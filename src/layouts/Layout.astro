@@ -3,6 +3,7 @@
  * MDRPedia — Base Layout
  * Wraps all pages with global styles, meta, and navigation
  */
+import "../styles/global.css";
 
 interface Props {
 	title: string;
@@ -118,7 +119,7 @@ const canonicalURL = new URL(
 </html>
 
 <style is:global>
-	@import "../styles/global.css";
+	/* Global styles move to frontmatter import */
 </style>
 
 <style>
