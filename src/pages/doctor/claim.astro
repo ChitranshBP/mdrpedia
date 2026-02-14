@@ -1,0 +1,56 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import NPIClaimWizard from "../../components/NPIClaimWizard";
+---
+
+<Layout title="Claim Profile — MDRPedia">
+    <div class="min-h-screen pt-32 pb-20 container relative overflow-hidden">
+        <!-- Background Elements -->
+        <div
+            class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-purple-900/20 blur-[120px] rounded-full -z-10"
+        >
+        </div>
+
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-bold text-white mb-4 tracking-tight">
+                Secure Your <span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300"
+                    >Legacy</span
+                >
+            </h1>
+            <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                Join 104,000+ top-tier physicians managing their digital
+                authority on MDRPedia.
+            </p>
+        </div>
+
+        <NPIClaimWizard client:load />
+
+        <div
+            class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center max-w-4xl mx-auto"
+        >
+            <div class="p-6">
+                <div class="text-3xl mb-2">🔒</div>
+                <h3 class="text-white font-bold mb-2">Lock Your Content</h3>
+                <p class="text-sm text-gray-500">
+                    Prevent unauthorized edits to your biography and
+                    achievements.
+                </p>
+            </div>
+            <div class="p-6">
+                <div class="text-3xl mb-2">📈</div>
+                <h3 class="text-white font-bold mb-2">Track Analytics</h3>
+                <p class="text-sm text-gray-500">
+                    See who is searching for you and viewing your lineage.
+                </p>
+            </div>
+            <div class="p-6">
+                <div class="text-3xl mb-2">✨</div>
+                <h3 class="text-white font-bold mb-2">Get Verified</h3>
+                <p class="text-sm text-gray-500">
+                    Earn the Blue Checkmark and boost your MDR Score.
+                </p>
+            </div>
+        </div>
+    </div>
+</Layout>

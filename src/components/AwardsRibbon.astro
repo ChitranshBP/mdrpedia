@@ -1,0 +1,170 @@
+---
+/**
+ * MDRPedia — Awards Ribbon
+ * Horizontal ribbon of verified honor badges below the profile header
+ * Visual hierarchy: Global Landmark (purple/gold) > National Honor (navy/silver) > Professional (oxford blue)
+ */
+import { classifyAward, getHonorStyle, HonorTier } from "../lib/global-honors";
+
+interface Props {
+    awards: {
+        name: string;
+        year?: number;
+        issuingBody?: string;
+        sourceUrl?: string; // E-E-A-T: Link to official source
+    }[];
+}
+
+const { awards } = Astro.props;
+
+// Classify and sort awards by tier (highest first)
+const classifiedAwards = awards
+    .map((award) => {
+        const classification = classifyAward(award.name);
+        const style = getHonorStyle(classification.tier);
+        return {
+            ...award,
+            classification,
+            style,
+        };
+    })
+    .filter((a) => a.classification.tier !== HonorTier.UNCLASSIFIED)
+    .sort((a, b) => b.classification.points - a.classification.points);
+---
+
+{
+    classifiedAwards.length > 0 && (
+        <div class="awards-ribbon">
+            {classifiedAwards.map((award) => (
+                <div
+                    class={`award-badge award-badge--${award.classification.tier.toLowerCase()}`}
+                    title={`${award.name} — ${award.issuingBody || "Verified"} (${award.year || ""})`}
+                    style={`--badge-bg: ${award.style.badgeColor}; --badge-border: ${award.style.borderColor}; --badge-text: ${award.style.textColor};`}
+                >
+                    <span class="award-badge__icon">{award.style.icon}</span>
+
+                    {award.sourceUrl ? (
+                        <a
+                            href={award.sourceUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="award-badge__link"
+                        >
+                            <span class="award-badge__name">
+                                {award.name} ↗
+                            </span>
+                        </a>
+                    ) : (
+                        <span class="award-badge__name">{award.name}</span>
+                    )}
+
+                    {award.year && (
+                        <span class="award-badge__year">{award.year}</span>
+                    )}
+                </div>
+            ))}
+        </div>
+    )
+}
+
+<style>
+    .awards-ribbon {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+        padding: var(--space-md) 0;
+        margin: var(--space-md) 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .award-badge {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        border-radius: var(--radius-full);
+        background: var(--badge-bg);
+        border: 1px solid var(--badge-border);
+        color: var(--badge-text);
+        font-size: 0.8rem;
+        font-weight: 500;
+        transition: all var(--transition-base);
+        cursor: default;
+    }
+
+    .award-badge:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .award-badge__link {
+        color: inherit;
+        text-decoration: none;
+        border-bottom: 1px dotted currentColor;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+    .award-badge__link:hover {
+        border-bottom-style: solid;
+    }
+
+    /* Tier-specific shimmer effects */
+    .award-badge--global_landmark {
+        animation: shimmer 3s infinite;
+        font-family: "Lora", serif;
+    }
+
+    @keyframes shimmer {
+        0%,
+        100% {
+            border-color: #ffd700;
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.15);
+        }
+        50% {
+            border-color: #ffc000;
+            box-shadow: 0 0 16px rgba(255, 215, 0, 0.3);
+        }
+    }
+
+    .award-badge--national_honor {
+        font-family: "Inter", sans-serif;
+    }
+
+    .award-badge--professional_excellence {
+        font-family: "Lora", serif;
+        font-style: italic;
+    }
+
+    .award-badge__icon {
+        font-size: 0.9rem;
+    }
+
+    .award-badge__name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 220px;
+    }
+
+    .award-badge__year {
+        font-size: 0.7rem;
+        opacity: 0.7;
+    }
+
+    @media (max-width: 768px) {
+        .awards-ribbon {
+            gap: var(--space-xs);
+        }
+
+        .award-badge {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+        }
+
+        .award-badge__name {
+            max-width: 150px;
+        }
+    }
+</style>

@@ -1,0 +1,242 @@
+/* ==========================================================================
+   MDRPedia — Wikipedia Standard Layout
+   Applied to MASTER and UNRANKED profiles for clean, academic styling.
+   Inspired by the "Clean Wikipedia" design standard.
+   ========================================================================== */
+
+/* ─── Base Page ────────────────────────────────────────────────────────────── */
+
+.mdr-common-page {
+    background-color: #ffffff;
+    color: #333333;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+}
+
+.mdr-common-page .profile-header {
+    background: #f8f9fa !important;
+    border-bottom: 2px solid #a2a9b1;
+}
+
+.mdr-common-page .profile-header__name {
+    color: #333 !important;
+    -webkit-text-fill-color: #333 !important;
+}
+
+.mdr-common-page .profile-header__specialty {
+    color: #555 !important;
+}
+
+.mdr-common-page .profile-header__location {
+    color: #666 !important;
+}
+
+/* ─── Heading Hierarchy (Classic Wiki Underline) ───────────────────────────── */
+
+.mdr-common-page h1,
+.mdr-common-page h2 {
+    font-family: 'Lora', serif;
+    border-bottom: 1px solid #a2a9b1;
+    padding-bottom: 0.3em;
+    margin-top: 1.5em;
+    color: #333;
+}
+
+.mdr-common-page h1 {
+    font-size: 2rem;
+}
+
+.mdr-common-page h2 {
+    font-size: 1.5rem;
+}
+
+.mdr-common-page h3 {
+    font-family: 'Lora', serif;
+    font-size: 1.2rem;
+    color: #444;
+    margin-top: 1.2em;
+}
+
+/* ─── Infobox (Floating Right Panel) ───────────────────────────────────────── */
+
+.mdr-infobox {
+    float: right;
+    width: 300px;
+    background-color: #f8f9fa;
+    border: 1px solid #a2a9b1;
+    padding: 12px;
+    margin: 0 0 16px 20px;
+    font-size: 0.9em;
+    border-radius: 4px;
+}
+
+.mdr-infobox__title {
+    font-family: 'Lora', serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-align: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.mdr-infobox__row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.mdr-infobox__label {
+    font-weight: 600;
+    color: #555;
+    font-size: 0.85rem;
+}
+
+.mdr-infobox__value {
+    color: #333;
+    font-size: 0.85rem;
+}
+
+.mdr-infobox__image {
+    width: 100%;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+/* ─── Links (Signature Wiki Blue) ──────────────────────────────────────────── */
+
+.mdr-common-page .mdr-link,
+.mdr-common-page a:not(.award-badge):not(.tier-badge):not(.nav__link) {
+    color: #0645ad;
+    text-decoration: none;
+}
+
+.mdr-common-page .mdr-link:hover,
+.mdr-common-page a:not(.award-badge):not(.tier-badge):not(.nav__link):hover {
+    text-decoration: underline;
+}
+
+/* ─── Citations (Superscript) ──────────────────────────────────────────────── */
+
+.mdr-common-page .mdr-citation,
+.mdr-common-page .citation-link {
+    color: #0645ad;
+    font-size: 0.8em;
+    vertical-align: super;
+    text-decoration: none;
+}
+
+.mdr-common-page .mdr-citation:hover,
+.mdr-common-page .citation-link:hover {
+    text-decoration: underline;
+}
+
+/* ─── Content Sections ─────────────────────────────────────────────────────── */
+
+.mdr-common-page .profile-content {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: white;
+}
+
+.mdr-common-page .profile-section {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin-bottom: 1.5rem;
+}
+
+.mdr-common-page .profile-section__title {
+    color: #333 !important;
+    -webkit-text-fill-color: #333 !important;
+    font-family: 'Lora', serif;
+    border-bottom: 1px solid #a2a9b1;
+    padding-bottom: 0.3em;
+}
+
+/* ─── Stats Grid (Wikipedia Table Style) ───────────────────────────────────── */
+
+.mdr-common-page .stats-grid {
+    background: #f8f9fa;
+    border: 1px solid #a2a9b1;
+    border-radius: 4px;
+}
+
+.mdr-common-page .stat-card {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid #eee !important;
+}
+
+.mdr-common-page .stat-card__value {
+    color: #0645ad !important;
+}
+
+.mdr-common-page .stat-card__label {
+    color: #555 !important;
+}
+
+/* ─── Reference List ───────────────────────────────────────────────────────── */
+
+.mdr-common-page .reference-list {
+    font-size: 0.9rem;
+    border-top: 1px solid #a2a9b1;
+    padding-top: 1rem;
+    margin-top: 2rem;
+}
+
+.mdr-common-page .reference-list__title {
+    font-family: 'Lora', serif;
+    color: #333;
+    border-bottom: 1px solid #a2a9b1;
+    padding-bottom: 0.3em;
+}
+
+.mdr-common-page .reference-list__item {
+    color: #333;
+    border-left-color: #a2a9b1;
+}
+
+/* ─── Navigation Override ──────────────────────────────────────────────────── */
+
+.mdr-common-page .nav {
+    background: #f8f9fa;
+    border-bottom: 1px solid #a2a9b1;
+}
+
+/* ─── Responsive ───────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .mdr-infobox {
+        float: none;
+        width: 100%;
+        margin: 0 0 16px 0;
+    }
+
+    .mdr-common-page .profile-content {
+        padding: 1rem;
+    }
+}
+
+/* ─── Print Styles ─────────────────────────────────────────────────────────── */
+
+@media print {
+    .mdr-common-page {
+        background: white;
+        color: black;
+    }
+
+    .mdr-common-page .nav,
+    .mdr-common-page .awards-ribbon {
+        display: none;
+    }
+
+    .mdr-infobox {
+        border: 2px solid #000;
+        box-shadow: none;
+    }
+}

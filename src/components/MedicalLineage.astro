@@ -1,0 +1,175 @@
+---
+/**
+ * MedicalLineage.astro
+ * Visualization of mentorship trees (Mentors -> Doctor -> Students)
+ */
+
+interface Props {
+    mentors?: { name: string; id?: string; title?: string }[];
+    students?: { name: string; id?: string; title?: string }[];
+}
+
+const { mentors, students } = Astro.props;
+const hasLineage =
+    (mentors && mentors.length > 0) || (students && students.length > 0);
+---
+
+{
+    hasLineage && (
+        <section class="medical-lineage">
+            <h3 class="lineage-title">Medical Lineage</h3>
+
+            <div class="lineage-container">
+                {/* Mentors Column */}
+                {mentors && mentors.length > 0 && (
+                    <div class="lineage-column">
+                        <h4 class="column-title">Mentored By</h4>
+                        <ul class="person-list">
+                            {mentors.map((m) => (
+                                <li class="person-card">
+                                    {m.id ? (
+                                        <a
+                                            href={`/doctors/${m.id}`}
+                                            class="person-link"
+                                        >
+                                            {m.name}
+                                        </a>
+                                    ) : (
+                                        <span class="person-name">
+                                            {m.name}
+                                        </span>
+                                    )}
+                                    {m.title && (
+                                        <span class="person-title">
+                                            {m.title}
+                                        </span>
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+
+                {/* Connector */}
+                {mentors && students && <div class="lineage-connector" />}
+
+                {/* Students Column */}
+                {students && students.length > 0 && (
+                    <div class="lineage-column">
+                        <h4 class="column-title">Mentored</h4>
+                        <ul class="person-list">
+                            {students.map((s) => (
+                                <li class="person-card">
+                                    {s.id ? (
+                                        <a
+                                            href={`/doctors/${s.id}`}
+                                            class="person-link"
+                                        >
+                                            {s.name}
+                                        </a>
+                                    ) : (
+                                        <span class="person-name">
+                                            {s.name}
+                                        </span>
+                                    )}
+                                    {s.title && (
+                                        <span class="person-title">
+                                            {s.title}
+                                        </span>
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+            </div>
+        </section>
+    )
+}
+
+<style>
+    .medical-lineage {
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+        padding: var(--space-xl);
+        margin-top: var(--space-2xl);
+    }
+
+    .lineage-title {
+        font-family: var(--font-serif);
+        font-size: 1.5rem;
+        color: var(--text-primary);
+        margin-bottom: var(--space-lg);
+        border-bottom: 1px solid var(--border-subtle);
+        padding-bottom: var(--space-sm);
+    }
+
+    .lineage-container {
+        display: flex;
+        gap: var(--space-2xl);
+        justify-content: flex-start;
+    }
+
+    .lineage-column {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .column-title {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+        margin-bottom: var(--space-md);
+    }
+
+    .person-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+
+    .person-card {
+        background: rgba(255, 255, 255, 0.03);
+        padding: var(--space-md);
+        border-radius: var(--radius-md);
+        border: 1px solid transparent;
+        transition: all 0.2s;
+    }
+
+    .person-card:hover {
+        border-color: var(--accent-purple);
+        background: rgba(139, 92, 246, 0.1);
+    }
+
+    .person-link {
+        display: block;
+        color: var(--accent-purple-light);
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .person-link:hover {
+        text-decoration: underline;
+    }
+
+    .person-name {
+        display: block;
+        color: var(--text-primary);
+        font-weight: 600;
+    }
+
+    .person-title {
+        display: block;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-top: 2px;
+    }
+
+    .lineage-connector {
+        width: 1px;
+        background: var(--border-subtle);
+        position: relative;
+    }
+</style>

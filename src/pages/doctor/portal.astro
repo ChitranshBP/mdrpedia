@@ -1,0 +1,200 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+// Mock Authentication Check
+// In production, this would use cookies/session
+const isVerified = true;
+const doctorName = "Dr. Siddhartha Mukherjee";
+const tier = "TITAN";
+---
+
+<Layout title="Doctor Portal — MDRPedia">
+    <div class="min-h-screen pt-24 pb-20 container">
+        <header
+            class="flex justify-between items-center mb-12 border-b border-white/10 pb-8"
+        >
+            <div>
+                <h1 class="text-3xl font-bold text-white mb-2">
+                    My Governance Dashboard
+                </h1>
+                <p class="text-gray-400">
+                    Welcome back, <span class="text-white">{doctorName}</span>
+                </p>
+            </div>
+            <div class="flex items-center gap-4">
+                <div
+                    class="px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full text-green-400 text-xs font-bold uppercase tracking-wider flex items-center gap-2"
+                >
+                    <span
+                        class="w-2 h-2 rounded-full bg-green-500 animate-pulse"
+                    ></span>
+                    Verified Identity
+                </div>
+                {
+                    tier === "TITAN" && (
+                        <div class="px-3 py-1 bg-yellow-500/10 border border-yellow-500/20 rounded-full text-yellow-400 text-xs font-bold uppercase tracking-wider">
+                            Titan Tier
+                        </div>
+                    )
+                }
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Sidebar -->
+            <div class="space-y-2">
+                <a
+                    href="#"
+                    class="block px-4 py-3 bg-white/10 text-white rounded-lg font-medium"
+                    >Overview</a
+                >
+                <a
+                    href="#"
+                    class="block px-4 py-3 text-gray-400 hover:bg-white/5 rounded-lg transition-colors"
+                    >Edit Profile</a
+                >
+                <a
+                    href="#"
+                    class="block px-4 py-3 text-gray-400 hover:bg-white/5 rounded-lg transition-colors"
+                    >Analytics</a
+                >
+                <a
+                    href="#"
+                    class="block px-4 py-3 text-gray-400 hover:bg-white/5 rounded-lg transition-colors"
+                    >Lineage Graph</a
+                >
+                <a
+                    href="#"
+                    class="block px-4 py-3 text-gray-400 hover:bg-white/5 rounded-lg transition-colors"
+                    >Settings</a
+                >
+            </div>
+
+            <!-- Main Content -->
+            <div class="md:col-span-3 space-y-8">
+                <!-- Analytics Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div
+                        class="p-6 bg-[#1a052e] border border-purple-500/30 rounded-2xl"
+                    >
+                        <div
+                            class="text-purple-400 text-sm font-bold uppercase tracking-wider mb-2"
+                        >
+                            Profile Views
+                        </div>
+                        <div class="text-4xl font-bold text-white">24.5K</div>
+                        <div class="text-xs text-green-400 mt-2">
+                            ↑ 12% this week
+                        </div>
+                    </div>
+                    <div
+                        class="p-6 bg-white/5 border border-white/10 rounded-2xl"
+                    >
+                        <div
+                            class="text-gray-400 text-sm font-bold uppercase tracking-wider mb-2"
+                        >
+                            Search Appearances
+                        </div>
+                        <div class="text-4xl font-bold text-white">8,201</div>
+                        <div class="text-xs text-green-400 mt-2">
+                            ↑ 5% from "Oncology"
+                        </div>
+                    </div>
+                    <div
+                        class="p-6 bg-white/5 border border-white/10 rounded-2xl"
+                    >
+                        <div
+                            class="text-gray-400 text-sm font-bold uppercase tracking-wider mb-2"
+                        >
+                            MDR Score
+                        </div>
+                        <div class="text-4xl font-bold text-white">98.2</div>
+                        <div class="text-xs text-gray-500 mt-2">
+                            Top 0.1% Global
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Lock Section -->
+                <div class="p-8 bg-white/5 border border-white/10 rounded-2xl">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h2 class="text-xl font-bold text-white mb-2">
+                                Content Lock™
+                            </h2>
+                            <p class="text-gray-400 text-sm max-w-lg">
+                                When enabled, your Biography, Education, and
+                                Awards sections cannot be edited by the
+                                community or AI scrapers. Only you can make
+                                changes.
+                            </p>
+                        </div>
+                        <div
+                            class="relative inline-flex items-center cursor-pointer"
+                        >
+                            <input
+                                type="checkbox"
+                                checked
+                                class="sr-only peer"
+                            />
+                            <div
+                                class="w-14 h-7 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-green-500"
+                            >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div
+                            class="px-4 py-2 bg-green-500/20 border border-green-500/30 rounded text-green-400 text-xs font-mono"
+                        >
+                            STATUS: ACTIVE
+                        </div>
+                        <div
+                            class="px-4 py-2 bg-white/5 border border-white/10 rounded text-gray-400 text-xs font-mono"
+                        >
+                            LAST LOCKED: 2 HRS AGO
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Alerts -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold text-white">Recent Alerts</h3>
+                    <div
+                        class="p-4 bg-white/5 border border-white/10 rounded-xl flex items-start gap-4"
+                    >
+                        <div class="w-2 h-2 bg-blue-500 rounded-full mt-2">
+                        </div>
+                        <div>
+                            <p class="text-sm text-white">
+                                New citation detected in <em
+                                    class="text-gray-400">Nature Medicine</em
+                                >.
+                            </p>
+                            <span class="text-xs text-gray-500"
+                                >2 hours ago</span
+                            >
+                        </div>
+                    </div>
+                    <div
+                        class="p-4 bg-white/5 border border-white/10 rounded-xl flex items-start gap-4"
+                    >
+                        <div class="w-2 h-2 bg-purple-500 rounded-full mt-2">
+                        </div>
+                        <div>
+                            <p class="text-sm text-white">
+                                Surgical Pedigree update: Dr. J. Smith added you
+                                as Mentor.
+                            </p>
+                            <span class="text-xs text-gray-500">Yesterday</span>
+                        </div>
+                        <button
+                            class="ml-auto text-xs bg-white/10 px-3 py-1 rounded hover:bg-white/20 text-white"
+                            >Review</button
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</Layout>

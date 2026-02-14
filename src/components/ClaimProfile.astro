@@ -59,6 +59,18 @@ const { doctorName, slug } = Astro.props;
                 />
             </div>
 
+            <!-- HoneyPot Field -->
+            <div style="display:none; opacity:0; visibility:hidden;">
+                <label for="website_url_hp">Website</label>
+                <input
+                    type="text"
+                    id="website_url_hp"
+                    name="website_url_hp"
+                    tabindex="-1"
+                    autocomplete="off"
+                />
+            </div>
+
             <div class="claim-profile__field">
                 <label>Upload Verification Certificate</label>
                 <div class="claim-profile__upload" id="uploadArea">
@@ -274,6 +286,15 @@ const { doctorName, slug } = Astro.props;
             e.preventDefault();
             const btn = form.querySelector("button");
             if (btn) {
+                // Check honeypot
+                const hp = document.getElementById(
+                    "website_url_hp",
+                ) as HTMLInputElement;
+                if (hp && hp.value) {
+                    console.warn("Bot detected");
+                    return;
+                }
+
                 btn.textContent = "✅ Claim Submitted!";
                 btn.setAttribute("disabled", "true");
                 btn.style.opacity = "0.7";

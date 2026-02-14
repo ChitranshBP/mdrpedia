@@ -9,7 +9,18 @@ import Search from "../components/Search.astro"; // Pagefind Search
 import TierBadge from "../components/TierBadge.astro";
 import { getCollection } from "astro:content";
 
+// Dynamic stats from content collection
 const allDoctors = await getCollection("doctors");
+const verifiedCount = allDoctors.filter(
+	(d) => d.data.tier !== "UNRANKED",
+).length;
+const titanCount = allDoctors.filter((d) => d.data.tier === "TITAN").length;
+const citationCount = allDoctors.reduce(
+	(sum, d) => sum + (d.data.citations?.length ?? 0),
+	0,
+);
+const countrySet = new Set(allDoctors.map((d) => d.data.geography.country));
+const countriesCount = countrySet.size;
 const recentDoctors = allDoctors
 	.sort((a, b) => {
 		// Sort by modification time (approximated here by reverse list order for now,
@@ -56,17 +67,26 @@ const recentDoctors = allDoctors
 
 			<div class="hero__trust-bar">
 				<div class="trust-item">
-					<span class="trust-number">100K+</span>
+					<span class="trust-number"
+						>{verifiedCount.toLocaleString()}</span
+					>
 					<span class="trust-label">Verified Profiles</span>
 				</div>
 				<div class="trust-divider"></div>
 				<div class="trust-item">
-					<span class="trust-number">2M+</span>
-					<span class="trust-label">DOI-Verified Citations</span>
+					<span class="trust-number">{titanCount}</span>
+					<span class="trust-label">Global Pioneers</span>
 				</div>
 				<div class="trust-divider"></div>
 				<div class="trust-item">
-					<span class="trust-number">195</span>
+					<span class="trust-number"
+						>{citationCount.toLocaleString()}</span
+					>
+					<span class="trust-label">Verified Citations</span>
+				</div>
+				<div class="trust-divider"></div>
+				<div class="trust-item">
+					<span class="trust-number">{countriesCount}</span>
 					<span class="trust-label">Countries</span>
 				</div>
 			</div>

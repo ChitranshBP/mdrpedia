@@ -1,0 +1,184 @@
+---
+/**
+ * MDRPedia — Live Activity Feed
+ * Shows real-time-style recent profile updates and citation additions
+ */
+import { prisma } from "../lib/prisma";
+
+// Fetch latest 8 activity events
+const recentProfiles = await prisma.profile.findMany({
+    orderBy: { updatedAt: "desc" },
+    take: 5,
+    select: {
+        slug: true,
+        full_name: true,
+        tier: true,
+        specialty: true,
+        updatedAt: true,
+    },
+});
+
+const recentCitations = await prisma.citation.findMany({
+    orderBy: { createdAt: "desc" },
+    take: 3,
+    select: {
+        title: true,
+        journal: true,
+        createdAt: true,
+        profile: {
+            select: { full_name: true, slug: true },
+        },
+    },
+});
+
+// Merge and sort by timestamp
+type ActivityItem = {
+    type: "profile" | "citation";
+    text: string;
+    link: string;
+    tier?: string;
+    timestamp: Date;
+};
+
+const activities: ActivityItem[] = [
+    ...recentProfiles.map((p) => ({
+        type: "profile" as const,
+        text: `${p.full_name} profile verified`,
+        link: `/doctors/${p.slug}`,
+        tier: p.tier,
+        timestamp: p.updatedAt,
+    })),
+    ...recentCitations.map((c) => ({
+        type: "citation" as const,
+        text: `New citation added: "${c.title?.slice(0, 60)}..."`,
+        link: `/doctors/${c.profile.slug}`,
+        timestamp: c.createdAt,
+    })),
+]
+    .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
+    .slice(0, 8);
+
+// Relative time formatter
+function timeAgo(date: Date): string {
+    const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
+    if (seconds < 60) return "Just now";
+    if (seconds < 3600) return `${Math.floor(seconds / 60)} min ago`;
+    if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+    if (seconds < 604800) return `${Math.floor(seconds / 86400)}d ago`;
+    return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+---
+
+<section class="live-feed">
+    <div class="live-feed__header">
+        <div class="live-feed__pulse"></div>
+        <h3 class="live-feed__title">Live Activity</h3>
+    </div>
+
+    <div class="live-feed__list">
+        {
+            activities.map((activity) => (
+                <a href={activity.link} class="live-feed__item">
+                    <span class="live-feed__icon">
+                        {activity.type === "profile" ? "✅" : "📄"}
+                    </span>
+                    <span class="live-feed__text">{activity.text}</span>
+                    <span class="live-feed__time">
+                        {timeAgo(activity.timestamp)}
+                    </span>
+                </a>
+            ))
+        }
+    </div>
+</section>
+
+<style>
+    .live-feed {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: var(--radius-lg);
+        padding: var(--space-lg);
+    }
+
+    .live-feed__header {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        margin-bottom: var(--space-md);
+    }
+
+    .live-feed__pulse {
+        width: 8px;
+        height: 8px;
+        background: #00ff88;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%,
+        100% {
+            opacity: 1;
+            box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.4);
+        }
+        50% {
+            opacity: 0.8;
+            box-shadow: 0 0 0 6px rgba(0, 255, 136, 0);
+        }
+    }
+
+    .live-feed__title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .live-feed__list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+    }
+
+    .live-feed__item {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        padding: var(--space-sm) var(--space-md);
+        border-radius: var(--radius-md);
+        text-decoration: none;
+        color: inherit;
+        transition: background-color var(--transition-base);
+    }
+
+    .live-feed__item:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .live-feed__icon {
+        font-size: 0.9rem;
+        flex-shrink: 0;
+    }
+
+    .live-feed__text {
+        flex: 1;
+        font-size: 0.85rem;
+        color: var(--text-primary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .live-feed__time {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+        .live-feed__text {
+            font-size: 0.8rem;
+        }
+    }
+</style>

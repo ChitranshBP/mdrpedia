@@ -8,12 +8,14 @@ interface Props {
 	title: string;
 	description?: string;
 	ogImage?: string;
+	tier?: string;
 }
 
 const {
 	title,
 	description = "MDRPedia — The Global Single-Source of Truth for Doctors & Surgeons",
 	ogImage,
+	tier,
 } = Astro.props;
 const canonicalURL = new URL(
 	Astro.url.pathname,
@@ -45,7 +47,7 @@ const canonicalURL = new URL(
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<title>{title}</title>
 	</head>
-	<body>
+	<body class={tier === "TITAN" ? "titan-theme" : ""}>
 		<!-- Navigation -->
 		<header class="site-header">
 			<div class="container">
@@ -58,7 +60,20 @@ const canonicalURL = new URL(
 					</a>
 					<div class="site-nav__links">
 						<a href="/doctors" class="nav-link">Browse</a>
-						<a href="/#search" class="nav-link">Search</a>
+						<a href="/communities" class="nav-link">Communities</a>
+						<a href="/nobel-laureates" class="nav-link"
+							>Nobel Laureates</a
+						>
+						<a href="/global-leaders" class="nav-link"
+							>Global Leaders</a
+						>
+						<a href="/compare" class="nav-link">Compare</a>
+						<a
+							href="/doctor/claim"
+							class="nav-link"
+							style="color: var(--accent-purple); font-weight: 700;"
+							>Claim Profile</a
+						>
 					</div>
 				</nav>
 			</div>
@@ -88,6 +103,13 @@ const canonicalURL = new URL(
 						<p class="footer-trust">
 							Every fact is backed by a DOI-verified citation.
 						</p>
+						<div style="margin-top: 1rem; opacity: 0.3;">
+							<a
+								href="/login"
+								style="color: inherit; text-decoration: none; font-size: 0.75rem;"
+								>Admin Login</a
+							>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -1,0 +1,48 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Admin Login — MDRPedia" description="Restricted Access">
+    <div class="container flex items-center justify-center min-h-[60vh]">
+        <div
+            class="bg-white/5 border border-white/10 p-8 rounded-2xl w-full max-w-md backdrop-blur-sm"
+        >
+            <h1 class="text-2xl font-bold text-white mb-2 text-center">
+                Admin Access
+            </h1>
+            <p class="text-white/40 text-center mb-8 text-sm">
+                Please enter your access key to continue.
+            </p>
+
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label for="key" class="sr-only">Access Key</label>
+                    <input
+                        type="password"
+                        id="key"
+                        placeholder="Enter Access Key"
+                        class="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-purple-500 transition-colors"
+                        required
+                    />
+                </div>
+                <button
+                    type="submit"
+                    class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-lg transition-colors"
+                >
+                    Access Dashboard
+                </button>
+            </form>
+        </div>
+    </div>
+</Layout>
+
+<script>
+    const form = document.getElementById("loginForm");
+    form?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const input = document.getElementById("key") as HTMLInputElement;
+        if (input && input.value) {
+            window.location.href = `/admin?key=${encodeURIComponent(input.value)}`;
+        }
+    });
+</script>

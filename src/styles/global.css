@@ -460,3 +460,61 @@ sup a {
     padding: 0 var(--space-md);
   }
 }
+/* Titan Theme (Parchment & Gold) */
+body.titan-theme {
+    background-color: #FCFBF7; /* Parchment */
+    color: #1a1a1a;
+}
+
+body.titan-theme .site-header {
+    background: rgba(252, 251, 247, 0.9);
+    border-bottom: 2px solid #FFD700;
+}
+body.titan-theme .site-nav a, 
+body.titan-theme .site-logo {
+    color: #300066; /* Royal Purple */
+}
+
+body.titan-theme .profile-hero__name {
+    color: #300066;
+    text-shadow: 0 0 0;
+}
+body.titan-theme .profile-hero__specialty,
+body.titan-theme .profile-hero__location,
+body.titan-theme .profile-hero__dates,
+body.titan-theme .stat__label {
+    color: rgba(48, 0, 102, 0.7);
+}
+body.titan-theme .stat__value {
+    color: #300066;
+}
+
+body.titan-theme .profile-sidebar {
+   border-left: 2px solid #FFD700;
+}
+body.titan-theme .toc {
+   background: #fff;
+   border: 1px solid #FFD700;
+   box-shadow: 0 4px 12px rgba(255, 215, 0, 0.1);
+}
+body.titan-theme .toc__title {
+    color: #300066;
+}
+body.titan-theme .toc__link {
+    color: #555;
+}
+body.titan-theme .toc__link:hover,
+body.titan-theme .toc__link.active {
+    background: rgba(255, 215, 0, 0.1);
+    color: #300066;
+    border-left-color: #300066;
+}
+
+/* Adjust dark mode containers for light theme */
+body.titan-theme .profile-section h2 {
+    color: #300066;
+    border-bottom-color: #FFD700;
+}
+body.titan-theme p {
+    color: #333;
+}

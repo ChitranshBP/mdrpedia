@@ -1,17 +1,20 @@
 // ============================================================================
-// MDRPedia — MDR Score Engine
-// The Impact Quotient: Weighted scoring across Four Pillars of Excellence
+// MDRPedia — MDR Score Engine v2
+// The Impact Quotient: Weighted scoring across Four Pillars + Global Honors
 // ============================================================================
 
 import type { MDRScoreInput, MDRScoreResult, FourPillars } from './types';
 import { Tier } from './types';
+import { calculateHonorBonus, type HonorBonusResult } from './global-honors';
+import { getImpactFactorMultiplier } from './pubmed-sync';
 
 // ─── Weight Constants ───────────────────────────────────────────────────────
 
 const WEIGHTS = {
-    CITATIONS: 0.4,
-    YEARS_ACTIVE: 0.2,
-    TECHNIQUE_INVENTION: 0.4,
+    CITATIONS: 0.35,
+    YEARS_ACTIVE: 0.15,
+    TECHNIQUE_INVENTION: 0.30,
+    HONOR_BONUS: 0.20,  // New: Global Honors contribute 20% of base score
 } as const;
 
 const PILLAR_WEIGHTS = {
@@ -20,6 +23,12 @@ const PILLAR_WEIGHTS = {
     GMS: 0.2,  // Global Mentorship Score
     HCI: 0.2,  // Humanitarian / Crisis Impact
 } as const;
+
+// ─── Bonus Constants ────────────────────────────────────────────────────────
+
+const PIONEER_BONUS = 40;       // +40 pts for pioneering keywords
+const LEADERSHIP_BONUS = 10;    // +10 pts for leadership roles
+const MAX_HONOR_POINTS = 300;   // Cap honor points for normalization
 
 // ─── Normalization Ceilings ─────────────────────────────────────────────────
 
@@ -55,7 +64,6 @@ function calculatePillars(input: MDRScoreInput): FourPillars {
     const intellectualLegacy = (hIndexScore * 0.4 + citationScore * 0.3 + techniqueScore * 0.3);
 
     // Global Mentorship Score (GMS)
-    // Placeholder: based on certifications as proxy for institutional influence
     const certScore = normalize(input.boardCertifications, CEILINGS.CERTIFICATIONS);
     const globalMentorshipScore = certScore;
 
@@ -71,6 +79,35 @@ function calculatePillars(input: MDRScoreInput): FourPillars {
     };
 }
 
+// ─── Impact Factor Weighted Citations ───────────────────────────────────────
+
+/**
+ * Calculate citation weight adjusted by journal impact factor.
+ * A single NEJM paper (5x multiplier) can outrank 5 low-IF papers.
+ */
+function calculateIFWeightedCitations(
+    citations: number,
+    journalImpactFactors?: { journal: string; citationCount: number }[]
+): number {
+    if (!journalImpactFactors || journalImpactFactors.length === 0) {
+        // Fallback: use raw citation count
+        return normalize(citations, CEILINGS.CITATIONS);
+    }
+
+    let weightedSum = 0;
+    let totalPapers = 0;
+
+    for (const entry of journalImpactFactors) {
+        const multiplier = getImpactFactorMultiplier(entry.journal);
+        weightedSum += entry.citationCount * multiplier;
+        totalPapers++;
+    }
+
+    // Normalize the weighted sum (higher ceiling for IF-weighted)
+    const weightedCeiling = CEILINGS.CITATIONS * 3; // IF weighting can exceed raw ceiling
+    return normalize(weightedSum, weightedCeiling);
+}
+
 // ─── Legacy Decay (Historical Profiles) ─────────────────────────────────────
 
 function calculateLegacyDecay(
@@ -80,25 +117,50 @@ function calculateLegacyDecay(
     const currentYear = new Date().getFullYear();
     const yearsSinceDeath = currentYear - yearOfDeath;
 
-    // If technique is still gold standard, no decay
     if (techniqueStillGoldStandard) return 1.0;
-
-    // Decay starts after 10 years, caps at 50% reduction after 100 years
     if (yearsSinceDeath <= 10) return 1.0;
     const decayFactor = Math.max(0.5, 1.0 - (yearsSinceDeath - 10) * 0.005);
     return Math.round(decayFactor * 1000) / 1000;
 }
 
-// ─── Main: Calculate MDR Score ──────────────────────────────────────────────
+// ─── Main: Calculate MDR Score v2 ───────────────────────────────────────────
 
 export function calculateMDRScore(input: MDRScoreInput): MDRScoreResult {
+    // ── Retraction Demotion ──
+    if (input.hasRetraction) {
+        return {
+            score: 0,
+            tier: Tier.UNRANKED,
+            pillars: { clinicalMasteryIndex: 0, intellectualLegacy: 0, globalMentorshipScore: 0, humanitarianImpact: 0 },
+            breakdown: {
+                citationWeight: 0,
+                yearsActiveWeight: 0,
+                techniqueWeight: 0,
+                pillarAverage: 0,
+                honorBonus: 0,
+                pioneerBonus: 0,
+                leadershipBonus: 0,
+            },
+            disqualified: true,
+            reason: 'Retracted publication detected. Profile status: Under Review.',
+        };
+    }
+
     // ── No-Dummy Guardrail ──
     if (!input.licenseVerified && !input.isHistorical) {
         return {
             score: null,
             tier: Tier.UNRANKED,
             pillars: { clinicalMasteryIndex: 0, intellectualLegacy: 0, globalMentorshipScore: 0, humanitarianImpact: 0 },
-            breakdown: { citationWeight: 0, yearsActiveWeight: 0, techniqueWeight: 0, pillarAverage: 0 },
+            breakdown: {
+                citationWeight: 0,
+                yearsActiveWeight: 0,
+                techniqueWeight: 0,
+                pillarAverage: 0,
+                honorBonus: 0,
+                pioneerBonus: 0,
+                leadershipBonus: 0,
+            },
             disqualified: true,
             reason: 'License cannot be verified. Profile remains Unverified.',
         };
@@ -114,12 +176,31 @@ export function calculateMDRScore(input: MDRScoreInput): MDRScoreResult {
         pillars.globalMentorshipScore * PILLAR_WEIGHTS.GMS +
         pillars.humanitarianImpact * PILLAR_WEIGHTS.HCI;
 
-    // ── Core MDR Score Formula ──
-    const citationWeight = normalize(input.citations, CEILINGS.CITATIONS) * WEIGHTS.CITATIONS;
+    // ── IF-Weighted Citation Score ──
+    const citationWeight = calculateIFWeightedCitations(
+        input.citations,
+        input.journalImpactFactors
+    ) * WEIGHTS.CITATIONS;
+
     const yearsActiveWeight = normalize(input.yearsActive, CEILINGS.YEARS_ACTIVE) * WEIGHTS.YEARS_ACTIVE;
     const techniqueWeight = input.techniqueInventionBonus * WEIGHTS.TECHNIQUE_INVENTION;
 
-    let rawScore = citationWeight + yearsActiveWeight + techniqueWeight;
+    // ── Global Honor Bonus ──
+    let honorBonusResult: HonorBonusResult | undefined;
+    let honorScore = 0;
+    if (input.honors && input.honors.length > 0) {
+        honorBonusResult = calculateHonorBonus(input.honors);
+        honorScore = normalize(honorBonusResult.totalPoints, MAX_HONOR_POINTS) * WEIGHTS.HONOR_BONUS;
+    }
+
+    // ── Pioneer Bonus (+40 pts capped to weight) ──
+    const pioneerScore = input.isPioneer ? normalize(PIONEER_BONUS, 100) * 0.1 : 0;
+
+    // ── Leadership Bonus (+10 pts capped to weight) ──
+    const leadershipScore = input.isLeader ? normalize(LEADERSHIP_BONUS, 100) * 0.05 : 0;
+
+    // ── Core Score ──
+    let rawScore = citationWeight + yearsActiveWeight + techniqueWeight + honorScore + pioneerScore + leadershipScore;
 
     // ── Blend with Pillar Average (50/50) ──
     rawScore = (rawScore * 0.5) + (pillarAverage * 0.5);
@@ -136,15 +217,30 @@ export function calculateMDRScore(input: MDRScoreInput): MDRScoreResult {
 
     const finalScore = Math.round(Math.min(rawScore, 100) * 100) / 100;
 
+    // ── Determine Tier ──
+    let tier = Tier.UNRANKED;
+    if (finalScore >= 90) tier = Tier.TITAN;
+    else if (finalScore >= 70) tier = Tier.ELITE;
+    else if (finalScore >= 50) tier = Tier.MASTER;
+
+    // ── Honor Floor Protection ──
+    // Tier 1/2 honor holders cannot drop below ELITE
+    if (honorBonusResult?.floorProtection && tier !== Tier.TITAN) {
+        tier = Tier.ELITE;
+    }
+
     return {
         score: finalScore,
-        tier: Tier.UNRANKED, // Tier assigned separately by the Gatekeeper
+        tier,
         pillars,
         breakdown: {
             citationWeight: Math.round(citationWeight * 100) / 100,
             yearsActiveWeight: Math.round(yearsActiveWeight * 100) / 100,
             techniqueWeight: Math.round(techniqueWeight * 100) / 100,
             pillarAverage: Math.round(pillarAverage * 100) / 100,
+            honorBonus: Math.round(honorScore * 100) / 100,
+            pioneerBonus: Math.round(pioneerScore * 100) / 100,
+            leadershipBonus: Math.round(leadershipScore * 100) / 100,
             legacyDecay,
         },
         disqualified: false,

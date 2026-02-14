@@ -425,3 +425,31 @@ model DoctorPortal {
 
   @@map("doctor_portals")
 }
+
+// ─── Search Analytics ───────────────────────────────────────────────────────
+
+model SearchLog {
+  id           String   @id @default(uuid())
+  queryText    String
+  resultsCount Int
+  userId       String?  // Optional: Link to authenticated user if available
+  ipAddress    String?  // Anonymized IP
+  clickedSlug  String?  // Analytics: Which profile was clicked
+  createdAt    DateTime @default(now())
+
+  @@index([createdAt])
+  @@map("search_logs")
+}
+
+model SearchAnalytics {
+  id        String   @id @default(cuid())
+  term      String   @unique
+  count     Int      @default(1)
+  updatedAt DateTime @updatedAt
+
+  @@map("search_analytics")
+}
+
+// Update: Log clicked result for analytics
+// (Astro doesn't support 'alter table' easily with sqlite/push, so we might just add field)
+// Actually I'll use replace to add it to the model definition above.

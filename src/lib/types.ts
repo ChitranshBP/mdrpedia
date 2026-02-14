@@ -51,6 +51,16 @@ export interface MDRScoreInput {
   isHistorical: boolean;
   yearOfDeath?: number;
   techniqueStillGoldStandard?: boolean;
+  /** Global Honor awards for honor bonus calculation */
+  honors?: { name: string; year?: number; issuingBody?: string }[];
+  /** Journal-level citation data for IF-weighted scoring */
+  journalImpactFactors?: { journal: string; citationCount: number }[];
+  /** Whether pioneer keywords were detected in publications */
+  isPioneer?: boolean;
+  /** Whether leadership roles were detected in affiliations */
+  isLeader?: boolean;
+  /** Whether any retracted publication was found */
+  hasRetraction?: boolean;
 }
 
 /** Result of MDR Score calculation */
@@ -63,6 +73,9 @@ export interface MDRScoreResult {
     yearsActiveWeight: number;
     techniqueWeight: number;
     pillarAverage: number;
+    honorBonus?: number;
+    pioneerBonus?: number;
+    leadershipBonus?: number;
     legacyDecay?: number;
   };
   disqualified: boolean;
@@ -124,6 +137,35 @@ export interface DoctorEntry {
   hasInvention: boolean;
   dateOfBirth?: string;
   dateOfDeath?: string;
+  /** Awards and honors */
+  awards?: {
+    name: string;
+    year?: number;
+    issuingBody?: string;
+    sourceUrl?: string;
+  }[];
+  /** Medical Lineage */
+  mentors?: { name: string; id?: string; title?: string }[];
+  students?: { name: string; id?: string; title?: string }[];
+  /** Citations with journal and DOI info */
+  citations?: {
+    doi: string;
+    title: string;
+    journal: string;
+    year: number;
+    verified: boolean;
+    citationCount?: number;
+    journalImpactFactor?: number;
+    evidenceClassification?: string;
+    isOpenAccess?: boolean;
+    openAccessUrl?: string;
+  }[];
+  /** Timeline of career milestones */
+  timeline?: {
+    year: number;
+    title: string;
+    description?: string;
+  }[];
 }
 
 /** Tier theme configuration */

@@ -34,13 +34,36 @@ const sortedDoctors = allDoctors.sort(
 
             <!-- Filter bar -->
             <div class="browse__filters">
-                <button class="filter-btn filter-btn--active" data-filter="all"
-                    >All</button
+                <span class="filter-label">Tier:</span>
+                <button
+                    class="filter-btn filter-btn--active"
+                    data-group="tier"
+                    data-filter="all">All</button
                 >
-                <button class="filter-btn" data-filter="TITAN">🏆 Titan</button>
-                <button class="filter-btn" data-filter="ELITE">🥈 Elite</button>
-                <button class="filter-btn" data-filter="MASTER"
-                    >🥉 Master</button
+                <button class="filter-btn" data-group="tier" data-filter="TITAN"
+                    >🏆 Titan</button
+                >
+                <button class="filter-btn" data-group="tier" data-filter="ELITE"
+                    >🥈 Elite</button
+                >
+                <button
+                    class="filter-btn"
+                    data-group="tier"
+                    data-filter="MASTER">🥉 Master</button
+                >
+
+                <span class="filter-divider">|</span>
+
+                <span class="filter-label">Status:</span>
+                <button
+                    class="filter-btn"
+                    data-group="status"
+                    data-filter="LIVING">🟢 Living</button
+                >
+                <button
+                    class="filter-btn"
+                    data-group="status"
+                    data-filter="HISTORICAL">🏛 Legacy</button
                 >
             </div>
 
@@ -62,6 +85,7 @@ const sortedDoctors = allDoctors.sort(
                                 href={`/doctors/${doctor.id}`}
                                 class={`browse-card card card--${d.tier.toLowerCase()}`}
                                 data-tier={d.tier}
+                                data-status={d.status}
                             >
                                 <div class="browse-card__top">
                                     <TierBadge
@@ -106,30 +130,61 @@ const sortedDoctors = allDoctors.sort(
 </Layout>
 
 <script>
-    // Client-side tier filtering
     document.addEventListener("DOMContentLoaded", () => {
         const buttons =
             document.querySelectorAll<HTMLButtonElement>(".filter-btn");
         const cards = document.querySelectorAll<HTMLElement>(".browse-card");
 
+        let currentTier = "all";
+        let currentStatus = "all";
+
+        function filterCards() {
+            cards.forEach((card) => {
+                const tierMatch =
+                    currentTier === "all" || card.dataset.tier === currentTier;
+                const statusMatch =
+                    currentStatus === "all" ||
+                    card.dataset.status === currentStatus;
+
+                if (tierMatch && statusMatch) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+
         buttons.forEach((btn) => {
             btn.addEventListener("click", () => {
-                const filter = btn.dataset.filter;
+                const group = btn.dataset.group;
+                const filter = btn.dataset.filter || "all";
 
-                // Update active state
-                buttons.forEach((b) =>
-                    b.classList.remove("filter-btn--active"),
-                );
-                btn.classList.add("filter-btn--active");
+                if (group === "tier") {
+                    document
+                        .querySelectorAll(`.filter-btn[data-group="tier"]`)
+                        .forEach((b) =>
+                            b.classList.remove("filter-btn--active"),
+                        );
+                    btn.classList.add("filter-btn--active");
+                    currentTier = filter;
+                } else if (group === "status") {
+                    const isActive =
+                        btn.classList.contains("filter-btn--active");
 
-                // Filter cards
-                cards.forEach((card) => {
-                    if (filter === "all" || card.dataset.tier === filter) {
-                        card.style.display = "";
+                    document
+                        .querySelectorAll(`.filter-btn[data-group="status"]`)
+                        .forEach((b) =>
+                            b.classList.remove("filter-btn--active"),
+                        );
+
+                    if (isActive) {
+                        currentStatus = "all";
                     } else {
-                        card.style.display = "none";
+                        btn.classList.add("filter-btn--active");
+                        currentStatus = filter;
                     }
-                });
+                }
+                filterCards();
             });
         });
     });
@@ -170,6 +225,23 @@ const sortedDoctors = allDoctors.sort(
         gap: var(--space-sm);
         margin-bottom: var(--space-xl);
         flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .filter-label {
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-weight: 700;
+        margin-right: 0.2rem;
+    }
+
+    .filter-divider {
+        color: rgba(255, 255, 255, 0.1);
+        margin: 0 0.5rem;
+        font-size: 1.2rem;
+        font-weight: 300;
     }
 
     .filter-btn {

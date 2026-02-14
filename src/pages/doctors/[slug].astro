@@ -5,17 +5,22 @@
  */
 
 import DoctorProfile from "../../layouts/DoctorProfile.astro";
-import { getCollection } from "astro:content";
+import HiddenAIContext from "../../components/SEO/HiddenAIContext.astro";
+import { getCollection, getEntry } from "astro:content";
 
 export async function getStaticPaths() {
     const doctors = await getCollection("doctors");
     return doctors.map((doctor) => ({
         params: { slug: doctor.id },
-        props: { doctor },
     }));
 }
 
-const { doctor } = Astro.props;
+const { slug } = Astro.params;
+if (!slug) return Astro.redirect("/404");
+
+const doctor = await getEntry("doctors", slug);
+if (!doctor) return Astro.redirect("/404");
+
 const d = doctor.data;
 
 const profileData = {
@@ -41,7 +46,17 @@ const profileData = {
     citations: d.citations,
     awards: d.awards,
     timeline: d.timeline,
+    // E-E-A-T Fields
+    npiNumber: d.npiNumber,
+    orcidId: d.orcidId,
+    medicalSpecialty: d.medicalSpecialty,
+    knowsAbout: d.knowsAbout,
+    affiliations: d.affiliations,
+    mentors: d.mentors,
+    students: d.students,
+    aiSummary: d.aiSummary,
 };
 ---
 
+<HiddenAIContext doctor={doctor} />
 <DoctorProfile doctor={profileData} />

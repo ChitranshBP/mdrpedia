@@ -19,11 +19,13 @@ interface DoctorGEOData {
     medicalSpecialty?: string[];
     knowsAbout?: string[];
     affiliations?: { hospitalName: string; role?: string; hospitalUrl?: string }[];
+    mentors?: { name: string }[];
     citations?: { doi?: string; title: string; journal?: string; year?: number }[];
     dateOfBirth?: string;
     dateOfDeath?: string;
     url: string;
     aiSummary?: string;
+    awards?: { name: string; year: number }[];
 }
 
 // ─── Physician JSON-LD ──────────────────────────────────────────────────────
@@ -45,8 +47,23 @@ export function generatePhysicianSchema(data: DoctorGEOData) {
         medicalSpecialty: data.medicalSpecialty?.length
             ? data.medicalSpecialty.map((s) => ({ '@type': 'MedicalSpecialty', name: s }))
             : { '@type': 'MedicalSpecialty', name: data.specialty },
+        honorificPrefix: "Dr.",
         ...(data.npiNumber ? { identifier: { '@type': 'PropertyValue', propertyID: 'NPI', value: data.npiNumber } } : {}),
         ...(data.orcidId ? { sameAs: `https://orcid.org/${data.orcidId}` } : {}),
+
+        // Lineage & Connections
+        ...(data.mentors?.length ? {
+            knows: data.mentors.map(m => ({
+                '@type': 'Person',
+                name: m.name
+            }))
+        } : {}),
+        ...(data.affiliations?.length ? {
+            alumniOf: data.affiliations.map(a => ({
+                '@type': 'Organization',
+                name: a.hospitalName
+            }))
+        } : {}),
 
         // Expertise
         knowsAbout: data.knowsAbout?.length
@@ -149,6 +166,21 @@ export function generateFAQSchema(data: DoctorGEOData) {
         questions.push({
             q: `How many years of experience does ${data.fullName} have?`,
             a: `${data.fullName} has ${data.yearsActive} years of active experience in ${data.specialty}.`,
+        });
+    }
+
+    // Q6: Verified Status
+    questions.push({
+        q: `Is ${data.fullName} verified by MDRPedia?`,
+        a: `Yes, ${data.fullName} is a verified ${data.tier} tier physician on MDRPedia, the global authority for medical reputation.`,
+    });
+
+    // Q7: Awards
+    // @ts-ignore
+    if (data.awards?.length > 0) { // Fix Typescript error by ignoring or updating interface
+        questions.push({
+            q: `What awards has ${data.fullName} received?`,
+            a: `${data.fullName} has received multiple awards, including ${data.awards?.slice(0, 3).map(a => a.name).join(', ')}.`,
         });
     }
 

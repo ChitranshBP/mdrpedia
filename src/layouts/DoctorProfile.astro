@@ -23,10 +23,18 @@ import PrestigeBadge from "../components/PrestigeBadge.astro";
 import MediaVault from "../components/MediaVault.astro";
 import ClaimProfile from "../components/ClaimProfile.astro";
 import CitePopup from "../components/CitePopup.astro";
+import ShareProfileModal from "../components/ShareProfileModal";
 import AISummary from "../components/AISummary.astro";
 import CitationHover from "../components/CitationHover.astro";
 import ResearchHighlights from "../components/ResearchHighlights.astro";
+import AwardsRibbon from "../components/AwardsRibbon.astro";
+import MedicalLineage from "../components/MedicalLineage.astro";
+import MedicalReviewer from "../components/MedicalReviewer.astro";
 import { generateAISummary } from "../lib/ai-summary";
+import { getSignedImage } from "../lib/image-security";
+import ImageWithFallback from "../components/ImageWithFallback";
+import MedicalLineageGraph from "../components/MedicalLineageGraph";
+import "../styles/wikipedia-layout.css";
 
 interface Props {
     doctor: {
@@ -73,8 +81,15 @@ interface Props {
             isOpenAccess?: boolean;
             openAccessUrl?: string;
         }[];
-        awards?: { name: string; year: number; issuingBody?: string }[];
+        awards?: {
+            name: string;
+            year: number;
+            issuingBody?: string;
+            sourceUrl?: string;
+        }[];
         timeline?: { year: number; title: string; description?: string }[];
+        mentors?: { name: string; id?: string; title?: string }[];
+        students?: { name: string; id?: string; title?: string }[];
     };
 }
 
@@ -106,6 +121,8 @@ const aiSummary =
         awards: doctor.awards,
     });
 const isTitan = doctor.tier === "TITAN";
+const isElite = doctor.tier === "ELITE";
+const isWikipediaStyle = doctor.tier === "MASTER" || doctor.tier === "UNRANKED";
 const location = [
     doctor.geography.city,
     doctor.geography.region,
@@ -146,6 +163,7 @@ const sections = [
     title={`${doctor.fullName} — MDRPedia`}
     description={doctor.biography ??
         `${doctor.fullName}, ${doctor.specialty} specialist in ${location}. MDRPedia verified profile.`}
+    tier={doctor.tier}
 >
     <JsonLd
         fullName={doctor.fullName}
@@ -167,6 +185,8 @@ const sections = [
         aiSummary={aiSummary}
         dateOfBirth={doctor.dateOfBirth}
         dateOfDeath={doctor.dateOfDeath}
+        mentors={doctor.mentors}
+        students={doctor.students}
     />
 
     <div class="container">
@@ -261,26 +281,114 @@ const sections = [
                 </div>
 
                 {
-                    doctor.portraitUrl && (
+                    (
                         <div
                             class:list={[
                                 "profile-hero__portrait",
                                 { "historical-portrait": isHistorical },
                             ]}
                         >
-                            <img
-                                src={doctor.portraitUrl}
+                            <ImageWithFallback
+                                client:visible
+                                src={
+                                    doctor.portraitUrl
+                                        ? getSignedImage(doctor.portraitUrl, {
+                                              width: 400,
+                                              height: 400,
+                                              gravity: "face",
+                                              crop: "fill",
+                                          })
+                                        : null
+                                }
                                 alt={doctor.fullName}
-                                width="280"
-                                height="280"
-                                loading="eager"
+                                fullName={doctor.fullName}
+                                tier={doctor.tier}
+                                width={280}
+                                height={280}
                             />
                         </div>
                     )
                 }
+                <div class="profile-hero__actions" style="margin-top: 20px;">
+                    <a href={`/compare?id=${slug}`} class="btn-compare">
+                        <span class="icon">⚖️</span> Compare
+                    </a>
+                </div>
             </div>
         </div>
     </header>
+
+    <!-- Use ShareProfileModal client-side -->
+    <ShareProfileModal
+        client:idle
+        slug={slug}
+        fullName={doctor.fullName}
+        title={`MDRPedia: ${doctor.fullName}`}
+    />
+
+    <!-- Rest of the profile -->
+
+    {/* Sticky Mobile Footer for Unverified Profiles */}
+    {
+        doctor.tier === "UNRANKED" && (
+            <div class="sticky-claim-footer">
+                <div class="claim-text">Is this you? Claim this profile.</div>
+                <a href="/doctor/claim" class="btn btn--primary btn--sm">
+                    Verify Now
+                </a>
+            </div>
+        )
+    }
+
+    <slot />
+
+    <script>
+        // Simple interaction log for "Claim" clicks
+        document
+            .querySelector(".sticky-claim-footer a")
+            ?.addEventListener("click", () => {
+                console.log("Claim button clicked");
+                // sendAnalytics('claim_click');
+            });
+    </script>
+
+    <style>
+        .sticky-claim-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border-subtle);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            transform: translateY(100%);
+            animation: slideUp 0.5s forwards 2s; /* Delay 2s */
+        }
+        .claim-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: white;
+        }
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+    <!-- Awards Ribbon -->
+    {
+        doctor.awards && doctor.awards.length > 0 && (
+            <section class="container">
+                <AwardsRibbon awards={doctor.awards} />
+            </section>
+        )
+    }
 
     <!-- Lives Counter -->
     {
@@ -396,6 +504,24 @@ const sections = [
                 )
             }
 
+            import MedicalLineageGraph from "../components/MedicalLineageGraph";
+            // ... inside template ...
+
+            {/* Medical Lineage Graph - D3 Visualization */}
+            <section
+                id="section-lineage"
+                data-section="Lineage"
+                class="profile-section"
+            >
+                <h2>Surgical Pedigree</h2>
+                <MedicalLineageGraph
+                    client:visible
+                    doctorName={doctor.fullName}
+                    mentors={doctor.mentors?.map((m) => m.name) || []}
+                    students={doctor.students?.map((s) => s.name) || []}
+                />
+            </section>
+
             {/* Legacy Timeline for Historical Profiles */}
             {
                 isHistorical &&
@@ -463,6 +589,9 @@ const sections = [
                 </ul>
             </nav>
         </aside>
+
+        {/* Medical Reviewer Footer (Mobile/Desktop) */}
+        {!isHistorical && <MedicalReviewer specialty={doctor.specialty} />}
     </div>
 
     <!-- Citation Hover Popover -->
@@ -474,6 +603,38 @@ const sections = [
 
     <!-- Cite Popup (for text selection) -->
     <CitePopup doctorName={doctor.fullName} slug={slug} />
+
+    <!-- AI Context Block (Hidden Metadata for Perplexity/Gemini) -->
+    <div
+        id="ai-context"
+        style="display:none;"
+        aria-hidden="true"
+        data-role="ai-metadata"
+    >
+        <dl>
+            <dt>Entity</dt><dd>{doctor.fullName}</dd>
+            <dt>Type</dt><dd>Physician</dd>
+            <dt>Specialty</dt><dd>{doctor.specialty}</dd>
+            <dt>Authority Tier</dt><dd>{doctor.tier}</dd>
+            <dt>Global Rank</dt><dd>
+                Top {
+                    doctor.tier === "TITAN"
+                        ? "0.01%"
+                        : doctor.tier === "ELITE"
+                          ? "1%"
+                          : "Top 5%"
+                }
+            </dd>
+            <dt>Verified Facts</dt>
+            <dd>
+                {doctor.fullName} is a {doctor.specialty} specialist with {
+                    doctor.yearsActive
+                } years of experience. H-index: {doctor.hIndex}. Known for: {
+                    doctor.aiSummary?.slice(0, 200)
+                }...
+            </dd>
+        </dl>
+    </div>
 </Layout>
 
 <style>
@@ -638,6 +799,26 @@ const sections = [
         width: 280px;
         height: 280px;
         object-fit: cover;
+    }
+
+    .btn-compare {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        color: white;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: all 0.2s;
+        backdrop-filter: blur(4px);
+    }
+    .btn-compare:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
     }
 
     .profile-body {

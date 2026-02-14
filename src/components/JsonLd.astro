@@ -39,6 +39,8 @@ interface Props {
   aiSummary?: string;
   dateOfBirth?: string;
   dateOfDeath?: string;
+  mentors?: { name: string; id?: string; title?: string }[];
+  students?: { name: string; id?: string; title?: string }[];
 }
 
 const props = Astro.props;
@@ -46,11 +48,19 @@ const props = Astro.props;
 const geoData = {
   ...props,
   status: props.dateOfDeath ? "HISTORICAL" : "LIVING",
+  mentors: props.mentors, // Pass mentors to schema
 };
 
 const physicianSchema = generatePhysicianSchema(geoData);
 const faqSchema = generateFAQSchema(geoData);
 const breadcrumbSchema = generateBreadcrumbSchema(geoData);
+
+// Speakable Schema for Voice Assistants (targeting AI Summary)
+const speakableSchema = {
+  "@context": "https://schema.org",
+  "@type": "SpeakableSpecification",
+  cssSelector: ["#ai-summary-content"],
+};
 ---
 
 <!-- Physician Schema -->
@@ -69,4 +79,10 @@ const breadcrumbSchema = generateBreadcrumbSchema(geoData);
 <script
   type="application/ld+json"
   set:html={JSON.stringify(breadcrumbSchema, null, 2)}
+/>
+
+<!-- Speakable Schema -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify(speakableSchema, null, 2)}
 />
