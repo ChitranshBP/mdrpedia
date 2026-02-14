@@ -1,0 +1,47 @@
+---
+/**
+ * MDRPedia — Dynamic Doctor Profile Page
+ * Uses Content Collections to generate pages for each doctor
+ */
+
+import DoctorProfile from "../../layouts/DoctorProfile.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+    const doctors = await getCollection("doctors");
+    return doctors.map((doctor) => ({
+        params: { slug: doctor.id },
+        props: { doctor },
+    }));
+}
+
+const { doctor } = Astro.props;
+const d = doctor.data;
+
+const profileData = {
+    fullName: d.fullName,
+    title: d.title,
+    specialty: d.specialty,
+    subSpecialty: d.subSpecialty,
+    geography: d.geography,
+    status: d.status as "LIVING" | "HISTORICAL",
+    tier: d.tier as "TITAN" | "ELITE" | "MASTER" | "UNRANKED",
+    rankingScore: d.rankingScore,
+    hIndex: d.hIndex,
+    yearsActive: d.yearsActive,
+    verifiedSurgeries: d.verifiedSurgeries,
+    biography: d.biography,
+    portraitUrl: d.portraitUrl,
+    galleryUrls: d.galleryUrls,
+    livesSaved: d.livesSaved,
+    techniquesInvented: d.techniquesInvented,
+    hasInvention: d.hasInvention,
+    dateOfBirth: d.dateOfBirth,
+    dateOfDeath: d.dateOfDeath,
+    citations: d.citations,
+    awards: d.awards,
+    timeline: d.timeline,
+};
+---
+
+<DoctorProfile doctor={profileData} />

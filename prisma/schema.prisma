@@ -1,0 +1,427 @@
+// ============================================================================
+// MDRPedia — The Integrity Core
+// PostgreSQL Schema via Prisma (Supabase-hosted)
+// ============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Enums ──────────────────────────────────────────────────────────────────
+
+enum Tier {
+  TITAN    // Top 0.01% — Paradigm Shifters
+  ELITE    // Top 1.0%  — National/International Authority
+  MASTER   // Top 3.0%  — Regional Mastery
+  UNRANKED // Default — Not yet scored
+}
+
+enum ProfileStatus {
+  LIVING
+  HISTORICAL // Deceased / Legacy profiles
+}
+
+enum VerificationStatus {
+  VERIFIED
+  PENDING
+  REJECTED
+}
+
+enum HealthcareSector {
+  PUBLIC   // Government-funded, academic, research-led
+  PRIVATE  // Specialist clinics, luxury healthcare, PE-backed
+}
+
+enum ClaimStatus {
+  UNCLAIMED
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+enum EvidenceClassification {
+  SUPPORTED              // Cited 100+ times, strong evidence
+  PARTIALLY_SUPPORTED    // Cited 10–99 times
+  HISTORICAL_LANDMARK    // Pre-1980, cited 500+, paradigm-shifting
+}
+
+enum DoctorAvailability {
+  PRIVATE_CONSULTANT
+  PUBLIC_FACULTY
+  BOTH
+}
+
+// ─── Geography ──────────────────────────────────────────────────────────────
+
+model Geography {
+  id        String    @id @default(cuid())
+  country   String
+  region    String?
+  city      String?
+  profiles  Profile[]
+  hospitals Hospital[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@unique([country, region, city])
+  @@index([country])
+  @@map("geographies")
+}
+
+// ─── Hospital / Institution ────────────────────────────────────────────────
+
+model Hospital {
+  id                    String             @id @default(cuid())
+  name                  String
+  slug                  String             @unique
+  sector                HealthcareSector   @default(PUBLIC)
+  center_of_excellence  String?            // e.g. "Cardiac Surgery"
+  ranking_source        String?            // e.g. "Newsweek Top 10"
+  ranking_position      Int?
+  website               String?
+  description           String?            @db.Text
+  logo_url              String?
+
+  // ── Location ──
+  geography_id          String?
+  geography             Geography?         @relation(fields: [geography_id], references: [id])
+
+  // ── Relations ──
+  affiliations          DoctorHospitalAffiliation[]
+
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+
+  @@index([sector])
+  @@index([geography_id])
+  @@map("hospitals")
+}
+
+// ─── Doctor ↔ Hospital Affiliation ─────────────────────────────────────────
+
+model DoctorHospitalAffiliation {
+  id            String    @id @default(cuid())
+  role          String?   // e.g. "Chief of Surgery", "Attending"
+  department    String?
+  start_year    Int?
+  end_year      Int?      // null = current
+  is_primary    Boolean   @default(false)
+
+  profile_id    String
+  profile       Profile   @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+
+  hospital_id   String
+  hospital      Hospital  @relation(fields: [hospital_id], references: [id], onDelete: Cascade)
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@unique([profile_id, hospital_id])
+  @@index([profile_id])
+  @@index([hospital_id])
+  @@map("doctor_hospital_affiliations")
+}
+
+// ─── Profile (Core Doctor/Surgeon Record) ───────────────────────────────────
+
+model Profile {
+  id                String              @id @default(cuid())
+  slug              String              @unique
+  full_name         String
+  title             String?             // e.g. "MD, PhD, FACS"
+  portrait_url      String?
+  specialty         String
+  sub_specialty     String?
+  biography         String?             @db.Text
+  status            ProfileStatus       @default(LIVING)
+
+  // ── Scoring ──
+  tier              Tier                @default(UNRANKED)
+  ranking_score     Float?
+  h_index           Int                 @default(0)
+  years_active      Int                 @default(0)
+  verified_surgeries Int                @default(0)
+
+  // ── Four Pillars ──
+  clinical_mastery_index Float?         // CMI
+  intellectual_legacy    Float?         // IL
+  global_mentorship_score Float?        // GMS
+  humanitarian_impact    Float?         // HCI
+
+  // ── GEO / Entity Fields ──
+  npi_number        String?             @unique  // US National Provider Identifier
+  orcid_id          String?             @unique  // ORCID researcher ID
+  openalex_id       String?             @unique  // OpenAlex author ID
+  medical_specialty String[]            // e.g. ["Cardiac Surgery", "Transplant"]
+  knows_about       String[]            // Procedures/conditions: ["CABG", "Heart Failure"]
+  ai_summary        String?             @db.Text  // GEO-optimized TL;DR
+  claim_status      ClaimStatus         @default(UNCLAIMED)
+
+  // ── Flags ──
+  has_technique_invention Boolean       @default(false)
+  license_verified       Boolean        @default(false)
+  is_manually_verified   Boolean        @default(false)
+
+  // ── Historical / Museum ──
+  date_of_birth     DateTime?
+  date_of_death     DateTime?
+  legacy_decay_score Float?             // For historical profiles
+
+  // ── Relations ──
+  geography_id      String?
+  geography         Geography?          @relation(fields: [geography_id], references: [id])
+
+  citations         Citation[]
+  impact_metrics    ImpactMetric[]
+  awards            Award[]
+  techniques        Technique[]
+  certifications    BoardCertification[]
+  historical_artifacts HistoricalArtifact[]
+  legacy_timeline   LegacyTimeline[]
+  tier_verifications TierVerification[]
+  affiliations      DoctorHospitalAffiliation[]
+  portal            DoctorPortal?
+
+  // ── Mentorship lineage ──
+  mentored_by_id    String?
+  mentored_by       Profile?            @relation("MentorLineage", fields: [mentored_by_id], references: [id])
+  mentees           Profile[]           @relation("MentorLineage")
+
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+
+  @@index([specialty])
+  @@index([tier])
+  @@index([status])
+  @@index([ranking_score])
+  @@index([geography_id])
+  @@index([claim_status])
+  @@map("profiles")
+}
+
+// ─── Citation Engine ────────────────────────────────────────────────────────
+
+model Citation {
+  id                      String                  @id @default(cuid())
+  doi                     String?                 @unique
+  pubmed_id               String?                 @unique
+  title                   String
+  journal                 String?
+  publication_date        DateTime?
+  source_url              String?
+  altmetric_score         Float?
+  citation_count          Int                     @default(0)
+  verification_status     VerificationStatus      @default(PENDING)
+  verified_at             DateTime?
+  rejection_reason        String?
+
+  // ── GEO-Enhanced Fields ──
+  abstract                String?                 @db.Text
+  journal_impact_factor   Float?
+  total_citation_count    Int?                    // Total times this paper was cited
+  evidence_classification EvidenceClassification?
+  is_open_access          Boolean                 @default(false)
+  open_access_url         String?
+
+  // ── Relation ──
+  profile_id              String
+  profile                 Profile                 @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
+
+  @@index([profile_id])
+  @@index([verification_status])
+  @@index([evidence_classification])
+  @@map("citations")
+}
+
+// ─── Impact Metrics ─────────────────────────────────────────────────────────
+
+model ImpactMetric {
+  id                  String   @id @default(cuid())
+  lives_saved         Int      @default(0)
+  techniques_invented Int      @default(0)
+  patients_treated    Int      @default(0)
+  clinical_trials_led Int      @default(0)
+  textbooks_authored  Int      @default(0)
+
+  // ── Verification ──
+  data_source         String?
+  last_verified       DateTime?
+
+  // ── Relation ──
+  profile_id          String   @unique
+  profile             Profile  @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@map("impact_metrics")
+}
+
+// ─── Global Awards ──────────────────────────────────────────────────────────
+
+model Award {
+  id                String             @id @default(cuid())
+  name              String
+  issuing_body      String
+  year_awarded      Int
+  description       String?
+  verification_url  String?
+  verification_status VerificationStatus @default(PENDING)
+
+  // ── Relation ──
+  profile_id        String
+  profile           Profile            @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  @@index([profile_id])
+  @@map("awards")
+}
+
+// ─── Techniques / Procedures Invented ───────────────────────────────────────
+
+model Technique {
+  id                    String   @id @default(cuid())
+  name                  String
+  description           String?  @db.Text
+  year_invented         Int?
+  is_gold_standard      Boolean  @default(false)
+  technique_acknowledged Boolean @default(false) // Named after the inventor
+  patent_number         String?
+  verification_url      String?
+
+  // ── Relation ──
+  profile_id            String
+  profile               Profile  @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@index([profile_id])
+  @@map("techniques")
+}
+
+// ─── Board Certifications ───────────────────────────────────────────────────
+
+model BoardCertification {
+  id              String             @id @default(cuid())
+  board_name      String
+  specialty       String
+  license_number  String?
+  issuing_body    String
+  country         String
+  issue_date      DateTime?
+  expiry_date     DateTime?
+  is_active       Boolean            @default(true)
+  verified        Boolean            @default(false)
+  verification_status VerificationStatus @default(PENDING)
+
+  // ── Relation ──
+  profile_id      String
+  profile         Profile            @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  @@index([profile_id])
+  @@map("board_certifications")
+}
+
+// ─── Historical Artifacts (Museum of Medicine) ──────────────────────────────
+
+model HistoricalArtifact {
+  id              String   @id @default(cuid())
+  title           String
+  description     String?  @db.Text
+  artifact_type   String   // "document", "instrument", "photograph", "correspondence"
+  media_url       String?
+  archive_source  String?
+  date_circa      String?  // e.g. "c. 1920" for approximate dates
+  provenance      String?
+
+  // ── Relation ──
+  profile_id      String
+  profile         Profile  @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([profile_id])
+  @@map("historical_artifacts")
+}
+
+// ─── Legacy Timeline ────────────────────────────────────────────────────────
+
+model LegacyTimeline {
+  id              String   @id @default(cuid())
+  year            Int
+  title           String
+  description     String?  @db.Text
+  significance    String?  // "major_breakthrough", "career_milestone", "publication"
+  source_url      String?
+
+  // ── Relation ──
+  profile_id      String
+  profile         Profile  @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([profile_id])
+  @@index([year])
+  @@map("legacy_timeline")
+}
+
+// ─── Tier Verifications (Manual by Titan-tier Doctors) ──────────────────────
+
+model TierVerification {
+  id              String   @id @default(cuid())
+  verifier_name   String
+  verifier_tier   Tier
+  verification_note String? @db.Text
+  verified_at     DateTime @default(now())
+
+  // ── Relation ──
+  profile_id      String
+  profile         Profile  @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([profile_id])
+  @@map("tier_verifications")
+}
+
+// ─── Doctor Portal (Self-Service Dashboard) ─────────────────────────────────
+
+model DoctorPortal {
+  id                    String              @id @default(cuid())
+  google_scholar_id     String?
+  google_scholar_url    String?
+  orcid_url             String?
+  accepted_insurance    String[]            // e.g. ["Aetna", "Cigna", "NHS"]
+  patient_philosophy    String?             @db.Text
+  availability          DoctorAvailability  @default(PUBLIC_FACULTY)
+  consultation_fee      String?             // e.g. "$500/hour"
+  booking_url           String?
+  languages_spoken      String[]            // e.g. ["English", "Spanish"]
+
+  // ── Relation ──
+  profile_id            String              @unique
+  profile               Profile             @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+
+  @@map("doctor_portals")
+}

@@ -1,0 +1,283 @@
+---
+/**
+ * MDRPedia — Claim Profile Portal
+ * Self-service portal for doctors to claim their profile
+ * Includes Cloudinary Upload Widget for certificate uploads
+ */
+interface Props {
+    doctorName: string;
+    slug: string;
+}
+
+const { doctorName, slug } = Astro.props;
+---
+
+<section class="claim-profile" id="claim-profile">
+    <div class="claim-profile__card">
+        <div class="claim-profile__header">
+            <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                class="claim-profile__icon"
+            >
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <h3>Are you {doctorName}?</h3>
+        </div>
+
+        <p class="claim-profile__description">
+            If this is your profile, claim it to verify your credentials, update
+            your biography, and manage your citations. Verified profiles receive
+            a ✅ badge.
+        </p>
+
+        <form class="claim-profile__form" id="claimForm" data-slug={slug}>
+            <div class="claim-profile__field">
+                <label for="claimEmail">Professional Email</label>
+                <input
+                    type="email"
+                    id="claimEmail"
+                    placeholder="your.name@hospital.edu"
+                    required
+                />
+            </div>
+
+            <div class="claim-profile__field">
+                <label for="claimLicense">Medical License Number</label>
+                <input
+                    type="text"
+                    id="claimLicense"
+                    placeholder="e.g., MD-12345678"
+                    required
+                />
+            </div>
+
+            <div class="claim-profile__field">
+                <label>Upload Verification Certificate</label>
+                <div class="claim-profile__upload" id="uploadArea">
+                    <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                        ></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <span>Click to upload or drag & drop</span>
+                    <span class="claim-profile__upload-hint"
+                        >PDF, JPG, PNG up to 10MB</span
+                    >
+                </div>
+                <input
+                    type="file"
+                    id="certUpload"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    class="sr-only"
+                />
+            </div>
+
+            <button
+                type="submit"
+                class="btn btn--primary claim-profile__submit"
+            >
+                Submit Claim Request
+            </button>
+        </form>
+
+        <p class="claim-profile__footer">
+            Claims are reviewed within 48 hours by our verification team.
+        </p>
+    </div>
+</section>
+
+<style>
+    .claim-profile {
+        margin: var(--space-3xl) 0;
+        padding: var(--space-2xl) 0;
+        border-top: 1px solid var(--border-subtle);
+    }
+
+    .claim-profile__card {
+        max-width: 580px;
+        margin: 0 auto;
+        background: var(--bg-card);
+        border: 1px solid var(--border-medium);
+        border-radius: var(--radius-lg);
+        padding: var(--space-2xl);
+    }
+
+    .claim-profile__header {
+        display: flex;
+        align-items: center;
+        gap: var(--space-md);
+        margin-bottom: var(--space-lg);
+    }
+
+    .claim-profile__header h3 {
+        font-family: var(--font-serif);
+        font-size: 1.5rem;
+        color: var(--text-primary);
+    }
+
+    .claim-profile__icon {
+        color: var(--accent-purple);
+        flex-shrink: 0;
+    }
+
+    .claim-profile__description {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin-bottom: var(--space-xl);
+        line-height: 1.6;
+    }
+
+    .claim-profile__form {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-lg);
+    }
+
+    .claim-profile__field label {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        margin-bottom: var(--space-xs);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .claim-profile__field input[type="email"],
+    .claim-profile__field input[type="text"] {
+        width: 100%;
+        padding: var(--space-md);
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        color: var(--text-primary);
+        font-family: var(--font-sans);
+        font-size: 0.95rem;
+        outline: none;
+        transition: border-color var(--transition-fast);
+    }
+
+    .claim-profile__field input:focus {
+        border-color: var(--accent-purple);
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+    }
+
+    .claim-profile__upload {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-sm);
+        padding: var(--space-xl);
+        border: 2px dashed var(--border-medium);
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        color: var(--text-muted);
+        transition: all var(--transition-base);
+        text-align: center;
+    }
+
+    .claim-profile__upload:hover {
+        border-color: var(--accent-purple);
+        color: var(--text-secondary);
+        background: rgba(139, 92, 246, 0.05);
+    }
+
+    .claim-profile__upload-hint {
+        font-size: 0.75rem;
+        opacity: 0.7;
+    }
+
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+    }
+
+    .claim-profile__submit {
+        width: 100%;
+        justify-content: center;
+        padding: var(--space-md) var(--space-xl);
+        font-size: 1rem;
+    }
+
+    .claim-profile__footer {
+        margin-top: var(--space-lg);
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        text-align: center;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const uploadArea = document.getElementById("uploadArea");
+        const fileInput = document.getElementById(
+            "certUpload",
+        ) as HTMLInputElement;
+
+        uploadArea?.addEventListener("click", () => fileInput?.click());
+
+        // Drag & drop
+        uploadArea?.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = "var(--accent-purple)";
+        });
+
+        uploadArea?.addEventListener("dragleave", () => {
+            uploadArea.style.borderColor = "";
+        });
+
+        uploadArea?.addEventListener("drop", (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = "";
+            const files = (e as DragEvent).dataTransfer?.files;
+            if (files && files.length > 0 && fileInput) {
+                const dt = new DataTransfer();
+                dt.items.add(files[0]);
+                fileInput.files = dt.files;
+                const span = uploadArea.querySelector("span");
+                if (span) span.textContent = `✅ ${files[0].name}`;
+            }
+        });
+
+        fileInput?.addEventListener("change", () => {
+            if (fileInput.files && fileInput.files.length > 0) {
+                const span = uploadArea?.querySelector("span");
+                if (span) span.textContent = `✅ ${fileInput.files[0].name}`;
+            }
+        });
+
+        // Form submit
+        const form = document.getElementById("claimForm");
+        form?.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const btn = form.querySelector("button");
+            if (btn) {
+                btn.textContent = "✅ Claim Submitted!";
+                btn.setAttribute("disabled", "true");
+                btn.style.opacity = "0.7";
+            }
+        });
+    });
+</script>

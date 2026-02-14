@@ -1,0 +1,109 @@
+---
+/**
+ * MDRPedia — Reference List (Wikipedia-Style Footnotes)
+ * Auto-renders numbered citation references at the bottom of doctor profiles
+ */
+
+interface Citation {
+    doi?: string;
+    pubmedId?: string;
+    title: string;
+    journal?: string;
+    year?: number;
+    verified?: boolean;
+}
+
+interface Props {
+    citations: Citation[];
+}
+
+const { citations } = Astro.props;
+---
+
+{
+    citations.length > 0 && (
+        <section class="reference-list" id="references">
+            <h3>References & Citations</h3>
+            <ol>
+                {citations.map((citation, index) => (
+                    <li id={`ref-${index + 1}`}>
+                        <span class="ref-title">{citation.title}</span>
+                        {citation.journal && (
+                            <span class="ref-journal">
+                                {" "}
+                                — <em>{citation.journal}</em>
+                            </span>
+                        )}
+                        {citation.year && (
+                            <span class="ref-year"> ({citation.year})</span>
+                        )}
+                        {citation.doi && (
+                            <a
+                                href={`https://doi.org/${citation.doi}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="ref-doi"
+                                data-citation={citation.doi}
+                            >
+                                DOI: {citation.doi}
+                            </a>
+                        )}
+                        {citation.pubmedId && (
+                            <a
+                                href={`https://pubmed.ncbi.nlm.nih.gov/${citation.pubmedId}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="ref-pubmed"
+                            >
+                                PubMed: {citation.pubmedId}
+                            </a>
+                        )}
+                        {citation.verified && (
+                            <span
+                                class="ref-verified"
+                                title="Verified by MDRPedia"
+                            >
+                                ✓ Verified
+                            </span>
+                        )}
+                    </li>
+                ))}
+            </ol>
+        </section>
+    )
+}
+
+<style>
+    .ref-title {
+        color: var(--text-primary);
+        font-weight: 500;
+    }
+
+    .ref-journal {
+        color: var(--text-secondary);
+    }
+
+    .ref-year {
+        color: var(--text-muted);
+    }
+
+    .ref-doi,
+    .ref-pubmed {
+        display: inline-block;
+        margin-left: var(--space-sm);
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-blue);
+        padding: 1px 6px;
+        background: rgba(59, 130, 246, 0.08);
+        border-radius: var(--radius-sm);
+    }
+
+    .ref-verified {
+        display: inline-block;
+        margin-left: var(--space-sm);
+        font-size: 0.75rem;
+        color: var(--accent-emerald);
+        font-weight: 600;
+    }
+</style>

@@ -1,0 +1,178 @@
+---
+/**
+ * MDRPedia — Prestige Badge Component
+ * SVG-based seals for Pioneer, Eminent, and Titan tiers
+ * Scales perfectly without blur at any size
+ */
+interface Props {
+    tier: "TITAN" | "ELITE" | "MASTER" | "UNRANKED";
+    size?: "sm" | "md" | "lg";
+    label?: string;
+}
+
+const { tier, size = "md", label } = Astro.props;
+
+const sizeMap = { sm: 48, md: 72, lg: 96 };
+const svgSize = sizeMap[size];
+
+const tierConfig: Record<
+    string,
+    { title: string; color1: string; color2: string; icon: string }
+> = {
+    TITAN: {
+        title: "Titan",
+        color1: "#FFD700",
+        color2: "#B8860B",
+        icon: "🏆",
+    },
+    ELITE: {
+        title: "Eminent",
+        color1: "#00AAFF",
+        color2: "#0066CC",
+        icon: "⭐",
+    },
+    MASTER: {
+        title: "Pioneer",
+        color1: "#00CC66",
+        color2: "#009933",
+        icon: "🔬",
+    },
+    UNRANKED: {
+        title: "Verified",
+        color1: "#888899",
+        color2: "#555566",
+        icon: "✓",
+    },
+};
+
+const config = tierConfig[tier] || tierConfig.UNRANKED;
+const displayLabel = label || config.title;
+---
+
+<div
+    class={`prestige-badge prestige-badge--${tier.toLowerCase()}`}
+    title={displayLabel}
+>
+    <svg
+        width={svgSize}
+        height={svgSize}
+        viewBox="0 0 120 120"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        class="prestige-badge__svg"
+    >
+        <!-- Outer glow -->
+        <defs>
+            <radialGradient id={`glow-${tier}`} cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color={config.color1} stop-opacity="0.3"
+                ></stop>
+                <stop offset="100%" stop-color={config.color1} stop-opacity="0"
+                ></stop>
+            </radialGradient>
+            <linearGradient
+                id={`seal-${tier}`}
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+            >
+                <stop offset="0%" stop-color={config.color1}></stop>
+                <stop offset="100%" stop-color={config.color2}></stop>
+            </linearGradient>
+        </defs>
+
+        <!-- Glow circle -->
+        <circle cx="60" cy="60" r="58" fill={`url(#glow-${tier})`}></circle>
+
+        <!-- Star burst points -->
+        <path
+            d="M60 6 L67 38 L98 22 L80 50 L112 54 L82 66 L102 94 L72 80 L68 112 L60 82 L52 112 L48 80 L18 94 L38 66 L8 54 L40 50 L22 22 L53 38 Z"
+            fill={`url(#seal-${tier})`}
+            opacity="0.15"></path>
+
+        <!-- Main seal circle -->
+        <circle
+            cx="60"
+            cy="60"
+            r="42"
+            stroke={config.color1}
+            stroke-width="2.5"
+            fill="none"></circle>
+        <circle
+            cx="60"
+            cy="60"
+            r="38"
+            stroke={config.color2}
+            stroke-width="1"
+            fill="rgba(0,0,0,0.4)"></circle>
+
+        <!-- Inner ring decoration -->
+        <circle
+            cx="60"
+            cy="60"
+            r="34"
+            stroke={config.color1}
+            stroke-width="0.5"
+            fill="none"
+            stroke-dasharray="3 3"></circle>
+
+        <!-- Tier text -->
+        <text
+            x="60"
+            y="56"
+            text-anchor="middle"
+            font-family="Inter, sans-serif"
+            font-size="10"
+            font-weight="700"
+            fill={config.color1}
+            letter-spacing="0.15em"
+        >
+            {displayLabel.toUpperCase()}
+        </text>
+
+        <!-- Verified subtitle -->
+        <text
+            x="60"
+            y="70"
+            text-anchor="middle"
+            font-family="Inter, sans-serif"
+            font-size="7"
+            fill={config.color1}
+            opacity="0.7"
+        >
+            MDRPedia Verified
+        </text>
+    </svg>
+</div>
+
+<style>
+    .prestige-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    .prestige-badge__svg {
+        filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.15));
+        transition:
+            transform var(--transition-base),
+            filter var(--transition-base);
+    }
+
+    .prestige-badge:hover .prestige-badge__svg {
+        transform: scale(1.08);
+    }
+
+    .prestige-badge--titan .prestige-badge__svg {
+        filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.25));
+    }
+
+    .prestige-badge--elite .prestige-badge__svg {
+        filter: drop-shadow(0 0 12px rgba(0, 170, 255, 0.25));
+    }
+
+    .prestige-badge--master .prestige-badge__svg {
+        filter: drop-shadow(0 0 12px rgba(0, 204, 102, 0.25));
+    }
+</style>

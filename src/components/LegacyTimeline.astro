@@ -1,0 +1,209 @@
+---
+/**
+ * MDRPedia — Legacy Timeline Component
+ * Timeline for historical doctor profiles
+ */
+
+interface TimelineEntry {
+    year: number;
+    title: string;
+    description?: string;
+}
+
+interface Props {
+    entries: TimelineEntry[];
+    doctorName: string;
+}
+
+const { entries, doctorName } = Astro.props;
+const sortedEntries = [...entries].sort((a, b) => a.year - b.year);
+---
+
+<section class="legacy-timeline">
+    <h2 class="legacy-timeline__title">Legacy Timeline</h2>
+    <p class="legacy-timeline__subtitle">
+        The life and contributions of {doctorName}
+    </p>
+
+    <div class="timeline">
+        {
+            sortedEntries.map((entry, index) => (
+                <div
+                    class={`timeline__item ${index % 2 === 0 ? "timeline__item--left" : "timeline__item--right"}`}
+                >
+                    <div class="timeline__marker" />
+                    <div class="timeline__card">
+                        <span class="timeline__year">{entry.year}</span>
+                        <h4 class="timeline__heading">{entry.title}</h4>
+                        {entry.description && (
+                            <p class="timeline__desc">{entry.description}</p>
+                        )}
+                    </div>
+                </div>
+            ))
+        }
+    </div>
+</section>
+
+<style>
+    .legacy-timeline {
+        margin: var(--space-3xl) 0;
+    }
+
+    .legacy-timeline__title {
+        text-align: center;
+        margin-bottom: var(--space-xs);
+    }
+
+    .legacy-timeline__subtitle {
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        margin-bottom: var(--space-2xl);
+    }
+
+    .timeline {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: var(--space-lg) 0;
+    }
+
+    .timeline::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(
+            to bottom,
+            transparent,
+            var(--accent-purple),
+            var(--accent-blue),
+            transparent
+        );
+        transform: translateX(-50%);
+    }
+
+    .timeline__item {
+        position: relative;
+        width: 50%;
+        padding: var(--space-md);
+        opacity: 0;
+        animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    .timeline__item--left {
+        padding-right: var(--space-2xl);
+        text-align: right;
+    }
+
+    .timeline__item--right {
+        left: 50%;
+        padding-left: var(--space-2xl);
+        text-align: left;
+    }
+
+    .timeline__marker {
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        background: var(--accent-purple);
+        border: 3px solid var(--bg-primary);
+        border-radius: 50%;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1;
+    }
+
+    .timeline__item--left .timeline__marker {
+        right: -7px;
+    }
+
+    .timeline__item--right .timeline__marker {
+        left: -7px;
+    }
+
+    .timeline__card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        padding: var(--space-lg);
+        transition: all var(--transition-base);
+    }
+
+    .timeline__card:hover {
+        border-color: var(--accent-purple);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .timeline__year {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--accent-purple);
+        letter-spacing: 0.05em;
+    }
+
+    .timeline__heading {
+        font-family: var(--font-sans);
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: var(--space-xs) 0;
+    }
+
+    .timeline__desc {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+    }
+
+    /* Animation delays for each item */
+    .timeline__item:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+    .timeline__item:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    .timeline__item:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+    .timeline__item:nth-child(4) {
+        animation-delay: 0.4s;
+    }
+    .timeline__item:nth-child(5) {
+        animation-delay: 0.5s;
+    }
+    .timeline__item:nth-child(6) {
+        animation-delay: 0.6s;
+    }
+    .timeline__item:nth-child(7) {
+        animation-delay: 0.7s;
+    }
+    .timeline__item:nth-child(8) {
+        animation-delay: 0.8s;
+    }
+
+    @media (max-width: 768px) {
+        .timeline::before {
+            left: 20px;
+        }
+        .timeline__item,
+        .timeline__item--left,
+        .timeline__item--right {
+            width: 100%;
+            left: 0;
+            padding-left: 48px;
+            padding-right: 0;
+            text-align: left;
+        }
+        .timeline__item--left .timeline__marker,
+        .timeline__item--right .timeline__marker {
+            left: 13px;
+            right: auto;
+        }
+    }
+</style>

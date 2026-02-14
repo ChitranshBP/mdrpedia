@@ -1,0 +1,279 @@
+---
+/**
+ * MDRPedia — Cite Popup Component
+ * Text selection triggers a "Cite this" popup for admins
+ * Uses window.getSelection() to detect user selections
+ */
+interface Props {
+    doctorName: string;
+    slug: string;
+}
+
+const { doctorName, slug } = Astro.props;
+---
+
+<!-- Cite popup container (hidden by default) -->
+<div class="cite-popup" id="citePopup" role="tooltip" aria-hidden="true">
+    <div class="cite-popup__content">
+        <button
+            class="cite-popup__btn"
+            id="citeBtn"
+            title="Cite this selection"
+        >
+            <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+            >
+                <path
+                    d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"
+                ></path>
+                <path
+                    d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 5v3c0 1 0 1 1 1z"
+                ></path>
+            </svg>
+            <span>Cite This</span>
+        </button>
+    </div>
+
+    <!-- Citation modal -->
+    <div class="cite-popup__modal" id="citeModal" aria-hidden="true">
+        <div class="cite-popup__modal-card">
+            <div class="cite-popup__modal-header">
+                <h4>Cite this passage</h4>
+                <button class="cite-popup__modal-close" id="citeModalClose"
+                    >&times;</button
+                >
+            </div>
+            <div class="cite-popup__modal-body">
+                <label>Selected Text</label>
+                <blockquote id="citeSelectedText" class="cite-popup__quote">
+                </blockquote>
+
+                <label>APA Citation</label>
+                <div class="cite-popup__citation" id="citeAPA"></div>
+
+                <label>MLA Citation</label>
+                <div class="cite-popup__citation" id="citeMLA"></div>
+
+                <button
+                    class="btn btn--primary cite-popup__copy"
+                    id="citeCopyBtn"
+                >
+                    📋 Copy APA Citation
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .cite-popup {
+        position: fixed;
+        z-index: 1000;
+        pointer-events: none;
+    }
+
+    .cite-popup__content {
+        position: fixed;
+        pointer-events: auto;
+        opacity: 0;
+        transform: translateY(4px);
+        transition: all 150ms ease;
+    }
+
+    .cite-popup__content.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .cite-popup__btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        background: var(--bg-elevated);
+        border: 1px solid var(--border-medium);
+        border-radius: var(--radius-md);
+        color: var(--text-primary);
+        font-family: var(--font-sans);
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: var(--shadow-md);
+        transition: all var(--transition-fast);
+    }
+
+    .cite-popup__btn:hover {
+        background: var(--accent-purple);
+        border-color: var(--accent-purple);
+        color: white;
+    }
+
+    /* Modal */
+    .cite-popup__modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(8px);
+        align-items: center;
+        justify-content: center;
+        pointer-events: auto;
+    }
+
+    .cite-popup__modal[aria-hidden="false"] {
+        display: flex;
+    }
+
+    .cite-popup__modal-card {
+        max-width: 560px;
+        width: 90%;
+        background: var(--bg-card);
+        border: 1px solid var(--border-medium);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+    }
+
+    .cite-popup__modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--space-lg) var(--space-xl);
+        border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .cite-popup__modal-header h4 {
+        font-family: var(--font-serif);
+        font-size: 1.1rem;
+    }
+
+    .cite-popup__modal-close {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    .cite-popup__modal-body {
+        padding: var(--space-xl);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+    }
+
+    .cite-popup__modal-body label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-muted);
+    }
+
+    .cite-popup__quote {
+        padding: var(--space-md);
+        background: var(--bg-secondary);
+        border-left: 3px solid var(--accent-purple);
+        border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        font-style: italic;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        max-height: 120px;
+        overflow-y: auto;
+    }
+
+    .cite-popup__citation {
+        padding: var(--space-md);
+        background: var(--bg-secondary);
+        border-radius: var(--radius-sm);
+        font-size: 0.85rem;
+        color: var(--text-primary);
+        font-family: var(--font-mono);
+        line-height: 1.5;
+        user-select: all;
+    }
+
+    .cite-popup__copy {
+        align-self: flex-start;
+    }
+</style>
+
+<script define:vars={{ doctorName, slug }}>
+    document.addEventListener("DOMContentLoaded", () => {
+        const popupContent = document.querySelector(".cite-popup__content");
+        const citeBtn = document.getElementById("citeBtn");
+        const citeModal = document.getElementById("citeModal");
+        const citeModalClose = document.getElementById("citeModalClose");
+        const citeSelectedText = document.getElementById("citeSelectedText");
+        const citeAPA = document.getElementById("citeAPA");
+        const citeMLA = document.getElementById("citeMLA");
+        const citeCopyBtn = document.getElementById("citeCopyBtn");
+
+        let selectedText = "";
+
+        document.addEventListener("mouseup", (e) => {
+            const selection = window.getSelection();
+            const text = selection?.toString().trim();
+
+            if (text && text.length > 10 && popupContent) {
+                selectedText = text;
+                const range = selection.getRangeAt(0);
+                const rect = range.getBoundingClientRect();
+
+                popupContent.style.top = `${rect.bottom + window.scrollY + 8}px`;
+                popupContent.style.left = `${rect.left + window.scrollX}px`;
+                popupContent.classList.add("visible");
+            } else if (
+                popupContent &&
+                !e.target.closest(".cite-popup__content")
+            ) {
+                popupContent.classList.remove("visible");
+            }
+        });
+
+        citeBtn?.addEventListener("click", () => {
+            if (!selectedText) return;
+
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = today.toLocaleString("en", { month: "long" });
+            const day = today.getDate();
+
+            const apa = `MDRPedia. (${year}). ${doctorName}. MDRPedia — The Global Single-Source of Truth for Doctors & Surgeons. Retrieved ${month} ${day}, ${year}, from https://mdrpedia.com/doctors/${slug}`;
+            const mla = `"${doctorName}." MDRPedia, ${year}, mdrpedia.com/doctors/${slug}. Accessed ${day} ${month} ${year}.`;
+
+            if (citeSelectedText) citeSelectedText.textContent = selectedText;
+            if (citeAPA) citeAPA.textContent = apa;
+            if (citeMLA) citeMLA.textContent = mla;
+            if (citeModal) citeModal.setAttribute("aria-hidden", "false");
+
+            popupContent?.classList.remove("visible");
+        });
+
+        citeCopyBtn?.addEventListener("click", () => {
+            const text = citeAPA?.textContent || "";
+            navigator.clipboard.writeText(text).then(() => {
+                if (citeCopyBtn) citeCopyBtn.textContent = "✅ Copied!";
+                setTimeout(() => {
+                    if (citeCopyBtn)
+                        citeCopyBtn.textContent = "📋 Copy APA Citation";
+                }, 2000);
+            });
+        });
+
+        citeModalClose?.addEventListener("click", () => {
+            citeModal?.setAttribute("aria-hidden", "true");
+        });
+
+        citeModal?.addEventListener("click", (e) => {
+            if (e.target === citeModal) {
+                citeModal.setAttribute("aria-hidden", "true");
+            }
+        });
+    });
+</script>

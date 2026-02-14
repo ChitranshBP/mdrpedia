@@ -1,0 +1,362 @@
+---
+/**
+ * MDRPedia — Citation Hover Popover
+ * Displays paper abstract, citation count, and Evidence Strength
+ * when hovering over [n] reference superscripts.
+ * Fetches data client-side from /api/citation-detail
+ */
+
+interface Props {
+    citations: {
+        doi?: string;
+        pubmedId?: string;
+        title: string;
+        journal?: string;
+        year?: number;
+        verified?: boolean;
+        abstract?: string;
+        totalCitationCount?: number;
+        evidenceClassification?: string;
+        isOpenAccess?: boolean;
+        openAccessUrl?: string;
+    }[];
+}
+
+const { citations } = Astro.props;
+---
+
+<div class="citation-hover-container" id="citationHoverContainer">
+    {
+        citations.map((cit, i) => (
+            <div
+                class="citation-hover__data"
+                data-ref-index={i + 1}
+                data-doi={cit.doi || ""}
+                data-title={cit.title}
+                data-journal={cit.journal || ""}
+                data-year={cit.year || ""}
+                data-abstract={cit.abstract || ""}
+                data-citation-count={cit.totalCitationCount || 0}
+                data-evidence={cit.evidenceClassification || "PENDING"}
+                data-oa={cit.isOpenAccess ? "true" : "false"}
+                data-oa-url={cit.openAccessUrl || ""}
+                data-verified={cit.verified ? "true" : "false"}
+                style="display: none;"
+            />
+        ))
+    }
+
+    <!-- The floating popover -->
+    <div
+        class="citation-popover"
+        id="citationPopover"
+        role="tooltip"
+        aria-hidden="true"
+    >
+        <div class="citation-popover__header">
+            <span class="citation-popover__badge" id="popoverBadge"></span>
+            <button
+                class="citation-popover__close"
+                id="popoverClose"
+                aria-label="Close">×</button
+            >
+        </div>
+        <h4 class="citation-popover__title" id="popoverTitle"></h4>
+        <p class="citation-popover__meta" id="popoverMeta"></p>
+        <div class="citation-popover__abstract" id="popoverAbstract"></div>
+        <div class="citation-popover__footer">
+            <span class="citation-popover__citations" id="popoverCitCount"
+            ></span>
+            <a
+                class="citation-popover__doi"
+                id="popoverDoi"
+                href="#"
+                target="_blank"
+                rel="noopener">View Paper ↗</a
+            >
+        </div>
+    </div>
+</div>
+
+<style>
+    .citation-hover-container {
+        position: relative;
+    }
+
+    .citation-popover {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        max-width: 420px;
+        min-width: 320px;
+        background: var(--bg-card, #1a1a2e);
+        border: 1px solid var(--border-subtle, #2a2a4e);
+        border-radius: var(--radius-lg, 12px);
+        padding: var(--space-lg, 1.25rem);
+        box-shadow:
+            0 20px 60px rgba(0, 0, 0, 0.5),
+            0 0 1px rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        pointer-events: auto;
+        animation: popoverIn 0.2s ease-out;
+    }
+
+    .citation-popover.visible {
+        display: block;
+    }
+
+    @keyframes popoverIn {
+        from {
+            opacity: 0;
+            transform: translateY(8px) scale(0.96);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    .citation-popover__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--space-sm, 0.5rem);
+    }
+
+    .citation-popover__badge {
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-family: var(--font-mono, monospace);
+    }
+
+    .citation-popover__badge[data-evidence="SUPPORTED"] {
+        background: rgba(0, 204, 102, 0.15);
+        color: #00cc66;
+        border: 1px solid rgba(0, 204, 102, 0.3);
+    }
+
+    .citation-popover__badge[data-evidence="PARTIALLY_SUPPORTED"] {
+        background: rgba(255, 170, 0, 0.15);
+        color: #ffaa00;
+        border: 1px solid rgba(255, 170, 0, 0.3);
+    }
+
+    .citation-popover__badge[data-evidence="HISTORICAL_LANDMARK"] {
+        background: rgba(139, 92, 246, 0.15);
+        color: #8b5cf6;
+        border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+
+    .citation-popover__badge[data-evidence="PENDING"] {
+        background: rgba(136, 136, 170, 0.15);
+        color: #8888aa;
+        border: 1px solid rgba(136, 136, 170, 0.3);
+    }
+
+    .citation-popover__close {
+        background: none;
+        border: none;
+        color: var(--text-muted, #666);
+        font-size: 1.2rem;
+        cursor: pointer;
+        padding: 0 4px;
+        line-height: 1;
+    }
+
+    .citation-popover__title {
+        font-family: var(--font-serif, serif);
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--text-primary, #fff);
+        margin: 0 0 var(--space-xs, 0.25rem);
+        line-height: 1.4;
+    }
+
+    .citation-popover__meta {
+        font-size: 0.75rem;
+        color: var(--text-muted, #888);
+        font-family: var(--font-mono, monospace);
+        margin: 0 0 var(--space-sm, 0.5rem);
+    }
+
+    .citation-popover__abstract {
+        font-size: 0.8rem;
+        color: var(--text-secondary, #aaa);
+        line-height: 1.5;
+        max-height: 120px;
+        overflow-y: auto;
+        margin-bottom: var(--space-sm, 0.5rem);
+        padding-right: var(--space-xs, 0.25rem);
+    }
+
+    .citation-popover__abstract::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    .citation-popover__abstract::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+    }
+
+    .citation-popover__footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: var(--space-sm, 0.5rem);
+        border-top: 1px solid var(--border-subtle, #2a2a4e);
+    }
+
+    .citation-popover__citations {
+        font-size: 0.7rem;
+        color: var(--text-muted, #888);
+        font-family: var(--font-mono, monospace);
+    }
+
+    .citation-popover__doi {
+        font-size: 0.75rem;
+        color: var(--wiki-blue, #0056b3);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.15s;
+    }
+
+    .citation-popover__doi:hover {
+        color: var(--accent-purple, #8b5cf6);
+    }
+
+    .citation-popover__doi.oa-link {
+        color: #00cc66;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const container = document.getElementById("citationHoverContainer");
+        const popover = document.getElementById("citationPopover");
+        if (!container || !popover) return;
+
+        const badge = document.getElementById("popoverBadge")!;
+        const title = document.getElementById("popoverTitle")!;
+        const meta = document.getElementById("popoverMeta")!;
+        const abstract = document.getElementById("popoverAbstract")!;
+        const citCount = document.getElementById("popoverCitCount")!;
+        const doiLink = document.getElementById(
+            "popoverDoi",
+        ) as HTMLAnchorElement;
+        const closeBtn = document.getElementById("popoverClose")!;
+
+        const EVIDENCE_LABELS: Record<string, string> = {
+            SUPPORTED: "✓ Supported",
+            PARTIALLY_SUPPORTED: "◐ Partially Supported",
+            HISTORICAL_LANDMARK: "★ Historical Landmark",
+            PENDING: "○ Pending Review",
+        };
+
+        function showPopover(refIndex: number, anchor: HTMLElement) {
+            const dataEl = container!.querySelector(
+                `[data-ref-index="${refIndex}"]`,
+            ) as HTMLElement;
+            if (!dataEl) return;
+
+            const evidence = dataEl.dataset.evidence || "PENDING";
+            const isOa = dataEl.dataset.oa === "true";
+            const oaUrl = dataEl.dataset.oaUrl;
+            const doi = dataEl.dataset.doi;
+
+            badge.textContent = EVIDENCE_LABELS[evidence] || evidence;
+            badge.setAttribute("data-evidence", evidence);
+            title.textContent = dataEl.dataset.title || "";
+            meta.textContent = [dataEl.dataset.journal, dataEl.dataset.year]
+                .filter(Boolean)
+                .join(" · ");
+
+            const abstractText = dataEl.dataset.abstract;
+            if (abstractText) {
+                abstract.textContent =
+                    abstractText.length > 300
+                        ? abstractText.slice(0, 300) + "…"
+                        : abstractText;
+                abstract.style.display = "block";
+            } else {
+                abstract.style.display = "none";
+            }
+
+            const count = parseInt(dataEl.dataset.citationCount || "0");
+            citCount.textContent =
+                count > 0 ? `Cited by ${count.toLocaleString()}` : "";
+
+            if (isOa && oaUrl) {
+                doiLink.href = oaUrl;
+                doiLink.textContent = "Read Full Paper ↗";
+                doiLink.classList.add("oa-link");
+            } else if (doi) {
+                doiLink.href = `https://doi.org/${doi}`;
+                doiLink.textContent = "View Paper ↗";
+                doiLink.classList.remove("oa-link");
+            } else {
+                doiLink.style.display = "none";
+            }
+
+            // Position popover near the anchor
+            const rect = anchor.getBoundingClientRect();
+            const popoverWidth = 400;
+            let left = rect.left + rect.width / 2 - popoverWidth / 2;
+            if (left < 10) left = 10;
+            if (left + popoverWidth > window.innerWidth - 10)
+                left = window.innerWidth - popoverWidth - 10;
+
+            popover!.style.left = `${left}px`;
+            popover!.style.top = `${rect.bottom + 8}px`;
+            popover!.classList.add("visible");
+            popover!.setAttribute("aria-hidden", "false");
+        }
+
+        function hidePopover() {
+            popover!.classList.remove("visible");
+            popover!.setAttribute("aria-hidden", "true");
+        }
+
+        // Listen for hover/click on citation links [n]
+        document.addEventListener("mouseover", (e) => {
+            const target = e.target as HTMLElement;
+            if (
+                target.classList.contains("citation-link") ||
+                target.closest(".citation-link")
+            ) {
+                const link = (target.closest(".citation-link") ||
+                    target) as HTMLAnchorElement;
+                const refText = link.textContent?.replace(/[[\]]/g, "").trim();
+                const refIndex = parseInt(refText || "0");
+                if (refIndex > 0) {
+                    showPopover(refIndex, link);
+                }
+            }
+        });
+
+        // Close on click outside or close button
+        closeBtn.addEventListener("click", hidePopover);
+        document.addEventListener("click", (e) => {
+            if (
+                !popover!.contains(e.target as Node) &&
+                !(e.target as HTMLElement).classList.contains("citation-link")
+            ) {
+                hidePopover();
+            }
+        });
+
+        // Close on scroll
+        let scrollTimeout: number;
+        window.addEventListener(
+            "scroll",
+            () => {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = window.setTimeout(hidePopover, 150);
+            },
+            { passive: true },
+        );
+    });
+</script>

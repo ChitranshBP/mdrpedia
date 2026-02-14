@@ -1,0 +1,193 @@
+---
+/**
+ * MDRPedia — Search Bar Component
+ * Large, search-first input for the homepage
+ */
+
+interface Props {
+    placeholder?: string;
+}
+
+const { placeholder = "Search doctors, surgeons, specialties..." } =
+    Astro.props;
+---
+
+<div class="search-wrapper">
+    <div class="search-container">
+        <div class="search-icon">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+            </svg>
+        </div>
+        <input
+            type="search"
+            id="mdr-search"
+            class="search-input search-input--hero"
+            placeholder={placeholder}
+            autocomplete="off"
+            aria-label="Search MDRPedia"
+        />
+        <div class="search-shortcut">
+            <kbd>⌘</kbd><kbd>K</kbd>
+        </div>
+    </div>
+
+    <div class="search-results" id="search-results" hidden>
+        <div class="search-results__empty">
+            <p>Start typing to search verified medical professionals...</p>
+        </div>
+    </div>
+
+    <div class="search-tags">
+        <span class="search-tag">Neurosurgery</span>
+        <span class="search-tag">Cardiovascular</span>
+        <span class="search-tag">Oncology</span>
+        <span class="search-tag">Orthopedics</span>
+        <span class="search-tag">Transplant Surgery</span>
+    </div>
+</div>
+
+<script>
+    const searchInput = document.getElementById(
+        "mdr-search",
+    ) as HTMLInputElement;
+    const resultsContainer = document.getElementById("search-results");
+
+    // Keyboard shortcut: ⌘K or Ctrl+K
+    document.addEventListener("keydown", (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+            e.preventDefault();
+            searchInput?.focus();
+        }
+    });
+
+    searchInput?.addEventListener("input", () => {
+        const query = searchInput.value.trim();
+        if (resultsContainer) {
+            resultsContainer.hidden = query.length === 0;
+        }
+    });
+
+    searchInput?.addEventListener("focus", () => {
+        searchInput.parentElement?.classList.add("search-container--focused");
+    });
+
+    searchInput?.addEventListener("blur", () => {
+        searchInput.parentElement?.classList.remove(
+            "search-container--focused",
+        );
+    });
+</script>
+
+<style>
+    .search-wrapper {
+        width: 100%;
+        max-width: 680px;
+        margin: 0 auto;
+    }
+
+    .search-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        transition: all var(--transition-base);
+    }
+
+    .search-container--focused {
+        transform: scale(1.02);
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 20px;
+        color: var(--text-muted);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .search-input--hero {
+        padding-left: 56px;
+        padding-right: 80px;
+        font-size: 1.25rem;
+        background: var(--bg-card);
+        border: 2px solid var(--border-medium);
+    }
+
+    .search-input--hero:focus {
+        border-color: var(--accent-purple);
+        background: var(--bg-elevated);
+        box-shadow:
+            0 0 0 6px rgba(139, 92, 246, 0.1),
+            0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .search-shortcut {
+        position: absolute;
+        right: 16px;
+        display: flex;
+        gap: 4px;
+        pointer-events: none;
+    }
+
+    .search-shortcut kbd {
+        font-family: var(--font-sans);
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 2px 6px;
+        background: var(--bg-primary);
+        border: 1px solid var(--border-subtle);
+        border-radius: 4px;
+        color: var(--text-muted);
+    }
+
+    .search-results {
+        margin-top: var(--space-sm);
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+        padding: var(--space-lg);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .search-results__empty p {
+        color: var(--text-muted);
+        text-align: center;
+        font-size: 0.9rem;
+    }
+
+    .search-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+        margin-top: var(--space-lg);
+        justify-content: center;
+    }
+
+    .search-tag {
+        font-size: 0.8rem;
+        padding: var(--space-xs) var(--space-md);
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-full);
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all var(--transition-fast);
+    }
+
+    .search-tag:hover {
+        border-color: var(--accent-purple);
+        color: var(--accent-purple);
+        background: rgba(139, 92, 246, 0.08);
+    }
+</style>

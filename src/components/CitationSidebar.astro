@@ -1,0 +1,152 @@
+---
+/**
+ * MDRPedia — Citation Sidebar
+ * Sticky sidebar showing active citations per section
+ */
+
+interface Citation {
+    doi?: string;
+    title: string;
+    journal?: string;
+    year?: number;
+    verified?: boolean;
+}
+
+interface Props {
+    citations: Citation[];
+}
+
+const { citations } = Astro.props;
+---
+
+<aside class="citation-sidebar" id="citation-sidebar">
+    <div class="citation-sidebar__header">
+        <h4>Active Citations</h4>
+        <span class="citation-sidebar__count">{citations.length}</span>
+    </div>
+
+    <div class="citation-sidebar__list">
+        {
+            citations.map((citation, index) => (
+                <a href={`#ref-${index + 1}`} class="citation-sidebar__item">
+                    <span class="citation-sidebar__index">[{index + 1}]</span>
+                    <div class="citation-sidebar__content">
+                        <span class="citation-sidebar__title">
+                            {citation.title}
+                        </span>
+                        {citation.journal && (
+                            <span class="citation-sidebar__journal">
+                                {citation.journal}, {citation.year}
+                            </span>
+                        )}
+                    </div>
+                    {citation.verified && (
+                        <span class="citation-sidebar__verified">✓</span>
+                    )}
+                </a>
+            ))
+        }
+    </div>
+</aside>
+
+<style>
+    .citation-sidebar {
+        position: sticky;
+        top: var(--space-xl);
+        width: var(--sidebar-width);
+        max-height: calc(100vh - var(--space-2xl));
+        overflow-y: auto;
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+        padding: var(--space-lg);
+        flex-shrink: 0;
+    }
+
+    .citation-sidebar__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--space-md);
+        padding-bottom: var(--space-md);
+        border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .citation-sidebar__header h4 {
+        font-family: var(--font-sans);
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+    }
+
+    .citation-sidebar__count {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        padding: 2px 8px;
+        background: var(--bg-elevated);
+        border-radius: var(--radius-full);
+        color: var(--accent-purple);
+        font-weight: 600;
+    }
+
+    .citation-sidebar__item {
+        display: flex;
+        gap: var(--space-sm);
+        padding: var(--space-sm);
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+        transition: all var(--transition-fast);
+        margin-bottom: var(--space-xs);
+    }
+
+    .citation-sidebar__item:hover {
+        background: var(--bg-elevated);
+    }
+
+    .citation-sidebar__index {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        color: var(--accent-purple);
+        font-weight: 600;
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+
+    .citation-sidebar__content {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+    }
+
+    .citation-sidebar__title {
+        font-size: 0.8rem;
+        color: var(--text-primary);
+        font-weight: 500;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .citation-sidebar__journal {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        margin-top: 2px;
+    }
+
+    .citation-sidebar__verified {
+        color: var(--accent-emerald);
+        font-size: 0.75rem;
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+
+    @media (max-width: 1024px) {
+        .citation-sidebar {
+            display: none;
+        }
+    }
+</style>

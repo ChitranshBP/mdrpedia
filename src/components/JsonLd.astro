@@ -1,0 +1,72 @@
+---
+/**
+ * MDRPedia — Enhanced JSON-LD Structured Data Component
+ * Generates Physician + FAQ + BreadcrumbList schemas for GEO optimization
+ */
+import {
+  generatePhysicianSchema,
+  generateFAQSchema,
+  generateBreadcrumbSchema,
+} from "../lib/geo-schema";
+
+interface Props {
+  fullName: string;
+  specialty: string;
+  subSpecialty?: string;
+  biography?: string;
+  portraitUrl?: string;
+  geography: { country: string; region?: string; city?: string };
+  citations?: {
+    doi?: string;
+    title: string;
+    journal?: string;
+    year?: number;
+  }[];
+  tier: string;
+  hIndex: number;
+  yearsActive: number;
+  url: string;
+  // GEO-enhanced fields
+  npiNumber?: string;
+  orcidId?: string;
+  medicalSpecialty?: string[];
+  knowsAbout?: string[];
+  affiliations?: {
+    hospitalName: string;
+    role?: string;
+    hospitalUrl?: string;
+  }[];
+  aiSummary?: string;
+  dateOfBirth?: string;
+  dateOfDeath?: string;
+}
+
+const props = Astro.props;
+
+const geoData = {
+  ...props,
+  status: props.dateOfDeath ? "HISTORICAL" : "LIVING",
+};
+
+const physicianSchema = generatePhysicianSchema(geoData);
+const faqSchema = generateFAQSchema(geoData);
+const breadcrumbSchema = generateBreadcrumbSchema(geoData);
+---
+
+<!-- Physician Schema -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify(physicianSchema, null, 2)}
+/>
+
+<!-- FAQ Schema -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify(faqSchema, null, 2)}
+/>
+
+<!-- Breadcrumb Schema -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify(breadcrumbSchema, null, 2)}
+/>

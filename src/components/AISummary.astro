@@ -1,0 +1,174 @@
+---
+/**
+ * MDRPedia — AI Summary Component
+ * GEO-optimized, fact-dense TL;DR placed as the FIRST div on every profile.
+ * Designed for AI search engines (Perplexity, Gemini, ChatGPT) to parse easily.
+ */
+
+interface Props {
+    summary: string;
+    tier: string;
+    fullName: string;
+    hIndex: number;
+    specialty: string;
+    verifiedBadge?: boolean;
+}
+
+const {
+    summary,
+    tier,
+    fullName,
+    hIndex,
+    specialty,
+    verifiedBadge = true,
+} = Astro.props;
+
+const tierEmojis: Record<string, string> = {
+    TITAN: "🏆",
+    ELITE: "🥈",
+    MASTER: "🥉",
+    UNRANKED: "",
+};
+---
+
+<div
+    class={`ai-summary ai-summary--${tier.toLowerCase()}`}
+    itemscope
+    itemtype="https://schema.org/Physician"
+    role="region"
+    aria-label={`AI summary for ${fullName}`}
+>
+    <div class="ai-summary__header">
+        <div class="ai-summary__label">
+            <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path
+                    d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"
+                ></path>
+                <line x1="10" y1="22" x2="14" y2="22"></line>
+            </svg>
+            <span>AI Summary</span>
+        </div>
+        {
+            verifiedBadge && (
+                <div class="ai-summary__verified">
+                    {tierEmojis[tier]} Verified{" "}
+                    {tier.charAt(0) + tier.slice(1).toLowerCase()}
+                </div>
+            )
+        }
+    </div>
+    <p class="ai-summary__text" itemprop="description">
+        {summary}
+    </p>
+    <div class="ai-summary__chips">
+        <span class="ai-summary__chip" itemprop="medicalSpecialty"
+            >{specialty}</span
+        >
+        {hIndex > 0 && <span class="ai-summary__chip">H-Index: {hIndex}</span>}
+    </div>
+</div>
+
+<style>
+    .ai-summary {
+        background: rgba(30, 30, 60, 0.4);
+        border: 1px solid var(--border-subtle, #2a2a4e);
+        border-radius: var(--radius-lg, 12px);
+        padding: var(--space-lg, 1.25rem) var(--space-xl, 1.5rem);
+        margin-bottom: var(--space-xl, 1.5rem);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .ai-summary::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            var(--accent-purple, #8b5cf6),
+            transparent
+        );
+        opacity: 0.5;
+    }
+
+    .ai-summary--titan::before {
+        background: linear-gradient(90deg, transparent, #ffd700, transparent);
+    }
+
+    .ai-summary--elite::before {
+        background: linear-gradient(90deg, transparent, #00aaff, transparent);
+    }
+
+    .ai-summary--master::before {
+        background: linear-gradient(90deg, transparent, #00cc66, transparent);
+    }
+
+    .ai-summary__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--space-sm, 0.5rem);
+    }
+
+    .ai-summary__label {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--accent-purple, #8b5cf6);
+        font-family: var(--font-mono, monospace);
+    }
+
+    .ai-summary__label svg {
+        opacity: 0.7;
+    }
+
+    .ai-summary__verified {
+        font-size: 0.65rem;
+        font-weight: 600;
+        color: var(--text-muted, #888);
+        font-family: var(--font-sans, sans-serif);
+    }
+
+    .ai-summary__text {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        color: var(--text-primary, #e0e0e0);
+        font-family: var(--font-serif, serif);
+        margin: 0;
+    }
+
+    .ai-summary__chips {
+        display: flex;
+        gap: var(--space-xs, 0.25rem);
+        margin-top: var(--space-md, 0.75rem);
+        flex-wrap: wrap;
+    }
+
+    .ai-summary__chip {
+        font-size: 0.65rem;
+        font-weight: 600;
+        padding: 2px 8px;
+        border-radius: 4px;
+        background: rgba(139, 92, 246, 0.1);
+        color: var(--accent-purple, #8b5cf6);
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        font-family: var(--font-mono, monospace);
+    }
+</style>

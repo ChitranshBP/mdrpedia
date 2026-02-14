@@ -1,0 +1,328 @@
+---
+/**
+ * MDRPedia — Research Highlights Component
+ * Papers grouped by year with Journal Impact badges,
+ * "Pioneer Work" tags, and Open Access links
+ */
+
+interface Citation {
+    doi?: string;
+    title: string;
+    journal?: string;
+    year?: number;
+    verified?: boolean;
+    totalCitationCount?: number;
+    evidenceClassification?: string;
+    isOpenAccess?: boolean;
+    openAccessUrl?: string;
+}
+
+interface Props {
+    citations: Citation[];
+    doctorName: string;
+}
+
+const { citations, doctorName } = Astro.props;
+
+// Top-tier journals for impact badge
+const TOP_JOURNALS = new Set([
+    "New England Journal of Medicine",
+    "NEJM",
+    "The Lancet",
+    "Lancet",
+    "Nature",
+    "Nature Medicine",
+    "Nature Reviews",
+    "Science",
+    "Cell",
+    "JAMA",
+    "JAMA Surgery",
+    "JAMA Internal Medicine",
+    "BMJ",
+    "British Medical Journal",
+    "Annals of Surgery",
+    "Annals of Internal Medicine",
+    "Circulation",
+    "Journal of Clinical Oncology",
+]);
+
+function isTopJournal(journal?: string): boolean {
+    if (!journal) return false;
+    return [...TOP_JOURNALS].some((j) =>
+        journal.toLowerCase().includes(j.toLowerCase()),
+    );
+}
+
+// Group citations by year
+const grouped = citations
+    .filter((c) => c.year)
+    .sort((a, b) => (b.year || 0) - (a.year || 0))
+    .reduce(
+        (acc, cit) => {
+            const year = cit.year!;
+            if (!acc[year]) acc[year] = [];
+            acc[year].push(cit);
+            return acc;
+        },
+        {} as Record<number, Citation[]>,
+    );
+
+const years = Object.keys(grouped)
+    .map(Number)
+    .sort((a, b) => b - a);
+
+// Find the "Pioneer Work" (most cited)
+const pioneerWork = citations.reduce(
+    (max, c) =>
+        (c.totalCitationCount || 0) > (max.totalCitationCount || 0) ? c : max,
+    citations[0],
+);
+---
+
+<section
+    class="research-highlights"
+    id="section-research"
+    data-section="Research"
+>
+    <h2>Research Highlights</h2>
+    <p class="research-highlights__subtitle">
+        {citations.length} publications • Sorted by year
+    </p>
+
+    <div class="research-timeline">
+        {
+            years.map((year) => (
+                <div class="research-year">
+                    <div class="research-year__label">{year}</div>
+                    <div class="research-year__papers">
+                        {grouped[year].map((cit) => {
+                            const isPioneer =
+                                cit === pioneerWork &&
+                                (cit.totalCitationCount || 0) > 50;
+                            const isTop = isTopJournal(cit.journal);
+                            return (
+                                <article class="research-paper">
+                                    <div class="research-paper__badges">
+                                        {isPioneer && (
+                                            <span class="badge badge--pioneer">
+                                                ★ Pioneer Work
+                                            </span>
+                                        )}
+                                        {isTop && (
+                                            <span class="badge badge--impact">
+                                                High Impact
+                                            </span>
+                                        )}
+                                        {cit.evidenceClassification ===
+                                            "HISTORICAL_LANDMARK" && (
+                                            <span class="badge badge--landmark">
+                                                Historical Landmark
+                                            </span>
+                                        )}
+                                        {cit.isOpenAccess && (
+                                            <span class="badge badge--oa">
+                                                Open Access
+                                            </span>
+                                        )}
+                                    </div>
+                                    <h4 class="research-paper__title">
+                                        {cit.doi ? (
+                                            <a
+                                                href={`https://doi.org/${cit.doi}`}
+                                                target="_blank"
+                                                rel="noopener"
+                                            >
+                                                {cit.title}
+                                            </a>
+                                        ) : (
+                                            cit.title
+                                        )}
+                                    </h4>
+                                    <div class="research-paper__meta">
+                                        {cit.journal && (
+                                            <span class="research-paper__journal">
+                                                {cit.journal}
+                                            </span>
+                                        )}
+                                        {(cit.totalCitationCount || 0) > 0 && (
+                                            <span class="research-paper__cited">
+                                                Cited by{" "}
+                                                {(
+                                                    cit.totalCitationCount || 0
+                                                ).toLocaleString()}
+                                            </span>
+                                        )}
+                                    </div>
+                                    {cit.isOpenAccess && cit.openAccessUrl && (
+                                        <a
+                                            href={cit.openAccessUrl}
+                                            class="research-paper__read"
+                                            target="_blank"
+                                            rel="noopener"
+                                        >
+                                            📖 Read Full Paper
+                                        </a>
+                                    )}
+                                </article>
+                            );
+                        })}
+                    </div>
+                </div>
+            ))
+        }
+    </div>
+</section>
+
+<style>
+    .research-highlights h2 {
+        margin-bottom: var(--space-xs, 0.25rem);
+        padding-bottom: var(--space-sm, 0.5rem);
+        border-bottom: 1px solid var(--border-subtle, #2a2a4e);
+    }
+
+    .research-highlights__subtitle {
+        font-size: 0.8rem;
+        color: var(--text-muted, #888);
+        font-family: var(--font-mono, monospace);
+        margin-bottom: var(--space-lg, 1.25rem);
+    }
+
+    .research-timeline {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-lg, 1.25rem);
+    }
+
+    .research-year {
+        display: flex;
+        gap: var(--space-lg, 1.25rem);
+    }
+
+    .research-year__label {
+        font-family: var(--font-mono, monospace);
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--accent-purple, #8b5cf6);
+        min-width: 50px;
+        padding-top: var(--space-sm, 0.5rem);
+    }
+
+    .research-year__papers {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm, 0.5rem);
+    }
+
+    .research-paper {
+        background: var(--bg-card, #1a1a2e);
+        border: 1px solid var(--border-subtle, #2a2a4e);
+        border-radius: var(--radius-md, 8px);
+        padding: var(--space-md, 0.75rem) var(--space-lg, 1.25rem);
+        transition:
+            border-color 0.2s,
+            transform 0.2s;
+    }
+
+    .research-paper:hover {
+        border-color: var(--accent-purple, #8b5cf6);
+        transform: translateX(4px);
+    }
+
+    .research-paper__badges {
+        display: flex;
+        gap: var(--space-xs, 0.25rem);
+        margin-bottom: var(--space-xs, 0.25rem);
+        flex-wrap: wrap;
+    }
+
+    .badge {
+        font-size: 0.6rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: var(--font-mono, monospace);
+    }
+
+    .badge--pioneer {
+        background: rgba(255, 215, 0, 0.15);
+        color: #ffd700;
+        border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .badge--impact {
+        background: rgba(255, 85, 85, 0.12);
+        color: #ff5555;
+        border: 1px solid rgba(255, 85, 85, 0.25);
+    }
+
+    .badge--landmark {
+        background: rgba(139, 92, 246, 0.15);
+        color: #8b5cf6;
+        border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+
+    .badge--oa {
+        background: rgba(0, 204, 102, 0.12);
+        color: #00cc66;
+        border: 1px solid rgba(0, 204, 102, 0.25);
+    }
+
+    .research-paper__title {
+        font-family: var(--font-sans, sans-serif);
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-primary, #e0e0e0);
+        margin: 0 0 var(--space-xs, 0.25rem);
+        line-height: 1.4;
+    }
+
+    .research-paper__title a {
+        color: inherit;
+        text-decoration: none;
+        transition: color 0.15s;
+    }
+
+    .research-paper__title a:hover {
+        color: var(--wiki-blue, #0056b3);
+    }
+
+    .research-paper__meta {
+        display: flex;
+        gap: var(--space-md, 0.75rem);
+        font-size: 0.75rem;
+        color: var(--text-muted, #888);
+    }
+
+    .research-paper__journal {
+        font-style: italic;
+    }
+
+    .research-paper__cited {
+        font-family: var(--font-mono, monospace);
+        color: var(--text-muted, #888);
+    }
+
+    .research-paper__read {
+        display: inline-block;
+        margin-top: var(--space-sm, 0.5rem);
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #00cc66;
+        text-decoration: none;
+        transition: opacity 0.15s;
+    }
+
+    .research-paper__read:hover {
+        opacity: 0.8;
+    }
+
+    @media (max-width: 640px) {
+        .research-year {
+            flex-direction: column;
+            gap: var(--space-xs, 0.25rem);
+        }
+    }
+</style>

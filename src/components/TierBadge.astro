@@ -1,0 +1,66 @@
+---
+/**
+ * MDRPedia — Tier Badge Component
+ * Displays the trophy badge with tier-specific styling
+ */
+
+interface Props {
+    tier: "TITAN" | "ELITE" | "MASTER" | "UNRANKED";
+    size?: "sm" | "md" | "lg";
+}
+
+const { tier, size = "md" } = Astro.props;
+
+const tierConfig = {
+    TITAN: {
+        label: "Titan",
+        emoji: "🏆",
+        percentage: "0.01%",
+        cssClass: "tier-badge--titan",
+    },
+    ELITE: {
+        label: "Elite",
+        emoji: "🥈",
+        percentage: "1%",
+        cssClass: "tier-badge--elite",
+    },
+    MASTER: {
+        label: "Master",
+        emoji: "🥉",
+        percentage: "3%",
+        cssClass: "tier-badge--master",
+    },
+    UNRANKED: { label: "Unranked", emoji: "", percentage: "", cssClass: "" },
+};
+
+const config = tierConfig[tier] ?? tierConfig.UNRANKED;
+---
+
+{
+    tier !== "UNRANKED" && (
+        <span class={`tier-badge ${config.cssClass} tier-badge--${size}`}>
+            <span class="tier-badge__emoji">{config.emoji}</span>
+            <span class="tier-badge__label">
+                Top {config.percentage} — {config.label}
+            </span>
+        </span>
+    )
+}
+
+<style>
+    .tier-badge--sm {
+        font-size: 0.65rem;
+        padding: 2px 8px;
+    }
+    .tier-badge--lg {
+        font-size: 0.9rem;
+        padding: 6px 16px;
+    }
+
+    .tier-badge__emoji {
+        font-size: 1.1em;
+    }
+    .tier-badge__label {
+        white-space: nowrap;
+    }
+</style>

@@ -8,7 +8,22 @@
     "preview": "astro preview",
     "astro": "astro"
   },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "dependencies": {
-    "astro": "^5.17.1"
+    "@astrojs/node": "^9.5.3",
+    "@cloudinary/react": "^1.14.4",
+    "@cloudinary/url-gen": "^1.22.0",
+    "@prisma/client": "^5.22.0",
+    "@supabase/supabase-js": "^2.95.3",
+    "astro": "^5.17.1",
+    "cloudinary": "^2.9.0",
+    "googleapis": "^171.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.3",
+    "prisma": "^5.22.0",
+    "tsx": "^4.21.0"
   }
 }

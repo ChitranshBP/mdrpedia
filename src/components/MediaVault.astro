@@ -1,0 +1,236 @@
+---
+/**
+ * MDRPedia — Media Vault Component
+ * Feature image + masonry gallery grid with lightbox
+ */
+interface Props {
+    portraitUrl: string;
+    fullName: string;
+    galleryUrls?: string[];
+    tier: string;
+}
+
+const { portraitUrl, fullName, galleryUrls = [], tier } = Astro.props;
+const hasGallery = galleryUrls.length > 0;
+---
+
+<div class="media-vault" data-tier={tier}>
+    <!-- Feature Portrait -->
+    <div class="media-vault__feature">
+        <img
+            src={portraitUrl}
+            alt={`Portrait of ${fullName}`}
+            width="480"
+            height="480"
+            loading="eager"
+            class="media-vault__portrait"
+        />
+        <div class="media-vault__overlay">
+            <span class="media-vault__label">Feature Portrait</span>
+        </div>
+    </div>
+
+    <!-- Archive Grid (Masonry) -->
+    {
+        hasGallery && (
+            <div class="media-vault__grid">
+                {galleryUrls.map((url, i) => (
+                    <div class="media-vault__item" data-index={i}>
+                        <img
+                            src={url}
+                            alt={`${fullName} — Archive ${i + 1}`}
+                            loading="lazy"
+                            class="media-vault__thumb"
+                        />
+                        <div class="media-vault__expand">
+                            <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <polyline points="15 3 21 3 21 9" />
+                                <polyline points="9 21 3 21 3 15" />
+                                <line x1="21" y1="3" x2="14" y2="10" />
+                                <line x1="3" y1="21" x2="10" y2="14" />
+                            </svg>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        )
+    }
+</div>
+
+<!-- Lightbox -->
+<div class="media-vault__lightbox" id="mediaLightbox" aria-hidden="true">
+    <button class="media-vault__lightbox-close" aria-label="Close lightbox"
+        >&times;</button
+    >
+    <img class="media-vault__lightbox-img" id="lightboxImg" src="" alt="" />
+</div>
+
+<style>
+    .media-vault {
+        display: grid;
+        gap: var(--space-lg);
+        margin: var(--space-2xl) 0;
+    }
+
+    .media-vault__feature {
+        position: relative;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        aspect-ratio: 1;
+        max-width: 480px;
+        box-shadow: var(--shadow-lg);
+    }
+
+    .media-vault__portrait {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform var(--transition-slow);
+    }
+
+    .media-vault__feature:hover .media-vault__portrait {
+        transform: scale(1.03);
+    }
+
+    .media-vault__overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: var(--space-md) var(--space-lg);
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    }
+
+    .media-vault__label {
+        font-family: var(--font-sans);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Archive Grid — 3-column masonry */
+    .media-vault__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-sm);
+    }
+
+    .media-vault__item {
+        position: relative;
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        cursor: pointer;
+        aspect-ratio: 4/3;
+    }
+
+    .media-vault__thumb {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform var(--transition-base);
+    }
+
+    .media-vault__item:hover .media-vault__thumb {
+        transform: scale(1.05);
+    }
+
+    .media-vault__expand {
+        position: absolute;
+        top: var(--space-sm);
+        right: var(--space-sm);
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        border-radius: var(--radius-sm);
+        padding: 4px;
+        opacity: 0;
+        transition: opacity var(--transition-fast);
+    }
+
+    .media-vault__item:hover .media-vault__expand {
+        opacity: 1;
+    }
+
+    /* Lightbox */
+    .media-vault__lightbox {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: rgba(0, 0, 0, 0.95);
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(8px);
+    }
+
+    .media-vault__lightbox[aria-hidden="false"] {
+        display: flex;
+    }
+
+    .media-vault__lightbox-close {
+        position: absolute;
+        top: var(--space-lg);
+        right: var(--space-lg);
+        font-size: 2rem;
+        color: white;
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 10000;
+    }
+
+    .media-vault__lightbox-img {
+        max-width: 90vw;
+        max-height: 90vh;
+        object-fit: contain;
+        border-radius: var(--radius-md);
+    }
+
+    @media (max-width: 640px) {
+        .media-vault__grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+</style>
+
+<script>
+    // Lightbox interaction
+    document.addEventListener("DOMContentLoaded", () => {
+        const lightbox = document.getElementById("mediaLightbox");
+        const lightboxImg = document.getElementById(
+            "lightboxImg",
+        ) as HTMLImageElement;
+        const items = document.querySelectorAll(".media-vault__item");
+
+        items.forEach((item) => {
+            item.addEventListener("click", () => {
+                const img = item.querySelector("img") as HTMLImageElement;
+                if (img && lightbox && lightboxImg) {
+                    lightboxImg.src = img.src;
+                    lightboxImg.alt = img.alt;
+                    lightbox.setAttribute("aria-hidden", "false");
+                }
+            });
+        });
+
+        lightbox?.addEventListener("click", (e) => {
+            if ((e.target as Element).closest(".media-vault__lightbox-img"))
+                return;
+            lightbox.setAttribute("aria-hidden", "true");
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+                lightbox?.setAttribute("aria-hidden", "true");
+            }
+        });
+    });
+</script>

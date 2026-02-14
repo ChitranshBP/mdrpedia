@@ -1,0 +1,115 @@
+---
+/**
+ * MDRPedia — Breadcrumb Navigation
+ * [Geography] > [Specialty] > [Doctor] for SEO authority
+ */
+
+interface Props {
+    geography: { country: string; region?: string; city?: string };
+    specialty: string;
+    doctorName: string;
+}
+
+const { geography, specialty, doctorName } = Astro.props;
+
+const crumbs = [
+    { label: "MDRPedia", href: "/" },
+    {
+        label: geography.country,
+        href: `/geography/${encodeURIComponent(geography.country.toLowerCase())}`,
+    },
+    ...(geography.region
+        ? [
+              {
+                  label: geography.region,
+                  href: `/geography/${encodeURIComponent(geography.country.toLowerCase())}/${encodeURIComponent(geography.region.toLowerCase())}`,
+              },
+          ]
+        : []),
+    {
+        label: specialty,
+        href: `/specialty/${encodeURIComponent(specialty.toLowerCase())}`,
+    },
+    { label: doctorName, href: "" },
+];
+
+const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: crumbs.map((crumb, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: crumb.label,
+        ...(crumb.href ? { item: `https://mdrpedia.com${crumb.href}` } : {}),
+    })),
+};
+---
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+    <ol class="breadcrumb__list">
+        {
+            crumbs.map((crumb, index) => (
+                <li class="breadcrumb__item">
+                    {index < crumbs.length - 1 ? (
+                        <>
+                            <a href={crumb.href} class="breadcrumb__link">
+                                {crumb.label}
+                            </a>
+                            <span class="breadcrumb__separator">›</span>
+                        </>
+                    ) : (
+                        <span class="breadcrumb__current" aria-current="page">
+                            {crumb.label}
+                        </span>
+                    )}
+                </li>
+            ))
+        }
+    </ol>
+</nav>
+
+<script
+    type="application/ld+json"
+    set:html={JSON.stringify(breadcrumbJsonLd)}
+/>
+
+<style>
+    .breadcrumb {
+        padding: var(--space-md) 0;
+        margin-bottom: var(--space-md);
+    }
+
+    .breadcrumb__list {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-xs);
+        list-style: none;
+    }
+
+    .breadcrumb__item {
+        display: flex;
+        align-items: center;
+        gap: var(--space-xs);
+        font-size: 0.8rem;
+    }
+
+    .breadcrumb__link {
+        color: var(--text-muted);
+        transition: color var(--transition-fast);
+    }
+
+    .breadcrumb__link:hover {
+        color: var(--accent-purple);
+    }
+
+    .breadcrumb__separator {
+        color: var(--text-muted);
+        opacity: 0.5;
+    }
+
+    .breadcrumb__current {
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+</style>

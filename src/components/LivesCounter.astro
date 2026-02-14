@@ -1,0 +1,131 @@
+---
+/**
+ * MDRPedia — Lives Saved Counter
+ * Animated counter showing verified patient impact
+ */
+
+interface Props {
+    count: number;
+    label?: string;
+}
+
+const { count, label = "Verified Lives Impacted" } = Astro.props;
+const formattedCount = count.toLocaleString();
+---
+
+<div class="lives-counter" data-target={count}>
+    <div class="lives-counter__number" id="lives-count">
+        <span class="lives-counter__value">0</span>
+        <span class="lives-counter__plus">+</span>
+    </div>
+    <div class="lives-counter__label">{label}</div>
+    <div class="lives-counter__pulse"></div>
+</div>
+
+<script>
+    function animateCounter() {
+        const counter = document.querySelector(".lives-counter") as HTMLElement;
+        if (!counter) return;
+
+        const target = parseInt(counter.dataset.target || "0", 10);
+        const valueEl = counter.querySelector(".lives-counter__value");
+        if (!valueEl) return;
+
+        const duration = 2000;
+        const startTime = performance.now();
+
+        function easeOutQuart(t: number): number {
+            return 1 - Math.pow(1 - t, 4);
+        }
+
+        function update(currentTime: number) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easedProgress = easeOutQuart(progress);
+            const current = Math.floor(easedProgress * target);
+
+            valueEl!.textContent = current.toLocaleString();
+
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            }
+        }
+
+        // Use IntersectionObserver to start animation when visible
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        requestAnimationFrame(update);
+                        observer.disconnect();
+                    }
+                });
+            },
+            { threshold: 0.3 },
+        );
+
+        observer.observe(counter);
+    }
+
+    animateCounter();
+    document.addEventListener("astro:page-load", animateCounter);
+</script>
+
+<style>
+    .lives-counter {
+        position: relative;
+        text-align: center;
+        padding: var(--space-lg) var(--space-xl);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+    }
+
+    .lives-counter__number {
+        font-family: var(--font-serif);
+        font-size: clamp(2.5rem, 6vw, 4rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        background: linear-gradient(
+            135deg,
+            var(--accent-purple),
+            var(--accent-blue)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+    }
+
+    .lives-counter__plus {
+        font-size: 0.6em;
+        opacity: 0.7;
+    }
+
+    .lives-counter__label {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-top: var(--space-xs);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+
+    .lives-counter__pulse {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 150%;
+        height: 150%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        background: radial-gradient(
+            circle,
+            rgba(139, 92, 246, 0.05) 0%,
+            transparent 70%
+        );
+        animation: pulse-glow 3s ease-in-out infinite;
+        pointer-events: none;
+    }
+</style>
