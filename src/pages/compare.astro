@@ -1,28 +1,518 @@
 ---
+/**
+ * MDRPedia — Compare Doctors
+ * Side-by-side comparison with client-side data (no SSR dependency)
+ */
 import Layout from "../layouts/Layout.astro";
-import ComparisonGrid from "../components/ComparisonGrid";
+import { getCollection } from "astro:content";
 
-// Comparison page with up to 3 slots
-// For now, this is a placeholder structure
+const allDoctors = await getCollection("doctors");
+
+// Pre-build comparison data at build time
+const compareData = allDoctors
+    .filter(
+        (d) =>
+            d.data.fullName &&
+            d.data.fullName.length > 2 &&
+            isNaN(Number(d.data.fullName)),
+    )
+    .map((d) => ({
+        id: d.id,
+        fullName: d.data.fullName,
+        specialty: d.data.specialty || "Unknown",
+        tier: d.data.tier || "UNRANKED",
+        hIndex: d.data.hIndex || 0,
+        verifiedSurgeries: d.data.verifiedSurgeries || 0,
+        yearsActive: d.data.yearsActive || 0,
+        livesSaved: d.data.livesSaved || 0,
+        country: d.data.geography?.country || "Unknown",
+        city: d.data.geography?.city || "",
+        portraitUrl: d.data.portraitUrl?.startsWith("data:")
+            ? ""
+            : d.data.portraitUrl || "",
+        citations: d.data.citations?.length || 0,
+    }));
 ---
 
 <Layout
     title="Compare Doctors — MDRPedia"
-    description="Side-by-side comparison of world's top specialists"
+    description="Side-by-side comparison of medical professionals"
 >
-    <div class="container py-20">
-        <header class="text-center mb-16">
-            <h1 class="text-4xl font-bold text-white mb-4">
-                Authority Comparison Engine
-            </h1>
-            <p class="text-gray-400">
-                Compare clinical volume, H-Index, and research impact
-                side-by-side.
+    <div class="compare-page">
+        <header class="compare-header">
+            <h1>Compare Doctors</h1>
+            <p>
+                Select up to 3 doctors to compare their research impact and
+                clinical metrics side-by-side.
             </p>
         </header>
 
-        <div class="mt-12">
-            <ComparisonGrid client:visible />
+        <div class="compare-slots" id="compare-slots">
+            <!-- Slot 1 -->
+            <div class="compare-slot" id="slot-0">
+                <div class="slot-empty">
+                    <div class="slot-search-wrap">
+                        <input
+                            type="text"
+                            class="slot-search"
+                            placeholder="Search doctor name…"
+                            data-slot="0"
+                            autocomplete="off"
+                        />
+                        <div class="slot-results" hidden></div>
+                    </div>
+                    <p class="slot-hint">Select a doctor to begin</p>
+                </div>
+            </div>
+            <!-- Slot 2 -->
+            <div class="compare-slot" id="slot-1">
+                <div class="slot-empty">
+                    <div class="slot-search-wrap">
+                        <input
+                            type="text"
+                            class="slot-search"
+                            placeholder="Search doctor name…"
+                            data-slot="1"
+                            autocomplete="off"
+                        />
+                        <div class="slot-results" hidden></div>
+                    </div>
+                    <p class="slot-hint">Add second doctor</p>
+                </div>
+            </div>
+            <!-- Slot 3 -->
+            <div class="compare-slot" id="slot-2">
+                <div class="slot-empty">
+                    <div class="slot-search-wrap">
+                        <input
+                            type="text"
+                            class="slot-search"
+                            placeholder="Search doctor name…"
+                            data-slot="2"
+                            autocomplete="off"
+                        />
+                        <div class="slot-results" hidden></div>
+                    </div>
+                    <p class="slot-hint">Add third doctor</p>
+                </div>
+            </div>
         </div>
     </div>
 </Layout>
+
+<script define:vars={{ compareData }}>
+    const DATA = compareData;
+
+    function findDoctor(id) {
+        return DATA.find((d) => d.id === id);
+    }
+
+    function searchDoctors(query) {
+        if (!query || query.length < 2) return [];
+        const q = query.toLowerCase();
+        return DATA.filter(
+            (d) =>
+                d.fullName.toLowerCase().includes(q) ||
+                d.specialty.toLowerCase().includes(q),
+        ).slice(0, 6);
+    }
+
+    function renderSlotCard(slotIdx, doctor) {
+        const slot = document.getElementById(`slot-${slotIdx}`);
+        if (!slot) return;
+
+        const tierClass =
+            doctor.tier === "TITAN"
+                ? "tier--titan"
+                : doctor.tier === "ELITE"
+                  ? "tier--elite"
+                  : "tier--master";
+        const tierLabel =
+            doctor.tier === "TITAN"
+                ? "🏆 Titan"
+                : doctor.tier === "ELITE"
+                  ? "🥈 Elite"
+                  : "🥉 Master";
+        const initials = doctor.fullName
+            .split(" ")
+            .map((w) => w[0])
+            .filter((_, i) => i < 2)
+            .join("")
+            .toUpperCase();
+
+        slot.innerHTML = `
+			<div class="slot-filled ${tierClass}">
+				<button class="slot-remove" data-slot="${slotIdx}" title="Remove">&times;</button>
+				<div class="slot-avatar">
+					${
+                        doctor.portraitUrl
+                            ? `<img src="${doctor.portraitUrl}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><span style="display:none" class="slot-initials">${initials}</span>`
+                            : `<span class="slot-initials">${initials}</span>`
+                    }
+				</div>
+				<h3 class="slot-name">${doctor.fullName}</h3>
+				<p class="slot-specialty">${doctor.specialty}</p>
+				<span class="slot-tier-label">${tierLabel}</span>
+
+				<div class="slot-stats">
+					<div class="stat-row"><span class="stat-label">H-Index</span><span class="stat-value ${doctor.hIndex > 50 ? "stat--high" : ""}">${doctor.hIndex}</span></div>
+					<div class="stat-row"><span class="stat-label">Citations</span><span class="stat-value">${doctor.citations.toLocaleString()}</span></div>
+					<div class="stat-row"><span class="stat-label">Years Active</span><span class="stat-value">${doctor.yearsActive || "N/A"}</span></div>
+					<div class="stat-row"><span class="stat-label">Lives Impacted</span><span class="stat-value">${doctor.livesSaved > 0 ? doctor.livesSaved.toLocaleString() : "N/A"}</span></div>
+					<div class="stat-row"><span class="stat-label">Surgeries</span><span class="stat-value">${doctor.verifiedSurgeries > 0 ? doctor.verifiedSurgeries.toLocaleString() : "N/A"}</span></div>
+					<div class="stat-row"><span class="stat-label">Location</span><span class="stat-value">${doctor.city ? doctor.city + ", " : ""}${doctor.country}</span></div>
+				</div>
+
+				<a href="/doctors/${doctor.id}" class="slot-profile-link">View Full Profile →</a>
+			</div>
+		`;
+    }
+
+    function clearSlot(slotIdx) {
+        const slot = document.getElementById(`slot-${slotIdx}`);
+        if (!slot) return;
+        slot.innerHTML = `
+			<div class="slot-empty">
+				<div class="slot-search-wrap">
+					<input type="text" class="slot-search" placeholder="Search doctor name…" data-slot="${slotIdx}" autocomplete="off" />
+					<div class="slot-results" hidden></div>
+				</div>
+				<p class="slot-hint">${slotIdx === 0 ? "Select a doctor to begin" : "Add another doctor"}</p>
+			</div>
+		`;
+        bindSearchEvents();
+    }
+
+    function bindSearchEvents() {
+        document.querySelectorAll(".slot-search").forEach((input) => {
+            let timer;
+            input.addEventListener("input", () => {
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    const q = input.value.trim();
+                    const resultsEl =
+                        input.parentElement.querySelector(".slot-results");
+                    if (q.length < 2) {
+                        resultsEl && (resultsEl.hidden = true);
+                        return;
+                    }
+                    const matches = searchDoctors(q);
+                    if (matches.length === 0) {
+                        resultsEl.innerHTML =
+                            '<div class="sr-empty">No results</div>';
+                        resultsEl.hidden = false;
+                        return;
+                    }
+                    resultsEl.innerHTML = matches
+                        .map((m) => {
+                            const tier =
+                                m.tier === "TITAN"
+                                    ? "🏆"
+                                    : m.tier === "ELITE"
+                                      ? "🥈"
+                                      : "🥉";
+                            return `<button class="sr-item" data-id="${m.id}" data-slot="${input.dataset.slot}">
+							<span class="sr-name">${m.fullName}</span>
+							<span class="sr-meta">${m.specialty} ${tier}</span>
+						</button>`;
+                        })
+                        .join("");
+                    resultsEl.hidden = false;
+                }, 150);
+            });
+        });
+
+        document.querySelectorAll(".slot-remove").forEach((btn) => {
+            btn.addEventListener("click", () =>
+                clearSlot(Number(btn.dataset.slot)),
+            );
+        });
+    }
+
+    // Event delegation for result clicks
+    document.getElementById("compare-slots")?.addEventListener("click", (e) => {
+        const item = e.target.closest(".sr-item");
+        if (item) {
+            const doctor = findDoctor(item.dataset.id);
+            if (doctor) renderSlotCard(Number(item.dataset.slot), doctor);
+        }
+        const removeBtn = e.target.closest(".slot-remove");
+        if (removeBtn) {
+            clearSlot(Number(removeBtn.dataset.slot));
+        }
+    });
+
+    // Auto-load doctor from URL ?id=slug
+    const params = new URLSearchParams(window.location.search);
+    const preloadId = params.get("id");
+    if (preloadId) {
+        const doctor = findDoctor(preloadId);
+        if (doctor) renderSlotCard(0, doctor);
+    }
+
+    bindSearchEvents();
+</script>
+
+<style>
+    .compare-page {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: var(--space-xl) var(--space-lg);
+    }
+    .compare-header {
+        text-align: center;
+        margin-bottom: var(--space-2xl);
+    }
+    .compare-header h1 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: var(--space-xs);
+    }
+    .compare-header p {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+    }
+
+    .compare-slots {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+
+    .compare-slot {
+        min-height: 400px;
+        border: 1px solid var(--border-subtle);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.02);
+        overflow: hidden;
+    }
+
+    /* Empty Slot */
+    .slot-empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        min-height: 400px;
+        padding: var(--space-lg);
+    }
+    .slot-search-wrap {
+        position: relative;
+        width: 100%;
+        max-width: 260px;
+    }
+    .slot-search {
+        width: 100%;
+        padding: 10px 14px;
+        font-size: 0.88rem;
+        font-family: var(--font-sans);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-subtle);
+        border-radius: 6px;
+        color: var(--text-primary);
+        outline: none;
+        transition: border-color 0.2s;
+    }
+    .slot-search::placeholder {
+        color: var(--text-muted);
+    }
+    .slot-search:focus {
+        border-color: var(--accent-purple);
+    }
+    .slot-hint {
+        margin-top: 8px;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+    }
+    .slot-results {
+        position: absolute;
+        top: calc(100% + 4px);
+        width: 100%;
+        background: var(--bg-card, #16162a);
+        border: 1px solid var(--border-subtle);
+        border-radius: 6px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        z-index: 50;
+        max-height: 240px;
+        overflow-y: auto;
+    }
+    .sr-item {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 8px 12px;
+        border: none;
+        background: none;
+        color: var(--text-primary);
+        cursor: pointer;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        font-family: var(--font-sans);
+    }
+    .sr-item:hover {
+        background: rgba(139, 92, 246, 0.08);
+    }
+    .sr-name {
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+    .sr-meta {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+    }
+    .sr-empty {
+        padding: 12px;
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.82rem;
+    }
+
+    /* Filled Slot */
+    .slot-filled {
+        padding: var(--space-lg);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .slot-remove {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        font-size: 1.4rem;
+        cursor: pointer;
+        transition: color 0.15s;
+        line-height: 1;
+    }
+    .slot-remove:hover {
+        color: #ff4444;
+    }
+
+    .slot-avatar {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.05);
+        border: 2px solid var(--border-subtle);
+    }
+    .tier--titan .slot-avatar {
+        border-color: rgba(255, 215, 0, 0.4);
+    }
+    .tier--elite .slot-avatar {
+        border-color: rgba(0, 170, 255, 0.3);
+    }
+    .slot-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .slot-initials {
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+    .tier--titan .slot-initials {
+        color: #ffd700;
+    }
+    .tier--elite .slot-initials {
+        color: #00aaff;
+    }
+
+    .slot-name {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 4px;
+    }
+    .tier--titan .slot-name {
+        color: #ffd700;
+    }
+    .slot-specialty {
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+        margin-bottom: 8px;
+    }
+    .slot-tier-label {
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 3px 10px;
+        border-radius: 4px;
+        margin-bottom: 16px;
+    }
+    .tier--titan .slot-tier-label {
+        background: rgba(255, 215, 0, 0.1);
+        color: #ffd700;
+    }
+    .tier--elite .slot-tier-label {
+        background: rgba(0, 170, 255, 0.08);
+        color: #00aaff;
+    }
+    .tier--master .slot-tier-label {
+        background: rgba(0, 204, 102, 0.08);
+        color: #00cc66;
+    }
+
+    .slot-stats {
+        width: 100%;
+        margin-top: var(--space-sm);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+    .stat-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 6px;
+        font-size: 0.82rem;
+    }
+    .stat-label {
+        color: var(--text-muted);
+    }
+    .stat-value {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-family: var(--font-mono);
+    }
+    .stat--high {
+        color: #22c55e;
+    }
+
+    .slot-profile-link {
+        display: inline-block;
+        margin-top: 16px;
+        padding: 8px 16px;
+        font-size: 0.82rem;
+        color: var(--accent-purple);
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        border-radius: 6px;
+        text-decoration: none;
+        transition: all 0.15s;
+    }
+    .slot-profile-link:hover {
+        background: rgba(139, 92, 246, 0.08);
+    }
+
+    @media (max-width: 768px) {
+        .compare-slots {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

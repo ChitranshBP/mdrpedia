@@ -1,217 +1,547 @@
 ---
+/**
+ * MDRPedia — Communities & Organizations
+ * Real medical organizations + specialty groupings
+ */
 import Layout from "../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import TierBadge from "../components/TierBadge.astro";
 
 const allDoctors = await getCollection("doctors");
 
-// Grouping by specialty
-const communitiesMap = new Map();
+// Medical Organizations
+const organizations = [
+    {
+        name: "World Health Organization",
+        abbr: "WHO",
+        icon: "🌍",
+        desc: "The United Nations agency directing and coordinating international health policy, disease response, and global public health standards.",
+        url: "https://www.who.int",
+        relatedSpecialties: [
+            "Public Health",
+            "Epidemiology",
+            "Infectious Disease",
+            "Global Health",
+        ],
+    },
+    {
+        name: "American Heart Association",
+        abbr: "AHA",
+        icon: "❤️",
+        desc: "Leading nonprofit funding cardiovascular and cerebrovascular disease research. Publisher of Circulation and the ACLS/BLS guidelines.",
+        url: "https://www.heart.org",
+        relatedSpecialties: [
+            "Cardiology",
+            "Cardiovascular Surgery",
+            "Clinical Cardiology",
+            "Vascular Medicine",
+        ],
+    },
+    {
+        name: "American Medical Association",
+        abbr: "AMA",
+        icon: "⚕️",
+        desc: "The largest association of physicians and medical students in the United States, advocating for the medical profession and public health.",
+        url: "https://www.ama-assn.org",
+        relatedSpecialties: [
+            "Internal Medicine",
+            "Family Medicine",
+            "General Practice",
+        ],
+    },
+    {
+        name: "National Institutes of Health",
+        abbr: "NIH",
+        icon: "🔬",
+        desc: "The primary U.S. federal agency for biomedical and public health research, comprising 27 institutes and centers.",
+        url: "https://www.nih.gov",
+        relatedSpecialties: [
+            "Genomics",
+            "Immunology",
+            "Biomedical Research",
+            "Molecular Biology",
+        ],
+    },
+    {
+        name: "American College of Surgeons",
+        abbr: "ACS",
+        icon: "🏥",
+        desc: "Scientific and educational organization of surgeons dedicated to improving surgical care through standards, education, and trauma verification.",
+        url: "https://www.facs.org",
+        relatedSpecialties: [
+            "Surgery",
+            "Neurosurgery",
+            "Transplant Surgery",
+            "Cardiac Surgery",
+        ],
+    },
+    {
+        name: "Royal College of Physicians",
+        abbr: "RCP",
+        icon: "👑",
+        desc: "The oldest medical college in England, setting standards in clinical practice, education, and quality improvement since 1518.",
+        url: "https://www.rcplondon.ac.uk",
+        relatedSpecialties: [
+            "Internal Medicine",
+            "Geriatrics",
+            "Respiratory Medicine",
+        ],
+    },
+    {
+        name: "Médecins Sans Frontières",
+        abbr: "MSF",
+        icon: "🆘",
+        desc: "Nobel Prize-winning international humanitarian medical organization providing aid in armed conflicts, epidemics, and natural disasters.",
+        url: "https://www.msf.org",
+        relatedSpecialties: [
+            "Emergency Medicine",
+            "Infectious Disease",
+            "Trauma Surgery",
+            "Humanitarian Medicine",
+        ],
+    },
+    {
+        name: "American Cancer Society",
+        abbr: "ACS",
+        icon: "🎗️",
+        desc: "Nationwide health organization funding cancer research, providing patient services, and leading evidence-based prevention programs.",
+        url: "https://www.cancer.org",
+        relatedSpecialties: [
+            "Oncology",
+            "Surgical Oncology",
+            "Radiation Oncology",
+            "Hematology",
+        ],
+    },
+];
 
-allDoctors.forEach((doc) => {
-    const specialty = doc.data.specialty;
-    if (!communitiesMap.has(specialty)) {
-        communitiesMap.set(specialty, []);
-    }
-    communitiesMap.get(specialty).push(doc);
+// Count related doctors for each org
+const orgsWithCounts = organizations.map((org) => {
+    const count = allDoctors.filter((d) => {
+        const spec = (d.data.specialty || "").toLowerCase();
+        return org.relatedSpecialties.some((rs) =>
+            spec.includes(rs.toLowerCase()),
+        );
+    }).length;
+    return { ...org, doctorCount: count };
 });
 
-// Sort each community by hIndex and pick the head
-const communities = Array.from(communitiesMap.entries())
-    .map(([name, members]) => {
-        const sortedMembers = members.sort(
-            (a, b) => (b.data.hIndex || 0) - (a.data.hIndex || 0),
-        );
-        return {
-            name,
-            count: members.length,
-            head: sortedMembers[0],
-            members: sortedMembers,
-        };
-    })
-    .sort((a, b) => b.count - a.count); // Sort by popularity/size
+// Specialty groupings (existing feature)
+const specMap = new Map<string, typeof allDoctors>();
+allDoctors.forEach((d) => {
+    const s = d.data.specialty;
+    if (s && s.length > 2) {
+        if (!specMap.has(s)) specMap.set(s, []);
+        specMap.get(s)!.push(d);
+    }
+});
 
-const seoTitle =
-    "Medical Specialty Communities — Verified Professional Networks";
-const seoDescription =
-    "Browse medical specialties and healthcare communities. Discover community heads and verified authorities in Surgery, Oncology, Cardiology, and more.";
+const communities = [...specMap.entries()]
+    .filter(([, members]) => members.length >= 3)
+    .sort((a, b) => b[1].length - a[1].length)
+    .slice(0, 20)
+    .map(([name, members]) => ({
+        name,
+        count: members.length,
+        head: members.sort(
+            (a, b) => (b.data.hIndex || 0) - (a.data.hIndex || 0),
+        )[0],
+        members: members.slice(0, 5),
+    }));
 ---
 
-<Layout title={seoTitle} description={seoDescription}>
-    <div class="container py-20">
-        <header class="text-center mb-16">
-            <div
-                class="inline-block px-4 py-1 rounded-full bg-accent-purple/10 text-accent-purple text-sm font-bold mb-4 border border-accent-purple/20"
-            >
-                SPECIALIZED NETWORKS
-            </div>
-            <h1 class="text-5xl font-bold text-white mb-6">
-                Medical Communities
-            </h1>
-            <p class="text-xl text-gray-400 max-w-2xl mx-auto">
-                Explore specialized global networks of medical excellence,
-                anchored by the world's most cited and influential authorities.
+<Layout
+    title="Medical Communities & Organizations — MDRPedia"
+    description="Browse medical organizations, specialty communities, and verified professional networks."
+>
+    <div class="communities-page">
+        <header class="page-header">
+            <h1>Communities & Organizations</h1>
+            <p>
+                Medical organizations, specialty communities, and verified
+                professional networks in the MDRPedia registry.
             </p>
         </header>
 
-        <!-- SEO Content Block: Methodology -->
-        <section
-            class="mb-20 grid grid-cols-1 lg:grid-cols-4 gap-8 items-center bg-[#111119] border border-white/5 rounded-3xl p-10"
-        >
-            <div class="lg:col-span-3">
-                <h2 class="text-2xl font-bold text-white mb-4">
-                    How Communities are Ranked
-                </h2>
-                <p class="text-gray-400 leading-relaxed text-balance">
-                    MDRPedia clusters medical professionals into communities
-                    based on their verified secondary and primary specialties.
-                    The <strong>Community Head</strong> is determined through a combination
-                    of their <strong>D-Index (Discipline H-Index)</strong>,
-                    total citation count, and verified peer recognitions. This
-                    ensures that each community is led by a true authority in
-                    their field.
-                </p>
-                <div class="flex flex-wrap gap-4 mt-8">
-                    <div
-                        class="flex items-center gap-2 text-sm text-gray-500 bg-white/5 px-3 py-1 rounded-full"
-                    >
-                        <span class="w-2 h-2 rounded-full bg-accent-purple"
-                        ></span>
-                        Verified Affiliations
-                    </div>
-                    <div
-                        class="flex items-center gap-2 text-sm text-gray-500 bg-white/5 px-3 py-1 rounded-full"
-                    >
-                        <span class="w-2 h-2 rounded-full bg-accent-blue"
-                        ></span>
-                        Citation Impact
-                    </div>
-                    <div
-                        class="flex items-center gap-2 text-sm text-gray-500 bg-white/5 px-3 py-1 rounded-full"
-                    >
-                        <span class="w-2 h-2 rounded-full bg-accent-emerald"
-                        ></span>
-                        Peer Verification
-                    </div>
-                </div>
-            </div>
-            <div class="hidden lg:block">
-                <div
-                    class="h-32 w-32 border-4 border-dashed border-white/10 rounded-full flex items-center justify-center mx-auto"
-                >
-                    <span class="text-4xl">📊</span>
-                </div>
-            </div>
-        </section>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {
-                communities.map((community) => (
-                    <div class="community-card bg-[#111119] border border-white/5 rounded-2xl p-8 hover:border-accent-purple/30 transition-all group">
-                        <div class="flex justify-between items-start mb-6">
-                            <div>
-                                <h2 class="text-2xl font-bold text-white mb-1">
-                                    {community.name}
-                                </h2>
-                                <p class="text-accent-purple text-sm font-semibold uppercase tracking-wider">
-                                    {community.count} Verified Authorities
-                                </p>
-                            </div>
-                            <div class="h-12 w-12 rounded-full bg-accent-purple/10 flex items-center justify-center text-2xl">
-                                🏛️
-                            </div>
-                        </div>
-
-                        <div class="head-profile flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/5 mb-6">
-                            <div class="h-16 w-16 rounded-full overflow-hidden bg-gray-800 border-2 border-accent-purple/20">
-                                {community.head.data.portraitUrl ? (
-                                    <img
-                                        src={community.head.data.portraitUrl}
-                                        alt={`Head of ${community.name}: ${community.head.data.fullName}`}
-                                        class="h-full w-full object-cover"
-                                    />
-                                ) : (
-                                    <div class="h-full w-full flex items-center justify-center text-xl bg-accent-purple/10 text-white font-bold">
-                                        {community.head.data.fullName[0]}
-                                    </div>
-                                )}
-                            </div>
-                            <div class="flex-1">
-                                <p class="text-[0.65rem] text-gray-500 font-bold uppercase tracking-widest mb-1">
-                                    Community Head
-                                </p>
-                                <h3 class="text-white font-bold">
-                                    {community.head.data.fullName}
-                                </h3>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <TierBadge
-                                        tier={community.head.data.tier}
-                                        size="sm"
-                                    />
-                                    <span class="text-xs text-gray-500 uppercase font-mono tracking-tighter">
-                                        D-Index: {community.head.data.hIndex}
+        <!-- Organizations -->
+        <section class="orgs-section">
+            <h2 class="section-heading">Medical Organizations</h2>
+            <div class="orgs-grid">
+                {
+                    orgsWithCounts.map((org) => (
+                        <div class="org-card">
+                            <div class="org-card__header">
+                                <span class="org-card__icon">{org.icon}</span>
+                                <div>
+                                    <h3 class="org-card__name">{org.name}</h3>
+                                    <span class="org-card__abbr">
+                                        {org.abbr}
                                     </span>
                                 </div>
                             </div>
-                            <a
-                                href={`/doctors/${community.head.id}`}
-                                class="px-4 py-2 rounded-lg bg-white/5 text-xs font-bold text-white hover:bg-white/10 transition-colors"
-                            >
-                                View Profile
-                            </a>
-                        </div>
-
-                        <div class="flex flex-wrap gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
-                            {community.members.slice(1, 4).map((member) => (
-                                <span class="text-xs px-2 py-1 rounded bg-white/5 text-gray-400">
-                                    {member.data.fullName}
+                            <p class="org-card__desc">{org.desc}</p>
+                            <div class="org-card__tags">
+                                {org.relatedSpecialties.slice(0, 3).map((s) => (
+                                    <span class="org-tag">{s}</span>
+                                ))}
+                            </div>
+                            <div class="org-card__footer">
+                                <span class="org-card__count">
+                                    {org.doctorCount} related profiles
                                 </span>
-                            ))}
-                            {community.count > 4 && (
-                                <span class="text-xs px-2 py-1 rounded bg-white/5 text-gray-500">
-                                    +{community.count - 4} more
-                                </span>
-                            )}
+                                <a
+                                    href={org.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="org-card__link"
+                                >
+                                    Visit Website ↗
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                ))
-            }
-        </div>
-
-        <!-- Semantic SEO Footer Section -->
-        <footer class="mt-20 border-t border-white/5 pt-16">
-            <div class="prose prose-invert max-w-none">
-                <h2 class="text-2xl font-bold text-white mb-6">
-                    Frequently Browsed Communities
-                </h2>
-                <div class="flex flex-wrap gap-x-8 gap-y-4">
-                    {
-                        communities.map((c) => (
-                            <a
-                                href={`#${c.name.toLowerCase().replace(/\s+/g, "-")}`}
-                                class="text-sm text-gray-500 hover:text-accent-purple transition-colors"
-                            >
-                                {c.name} Registry
-                            </a>
-                        ))
-                    }
-                </div>
-                <p class="text-sm text-gray-600 mt-10">
-                    Our medical community registry includes authorities across
-                    North America, Europe, and Asia, covering over 50+ unique
-                    specialties including Neurosurgery, Transplantation, Genomic
-                    Medicine, and Global Health.
-                </p>
+                    ))
+                }
             </div>
-        </footer>
+        </section>
+
+        <!-- Specialty Communities -->
+        <section class="spec-section">
+            <h2 class="section-heading">Specialty Communities</h2>
+            <p class="section-desc">
+                Communities of verified professionals grouped by medical
+                specialty. Each community is led by the highest-ranked authority
+                in that field.
+            </p>
+            <div class="spec-grid">
+                {
+                    communities.map((community) => (
+                        <div class="spec-card">
+                            <div class="spec-card__header">
+                                <h3 class="spec-card__name">
+                                    {community.name}
+                                </h3>
+                                <span class="spec-card__count">
+                                    {community.count} members
+                                </span>
+                            </div>
+                            <div class="spec-card__head">
+                                <div class="spec-card__avatar">
+                                    {community.head.data.fullName
+                                        .split(" ")
+                                        .map((w: string) => w[0])
+                                        .filter((_: string, i: number) => i < 2)
+                                        .join("")
+                                        .toUpperCase()}
+                                </div>
+                                <div class="spec-card__head-info">
+                                    <span class="spec-card__head-label">
+                                        Community Head
+                                    </span>
+                                    <a
+                                        href={`/doctors/${community.head.id}`}
+                                        class="spec-card__head-name"
+                                    >
+                                        {community.head.data.fullName}
+                                    </a>
+                                    <span class="spec-card__head-meta">
+                                        H-index: {community.head.data.hIndex} ·
+                                        <TierBadge
+                                            tier={
+                                                community.head.data.tier as
+                                                    | "TITAN"
+                                                    | "ELITE"
+                                                    | "MASTER"
+                                                    | "UNRANKED"
+                                            }
+                                            size="sm"
+                                        />
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="spec-card__members">
+                                {community.members.slice(1, 4).map((m) => (
+                                    <a
+                                        href={`/doctors/${m.id}`}
+                                        class="spec-member"
+                                        title={m.data.fullName}
+                                    >
+                                        {m.data.fullName
+                                            .split(" ")
+                                            .map((w: string) => w[0])
+                                            .filter(
+                                                (_: string, i: number) => i < 2,
+                                            )
+                                            .join("")
+                                            .toUpperCase()}
+                                    </a>
+                                ))}
+                                {community.count > 4 && (
+                                    <span class="spec-more">
+                                        +{community.count - 4}
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+        </section>
     </div>
 </Layout>
 
 <style>
-    .community-card {
-        transition: transform 0.2s ease-out;
+    .communities-page {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: var(--space-xl) var(--space-lg);
     }
-    .community-card:hover {
-        transform: translateY(-4px);
+    .page-header {
+        text-align: center;
+        margin-bottom: var(--space-2xl);
+    }
+    .page-header h1 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: var(--space-xs);
+    }
+    .page-header p {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+    }
+    .section-heading {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: var(--space-md);
+        padding-bottom: var(--space-xs);
+        border-bottom: 1px solid var(--border-subtle);
+    }
+    .section-desc {
+        color: var(--text-muted);
+        font-size: 0.88rem;
+        margin-bottom: var(--space-lg);
+        margin-top: calc(var(--space-xs) * -1);
+    }
+
+    /* Organizations */
+    .orgs-section {
+        margin-bottom: var(--space-2xl);
+    }
+    .orgs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 16px;
+    }
+    .org-card {
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--border-subtle);
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        transition: border-color 0.15s;
+    }
+    .org-card:hover {
+        border-color: rgba(139, 92, 246, 0.3);
+    }
+    .org-card__header {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+    .org-card__icon {
+        font-size: 1.8rem;
+        flex-shrink: 0;
+    }
+    .org-card__name {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        line-height: 1.3;
+    }
+    .org-card__abbr {
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--accent-purple);
+        letter-spacing: 0.05em;
+    }
+    .org-card__desc {
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 12px;
+        flex: 1;
+    }
+    .org-card__tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin-bottom: 12px;
+    }
+    .org-tag {
+        font-size: 0.68rem;
+        font-weight: 500;
+        padding: 2px 8px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 3px;
+        color: var(--text-muted);
+    }
+    .org-card__footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 10px;
+        border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .org-card__count {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        font-weight: 500;
+    }
+    .org-card__link {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--accent-purple);
+        text-decoration: none;
+    }
+    .org-card__link:hover {
+        text-decoration: underline;
+    }
+
+    /* Specialty Communities */
+    .spec-section {
+        margin-bottom: var(--space-2xl);
+    }
+    .spec-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 14px;
+    }
+    .spec-card {
+        padding: 18px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--border-subtle);
+        border-radius: 10px;
+        transition: border-color 0.15s;
+    }
+    .spec-card:hover {
+        border-color: rgba(139, 92, 246, 0.3);
+    }
+    .spec-card__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+    }
+    .spec-card__name {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+    .spec-card__count {
+        font-size: 0.7rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        background: rgba(255, 255, 255, 0.04);
+        padding: 3px 8px;
+        border-radius: 4px;
+    }
+    .spec-card__head {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        margin-bottom: 12px;
+    }
+    .spec-card__avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(139, 92, 246, 0.1);
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.75rem;
+        color: var(--accent-purple);
+        flex-shrink: 0;
+    }
+    .spec-card__head-info {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+    }
+    .spec-card__head-label {
+        font-size: 0.6rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+    }
+    .spec-card__head-name {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        text-decoration: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .spec-card__head-name:hover {
+        color: var(--accent-purple);
+    }
+    .spec-card__head-meta {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+    .spec-card__members {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+    }
+    .spec-member {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-subtle);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.6rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: border-color 0.15s;
+    }
+    .spec-member:hover {
+        border-color: var(--accent-purple);
+        color: var(--accent-purple);
+    }
+    .spec-more {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        margin-left: 4px;
+    }
+
+    @media (max-width: 600px) {
+        .orgs-grid {
+            grid-template-columns: 1fr;
+        }
+        .spec-grid {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
