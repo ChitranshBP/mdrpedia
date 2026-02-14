@@ -5,7 +5,6 @@
  */
 
 import Layout from "../layouts/Layout.astro";
-import Search from "../components/Search.astro"; // Pagefind Search
 import TierBadge from "../components/TierBadge.astro";
 import { getCollection } from "astro:content";
 
@@ -30,6 +29,26 @@ const recentDoctors = allDoctors
 		return (tierOrder[a.data.tier] ?? 3) - (tierOrder[b.data.tier] ?? 3);
 	})
 	.slice(0, 5);
+
+// Build search index at build time
+const searchIndex = allDoctors
+	.filter(
+		(d) =>
+			d.data.fullName &&
+			d.data.fullName.length > 2 &&
+			isNaN(Number(d.data.fullName)),
+	)
+	.map((d) => ({
+		id: d.id,
+		n: d.data.fullName,
+		s: d.data.specialty || "",
+		t: d.data.tier || "UNRANKED",
+		c: d.data.geography?.country || "",
+		p: d.data.portraitUrl?.startsWith("data:")
+			? ""
+			: d.data.portraitUrl || "",
+	}))
+	.slice(0, 500); // Limit for performance
 ---
 
 <Layout
@@ -62,7 +81,54 @@ const recentDoctors = allDoctors
 			</p>
 
 			<div class="hero__search-wrapper">
-				<Search />
+				<div class="mdr-search-container" id="mdr-search-root">
+					<div class="mdr-search-input-wrap">
+						<svg
+							class="mdr-search-icon"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+						>
+							<circle cx="11" cy="11" r="8"></circle>
+							<path d="m21 21-4.3-4.3"></path>
+						</svg>
+						<input
+							type="text"
+							id="mdr-hero-search"
+							class="mdr-search-input"
+							placeholder="Search by name, specialty, or country..."
+							autocomplete="off"
+							aria-label="Search MDRPedia"
+						/>
+						<div class="mdr-search-shortcut">
+							<kbd>⌘</kbd><kbd>K</kbd>
+						</div>
+					</div>
+					<div
+						class="mdr-search-results"
+						id="mdr-search-results"
+						hidden
+					>
+					</div>
+				</div>
+				<div class="search-tags">
+					<button class="search-tag" data-query="Neurosurgery"
+						>Neurosurgery</button
+					>
+					<button class="search-tag" data-query="Cardiology"
+						>Cardiology</button
+					>
+					<button class="search-tag" data-query="Oncology"
+						>Oncology</button
+					>
+					<button class="search-tag" data-query="Genomics"
+						>Genomics</button
+					>
+					<button class="search-tag" data-query="Transplant"
+						>Transplant</button
+					>
+				</div>
 			</div>
 
 			<div class="hero__trust-bar">
@@ -493,5 +559,326 @@ const recentDoctors = allDoctors
 		margin-top: auto;
 		padding-top: var(--space-sm);
 		border-top: 1px solid var(--border-subtle);
+	}
+</style>
+
+<script define:vars={{ searchIndex }}>
+	// Client-side search engine
+	const DATA = searchIndex;
+	const input = document.getElementById("mdr-hero-search");
+	const resultsEl = document.getElementById("mdr-search-results");
+	let activeIdx = -1;
+
+	// Keyboard shortcut: ⌘K / Ctrl+K
+	document.addEventListener("keydown", (e) => {
+		if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+			e.preventDefault();
+			input?.focus();
+		}
+	});
+
+	function renderResults(matches) {
+		if (!resultsEl) return;
+		if (matches.length === 0) {
+			resultsEl.innerHTML =
+				'<div class="mdr-no-results">No matching doctors found</div>';
+			resultsEl.hidden = false;
+			return;
+		}
+		activeIdx = -1;
+		resultsEl.innerHTML = matches
+			.map((m, i) => {
+				const tierClass =
+					m.t === "TITAN"
+						? "tier-titan"
+						: m.t === "ELITE"
+							? "tier-elite"
+							: "tier-master";
+				const tierLabel =
+					m.t === "TITAN"
+						? "🏆 Titan"
+						: m.t === "ELITE"
+							? "🥈 Elite"
+							: "⭐ Master";
+				const initials = m.n
+					.split(" ")
+					.map((w) => w[0])
+					.filter((_, j) => j < 2)
+					.join("")
+					.toUpperCase();
+				const avatarHtml = m.p
+					? `<img src="${m.p}" alt="" class="mdr-result-avatar-img" onerror="this.style.display='none';this.nextElementSibling.style.display=''" /><span style="display:none">${initials}</span>`
+					: `<span>${initials}</span>`;
+				return `<a href="/doctors/${m.id}" class="mdr-result-item ${tierClass}" data-idx="${i}">
+				<div class="mdr-result-avatar ${tierClass}">${avatarHtml}</div>
+				<div class="mdr-result-info">
+					<div class="mdr-result-name">${m.n}</div>
+					<div class="mdr-result-meta">${m.s}${m.c ? " • " + m.c : ""}</div>
+				</div>
+				<span class="mdr-result-tier">${tierLabel}</span>
+			</a>`;
+			})
+			.join("");
+		resultsEl.hidden = false;
+	}
+
+	let debounceTimer;
+	input?.addEventListener("input", () => {
+		clearTimeout(debounceTimer);
+		debounceTimer = setTimeout(() => {
+			const q = input.value.trim().toLowerCase();
+			if (q.length < 2) {
+				resultsEl && (resultsEl.hidden = true);
+				return;
+			}
+			const matches = DATA.filter((d) => {
+				const text = `${d.n} ${d.s} ${d.c}`.toLowerCase();
+				return text.includes(q);
+			}).slice(0, 8);
+			renderResults(matches);
+		}, 150);
+	});
+
+	// Keyboard navigation
+	input?.addEventListener("keydown", (e) => {
+		if (!resultsEl || resultsEl.hidden) return;
+		const items = resultsEl.querySelectorAll(".mdr-result-item");
+		if (e.key === "ArrowDown") {
+			e.preventDefault();
+			activeIdx = Math.min(activeIdx + 1, items.length - 1);
+			items.forEach((el, i) =>
+				el.classList.toggle("active", i === activeIdx),
+			);
+		} else if (e.key === "ArrowUp") {
+			e.preventDefault();
+			activeIdx = Math.max(activeIdx - 1, 0);
+			items.forEach((el, i) =>
+				el.classList.toggle("active", i === activeIdx),
+			);
+		} else if (e.key === "Enter" && activeIdx >= 0) {
+			e.preventDefault();
+			items[activeIdx]?.click();
+		} else if (e.key === "Escape") {
+			resultsEl.hidden = true;
+		}
+	});
+
+	// Close on click outside
+	document.addEventListener("click", (e) => {
+		if (!document.getElementById("mdr-search-root")?.contains(e.target)) {
+			resultsEl && (resultsEl.hidden = true);
+		}
+	});
+
+	// Search tags
+	document.querySelectorAll(".search-tag").forEach((btn) => {
+		btn.addEventListener("click", () => {
+			const q = btn.dataset.query;
+			if (input) {
+				input.value = q;
+				input.dispatchEvent(new Event("input"));
+				input.focus();
+			}
+		});
+	});
+</script>
+
+<style>
+	/* ─── Hero Search ───────────────────────────────────────────────────── */
+	.mdr-search-container {
+		width: 100%;
+		max-width: 680px;
+		margin: 0 auto;
+		position: relative;
+	}
+	.mdr-search-input-wrap {
+		position: relative;
+		display: flex;
+		align-items: center;
+	}
+	.mdr-search-icon {
+		position: absolute;
+		left: 20px;
+		width: 22px;
+		height: 22px;
+		color: rgba(255, 255, 255, 0.4);
+		pointer-events: none;
+		z-index: 1;
+	}
+	.mdr-search-input {
+		width: 100%;
+		padding: 18px 90px 18px 56px;
+		font-size: 1.15rem;
+		font-family: var(--font-sans);
+		background: rgba(255, 255, 255, 0.06);
+		border: 2px solid rgba(255, 255, 255, 0.1);
+		border-radius: 60px;
+		color: white;
+		outline: none;
+		transition: all 0.25s ease;
+	}
+	.mdr-search-input::placeholder {
+		color: rgba(255, 255, 255, 0.4);
+	}
+	.mdr-search-input:focus {
+		border-color: var(--accent-purple, #8b5cf6);
+		background: rgba(255, 255, 255, 0.1);
+		box-shadow:
+			0 0 0 6px rgba(139, 92, 246, 0.15),
+			0 8px 32px rgba(0, 0, 0, 0.3);
+		transform: scale(1.01);
+	}
+	.mdr-search-shortcut {
+		position: absolute;
+		right: 18px;
+		display: flex;
+		gap: 4px;
+		pointer-events: none;
+	}
+	.mdr-search-shortcut kbd {
+		font-family: var(--font-sans);
+		font-size: 0.7rem;
+		font-weight: 600;
+		padding: 2px 7px;
+		background: rgba(255, 255, 255, 0.08);
+		border: 1px solid rgba(255, 255, 255, 0.15);
+		border-radius: 5px;
+		color: rgba(255, 255, 255, 0.4);
+	}
+	/* Results */
+	.mdr-search-results {
+		position: absolute;
+		z-index: 100;
+		top: calc(100% + 8px);
+		width: 100%;
+		background: var(--bg-card, #16162a);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 16px;
+		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+		overflow: hidden;
+		max-height: 420px;
+		overflow-y: auto;
+	}
+	.mdr-result-item {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		padding: 12px 18px;
+		text-decoration: none;
+		color: white;
+		transition: background 0.15s;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+	}
+	.mdr-result-item:hover,
+	.mdr-result-item.active {
+		background: rgba(139, 92, 246, 0.1);
+	}
+	.mdr-result-avatar {
+		width: 44px;
+		height: 44px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-weight: 700;
+		font-size: 0.85rem;
+		flex-shrink: 0;
+		overflow: hidden;
+	}
+	.mdr-result-avatar.tier-titan {
+		background: linear-gradient(135deg, #300066, #1a0033);
+		color: #ffd700;
+		border: 2px solid rgba(255, 215, 0, 0.4);
+	}
+	.mdr-result-avatar.tier-elite {
+		background: linear-gradient(135deg, #001a4d, #001133);
+		color: #00aaff;
+		border: 2px solid rgba(0, 170, 255, 0.3);
+	}
+	.mdr-result-avatar.tier-master {
+		background: linear-gradient(135deg, #003322, #002211);
+		color: #00cc66;
+		border: 2px solid rgba(0, 204, 102, 0.3);
+	}
+	.mdr-result-avatar-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 50%;
+	}
+	.mdr-result-info {
+		flex: 1;
+		min-width: 0;
+	}
+	.mdr-result-name {
+		font-weight: 600;
+		font-size: 0.95rem;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.tier-titan .mdr-result-name {
+		color: #ffd700;
+	}
+	.mdr-result-meta {
+		font-size: 0.8rem;
+		color: rgba(255, 255, 255, 0.5);
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.mdr-result-tier {
+		font-size: 0.7rem;
+		font-weight: 600;
+		padding: 3px 10px;
+		border-radius: 20px;
+		white-space: nowrap;
+		flex-shrink: 0;
+	}
+	.tier-titan .mdr-result-tier {
+		background: rgba(255, 215, 0, 0.15);
+		color: #ffd700;
+		border: 1px solid rgba(255, 215, 0, 0.3);
+	}
+	.tier-elite .mdr-result-tier {
+		background: rgba(0, 170, 255, 0.12);
+		color: #00aaff;
+		border: 1px solid rgba(0, 170, 255, 0.25);
+	}
+	.tier-master .mdr-result-tier {
+		background: rgba(0, 204, 102, 0.12);
+		color: #00cc66;
+		border: 1px solid rgba(0, 204, 102, 0.25);
+	}
+	.mdr-no-results {
+		padding: 20px;
+		text-align: center;
+		color: rgba(255, 255, 255, 0.4);
+		font-size: 0.9rem;
+	}
+
+	/* Search Tags */
+	.search-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-top: 16px;
+		justify-content: center;
+	}
+	.search-tag {
+		font-size: 0.8rem;
+		padding: 5px 14px;
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 20px;
+		color: rgba(255, 255, 255, 0.6);
+		cursor: pointer;
+		transition: all 0.2s ease;
+		font-family: var(--font-sans);
+	}
+	.search-tag:hover {
+		border-color: var(--accent-purple, #8b5cf6);
+		color: var(--accent-purple, #8b5cf6);
+		background: rgba(139, 92, 246, 0.1);
 	}
 </style>
