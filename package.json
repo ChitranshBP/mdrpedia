@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && npx pagefind --site dist",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -22,7 +22,9 @@
     "googleapis": "^171.4.0"
   },
   "devDependencies": {
+    "@pagefind/default-ui": "^1.4.0",
     "@types/node": "^25.2.3",
+    "pagefind": "^1.4.0",
     "prisma": "^5.22.0",
     "tsx": "^4.21.0"
   }

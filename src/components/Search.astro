@@ -1,0 +1,82 @@
+---
+/**
+ * MDRPedia - High-Performance Search Component
+ * Wraps @pagefind/default-ui for instant client-side search
+ */
+---
+
+<div id="search" class="pagefind-ui"></div>
+
+<script>
+    // Load Pagefind UI
+    // Note: This script runs on the client. Pagefind assets are generated at build time.
+    window.addEventListener("DOMContentLoaded", () => {
+        const loadPagefind = async () => {
+            // @ts-ignore
+            const { PagefindUI } = await import("@pagefind/default-ui");
+            new PagefindUI({
+                element: "#search",
+                showSubResults: true,
+                showImages: false,
+                translations: {
+                    placeholder: "Search 100,000+ verified doctors...",
+                    zero_results:
+                        "No verified profiles found for [SEARCH_TERM]",
+                },
+            });
+        };
+        loadPagefind();
+    });
+</script>
+
+<style is:global>
+    /* Pagefind UI Customization for MDRPedia Theme */
+    :root {
+        --pagefind-ui-scale: 1;
+        --pagefind-ui-primary: var(--accent-purple);
+        --pagefind-ui-text: var(--text-primary);
+        --pagefind-ui-background: var(--bg-card);
+        --pagefind-ui-border: var(--border-subtle);
+        --pagefind-ui-tag: var(--accent-blue);
+        --pagefind-ui-border-width: 1px;
+        --pagefind-ui-border-radius: var(--radius-md);
+        --pagefind-ui-image-border-radius: var(--radius-md);
+        --pagefind-ui-image-box-ratio: 3 / 2;
+        --pagefind-ui-font: var(--font-sans);
+    }
+
+    .pagefind-ui .pagefind-ui__search-input {
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        font-size: 1.2rem;
+        padding: 1.2rem 1.5rem;
+        border-radius: var(--radius-full);
+        transition: all var(--transition-base);
+    }
+
+    .pagefind-ui .pagefind-ui__search-input:focus {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: var(--accent-purple);
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+    }
+
+    .pagefind-ui .pagefind-ui__drawer {
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+        margin-top: var(--space-md);
+        box-shadow: var(--shadow-xl);
+    }
+
+    .pagefind-ui .pagefind-ui__result-link {
+        color: var(--accent-blue);
+        font-weight: 600;
+    }
+
+    .pagefind-ui .pagefind-ui__result-excerpt {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+</style>

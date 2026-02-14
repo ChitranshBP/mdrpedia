@@ -1,0 +1,279 @@
+---
+/**
+ * MDRPedia — Browse All Doctors
+ * Displays a searchable grid of all verified doctor profiles
+ */
+import Layout from "../../layouts/Layout.astro";
+import TierBadge from "../../components/TierBadge.astro";
+import { getCollection } from "astro:content";
+
+const allDoctors = await getCollection("doctors");
+
+// Sort: Titans first, then Elite, then Master, then Unranked
+const tierOrder: Record<string, number> = {
+    TITAN: 0,
+    ELITE: 1,
+    MASTER: 2,
+    UNRANKED: 3,
+};
+const sortedDoctors = allDoctors.sort(
+    (a, b) => (tierOrder[a.data.tier] ?? 3) - (tierOrder[b.data.tier] ?? 3),
+);
+---
+
+<Layout title="Browse All Doctors — MDRPedia">
+    <section class="browse">
+        <div class="container">
+            <div class="browse__header">
+                <h1 class="browse__title">Browse Verified Profiles</h1>
+                <p class="browse__subtitle">
+                    {sortedDoctors.length} verified medical professionals in the MDRPedia
+                    registry
+                </p>
+            </div>
+
+            <!-- Filter bar -->
+            <div class="browse__filters">
+                <button class="filter-btn filter-btn--active" data-filter="all"
+                    >All</button
+                >
+                <button class="filter-btn" data-filter="TITAN">🏆 Titan</button>
+                <button class="filter-btn" data-filter="ELITE">🥈 Elite</button>
+                <button class="filter-btn" data-filter="MASTER"
+                    >🥉 Master</button
+                >
+            </div>
+
+            <!-- Doctor Grid -->
+            <div class="browse__grid" id="doctor-grid">
+                {
+                    sortedDoctors.map((doctor) => {
+                        const d = doctor.data;
+                        const location = [
+                            d.geography.city,
+                            d.geography.region,
+                            d.geography.country,
+                        ]
+                            .filter(Boolean)
+                            .join(", ");
+
+                        return (
+                            <a
+                                href={`/doctors/${doctor.id}`}
+                                class={`browse-card card card--${d.tier.toLowerCase()}`}
+                                data-tier={d.tier}
+                            >
+                                <div class="browse-card__top">
+                                    <TierBadge
+                                        tier={
+                                            d.tier as
+                                                | "TITAN"
+                                                | "ELITE"
+                                                | "MASTER"
+                                                | "UNRANKED"
+                                        }
+                                        size="sm"
+                                    />
+                                    {d.status === "HISTORICAL" && (
+                                        <span class="browse-card__legacy">
+                                            Legacy
+                                        </span>
+                                    )}
+                                </div>
+                                <h3 class="browse-card__name">{d.fullName}</h3>
+                                <p class="browse-card__specialty">
+                                    {d.specialty}
+                                </p>
+                                <p class="browse-card__location">
+                                    📍 {location}
+                                </p>
+                                <div class="browse-card__meta">
+                                    <span class="browse-card__stat">
+                                        H-index: {d.hIndex}
+                                    </span>
+                                    <span class="browse-card__stat">
+                                        {d.citations ? d.citations.length : 0}{" "}
+                                        citations
+                                    </span>
+                                </div>
+                            </a>
+                        );
+                    })
+                }
+            </div>
+        </div>
+    </section>
+</Layout>
+
+<script>
+    // Client-side tier filtering
+    document.addEventListener("DOMContentLoaded", () => {
+        const buttons =
+            document.querySelectorAll<HTMLButtonElement>(".filter-btn");
+        const cards = document.querySelectorAll<HTMLElement>(".browse-card");
+
+        buttons.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const filter = btn.dataset.filter;
+
+                // Update active state
+                buttons.forEach((b) =>
+                    b.classList.remove("filter-btn--active"),
+                );
+                btn.classList.add("filter-btn--active");
+
+                // Filter cards
+                cards.forEach((card) => {
+                    if (filter === "all" || card.dataset.tier === filter) {
+                        card.style.display = "";
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+<style>
+    .browse {
+        padding: var(--space-3xl) 0;
+    }
+
+    .browse__header {
+        text-align: center;
+        margin-bottom: var(--space-2xl);
+    }
+
+    .browse__title {
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 800;
+        background: linear-gradient(
+            135deg,
+            var(--accent-purple),
+            var(--accent-blue)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: var(--space-sm);
+    }
+
+    .browse__subtitle {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+    }
+
+    .browse__filters {
+        display: flex;
+        justify-content: center;
+        gap: var(--space-sm);
+        margin-bottom: var(--space-xl);
+        flex-wrap: wrap;
+    }
+
+    .filter-btn {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--text-secondary);
+        padding: 0.6rem 1.2rem;
+        border-radius: var(--radius-full);
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all var(--transition-base);
+    }
+
+    .filter-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+
+    .filter-btn--active {
+        background: var(--accent-purple);
+        border-color: var(--accent-purple);
+        color: white;
+    }
+
+    .browse__grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: var(--space-lg);
+    }
+
+    .browse-card {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+        padding: var(--space-lg);
+        text-decoration: none;
+        color: inherit;
+        transition:
+            transform var(--transition-base),
+            box-shadow var(--transition-base);
+    }
+
+    .browse-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .browse-card__top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: var(--space-xs);
+    }
+
+    .browse-card__legacy {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 0.2rem 0.6rem;
+        border-radius: var(--radius-full);
+    }
+
+    .browse-card__name {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: white;
+    }
+
+    .browse-card__specialty {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+
+    .browse-card__location {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+    }
+
+    .browse-card__meta {
+        display: flex;
+        gap: var(--space-md);
+        margin-top: var(--space-sm);
+        padding-top: var(--space-sm);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .browse-card__stat {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+
+    @media (max-width: 768px) {
+        .browse__grid {
+            grid-template-columns: 1fr;
+        }
+
+        .browse__filters {
+            gap: var(--space-xs);
+        }
+
+        .filter-btn {
+            padding: 0.5rem 0.8rem;
+            font-size: 0.8rem;
+        }
+    }
+</style>

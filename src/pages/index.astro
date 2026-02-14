@@ -5,13 +5,16 @@
  */
 
 import Layout from "../layouts/Layout.astro";
-import SearchBar from "../components/SearchBar.astro";
+import Search from "../components/Search.astro"; // Pagefind Search
 import TierBadge from "../components/TierBadge.astro";
 import { getCollection } from "astro:content";
 
 const allDoctors = await getCollection("doctors");
 const recentDoctors = allDoctors
 	.sort((a, b) => {
+		// Sort by modification time (approximated here by reverse list order for now,
+		// as file system stats aren't exposed in content collection)
+		// Or better: sort by tier for quality
 		const tierOrder = { TITAN: 0, ELITE: 1, MASTER: 2, UNRANKED: 3 };
 		return (tierOrder[a.data.tier] ?? 3) - (tierOrder[b.data.tier] ?? 3);
 	})
@@ -47,10 +50,8 @@ const recentDoctors = allDoctors
 				The single-source of truth for 100,000+ doctors and surgeons.
 			</p>
 
-			<div id="search" class="hero__search">
-				<SearchBar
-					placeholder="Search by name, specialty, or location..."
-				/>
+			<div class="hero__search-wrapper">
+				<Search />
 			</div>
 
 			<div class="hero__trust-bar">
@@ -177,7 +178,10 @@ const recentDoctors = allDoctors
 								<div class="feed-card__stats">
 									<span>H-index: {d.hIndex}</span>
 									<span>·</span>
-									<span>{d.citations.length} citations</span>
+									<span>
+										{d.citations ? d.citations.length : 0}{" "}
+										citations
+									</span>
 								</div>
 							</a>
 						);
