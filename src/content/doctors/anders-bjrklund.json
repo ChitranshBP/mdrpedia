@@ -2,30 +2,514 @@
   "fullName": "Anders Björklund",
   "slug": "anders-bjrklund",
   "title": "MD, PhD",
-  "specialty": "Neural Repair",
+  "specialty": "Neuroscience",
+  "subSpecialty": "Regenerative Medicine",
   "geography": {
-    "city": "Unknown",
-    "country": "Sweden"
+    "country": "Sweden",
+    "region": "Scania",
+    "city": "Lund"
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">AB</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 49,
-  "hIndex": 197,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 45.9,
+  "hIndex": 172,
+  "yearsActive": 50,
   "verifiedSurgeries": 0,
-  "livesSaved": 10981,
-  "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
+  "livesSaved": 0,
+  "biography": "<h3>Executive Summary</h3><p><strong>Dr. Anders Björklund</strong> is a titan of modern neuroscience and a pioneer in the field of <strong>Restorative Neurology</strong>. A Professor of Histology at Lund University, Sweden, he is world-renowned for his groundbreaking work on cell transplantation and gene therapy for <strong>Parkinson's Disease</strong>. His research provided the first proof-of-concept that damaged neurons in the mammalian brain can be regenerated and reconnected, fundamentally changing the dogma of brain plasticity.</p><h3>Early Life and Education</h3><p>Born in 1945 in Söderhamn, Sweden, Dr. Björklund received his MD in 1969 and PhD in 1970 from <strong>Lund University</strong>. He was part of the golden generation of Swedish neuroscientists who developed the Falck-Hillarp fluorescence method, allowing the comprehensive mapping of monoamine systems in the brain.</p><h3>Scientific Contributions</h3><ul><li><strong>Dopamine System Mapping:</strong> In the 1970s, he co-authored the definitive atlases of dopamine and serotonin pathways in the brain, which remain standard references today.</li><li><strong>Cell Transplantation:</strong> In 1979, he performed the first successful transplantation of fetal dopamine neurons into the brains of rats with Parkinson-like symptoms, restoring motor function. This work laid the foundation for human clinical trials started in Lund in 1987.</li><li><strong>Gene Therapy:</strong> His team demonstrated the neuroprotective effects of Glial Cell Line-Derived Neurotrophic Factor (GDNF), leading to clinical trials delivering GDNF genes to Parkinson's patients.</li></ul><h3>Awards and Recognition</h3><ul><li><strong>The Brain Prize (2011):</strong> Shared with Winfried Denk and Ann Graybiel for his work on brain circuits.</li><li><strong>Signe and Ane Gyllenberg Foundation Prize (2023)</strong></li><li>Member of the <strong>Royal Swedish Academy of Sciences</strong> and the <strong>National Academy of Sciences (USA)</strong>.</li></ul><h3>Legacy</h3><p>Dr. Björklund's work launched the field of neural grafting. He continues to lead the <strong>Wallenberg Neuroscience Center</strong>, pushing the boundaries of stem cell therapy. His h-index of over 170 reflects a lifetime of high-impact research that consistently opens new avenues for treating neurodegenerative diseases.</p>",
+  "aiSummary": "Anders Björklund is a neuroscience specialist with an H-index of 172 at Lund University (Senior Professor). Known for pioneered Neural Grafting (Parkinson's), GDNF Gene Therapy. Has been published in Nature Medicine, Trends in Neurosciences, Proceedings of the National Academy of Sciences and recipient of the The Brain Prize (2011). Based in Lund, Scania, Sweden.",
+  "techniquesInvented": [
+    "Neural Grafting (Parkinson's)",
+    "GDNF Gene Therapy"
+  ],
+  "hasInvention": true,
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/4/41/Anders_Bj%C3%B6rklund%2C_Lund_University.jpg",
+  "galleryUrls": [],
+  "npiNumber": null,
+  "orcidId": null,
+  "medicalSpecialty": [
+    "Neuroscience",
+    "Restorative Neurology"
+  ],
+  "knowsAbout": [
+    "Parkinson's Disease",
+    "Stem Cell Therapy",
+    "Neuroanatomy"
+  ],
+  "dateOfBirth": "1945-07-11",
   "affiliations": [
     {
-      "hospitalName": "Lund University"
+      "hospitalName": "Lund University",
+      "role": "Senior Professor",
+      "hospitalUrl": "https://www.lunduniversity.lu.se/"
+    },
+    {
+      "hospitalName": "Wallenberg Neuroscience Center",
+      "role": "Section Leader",
+      "hospitalUrl": "https://www.wnc.lu.se/"
     }
   ],
-  "bio": "Anders Björklund is a pioneer in Neural Repair at Lund University, Sweden. With a D-Index of 197 and over 109,812 citations, they are among the world's most influential researchers.",
-  "awards": [],
-  "education": [],
-  "socialMedia": {},
-  "status": "LIVING"
+  "citations": [
+    {
+      "title": "Lewy bodies in grafted neurons in subjects with Parkinson's disease suggest host-to-graft disease propagation",
+      "journal": "Nature Medicine",
+      "year": 2008,
+      "citationCount": 1796,
+      "doi": "10.1038/nm1746",
+      "sourceUrl": "https://doi.org/10.1038/nm1746",
+      "verified": true
+    },
+    {
+      "title": "Dopamine neuron systems in the brain: an update",
+      "journal": "Trends in Neurosciences",
+      "year": 2007,
+      "citationCount": 1746,
+      "doi": "10.1016/j.tins.2007.03.006",
+      "sourceUrl": "https://doi.org/10.1016/j.tins.2007.03.006",
+      "verified": true
+    },
+    {
+      "title": "The organization of the ascending catecholamine neuron systems in the rat brain as revealed by the glyoxylic acid fluorescence method.",
+      "journal": "PubMed",
+      "year": 1974,
+      "citationCount": 1137,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2402507191",
+      "verified": true
+    },
+    {
+      "title": "Continuous infusion of nerve growth factor prevents basal forebrain neuronal death after fimbria fornix transection.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1986,
+      "citationCount": 1062,
+      "doi": "10.1073/pnas.83.23.9231",
+      "sourceUrl": "https://doi.org/10.1073/pnas.83.23.9231",
+      "verified": true
+    },
+    {
+      "title": "Amelioration of cholinergic neuron atrophy and spatial memory impairment in aged rats by nerve growth factor",
+      "journal": "Nature",
+      "year": 1987,
+      "citationCount": 1027,
+      "doi": "10.1038/329065a0",
+      "sourceUrl": "https://doi.org/10.1038/329065a0",
+      "verified": true
+    },
+    {
+      "title": "Cell replacement therapies for central nervous system disorders",
+      "journal": "Nature Neuroscience",
+      "year": 2000,
+      "citationCount": 940,
+      "doi": "10.1038/75705",
+      "sourceUrl": "https://doi.org/10.1038/75705",
+      "verified": true
+    },
+    {
+      "title": "Is There a Glass Ceiling in Sweden?",
+      "journal": "Journal of Labor Economics",
+      "year": 2003,
+      "citationCount": 891,
+      "doi": "10.1086/344126",
+      "sourceUrl": "https://doi.org/10.1086/344126",
+      "verified": true
+    },
+    {
+      "title": "TFEB-mediated autophagy rescues midbrain dopamine neurons from α-synuclein toxicity",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2013,
+      "citationCount": 745,
+      "doi": "10.1073/pnas.1305623110",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1305623110",
+      "verified": true
+    },
+    {
+      "title": "Direct conversion of human fibroblasts to dopaminergic neurons",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2011,
+      "citationCount": 740,
+      "doi": "10.1073/pnas.1105135108",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1105135108",
+      "verified": true
+    },
+    {
+      "title": "Dopamine release from nigral transplants visualized in vivo in a Parkinson's patient",
+      "journal": "Nature Neuroscience",
+      "year": 1999,
+      "citationCount": 688,
+      "doi": "10.1038/16060",
+      "sourceUrl": "https://doi.org/10.1038/16060",
+      "verified": true
+    },
+    {
+      "title": "Characterization of Behavioral and Neurodegenerative Changes Following Partial Lesions of the Nigrostriatal Dopamine System Induced by Intrastriatal 6-Hydroxydopamine in the Rat",
+      "journal": "Experimental Neurology",
+      "year": 1998,
+      "citationCount": 661,
+      "doi": "10.1006/exnr.1998.6848",
+      "sourceUrl": "https://doi.org/10.1006/exnr.1998.6848",
+      "verified": true
+    },
+    {
+      "title": "Parkinson-like neurodegeneration induced by targeted overexpression of alpha-synuclein in the nigrostriatal system.",
+      "journal": "PubMed",
+      "year": 2002,
+      "citationCount": 649,
+      "doi": "https://doi.org/",
+      "sourceUrl": "https://doi.org/",
+      "verified": true
+    },
+    {
+      "title": "Forelimb akinesia in the rat Parkinson model: differential effects of dopamine agonists and nigral transplants as assessed by a new stepping test",
+      "journal": "Journal of Neuroscience",
+      "year": 1995,
+      "citationCount": 618,
+      "doi": "10.1523/jneurosci.15-05-03863.1995",
+      "sourceUrl": "https://doi.org/10.1523/jneurosci.15-05-03863.1995",
+      "verified": true
+    },
+    {
+      "title": "Dopamine released from 5-HT terminals is the cause of L-DOPA-induced dyskinesia in parkinsonian rats",
+      "journal": "Brain",
+      "year": 2007,
+      "citationCount": 613,
+      "doi": "10.1093/brain/awm082",
+      "sourceUrl": "https://doi.org/10.1093/brain/awm082",
+      "verified": true
+    },
+    {
+      "title": "L-DOPA-induced dyskinesia in the rat is associated with striatal overexpression of prodynorphin- and glutamic acid decarboxylase mRNA",
+      "journal": "European Journal of Neuroscience",
+      "year": 1998,
+      "citationCount": 613,
+      "doi": "10.1046/j.1460-9568.1998.t01-1-00285.x",
+      "sourceUrl": "https://doi.org/10.1046/j.1460-9568.1998.t01-1-00285.x",
+      "verified": true
+    },
+    {
+      "title": "Parkinson-Like Neurodegeneration Induced by Targeted Overexpression of α-Synuclein in the Nigrostriatal System",
+      "journal": "Journal of Neuroscience",
+      "year": 2002,
+      "citationCount": 602,
+      "doi": "10.1523/jneurosci.22-07-02780.2002",
+      "sourceUrl": "https://doi.org/10.1523/jneurosci.22-07-02780.2002",
+      "verified": true
+    },
+    {
+      "title": "Intergenerational Income Mobility in Sweden Compared to the United States",
+      "journal": "American Economic Review",
+      "year": 1997,
+      "citationCount": 596,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1513502430",
+      "verified": true
+    },
+    {
+      "title": "Site-Specific Migration and Neuronal Differentiation of Human Neural Progenitor Cells after Transplantation in the Adult Rat Brain",
+      "journal": "Journal of Neuroscience",
+      "year": 1999,
+      "citationCount": 560,
+      "doi": "10.1523/jneurosci.19-14-05990.1999",
+      "sourceUrl": "https://doi.org/10.1523/jneurosci.19-14-05990.1999",
+      "verified": true
+    },
+    {
+      "title": "Reinnervation of the denervated striatum by substantia nigra transplants: Functional consequences as revealed by pharmacological and sensorimotor testing",
+      "journal": "Brain Research",
+      "year": 1980,
+      "citationCount": 553,
+      "doi": "10.1016/0006-8993(80)90692-7",
+      "sourceUrl": "https://doi.org/10.1016/0006-8993(80)90692-7",
+      "verified": true
+    },
+    {
+      "title": "L‐DOPA‐induced dyskinesia in the rat is associated with striatal overexpression of prodynorphin‐ and glutamic acid decarboxylase mRNA",
+      "journal": "European Journal of Neuroscience",
+      "year": 1998,
+      "citationCount": 541,
+      "doi": "10.1046/j.1460-9568.1998.00285.x",
+      "sourceUrl": "https://doi.org/10.1046/j.1460-9568.1998.00285.x",
+      "verified": true
+    },
+    {
+      "title": "Prospects for new restorative and neuroprotective treatments in Parkinson's disease",
+      "journal": "Nature",
+      "year": 1999,
+      "citationCount": 538,
+      "doi": "10.1038/399a032",
+      "sourceUrl": "https://doi.org/10.1038/399a032",
+      "verified": true
+    },
+    {
+      "title": "The organization of tubero-hypophyseal and reticulo-infundibular catecholamine neuron systems in the rat brain",
+      "journal": "Brain Research",
+      "year": 1973,
+      "citationCount": 516,
+      "doi": "10.1016/0006-8993(73)90371-5",
+      "sourceUrl": "https://doi.org/10.1016/0006-8993(73)90371-5",
+      "verified": true
+    },
+    {
+      "title": "Spatial learning and motor deficits in aged rats",
+      "journal": "Neurobiology of Aging",
+      "year": 1984,
+      "citationCount": 505,
+      "doi": "10.1016/0197-4580(84)90084-8",
+      "sourceUrl": "https://doi.org/10.1016/0197-4580(84)90084-8",
+      "verified": true
+    },
+    {
+      "title": "Mesencephalic dopamine neurons projecting to neocortex",
+      "journal": "Brain Research",
+      "year": 1974,
+      "citationCount": 505,
+      "doi": "10.1016/0006-8993(74)90947-0",
+      "sourceUrl": "https://doi.org/10.1016/0006-8993(74)90947-0",
+      "verified": true
+    },
+    {
+      "title": "Bilateral Fetal Mesencephalic Grafting in Two Patients with Parkinsonism Induced by 1-Methyl-4-Phenyl-L,2,3,6-Tetrahydropyridine (MPTP)",
+      "journal": "New England Journal of Medicine",
+      "year": 1992,
+      "citationCount": 494,
+      "doi": "10.1056/nejm199211263272203",
+      "sourceUrl": "https://doi.org/10.1056/nejm199211263272203",
+      "verified": true
+    },
+    {
+      "title": "Distribution of vasoactive intestinal polypeptide in the rat and mouse brain",
+      "journal": "Neuroscience",
+      "year": 1979,
+      "citationCount": 487,
+      "doi": "10.1016/0306-4522(79)90068-x",
+      "sourceUrl": "https://doi.org/10.1016/0306-4522(79)90068-x",
+      "verified": true
+    },
+    {
+      "title": "Learning Deficit in BDNF Mutant Mice",
+      "journal": "European Journal of Neuroscience",
+      "year": 1997,
+      "citationCount": 466,
+      "doi": "10.1111/j.1460-9568.1997.tb01687.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1460-9568.1997.tb01687.x",
+      "verified": true
+    },
+    {
+      "title": "Evidence for long‐term survival and function of dopaminergic grafts in progressive Parkinson's disease",
+      "journal": "Annals of Neurology",
+      "year": 1994,
+      "citationCount": 458,
+      "doi": "10.1002/ana.410350208",
+      "sourceUrl": "https://doi.org/10.1002/ana.410350208",
+      "verified": true
+    },
+    {
+      "title": "Dyskinesias following neural transplantation in Parkinson's disease",
+      "journal": "Nature Neuroscience",
+      "year": 2002,
+      "citationCount": 441,
+      "doi": "10.1038/nn863",
+      "sourceUrl": "https://doi.org/10.1038/nn863",
+      "verified": true
+    },
+    {
+      "title": "Long-Term rAAV-Mediated Gene Transfer of GDNF in the Rat Parkinson's Model: Intrastriatal But Not Intranigral Transduction Promotes Functional Regeneration in the Lesioned Nigrostriatal System",
+      "journal": "Journal of Neuroscience",
+      "year": 2000,
+      "citationCount": 431,
+      "doi": "10.1523/jneurosci.20-12-04686.2000",
+      "sourceUrl": "https://doi.org/10.1523/jneurosci.20-12-04686.2000",
+      "verified": true
+    },
+    {
+      "title": "Human ESC-Derived Dopamine Neurons Show Similar Preclinical Efficacy and Potency to Fetal Neurons when Grafted in a Rat Model of Parkinson’s Disease",
+      "journal": "Cell stem cell",
+      "year": 2014,
+      "citationCount": 429,
+      "doi": "10.1016/j.stem.2014.09.017",
+      "sourceUrl": "https://doi.org/10.1016/j.stem.2014.09.017",
+      "verified": true
+    },
+    {
+      "title": "l-DOPA-Induced Dyskinesia in the Intrastriatal 6-Hydroxydopamine Model of Parkinson's Disease: Relation to Motor and Cellular Parameters of Nigrostriatal Function",
+      "journal": "Neurobiology of Disease",
+      "year": 2002,
+      "citationCount": 422,
+      "doi": "10.1006/nbdi.2002.0499",
+      "sourceUrl": "https://doi.org/10.1006/nbdi.2002.0499",
+      "verified": true
+    },
+    {
+      "title": "Organization of catecholamine neurons projecting to the frontal cortex in the rat",
+      "journal": "Brain Research",
+      "year": 1978,
+      "citationCount": 421,
+      "doi": "10.1016/0006-8993(78)90173-7",
+      "sourceUrl": "https://doi.org/10.1016/0006-8993(78)90173-7",
+      "verified": true
+    },
+    {
+      "title": "Intracerebral Neural Implants: Neuronal Replacement and Reconstruction of Damaged Circuitries",
+      "journal": "Annual Review of Neuroscience",
+      "year": 1984,
+      "citationCount": 417,
+      "doi": "10.1146/annurev.ne.07.030184.001431",
+      "sourceUrl": "https://doi.org/10.1146/annurev.ne.07.030184.001431",
+      "verified": true
+    },
+    {
+      "title": "Generation of induced neurons via direct conversion in vivo",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2013,
+      "citationCount": 415,
+      "doi": "10.1073/pnas.1303829110",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1303829110",
+      "verified": true
+    },
+    {
+      "title": "Septal transplants restore maze learning in rats with fornix-fimbria lesions",
+      "journal": "Brain Research",
+      "year": 1982,
+      "citationCount": 415,
+      "doi": "10.1016/0006-8993(82)90751-x",
+      "sourceUrl": "https://doi.org/10.1016/0006-8993(82)90751-x",
+      "verified": true
+    },
+    {
+      "title": "Topographic principles in the spinal projections of serotonergic and non-serotonergic brainstem neurons in the rat",
+      "journal": "Neuroscience",
+      "year": 1985,
+      "citationCount": 410,
+      "doi": "10.1016/0306-4522(85)90225-8",
+      "sourceUrl": "https://doi.org/10.1016/0306-4522(85)90225-8",
+      "verified": true
+    },
+    {
+      "title": "Intracerebral grafting of neuronal cell suspensions. I. Introduction and general methods of preparation.",
+      "journal": "PubMed",
+      "year": 1983,
+      "citationCount": 404,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1703876792",
+      "verified": true
+    },
+    {
+      "title": "Nigrostriatal α-synucleinopathy induced by viral vector-mediated overexpression of human α-synuclein: A new primate model of Parkinson's disease",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2003,
+      "citationCount": 402,
+      "doi": "10.1073/pnas.0536383100",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0536383100",
+      "verified": true
+    },
+    {
+      "title": "Nurr1 Is Required for Maintenance of Maturing and Adult Midbrain Dopamine Neurons",
+      "journal": "Journal of Neuroscience",
+      "year": 2009,
+      "citationCount": 379,
+      "doi": "10.1523/jneurosci.3910-09.2009",
+      "sourceUrl": "https://doi.org/10.1523/jneurosci.3910-09.2009",
+      "verified": true
+    },
+    {
+      "title": "Glial cell line-derived neurotrophic factor but not transforming growth factor beta 3 prevents delayed degeneration of nigral dopaminergic neurons following striatal 6-hydroxydopamine lesion.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1995,
+      "citationCount": 375,
+      "doi": "10.1073/pnas.92.19.8935",
+      "sourceUrl": "https://doi.org/10.1073/pnas.92.19.8935",
+      "verified": true
+    },
+    {
+      "title": "Regeneration of monoaminergic and cholinergic neurons in the mammalian central nervous system",
+      "journal": "Physiological Reviews",
+      "year": 1979,
+      "citationCount": 374,
+      "doi": "10.1152/physrev.1979.59.1.62",
+      "sourceUrl": "https://doi.org/10.1152/physrev.1979.59.1.62",
+      "verified": true
+    },
+    {
+      "title": "Intrahippocampal Septal Grafts Ameliorate Learning Impairments in Aged Rats",
+      "journal": "Science",
+      "year": 1984,
+      "citationCount": 369,
+      "doi": "10.1126/science.6539949",
+      "sourceUrl": "https://doi.org/10.1126/science.6539949",
+      "verified": true
+    },
+    {
+      "title": "Short‐ and long‐term survival and function of unilateral intrastriatal dopaminergic grafts in Parkinson's disease",
+      "journal": "Annals of Neurology",
+      "year": 1997,
+      "citationCount": 367,
+      "doi": "10.1002/ana.410420115",
+      "sourceUrl": "https://doi.org/10.1002/ana.410420115",
+      "verified": true
+    },
+    {
+      "title": "Intergenerational Income Mobility and the Role of Family Background",
+      "journal": "Oxford University Press eBooks",
+      "year": 2011,
+      "citationCount": 357,
+      "doi": "10.1093/oxfordhb/9780199606061.013.0020",
+      "sourceUrl": "https://doi.org/10.1093/oxfordhb/9780199606061.013.0020",
+      "verified": true
+    },
+    {
+      "title": "Neural transplantation for the treatment of Parkinson's disease",
+      "journal": "The Lancet Neurology",
+      "year": 2003,
+      "citationCount": 353,
+      "doi": "10.1016/s1474-4422(03)00442-3",
+      "sourceUrl": "https://doi.org/10.1016/s1474-4422(03)00442-3",
+      "verified": true
+    },
+    {
+      "title": "Fetal dopaminergic transplantation trials and the future of neural grafting in Parkinson's disease",
+      "journal": "The Lancet Neurology",
+      "year": 2012,
+      "citationCount": 351,
+      "doi": "10.1016/s1474-4422(12)70295-8",
+      "sourceUrl": "https://doi.org/10.1016/s1474-4422(12)70295-8",
+      "verified": true
+    },
+    {
+      "title": "Mechanisms of action of intracerebral neural implants: studies on nigral and striatal grafts to the lesioned striatum",
+      "journal": "Trends in Neurosciences",
+      "year": 1987,
+      "citationCount": 348,
+      "doi": "10.1016/0166-2236(87)90131-7",
+      "sourceUrl": "https://doi.org/10.1016/0166-2236(87)90131-7",
+      "verified": true
+    },
+    {
+      "title": "Cell therapy in Parkinson’s disease",
+      "journal": "NeuroRx",
+      "year": 2004,
+      "citationCount": 344,
+      "doi": "10.1602/neurorx.1.4.382",
+      "sourceUrl": "https://doi.org/10.1602/neurorx.1.4.382",
+      "verified": true
+    },
+    {
+      "title": "Towards a neuroprotective gene therapy for Parkinson’s disease: use of adenovirus, AAV and lentivirus vectors for gene transfer of GDNF to the nigrostriatal system in the rat Parkinson model11Published on the World Wide Web on 10 October 2000.",
+      "journal": "Brain Research",
+      "year": 2000,
+      "citationCount": 341,
+      "doi": "10.1016/s0006-8993(00)02915-2",
+      "sourceUrl": "https://doi.org/10.1016/s0006-8993(00)02915-2",
+      "verified": true
+    }
+  ],
+  "awards": [
+    {
+      "name": "The Brain Prize",
+      "year": 2011,
+      "issuingBody": "Lundbeck Foundation"
+    }
+  ],
+  "timeline": [],
+  "mentors": [],
+  "students": [],
+  "openalexId": "https://openalex.org/A5047762447"
 }

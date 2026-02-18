@@ -35,7 +35,7 @@ const { doctorName, slug } = Astro.props;
         <p class="claim-profile__description">
             If this is your profile, claim it to verify your credentials, update
             your biography, and manage your citations. Verified profiles receive
-            a ✅ badge.
+            a verified badge.
         </p>
 
         <form class="claim-profile__form" id="claimForm" data-slug={slug}>
@@ -50,11 +50,11 @@ const { doctorName, slug } = Astro.props;
             </div>
 
             <div class="claim-profile__field">
-                <label for="claimLicense">Medical License Number</label>
+                <label for="claimLicense">Medical License / NPI Number</label>
                 <input
                     type="text"
                     id="claimLicense"
-                    placeholder="e.g., MD-12345678"
+                    placeholder="e.g., NPI, GMC, or Medical Council ID"
                     required
                 />
             </div>
@@ -269,14 +269,15 @@ const { doctorName, slug } = Astro.props;
                 dt.items.add(files[0]);
                 fileInput.files = dt.files;
                 const span = uploadArea.querySelector("span");
-                if (span) span.textContent = `✅ ${files[0].name}`;
+                if (span) span.textContent = `Selected: ${files[0].name}`;
             }
         });
 
         fileInput?.addEventListener("change", () => {
             if (fileInput.files && fileInput.files.length > 0) {
                 const span = uploadArea?.querySelector("span");
-                if (span) span.textContent = `✅ ${fileInput.files[0].name}`;
+                if (span)
+                    span.textContent = `Selected: ${fileInput.files[0].name}`;
             }
         });
 
@@ -295,7 +296,7 @@ const { doctorName, slug } = Astro.props;
                     return;
                 }
 
-                btn.textContent = "✅ Claim Submitted!";
+                btn.textContent = "Claim Submitted!";
                 btn.setAttribute("disabled", "true");
                 btn.style.opacity = "0.7";
             }

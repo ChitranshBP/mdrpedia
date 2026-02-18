@@ -1,36 +1,492 @@
 {
   "fullName": "Irving L. Weissman",
   "slug": "irving-l-weissman",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Stem Cell Biology",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">IL</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 61,
-  "hIndex": 243,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 253,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 25317,
+  "livesSaved": 0,
+  "biography": "Irving Lerner \"Irv\" Weissman is a Professor of Pathology and Developmental Biology at Stanford University where he is the Founding Director of the Stanford Institute of Stem Cell Biology and Regenerative Medicine.",
+  "aiSummary": "Irving L. Weissman is a stem cell biology specialist with an H-index of 253 at Stanford University (Faculty). Has been published in Nature, Cell, Science. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Stanford University"
-    }
-  ],
-  "bio": "Irving L. Weissman is a pioneer in Stem Cell Biology at Stanford University, USA. With a D-Index of 243 and over 253,174 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Stanford University",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Stem Cell Biology"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Stem cells, cancer, and cancer stem cells",
+      "journal": "Nature",
+      "year": 2001,
+      "citationCount": 9611,
+      "doi": "10.1038/35102167",
+      "sourceUrl": "https://doi.org/10.1038/35102167",
+      "verified": true
+    },
+    {
+      "title": "Calcineurin is a common target of cyclophilin-cyclosporin A and FKBP-FK506 complexes",
+      "journal": "Cell",
+      "year": 1991,
+      "citationCount": 4118,
+      "doi": "10.1016/0092-8674(91)90124-h",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(91)90124-h",
+      "verified": true
+    },
+    {
+      "title": "Cancer Stem Cells—Perspectives on Current Status and Future Directions: AACR Workshop on Cancer Stem Cells",
+      "journal": "Cancer Research",
+      "year": 2006,
+      "citationCount": 3054,
+      "doi": "10.1158/0008-5472.can-06-3126",
+      "sourceUrl": "https://doi.org/10.1158/0008-5472.can-06-3126",
+      "verified": true
+    },
+    {
+      "title": "Purification and Characterization of Mouse Hematopoietic Stem Cells",
+      "journal": "Science",
+      "year": 1988,
+      "citationCount": 2819,
+      "doi": "10.1126/science.2898810",
+      "sourceUrl": "https://doi.org/10.1126/science.2898810",
+      "verified": true
+    },
+    {
+      "title": "A clonogenic common myeloid progenitor that gives rise to all myeloid lineages",
+      "journal": "Nature",
+      "year": 2000,
+      "citationCount": 2534,
+      "doi": "10.1038/35004599",
+      "sourceUrl": "https://doi.org/10.1038/35004599",
+      "verified": true
+    },
+    {
+      "title": "Association of reactive oxygen species levels and radioresistance in cancer stem cells",
+      "journal": "Nature",
+      "year": 2009,
+      "citationCount": 2492,
+      "doi": "10.1038/nature07733",
+      "sourceUrl": "https://doi.org/10.1038/nature07733",
+      "verified": true
+    },
+    {
+      "title": "Purified hematopoietic stem cells can differentiate into hepatocytes in vivo",
+      "journal": "Nature Medicine",
+      "year": 2000,
+      "citationCount": 2326,
+      "doi": "10.1038/81326",
+      "sourceUrl": "https://doi.org/10.1038/81326",
+      "verified": true
+    },
+    {
+      "title": "Epigenetic memory in induced pluripotent stem cells",
+      "journal": "Nature",
+      "year": 2010,
+      "citationCount": 2251,
+      "doi": "10.1038/nature09342",
+      "sourceUrl": "https://doi.org/10.1038/nature09342",
+      "verified": true
+    },
+    {
+      "title": "Wnt proteins are lipid-modified and can act as stem cell growth factors",
+      "journal": "Nature",
+      "year": 2003,
+      "citationCount": 2234,
+      "doi": "10.1038/nature01611",
+      "sourceUrl": "https://doi.org/10.1038/nature01611",
+      "verified": true
+    },
+    {
+      "title": "Rejuvenation of aged progenitor cells by exposure to a young systemic environment",
+      "journal": "Nature",
+      "year": 2005,
+      "citationCount": 2202,
+      "doi": "10.1038/nature03260",
+      "sourceUrl": "https://doi.org/10.1038/nature03260",
+      "verified": true
+    },
+    {
+      "title": "Identification of Clonogenic Common Lymphoid Progenitors in Mouse Bone Marrow",
+      "journal": "Cell",
+      "year": 1997,
+      "citationCount": 2190,
+      "doi": "10.1016/s0092-8674(00)80453-5",
+      "sourceUrl": "https://doi.org/10.1016/s0092-8674(00)80453-5",
+      "verified": true
+    },
+    {
+      "title": "PD-1 expression by tumour-associated macrophages inhibits phagocytosis and tumour immunity",
+      "journal": "Nature",
+      "year": 2017,
+      "citationCount": 2176,
+      "doi": "10.1038/nature22396",
+      "sourceUrl": "https://doi.org/10.1038/nature22396",
+      "verified": true
+    },
+    {
+      "title": "Identification of a subpopulation of cells with cancer stem cell properties in head and neck squamous cell carcinoma",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2007,
+      "citationCount": 2161,
+      "doi": "10.1073/pnas.0610117104",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0610117104",
+      "verified": true
+    },
+    {
+      "title": "A role for Wnt signalling in self-renewal of haematopoietic stem cells",
+      "journal": "Nature",
+      "year": 2003,
+      "citationCount": 2131,
+      "doi": "10.1038/nature01593",
+      "sourceUrl": "https://doi.org/10.1038/nature01593",
+      "verified": true
+    },
+    {
+      "title": "Bmi-1 is required for maintenance of adult self-renewing haematopoietic stem cells",
+      "journal": "Nature",
+      "year": 2003,
+      "citationCount": 1840,
+      "doi": "10.1038/nature01587",
+      "sourceUrl": "https://doi.org/10.1038/nature01587",
+      "verified": true
+    },
+    {
+      "title": "Direct isolation of human central nervous system stem cells",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2000,
+      "citationCount": 1815,
+      "doi": "10.1073/pnas.97.26.14720",
+      "sourceUrl": "https://doi.org/10.1073/pnas.97.26.14720",
+      "verified": true
+    },
+    {
+      "title": "New tools for studying microglia in the mouse and human CNS",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2016,
+      "citationCount": 1805,
+      "doi": "10.1073/pnas.1525528113",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1525528113",
+      "verified": true
+    },
+    {
+      "title": "Stem Cells",
+      "journal": "Cell",
+      "year": 2000,
+      "citationCount": 1796,
+      "doi": "10.1016/s0092-8674(00)81692-x",
+      "sourceUrl": "https://doi.org/10.1016/s0092-8674(00)81692-x",
+      "verified": true
+    },
+    {
+      "title": "Haematopoietic stem cells adopt mature haematopoietic fates in ischaemic myocardium",
+      "journal": "Nature",
+      "year": 2004,
+      "citationCount": 1758,
+      "doi": "10.1038/nature02460",
+      "sourceUrl": "https://doi.org/10.1038/nature02460",
+      "verified": true
+    },
+    {
+      "title": "A molecular cell atlas of the human lung from single-cell RNA sequencing",
+      "journal": "Nature",
+      "year": 2020,
+      "citationCount": 1729,
+      "doi": "10.1038/s41586-020-2922-4",
+      "sourceUrl": "https://doi.org/10.1038/s41586-020-2922-4",
+      "verified": true
+    },
+    {
+      "title": "CD47 Is an Adverse Prognostic Factor and Therapeutic Antibody Target on Human Acute Myeloid Leukemia Stem Cells",
+      "journal": "Cell",
+      "year": 2009,
+      "citationCount": 1701,
+      "doi": "10.1016/j.cell.2009.05.045",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2009.05.045",
+      "verified": true
+    },
+    {
+      "title": "The CD47-signal regulatory protein alpha (SIRPa) interaction is a therapeutic target for human solid tumors",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2012,
+      "citationCount": 1605,
+      "doi": "10.1073/pnas.1121623109",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1121623109",
+      "verified": true
+    },
+    {
+      "title": "CD47 Is Upregulated on Circulating Hematopoietic Stem Cells and Leukemia Cells to Avoid Phagocytosis",
+      "journal": "Cell",
+      "year": 2009,
+      "citationCount": 1530,
+      "doi": "10.1016/j.cell.2009.05.046",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2009.05.046",
+      "verified": true
+    },
+    {
+      "title": "A cell-surface molecule involved in organ-specific homing of lymphocytes",
+      "journal": "Nature",
+      "year": 1983,
+      "citationCount": 1491,
+      "doi": "10.1038/304030a0",
+      "sourceUrl": "https://doi.org/10.1038/304030a0",
+      "verified": true
+    },
+    {
+      "title": "Granulocyte–Macrophage Progenitors as Candidate Leukemic Stem Cells in Blast-Crisis CML",
+      "journal": "New England Journal of Medicine",
+      "year": 2004,
+      "citationCount": 1485,
+      "doi": "10.1056/nejmoa040258",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa040258",
+      "verified": true
+    },
+    {
+      "title": "Little Evidence for Developmental Plasticity of Adult Hematopoietic Stem Cells",
+      "journal": "Science",
+      "year": 2002,
+      "citationCount": 1470,
+      "doi": "10.1126/science.1074807",
+      "sourceUrl": "https://doi.org/10.1126/science.1074807",
+      "verified": true
+    },
+    {
+      "title": "α4β7 integrin mediates lymphocyte binding to the mucosal vascular addressin MAdCAM-1",
+      "journal": "Cell",
+      "year": 1993,
+      "citationCount": 1446,
+      "doi": "10.1016/0092-8674(93)90305-a",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(93)90305-a",
+      "verified": true
+    },
+    {
+      "title": "CD24 signalling through macrophage Siglec-10 is a target for cancer immunotherapy",
+      "journal": "Nature",
+      "year": 2019,
+      "citationCount": 1296,
+      "doi": "10.1038/s41586-019-1456-0",
+      "sourceUrl": "https://doi.org/10.1038/s41586-019-1456-0",
+      "verified": true
+    },
+    {
+      "title": "Plasticity of Adult Stem Cells",
+      "journal": "Cell",
+      "year": 2004,
+      "citationCount": 1237,
+      "doi": "10.1016/s0092-8674(04)00208-9",
+      "sourceUrl": "https://doi.org/10.1016/s0092-8674(04)00208-9",
+      "verified": true
+    },
+    {
+      "title": "Cell intrinsic alterations underlie hematopoietic stem cell aging",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2005,
+      "citationCount": 1127,
+      "doi": "10.1073/pnas.0503280102",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0503280102",
+      "verified": true
+    },
+    {
+      "title": "The long-term repopulating subset of hematopoietic stem cells is deterministic and isolatable by phenotype",
+      "journal": "Immunity",
+      "year": 1994,
+      "citationCount": 1095,
+      "doi": "10.1016/1074-7613(94)90037-x",
+      "sourceUrl": "https://doi.org/10.1016/1074-7613(94)90037-x",
+      "verified": true
+    },
+    {
+      "title": "Deficiencies in DNA damage repair limit the function of haematopoietic stem cells with age",
+      "journal": "Nature",
+      "year": 2007,
+      "citationCount": 1082,
+      "doi": "10.1038/nature05862",
+      "sourceUrl": "https://doi.org/10.1038/nature05862",
+      "verified": true
+    },
+    {
+      "title": "CD47 Blockade by Hu5F9-G4 and Rituximab in Non-Hodgkin’s Lymphoma",
+      "journal": "New England Journal of Medicine",
+      "year": 2018,
+      "citationCount": 1071,
+      "doi": "10.1056/nejmoa1807315",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1807315",
+      "verified": true
+    },
+    {
+      "title": "Anti-CD47 Antibody Synergizes with Rituximab to Promote Phagocytosis and Eradicate Non-Hodgkin Lymphoma",
+      "journal": "Cell",
+      "year": 2010,
+      "citationCount": 1043,
+      "doi": "10.1016/j.cell.2010.07.044",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2010.07.044",
+      "verified": true
+    },
+    {
+      "title": "Biology of Hematopoietic Stem Cells and Progenitors: Implications for Clinical Application",
+      "journal": "Annual Review of Immunology",
+      "year": 2003,
+      "citationCount": 993,
+      "doi": "10.1146/annurev.immunol.21.120601.141007",
+      "sourceUrl": "https://doi.org/10.1146/annurev.immunol.21.120601.141007",
+      "verified": true
+    },
+    {
+      "title": "Human bone marrow hematopoietic stem cells are increased in frequency and myeloid-biased with age",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2011,
+      "citationCount": 971,
+      "doi": "10.1073/pnas.1116110108",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1116110108",
+      "verified": true
+    },
+    {
+      "title": "Stem and Progenitor Cells: Origins, Phenotypes, Lineage Commitments, and Transdifferentiations",
+      "journal": "Annual Review of Cell and Developmental Biology",
+      "year": 2001,
+      "citationCount": 938,
+      "doi": "10.1146/annurev.cellbio.17.1.387",
+      "sourceUrl": "https://doi.org/10.1146/annurev.cellbio.17.1.387",
+      "verified": true
+    },
+    {
+      "title": "Langerhans cells renew in the skin throughout life under steady-state conditions",
+      "journal": "Nature Immunology",
+      "year": 2002,
+      "citationCount": 935,
+      "doi": "10.1038/ni852",
+      "sourceUrl": "https://doi.org/10.1038/ni852",
+      "verified": true
+    },
+    {
+      "title": "Physiological Migration of Hematopoietic Stem and Progenitor Cells",
+      "journal": "Science",
+      "year": 2001,
+      "citationCount": 927,
+      "doi": "10.1126/science.1064081",
+      "sourceUrl": "https://doi.org/10.1126/science.1064081",
+      "verified": true
+    },
+    {
+      "title": "Hematopoietic stem cell: self‐renewal versus differentiation",
+      "journal": "WIREs Systems Biology and Medicine",
+      "year": 2010,
+      "citationCount": 892,
+      "doi": "10.1002/wsbm.86",
+      "sourceUrl": "https://doi.org/10.1002/wsbm.86",
+      "verified": true
+    },
+    {
+      "title": "Phagocytosis checkpoints as new targets for cancer immunotherapy",
+      "journal": "Nature reviews. Cancer",
+      "year": 2019,
+      "citationCount": 891,
+      "doi": "10.1038/s41568-019-0183-z",
+      "sourceUrl": "https://doi.org/10.1038/s41568-019-0183-z",
+      "verified": true
+    },
+    {
+      "title": "Stems Cells and the Pathways to Aging and Cancer",
+      "journal": "Cell",
+      "year": 2008,
+      "citationCount": 886,
+      "doi": "10.1016/j.cell.2008.01.036",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2008.01.036",
+      "verified": true
+    },
+    {
+      "title": "Sustained in vitro intestinal epithelial culture within a Wnt-dependent stem cell niche",
+      "journal": "Nature Medicine",
+      "year": 2009,
+      "citationCount": 876,
+      "doi": "10.1038/nm.1951",
+      "sourceUrl": "https://doi.org/10.1038/nm.1951",
+      "verified": true
+    },
+    {
+      "title": "The aging of hematopoietic stem cells",
+      "journal": "Nature Medicine",
+      "year": 1996,
+      "citationCount": 863,
+      "doi": "10.1038/nm0996-1011",
+      "sourceUrl": "https://doi.org/10.1038/nm0996-1011",
+      "verified": true
+    },
+    {
+      "title": "Translating Stem and Progenitor Cell Biology to the Clinic: Barriers and Opportunities",
+      "journal": "Science",
+      "year": 2000,
+      "citationCount": 852,
+      "doi": "10.1126/science.287.5457.1442",
+      "sourceUrl": "https://doi.org/10.1126/science.287.5457.1442",
+      "verified": true
+    },
+    {
+      "title": "<i>In vivo</i> proliferation and cell cycle kinetics of long-term self-renewing hematopoietic stem cells",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1999,
+      "citationCount": 847,
+      "doi": "10.1073/pnas.96.6.3120",
+      "sourceUrl": "https://doi.org/10.1073/pnas.96.6.3120",
+      "verified": true
+    },
+    {
+      "title": "Identification and Specification of the Mouse Skeletal Stem Cell",
+      "journal": "Cell",
+      "year": 2015,
+      "citationCount": 761,
+      "doi": "10.1016/j.cell.2014.12.002",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2014.12.002",
+      "verified": true
+    },
+    {
+      "title": "The Biology of Hematopoietic Stem Cells",
+      "journal": "Annual Review of Cell and Developmental Biology",
+      "year": 1995,
+      "citationCount": 761,
+      "doi": "10.1146/annurev.cb.11.110195.000343",
+      "sourceUrl": "https://doi.org/10.1146/annurev.cb.11.110195.000343",
+      "verified": true
+    },
+    {
+      "title": "Flk-2 is a marker in hematopoietic stem cell differentiation: A simple method to isolate long-term stem cells",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2001,
+      "citationCount": 761,
+      "doi": "10.1073/pnas.261562798",
+      "sourceUrl": "https://doi.org/10.1073/pnas.261562798",
+      "verified": true
+    },
+    {
+      "title": "Calreticulin Is the Dominant Pro-Phagocytic Signal on Multiple Human Cancers and Is Counterbalanced by CD47",
+      "journal": "Science Translational Medicine",
+      "year": 2010,
+      "citationCount": 748,
+      "doi": "10.1126/scitranslmed.3001375",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.3001375",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:13.000Z",
+  "openalexId": "https://openalex.org/A5082894731"
 }

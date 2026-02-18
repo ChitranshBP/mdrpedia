@@ -1,36 +1,495 @@
 {
   "fullName": "Robert Langer",
   "slug": "robert-langer",
-  "title": "MD, PhD",
-  "specialty": "Drug Delivery",
+  "title": "MD",
+  "specialty": "Breakthrough Prize",
   "geography": {
+    "country": "Global",
     "city": "Unknown",
-    "country": "USA"
+    "region": "Unknown"
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">RL</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 58,
-  "hIndex": 233,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 262,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 45161,
+  "livesSaved": 0,
+  "biography": "Robert Samuel Langer Jr. FREng is an American biotechnologist, businessman, chemical engineer, chemist, and inventor. He is one of the nine Institute Professors at the Massachusetts Institute of Technology.",
+  "aiSummary": "Robert Langer is a breakthrough prize specialist with an H-index of 262 at MITBiomedical Engineering (Member). Has been published in Science, Nature Nanotechnology, Nature Reviews Drug Discovery. Based in Unknown, Unknown, Global.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
+  "hasInvention": false,
+  "education": [
+    "MITBiomedical Engineering"
+  ],
+  "socialMedia": {},
   "affiliations": [
     {
-      "hospitalName": "MIT"
+      "hospitalName": "MITBiomedical Engineering",
+      "role": "Member",
+      "hospitalUrl": "#"
     }
   ],
-  "bio": "Robert Langer is a pioneer in Drug Delivery at MIT, USA. With a D-Index of 233 and over 451,612 citations, they are among the world's most influential researchers.",
-  "awards": [
+  "medicalSpecialty": [
+    "Breakthrough Prize"
+  ],
+  "knowsAbout": [
+    "Drug delivery systemsm"
+  ],
+  "citations": [
     {
-      "name": "High Impact Researcher",
-      "year": 2024
+      "title": "Tissue Engineering",
+      "journal": "Science",
+      "year": 1993,
+      "citationCount": 9464,
+      "doi": "10.1126/science.8493529",
+      "sourceUrl": "https://doi.org/10.1126/science.8493529",
+      "verified": true
+    },
+    {
+      "title": "Nanocarriers as an emerging platform for cancer therapy",
+      "journal": "Nature Nanotechnology",
+      "year": 2007,
+      "citationCount": 8439,
+      "doi": "10.1038/nnano.2007.387",
+      "sourceUrl": "https://doi.org/10.1038/nnano.2007.387",
+      "verified": true
+    },
+    {
+      "title": "Engineering precision nanoparticles for drug delivery",
+      "journal": "Nature Reviews Drug Discovery",
+      "year": 2020,
+      "citationCount": 6799,
+      "doi": "10.1038/s41573-020-0090-8",
+      "sourceUrl": "https://doi.org/10.1038/s41573-020-0090-8",
+      "verified": true
+    },
+    {
+      "title": "Hydrogels in Biology and Medicine: From Molecular Principles to Bionanotechnology",
+      "journal": "Advanced Materials",
+      "year": 2006,
+      "citationCount": 3924,
+      "doi": "10.1002/adma.200501612",
+      "sourceUrl": "https://doi.org/10.1002/adma.200501612",
+      "verified": true
+    },
+    {
+      "title": "Transdermal drug delivery",
+      "journal": "Nature Biotechnology",
+      "year": 2008,
+      "citationCount": 3275,
+      "doi": "10.1038/nbt.1504",
+      "sourceUrl": "https://doi.org/10.1038/nbt.1504",
+      "verified": true
+    },
+    {
+      "title": "Lipid nanoparticles for mRNA delivery",
+      "journal": "Nature Reviews Materials",
+      "year": 2021,
+      "citationCount": 3180,
+      "doi": "10.1038/s41578-021-00358-0",
+      "sourceUrl": "https://doi.org/10.1038/s41578-021-00358-0",
+      "verified": true
+    },
+    {
+      "title": "Designing materials for biology and medicine",
+      "journal": "Nature",
+      "year": 2004,
+      "citationCount": 3129,
+      "doi": "10.1038/nature02388",
+      "sourceUrl": "https://doi.org/10.1038/nature02388",
+      "verified": true
+    },
+    {
+      "title": "Knocking down barriers: advances in siRNA delivery",
+      "journal": "Nature Reviews Drug Discovery",
+      "year": 2009,
+      "citationCount": 3079,
+      "doi": "10.1038/nrd2742",
+      "sourceUrl": "https://doi.org/10.1038/nrd2742",
+      "verified": true
+    },
+    {
+      "title": "Physical and mechanical properties of PLA, and their functions in widespread applications — A comprehensive review",
+      "journal": "Advanced Drug Delivery Reviews",
+      "year": 2016,
+      "citationCount": 3040,
+      "doi": "10.1016/j.addr.2016.06.012",
+      "sourceUrl": "https://doi.org/10.1016/j.addr.2016.06.012",
+      "verified": true
+    },
+    {
+      "title": "Biodegradable Long-Circulating Polymeric Nanospheres",
+      "journal": "Science",
+      "year": 1994,
+      "citationCount": 2877,
+      "doi": "10.1126/science.8128245",
+      "sourceUrl": "https://doi.org/10.1126/science.8128245",
+      "verified": true
+    },
+    {
+      "title": "Polymeric Systems for Controlled Drug Release",
+      "journal": "Chemical Reviews",
+      "year": 1999,
+      "citationCount": 2598,
+      "doi": "10.1021/cr940351u",
+      "sourceUrl": "https://doi.org/10.1021/cr940351u",
+      "verified": true
+    },
+    {
+      "title": "Delivery technologies for cancer immunotherapy",
+      "journal": "Nature Reviews Drug Discovery",
+      "year": 2019,
+      "citationCount": 2521,
+      "doi": "10.1038/s41573-018-0006-z",
+      "sourceUrl": "https://doi.org/10.1038/s41573-018-0006-z",
+      "verified": true
+    },
+    {
+      "title": "Biodegradable, Elastic Shape-Memory Polymers for Potential Biomedical Applications",
+      "journal": "Science",
+      "year": 2002,
+      "citationCount": 2107,
+      "doi": "10.1126/science.1066102",
+      "sourceUrl": "https://doi.org/10.1126/science.1066102",
+      "verified": true
+    },
+    {
+      "title": "Light-induced shape-memory polymers",
+      "journal": "Nature",
+      "year": 2005,
+      "citationCount": 1982,
+      "doi": "10.1038/nature03496",
+      "sourceUrl": "https://doi.org/10.1038/nature03496",
+      "verified": true
+    },
+    {
+      "title": "Advances in oligonucleotide drug delivery",
+      "journal": "Nature Reviews Drug Discovery",
+      "year": 2020,
+      "citationCount": 1860,
+      "doi": "10.1038/s41573-020-0075-7",
+      "sourceUrl": "https://doi.org/10.1038/s41573-020-0075-7",
+      "verified": true
+    },
+    {
+      "title": "Bioplastics for a circular economy",
+      "journal": "Nature Reviews Materials",
+      "year": 2022,
+      "citationCount": 1814,
+      "doi": "10.1038/s41578-021-00407-8",
+      "sourceUrl": "https://doi.org/10.1038/s41578-021-00407-8",
+      "verified": true
+    },
+    {
+      "title": "New Methods of Drug Delivery",
+      "journal": "Science",
+      "year": 1990,
+      "citationCount": 1767,
+      "doi": "10.1126/science.2218494",
+      "sourceUrl": "https://doi.org/10.1126/science.2218494",
+      "verified": true
+    },
+    {
+      "title": "Functional Arteries Grown in Vitro",
+      "journal": "Science",
+      "year": 1999,
+      "citationCount": 1747,
+      "doi": "10.1126/science.284.5413.489",
+      "sourceUrl": "https://doi.org/10.1126/science.284.5413.489",
+      "verified": true
+    },
+    {
+      "title": "Targeted nanoparticle-aptamer bioconjugates for cancer chemotherapy <i>in vivo</i>",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2006,
+      "citationCount": 1642,
+      "doi": "10.1073/pnas.0601755103",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0601755103",
+      "verified": true
+    },
+    {
+      "title": "Overcoming the challenges in administering biopharmaceuticals: formulation and delivery strategies",
+      "journal": "Nature Reviews Drug Discovery",
+      "year": 2014,
+      "citationCount": 1585,
+      "doi": "10.1038/nrd4363",
+      "sourceUrl": "https://doi.org/10.1038/nrd4363",
+      "verified": true
+    },
+    {
+      "title": "Nanotechnology in Drug Delivery and Tissue Engineering: From Discovery to Applications",
+      "journal": "Nano Letters",
+      "year": 2010,
+      "citationCount": 1573,
+      "doi": "10.1021/nl102184c",
+      "sourceUrl": "https://doi.org/10.1021/nl102184c",
+      "verified": true
+    },
+    {
+      "title": "Microscale technologies for tissue engineering and biology",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2006,
+      "citationCount": 1552,
+      "doi": "10.1073/pnas.0507681102",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0507681102",
+      "verified": true
+    },
+    {
+      "title": "Supramolecular biomaterials",
+      "journal": "Nature Materials",
+      "year": 2015,
+      "citationCount": 1537,
+      "doi": "10.1038/nmat4474",
+      "sourceUrl": "https://doi.org/10.1038/nmat4474",
+      "verified": true
+    },
+    {
+      "title": "Nanoparticle Delivery of Cancer Drugs",
+      "journal": "Annual Review of Medicine",
+      "year": 2011,
+      "citationCount": 1512,
+      "doi": "10.1146/annurev-med-040210-162544",
+      "sourceUrl": "https://doi.org/10.1146/annurev-med-040210-162544",
+      "verified": true
+    },
+    {
+      "title": "Current status and future potential of transdermal drug delivery",
+      "journal": "Nature Reviews Drug Discovery",
+      "year": 2004,
+      "citationCount": 1423,
+      "doi": "10.1038/nrd1304",
+      "sourceUrl": "https://doi.org/10.1038/nrd1304",
+      "verified": true
+    },
+    {
+      "title": "Bioresponsive materials",
+      "journal": "Nature Reviews Materials",
+      "year": 2016,
+      "citationCount": 1372,
+      "doi": "10.1038/natrevmats.2016.75",
+      "sourceUrl": "https://doi.org/10.1038/natrevmats.2016.75",
+      "verified": true
+    },
+    {
+      "title": "Nanotechnological strategies for engineering complex tissues",
+      "journal": "Nature Nanotechnology",
+      "year": 2010,
+      "citationCount": 1355,
+      "doi": "10.1038/nnano.2010.246",
+      "sourceUrl": "https://doi.org/10.1038/nnano.2010.246",
+      "verified": true
+    },
+    {
+      "title": "Exploring polyethylenimine‐mediated DNA transfection and the proton sponge hypothesis",
+      "journal": "The Journal of Gene Medicine",
+      "year": 2004,
+      "citationCount": 1322,
+      "doi": "10.1002/jgm.696",
+      "sourceUrl": "https://doi.org/10.1002/jgm.696",
+      "verified": true
+    },
+    {
+      "title": "Tissue engineering: the design and fabrication of living replacement devices for surgical reconstruction and transplantation",
+      "journal": "The Lancet",
+      "year": 1999,
+      "citationCount": 1294,
+      "doi": "10.1016/s0140-6736(99)90247-7",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(99)90247-7",
+      "verified": true
+    },
+    {
+      "title": "A tough biodegradable elastomer",
+      "journal": "Nature Biotechnology",
+      "year": 2002,
+      "citationCount": 1290,
+      "doi": "10.1038/nbt0602-602",
+      "sourceUrl": "https://doi.org/10.1038/nbt0602-602",
+      "verified": true
+    },
+    {
+      "title": "Small-scale systems for in vivo drug delivery",
+      "journal": "Nature Biotechnology",
+      "year": 2003,
+      "citationCount": 1287,
+      "doi": "10.1038/nbt876",
+      "sourceUrl": "https://doi.org/10.1038/nbt876",
+      "verified": true
+    },
+    {
+      "title": "Engineering vascularized skeletal muscle tissue",
+      "journal": "Nature Biotechnology",
+      "year": 2005,
+      "citationCount": 1273,
+      "doi": "10.1038/nbt1109",
+      "sourceUrl": "https://doi.org/10.1038/nbt1109",
+      "verified": true
+    },
+    {
+      "title": "Engineering Substrate Topography at the Micro‐ and Nanoscale to Control Cell Function",
+      "journal": "Angewandte Chemie International Edition",
+      "year": 2009,
+      "citationCount": 1235,
+      "doi": "10.1002/anie.200805179",
+      "sourceUrl": "https://doi.org/10.1002/anie.200805179",
+      "verified": true
+    },
+    {
+      "title": "Biodegradable Polymer Scaffolds for Tissue Engineering",
+      "journal": "Nature Biotechnology",
+      "year": 1994,
+      "citationCount": 1228,
+      "doi": "10.1038/nbt0794-689",
+      "sourceUrl": "https://doi.org/10.1038/nbt0794-689",
+      "verified": true
+    },
+    {
+      "title": "A combinatorial library of lipid-like materials for delivery of RNAi therapeutics",
+      "journal": "Nature Biotechnology",
+      "year": 2008,
+      "citationCount": 1205,
+      "doi": "10.1038/nbt1402",
+      "sourceUrl": "https://doi.org/10.1038/nbt1402",
+      "verified": true
+    },
+    {
+      "title": "Preparation and characterization of poly(l-lactic acid) foams",
+      "journal": "Polymer",
+      "year": 1994,
+      "citationCount": 1181,
+      "doi": "10.1016/0032-3861(94)90953-9",
+      "sourceUrl": "https://doi.org/10.1016/0032-3861(94)90953-9",
+      "verified": true
+    },
+    {
+      "title": "Polymers for the sustained release of proteins and other macromolecules",
+      "journal": "Nature",
+      "year": 1976,
+      "citationCount": 1165,
+      "doi": "10.1038/263797a0",
+      "sourceUrl": "https://doi.org/10.1038/263797a0",
+      "verified": true
+    },
+    {
+      "title": "Large Porous Particles for Pulmonary Drug Delivery",
+      "journal": "Science",
+      "year": 1997,
+      "citationCount": 1162,
+      "doi": "10.1126/science.276.5320.1868",
+      "sourceUrl": "https://doi.org/10.1126/science.276.5320.1868",
+      "verified": true
+    },
+    {
+      "title": "Molecularly self-assembled nucleic acid nanoparticles for targeted in vivo siRNA delivery",
+      "journal": "Nature Nanotechnology",
+      "year": 2012,
+      "citationCount": 1158,
+      "doi": "10.1038/nnano.2012.73",
+      "sourceUrl": "https://doi.org/10.1038/nnano.2012.73",
+      "verified": true
+    },
+    {
+      "title": "Treating metastatic cancer with nanotechnology",
+      "journal": "Nature reviews. Cancer",
+      "year": 2011,
+      "citationCount": 1149,
+      "doi": "10.1038/nrc3180",
+      "sourceUrl": "https://doi.org/10.1038/nrc3180",
+      "verified": true
+    },
+    {
+      "title": "A Reversibly Switching Surface",
+      "journal": "Science",
+      "year": 2003,
+      "citationCount": 1108,
+      "doi": "10.1126/science.1078933",
+      "sourceUrl": "https://doi.org/10.1126/science.1078933",
+      "verified": true
+    },
+    {
+      "title": "Preclinical Development and Clinical Translation of a PSMA-Targeted Docetaxel Nanoparticle with a Differentiated Pharmacological Profile",
+      "journal": "Science Translational Medicine",
+      "year": 2012,
+      "citationCount": 1105,
+      "doi": "10.1126/scitranslmed.3003651",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.3003651",
+      "verified": true
+    },
+    {
+      "title": "Novel approach to fabricate porous sponges of poly(d,l-lactic-co-glycolic acid) without the use of organic solvents",
+      "journal": "Biomaterials",
+      "year": 1996,
+      "citationCount": 1070,
+      "doi": "10.1016/0142-9612(96)87284-x",
+      "sourceUrl": "https://doi.org/10.1016/0142-9612(96)87284-x",
+      "verified": true
+    },
+    {
+      "title": "Nanostructured materials for applications in drug delivery and tissue engineering",
+      "journal": "Journal of Biomaterials Science Polymer Edition",
+      "year": 2007,
+      "citationCount": 1042,
+      "doi": "10.1163/156856207779996931",
+      "sourceUrl": "https://doi.org/10.1163/156856207779996931",
+      "verified": true
+    },
+    {
+      "title": "Quantum Dot−Aptamer Conjugates for Synchronous Cancer Imaging, Therapy, and Sensing of Drug Delivery Based on Bi-Fluorescence Resonance Energy Transfer",
+      "journal": "Nano Letters",
+      "year": 2007,
+      "citationCount": 1021,
+      "doi": "10.1021/nl071546n",
+      "sourceUrl": "https://doi.org/10.1021/nl071546n",
+      "verified": true
+    },
+    {
+      "title": "Self-Assembled Lipid−Polymer Hybrid Nanoparticles: A Robust Drug Delivery Platform",
+      "journal": "ACS Nano",
+      "year": 2008,
+      "citationCount": 995,
+      "doi": "10.1021/nn800275r",
+      "sourceUrl": "https://doi.org/10.1021/nn800275r",
+      "verified": true
+    },
+    {
+      "title": "Targeted delivery of cisplatin to prostate cancer cells by aptamer functionalized Pt(IV) prodrug-PLGA–PEG nanoparticles",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2008,
+      "citationCount": 982,
+      "doi": "10.1073/pnas.0809154105",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0809154105",
+      "verified": true
+    },
+    {
+      "title": "Functional recovery following traumatic spinal cord injury mediated by a unique polymer scaffold seeded with neural stem cells",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2002,
+      "citationCount": 963,
+      "doi": "10.1073/pnas.052678899",
+      "sourceUrl": "https://doi.org/10.1073/pnas.052678899",
+      "verified": true
+    },
+    {
+      "title": "Neocartilage formation <i>in vitro</i> and <i>in vivo</i> using cells cultured on synthetic biodegradable polymers",
+      "journal": "Journal of Biomedical Materials Research",
+      "year": 1993,
+      "citationCount": 951,
+      "doi": "10.1002/jbm.820270104",
+      "sourceUrl": "https://doi.org/10.1002/jbm.820270104",
+      "verified": true
+    },
+    {
+      "title": "Lipid-like materials for low-dose, in vivo gene silencing",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2010,
+      "citationCount": 950,
+      "doi": "10.1073/pnas.0910603106",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0910603106",
+      "verified": true
     }
   ],
-  "education": [],
-  "socialMedia": {},
-  "status": "LIVING"
+  "awards": [],
+  "timeline": [],
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Robert_Langer_in_2023.jpg/330px-Robert_Langer_in_2023.jpg",
+  "openalexId": "https://openalex.org/A5042597057"
 }

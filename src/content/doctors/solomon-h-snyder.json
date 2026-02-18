@@ -1,36 +1,485 @@
 {
   "fullName": "Solomon H. Snyder",
   "slug": "solomon-h-snyder",
-  "title": "MD, PhD",
-  "specialty": "Neuropharmacology",
+  "title": "MD",
+  "specialty": "Medicine",
   "geography": {
+    "country": "Unknown",
     "city": "Unknown",
-    "country": "USA"
+    "region": "Unknown"
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">SH</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 71,
-  "hIndex": 284,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 222,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 29263,
+  "livesSaved": 0,
+  "biography": "Solomon Halbert Snyder is an American neuroscientist who has made wide-ranging contributions to neuropharmacology and neurochemistry. He studied at Georgetown University, and has conducted the majority of his research at the Johns Hopkins School of Medicine. Many advances in molecular neuroscience have stemmed from Snyder's identification of receptors for neurotransmitters and drugs, and elucidation of the actions of psychotropic agents. He received the Albert Lasker Award for Basic Medical Research in 1978 for his research on the opioid receptor, and is one of the most highly cited researchers in the biological and biomedical sciences, with the highest h-index in those fields for the years 1983–2002, and then from 2007 to 2019.",
+  "aiSummary": "Solomon H. Snyder is a medicine specialist with an H-index of 222. Has been published in Proceedings of the National Academy of Sciences, Science, Nature. Based in Unknown, Unknown, Unknown.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Johns Hopkins University"
-    }
-  ],
-  "bio": "Solomon H. Snyder is a pioneer in Neuropharmacology at Johns Hopkins University, USA. With a D-Index of 284 and over 292,625 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [],
+  "medicalSpecialty": [
+    "Medicine"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Isolation of nitric oxide synthetase, a calmodulin-requiring enzyme.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1990,
+      "citationCount": 3302,
+      "doi": "10.1073/pnas.87.2.682",
+      "sourceUrl": "https://doi.org/10.1073/pnas.87.2.682",
+      "verified": true
+    },
+    {
+      "title": "Handbook of Psychopharmacology",
+      "journal": "Unknown Journal",
+      "year": 1988,
+      "citationCount": 2759,
+      "doi": "10.1007/978-1-4613-0933-8",
+      "sourceUrl": "https://doi.org/10.1007/978-1-4613-0933-8",
+      "verified": true
+    },
+    {
+      "title": "Opiate Receptor: Demonstration in Nervous Tissue",
+      "journal": "Science",
+      "year": 1973,
+      "citationCount": 2369,
+      "doi": "10.1126/science.179.4077.1011",
+      "sourceUrl": "https://doi.org/10.1126/science.179.4077.1011",
+      "verified": true
+    },
+    {
+      "title": "Cloned and expressed nitric oxide synthase structurally resembles cytochrome P-450 reductase",
+      "journal": "Nature",
+      "year": 1991,
+      "citationCount": 2360,
+      "doi": "10.1038/351714a0",
+      "sourceUrl": "https://doi.org/10.1038/351714a0",
+      "verified": true
+    },
+    {
+      "title": "H <sub>2</sub> S as a Physiologic Vasorelaxant: Hypertension in Mice with Deletion of Cystathionine γ-Lyase",
+      "journal": "Science",
+      "year": 2008,
+      "citationCount": 2286,
+      "doi": "10.1126/science.1162667",
+      "sourceUrl": "https://doi.org/10.1126/science.1162667",
+      "verified": true
+    },
+    {
+      "title": "Dopamine Receptor Binding Predicts Clinical and Pharmacological Potencies of Antischizophrenic Drugs",
+      "journal": "Science",
+      "year": 1976,
+      "citationCount": 2225,
+      "doi": "10.1126/science.3854",
+      "sourceUrl": "https://doi.org/10.1126/science.3854",
+      "verified": true
+    },
+    {
+      "title": "Nitric oxide synthase and neuronal NADPH diaphorase are identical in brain and peripheral tissues.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1991,
+      "citationCount": 1853,
+      "doi": "10.1073/pnas.88.17.7797",
+      "sourceUrl": "https://doi.org/10.1073/pnas.88.17.7797",
+      "verified": true
+    },
+    {
+      "title": "Carbon Monoxide: a Putative Neural Messenger",
+      "journal": "Science",
+      "year": 1993,
+      "citationCount": 1557,
+      "doi": "10.1126/science.7678352",
+      "sourceUrl": "https://doi.org/10.1126/science.7678352",
+      "verified": true
+    },
+    {
+      "title": "RAFT1: A mammalian protein that binds to FKBP12 in a rapamycin-dependent fashion and is homologous to yeast TORs",
+      "journal": "Cell",
+      "year": 1994,
+      "citationCount": 1479,
+      "doi": "10.1016/0092-8674(94)90570-3",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(94)90570-3",
+      "verified": true
+    },
+    {
+      "title": "Protein S-nitrosylation: a physiological signal for neuronal nitric oxide",
+      "journal": "Nature Cell Biology",
+      "year": 2001,
+      "citationCount": 1392,
+      "doi": "10.1038/35055104",
+      "sourceUrl": "https://doi.org/10.1038/35055104",
+      "verified": true
+    },
+    {
+      "title": "Multiple Serotonin Receptors: Differential Binding of [3H]5-Hydroxytryptamine, [3H]Lysergic Acid Diethylamide and [3H]Spiroperidol",
+      "journal": "Molecular Pharmacology",
+      "year": 1979,
+      "citationCount": 1354,
+      "doi": "10.1016/s0026-895x(25)13812-1",
+      "sourceUrl": "https://doi.org/10.1016/s0026-895x(25)13812-1",
+      "verified": true
+    },
+    {
+      "title": "Targeted disruption of the neuronal nitric oxide synthase gene",
+      "journal": "Cell",
+      "year": 1993,
+      "citationCount": 1307,
+      "doi": "10.1016/0092-8674(93)90615-w",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(93)90615-w",
+      "verified": true
+    },
+    {
+      "title": "Parkinsonism-inducing neurotoxin, N-methyl-4-phenyl-1,2,3,6 -tetrahydropyridine: uptake of the metabolite N-methyl-4-phenylpyridine by dopamine neurons explains selective toxicity.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1985,
+      "citationCount": 1258,
+      "doi": "10.1073/pnas.82.7.2173",
+      "sourceUrl": "https://doi.org/10.1073/pnas.82.7.2173",
+      "verified": true
+    },
+    {
+      "title": "Muscarinic Cholinergic Binding in Rat Brain",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1974,
+      "citationCount": 1214,
+      "doi": "10.1073/pnas.71.5.1725",
+      "sourceUrl": "https://doi.org/10.1073/pnas.71.5.1725",
+      "verified": true
+    },
+    {
+      "title": "H <sub>2</sub> S Signals Through Protein S-Sulfhydration",
+      "journal": "Science Signaling",
+      "year": 2009,
+      "citationCount": 1196,
+      "doi": "10.1126/scisignal.2000464",
+      "sourceUrl": "https://doi.org/10.1126/scisignal.2000464",
+      "verified": true
+    },
+    {
+      "title": "Nitric Oxide: A Physiologic Mediator of Penile Erection",
+      "journal": "Science",
+      "year": 1992,
+      "citationCount": 1178,
+      "doi": "10.1126/science.1378650",
+      "sourceUrl": "https://doi.org/10.1126/science.1378650",
+      "verified": true
+    },
+    {
+      "title": "RAFT1 phosphorylation of the translational regulators p70 S6 kinase and 4E-BP1",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1998,
+      "citationCount": 1134,
+      "doi": "10.1073/pnas.95.4.1432",
+      "sourceUrl": "https://doi.org/10.1073/pnas.95.4.1432",
+      "verified": true
+    },
+    {
+      "title": "Nitric Oxide Activation of Poly(ADP-Ribose) Synthetase in Neurotoxicity",
+      "journal": "Science",
+      "year": 1994,
+      "citationCount": 1125,
+      "doi": "10.1126/science.8080500",
+      "sourceUrl": "https://doi.org/10.1126/science.8080500",
+      "verified": true
+    },
+    {
+      "title": "<scp>d</scp> -Serine is an endogenous ligand for the glycine site of the <i>N</i> -methyl- <scp>d</scp> -aspartate receptor",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2000,
+      "citationCount": 1114,
+      "doi": "10.1073/pnas.97.9.4926",
+      "sourceUrl": "https://doi.org/10.1073/pnas.97.9.4926",
+      "verified": true
+    },
+    {
+      "title": "N<scp>OVEL</scp>N<scp>EURAL</scp>M<scp>ODULATORS</scp>",
+      "journal": "Annual Review of Neuroscience",
+      "year": 2003,
+      "citationCount": 1113,
+      "doi": "10.1146/annurev.neuro.26.041002.131047",
+      "sourceUrl": "https://doi.org/10.1146/annurev.neuro.26.041002.131047",
+      "verified": true
+    },
+    {
+      "title": "Biliverdin reductase: A major physiologic cytoprotectant",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2002,
+      "citationCount": 1083,
+      "doi": "10.1073/pnas.252626999",
+      "sourceUrl": "https://doi.org/10.1073/pnas.252626999",
+      "verified": true
+    },
+    {
+      "title": "Macrophage nitric oxide synthase gene: two upstream regions mediate induction by interferon gamma and lipopolysaccharide.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1993,
+      "citationCount": 1069,
+      "doi": "10.1073/pnas.90.20.9730",
+      "sourceUrl": "https://doi.org/10.1073/pnas.90.20.9730",
+      "verified": true
+    },
+    {
+      "title": "S-nitrosylated GAPDH initiates apoptotic cell death by nuclear translocation following Siah1 binding",
+      "journal": "Nature Cell Biology",
+      "year": 2005,
+      "citationCount": 1055,
+      "doi": "10.1038/ncb1268",
+      "sourceUrl": "https://doi.org/10.1038/ncb1268",
+      "verified": true
+    },
+    {
+      "title": "Antischizophrenic Drugs: Chronic Treatment Elevates Dopamine Receptor Binding in Brain",
+      "journal": "Science",
+      "year": 1977,
+      "citationCount": 1025,
+      "doi": "10.1126/science.847477",
+      "sourceUrl": "https://doi.org/10.1126/science.847477",
+      "verified": true
+    },
+    {
+      "title": "Nitric Oxide: First in a New Class of Neurotransmitters",
+      "journal": "Science",
+      "year": 1992,
+      "citationCount": 1005,
+      "doi": "10.1126/science.1353273",
+      "sourceUrl": "https://doi.org/10.1126/science.1353273",
+      "verified": true
+    },
+    {
+      "title": "Positron Emission Tomography Reveals Elevated D <sub>2</sub> Dopamine Receptors in Drug-Naive Schizophrenics",
+      "journal": "Science",
+      "year": 1986,
+      "citationCount": 932,
+      "doi": "10.1126/science.2878495",
+      "sourceUrl": "https://doi.org/10.1126/science.2878495",
+      "verified": true
+    },
+    {
+      "title": "Poly(ADP-ribose) polymerase is a mediator of necrotic cell death by ATP depletion",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1999,
+      "citationCount": 899,
+      "doi": "10.1073/pnas.96.24.13978",
+      "sourceUrl": "https://doi.org/10.1073/pnas.96.24.13978",
+      "verified": true
+    },
+    {
+      "title": "Long-Term Antidepressant Treatment Decreases Spiroperidol-Labeled Serotonin Receptor Binding",
+      "journal": "Science",
+      "year": 1980,
+      "citationCount": 838,
+      "doi": "10.1126/science.6251550",
+      "sourceUrl": "https://doi.org/10.1126/science.6251550",
+      "verified": true
+    },
+    {
+      "title": "Drugs, Neurotransmitters, and Schizophrenia",
+      "journal": "Science",
+      "year": 1974,
+      "citationCount": 833,
+      "doi": "10.1126/science.184.4143.1243",
+      "sourceUrl": "https://doi.org/10.1126/science.184.4143.1243",
+      "verified": true
+    },
+    {
+      "title": "A novel neuronal messenger molecule in brain: The free radical, nitric oxide",
+      "journal": "Annals of Neurology",
+      "year": 1992,
+      "citationCount": 832,
+      "doi": "10.1002/ana.410320302",
+      "sourceUrl": "https://doi.org/10.1002/ana.410320302",
+      "verified": true
+    },
+    {
+      "title": "H2S signalling through protein sulfhydration and beyond",
+      "journal": "Nature Reviews Molecular Cell Biology",
+      "year": 2012,
+      "citationCount": 829,
+      "doi": "10.1038/nrm3391",
+      "sourceUrl": "https://doi.org/10.1038/nrm3391",
+      "verified": true
+    },
+    {
+      "title": "Regional Distribution of Opiate Receptor Binding in Monkey and Human Brain",
+      "journal": "Nature",
+      "year": 1973,
+      "citationCount": 818,
+      "doi": "10.1038/245447a0",
+      "sourceUrl": "https://doi.org/10.1038/245447a0",
+      "verified": true
+    },
+    {
+      "title": "Serine racemase: A glial enzyme synthesizing <scp>d</scp> -serine to regulate glutamate- <i>N</i> -methyl- <scp>d</scp> -aspartate neurotransmission",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1999,
+      "citationCount": 798,
+      "doi": "10.1073/pnas.96.23.13409",
+      "sourceUrl": "https://doi.org/10.1073/pnas.96.23.13409",
+      "verified": true
+    },
+    {
+      "title": "The Biotin Switch Method for the Detection of <i>S</i> -Nitrosylated Proteins",
+      "journal": "Science s STKE",
+      "year": 2001,
+      "citationCount": 791,
+      "doi": "10.1126/stke.2001.86.pl1",
+      "sourceUrl": "https://doi.org/10.1126/stke.2001.86.pl1",
+      "verified": true
+    },
+    {
+      "title": "Generation of superoxide by purified brain nitric oxide synthase.",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1992,
+      "citationCount": 753,
+      "doi": "10.1016/s0021-9258(18)35745-4",
+      "sourceUrl": "https://doi.org/10.1016/s0021-9258(18)35745-4",
+      "verified": true
+    },
+    {
+      "title": "Nitric oxide, a novel biologic messenger",
+      "journal": "Cell",
+      "year": 1992,
+      "citationCount": 746,
+      "doi": "10.1016/0092-8674(92)90301-r",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(92)90301-r",
+      "verified": true
+    },
+    {
+      "title": "Amine synthesis in rapidly growing tissues: ornithine decarboxylase activity in regenerating rat liver, chick embryo, and various tumors.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1968,
+      "citationCount": 745,
+      "doi": "10.1073/pnas.60.4.1420",
+      "sourceUrl": "https://doi.org/10.1073/pnas.60.4.1420",
+      "verified": true
+    },
+    {
+      "title": "Dopamine Receptor Binding Enhancement Accompanies Lesion-Induced Behavioral Supersensitivity",
+      "journal": "Science",
+      "year": 1977,
+      "citationCount": 714,
+      "doi": "10.1126/science.877576",
+      "sourceUrl": "https://doi.org/10.1126/science.877576",
+      "verified": true
+    },
+    {
+      "title": "Adenosine receptors and behavioral actions of methylxanthines.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1981,
+      "citationCount": 702,
+      "doi": "10.1073/pnas.78.5.3260",
+      "sourceUrl": "https://doi.org/10.1073/pnas.78.5.3260",
+      "verified": true
+    },
+    {
+      "title": "Bilirubin, formed by activation of heme oxygenase-2, protects neurons against oxidative stress injury",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1999,
+      "citationCount": 701,
+      "doi": "10.1073/pnas.96.5.2445",
+      "sourceUrl": "https://doi.org/10.1073/pnas.96.5.2445",
+      "verified": true
+    },
+    {
+      "title": "Hydrogen Sulfide-Linked Sulfhydration of NF-κB Mediates Its Antiapoptotic Actions",
+      "journal": "Molecular Cell",
+      "year": 2012,
+      "citationCount": 694,
+      "doi": "10.1016/j.molcel.2011.10.021",
+      "sourceUrl": "https://doi.org/10.1016/j.molcel.2011.10.021",
+      "verified": true
+    },
+    {
+      "title": "The peripheral-type benzodiazepine receptor. Localization to the mitochondrial outer membrane.",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1986,
+      "citationCount": 690,
+      "doi": "10.1016/s0021-9258(17)36131-8",
+      "sourceUrl": "https://doi.org/10.1016/s0021-9258(17)36131-8",
+      "verified": true
+    },
+    {
+      "title": "Solubilization, purification, and characterization of an inositol trisphosphate receptor.",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1988,
+      "citationCount": 651,
+      "doi": "10.1016/s0021-9258(19)57336-7",
+      "sourceUrl": "https://doi.org/10.1016/s0021-9258(19)57336-7",
+      "verified": true
+    },
+    {
+      "title": "Dimethyl fumarate targets GAPDH and aerobic glycolysis to modulate immunity",
+      "journal": "Science",
+      "year": 2018,
+      "citationCount": 650,
+      "doi": "10.1126/science.aan4665",
+      "sourceUrl": "https://doi.org/10.1126/science.aan4665",
+      "verified": true
+    },
+    {
+      "title": "Opiate receptor binding in primate spinal cord: distribution and changes after dorsal root section",
+      "journal": "Brain Research",
+      "year": 1976,
+      "citationCount": 644,
+      "doi": "10.1016/0006-8993(76)90296-1",
+      "sourceUrl": "https://doi.org/10.1016/0006-8993(76)90296-1",
+      "verified": true
+    },
+    {
+      "title": "Two Distinct Central Serotonin Receptors with Different Physiological Functions",
+      "journal": "Science",
+      "year": 1981,
+      "citationCount": 637,
+      "doi": "10.1126/science.7221567",
+      "sourceUrl": "https://doi.org/10.1126/science.7221567",
+      "verified": true
+    },
+    {
+      "title": "Properties of γ-aminobutyric acid (GABA) receptor binding in rat brain synaptic membrane fractions",
+      "journal": "Brain Research",
+      "year": 1975,
+      "citationCount": 634,
+      "doi": "10.1016/0006-8993(75)90243-7",
+      "sourceUrl": "https://doi.org/10.1016/0006-8993(75)90243-7",
+      "verified": true
+    },
+    {
+      "title": "Cytochrome c binds to inositol (1,4,5) trisphosphate receptors, amplifying calcium-dependent apoptosis",
+      "journal": "Nature Cell Biology",
+      "year": 2003,
+      "citationCount": 630,
+      "doi": "10.1038/ncb1063",
+      "sourceUrl": "https://doi.org/10.1038/ncb1063",
+      "verified": true
+    },
+    {
+      "title": "Opiate receptor: autoradiographic localization in rat brain.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1976,
+      "citationCount": 627,
+      "doi": "10.1073/pnas.73.10.3729",
+      "sourceUrl": "https://doi.org/10.1073/pnas.73.10.3729",
+      "verified": true
+    },
+    {
+      "title": "Nitric oxide as a neuronal messenger",
+      "journal": "Trends in Pharmacological Sciences",
+      "year": 1991,
+      "citationCount": 627,
+      "doi": "10.1016/0165-6147(91)90526-x",
+      "sourceUrl": "https://doi.org/10.1016/0165-6147(91)90526-x",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Solomon_H._Snyder.jpg/330px-Solomon_H._Snyder.jpg",
+  "openalexId": "https://openalex.org/A5020208893"
 }

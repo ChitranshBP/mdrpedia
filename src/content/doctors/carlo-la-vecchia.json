@@ -1,36 +1,492 @@
 {
   "fullName": "Carlo La Vecchia",
   "slug": "carlo-la-vecchia",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Clinical Epidemiology",
   "geography": {
-    "city": "Unknown",
-    "country": "Italy"
+    "country": "Italy",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">CL</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 50,
-  "hIndex": 201,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 200,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 20005,
+  "livesSaved": 0,
+  "biography": "Carlo La Vecchia is an Italian epidemiologist. He is doing research on chronic diseases, where he contributed to the understanding of the risks related to diet, tobacco, oral contraceptive use and occupational or environmental exposure to toxic substances in cancer and other chronic diseases development.",
+  "aiSummary": "Carlo La Vecchia is a clinical epidemiology specialist with an H-index of 200 at University of Milan (Faculty). Has been published in Nature Reviews Disease Primers, Nature, The Lancet Oncology. Based in Italy.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "University of Milan"
-    }
-  ],
-  "bio": "Carlo La Vecchia is a pioneer in Clinical Epidemiology at University of Milan, Italy. With a D-Index of 201 and over 200,047 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "University of Milan",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Clinical Epidemiology"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Epidemiology and Risk Factors of Urothelial Bladder Cancer",
+      "journal": "European Urology",
+      "year": 2012,
+      "citationCount": 2143,
+      "doi": "10.1016/j.eururo.2012.07.033",
+      "sourceUrl": "https://doi.org/10.1016/j.eururo.2012.07.033",
+      "verified": true
+    },
+    {
+      "title": "Pancreatic cancer",
+      "journal": "Nature Reviews Disease Primers",
+      "year": 2016,
+      "citationCount": 1788,
+      "doi": "10.1038/nrdp.2016.22",
+      "sourceUrl": "https://doi.org/10.1038/nrdp.2016.22",
+      "verified": true
+    },
+    {
+      "title": "Risk Factors for Falls in Community-dwelling Older People",
+      "journal": "Epidemiology",
+      "year": 2010,
+      "citationCount": 1427,
+      "doi": "10.1097/ede.0b013e3181e89905",
+      "sourceUrl": "https://doi.org/10.1097/ede.0b013e3181e89905",
+      "verified": true
+    },
+    {
+      "title": "Alcohol consumption and site-specific cancer risk: a comprehensive dose–response meta-analysis",
+      "journal": "British Journal of Cancer",
+      "year": 2014,
+      "citationCount": 1251,
+      "doi": "10.1038/bjc.2014.579",
+      "sourceUrl": "https://doi.org/10.1038/bjc.2014.579",
+      "verified": true
+    },
+    {
+      "title": "Interaction between Tobacco and Alcohol Use and the Risk of Head and Neck Cancer: Pooled Analysis in the International Head and Neck Cancer Epidemiology Consortium",
+      "journal": "Cancer Epidemiology Biomarkers & Prevention",
+      "year": 2009,
+      "citationCount": 1210,
+      "doi": "10.1158/1055-9965.epi-08-0347",
+      "sourceUrl": "https://doi.org/10.1158/1055-9965.epi-08-0347",
+      "verified": true
+    },
+    {
+      "title": "Alcohol Drinking in Never Users of Tobacco, Cigarette Smoking in Never Drinkers, and the Risk of Head and Neck Cancer: Pooled Analysis in the International Head and Neck Cancer Epidemiology Consortium",
+      "journal": "JNCI Journal of the National Cancer Institute",
+      "year": 2007,
+      "citationCount": 1090,
+      "doi": "10.1093/jnci/djk179",
+      "sourceUrl": "https://doi.org/10.1093/jnci/djk179",
+      "verified": true
+    },
+    {
+      "title": "Thyroid cancer mortality and incidence: A global overview",
+      "journal": "International Journal of Cancer",
+      "year": 2014,
+      "citationCount": 1009,
+      "doi": "10.1002/ijc.29251",
+      "sourceUrl": "https://doi.org/10.1002/ijc.29251",
+      "verified": true
+    },
+    {
+      "title": "Cancer incidence and mortality in Europe",
+      "journal": "Sozial- und Präventivmedizin",
+      "year": 1989,
+      "citationCount": 971,
+      "doi": "10.1007/bf02148558",
+      "sourceUrl": "https://doi.org/10.1007/bf02148558",
+      "verified": true
+    },
+    {
+      "title": "Risk factors for lung cancer worldwide",
+      "journal": "European Respiratory Journal",
+      "year": 2016,
+      "citationCount": 949,
+      "doi": "10.1183/13993003.00359-2016",
+      "sourceUrl": "https://doi.org/10.1183/13993003.00359-2016",
+      "verified": true
+    },
+    {
+      "title": "Gallbladder cancer worldwide: Geographical distribution and risk factors",
+      "journal": "International Journal of Cancer",
+      "year": 2006,
+      "citationCount": 909,
+      "doi": "10.1002/ijc.21683",
+      "sourceUrl": "https://doi.org/10.1002/ijc.21683",
+      "verified": true
+    },
+    {
+      "title": "The European mesothelioma epidemic",
+      "journal": "British Journal of Cancer",
+      "year": 1999,
+      "citationCount": 896,
+      "doi": "10.1038/sj.bjc.6690105",
+      "sourceUrl": "https://doi.org/10.1038/sj.bjc.6690105",
+      "verified": true
+    },
+    {
+      "title": "Prediction of acute myeloid leukaemia risk in healthy individuals",
+      "journal": "Nature",
+      "year": 2018,
+      "citationCount": 840,
+      "doi": "10.1038/s41586-018-0317-6",
+      "sourceUrl": "https://doi.org/10.1038/s41586-018-0317-6",
+      "verified": true
+    },
+    {
+      "title": "Aspirin and non-steroidal anti-inflammatory drugs for cancer prevention: an international consensus statement",
+      "journal": "The Lancet Oncology",
+      "year": 2009,
+      "citationCount": 705,
+      "doi": "10.1016/s1470-2045(09)70035-x",
+      "sourceUrl": "https://doi.org/10.1016/s1470-2045(09)70035-x",
+      "verified": true
+    },
+    {
+      "title": "Physical activity and risks of breast and colorectal cancer: a Mendelian randomisation analysis",
+      "journal": "Nature Communications",
+      "year": 2020,
+      "citationCount": 670,
+      "doi": "10.1038/s41467-020-14389-8",
+      "sourceUrl": "https://doi.org/10.1038/s41467-020-14389-8",
+      "verified": true
+    },
+    {
+      "title": "Glycemic index, glycemic load and glycemic response: An International Scientific Consensus Summit from the International Carbohydrate Quality Consortium (ICQC)",
+      "journal": "Nutrition Metabolism and Cardiovascular Diseases",
+      "year": 2015,
+      "citationCount": 668,
+      "doi": "10.1016/j.numecd.2015.05.005",
+      "sourceUrl": "https://doi.org/10.1016/j.numecd.2015.05.005",
+      "verified": true
+    },
+    {
+      "title": "Alcohol drinking and colorectal cancer risk: an overall and dose–response meta-analysis of published studies",
+      "journal": "Annals of Oncology",
+      "year": 2011,
+      "citationCount": 655,
+      "doi": "10.1093/annonc/mdq653",
+      "sourceUrl": "https://doi.org/10.1093/annonc/mdq653",
+      "verified": true
+    },
+    {
+      "title": "Global trends and predictions in hepatocellular carcinoma mortality",
+      "journal": "Journal of Hepatology",
+      "year": 2017,
+      "citationCount": 650,
+      "doi": "10.1016/j.jhep.2017.03.011",
+      "sourceUrl": "https://doi.org/10.1016/j.jhep.2017.03.011",
+      "verified": true
+    },
+    {
+      "title": "The global, regional, and national burden of pancreatic cancer and its attributable risk factors in 195 countries and territories, 1990–2017: a systematic analysis for the Global Burden of Disease Study 2017",
+      "journal": "The Lancet. Gastroenterology & hepatology",
+      "year": 2019,
+      "citationCount": 649,
+      "doi": "10.1016/s2468-1253(19)30347-4",
+      "sourceUrl": "https://doi.org/10.1016/s2468-1253(19)30347-4",
+      "verified": true
+    },
+    {
+      "title": "Cigarette Smoking, Body Mass Index, and Stressful Life Events as Risk Factors for Psoriasis: Results from an Italian Case–Control Study",
+      "journal": "Journal of Investigative Dermatology",
+      "year": 2005,
+      "citationCount": 639,
+      "doi": "10.1111/j.0022-202x.2005.23681.x",
+      "sourceUrl": "https://doi.org/10.1111/j.0022-202x.2005.23681.x",
+      "verified": true
+    },
+    {
+      "title": "Recent patterns in gastric cancer: A global overview",
+      "journal": "International Journal of Cancer",
+      "year": 2009,
+      "citationCount": 636,
+      "doi": "10.1002/ijc.24290",
+      "sourceUrl": "https://doi.org/10.1002/ijc.24290",
+      "verified": true
+    },
+    {
+      "title": "The global, regional, and national burden of oesophageal cancer and its attributable risk factors in 195 countries and territories, 1990–2017: a systematic analysis for the Global Burden of Disease Study 2017",
+      "journal": "The Lancet. Gastroenterology & hepatology",
+      "year": 2020,
+      "citationCount": 629,
+      "doi": "10.1016/s2468-1253(20)30007-8",
+      "sourceUrl": "https://doi.org/10.1016/s2468-1253(20)30007-8",
+      "verified": true
+    },
+    {
+      "title": "The global, regional, and national burden of stomach cancer in 195 countries, 1990–2017: a systematic analysis for the Global Burden of Disease study 2017",
+      "journal": "The Lancet. Gastroenterology & hepatology",
+      "year": 2019,
+      "citationCount": 627,
+      "doi": "10.1016/s2468-1253(19)30328-0",
+      "sourceUrl": "https://doi.org/10.1016/s2468-1253(19)30328-0",
+      "verified": true
+    },
+    {
+      "title": "Global trends in mortality from intrahepatic and extrahepatic cholangiocarcinoma",
+      "journal": "Journal of Hepatology",
+      "year": 2019,
+      "citationCount": 626,
+      "doi": "10.1016/j.jhep.2019.03.013",
+      "sourceUrl": "https://doi.org/10.1016/j.jhep.2019.03.013",
+      "verified": true
+    },
+    {
+      "title": "Worldwide trends in gastric cancer mortality (1980–2011), with predictions to 2015, and incidence by subtype",
+      "journal": "European Journal of Cancer",
+      "year": 2014,
+      "citationCount": 615,
+      "doi": "10.1016/j.ejca.2014.01.029",
+      "sourceUrl": "https://doi.org/10.1016/j.ejca.2014.01.029",
+      "verified": true
+    },
+    {
+      "title": "Autoimmune disorders and risk of non-Hodgkin lymphoma subtypes: a pooled analysis within the InterLymph Consortium",
+      "journal": "Blood",
+      "year": 2008,
+      "citationCount": 605,
+      "doi": "10.1182/blood-2007-10-119974",
+      "sourceUrl": "https://doi.org/10.1182/blood-2007-10-119974",
+      "verified": true
+    },
+    {
+      "title": "A meta-analysis of alcohol drinking and cancer risk",
+      "journal": "British Journal of Cancer",
+      "year": 2001,
+      "citationCount": 600,
+      "doi": "10.1054/bjoc.2001.2140",
+      "sourceUrl": "https://doi.org/10.1054/bjoc.2001.2140",
+      "verified": true
+    },
+    {
+      "title": "The antiestrogenic effect of cigarette smoking in women",
+      "journal": "American Journal of Obstetrics and Gynecology",
+      "year": 1990,
+      "citationCount": 596,
+      "doi": "10.1016/0002-9378(90)90420-c",
+      "sourceUrl": "https://doi.org/10.1016/0002-9378(90)90420-c",
+      "verified": true
+    },
+    {
+      "title": "Smoking and drinking in relation to cancers of the oral cavity, pharynx, larynx, and esophagus in northern Italy.",
+      "journal": "PubMed",
+      "year": 1990,
+      "citationCount": 590,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2149797943",
+      "verified": true
+    },
+    {
+      "title": "Cancer mortality in Europe, 2000–2004, and an overview of trends since 1975",
+      "journal": "Annals of Oncology",
+      "year": 2009,
+      "citationCount": 562,
+      "doi": "10.1093/annonc/mdp530",
+      "sourceUrl": "https://doi.org/10.1093/annonc/mdp530",
+      "verified": true
+    },
+    {
+      "title": "Epidemiology and Prevention of Prostate Cancer",
+      "journal": "European Urology Oncology",
+      "year": 2021,
+      "citationCount": 562,
+      "doi": "10.1016/j.euo.2021.09.006",
+      "sourceUrl": "https://doi.org/10.1016/j.euo.2021.09.006",
+      "verified": true
+    },
+    {
+      "title": "Hepatocellular carcinoma epidemiology",
+      "journal": "Best Practice & Research Clinical Gastroenterology",
+      "year": 2014,
+      "citationCount": 524,
+      "doi": "10.1016/j.bpg.2014.08.007",
+      "sourceUrl": "https://doi.org/10.1016/j.bpg.2014.08.007",
+      "verified": true
+    },
+    {
+      "title": "European cancer mortality predictions for the year 2013",
+      "journal": "Annals of Oncology",
+      "year": 2013,
+      "citationCount": 517,
+      "doi": "10.1093/annonc/mdt010",
+      "sourceUrl": "https://doi.org/10.1093/annonc/mdt010",
+      "verified": true
+    },
+    {
+      "title": "Olive oil and health: Summary of the II international conference on olive oil and health consensus report, Jaén and Córdoba (Spain) 2008",
+      "journal": "Nutrition Metabolism and Cardiovascular Diseases",
+      "year": 2010,
+      "citationCount": 511,
+      "doi": "10.1016/j.numecd.2009.12.007",
+      "sourceUrl": "https://doi.org/10.1016/j.numecd.2009.12.007",
+      "verified": true
+    },
+    {
+      "title": "Prevention and early detection of prostate cancer",
+      "journal": "The Lancet Oncology",
+      "year": 2014,
+      "citationCount": 487,
+      "doi": "10.1016/s1470-2045(14)70211-6",
+      "sourceUrl": "https://doi.org/10.1016/s1470-2045(14)70211-6",
+      "verified": true
+    },
+    {
+      "title": "Mediterranean diet and cardiovascular disease: a systematic review and meta-analysis of observational studies",
+      "journal": "European Journal of Nutrition",
+      "year": 2017,
+      "citationCount": 463,
+      "doi": "10.1007/s00394-017-1582-0",
+      "sourceUrl": "https://doi.org/10.1007/s00394-017-1582-0",
+      "verified": true
+    },
+    {
+      "title": "Cancer mortality in Europe, 2005–2009, and an overview of trends since 1980",
+      "journal": "Annals of Oncology",
+      "year": 2013,
+      "citationCount": 461,
+      "doi": "10.1093/annonc/mdt301",
+      "sourceUrl": "https://doi.org/10.1093/annonc/mdt301",
+      "verified": true
+    },
+    {
+      "title": "Epidemiology and prevention of oral cancer",
+      "journal": "Oral Oncology",
+      "year": 1997,
+      "citationCount": 440,
+      "doi": "10.1016/s1368-8375(97)00029-8",
+      "sourceUrl": "https://doi.org/10.1016/s1368-8375(97)00029-8",
+      "verified": true
+    },
+    {
+      "title": "The Role of Tobacco Smoke in Bladder and Kidney Carcinogenesis: A Comparison of Exposures and Meta-analysis of Incidence and Mortality Risks",
+      "journal": "European Urology",
+      "year": 2015,
+      "citationCount": 434,
+      "doi": "10.1016/j.eururo.2015.06.042",
+      "sourceUrl": "https://doi.org/10.1016/j.eururo.2015.06.042",
+      "verified": true
+    },
+    {
+      "title": "Clinical Utility of a Plasma-Based miRNA Signature Classifier Within Computed Tomography Lung Cancer Screening: A Correlative MILD Trial Study",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2014,
+      "citationCount": 427,
+      "doi": "10.1200/jco.2013.50.4357",
+      "sourceUrl": "https://doi.org/10.1200/jco.2013.50.4357",
+      "verified": true
+    },
+    {
+      "title": "Epidemiology and aetiology of gestational trophoblastic diseases",
+      "journal": "The Lancet Oncology",
+      "year": 2003,
+      "citationCount": 418,
+      "doi": "10.1016/s1470-2045(03)01245-2",
+      "sourceUrl": "https://doi.org/10.1016/s1470-2045(03)01245-2",
+      "verified": true
+    },
+    {
+      "title": "Annual or biennial CT screening versus observation in heavy smokers",
+      "journal": "European Journal of Cancer Prevention",
+      "year": 2012,
+      "citationCount": 411,
+      "doi": "10.1097/cej.0b013e328351e1b6",
+      "sourceUrl": "https://doi.org/10.1097/cej.0b013e328351e1b6",
+      "verified": true
+    },
+    {
+      "title": "Disparities in breast cancer mortality trends between 30 European countries: retrospective trend analysis of WHO mortality database",
+      "journal": "BMJ",
+      "year": 2010,
+      "citationCount": 409,
+      "doi": "10.1136/bmj.c3620",
+      "sourceUrl": "https://doi.org/10.1136/bmj.c3620",
+      "verified": true
+    },
+    {
+      "title": "Validation of a food-frequency questionnaire to assess dietary intakes in cancer studies in Italy results for specific nutrients",
+      "journal": "Annals of Epidemiology",
+      "year": 1996,
+      "citationCount": 408,
+      "doi": "10.1016/1047-2797(95)00129-8",
+      "sourceUrl": "https://doi.org/10.1016/1047-2797(95)00129-8",
+      "verified": true
+    },
+    {
+      "title": "The epidemiology of endometrial cancer",
+      "journal": "Gynecologic Oncology",
+      "year": 1991,
+      "citationCount": 406,
+      "doi": "10.1016/0090-8258(91)90246-2",
+      "sourceUrl": "https://doi.org/10.1016/0090-8258(91)90246-2",
+      "verified": true
+    },
+    {
+      "title": "Cigarette smoking and pancreatic cancer: an analysis from the International Pancreatic Cancer Case-Control Consortium (Panc4)",
+      "journal": "Annals of Oncology",
+      "year": 2011,
+      "citationCount": 402,
+      "doi": "10.1093/annonc/mdr541",
+      "sourceUrl": "https://doi.org/10.1093/annonc/mdr541",
+      "verified": true
+    },
+    {
+      "title": "Light alcohol drinking and cancer: a meta-analysis",
+      "journal": "Annals of Oncology",
+      "year": 2012,
+      "citationCount": 399,
+      "doi": "10.1093/annonc/mds337",
+      "sourceUrl": "https://doi.org/10.1093/annonc/mds337",
+      "verified": true
+    },
+    {
+      "title": "European cancer mortality predictions for the year 2012",
+      "journal": "Annals of Oncology",
+      "year": 2012,
+      "citationCount": 386,
+      "doi": "10.1093/annonc/mds024",
+      "sourceUrl": "https://doi.org/10.1093/annonc/mds024",
+      "verified": true
+    },
+    {
+      "title": "Glycemic index in chronic disease: a review",
+      "journal": "European Journal of Clinical Nutrition",
+      "year": 2002,
+      "citationCount": 386,
+      "doi": "10.1038/sj.ejcn.1601454",
+      "sourceUrl": "https://doi.org/10.1038/sj.ejcn.1601454",
+      "verified": true
+    },
+    {
+      "title": "Dietary linoleic acid and human health: Focus on cardiovascular and cardiometabolic effects",
+      "journal": "Atherosclerosis",
+      "year": 2019,
+      "citationCount": 386,
+      "doi": "10.1016/j.atherosclerosis.2019.11.018",
+      "sourceUrl": "https://doi.org/10.1016/j.atherosclerosis.2019.11.018",
+      "verified": true
+    },
+    {
+      "title": "European cancer mortality predictions for the year 2014",
+      "journal": "Annals of Oncology",
+      "year": 2014,
+      "citationCount": 385,
+      "doi": "10.1093/annonc/mdu138",
+      "sourceUrl": "https://doi.org/10.1093/annonc/mdu138",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:14.000Z",
+  "openalexId": "https://openalex.org/A5075525738"
 }

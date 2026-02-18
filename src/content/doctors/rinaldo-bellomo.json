@@ -1,31 +1,492 @@
 {
   "fullName": "Rinaldo Bellomo",
   "slug": "rinaldo-bellomo",
-  "title": "MD, PhD",
-  "specialty": "Intensive Care Medicine",
+  "title": "MD",
+  "specialty": "Intensive Care",
   "geography": {
-    "city": "Unknown",
-    "country": "Australia"
+    "country": "Australia",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">RB</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 48,
-  "hIndex": 190,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 204,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 20483,
+  "livesSaved": 0,
+  "biography": "Rinaldo Bellomo AO was an Australian intensivist and researcher. He was the Professor of Intensive Care Medicine at the University of Melbourne, Professor at Monash University, Honorary Professional Fellow at the University of New South Wales, Honorary Professional Fellow at the George Institute for Global Health and Honorary Fellow at the Florey Institute of Neuroscience and Mental Health. In 2018 he was awarded an Order of Australia for distinguished service to intensive care medicine as a biomedical scientist and researcher. In 2021 he and Jamie Cooper were jointly awarded the GSK Award for Research Excellence (ARE).",
+  "aiSummary": "Rinaldo Bellomo is a intensive care specialist with an H-index of 204 at Monash University (Faculty). Has been published in JAMA, The Lancet, New England Journal of Medicine. Based in Australia.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Monash University"
-    }
-  ],
-  "bio": "Rinaldo Bellomo is a pioneer in Intensive Care Medicine at Monash University, Australia. With a D-Index of 190 and over 204,833 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Monash University",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Intensive Care"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "The Third International Consensus Definitions for Sepsis and Septic Shock (Sepsis-3)",
+      "journal": "JAMA",
+      "year": 2016,
+      "citationCount": 26171,
+      "doi": "10.1001/jama.2016.0287",
+      "sourceUrl": "https://doi.org/10.1001/jama.2016.0287",
+      "verified": true
+    },
+    {
+      "title": "Acute renal failure – definition, outcome measures, animal models, fluid therapy and information technology needs: the Second International Consensus Conference of the Acute Dialysis Quality Initiative (ADQI) Group",
+      "journal": "Critical Care",
+      "year": 2004,
+      "citationCount": 6744,
+      "doi": "10.1186/cc2872",
+      "sourceUrl": "https://doi.org/10.1186/cc2872",
+      "verified": true
+    },
+    {
+      "title": "Epidemiology of acute kidney injury in critically ill patients: the multinational AKI-EPI study",
+      "journal": "Intensive Care Medicine",
+      "year": 2015,
+      "citationCount": 2875,
+      "doi": "10.1007/s00134-015-3934-7",
+      "sourceUrl": "https://doi.org/10.1007/s00134-015-3934-7",
+      "verified": true
+    },
+    {
+      "title": "Acute kidney injury",
+      "journal": "The Lancet",
+      "year": 2012,
+      "citationCount": 2545,
+      "doi": "10.1016/s0140-6736(11)61454-2",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(11)61454-2",
+      "verified": true
+    },
+    {
+      "title": "Cardiorenal Syndrome",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2008,
+      "citationCount": 1764,
+      "doi": "10.1016/j.jacc.2008.07.051",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2008.07.051",
+      "verified": true
+    },
+    {
+      "title": "Acute kidney injury",
+      "journal": "The Lancet",
+      "year": 2019,
+      "citationCount": 1724,
+      "doi": "10.1016/s0140-6736(19)32563-2",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(19)32563-2",
+      "verified": true
+    },
+    {
+      "title": "Mortality Related to Severe Sepsis and Septic Shock Among Critically Ill Patients in Australia and New Zealand, 2000-2012",
+      "journal": "JAMA",
+      "year": 2014,
+      "citationCount": 1675,
+      "doi": "10.1001/jama.2014.2637",
+      "sourceUrl": "https://doi.org/10.1001/jama.2014.2637",
+      "verified": true
+    },
+    {
+      "title": "Hydroxyethyl Starch or Saline for Fluid Resuscitation in Intensive Care",
+      "journal": "New England Journal of Medicine",
+      "year": 2012,
+      "citationCount": 1673,
+      "doi": "10.1056/nejmoa1209759",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1209759",
+      "verified": true
+    },
+    {
+      "title": "Effects of different doses in continuous veno-venous haemofiltration on outcomes of acute renal failure: a prospective randomised trial",
+      "journal": "The Lancet",
+      "year": 2000,
+      "citationCount": 1582,
+      "doi": "10.1016/s0140-6736(00)02430-2",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(00)02430-2",
+      "verified": true
+    },
+    {
+      "title": "Acute kidney disease and renal recovery: consensus report of the Acute Disease Quality Initiative (ADQI) 16 Workgroup",
+      "journal": "Nature Reviews Nephrology",
+      "year": 2017,
+      "citationCount": 1452,
+      "doi": "10.1038/nrneph.2017.2",
+      "sourceUrl": "https://doi.org/10.1038/nrneph.2017.2",
+      "verified": true
+    },
+    {
+      "title": "Intensity of Continuous Renal-Replacement Therapy in Critically Ill Patients",
+      "journal": "New England Journal of Medicine",
+      "year": 2009,
+      "citationCount": 1436,
+      "doi": "10.1056/nejmoa0902413",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa0902413",
+      "verified": true
+    },
+    {
+      "title": "Accuracy of Neutrophil Gelatinase-Associated Lipocalin (NGAL) in Diagnosis and Prognosis in Acute Kidney Injury: A Systematic Review and Meta-analysis",
+      "journal": "American Journal of Kidney Diseases",
+      "year": 2009,
+      "citationCount": 1297,
+      "doi": "10.1053/j.ajkd.2009.07.020",
+      "sourceUrl": "https://doi.org/10.1053/j.ajkd.2009.07.020",
+      "verified": true
+    },
+    {
+      "title": "Prognostic Accuracy of the SOFA Score, SIRS Criteria, and qSOFA Score for In-Hospital Mortality Among Adults With Suspected Infection Admitted to the Intensive Care Unit",
+      "journal": "JAMA",
+      "year": 2017,
+      "citationCount": 1202,
+      "doi": "10.1001/jama.2016.20328",
+      "sourceUrl": "https://doi.org/10.1001/jama.2016.20328",
+      "verified": true
+    },
+    {
+      "title": "Association Between a Chloride-Liberal vs Chloride-Restrictive Intravenous Fluid Administration Strategy and Kidney Injury in Critically Ill Adults",
+      "journal": "JAMA",
+      "year": 2012,
+      "citationCount": 1187,
+      "doi": "10.1001/jama.2012.13356",
+      "sourceUrl": "https://doi.org/10.1001/jama.2012.13356",
+      "verified": true
+    },
+    {
+      "title": "Systemic Inflammatory Response Syndrome Criteria in Defining Severe Sepsis",
+      "journal": "New England Journal of Medicine",
+      "year": 2015,
+      "citationCount": 1152,
+      "doi": "10.1056/nejmoa1415236",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1415236",
+      "verified": true
+    },
+    {
+      "title": "Cardio-renal syndromes: report from the consensus conference of the Acute Dialysis Quality Initiative",
+      "journal": "European Heart Journal",
+      "year": 2009,
+      "citationCount": 1048,
+      "doi": "10.1093/eurheartj/ehp507",
+      "sourceUrl": "https://doi.org/10.1093/eurheartj/ehp507",
+      "verified": true
+    },
+    {
+      "title": "Low-dose dopamine in patients with early renal dysfunction: a placebo-controlled randomised trial",
+      "journal": "The Lancet",
+      "year": 2000,
+      "citationCount": 992,
+      "doi": "10.1016/s0140-6736(00)03495-4",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(00)03495-4",
+      "verified": true
+    },
+    {
+      "title": "Adjunctive Glucocorticoid Therapy in Patients with Septic Shock",
+      "journal": "New England Journal of Medicine",
+      "year": 2018,
+      "citationCount": 947,
+      "doi": "10.1056/nejmoa1705835",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1705835",
+      "verified": true
+    },
+    {
+      "title": "An assessment of the RIFLE criteria for acute renal failure in hospitalized patients*",
+      "journal": "Critical Care Medicine",
+      "year": 2006,
+      "citationCount": 937,
+      "doi": "10.1097/01.ccm.0000224227.70642.4f",
+      "sourceUrl": "https://doi.org/10.1097/01.ccm.0000224227.70642.4f",
+      "verified": true
+    },
+    {
+      "title": "Respiratory rate: the neglected vital sign",
+      "journal": "The Medical Journal of Australia",
+      "year": 2008,
+      "citationCount": 869,
+      "doi": "10.5694/j.1326-5377.2008.tb01825.x",
+      "sourceUrl": "https://doi.org/10.5694/j.1326-5377.2008.tb01825.x",
+      "verified": true
+    },
+    {
+      "title": "Restrictive versus Liberal Fluid Therapy for Major Abdominal Surgery",
+      "journal": "New England Journal of Medicine",
+      "year": 2018,
+      "citationCount": 865,
+      "doi": "10.1056/nejmoa1801601",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1801601",
+      "verified": true
+    },
+    {
+      "title": "Septic Acute Kidney Injury in Critically Ill Patients",
+      "journal": "Clinical Journal of the American Society of Nephrology",
+      "year": 2007,
+      "citationCount": 864,
+      "doi": "10.2215/cjn.03681106",
+      "sourceUrl": "https://doi.org/10.2215/cjn.03681106",
+      "verified": true
+    },
+    {
+      "title": "Findings of the First Consensus Conference on Medical Emergency Teams*",
+      "journal": "Critical Care Medicine",
+      "year": 2006,
+      "citationCount": 852,
+      "doi": "10.1097/01.ccm.0000235743.38172.6e",
+      "sourceUrl": "https://doi.org/10.1097/01.ccm.0000235743.38172.6e",
+      "verified": true
+    },
+    {
+      "title": "Angiotensin II for the Treatment of Vasodilatory Shock",
+      "journal": "New England Journal of Medicine",
+      "year": 2017,
+      "citationCount": 830,
+      "doi": "10.1056/nejmoa1704154",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1704154",
+      "verified": true
+    },
+    {
+      "title": "Variability of Blood Glucose Concentration and Short-term Mortality in Critically Ill Patients",
+      "journal": "Anesthesiology",
+      "year": 2006,
+      "citationCount": 825,
+      "doi": "10.1097/00000542-200608000-00006",
+      "sourceUrl": "https://doi.org/10.1097/00000542-200608000-00006",
+      "verified": true
+    },
+    {
+      "title": "Rapid-Response Teams",
+      "journal": "New England Journal of Medicine",
+      "year": 2011,
+      "citationCount": 760,
+      "doi": "10.1056/nejmra0910926",
+      "sourceUrl": "https://doi.org/10.1056/nejmra0910926",
+      "verified": true
+    },
+    {
+      "title": "Cardiac surgery-associated acute kidney injury: risk factors, pathophysiology and treatment",
+      "journal": "Nature Reviews Nephrology",
+      "year": 2017,
+      "citationCount": 757,
+      "doi": "10.1038/nrneph.2017.119",
+      "sourceUrl": "https://doi.org/10.1038/nrneph.2017.119",
+      "verified": true
+    },
+    {
+      "title": "Acute kidney injury in sepsis",
+      "journal": "Intensive Care Medicine",
+      "year": 2017,
+      "citationCount": 741,
+      "doi": "10.1007/s00134-017-4755-7",
+      "sourceUrl": "https://doi.org/10.1007/s00134-017-4755-7",
+      "verified": true
+    },
+    {
+      "title": "Effect of a Buffered Crystalloid Solution vs Saline on Acute Kidney Injury Among Patients in the Intensive Care Unit",
+      "journal": "JAMA",
+      "year": 2015,
+      "citationCount": 714,
+      "doi": "10.1001/jama.2015.12334",
+      "sourceUrl": "https://doi.org/10.1001/jama.2015.12334",
+      "verified": true
+    },
+    {
+      "title": "Control of Confounding and Reporting of Results in Causal Inference Studies. Guidance for Authors from Editors of Respiratory, Sleep, and Critical Care Journals",
+      "journal": "Annals of the American Thoracic Society",
+      "year": 2018,
+      "citationCount": 693,
+      "doi": "10.1513/annalsats.201808-564ps",
+      "sourceUrl": "https://doi.org/10.1513/annalsats.201808-564ps",
+      "verified": true
+    },
+    {
+      "title": "Stress hyperglycemia: an essential survival response!",
+      "journal": "Critical Care",
+      "year": 2013,
+      "citationCount": 690,
+      "doi": "10.1186/cc12514",
+      "sourceUrl": "https://doi.org/10.1186/cc12514",
+      "verified": true
+    },
+    {
+      "title": "The Outcome of Neutrophil Gelatinase-Associated Lipocalin-Positive Subclinical Acute Kidney Injury",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2011,
+      "citationCount": 670,
+      "doi": "10.1016/j.jacc.2010.11.051",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2010.11.051",
+      "verified": true
+    },
+    {
+      "title": "Early acute kidney injury and sepsis: a multicentre evaluation",
+      "journal": "Critical Care",
+      "year": 2008,
+      "citationCount": 658,
+      "doi": "10.1186/cc6863",
+      "sourceUrl": "https://doi.org/10.1186/cc6863",
+      "verified": true
+    },
+    {
+      "title": "Resources for the Optimal Care of the Injured Patient(2006)",
+      "journal": "Unknown Journal",
+      "year": 2012,
+      "citationCount": 650,
+      "doi": "10.1007/978-3-642-00418-6_2148",
+      "sourceUrl": "https://doi.org/10.1007/978-3-642-00418-6_2148",
+      "verified": true
+    },
+    {
+      "title": "A prospective before‐and‐after trial of a medical emergency team",
+      "journal": "The Medical Journal of Australia",
+      "year": 2003,
+      "citationCount": 590,
+      "doi": "10.5694/j.1326-5377.2003.tb05548.x",
+      "sourceUrl": "https://doi.org/10.5694/j.1326-5377.2003.tb05548.x",
+      "verified": true
+    },
+    {
+      "title": "Sepsis-associated acute kidney injury: consensus report of the 28th Acute Disease Quality Initiative workgroup",
+      "journal": "Nature Reviews Nephrology",
+      "year": 2023,
+      "citationCount": 568,
+      "doi": "10.1038/s41581-023-00683-3",
+      "sourceUrl": "https://doi.org/10.1038/s41581-023-00683-3",
+      "verified": true
+    },
+    {
+      "title": "Continuous renal replacement therapy: A worldwide practice survey",
+      "journal": "Intensive Care Medicine",
+      "year": 2007,
+      "citationCount": 564,
+      "doi": "10.1007/s00134-007-0754-4",
+      "sourceUrl": "https://doi.org/10.1007/s00134-007-0754-4",
+      "verified": true
+    },
+    {
+      "title": "A comparison of the RIFLE and AKIN criteria for acute kidney injury in critically ill patients",
+      "journal": "Nephrology Dialysis Transplantation",
+      "year": 2008,
+      "citationCount": 546,
+      "doi": "10.1093/ndt/gfn009",
+      "sourceUrl": "https://doi.org/10.1093/ndt/gfn009",
+      "verified": true
+    },
+    {
+      "title": "Acute Kidney Injury",
+      "journal": "Unknown Journal",
+      "year": 2009,
+      "citationCount": 534,
+      "doi": "10.1007/978-0-387-77893-8_38",
+      "sourceUrl": "https://doi.org/10.1007/978-0-387-77893-8_38",
+      "verified": true
+    },
+    {
+      "title": "Early Intensive Care Sedation Predicts Long-Term Mortality in Ventilated Critically Ill Patients",
+      "journal": "American Journal of Respiratory and Critical Care Medicine",
+      "year": 2012,
+      "citationCount": 516,
+      "doi": "10.1164/rccm.201203-0522oc",
+      "sourceUrl": "https://doi.org/10.1164/rccm.201203-0522oc",
+      "verified": true
+    },
+    {
+      "title": "Prospective controlled trial of effect of medical emergency team on postoperative morbidity and mortality rates*",
+      "journal": "Critical Care Medicine",
+      "year": 2004,
+      "citationCount": 511,
+      "doi": "10.1097/01.ccm.0000119428.02968.9e",
+      "sourceUrl": "https://doi.org/10.1097/01.ccm.0000119428.02968.9e",
+      "verified": true
+    },
+    {
+      "title": "Controversies in acute kidney injury: conclusions from a Kidney Disease: Improving Global Outcomes (KDIGO) Conference",
+      "journal": "Kidney International",
+      "year": 2020,
+      "citationCount": 508,
+      "doi": "10.1016/j.kint.2020.04.020",
+      "sourceUrl": "https://doi.org/10.1016/j.kint.2020.04.020",
+      "verified": true
+    },
+    {
+      "title": "Early Sedation with Dexmedetomidine in Critically Ill Patients",
+      "journal": "New England Journal of Medicine",
+      "year": 2019,
+      "citationCount": 503,
+      "doi": "10.1056/nejmoa1904710",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1904710",
+      "verified": true
+    },
+    {
+      "title": "A prospective before‐and‐after trial of a medical emergency team",
+      "journal": "The Medical Journal of Australia",
+      "year": 2004,
+      "citationCount": 501,
+      "doi": "10.5694/j.1326-5377.2004.tb05937.x",
+      "sourceUrl": "https://doi.org/10.5694/j.1326-5377.2004.tb05937.x",
+      "verified": true
+    },
+    {
+      "title": "Long-term risk of adverse outcomes after acute kidney injury: a systematic review and meta-analysis of cohort studies using consensus definitions of exposure",
+      "journal": "Kidney International",
+      "year": 2018,
+      "citationCount": 493,
+      "doi": "10.1016/j.kint.2018.08.036",
+      "sourceUrl": "https://doi.org/10.1016/j.kint.2018.08.036",
+      "verified": true
+    },
+    {
+      "title": "Fluid balance and acute kidney injury",
+      "journal": "Nature Reviews Nephrology",
+      "year": 2009,
+      "citationCount": 493,
+      "doi": "10.1038/nrneph.2009.213",
+      "sourceUrl": "https://doi.org/10.1038/nrneph.2009.213",
+      "verified": true
+    },
+    {
+      "title": "A multi-centre evaluation of the RIFLE criteria for early acute kidney injury in critically ill patients",
+      "journal": "Nephrology Dialysis Transplantation",
+      "year": 2007,
+      "citationCount": 489,
+      "doi": "10.1093/ndt/gfm744",
+      "sourceUrl": "https://doi.org/10.1093/ndt/gfm744",
+      "verified": true
+    },
+    {
+      "title": "A pilot study of coupled plasma filtration with adsorption in septic shock*",
+      "journal": "Critical Care Medicine",
+      "year": 2002,
+      "citationCount": 482,
+      "doi": "10.1097/00003246-200206000-00015",
+      "sourceUrl": "https://doi.org/10.1097/00003246-200206000-00015",
+      "verified": true
+    },
+    {
+      "title": "Very old patients admitted to intensive care in Australia and New Zealand: a multi-centre cohort analysis",
+      "journal": "Critical Care",
+      "year": 2009,
+      "citationCount": 472,
+      "doi": "10.1186/cc7768",
+      "sourceUrl": "https://doi.org/10.1186/cc7768",
+      "verified": true
+    },
+    {
+      "title": "Sepsis-associated hyperlactatemia",
+      "journal": "Critical Care",
+      "year": 2014,
+      "citationCount": 459,
+      "doi": "10.1186/s13054-014-0503-3",
+      "sourceUrl": "https://doi.org/10.1186/s13054-014-0503-3",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:14.000Z",
+  "openalexId": "https://openalex.org/A5011216396"
 }

@@ -1,0 +1,245 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection, getEntry } from "astro:content";
+
+export async function getStaticPaths() {
+    const newsEntries = await getCollection("news");
+    return newsEntries.map((entry) => ({
+        params: { slug: entry.id },
+        props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const { title, summary, date, category, source, content } = entry.data;
+
+function formatDate(dateStr: string) {
+    return new Date(dateStr).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
+}
+---
+
+<Layout title={`${title} — MDRPedia News`} description={summary}>
+    <main class="news-detail">
+        <nav class="breadcrumb">
+            <a href="/news">← Back to News</a>
+        </nav>
+
+        <article class="article-container">
+            <header class="article-header">
+                <div class="article-meta">
+                    <span class="category-badge">{category}</span>
+                    <span class="divider">•</span>
+                    <time datetime={date}>{formatDate(date)}</time>
+                </div>
+                <h1 class="article-title">{title}</h1>
+                <div class="article-source">
+                    Source: <strong>{source}</strong>
+                </div>
+            </header>
+
+            <div class="article-hero">
+                <div class="hero-placeholder">
+                    <div class="shimmer"></div>
+                    <span class="hero-label"
+                        >MDRPedia Editorial | {category}</span
+                    >
+                </div>
+            </div>
+
+            <section class="article-content">
+                <p class="lead-text">{summary}</p>
+                <hr />
+                <div class="body-text">
+                    {
+                        content ||
+                            "Detailed report coming soon as the research data is fully indexed."
+                    }
+                </div>
+            </section>
+
+            <footer class="article-footer">
+                <div class="share-box">
+                    <span
+                        >Reference and verification enabled for MDRPedia
+                        Verified Professionals.</span
+                    >
+                </div>
+            </footer>
+        </article>
+    </main>
+</Layout>
+
+<style>
+    .news-detail {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px 100px;
+    }
+
+    .breadcrumb {
+        margin-bottom: 32px;
+    }
+
+    .breadcrumb a {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.2s;
+    }
+
+    .breadcrumb a:hover {
+        color: #a78bfa;
+    }
+
+    .article-container {
+        background: var(--bg-card, #16162a);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .article-header {
+        padding: 48px 48px 32px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .article-meta {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        font-size: 0.85rem;
+    }
+
+    .category-badge {
+        background: rgba(139, 92, 246, 0.15);
+        color: #a78bfa;
+        padding: 4px 12px;
+        border-radius: 6px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .divider {
+        color: rgba(255, 255, 255, 0.2);
+    }
+
+    .article-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        line-height: 1.2;
+        color: var(--text-primary);
+        margin-bottom: 20px;
+    }
+
+    .article-source {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+    }
+
+    .article-hero {
+        width: 100%;
+        height: 300px;
+        background: #0f172a;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    .hero-label {
+        color: rgba(255, 255, 255, 0.2);
+        font-weight: 700;
+        font-size: 1.2rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+    }
+
+    .shimmer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.03) 50%,
+            rgba(255, 255, 255, 0) 100%
+        );
+        animation: shimmer 3s infinite linear;
+    }
+
+    @keyframes shimmer {
+        0% {
+            transform: translateX(-100%);
+        }
+        100% {
+            transform: translateX(100%);
+        }
+    }
+
+    .article-content {
+        padding: 48px;
+    }
+
+    .lead-text {
+        font-size: 1.25rem;
+        line-height: 1.6;
+        color: var(--text-secondary);
+        font-weight: 500;
+        margin-bottom: 32px;
+    }
+
+    hr {
+        border: 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        margin: 32px 0;
+    }
+
+    .body-text {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--text-muted);
+    }
+
+    .article-footer {
+        padding: 32px 48px;
+        background: rgba(0, 0, 0, 0.2);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .share-box {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        font-style: italic;
+        text-align: center;
+    }
+
+    @media (max-width: 600px) {
+        .article-title {
+            font-size: 1.8rem;
+        }
+        .article-header,
+        .article-content,
+        .article-footer {
+            padding: 30px 24px;
+        }
+        .article-hero {
+            height: 200px;
+        }
+    }
+</style>

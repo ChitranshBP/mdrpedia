@@ -1,31 +1,497 @@
 {
   "fullName": "Tasuku Honjo",
   "slug": "tasuku-honjo",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "PD-1 Immunotherapy",
   "geography": {
-    "city": "Unknown",
-    "country": "Japan"
+    "country": "Japan",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23001a4d\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%2300aaff\" text-anchor=\"middle\" dy=\".3em\">TH</text></svg>",
-  "tier": "ELITE",
-  "rankingScore": 32,
-  "hIndex": 128,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 175,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 17500,
+  "livesSaved": 0,
+  "biography": "Tasuku Honjo  is a Japanese physician-scientist and immunologist. He won the 2018 Nobel Prize in Physiology or Medicine and is best known for his identification of programmed cell death protein 1 (PD-1). He is also known for his molecular identification of cytokines IL-4 and IL-5, as well as the discovery of activation-induced cytidine deaminase (AID) that is essential for class switch recombination and somatic hypermutation.",
+  "aiSummary": "Tasuku Honjo is a pd-1 immunotherapy specialist with an H-index of 175 at Kyoto University (Faculty). Has been published in Cell, Proceedings of the National Academy of Sciences, Nature Immunology. Based in Japan.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
+  "hasInvention": false,
+  "education": [
+    "Kyoto University"
+  ],
+  "socialMedia": {},
   "affiliations": [
     {
-      "hospitalName": "Kyoto University"
+      "hospitalName": "Kyoto University",
+      "role": "Faculty",
+      "hospitalUrl": "#"
     }
   ],
-  "bio": "Tasuku Honjo is a pioneer in PD-1 Immunotherapy at Kyoto University, Japan. With a D-Index of 128 and over 175,000 citations, they are among the world's most influential researchers.",
+  "medicalSpecialty": [
+    "PD-1 Immunotherapy"
+  ],
+  "knowsAbout": [
+    "Nobel Prize in Physiology or Medicine"
+  ],
+  "citations": [
+    {
+      "title": "Engagement of the Pd-1 Immunoinhibitory Receptor by a Novel B7 Family Member Leads to Negative Regulation of Lymphocyte Activation",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 2000,
+      "citationCount": 5166,
+      "doi": "10.1084/jem.192.7.1027",
+      "sourceUrl": "https://doi.org/10.1084/jem.192.7.1027",
+      "verified": true
+    },
+    {
+      "title": "Class Switch Recombination and Hypermutation Require Activation-Induced Cytidine Deaminase (AID), a Potential RNA Editing Enzyme",
+      "journal": "Cell",
+      "year": 2000,
+      "citationCount": 3380,
+      "doi": "10.1016/s0092-8674(00)00078-7",
+      "sourceUrl": "https://doi.org/10.1016/s0092-8674(00)00078-7",
+      "verified": true
+    },
+    {
+      "title": "Involvement of PD-L1 on tumor cells in the escape from host immune system and tumor immunotherapy by PD-L1 blockade",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2002,
+      "citationCount": 3140,
+      "doi": "10.1073/pnas.192461099",
+      "sourceUrl": "https://doi.org/10.1073/pnas.192461099",
+      "verified": true
+    },
+    {
+      "title": "Induced expression of PD-1, a novel member of the immunoglobulin gene superfamily, upon programmed cell death.",
+      "journal": "The EMBO Journal",
+      "year": 1992,
+      "citationCount": 3137,
+      "doi": "10.1002/j.1460-2075.1992.tb05481.x",
+      "sourceUrl": "https://doi.org/10.1002/j.1460-2075.1992.tb05481.x",
+      "verified": true
+    },
+    {
+      "title": "PD-L2 is a second ligand for PD-1 and inhibits T cell activation",
+      "journal": "Nature Immunology",
+      "year": 2001,
+      "citationCount": 2922,
+      "doi": "10.1038/85330",
+      "sourceUrl": "https://doi.org/10.1038/85330",
+      "verified": true
+    },
+    {
+      "title": "Development of Lupus-like Autoimmune Diseases by Disruption of the PD-1 Gene Encoding an ITIM Motif-Carrying Immunoreceptor",
+      "journal": "Immunity",
+      "year": 1999,
+      "citationCount": 2689,
+      "doi": "10.1016/s1074-7613(00)80089-8",
+      "sourceUrl": "https://doi.org/10.1016/s1074-7613(00)80089-8",
+      "verified": true
+    },
+    {
+      "title": "Autoimmune Dilated Cardiomyopathy in PD-1 Receptor-Deficient Mice",
+      "journal": "Science",
+      "year": 2001,
+      "citationCount": 1827,
+      "doi": "10.1126/science.291.5502.319",
+      "sourceUrl": "https://doi.org/10.1126/science.291.5502.319",
+      "verified": true
+    },
+    {
+      "title": "Activation-Induced Cytidine Deaminase (AID) Deficiency Causes the Autosomal Recessive Form of the Hyper-IgM Syndrome (HIGM2)",
+      "journal": "Cell",
+      "year": 2000,
+      "citationCount": 1613,
+      "doi": "10.1016/s0092-8674(00)00079-9",
+      "sourceUrl": "https://doi.org/10.1016/s0092-8674(00)00079-9",
+      "verified": true
+    },
+    {
+      "title": "Expression of the PD-1 antigen on the surface of stimulated mouse T and B lymphocytes",
+      "journal": "International Immunology",
+      "year": 1996,
+      "citationCount": 1540,
+      "doi": "10.1093/intimm/8.5.765",
+      "sourceUrl": "https://doi.org/10.1093/intimm/8.5.765",
+      "verified": true
+    },
+    {
+      "title": "Programmed cell death 1 ligand 1 and tumor-infiltrating CD8 <sup>+</sup> T lymphocytes are prognostic factors of human ovarian cancer",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2007,
+      "citationCount": 1361,
+      "doi": "10.1073/pnas.0611533104",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0611533104",
+      "verified": true
+    },
+    {
+      "title": "Safety and Antitumor Activity of Anti–PD-1 Antibody, Nivolumab, in Patients With Platinum-Resistant Ovarian Cancer",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2015,
+      "citationCount": 1156,
+      "doi": "10.1200/jco.2015.62.3397",
+      "sourceUrl": "https://doi.org/10.1200/jco.2015.62.3397",
+      "verified": true
+    },
+    {
+      "title": "Notch signalling controls pancreatic cell differentiation",
+      "journal": "Nature",
+      "year": 1999,
+      "citationCount": 1150,
+      "doi": "10.1038/23716",
+      "sourceUrl": "https://doi.org/10.1038/23716",
+      "verified": true
+    },
+    {
+      "title": "Specific Expression of Activation-induced Cytidine Deaminase (AID), a Novel Member of the RNA-editing Deaminase Family in Germinal Center B Cells",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1999,
+      "citationCount": 1149,
+      "doi": "10.1074/jbc.274.26.18470",
+      "sourceUrl": "https://doi.org/10.1074/jbc.274.26.18470",
+      "verified": true
+    },
+    {
+      "title": "A rheostat for immune responses: the unique properties of PD-1 and their advantages for clinical application",
+      "journal": "Nature Immunology",
+      "year": 2013,
+      "citationCount": 903,
+      "doi": "10.1038/ni.2762",
+      "sourceUrl": "https://doi.org/10.1038/ni.2762",
+      "verified": true
+    },
+    {
+      "title": "Instruction of Distinct CD4 T Helper Cell Fates by Different Notch Ligands on Antigen-Presenting Cells",
+      "journal": "Cell",
+      "year": 2004,
+      "citationCount": 881,
+      "doi": "10.1016/s0092-8674(04)00451-9",
+      "sourceUrl": "https://doi.org/10.1016/s0092-8674(04)00451-9",
+      "verified": true
+    },
+    {
+      "title": "Generation of Lymphohematopoietic Cells from Embryonic Stem Cells in Culture",
+      "journal": "Science",
+      "year": 1994,
+      "citationCount": 879,
+      "doi": "10.1126/science.8066449",
+      "sourceUrl": "https://doi.org/10.1126/science.8066449",
+      "verified": true
+    },
+    {
+      "title": "PD-1 immunoreceptor inhibits B cell receptor-mediated signaling by recruiting src homology 2-domain-containing tyrosine phosphatase 2 to phosphotyrosine",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2001,
+      "citationCount": 829,
+      "doi": "10.1073/pnas.231486598",
+      "sourceUrl": "https://doi.org/10.1073/pnas.231486598",
+      "verified": true
+    },
+    {
+      "title": "PD-L1/B7H-1 Inhibits the Effector Phase of Tumor Rejection by T Cell Receptor (TCR) Transgenic CD8+ T Cells",
+      "journal": "Cancer Research",
+      "year": 2004,
+      "citationCount": 766,
+      "doi": "10.1158/0008-5472.can-03-3259",
+      "sourceUrl": "https://doi.org/10.1158/0008-5472.can-03-3259",
+      "verified": true
+    },
+    {
+      "title": "Signal Sequence Trap: a Cloning Strategy for Secreted Proteins and Type I Membrane Proteins",
+      "journal": "Science",
+      "year": 1993,
+      "citationCount": 713,
+      "doi": "10.1126/science.8342023",
+      "sourceUrl": "https://doi.org/10.1126/science.8342023",
+      "verified": true
+    },
+    {
+      "title": "Aberrant expansion of segmented filamentous bacteria in IgA-deficient gut",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2004,
+      "citationCount": 712,
+      "doi": "10.1073/pnas.0307317101",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0307317101",
+      "verified": true
+    },
+    {
+      "title": "The PD-1–PD-L pathway in immunological tolerance",
+      "journal": "Trends in Immunology",
+      "year": 2006,
+      "citationCount": 709,
+      "doi": "10.1016/j.it.2006.02.001",
+      "sourceUrl": "https://doi.org/10.1016/j.it.2006.02.001",
+      "verified": true
+    },
+    {
+      "title": "Autoantibodies against cardiac troponin I are responsible for dilated cardiomyopathy in PD-1-deficient mice",
+      "journal": "Nature Medicine",
+      "year": 2003,
+      "citationCount": 675,
+      "doi": "10.1038/nm955",
+      "sourceUrl": "https://doi.org/10.1038/nm955",
+      "verified": true
+    },
+    {
+      "title": "PD-1:PD-L inhibitory pathway affects both CD4+ and CD8+ T cells and is overcome by IL-2",
+      "journal": "European Journal of Immunology",
+      "year": 2002,
+      "citationCount": 665,
+      "doi": "10.1002/1521-4141(200203)32:3<634::aid-immu634>3.0.co;2-9",
+      "sourceUrl": "https://doi.org/10.1002/1521-4141(200203)32:3<634::aid-immu634>3.0.co;2-9",
+      "verified": true
+    },
+    {
+      "title": "Tumor cell expression of programmed cell death‐1 ligand 1 is a prognostic factor for malignant melanoma",
+      "journal": "Cancer",
+      "year": 2010,
+      "citationCount": 660,
+      "doi": "10.1002/cncr.24899",
+      "sourceUrl": "https://doi.org/10.1002/cncr.24899",
+      "verified": true
+    },
+    {
+      "title": "Cancer immunotherapies targeting the PD-1 signaling pathway",
+      "journal": "Journal of Biomedical Science",
+      "year": 2017,
+      "citationCount": 638,
+      "doi": "10.1186/s12929-017-0329-9",
+      "sourceUrl": "https://doi.org/10.1186/s12929-017-0329-9",
+      "verified": true
+    },
+    {
+      "title": "Conservation of the Notch signalling pathway in mammalian neurogenesis",
+      "journal": "Development",
+      "year": 1997,
+      "citationCount": 630,
+      "doi": "10.1242/dev.124.6.1139",
+      "sourceUrl": "https://doi.org/10.1242/dev.124.6.1139",
+      "verified": true
+    },
+    {
+      "title": "Structure and Chromosomal Localization of the Human Stromal Cell-Derived Factor 1 (SDF1) Gene",
+      "journal": "Genomics",
+      "year": 1995,
+      "citationCount": 621,
+      "doi": "10.1006/geno.1995.1180",
+      "sourceUrl": "https://doi.org/10.1006/geno.1995.1180",
+      "verified": true
+    },
+    {
+      "title": "Fibulin-5/DANCE is essential for elastogenesis in vivo",
+      "journal": "Nature",
+      "year": 2002,
+      "citationCount": 620,
+      "doi": "10.1038/415171a",
+      "sourceUrl": "https://doi.org/10.1038/415171a",
+      "verified": true
+    },
+    {
+      "title": "Critical Roles of Activation-Induced Cytidine Deaminase in the Homeostasis of Gut Flora",
+      "journal": "Science",
+      "year": 2002,
+      "citationCount": 588,
+      "doi": "10.1126/science.1077336",
+      "sourceUrl": "https://doi.org/10.1126/science.1077336",
+      "verified": true
+    },
+    {
+      "title": "Molecular Mechanism of Class Switch Recombination: Linkage with Somatic Hypermutation",
+      "journal": "Annual Review of Immunology",
+      "year": 2002,
+      "citationCount": 586,
+      "doi": "10.1146/annurev.immunol.20.090501.112049",
+      "sourceUrl": "https://doi.org/10.1146/annurev.immunol.20.090501.112049",
+      "verified": true
+    },
+    {
+      "title": "Preferential Generation of Follicular B Helper T Cells from Foxp3 <sup>+</sup> T Cells in Gut Peyer's Patches",
+      "journal": "Science",
+      "year": 2009,
+      "citationCount": 574,
+      "doi": "10.1126/science.1169152",
+      "sourceUrl": "https://doi.org/10.1126/science.1169152",
+      "verified": true
+    },
+    {
+      "title": "Inducible gene knockout of transcription factor recombination signal binding protein‐J reveals its essential role in T versus B lineage decision",
+      "journal": "International Immunology",
+      "year": 2002,
+      "citationCount": 571,
+      "doi": "10.1093/intimm/dxf030",
+      "sourceUrl": "https://doi.org/10.1093/intimm/dxf030",
+      "verified": true
+    },
+    {
+      "title": "Molecular cloning of cDNA encoding human interleukin-2 receptor",
+      "journal": "Nature",
+      "year": 1984,
+      "citationCount": 566,
+      "doi": "10.1038/311631a0",
+      "sourceUrl": "https://doi.org/10.1038/311631a0",
+      "verified": true
+    },
+    {
+      "title": "Resting dendritic cells induce peripheral CD8+ T cell tolerance through PD-1 and CTLA-4",
+      "journal": "Nature Immunology",
+      "year": 2005,
+      "citationCount": 541,
+      "doi": "10.1038/ni1165",
+      "sourceUrl": "https://doi.org/10.1038/ni1165",
+      "verified": true
+    },
+    {
+      "title": "Diphtheria Toxin-dependent Adenosine Diphosphate Ribosylation of Aminoacyl Transferase II and Inhibition of Protein Synthesis",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1968,
+      "citationCount": 540,
+      "doi": "10.1016/s0021-9258(18)93347-8",
+      "sourceUrl": "https://doi.org/10.1016/s0021-9258(18)93347-8",
+      "verified": true
+    },
+    {
+      "title": "Haploinsufficient lethality and formation of arteriovenous malformations in Notch pathway mutants",
+      "journal": "Genes & Development",
+      "year": 2004,
+      "citationCount": 529,
+      "doi": "10.1101/gad.1239204",
+      "sourceUrl": "https://doi.org/10.1101/gad.1239204",
+      "verified": true
+    },
+    {
+      "title": "Plasma elevation of stromal cell–derived factor-1 induces mobilization of mature and immature hematopoietic progenitor and stem cells",
+      "journal": "Blood",
+      "year": 2001,
+      "citationCount": 525,
+      "doi": "10.1182/blood.v97.11.3354",
+      "sourceUrl": "https://doi.org/10.1182/blood.v97.11.3354",
+      "verified": true
+    },
+    {
+      "title": "Intestinal IgA synthesis: regulation of front-line body defences",
+      "journal": "Nature reviews. Immunology",
+      "year": 2003,
+      "citationCount": 501,
+      "doi": "10.1038/nri982",
+      "sourceUrl": "https://doi.org/10.1038/nri982",
+      "verified": true
+    },
+    {
+      "title": "AID is required to initiate Nbs1/γ-H2AX focus formation and mutations at sites of class switching",
+      "journal": "Nature",
+      "year": 2001,
+      "citationCount": 494,
+      "doi": "10.1038/414660a",
+      "sourceUrl": "https://doi.org/10.1038/414660a",
+      "verified": true
+    },
+    {
+      "title": "Cloning of cDNA encoding the murine IgG1 induction factor by a novel strategy using SP6 promoter",
+      "journal": "Nature",
+      "year": 1986,
+      "citationCount": 480,
+      "doi": "10.1038/319640a0",
+      "sourceUrl": "https://doi.org/10.1038/319640a0",
+      "verified": true
+    },
+    {
+      "title": "Disruption of the mouse <i>RBP-J</i>к gene results in early embryonic death",
+      "journal": "Development",
+      "year": 1995,
+      "citationCount": 477,
+      "doi": "10.1242/dev.121.10.3291",
+      "sourceUrl": "https://doi.org/10.1242/dev.121.10.3291",
+      "verified": true
+    },
+    {
+      "title": "Notch–RBP-J signaling is involved in cell fate determination of marginal zone B cells",
+      "journal": "Nature Immunology",
+      "year": 2002,
+      "citationCount": 475,
+      "doi": "10.1038/ni793",
+      "sourceUrl": "https://doi.org/10.1038/ni793",
+      "verified": true
+    },
+    {
+      "title": "Physical interaction between a novel domain of the receptor Notch and the transcription factor RBP-Jκ/Su(H)",
+      "journal": "Current Biology",
+      "year": 1995,
+      "citationCount": 474,
+      "doi": "10.1016/s0960-9822(95)00279-x",
+      "sourceUrl": "https://doi.org/10.1016/s0960-9822(95)00279-x",
+      "verified": true
+    },
+    {
+      "title": "Helicobacter pylori infection triggers aberrant expression of activation-induced cytidine deaminase in gastric epithelium",
+      "journal": "Nature Medicine",
+      "year": 2007,
+      "citationCount": 468,
+      "doi": "10.1038/nm1566",
+      "sourceUrl": "https://doi.org/10.1038/nm1566",
+      "verified": true
+    },
+    {
+      "title": "AID Is Required for c-myc/IgH Chromosome Translocations In Vivo",
+      "journal": "Cell",
+      "year": 2004,
+      "citationCount": 453,
+      "doi": "10.1016/j.cell.2004.08.006",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2004.08.006",
+      "verified": true
+    },
+    {
+      "title": "Alymphoplasia is caused by a point mutation in the mouse gene encoding Nf-κb-inducing kinase",
+      "journal": "Nature Genetics",
+      "year": 1999,
+      "citationCount": 447,
+      "doi": "10.1038/8780",
+      "sourceUrl": "https://doi.org/10.1038/8780",
+      "verified": true
+    },
+    {
+      "title": "Forebrain ependymal cells are Notch-dependent and generate neuroblasts and astrocytes after stroke",
+      "journal": "Nature Neuroscience",
+      "year": 2009,
+      "citationCount": 446,
+      "doi": "10.1038/nn.2268",
+      "sourceUrl": "https://doi.org/10.1038/nn.2268",
+      "verified": true
+    },
+    {
+      "title": "The PD-1/PD-L1 complex resembles the antigen-binding Fv domains of antibodies and T cell receptors",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2008,
+      "citationCount": 444,
+      "doi": "10.1073/pnas.0712278105",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0712278105",
+      "verified": true
+    },
+    {
+      "title": "Constitutive Expression of AID Leads to Tumorigenesis",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 2003,
+      "citationCount": 432,
+      "doi": "10.1084/jem.20030275",
+      "sourceUrl": "https://doi.org/10.1084/jem.20030275",
+      "verified": true
+    },
+    {
+      "title": "In situ class switching and differentiation to IgA-producing cells in the gut lamina propria",
+      "journal": "Nature",
+      "year": 2001,
+      "citationCount": 428,
+      "doi": "10.1038/35098100",
+      "sourceUrl": "https://doi.org/10.1038/35098100",
+      "verified": true
+    }
+  ],
   "awards": [],
-  "education": [],
-  "socialMedia": {},
-  "status": "LIVING"
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:15.000Z",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Tasuku_Honjo_201311.jpg/330px-Tasuku_Honjo_201311.jpg",
+  "openalexId": "https://openalex.org/A5019039647"
 }

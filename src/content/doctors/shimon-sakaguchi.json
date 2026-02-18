@@ -1,31 +1,493 @@
 {
   "fullName": "Shimon Sakaguchi",
   "slug": "shimon-sakaguchi",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Regulatory T Cells",
   "geography": {
-    "city": "Unknown",
-    "country": "Japan"
+    "country": "Japan",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23001a4d\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%2300aaff\" text-anchor=\"middle\" dy=\".3em\">SS</text></svg>",
-  "tier": "ELITE",
-  "rankingScore": 34,
-  "hIndex": 137,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 170,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 17000,
+  "livesSaved": 0,
+  "biography": "Shimon Sakaguchi  is a Japanese immunologist, a Distinguished Professor of Osaka University, and a Professor Emeritus of Kyoto University.",
+  "aiSummary": "Shimon Sakaguchi is a regulatory t cells specialist with an H-index of 170 at Osaka University (Faculty). Has been published in Science, Cell, Nature. Based in Japan.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Osaka University"
-    }
-  ],
-  "bio": "Shimon Sakaguchi is a pioneer in Regulatory T Cells at Osaka University, Japan. With a D-Index of 137 and over 170,000 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Osaka University",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Regulatory T Cells"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Control of Regulatory T Cell Development by the Transcription Factor <i>Foxp3</i>",
+      "journal": "Science",
+      "year": 2003,
+      "citationCount": 8024,
+      "doi": "10.1126/science.1079490",
+      "sourceUrl": "https://doi.org/10.1126/science.1079490",
+      "verified": true
+    },
+    {
+      "title": "Regulatory T Cells and Immune Tolerance",
+      "journal": "Cell",
+      "year": 2008,
+      "citationCount": 5145,
+      "doi": "10.1016/j.cell.2008.05.009",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2008.05.009",
+      "verified": true
+    },
+    {
+      "title": "N<scp>aturally</scp>A<scp>rising</scp>CD4<sup>+</sup>R<scp>egulatory</scp>T C<scp>ells for</scp>I<scp>mmunologic</scp>S<scp>elf</scp>-T<scp>olerance and</scp>N<scp>egative</scp>C<scp>ontrol of</scp>I<scp>mmune</scp>R<scp>esponses</scp>",
+      "journal": "Annual Review of Immunology",
+      "year": 2003,
+      "citationCount": 3295,
+      "doi": "10.1146/annurev.immunol.21.120601.141122",
+      "sourceUrl": "https://doi.org/10.1146/annurev.immunol.21.120601.141122",
+      "verified": true
+    },
+    {
+      "title": "Treg induction by a rationally selected mixture of Clostridia strains from the human microbiota",
+      "journal": "Nature",
+      "year": 2013,
+      "citationCount": 2840,
+      "doi": "10.1038/nature12331",
+      "sourceUrl": "https://doi.org/10.1038/nature12331",
+      "verified": true
+    },
+    {
+      "title": "CTLA-4 Control over Foxp3 <sup>+</sup> Regulatory T Cell Function",
+      "journal": "Science",
+      "year": 2008,
+      "citationCount": 2803,
+      "doi": "10.1126/science.1160062",
+      "sourceUrl": "https://doi.org/10.1126/science.1160062",
+      "verified": true
+    },
+    {
+      "title": "Naturally arising Foxp3-expressing CD25+CD4+ regulatory T cells in immunological tolerance to self and non-self",
+      "journal": "Nature Immunology",
+      "year": 2005,
+      "citationCount": 2649,
+      "doi": "10.1038/ni1178",
+      "sourceUrl": "https://doi.org/10.1038/ni1178",
+      "verified": true
+    },
+    {
+      "title": "FOXP3+ regulatory T cells in the human immune system",
+      "journal": "Nature reviews. Immunology",
+      "year": 2010,
+      "citationCount": 2388,
+      "doi": "10.1038/nri2785",
+      "sourceUrl": "https://doi.org/10.1038/nri2785",
+      "verified": true
+    },
+    {
+      "title": "Functional Delineation and Differentiation Dynamics of Human CD4+ T Cells Expressing the FoxP3 Transcription Factor",
+      "journal": "Immunity",
+      "year": 2009,
+      "citationCount": 2212,
+      "doi": "10.1016/j.immuni.2009.03.019",
+      "sourceUrl": "https://doi.org/10.1016/j.immuni.2009.03.019",
+      "verified": true
+    },
+    {
+      "title": "Immunologic Self-Tolerance Maintained by Cd25+Cd4+Regulatory T Cells Constitutively Expressing Cytotoxic T Lymphocyte–Associated Antigen 4",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 2000,
+      "citationCount": 2200,
+      "doi": "10.1084/jem.192.2.303",
+      "sourceUrl": "https://doi.org/10.1084/jem.192.2.303",
+      "verified": true
+    },
+    {
+      "title": "Regulatory T cells in cancer immunotherapy",
+      "journal": "Cell Research",
+      "year": 2016,
+      "citationCount": 1836,
+      "doi": "10.1038/cr.2016.151",
+      "sourceUrl": "https://doi.org/10.1038/cr.2016.151",
+      "verified": true
+    },
+    {
+      "title": "Regulatory T Cells",
+      "journal": "Cell",
+      "year": 2000,
+      "citationCount": 1805,
+      "doi": "10.1016/s0092-8674(00)80856-9",
+      "sourceUrl": "https://doi.org/10.1016/s0092-8674(00)80856-9",
+      "verified": true
+    },
+    {
+      "title": "Stimulation of CD25+CD4+ regulatory T cells through GITR breaks immunological self-tolerance",
+      "journal": "Nature Immunology",
+      "year": 2002,
+      "citationCount": 1714,
+      "doi": "10.1038/ni759",
+      "sourceUrl": "https://doi.org/10.1038/ni759",
+      "verified": true
+    },
+    {
+      "title": "Foxp3<sup>+</sup>CD25<sup>+</sup>CD4<sup>+</sup> natural regulatory T cells in dominant self‐tolerance and autoimmune disease",
+      "journal": "Immunological Reviews",
+      "year": 2006,
+      "citationCount": 1528,
+      "doi": "10.1111/j.0105-2896.2006.00427.x",
+      "sourceUrl": "https://doi.org/10.1111/j.0105-2896.2006.00427.x",
+      "verified": true
+    },
+    {
+      "title": "Induction of Tumor Immunity by Removing CD25+CD4+ T Cells: A Common Basis Between Tumor Immunity and Autoimmunity",
+      "journal": "The Journal of Immunology",
+      "year": 1999,
+      "citationCount": 1473,
+      "doi": "10.4049/jimmunol.163.10.5211",
+      "sourceUrl": "https://doi.org/10.4049/jimmunol.163.10.5211",
+      "verified": true
+    },
+    {
+      "title": "Regulatory T cells in transplantation tolerance",
+      "journal": "Nature reviews. Immunology",
+      "year": 2003,
+      "citationCount": 1313,
+      "doi": "10.1038/nri1027",
+      "sourceUrl": "https://doi.org/10.1038/nri1027",
+      "verified": true
+    },
+    {
+      "title": "Homeostatic maintenance of natural <i>Foxp3</i> + CD25+ CD4+ regulatory T cells by interleukin (IL)-2 and induction of autoimmune disease by IL-2 neutralization",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 2005,
+      "citationCount": 1202,
+      "doi": "10.1084/jem.20041982",
+      "sourceUrl": "https://doi.org/10.1084/jem.20041982",
+      "verified": true
+    },
+    {
+      "title": "Thymus and Autoimmunity: Production of CD25+CD4+ Naturally Anergic and Suppressive T Cells as a Key Function of the Thymus in Maintaining Immunologic Self-Tolerance",
+      "journal": "The Journal of Immunology",
+      "year": 1999,
+      "citationCount": 1193,
+      "doi": "10.4049/jimmunol.162.9.5317",
+      "sourceUrl": "https://doi.org/10.4049/jimmunol.162.9.5317",
+      "verified": true
+    },
+    {
+      "title": "Regulatory T cells exert checks and balances on self tolerance and autoimmunity",
+      "journal": "Nature Immunology",
+      "year": 2009,
+      "citationCount": 1086,
+      "doi": "10.1038/ni.1818",
+      "sourceUrl": "https://doi.org/10.1038/ni.1818",
+      "verified": true
+    },
+    {
+      "title": "Pillars Article: Control of Regulatory T Cell Development by the Transcription Factor Foxp3. Science 2003. 299: 1057-1061.",
+      "journal": "PubMed",
+      "year": 2017,
+      "citationCount": 1064,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2581118710",
+      "verified": true
+    },
+    {
+      "title": "Tumor rejection by in vivo administration of anti-CD25 (interleukin-2 receptor alpha) monoclonal antibody.",
+      "journal": "PubMed",
+      "year": 1999,
+      "citationCount": 1060,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2147350757",
+      "verified": true
+    },
+    {
+      "title": "Regulatory T Cells and Human Disease",
+      "journal": "Annual Review of Immunology",
+      "year": 2020,
+      "citationCount": 1050,
+      "doi": "10.1146/annurev-immunol-042718-041717",
+      "sourceUrl": "https://doi.org/10.1146/annurev-immunol-042718-041717",
+      "verified": true
+    },
+    {
+      "title": "PD-1 <sup>+</sup> regulatory T cells amplified by PD-1 blockade promote hyperprogression of cancer",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2019,
+      "citationCount": 984,
+      "doi": "10.1073/pnas.1822001116",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1822001116",
+      "verified": true
+    },
+    {
+      "title": "Regulatory T cells in tumor immunity",
+      "journal": "International Journal of Cancer",
+      "year": 2010,
+      "citationCount": 921,
+      "doi": "10.1002/ijc.25429",
+      "sourceUrl": "https://doi.org/10.1002/ijc.25429",
+      "verified": true
+    },
+    {
+      "title": "Preferential recruitment of CCR6-expressing Th17 cells to inflamed joints via CCL20 in rheumatoid arthritis and its animal model",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 2007,
+      "citationCount": 907,
+      "doi": "10.1084/jem.20071397",
+      "sourceUrl": "https://doi.org/10.1084/jem.20071397",
+      "verified": true
+    },
+    {
+      "title": "Cutting Edge: Contact-Mediated Suppression by CD4+CD25+ Regulatory Cells Involves a Granzyme B-Dependent, Perforin-Independent Mechanism",
+      "journal": "The Journal of Immunology",
+      "year": 2005,
+      "citationCount": 881,
+      "doi": "10.4049/jimmunol.174.4.1783",
+      "sourceUrl": "https://doi.org/10.4049/jimmunol.174.4.1783",
+      "verified": true
+    },
+    {
+      "title": "Altered thymic T-cell selection due to a mutation of the ZAP-70 gene causes autoimmune arthritis in mice",
+      "journal": "Nature",
+      "year": 2003,
+      "citationCount": 858,
+      "doi": "10.1038/nature02119",
+      "sourceUrl": "https://doi.org/10.1038/nature02119",
+      "verified": true
+    },
+    {
+      "title": "Two FOXP3+CD4+ T cell subpopulations distinctly control the prognosis of colorectal cancers",
+      "journal": "Nature Medicine",
+      "year": 2016,
+      "citationCount": 857,
+      "doi": "10.1038/nm.4086",
+      "sourceUrl": "https://doi.org/10.1038/nm.4086",
+      "verified": true
+    },
+    {
+      "title": "Regulatory T cells: how do they suppress immune responses?",
+      "journal": "International Immunology",
+      "year": 2009,
+      "citationCount": 853,
+      "doi": "10.1093/intimm/dxp095",
+      "sourceUrl": "https://doi.org/10.1093/intimm/dxp095",
+      "verified": true
+    },
+    {
+      "title": "The microbiota regulates type 2 immunity through RORγt <sup>+</sup> T cells",
+      "journal": "Science",
+      "year": 2015,
+      "citationCount": 845,
+      "doi": "10.1126/science.aac4263",
+      "sourceUrl": "https://doi.org/10.1126/science.aac4263",
+      "verified": true
+    },
+    {
+      "title": "Autosomal dominant immune dysregulation syndrome in humans with CTLA4 mutations",
+      "journal": "Nature Medicine",
+      "year": 2014,
+      "citationCount": 805,
+      "doi": "10.1038/nm.3746",
+      "sourceUrl": "https://doi.org/10.1038/nm.3746",
+      "verified": true
+    },
+    {
+      "title": "Crucial role of FOXP3 in the development and function of human CD25+CD4+ regulatory T cells",
+      "journal": "International Immunology",
+      "year": 2004,
+      "citationCount": 792,
+      "doi": "10.1093/intimm/dxh165",
+      "sourceUrl": "https://doi.org/10.1093/intimm/dxh165",
+      "verified": true
+    },
+    {
+      "title": "T Cell Receptor Stimulation-Induced Epigenetic Changes and Foxp3 Expression Are Independent and Complementary Events Required for Treg Cell Development",
+      "journal": "Immunity",
+      "year": 2012,
+      "citationCount": 724,
+      "doi": "10.1016/j.immuni.2012.09.010",
+      "sourceUrl": "https://doi.org/10.1016/j.immuni.2012.09.010",
+      "verified": true
+    },
+    {
+      "title": "Organ-specific autoimmune diseases induced in mice by elimination of T cell subset. I. Evidence for the active participation of T cells in natural self-tolerance; deficit of a T cell subset as a possible cause of autoimmune disease.",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 1985,
+      "citationCount": 710,
+      "doi": "10.1084/jem.161.1.72",
+      "sourceUrl": "https://doi.org/10.1084/jem.161.1.72",
+      "verified": true
+    },
+    {
+      "title": "Human FOXP3+ Regulatory T Cell Heterogeneity and Function in Autoimmunity and Cancer",
+      "journal": "Immunity",
+      "year": 2019,
+      "citationCount": 709,
+      "doi": "10.1016/j.immuni.2019.01.020",
+      "sourceUrl": "https://doi.org/10.1016/j.immuni.2019.01.020",
+      "verified": true
+    },
+    {
+      "title": "Natural regulatory T cells: mechanisms of suppression",
+      "journal": "Trends in Molecular Medicine",
+      "year": 2007,
+      "citationCount": 701,
+      "doi": "10.1016/j.molmed.2007.01.003",
+      "sourceUrl": "https://doi.org/10.1016/j.molmed.2007.01.003",
+      "verified": true
+    },
+    {
+      "title": "Development and Maintenance of Regulatory T cells",
+      "journal": "Immunity",
+      "year": 2013,
+      "citationCount": 697,
+      "doi": "10.1016/j.immuni.2013.03.002",
+      "sourceUrl": "https://doi.org/10.1016/j.immuni.2013.03.002",
+      "verified": true
+    },
+    {
+      "title": "Regulatory T cells in cancer immunotherapy",
+      "journal": "Current Opinion in Immunology",
+      "year": 2014,
+      "citationCount": 693,
+      "doi": "10.1016/j.coi.2013.12.005",
+      "sourceUrl": "https://doi.org/10.1016/j.coi.2013.12.005",
+      "verified": true
+    },
+    {
+      "title": "Foxp3 controls regulatory T-cell function by interacting with AML1/Runx1",
+      "journal": "Nature",
+      "year": 2007,
+      "citationCount": 688,
+      "doi": "10.1038/nature05673",
+      "sourceUrl": "https://doi.org/10.1038/nature05673",
+      "verified": true
+    },
+    {
+      "title": "Foxp3<sup>+</sup>natural regulatory T cells preferentially form aggregates on dendritic cells<i>in vitro</i>and actively inhibit their maturation",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2008,
+      "citationCount": 679,
+      "doi": "10.1073/pnas.0711106105",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0711106105",
+      "verified": true
+    },
+    {
+      "title": "Dysbiosis Contributes to Arthritis Development via Activation of Autoreactive T Cells in the Intestine",
+      "journal": "Arthritis & Rheumatology",
+      "year": 2016,
+      "citationCount": 669,
+      "doi": "10.1002/art.39783",
+      "sourceUrl": "https://doi.org/10.1002/art.39783",
+      "verified": true
+    },
+    {
+      "title": "Anti-CCR4 mAb selectively depletes effector-type FoxP3<sup>+</sup>CD4<sup>+</sup>regulatory T cells, evoking antitumor immune responses in humans",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2013,
+      "citationCount": 608,
+      "doi": "10.1073/pnas.1316796110",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1316796110",
+      "verified": true
+    },
+    {
+      "title": "Regulatory T cells: recommendations to simplify the nomenclature",
+      "journal": "Nature Immunology",
+      "year": 2013,
+      "citationCount": 595,
+      "doi": "10.1038/ni.2554",
+      "sourceUrl": "https://doi.org/10.1038/ni.2554",
+      "verified": true
+    },
+    {
+      "title": "Continuous administration of anti-interleukin 10 antibodies delays onset of autoimmunity in NZB/W F1 mice.",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 1994,
+      "citationCount": 535,
+      "doi": "10.1084/jem.179.1.305",
+      "sourceUrl": "https://doi.org/10.1084/jem.179.1.305",
+      "verified": true
+    },
+    {
+      "title": "Interleukin-10-Producing Plasmablasts Exert Regulatory Function in Autoimmune Inflammation",
+      "journal": "Immunity",
+      "year": 2014,
+      "citationCount": 517,
+      "doi": "10.1016/j.immuni.2014.10.016",
+      "sourceUrl": "https://doi.org/10.1016/j.immuni.2014.10.016",
+      "verified": true
+    },
+    {
+      "title": "A role for Dicer in immune regulation",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 2006,
+      "citationCount": 515,
+      "doi": "10.1084/jem.20061692",
+      "sourceUrl": "https://doi.org/10.1084/jem.20061692",
+      "verified": true
+    },
+    {
+      "title": "Scalable, multimodal profiling of chromatin accessibility, gene expression and protein levels in single cells",
+      "journal": "Nature Biotechnology",
+      "year": 2021,
+      "citationCount": 511,
+      "doi": "10.1038/s41587-021-00927-2",
+      "sourceUrl": "https://doi.org/10.1038/s41587-021-00927-2",
+      "verified": true
+    },
+    {
+      "title": "The plasticity and stability of regulatory T cells",
+      "journal": "Nature reviews. Immunology",
+      "year": 2013,
+      "citationCount": 502,
+      "doi": "10.1038/nri3464",
+      "sourceUrl": "https://doi.org/10.1038/nri3464",
+      "verified": true
+    },
+    {
+      "title": "Targeting Treg cells in cancer immunotherapy",
+      "journal": "European Journal of Immunology",
+      "year": 2019,
+      "citationCount": 479,
+      "doi": "10.1002/eji.201847659",
+      "sourceUrl": "https://doi.org/10.1002/eji.201847659",
+      "verified": true
+    },
+    {
+      "title": "T cell self-reactivity forms a cytokine milieu for spontaneous development of IL-17+ Th cells that cause autoimmune arthritis",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 2007,
+      "citationCount": 478,
+      "doi": "10.1084/jem.20062259",
+      "sourceUrl": "https://doi.org/10.1084/jem.20062259",
+      "verified": true
+    },
+    {
+      "title": "Treatment of advanced tumors with agonistic anti-GITR mAb and its effects on tumor-infiltrating Foxp3+CD25+CD4+ regulatory T cells",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 2012,
+      "citationCount": 463,
+      "doi": "10.1084/jem.200509402092c",
+      "sourceUrl": "https://doi.org/10.1084/jem.200509402092c",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:15.000Z",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Shimon_Sakaguchi_cropped_2_Shimon_Sakaguchi_201711.jpg/330px-Shimon_Sakaguchi_cropped_2_Shimon_Sakaguchi_201711.jpg",
+  "openalexId": "https://openalex.org/A5025764166"
 }

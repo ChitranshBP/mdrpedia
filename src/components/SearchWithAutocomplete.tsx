@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 interface SearchResult {
     slug: string;
@@ -13,25 +13,45 @@ interface SearchResult {
 
 interface Props {
     onSelect?: (doctor: SearchResult) => void;
+    placeholder?: string;
+    autoFocus?: boolean;
 }
 
-export default function SearchWithAutocomplete({ onSelect }: Props) {
+export default function SearchWithAutocomplete({ onSelect, placeholder, autoFocus }: Props) {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState<SearchResult[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [activeIndex, setActiveIndex] = useState(-1);
     const wrapperRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const listRef = useRef<HTMLUListElement>(null);
+    const listId = 'search-results-list';
 
-    // Close on click outside
+    // Close on click outside or Escape key
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
             if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
                 setIsOpen(false);
+                setActiveIndex(-1);
             }
         }
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, [wrapperRef]);
+
+        function handleEscape(event: KeyboardEvent) {
+            if (event.key === 'Escape') {
+                setIsOpen(false);
+                setActiveIndex(-1);
+                inputRef.current?.focus();
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('keydown', handleEscape);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('keydown', handleEscape);
+        };
+    }, []);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -40,81 +60,148 @@ export default function SearchWithAutocomplete({ onSelect }: Props) {
                 fetch(`/api/search?q=${encodeURIComponent(query)}`)
                     .then(res => res.json())
                     .then(data => {
-                        const results = Array.isArray(data) ? data : [];
-                        setResults(results);
+                        const searchResults = Array.isArray(data) ? data : [];
+                        setResults(searchResults);
                         setIsLoading(false);
                         setIsOpen(true);
+                        setActiveIndex(-1);
 
-                        // Log Zero Results (Unmet Demand)
-                        if (results.length === 0 && query.length > 3) {
+                        // Log Zero Results (Unmet Demand) - fire and forget
+                        if (searchResults.length === 0 && query.length > 3) {
                             fetch('/api/log-search-click', {
                                 method: 'POST',
                                 body: JSON.stringify({ query, clickedSlug: 'ZERO_RESULTS' })
-                            }).catch(err => console.error(err));
+                            }).catch(() => { /* Silent fail for analytics */ });
                         }
                     })
                     .catch(() => setIsLoading(false));
             } else {
                 setResults([]);
                 setIsOpen(false);
+                setActiveIndex(-1);
             }
         }, 300); // Debounce 300ms
 
         return () => clearTimeout(timer);
     }, [query]);
 
-    const handleSelect = (result: SearchResult) => {
-        // Log the click
+    const handleSelect = useCallback((result: SearchResult) => {
+        // Log the click - fire and forget
         fetch('/api/log-search-click', {
             method: 'POST',
             body: JSON.stringify({ query, clickedSlug: result.slug })
-        }).catch(err => console.error(err));
+        }).catch(() => { /* Silent fail for analytics */ });
 
         if (onSelect) {
             onSelect(result);
             setQuery('');
             setIsOpen(false);
-        } else {
-            // Navigate explicitly if no callback (though <a> tag usually handles it, logging is good side effect)
-            // But we keep the <a> tag structure for SEO/Standard usage if onSelect is missing
+            setActiveIndex(-1);
         }
-    };
+    }, [query, onSelect]);
+
+    // Keyboard navigation handler
+    const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+        if (!isOpen || results.length === 0) return;
+
+        switch (e.key) {
+            case 'ArrowDown':
+                e.preventDefault();
+                setActiveIndex(prev => (prev < results.length - 1 ? prev + 1 : 0));
+                break;
+            case 'ArrowUp':
+                e.preventDefault();
+                setActiveIndex(prev => (prev > 0 ? prev - 1 : results.length - 1));
+                break;
+            case 'Enter':
+                e.preventDefault();
+                if (activeIndex >= 0 && activeIndex < results.length) {
+                    handleSelect(results[activeIndex]);
+                    if (!onSelect) {
+                        window.location.href = `/doctors/${results[activeIndex].slug}`;
+                    }
+                }
+                break;
+            case 'Tab':
+                setIsOpen(false);
+                setActiveIndex(-1);
+                break;
+        }
+    }, [isOpen, results, activeIndex, handleSelect, onSelect]);
+
+    // Scroll active item into view
+    useEffect(() => {
+        if (activeIndex >= 0 && listRef.current) {
+            const activeElement = listRef.current.children[activeIndex] as HTMLElement;
+            activeElement?.scrollIntoView({ block: 'nearest' });
+        }
+    }, [activeIndex]);
 
     return (
         <div className="relative w-full max-w-lg" ref={wrapperRef}>
             <div className="relative">
                 <input
+                    ref={inputRef}
                     type="text"
+                    role="combobox"
+                    aria-expanded={isOpen && results.length > 0}
+                    aria-haspopup="listbox"
+                    aria-controls={listId}
+                    aria-activedescendant={activeIndex >= 0 ? `search-result-${activeIndex}` : undefined}
+                    aria-autocomplete="list"
+                    aria-label="Search for doctors by name, specialty, or hospital"
                     className="w-full px-4 py-3 pl-12 bg-white/5 border border-white/10 rounded-full text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500/50 backdrop-blur-md"
-                    placeholder="Search by name, specialty, or hospital..."
+                    placeholder={placeholder || "Search by name, specialty, or hospital..."}
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     onFocus={() => query.length >= 2 && setIsOpen(true)}
+                    onKeyDown={handleKeyDown}
+                    autoFocus={autoFocus}
+                    autoComplete="off"
                 />
                 <svg
                     className="absolute left-4 top-3.5 w-5 h-5 text-white/40"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
+                    aria-hidden="true"
                 >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 {isLoading && (
-                    <div className="absolute right-4 top-3.5">
+                    <div className="absolute right-4 top-3.5" aria-hidden="true">
                         <div className="w-5 h-5 border-2 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
                     </div>
                 )}
             </div>
 
+            {/* Live region for screen reader announcements */}
+            <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+                {isLoading ? 'Searching...' : results.length > 0 ? `${results.length} results found` : query.length > 2 && !isLoading ? 'No results found' : ''}
+            </div>
+
             {isOpen && results.length > 0 && (
-                <div className="absolute z-50 w-full mt-2 bg-[#0f0f13] border border-white/10 rounded-xl shadow-2xl overflow-hidden backdrop-blur-xl">
-                    <ul>
-                        {results.map((result) => (
-                            <li key={result.slug}>
+                <div className="absolute z-50 w-full mt-2 bg-[#0f0f13] border border-white/10 rounded-xl shadow-2xl overflow-hidden backdrop-blur-xl max-h-96 overflow-y-auto">
+                    <ul
+                        ref={listRef}
+                        id={listId}
+                        role="listbox"
+                        aria-label="Search results"
+                    >
+                        {results.map((result, index) => (
+                            <li
+                                key={result.slug}
+                                id={`search-result-${index}`}
+                                role="option"
+                                aria-selected={index === activeIndex}
+                            >
                                 {onSelect ? (
                                     <button
                                         onClick={() => handleSelect(result)}
-                                        className="w-full text-left flex items-center gap-4 px-4 py-3 hover:bg-white/5 transition-colors group"
+                                        className={`w-full text-left flex items-center gap-4 px-4 py-3 transition-colors group ${
+                                            index === activeIndex ? 'bg-white/10' : 'hover:bg-white/5'
+                                        }`}
+                                        tabIndex={-1}
                                     >
                                         <SearchResultContent result={result} />
                                     </button>
@@ -122,7 +209,10 @@ export default function SearchWithAutocomplete({ onSelect }: Props) {
                                     <a
                                         href={`/doctors/${result.slug}`}
                                         onClick={() => handleSelect(result)}
-                                        className="flex items-center gap-4 px-4 py-3 hover:bg-white/5 transition-colors group"
+                                        className={`flex items-center gap-4 px-4 py-3 transition-colors group ${
+                                            index === activeIndex ? 'bg-white/10' : 'hover:bg-white/5'
+                                        }`}
+                                        tabIndex={-1}
                                     >
                                         <SearchResultContent result={result} />
                                     </a>
@@ -134,7 +224,10 @@ export default function SearchWithAutocomplete({ onSelect }: Props) {
             )}
 
             {isOpen && query.length > 2 && results.length === 0 && !isLoading && (
-                <div className="absolute z-50 w-full mt-2 bg-[#0f0f13] border border-white/10 rounded-xl shadow-xl p-4 text-center text-gray-400 text-sm">
+                <div
+                    className="absolute z-50 w-full mt-2 bg-[#0f0f13] border border-white/10 rounded-xl shadow-xl p-4 text-center text-gray-400 text-sm"
+                    role="status"
+                >
                     No results found for "{query}"
                 </div>
             )}
@@ -150,7 +243,7 @@ function SearchResultContent({ result }: { result: SearchResult }) {
                     'bg-gray-800 text-gray-400'
                 }`}>
                 {result.portraitUrl ? (
-                    <img src={result.portraitUrl} alt="" className="w-full h-full object-cover rounded-full" />
+                    <img src={result.portraitUrl} alt={`Portrait of ${result.fullName}`} className="w-full h-full object-cover rounded-full" />
                 ) : (
                     <span>{result.fullName.split(' ').map(n => n[0]).join('').slice(0, 2)}</span>
                 )}

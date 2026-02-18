@@ -1,36 +1,493 @@
 {
   "fullName": "Eric S. Lander",
   "slug": "eric-s-lander",
-  "title": "MD, PhD",
-  "specialty": "Genomics",
+  "title": "MD",
+  "specialty": "Human Genome Mapping",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">ES</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 82,
-  "hIndex": 329,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 270,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 73239,
+  "livesSaved": 0,
+  "biography": "Eric Steven Lander is an American mathematician and geneticist who is a professor of biology at the Massachusetts Institute of Technology (MIT), and a professor of systems biology at Harvard Medical School.",
+  "aiSummary": "Eric S. Lander is a human genome mapping specialist with an H-index of 270 at Broad Institute (Faculty). Has been published in Proceedings of the National Academy of Sciences, Nature, Nature Biotechnology. Based in United States.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Eric_Lander_in_2023_A_01.jpg",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Broad Institute"
-    }
-  ],
-  "bio": "Eric S. Lander is a pioneer in Genomics at Broad Institute, USA. With a D-Index of 329 and over 732,389 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Broad Institute",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Human Genome Mapping"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Gene set enrichment analysis: A knowledge-based approach for interpreting genome-wide expression profiles",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2005,
+      "citationCount": 54419,
+      "doi": "10.1073/pnas.0506580102",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0506580102",
+      "verified": true
+    },
+    {
+      "title": "A global reference for human genetic variation",
+      "journal": "Nature",
+      "year": 2015,
+      "citationCount": 19133,
+      "doi": "10.1038/nature15393",
+      "sourceUrl": "https://doi.org/10.1038/nature15393",
+      "verified": true
+    },
+    {
+      "title": "Integrative genomics viewer",
+      "journal": "Nature Biotechnology",
+      "year": 2011,
+      "citationCount": 15770,
+      "doi": "10.1038/nbt.1754",
+      "sourceUrl": "https://doi.org/10.1038/nbt.1754",
+      "verified": true
+    },
+    {
+      "title": "Molecular Classification of Cancer: Class Discovery and Class Prediction by Gene Expression Monitoring",
+      "journal": "Science",
+      "year": 1999,
+      "citationCount": 11567,
+      "doi": "10.1126/science.286.5439.531",
+      "sourceUrl": "https://doi.org/10.1126/science.286.5439.531",
+      "verified": true
+    },
+    {
+      "title": "PGC-1α-responsive genes involved in oxidative phosphorylation are coordinately downregulated in human diabetes",
+      "journal": "Nature Genetics",
+      "year": 2003,
+      "citationCount": 10336,
+      "doi": "10.1038/ng1180",
+      "sourceUrl": "https://doi.org/10.1038/ng1180",
+      "verified": true
+    },
+    {
+      "title": "A 3D Map of the Human Genome at Kilobase Resolution Reveals Principles of Chromatin Looping",
+      "journal": "Cell",
+      "year": 2014,
+      "citationCount": 9405,
+      "doi": "10.1016/j.cell.2014.11.021",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2014.11.021",
+      "verified": true
+    },
+    {
+      "title": "Comprehensive Mapping of Long-Range Interactions Reveals Folding Principles of the Human Genome",
+      "journal": "Science",
+      "year": 2009,
+      "citationCount": 9294,
+      "doi": "10.1126/science.1181369",
+      "sourceUrl": "https://doi.org/10.1126/science.1181369",
+      "verified": true
+    },
+    {
+      "title": "MAPMAKER: An interactive computer package for constructing primary genetic linkage maps of experimental and natural populations",
+      "journal": "Genomics",
+      "year": 1987,
+      "citationCount": 6687,
+      "doi": "10.1016/0888-7543(87)90010-3",
+      "sourceUrl": "https://doi.org/10.1016/0888-7543(87)90010-3",
+      "verified": true
+    },
+    {
+      "title": "Comprehensive molecular characterization of gastric adenocarcinoma",
+      "journal": "Nature",
+      "year": 2014,
+      "citationCount": 6331,
+      "doi": "10.1038/nature13480",
+      "sourceUrl": "https://doi.org/10.1038/nature13480",
+      "verified": true
+    },
+    {
+      "title": "The Structure of Haplotype Blocks in the Human Genome",
+      "journal": "Science",
+      "year": 2002,
+      "citationCount": 5813,
+      "doi": "10.1126/science.1069424",
+      "sourceUrl": "https://doi.org/10.1126/science.1069424",
+      "verified": true
+    },
+    {
+      "title": "Development and Applications of CRISPR-Cas9 for Genome Engineering",
+      "journal": "Cell",
+      "year": 2014,
+      "citationCount": 5719,
+      "doi": "10.1016/j.cell.2014.05.010",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2014.05.010",
+      "verified": true
+    },
+    {
+      "title": "The Connectivity Map: Using Gene-Expression Signatures to Connect Small Molecules, Genes, and Disease",
+      "journal": "Science",
+      "year": 2006,
+      "citationCount": 5368,
+      "doi": "10.1126/science.1132939",
+      "sourceUrl": "https://doi.org/10.1126/science.1132939",
+      "verified": true
+    },
+    {
+      "title": "A Bivalent Chromatin Structure Marks Key Developmental Genes in Embryonic Stem Cells",
+      "journal": "Cell",
+      "year": 2006,
+      "citationCount": 5344,
+      "doi": "10.1016/j.cell.2006.02.041",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2006.02.041",
+      "verified": true
+    },
+    {
+      "title": "Mapping mendelian factors underlying quantitative traits using RFLP linkage maps.",
+      "journal": "Genetics",
+      "year": 1989,
+      "citationCount": 5286,
+      "doi": "10.1093/genetics/121.1.185",
+      "sourceUrl": "https://doi.org/10.1093/genetics/121.1.185",
+      "verified": true
+    },
+    {
+      "title": "Genetic dissection of complex traits: guidelines for interpreting and reporting linkage results",
+      "journal": "Nature Genetics",
+      "year": 1995,
+      "citationCount": 5262,
+      "doi": "10.1038/ng1195-241",
+      "sourceUrl": "https://doi.org/10.1038/ng1195-241",
+      "verified": true
+    },
+    {
+      "title": "Chromatin signature reveals over a thousand highly conserved large non-coding RNAs in mammals",
+      "journal": "Nature",
+      "year": 2009,
+      "citationCount": 4152,
+      "doi": "10.1038/nature07672",
+      "sourceUrl": "https://doi.org/10.1038/nature07672",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide maps of chromatin state in pluripotent and lineage-committed cells",
+      "journal": "Nature",
+      "year": 2007,
+      "citationCount": 4101,
+      "doi": "10.1038/nature06008",
+      "sourceUrl": "https://doi.org/10.1038/nature06008",
+      "verified": true
+    },
+    {
+      "title": "Systematic RNA interference reveals that oncogenic KRAS-driven cancers require TBK1",
+      "journal": "Nature",
+      "year": 2009,
+      "citationCount": 4052,
+      "doi": "10.1038/nature08460",
+      "sourceUrl": "https://doi.org/10.1038/nature08460",
+      "verified": true
+    },
+    {
+      "title": "Juicer Provides a One-Click System for Analyzing Loop-Resolution Hi-C Experiments",
+      "journal": "Cell Systems",
+      "year": 2016,
+      "citationCount": 3953,
+      "doi": "10.1016/j.cels.2016.07.002",
+      "sourceUrl": "https://doi.org/10.1016/j.cels.2016.07.002",
+      "verified": true
+    },
+    {
+      "title": "Genetic Dissection of Complex Traits",
+      "journal": "Science",
+      "year": 1994,
+      "citationCount": 3441,
+      "doi": "10.1126/science.8091226",
+      "sourceUrl": "https://doi.org/10.1126/science.8091226",
+      "verified": true
+    },
+    {
+      "title": "Clonal Hematopoiesis and Blood-Cancer Risk Inferred from Blood DNA Sequence",
+      "journal": "New England Journal of Medicine",
+      "year": 2014,
+      "citationCount": 3366,
+      "doi": "10.1056/nejmoa1409405",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1409405",
+      "verified": true
+    },
+    {
+      "title": "Detecting Novel Associations in Large Data Sets",
+      "journal": "Science",
+      "year": 2011,
+      "citationCount": 3247,
+      "doi": "10.1126/science.1205438",
+      "sourceUrl": "https://doi.org/10.1126/science.1205438",
+      "verified": true
+    },
+    {
+      "title": "Discovery and saturation analysis of cancer genes across 21 tumour types",
+      "journal": "Nature",
+      "year": 2014,
+      "citationCount": 3113,
+      "doi": "10.1038/nature12912",
+      "sourceUrl": "https://doi.org/10.1038/nature12912",
+      "verified": true
+    },
+    {
+      "title": "Interpreting patterns of gene expression with self-organizing maps: Methods and application to hematopoietic differentiation",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1999,
+      "citationCount": 2940,
+      "doi": "10.1073/pnas.96.6.2907",
+      "sourceUrl": "https://doi.org/10.1073/pnas.96.6.2907",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide polygenic scores for common diseases identify individuals with risk equivalent to monogenic mutations",
+      "journal": "Nature Genetics",
+      "year": 2018,
+      "citationCount": 2893,
+      "doi": "10.1038/s41588-018-0183-z",
+      "sourceUrl": "https://doi.org/10.1038/s41588-018-0183-z",
+      "verified": true
+    },
+    {
+      "title": "Parametric and nonparametric linkage analysis: a unified multipoint approach.",
+      "journal": "PubMed",
+      "year": 1996,
+      "citationCount": 2882,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2107871825",
+      "verified": true
+    },
+    {
+      "title": "Many human large intergenic noncoding RNAs associate with chromatin-modifying complexes and affect gene expression",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2009,
+      "citationCount": 2835,
+      "doi": "10.1073/pnas.0904715106",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0904715106",
+      "verified": true
+    },
+    {
+      "title": "An immunogenic personal neoantigen vaccine for patients with melanoma",
+      "journal": "Nature",
+      "year": 2017,
+      "citationCount": 2787,
+      "doi": "10.1038/nature22991",
+      "sourceUrl": "https://doi.org/10.1038/nature22991",
+      "verified": true
+    },
+    {
+      "title": "De novo assembly of the <i>Aedes aegypti</i> genome using Hi-C yields chromosome-length scaffolds",
+      "journal": "Science",
+      "year": 2017,
+      "citationCount": 2766,
+      "doi": "10.1126/science.aal3327",
+      "sourceUrl": "https://doi.org/10.1126/science.aal3327",
+      "verified": true
+    },
+    {
+      "title": "Somatic mutations affect key pathways in lung adenocarcinoma",
+      "journal": "Nature",
+      "year": 2008,
+      "citationCount": 2719,
+      "doi": "10.1038/nature07423",
+      "sourceUrl": "https://doi.org/10.1038/nature07423",
+      "verified": true
+    },
+    {
+      "title": "Classification of human lung carcinomas by mRNA expression profiling reveals distinct adenocarcinoma subclasses",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2001,
+      "citationCount": 2577,
+      "doi": "10.1073/pnas.191502998",
+      "sourceUrl": "https://doi.org/10.1073/pnas.191502998",
+      "verified": true
+    },
+    {
+      "title": "A Landscape of Driver Mutations in Melanoma",
+      "journal": "Cell",
+      "year": 2012,
+      "citationCount": 2575,
+      "doi": "10.1016/j.cell.2012.06.024",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2012.06.024",
+      "verified": true
+    },
+    {
+      "title": "Gene expression correlates of clinical prostate cancer behavior",
+      "journal": "Cancer Cell",
+      "year": 2002,
+      "citationCount": 2521,
+      "doi": "10.1016/s1535-6108(02)00030-2",
+      "sourceUrl": "https://doi.org/10.1016/s1535-6108(02)00030-2",
+      "verified": true
+    },
+    {
+      "title": "The Mutational Landscape of Head and Neck Squamous Cell Carcinoma",
+      "journal": "Science",
+      "year": 2011,
+      "citationCount": 2513,
+      "doi": "10.1126/science.1208130",
+      "sourceUrl": "https://doi.org/10.1126/science.1208130",
+      "verified": true
+    },
+    {
+      "title": "Genome-scale DNA methylation maps of pluripotent and differentiated cells",
+      "journal": "Nature",
+      "year": 2008,
+      "citationCount": 2503,
+      "doi": "10.1038/nature07107",
+      "sourceUrl": "https://doi.org/10.1038/nature07107",
+      "verified": true
+    },
+    {
+      "title": "Reactive oxygen species have a causal role in multiple forms of insulin resistance",
+      "journal": "Nature",
+      "year": 2006,
+      "citationCount": 2488,
+      "doi": "10.1038/nature04634",
+      "sourceUrl": "https://doi.org/10.1038/nature04634",
+      "verified": true
+    },
+    {
+      "title": "Diffuse large B-cell lymphoma outcome prediction by gene-expression profiling and supervised machine learning",
+      "journal": "Nature Medicine",
+      "year": 2002,
+      "citationCount": 2437,
+      "doi": "10.1038/nm0102-68",
+      "sourceUrl": "https://doi.org/10.1038/nm0102-68",
+      "verified": true
+    },
+    {
+      "title": "Juicebox Provides a Visualization System for Hi-C Contact Maps with Unlimited Zoom",
+      "journal": "Cell Systems",
+      "year": 2016,
+      "citationCount": 2390,
+      "doi": "10.1016/j.cels.2015.07.012",
+      "sourceUrl": "https://doi.org/10.1016/j.cels.2015.07.012",
+      "verified": true
+    },
+    {
+      "title": "Prediction of central nervous system embryonal tumour outcome based on gene expression",
+      "journal": "Nature",
+      "year": 2002,
+      "citationCount": 2377,
+      "doi": "10.1038/415436a",
+      "sourceUrl": "https://doi.org/10.1038/415436a",
+      "verified": true
+    },
+    {
+      "title": "Identification of Selective Inhibitors of Cancer Stem Cells by High-Throughput Screening",
+      "journal": "Cell",
+      "year": 2009,
+      "citationCount": 2364,
+      "doi": "10.1016/j.cell.2009.06.034",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2009.06.034",
+      "verified": true
+    },
+    {
+      "title": "C2c2 is a single-component programmable RNA-guided RNA-targeting CRISPR effector",
+      "journal": "Science",
+      "year": 2016,
+      "citationCount": 2281,
+      "doi": "10.1126/science.aaf5573",
+      "sourceUrl": "https://doi.org/10.1126/science.aaf5573",
+      "verified": true
+    },
+    {
+      "title": "Transcriptional regulatory code of a eukaryotic genome",
+      "journal": "Nature",
+      "year": 2004,
+      "citationCount": 2174,
+      "doi": "10.1038/nature02800",
+      "sourceUrl": "https://doi.org/10.1038/nature02800",
+      "verified": true
+    },
+    {
+      "title": "Large-Scale Identification, Mapping, and Genotyping of Single-Nucleotide Polymorphisms in the Human Genome",
+      "journal": "Science",
+      "year": 1998,
+      "citationCount": 2167,
+      "doi": "10.1126/science.280.5366.1077",
+      "sourceUrl": "https://doi.org/10.1126/science.280.5366.1077",
+      "verified": true
+    },
+    {
+      "title": "Absolute quantification of somatic DNA alterations in human cancer",
+      "journal": "Nature Biotechnology",
+      "year": 2012,
+      "citationCount": 2153,
+      "doi": "10.1038/nbt.2203",
+      "sourceUrl": "https://doi.org/10.1038/nbt.2203",
+      "verified": true
+    },
+    {
+      "title": "Detecting recent positive selection in the human genome from haplotype structure",
+      "journal": "Nature",
+      "year": 2002,
+      "citationCount": 2153,
+      "doi": "10.1038/nature01140",
+      "sourceUrl": "https://doi.org/10.1038/nature01140",
+      "verified": true
+    },
+    {
+      "title": "A Large Intergenic Noncoding RNA Induced by p53 Mediates Global Gene Repression in the p53 Response",
+      "journal": "Cell",
+      "year": 2010,
+      "citationCount": 2076,
+      "doi": "10.1016/j.cell.2010.06.040",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2010.06.040",
+      "verified": true
+    },
+    {
+      "title": "Multiclass cancer diagnosis using tumor gene expression signatures",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2001,
+      "citationCount": 2036,
+      "doi": "10.1073/pnas.211566398",
+      "sourceUrl": "https://doi.org/10.1073/pnas.211566398",
+      "verified": true
+    },
+    {
+      "title": "RNA targeting with CRISPR–Cas13",
+      "journal": "Nature",
+      "year": 2017,
+      "citationCount": 2024,
+      "doi": "10.1038/nature24049",
+      "sourceUrl": "https://doi.org/10.1038/nature24049",
+      "verified": true
+    },
+    {
+      "title": "The Mammalian Epigenome",
+      "journal": "Cell",
+      "year": 2007,
+      "citationCount": 2020,
+      "doi": "10.1016/j.cell.2007.01.033",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2007.01.033",
+      "verified": true
+    },
+    {
+      "title": "The NIH Roadmap Epigenomics Mapping Consortium",
+      "journal": "Nature Biotechnology",
+      "year": 2010,
+      "citationCount": 2001,
+      "doi": "10.1038/nbt1010-1045",
+      "sourceUrl": "https://doi.org/10.1038/nbt1010-1045",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:23.000Z",
+  "openalexId": "https://openalex.org/A5020748592"
 }

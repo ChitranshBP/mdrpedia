@@ -1,36 +1,493 @@
 {
   "fullName": "David M. Holtzman",
   "slug": "david-m-holtzman",
-  "title": "MD, PhD",
-  "specialty": "Neurobiology of Disease",
+  "title": "MD",
+  "specialty": "Neurodegenerative Disease",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">DM</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 51,
-  "hIndex": 205,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 203,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 15322,
+  "livesSaved": 0,
+  "biography": "David M. Holtzman is an American physician-scientist known for his work exploring the biological mechanisms underlying neurodegeneration, with a focus on Alzheimer's disease. Holtzman is former Chair of the Department of Neurology, Scientific Director of the Hope Center for Neurological Disorders, and associate director of the Knight Alzheimer's Disease Research Center at Washington University School of Medicine in St. Louis, Missouri. Holtzman's lab is known for examining how apoE4 contributes to Alzheimer's disease as well as how sleep modulates amyloid beta in the brain. His work has also examined the contributions of microglia to AD pathology.",
+  "aiSummary": "David M. Holtzman is a neurodegenerative disease specialist with an H-index of 203 at Washington University (Faculty). Has been published in New England Journal of Medicine, Cell, Nature Reviews Disease Primers. Based in United States.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f1/David_holtzman_headshot.jpg",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Washington University"
-    }
-  ],
-  "bio": "David M. Holtzman is a pioneer in Neurobiology of Disease at Washington University, USA. With a D-Index of 205 and over 153,219 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Washington University",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Neurodegenerative Disease"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "The diagnosis of mild cognitive impairment due to Alzheimer's disease: Recommendations from the National Institute on Aging‐Alzheimer's Association workgroups on diagnostic guidelines for Alzheimer's disease",
+      "journal": "Alzheimer s & Dementia",
+      "year": 2011,
+      "citationCount": 9860,
+      "doi": "10.1016/j.jalz.2011.03.008",
+      "sourceUrl": "https://doi.org/10.1016/j.jalz.2011.03.008",
+      "verified": true
+    },
+    {
+      "title": "NIA‐AA Research Framework: Toward a biological definition of Alzheimer's disease",
+      "journal": "Alzheimer s & Dementia",
+      "year": 2018,
+      "citationCount": 9675,
+      "doi": "10.1016/j.jalz.2018.02.018",
+      "sourceUrl": "https://doi.org/10.1016/j.jalz.2018.02.018",
+      "verified": true
+    },
+    {
+      "title": "Clinical and Biomarker Changes in Dominantly Inherited Alzheimer's Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 2012,
+      "citationCount": 3710,
+      "doi": "10.1056/nejmoa1202753",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1202753",
+      "verified": true
+    },
+    {
+      "title": "Alzheimer Disease: An Update on Pathobiology and Treatment Strategies",
+      "journal": "Cell",
+      "year": 2019,
+      "citationCount": 2968,
+      "doi": "10.1016/j.cell.2019.09.001",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2019.09.001",
+      "verified": true
+    },
+    {
+      "title": "The TREM2-APOE Pathway Drives the Transcriptional Phenotype of Dysfunctional Microglia in Neurodegenerative Diseases",
+      "journal": "Immunity",
+      "year": 2017,
+      "citationCount": 2788,
+      "doi": "10.1016/j.immuni.2017.08.008",
+      "sourceUrl": "https://doi.org/10.1016/j.immuni.2017.08.008",
+      "verified": true
+    },
+    {
+      "title": "The Diagnosis of Mild Cognitive Impairment due to Alzheimer’s Disease: Recommendations from the National Institute on Aging-Alzheimer’s Association Workgroups on Diagnostic Guidelines for Alzheimer’s Disease",
+      "journal": "FOCUS The Journal of Lifelong Learning in Psychiatry",
+      "year": 2013,
+      "citationCount": 2629,
+      "doi": "10.1176/appi.focus.11.1.96",
+      "sourceUrl": "https://doi.org/10.1176/appi.focus.11.1.96",
+      "verified": true
+    },
+    {
+      "title": "Alzheimer disease",
+      "journal": "Nature Reviews Disease Primers",
+      "year": 2021,
+      "citationCount": 2165,
+      "doi": "10.1038/s41572-021-00269-y",
+      "sourceUrl": "https://doi.org/10.1038/s41572-021-00269-y",
+      "verified": true
+    },
+    {
+      "title": "Preclinical Alzheimer's disease: Definition, natural history, and diagnostic criteria",
+      "journal": "Alzheimer s & Dementia",
+      "year": 2016,
+      "citationCount": 1845,
+      "doi": "10.1016/j.jalz.2016.02.002",
+      "sourceUrl": "https://doi.org/10.1016/j.jalz.2016.02.002",
+      "verified": true
+    },
+    {
+      "title": "National Institute of Neurological Disorders and Stroke–Canadian Stroke Network Vascular Cognitive Impairment Harmonization Standards",
+      "journal": "Stroke",
+      "year": 2006,
+      "citationCount": 1691,
+      "doi": "10.1161/01.str.0000237236.88823.47",
+      "sourceUrl": "https://doi.org/10.1161/01.str.0000237236.88823.47",
+      "verified": true
+    },
+    {
+      "title": "TREM2 Lipid Sensing Sustains the Microglial Response in an Alzheimer’s Disease Model",
+      "journal": "Cell",
+      "year": 2015,
+      "citationCount": 1687,
+      "doi": "10.1016/j.cell.2015.01.049",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2015.01.049",
+      "verified": true
+    },
+    {
+      "title": "The Role of Apolipoprotein E in Alzheimer's Disease",
+      "journal": "Neuron",
+      "year": 2009,
+      "citationCount": 1609,
+      "doi": "10.1016/j.neuron.2009.06.026",
+      "sourceUrl": "https://doi.org/10.1016/j.neuron.2009.06.026",
+      "verified": true
+    },
+    {
+      "title": "Amyloid-β Dynamics Are Regulated by Orexin and the Sleep-Wake Cycle",
+      "journal": "Science",
+      "year": 2009,
+      "citationCount": 1502,
+      "doi": "10.1126/science.1180962",
+      "sourceUrl": "https://doi.org/10.1126/science.1180962",
+      "verified": true
+    },
+    {
+      "title": "Brain insulin resistance in type 2 diabetes and Alzheimer disease: concepts and conundrums",
+      "journal": "Nature Reviews Neurology",
+      "year": 2018,
+      "citationCount": 1428,
+      "doi": "10.1038/nrneurol.2017.185",
+      "sourceUrl": "https://doi.org/10.1038/nrneurol.2017.185",
+      "verified": true
+    },
+    {
+      "title": "Hallmarks of neurodegenerative diseases",
+      "journal": "Cell",
+      "year": 2023,
+      "citationCount": 1424,
+      "doi": "10.1016/j.cell.2022.12.032",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2022.12.032",
+      "verified": true
+    },
+    {
+      "title": "Alzheimer’s Disease: The Challenge of the Second Century",
+      "journal": "Science Translational Medicine",
+      "year": 2011,
+      "citationCount": 1406,
+      "doi": "10.1126/scitranslmed.3002369",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.3002369",
+      "verified": true
+    },
+    {
+      "title": "Clearance of Alzheimer’s amyloid-β1-40 peptide from brain by LDL receptor–related protein-1 at the blood-brain barrier",
+      "journal": "Journal of Clinical Investigation",
+      "year": 2000,
+      "citationCount": 1366,
+      "doi": "10.1172/jci10498",
+      "sourceUrl": "https://doi.org/10.1172/jci10498",
+      "verified": true
+    },
+    {
+      "title": "Peripheral anti-Aβ antibody alters CNS and plasma Aβ clearance and decreases brain Aβ burden in a mouse model of Alzheimer's disease",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2001,
+      "citationCount": 1276,
+      "doi": "10.1073/pnas.151261398",
+      "sourceUrl": "https://doi.org/10.1073/pnas.151261398",
+      "verified": true
+    },
+    {
+      "title": "Synaptic Activity Regulates Interstitial Fluid Amyloid-β Levels In Vivo",
+      "journal": "Neuron",
+      "year": 2005,
+      "citationCount": 1259,
+      "doi": "10.1016/j.neuron.2005.10.028",
+      "sourceUrl": "https://doi.org/10.1016/j.neuron.2005.10.028",
+      "verified": true
+    },
+    {
+      "title": "Apolipoprotein E controls cerebrovascular integrity via cyclophilin A",
+      "journal": "Nature",
+      "year": 2012,
+      "citationCount": 1251,
+      "doi": "10.1038/nature11087",
+      "sourceUrl": "https://doi.org/10.1038/nature11087",
+      "verified": true
+    },
+    {
+      "title": "Inverse relation between in vivo amyloid imaging load and cerebrospinal fluid Aβ <sub>42</sub> in humans",
+      "journal": "Annals of Neurology",
+      "year": 2005,
+      "citationCount": 1243,
+      "doi": "10.1002/ana.20730",
+      "sourceUrl": "https://doi.org/10.1002/ana.20730",
+      "verified": true
+    },
+    {
+      "title": "ApoE4 markedly exacerbates tau-mediated neurodegeneration in a mouse model of tauopathy",
+      "journal": "Nature",
+      "year": 2017,
+      "citationCount": 1173,
+      "doi": "10.1038/nature24016",
+      "sourceUrl": "https://doi.org/10.1038/nature24016",
+      "verified": true
+    },
+    {
+      "title": "TREM2 Maintains Microglial Metabolic Fitness in Alzheimer’s Disease",
+      "journal": "Cell",
+      "year": 2017,
+      "citationCount": 1165,
+      "doi": "10.1016/j.cell.2017.07.023",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2017.07.023",
+      "verified": true
+    },
+    {
+      "title": "Human apoE Isoforms Differentially Regulate Brain Amyloid-β Peptide Clearance",
+      "journal": "Science Translational Medicine",
+      "year": 2011,
+      "citationCount": 1160,
+      "doi": "10.1126/scitranslmed.3002156",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.3002156",
+      "verified": true
+    },
+    {
+      "title": "Human and mouse single-nucleus transcriptomics reveal TREM2-dependent and TREM2-independent cellular responses in Alzheimer’s disease",
+      "journal": "Nature Medicine",
+      "year": 2020,
+      "citationCount": 1138,
+      "doi": "10.1038/s41591-019-0695-9",
+      "sourceUrl": "https://doi.org/10.1038/s41591-019-0695-9",
+      "verified": true
+    },
+    {
+      "title": "Biomarker Modeling of Alzheimer’s Disease",
+      "journal": "Neuron",
+      "year": 2013,
+      "citationCount": 1010,
+      "doi": "10.1016/j.neuron.2013.12.003",
+      "sourceUrl": "https://doi.org/10.1016/j.neuron.2013.12.003",
+      "verified": true
+    },
+    {
+      "title": "Rapid appearance and local toxicity of amyloid-β plaques in a mouse model of Alzheimer’s disease",
+      "journal": "Nature",
+      "year": 2008,
+      "citationCount": 983,
+      "doi": "10.1038/nature06616",
+      "sourceUrl": "https://doi.org/10.1038/nature06616",
+      "verified": true
+    },
+    {
+      "title": "Sleep and Alzheimer disease pathology—a bidirectional relationship",
+      "journal": "Nature Reviews Neurology",
+      "year": 2013,
+      "citationCount": 943,
+      "doi": "10.1038/nrneurol.2013.269",
+      "sourceUrl": "https://doi.org/10.1038/nrneurol.2013.269",
+      "verified": true
+    },
+    {
+      "title": "Apolipoprotein E isoform-dependent amyloid deposition and neuritic degeneration in a mouse model of Alzheimer's disease",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2000,
+      "citationCount": 931,
+      "doi": "10.1073/pnas.050004797",
+      "sourceUrl": "https://doi.org/10.1073/pnas.050004797",
+      "verified": true
+    },
+    {
+      "title": "Cerebrospinal Fluid tau/β-Amyloid42 Ratio as a Prediction of Cognitive Decline in Nondemented Older Adults",
+      "journal": "Archives of Neurology",
+      "year": 2007,
+      "citationCount": 896,
+      "doi": "10.1001/archneur.64.3.noc60123",
+      "sourceUrl": "https://doi.org/10.1001/archneur.64.3.noc60123",
+      "verified": true
+    },
+    {
+      "title": "Neuronal activity regulates the regional vulnerability to amyloid-β deposition",
+      "journal": "Nature Neuroscience",
+      "year": 2011,
+      "citationCount": 879,
+      "doi": "10.1038/nn.2801",
+      "sourceUrl": "https://doi.org/10.1038/nn.2801",
+      "verified": true
+    },
+    {
+      "title": "Immunization reverses memory deficits without reducing brain Aβ burden in Alzheimer's disease model",
+      "journal": "Nature Neuroscience",
+      "year": 2002,
+      "citationCount": 857,
+      "doi": "10.1038/nn842",
+      "sourceUrl": "https://doi.org/10.1038/nn842",
+      "verified": true
+    },
+    {
+      "title": "ApoE Promotes the Proteolytic Degradation of Aβ",
+      "journal": "Neuron",
+      "year": 2008,
+      "citationCount": 853,
+      "doi": "10.1016/j.neuron.2008.04.010",
+      "sourceUrl": "https://doi.org/10.1016/j.neuron.2008.04.010",
+      "verified": true
+    },
+    {
+      "title": "High-precision plasma β-amyloid 42/40 predicts current and future brain amyloidosis",
+      "journal": "Neurology",
+      "year": 2019,
+      "citationCount": 849,
+      "doi": "10.1212/wnl.0000000000008081",
+      "sourceUrl": "https://doi.org/10.1212/wnl.0000000000008081",
+      "verified": true
+    },
+    {
+      "title": "Apolipoprotein E in Alzheimer's disease and other neurological disorders",
+      "journal": "The Lancet Neurology",
+      "year": 2011,
+      "citationCount": 844,
+      "doi": "10.1016/s1474-4422(10)70325-2",
+      "sourceUrl": "https://doi.org/10.1016/s1474-4422(10)70325-2",
+      "verified": true
+    },
+    {
+      "title": "<i>APOE</i> predicts amyloid‐beta but not tau Alzheimer pathology in cognitively normal aging",
+      "journal": "Annals of Neurology",
+      "year": 2009,
+      "citationCount": 819,
+      "doi": "10.1002/ana.21843",
+      "sourceUrl": "https://doi.org/10.1002/ana.21843",
+      "verified": true
+    },
+    {
+      "title": "TREM2-mediated early microglial response limits diffusion and toxicity of amyloid plaques",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 2016,
+      "citationCount": 815,
+      "doi": "10.1084/jem.20151948",
+      "sourceUrl": "https://doi.org/10.1084/jem.20151948",
+      "verified": true
+    },
+    {
+      "title": "Mechanisms linking circadian clocks, sleep, and neurodegeneration",
+      "journal": "Science",
+      "year": 2016,
+      "citationCount": 806,
+      "doi": "10.1126/science.aah4968",
+      "sourceUrl": "https://doi.org/10.1126/science.aah4968",
+      "verified": true
+    },
+    {
+      "title": "Selective Vulnerability of Late Oligodendrocyte Progenitors to Hypoxia–Ischemia",
+      "journal": "Journal of Neuroscience",
+      "year": 2002,
+      "citationCount": 781,
+      "doi": "10.1523/jneurosci.22-02-00455.2002",
+      "sourceUrl": "https://doi.org/10.1523/jneurosci.22-02-00455.2002",
+      "verified": true
+    },
+    {
+      "title": "Apolipoprotein E and Apolipoprotein E Receptors: Normal Biology and Roles in Alzheimer Disease",
+      "journal": "Cold Spring Harbor Perspectives in Medicine",
+      "year": 2012,
+      "citationCount": 779,
+      "doi": "10.1101/cshperspect.a006312",
+      "sourceUrl": "https://doi.org/10.1101/cshperspect.a006312",
+      "verified": true
+    },
+    {
+      "title": "apoE isoform–specific disruption of amyloid β peptide clearance from mouse brain",
+      "journal": "Journal of Clinical Investigation",
+      "year": 2008,
+      "citationCount": 745,
+      "doi": "10.1172/jci36663",
+      "sourceUrl": "https://doi.org/10.1172/jci36663",
+      "verified": true
+    },
+    {
+      "title": "The sleep-wake cycle regulates brain interstitial fluid tau in mice and CSF tau in humans",
+      "journal": "Science",
+      "year": 2019,
+      "citationCount": 745,
+      "doi": "10.1126/science.aav2546",
+      "sourceUrl": "https://doi.org/10.1126/science.aav2546",
+      "verified": true
+    },
+    {
+      "title": "Tau and Aβ imaging, CSF measures, and cognition in Alzheimer’s disease",
+      "journal": "Science Translational Medicine",
+      "year": 2016,
+      "citationCount": 721,
+      "doi": "10.1126/scitranslmed.aaf2362",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.aaf2362",
+      "verified": true
+    },
+    {
+      "title": "Sleep Quality and Preclinical Alzheimer Disease",
+      "journal": "JAMA Neurology",
+      "year": 2013,
+      "citationCount": 719,
+      "doi": "10.1001/jamaneurol.2013.2334",
+      "sourceUrl": "https://doi.org/10.1001/jamaneurol.2013.2334",
+      "verified": true
+    },
+    {
+      "title": "Proteopathic tau seeding predicts tauopathy in vivo",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2014,
+      "citationCount": 716,
+      "doi": "10.1073/pnas.1411649111",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1411649111",
+      "verified": true
+    },
+    {
+      "title": "Multimodal techniques for diagnosis and prognosis of Alzheimer's disease",
+      "journal": "Nature",
+      "year": 2009,
+      "citationCount": 707,
+      "doi": "10.1038/nature08538",
+      "sourceUrl": "https://doi.org/10.1038/nature08538",
+      "verified": true
+    },
+    {
+      "title": "Three dimensions of the amyloid hypothesis: time, space and 'wingmen'",
+      "journal": "Nature Neuroscience",
+      "year": 2015,
+      "citationCount": 689,
+      "doi": "10.1038/nn.4018",
+      "sourceUrl": "https://doi.org/10.1038/nn.4018",
+      "verified": true
+    },
+    {
+      "title": "Transport Pathways for Clearance of Human Alzheimer's Amyloid β-Peptide and Apolipoproteins E and J in the Mouse Central Nervous System",
+      "journal": "Journal of Cerebral Blood Flow & Metabolism",
+      "year": 2006,
+      "citationCount": 649,
+      "doi": "10.1038/sj.jcbfm.9600419",
+      "sourceUrl": "https://doi.org/10.1038/sj.jcbfm.9600419",
+      "verified": true
+    },
+    {
+      "title": "Endocytosis Is Required for Synaptic Activity-Dependent Release of Amyloid-β In Vivo",
+      "journal": "Neuron",
+      "year": 2008,
+      "citationCount": 646,
+      "doi": "10.1016/j.neuron.2008.02.003",
+      "sourceUrl": "https://doi.org/10.1016/j.neuron.2008.02.003",
+      "verified": true
+    },
+    {
+      "title": "Substantial sulfatide deficiency and ceramide elevation in very early Alzheimer's disease: potential role in disease pathogenesis",
+      "journal": "Journal of Neurochemistry",
+      "year": 2002,
+      "citationCount": 623,
+      "doi": "10.1046/j.1471-4159.2002.00997.x",
+      "sourceUrl": "https://doi.org/10.1046/j.1471-4159.2002.00997.x",
+      "verified": true
+    },
+    {
+      "title": "Antibiotic-induced perturbations in gut microbial diversity influences neuro-inflammation and amyloidosis in a murine model of Alzheimer’s disease",
+      "journal": "Scientific Reports",
+      "year": 2016,
+      "citationCount": 621,
+      "doi": "10.1038/srep30028",
+      "sourceUrl": "https://doi.org/10.1038/srep30028",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:16.000Z",
+  "openalexId": "https://openalex.org/A5088998527"
 }

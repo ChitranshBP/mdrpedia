@@ -1,31 +1,493 @@
 {
   "fullName": "Cesar G. Victora",
   "slug": "cesar-g-victora",
-  "title": "MD, PhD",
-  "specialty": "Child Nutrition & Global Health",
+  "title": "MD",
+  "specialty": "Child Health Epidemiology",
   "geography": {
-    "city": "Unknown",
-    "country": "Brazil"
+    "country": "Brazil",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">CG</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 41,
-  "hIndex": 163,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 148,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 14088,
+  "livesSaved": 0,
+  "biography": "Cesar G. Victora is a Brazilian-born epidemiologist, academic and specialist in child health and nutrition. He is an Emeritus Professor of Epidemiology at the Federal University of Pelotas and holds or has held honorary appointments at the Universities of Harvard, Oxford, and Johns Hopkins, and at the London School of Hygiene and Tropical Medicine.",
+  "aiSummary": "Cesar G. Victora is a child health epidemiology specialist with an H-index of 148 at Federal University of Pelotas (Faculty). Has been published in The Lancet, Social Science & Medicine, The Lancet Global Health. Based in Brazil.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Cesar_Victora.jpg",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Federal University of Pelotas"
-    }
-  ],
-  "bio": "Cesar G. Victora is a pioneer in Child Nutrition & Global Health at Federal University of Pelotas, Brazil. With a D-Index of 163 and over 140,882 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Federal University of Pelotas",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Child Health Epidemiology"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Maternal and child undernutrition and overweight in low-income and middle-income countries",
+      "journal": "The Lancet",
+      "year": 2013,
+      "citationCount": 8125,
+      "doi": "10.1016/s0140-6736(13)60937-x",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(13)60937-x",
+      "verified": true
+    },
+    {
+      "title": "Breastfeeding in the 21st century: epidemiology, mechanisms, and lifelong effect",
+      "journal": "The Lancet",
+      "year": 2016,
+      "citationCount": 7638,
+      "doi": "10.1016/s0140-6736(15)01024-7",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(15)01024-7",
+      "verified": true
+    },
+    {
+      "title": "Maternal and child undernutrition: consequences for adult health and human capital",
+      "journal": "The Lancet",
+      "year": 2008,
+      "citationCount": 3834,
+      "doi": "10.1016/s0140-6736(07)61692-4",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(07)61692-4",
+      "verified": true
+    },
+    {
+      "title": "WHO child growth standards: length/height-for-age, weight-for-age, weight-for-length, weight-for-height and body mass index-for-age - Methods and development",
+      "journal": "(2006)",
+      "year": 2006,
+      "citationCount": 3455,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2792467716",
+      "verified": true
+    },
+    {
+      "title": "Why invest, and what it will take to improve breastfeeding practices?",
+      "journal": "The Lancet",
+      "year": 2016,
+      "citationCount": 2802,
+      "doi": "10.1016/s0140-6736(15)01044-2",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(15)01044-2",
+      "verified": true
+    },
+    {
+      "title": "The role of conceptual frameworks in epidemiological analysis: a hierarchical approach.",
+      "journal": "International Journal of Epidemiology",
+      "year": 1997,
+      "citationCount": 2383,
+      "doi": "10.1093/ije/26.1.224",
+      "sourceUrl": "https://doi.org/10.1093/ije/26.1.224",
+      "verified": true
+    },
+    {
+      "title": "International standards for newborn weight, length, and head circumference by gestational age and sex: the Newborn Cross-Sectional Study of the INTERGROWTH-21st Project",
+      "journal": "The Lancet",
+      "year": 2014,
+      "citationCount": 2168,
+      "doi": "10.1016/s0140-6736(14)60932-6",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(14)60932-6",
+      "verified": true
+    },
+    {
+      "title": "Worldwide Timing of Growth Faltering: Revisiting Implications for Interventions",
+      "journal": "PEDIATRICS",
+      "year": 2010,
+      "citationCount": 1433,
+      "doi": "10.1542/peds.2009-1519",
+      "sourceUrl": "https://doi.org/10.1542/peds.2009-1519",
+      "verified": true
+    },
+    {
+      "title": "2007 world population data sheet.",
+      "journal": "Social Science & Medicine",
+      "year": 2007,
+      "citationCount": 1420,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2586793975",
+      "verified": true
+    },
+    {
+      "title": "Long‐term consequences of breastfeeding on cholesterol, obesity, systolic blood pressure and type 2 diabetes: a systematic review and meta‐analysis",
+      "journal": "Acta Paediatrica",
+      "year": 2015,
+      "citationCount": 1145,
+      "doi": "10.1111/apa.13133",
+      "sourceUrl": "https://doi.org/10.1111/apa.13133",
+      "verified": true
+    },
+    {
+      "title": "Evidence-Based Public Health: Moving Beyond Randomized Trials",
+      "journal": "American Journal of Public Health",
+      "year": 2004,
+      "citationCount": 1057,
+      "doi": "10.2105/ajph.94.3.400",
+      "sourceUrl": "https://doi.org/10.2105/ajph.94.3.400",
+      "verified": true
+    },
+    {
+      "title": "Maternal and child health in Brazil: progress and challenges",
+      "journal": "The Lancet",
+      "year": 2011,
+      "citationCount": 1043,
+      "doi": "10.1016/s0140-6736(11)60138-4",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(11)60138-4",
+      "verified": true
+    },
+    {
+      "title": "How can we achieve and maintain high-quality performance of health workers in low-resource settings?",
+      "journal": "The Lancet",
+      "year": 2005,
+      "citationCount": 1015,
+      "doi": "10.1016/s0140-6736(05)67028-6",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(05)67028-6",
+      "verified": true
+    },
+    {
+      "title": "Chronic obstructive pulmonary disease in five Latin American cities (the PLATINO study): a prevalence study",
+      "journal": "The Lancet",
+      "year": 2005,
+      "citationCount": 1000,
+      "doi": "10.1016/s0140-6736(05)67632-5",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(05)67632-5",
+      "verified": true
+    },
+    {
+      "title": "The who Multicentre Growth Reference Study: Planning, Study Design, and Methodology",
+      "journal": "Food and Nutrition Bulletin",
+      "year": 2004,
+      "citationCount": 952,
+      "doi": "10.1177/15648265040251s104",
+      "sourceUrl": "https://doi.org/10.1177/15648265040251s104",
+      "verified": true
+    },
+    {
+      "title": "Adolescent Physical Activity and Health",
+      "journal": "Sports Medicine",
+      "year": 2006,
+      "citationCount": 949,
+      "doi": "10.2165/00007256-200636120-00003",
+      "sourceUrl": "https://doi.org/10.2165/00007256-200636120-00003",
+      "verified": true
+    },
+    {
+      "title": "Mortality risk in preterm and small-for-gestational-age infants in low-income and middle-income countries: a pooled country analysis",
+      "journal": "The Lancet",
+      "year": 2013,
+      "citationCount": 912,
+      "doi": "10.1016/s0140-6736(13)60993-9",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(13)60993-9",
+      "verified": true
+    },
+    {
+      "title": "Rapid growth in infancy and childhood and obesity in later life – a systematic review",
+      "journal": "Obesity Reviews",
+      "year": 2005,
+      "citationCount": 901,
+      "doi": "10.1111/j.1467-789x.2005.00183.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1467-789x.2005.00183.x",
+      "verified": true
+    },
+    {
+      "title": "Associations of linear growth and relative weight gain during early life with adult health and human capital in countries of low and middle income: findings from five birth cohort studies",
+      "journal": "The Lancet",
+      "year": 2013,
+      "citationCount": 888,
+      "doi": "10.1016/s0140-6736(13)60103-8",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(13)60103-8",
+      "verified": true
+    },
+    {
+      "title": "International standards for fetal growth based on serial ultrasound measurements: the Fetal Growth Longitudinal Study of the INTERGROWTH-21st Project",
+      "journal": "The Lancet",
+      "year": 2014,
+      "citationCount": 848,
+      "doi": "10.1016/s0140-6736(14)61490-2",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(14)61490-2",
+      "verified": true
+    },
+    {
+      "title": "Countdown to 2015 decade report (2000–10): taking stock of maternal, newborn, and child survival",
+      "journal": "The Lancet",
+      "year": 2010,
+      "citationCount": 827,
+      "doi": "10.1016/s0140-6736(10)60678-2",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(10)60678-2",
+      "verified": true
+    },
+    {
+      "title": "Applying an equity lens to child health and mortality: more of the same is not enough",
+      "journal": "The Lancet",
+      "year": 2003,
+      "citationCount": 816,
+      "doi": "10.1016/s0140-6736(03)13917-7",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(03)13917-7",
+      "verified": true
+    },
+    {
+      "title": "Association between breastfeeding and intelligence, educational attainment, and income at 30 years of age: a prospective birth cohort study from Brazil",
+      "journal": "The Lancet Global Health",
+      "year": 2015,
+      "citationCount": 775,
+      "doi": "10.1016/s2214-109x(15)70002-1",
+      "sourceUrl": "https://doi.org/10.1016/s2214-109x(15)70002-1",
+      "verified": true
+    },
+    {
+      "title": "Explaining trends in inequities: evidence from Brazilian child health studies",
+      "journal": "The Lancet",
+      "year": 2000,
+      "citationCount": 737,
+      "doi": "10.1016/s0140-6736(00)02741-0",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(00)02741-0",
+      "verified": true
+    },
+    {
+      "title": "Revisiting maternal and child undernutrition in low-income and middle-income countries: variable progress towards an unfinished agenda",
+      "journal": "The Lancet",
+      "year": 2021,
+      "citationCount": 729,
+      "doi": "10.1016/s0140-6736(21)00394-9",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(21)00394-9",
+      "verified": true
+    },
+    {
+      "title": "Breastfeeding and intelligence: a systematic review and meta‐analysis",
+      "journal": "Acta Paediatrica",
+      "year": 2015,
+      "citationCount": 726,
+      "doi": "10.1111/apa.13139",
+      "sourceUrl": "https://doi.org/10.1111/apa.13139",
+      "verified": true
+    },
+    {
+      "title": "Worldwide Timing of Growth Faltering: Implications for Nutritional Interventions",
+      "journal": "PEDIATRICS",
+      "year": 2001,
+      "citationCount": 721,
+      "doi": "10.1542/peds.107.5.e75",
+      "sourceUrl": "https://doi.org/10.1542/peds.107.5.e75",
+      "verified": true
+    },
+    {
+      "title": "EVIDENCE FOR PROTECTION BY BREAST-FEEDING AGAINST INFANT DEATHS FROM INFECTIOUS DISEASES IN BRAZIL",
+      "journal": "The Lancet",
+      "year": 1987,
+      "citationCount": 712,
+      "doi": "10.1016/s0140-6736(87)90902-0",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(87)90902-0",
+      "verified": true
+    },
+    {
+      "title": "Breastfeeding and the risk for diarrhea morbidity and mortality",
+      "journal": "BMC Public Health",
+      "year": 2011,
+      "citationCount": 646,
+      "doi": "10.1186/1471-2458-11-s3-s15",
+      "sourceUrl": "https://doi.org/10.1186/1471-2458-11-s3-s15",
+      "verified": true
+    },
+    {
+      "title": "Congenital Zika virus syndrome in Brazil: a case series of the first 1501 livebirths with complete investigation",
+      "journal": "The Lancet",
+      "year": 2016,
+      "citationCount": 607,
+      "doi": "10.1016/s0140-6736(16)30902-3",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(16)30902-3",
+      "verified": true
+    },
+    {
+      "title": "Physical Inactivity: Prevalence and Associated Variables in Brazilian Adults",
+      "journal": "Medicine & Science in Sports & Exercise",
+      "year": 2003,
+      "citationCount": 602,
+      "doi": "10.1249/01.mss.0000093615.33774.0e",
+      "sourceUrl": "https://doi.org/10.1249/01.mss.0000093615.33774.0e",
+      "verified": true
+    },
+    {
+      "title": "Members of the who Multicentre Growth Reference Study Group",
+      "journal": "Food and Nutrition Bulletin",
+      "year": 2004,
+      "citationCount": 600,
+      "doi": "10.1177/15648265040251s103",
+      "sourceUrl": "https://doi.org/10.1177/15648265040251s103",
+      "verified": true
+    },
+    {
+      "title": "Risk of childhood undernutrition related to small-for-gestational age and preterm birth in low- and middle-income countries",
+      "journal": "International Journal of Epidemiology",
+      "year": 2013,
+      "citationCount": 572,
+      "doi": "10.1093/ije/dyt109",
+      "sourceUrl": "https://doi.org/10.1093/ije/dyt109",
+      "verified": true
+    },
+    {
+      "title": "Equity in maternal, newborn, and child health interventions in Countdown to 2015: a retrospective review of survey data from 54 countries",
+      "journal": "The Lancet",
+      "year": 2012,
+      "citationCount": 569,
+      "doi": "10.1016/s0140-6736(12)60113-5",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(12)60113-5",
+      "verified": true
+    },
+    {
+      "title": "RELIABILITY AND VALIDITY OF THE INTERNATIONAL PHYSICAL ACTIVITY QUESTIONNAIRE (IPAQ)",
+      "journal": "Medicine & Science in Sports & Exercise",
+      "year": 2004,
+      "citationCount": 551,
+      "doi": "10.1249/01.mss.0000117161.66394.07",
+      "sourceUrl": "https://doi.org/10.1249/01.mss.0000117161.66394.07",
+      "verified": true
+    },
+    {
+      "title": "Health conditions and health-policy innovations in Brazil: the way forward",
+      "journal": "The Lancet",
+      "year": 2011,
+      "citationCount": 523,
+      "doi": "10.1016/s0140-6736(11)60055-x",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(11)60055-x",
+      "verified": true
+    },
+    {
+      "title": "Breastfeeding: crucially important, but increasingly challenged in a market-driven world",
+      "journal": "The Lancet",
+      "year": 2023,
+      "citationCount": 519,
+      "doi": "10.1016/s0140-6736(22)01932-8",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(22)01932-8",
+      "verified": true
+    },
+    {
+      "title": "Countdown to 2030: tracking progress towards universal coverage for reproductive, maternal, newborn, and child health",
+      "journal": "The Lancet",
+      "year": 2018,
+      "citationCount": 513,
+      "doi": "10.1016/s0140-6736(18)30104-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(18)30104-1",
+      "verified": true
+    },
+    {
+      "title": "Countdown to 2015: a decade of tracking progress for maternal, newborn, and child survival",
+      "journal": "The Lancet",
+      "year": 2015,
+      "citationCount": 497,
+      "doi": "10.1016/s0140-6736(15)00519-x",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(15)00519-x",
+      "verified": true
+    },
+    {
+      "title": "Inequities among the very poor: health care for children in rural southern Tanzania",
+      "journal": "The Lancet",
+      "year": 2003,
+      "citationCount": 464,
+      "doi": "10.1016/s0140-6736(03)12515-9",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(03)12515-9",
+      "verified": true
+    },
+    {
+      "title": "Association between maternal age at childbirth and child and adult outcomes in the offspring: a prospective study in five low-income and middle-income countries (COHORTS collaboration)",
+      "journal": "The Lancet Global Health",
+      "year": 2015,
+      "citationCount": 464,
+      "doi": "10.1016/s2214-109x(15)00038-8",
+      "sourceUrl": "https://doi.org/10.1016/s2214-109x(15)00038-8",
+      "verified": true
+    },
+    {
+      "title": "Measuring Coverage in MNCH: Determining and Interpreting Inequalities in Coverage of Maternal, Newborn, and Child Health Interventions",
+      "journal": "PLoS Medicine",
+      "year": 2013,
+      "citationCount": 438,
+      "doi": "10.1371/journal.pmed.1001390",
+      "sourceUrl": "https://doi.org/10.1371/journal.pmed.1001390",
+      "verified": true
+    },
+    {
+      "title": "Breastfeeding: crucially important, but increasingly challenged in a market-driven world.",
+      "journal": "Lancet (London, England)",
+      "year": 2023,
+      "citationCount": 430,
+      "doi": "10.1016/S0140-6736(22)01932-8",
+      "sourceUrl": "https://doi.org/10.1016/S0140-6736(22)01932-8",
+      "verified": true
+    },
+    {
+      "title": "SARS-CoV-2 antibody prevalence in Brazil: results from two successive nationwide serological household surveys",
+      "journal": "The Lancet Global Health",
+      "year": 2020,
+      "citationCount": 421,
+      "doi": "10.1016/s2214-109x(20)30387-9",
+      "sourceUrl": "https://doi.org/10.1016/s2214-109x(20)30387-9",
+      "verified": true
+    },
+    {
+      "title": "Reducing deaths from diarrhoea through oral rehydration therapy.",
+      "journal": "PubMed",
+      "year": 2000,
+      "citationCount": 394,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2155651109",
+      "verified": true
+    },
+    {
+      "title": "Making health systems more equitable",
+      "journal": "The Lancet",
+      "year": 2004,
+      "citationCount": 387,
+      "doi": "10.1016/s0140-6736(04)17145-6",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(04)17145-6",
+      "verified": true
+    },
+    {
+      "title": "What are the causal effects of breastfeeding on IQ, obesity and blood pressure? Evidence from comparing high-income with middle-income cohorts",
+      "journal": "International Journal of Epidemiology",
+      "year": 2011,
+      "citationCount": 379,
+      "doi": "10.1093/ije/dyr020",
+      "sourceUrl": "https://doi.org/10.1093/ije/dyr020",
+      "verified": true
+    },
+    {
+      "title": "Estimates of burden and consequences of infants born small for gestational age in low and middle income countries with INTERGROWTH-21<sup>st</sup>standard: analysis of CHERG datasets",
+      "journal": "BMJ",
+      "year": 2017,
+      "citationCount": 365,
+      "doi": "10.1136/bmj.j3677",
+      "sourceUrl": "https://doi.org/10.1136/bmj.j3677",
+      "verified": true
+    },
+    {
+      "title": "Socio-Economic Differences in Health, Nutrition, and Population Within Developing Countries: An Overview",
+      "journal": "JAMA",
+      "year": 2007,
+      "citationCount": 364,
+      "doi": "10.1001/jama.298.16.1943",
+      "sourceUrl": "https://doi.org/10.1001/jama.298.16.1943",
+      "verified": true
+    },
+    {
+      "title": "Independent and joint effects of tobacco smoking and alcohol drinking on the risk of esophageal cancer in men and women",
+      "journal": "International Journal of Cancer",
+      "year": 1999,
+      "citationCount": 361,
+      "doi": "10.1002/(sici)1097-0215(19990827)82:5<657::aid-ijc7>3.0.co;2-c",
+      "sourceUrl": "https://doi.org/10.1002/(sici)1097-0215(19990827)82:5<657::aid-ijc7>3.0.co;2-c",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:16.000Z",
+  "openalexId": "https://openalex.org/A5061355571"
 }

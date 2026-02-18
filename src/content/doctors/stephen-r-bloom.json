@@ -1,36 +1,493 @@
 {
   "fullName": "Stephen R. Bloom",
   "slug": "stephen-r-bloom",
-  "title": "MD, PhD",
-  "specialty": "Obesity & Metabolism",
+  "title": "MD",
+  "specialty": "Metabolic Endocrinology",
   "geography": {
-    "city": "Unknown",
-    "country": "UK"
+    "country": "United Kingdom",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">SR</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 50,
-  "hIndex": 201,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 169,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 16905,
+  "livesSaved": 0,
+  "biography": "Sir Stephen Robert Bloom FRS is a British Professor of Medicine at Imperial College London where he leads the Diabetes, Endocrinology and Metabolism division.",
+  "aiSummary": "Stephen R. Bloom is a metabolic endocrinology specialist with an H-index of 169 at Imperial College London (Faculty). Has been published in Nature, The Lancet, New England Journal of Medicine. Based in United Kingdom.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Imperial College London"
-    }
-  ],
-  "bio": "Stephen R. Bloom is a pioneer in Obesity & Metabolism at Imperial College London, UK. With a D-Index of 201 and over 169,051 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Imperial College London",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Metabolic Endocrinology"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Ghrelin Enhances Appetite and Increases Food Intake in Humans",
+      "journal": "The Journal of Clinical Endocrinology & Metabolism",
+      "year": 2001,
+      "citationCount": 2381,
+      "doi": "10.1210/jcem.86.12.8111",
+      "sourceUrl": "https://doi.org/10.1210/jcem.86.12.8111",
+      "verified": true
+    },
+    {
+      "title": "Gut hormone PYY3-36 physiologically inhibits food intake",
+      "journal": "Nature",
+      "year": 2002,
+      "citationCount": 2302,
+      "doi": "10.1038/nature00887",
+      "sourceUrl": "https://doi.org/10.1038/nature00887",
+      "verified": true
+    },
+    {
+      "title": "Leptin modulates the T-cell immune response and reverses starvation-induced immunosuppression",
+      "journal": "Nature",
+      "year": 1998,
+      "citationCount": 2152,
+      "doi": "10.1038/29795",
+      "sourceUrl": "https://doi.org/10.1038/29795",
+      "verified": true
+    },
+    {
+      "title": "GLUCAGON-LIKE PEPTIDE-1 7-36: A PHYSIOLOGICAL INCRETIN IN MAN",
+      "journal": "The Lancet",
+      "year": 1987,
+      "citationCount": 1898,
+      "doi": "10.1016/s0140-6736(87)91194-9",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(87)91194-9",
+      "verified": true
+    },
+    {
+      "title": "Glucagon-like peptide 1 (GLP-1)",
+      "journal": "Molecular Metabolism",
+      "year": 2019,
+      "citationCount": 1604,
+      "doi": "10.1016/j.molmet.2019.09.010",
+      "sourceUrl": "https://doi.org/10.1016/j.molmet.2019.09.010",
+      "verified": true
+    },
+    {
+      "title": "Inhibition of Food Intake in Obese Subjects by Peptide YY<sub>3–36</sub>",
+      "journal": "New England Journal of Medicine",
+      "year": 2003,
+      "citationCount": 1570,
+      "doi": "10.1056/nejmoa030204",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa030204",
+      "verified": true
+    },
+    {
+      "title": "The Novel Hypothalamic Peptide Ghrelin Stimulates Food Intake and Growth Hormone Secretion",
+      "journal": "Endocrinology",
+      "year": 2000,
+      "citationCount": 1546,
+      "doi": "10.1210/endo.141.11.7873",
+      "sourceUrl": "https://doi.org/10.1210/endo.141.11.7873",
+      "verified": true
+    },
+    {
+      "title": "Effects of targeted delivery of propionate to the human colon on appetite regulation, body weight maintenance and adiposity in overweight adults",
+      "journal": "Gut",
+      "year": 2014,
+      "citationCount": 1307,
+      "doi": "10.1136/gutjnl-2014-307913",
+      "sourceUrl": "https://doi.org/10.1136/gutjnl-2014-307913",
+      "verified": true
+    },
+    {
+      "title": "Neuropeptide Y (NPY)‐like immunoreactivity in peripheral noradrenergic neurons and effects of NPY on sympathetic function",
+      "journal": "Acta Physiologica Scandinavica",
+      "year": 1982,
+      "citationCount": 1203,
+      "doi": "10.1111/j.1748-1716.1982.tb07171.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1748-1716.1982.tb07171.x",
+      "verified": true
+    },
+    {
+      "title": "Ghrelin Causes Hyperphagia and Obesity in Rats",
+      "journal": "Diabetes",
+      "year": 2001,
+      "citationCount": 1114,
+      "doi": "10.2337/diabetes.50.11.2540",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.50.11.2540",
+      "verified": true
+    },
+    {
+      "title": "Human distribution and release of a putative new gut hormone, peptide YY",
+      "journal": "Gastroenterology",
+      "year": 1985,
+      "citationCount": 1062,
+      "doi": "10.1016/0016-5085(85)90211-2",
+      "sourceUrl": "https://doi.org/10.1016/0016-5085(85)90211-2",
+      "verified": true
+    },
+    {
+      "title": "Gut Hormone Profiles Following Bariatric Surgery Favor an Anorectic State, Facilitate Weight Loss, and Improve Metabolic Parameters",
+      "journal": "Annals of Surgery",
+      "year": 2005,
+      "citationCount": 977,
+      "doi": "10.1097/01.sla.0000183349.16877.84",
+      "sourceUrl": "https://doi.org/10.1097/01.sla.0000183349.16877.84",
+      "verified": true
+    },
+    {
+      "title": "Characterization of a gastrin releasing peptide from porcine non-antral gastric tissue",
+      "journal": "Biochemical and Biophysical Research Communications",
+      "year": 1979,
+      "citationCount": 877,
+      "doi": "10.1016/0006-291x(79)91614-0",
+      "sourceUrl": "https://doi.org/10.1016/0006-291x(79)91614-0",
+      "verified": true
+    },
+    {
+      "title": "The short chain fatty acid propionate stimulates GLP-1 and PYY secretion via free fatty acid receptor 2 in rodents",
+      "journal": "International Journal of Obesity",
+      "year": 2014,
+      "citationCount": 789,
+      "doi": "10.1038/ijo.2014.153",
+      "sourceUrl": "https://doi.org/10.1038/ijo.2014.153",
+      "verified": true
+    },
+    {
+      "title": "Gut hormones and the regulation of energy homeostasis",
+      "journal": "Nature",
+      "year": 2006,
+      "citationCount": 760,
+      "doi": "10.1038/nature05484",
+      "sourceUrl": "https://doi.org/10.1038/nature05484",
+      "verified": true
+    },
+    {
+      "title": "AMP-activated Protein Kinase Plays a Role in the Control of Food Intake",
+      "journal": "Journal of Biological Chemistry",
+      "year": 2004,
+      "citationCount": 746,
+      "doi": "10.1074/jbc.c300557200",
+      "sourceUrl": "https://doi.org/10.1074/jbc.c300557200",
+      "verified": true
+    },
+    {
+      "title": "Gut Hormones as Mediators of Appetite and Weight Loss After Roux-en-Y Gastric Bypass",
+      "journal": "Annals of Surgery",
+      "year": 2007,
+      "citationCount": 725,
+      "doi": "10.1097/sla.0b013e3180caa3e3",
+      "sourceUrl": "https://doi.org/10.1097/sla.0b013e3180caa3e3",
+      "verified": true
+    },
+    {
+      "title": "Neuropeptide Y distribution in human brain",
+      "journal": "Nature",
+      "year": 1983,
+      "citationCount": 691,
+      "doi": "10.1038/306584a0",
+      "sourceUrl": "https://doi.org/10.1038/306584a0",
+      "verified": true
+    },
+    {
+      "title": "Colocalization of neuropeptide Y immunoreactivity in brainstem catecholaminergic neurons that project to the paraventricular nucleus of the hypothalamus",
+      "journal": "The Journal of Comparative Neurology",
+      "year": 1985,
+      "citationCount": 662,
+      "doi": "10.1002/cne.902410203",
+      "sourceUrl": "https://doi.org/10.1002/cne.902410203",
+      "verified": true
+    },
+    {
+      "title": "Kisspeptin-54 Stimulates the Hypothalamic-Pituitary Gonadal Axis in Human Males",
+      "journal": "The Journal of Clinical Endocrinology & Metabolism",
+      "year": 2005,
+      "citationCount": 649,
+      "doi": "10.1210/jc.2005-1468",
+      "sourceUrl": "https://doi.org/10.1210/jc.2005-1468",
+      "verified": true
+    },
+    {
+      "title": "The inhibitory effects of peripheral administration of peptide YY3–36 and glucagon-like peptide-1 on food intake are attenuated by ablation of the vagal–brainstem–hypothalamic pathway",
+      "journal": "Brain Research",
+      "year": 2005,
+      "citationCount": 587,
+      "doi": "10.1016/j.brainres.2005.03.011",
+      "sourceUrl": "https://doi.org/10.1016/j.brainres.2005.03.011",
+      "verified": true
+    },
+    {
+      "title": "Leptin protects mice from starvation-induced lymphoid atrophy and increases thymic cellularity in ob/ob mice",
+      "journal": "Journal of Clinical Investigation",
+      "year": 1999,
+      "citationCount": 563,
+      "doi": "10.1172/jci6762",
+      "sourceUrl": "https://doi.org/10.1172/jci6762",
+      "verified": true
+    },
+    {
+      "title": "A C-Terminal Fragment of Agouti-Related Protein Increases Feeding and Antagonizes the Effect of Alpha-Melanocyte Stimulating Hormone<i>in Vivo</i>",
+      "journal": "Endocrinology",
+      "year": 1998,
+      "citationCount": 551,
+      "doi": "10.1210/endo.139.10.6332",
+      "sourceUrl": "https://doi.org/10.1210/endo.139.10.6332",
+      "verified": true
+    },
+    {
+      "title": "GROWTH-HORMONE RELEASE-INHIBITING HORMONE IN GASTROINTESTINAL AND PANCREATIC D CELLS",
+      "journal": "The Lancet",
+      "year": 1975,
+      "citationCount": 525,
+      "doi": "10.1016/s0140-6736(75)92198-4",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(75)92198-4",
+      "verified": true
+    },
+    {
+      "title": "Food Fails to Suppress Ghrelin Levels in Obese Humans",
+      "journal": "The Journal of Clinical Endocrinology & Metabolism",
+      "year": 2002,
+      "citationCount": 518,
+      "doi": "10.1210/jcem.87.6.8738",
+      "sourceUrl": "https://doi.org/10.1210/jcem.87.6.8738",
+      "verified": true
+    },
+    {
+      "title": "POSSIBLE DUAL ROLE FOR VASOACTIVE INTESTINAL PEPTIDE AS GASTROINTESTINAL HORMONE AND NEUROTRANSMITTER SUBSTANCE",
+      "journal": "The Lancet",
+      "year": 1976,
+      "citationCount": 500,
+      "doi": "10.1016/s0140-6736(76)91863-8",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(76)91863-8",
+      "verified": true
+    },
+    {
+      "title": "Elevated plasma endothelin in patients with diabetes mellitus",
+      "journal": "Diabetologia",
+      "year": 1990,
+      "citationCount": 492,
+      "doi": "10.1007/bf00403325",
+      "sourceUrl": "https://doi.org/10.1007/bf00403325",
+      "verified": true
+    },
+    {
+      "title": "Pancreatic Polypeptide Reduces Appetite and Food Intake in Humans",
+      "journal": "The Journal of Clinical Endocrinology & Metabolism",
+      "year": 2003,
+      "citationCount": 486,
+      "doi": "10.1210/jc.2003-030630",
+      "sourceUrl": "https://doi.org/10.1210/jc.2003-030630",
+      "verified": true
+    },
+    {
+      "title": "Central and Peripheral Administration of Kisspeptin‐10 Stimulates the Hypothalamic‐Pituitary‐Gonadal Axis",
+      "journal": "Journal of Neuroendocrinology",
+      "year": 2004,
+      "citationCount": 476,
+      "doi": "10.1111/j.1365-2826.2004.01240.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1365-2826.2004.01240.x",
+      "verified": true
+    },
+    {
+      "title": "Oxyntomodulin Suppresses Appetite and Reduces Food Intake in Humans",
+      "journal": "The Journal of Clinical Endocrinology & Metabolism",
+      "year": 2003,
+      "citationCount": 469,
+      "doi": "10.1210/jc.2003-030421",
+      "sourceUrl": "https://doi.org/10.1210/jc.2003-030421",
+      "verified": true
+    },
+    {
+      "title": "ENKEPHALIN-LIKE IMMUNOREACTIVITY IN THE HUMAN GASTROINTESTINAL TRACT",
+      "journal": "The Lancet",
+      "year": 1977,
+      "citationCount": 468,
+      "doi": "10.1016/s0140-6736(77)92277-2",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(77)92277-2",
+      "verified": true
+    },
+    {
+      "title": "Exendin-4 reduces fasting and postprandial glucose and decreases energy intake in healthy volunteers",
+      "journal": "American Journal of Physiology-Endocrinology and Metabolism",
+      "year": 2001,
+      "citationCount": 466,
+      "doi": "10.1152/ajpendo.2001.281.1.e155",
+      "sourceUrl": "https://doi.org/10.1152/ajpendo.2001.281.1.e155",
+      "verified": true
+    },
+    {
+      "title": "NEURON-SPECIFIC ENOLASE IS PRODUCED BY NEUROENDOCRINE TUMOURS",
+      "journal": "The Lancet",
+      "year": 1981,
+      "citationCount": 462,
+      "doi": "10.1016/s0140-6736(81)92682-9",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(81)92682-9",
+      "verified": true
+    },
+    {
+      "title": "Ghrelin Increases Energy Intake in Cancer Patients with Impaired Appetite: Acute, Randomized, Placebo-Controlled Trial",
+      "journal": "The Journal of Clinical Endocrinology & Metabolism",
+      "year": 2004,
+      "citationCount": 459,
+      "doi": "10.1210/jc.2003-031768",
+      "sourceUrl": "https://doi.org/10.1210/jc.2003-031768",
+      "verified": true
+    },
+    {
+      "title": "Bombesin-like immunoreactivity in the lung",
+      "journal": "Nature",
+      "year": 1978,
+      "citationCount": 437,
+      "doi": "10.1038/273769a0",
+      "sourceUrl": "https://doi.org/10.1038/273769a0",
+      "verified": true
+    },
+    {
+      "title": "Distribution of galanin immunoreactivity in the central nervous system and the responses of galanin-containing neuronal pathways to injury",
+      "journal": "Neuroscience",
+      "year": 1985,
+      "citationCount": 437,
+      "doi": "10.1016/0306-4522(85)90007-7",
+      "sourceUrl": "https://doi.org/10.1016/0306-4522(85)90007-7",
+      "verified": true
+    },
+    {
+      "title": "Subcutaneous Oxyntomodulin Reduces Body Weight in Overweight and Obese Subjects",
+      "journal": "Diabetes",
+      "year": 2005,
+      "citationCount": 429,
+      "doi": "10.2337/diabetes.54.8.2390",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.54.8.2390",
+      "verified": true
+    },
+    {
+      "title": "Gut Hormones and Appetite Control",
+      "journal": "Gastroenterology",
+      "year": 2007,
+      "citationCount": 428,
+      "doi": "10.1053/j.gastro.2007.03.048",
+      "sourceUrl": "https://doi.org/10.1053/j.gastro.2007.03.048",
+      "verified": true
+    },
+    {
+      "title": "Ghrelin increases food intake in obese as well as lean subjects",
+      "journal": "International Journal of Obesity",
+      "year": 2005,
+      "citationCount": 393,
+      "doi": "10.1038/sj.ijo.0803001",
+      "sourceUrl": "https://doi.org/10.1038/sj.ijo.0803001",
+      "verified": true
+    },
+    {
+      "title": "The Role of Bile After Roux-en-Y Gastric Bypass in Promoting Weight Loss and Improving Glycaemic Control",
+      "journal": "Endocrinology",
+      "year": 2012,
+      "citationCount": 383,
+      "doi": "10.1210/en.2011-2145",
+      "sourceUrl": "https://doi.org/10.1210/en.2011-2145",
+      "verified": true
+    },
+    {
+      "title": "Motilin and the interdigestive migrating motor complex in man",
+      "journal": "Digestive Diseases and Sciences",
+      "year": 1979,
+      "citationCount": 380,
+      "doi": "10.1007/bf01489315",
+      "sourceUrl": "https://doi.org/10.1007/bf01489315",
+      "verified": true
+    },
+    {
+      "title": "Peptide YY3–36 and Glucagon-Like Peptide-17–36 Inhibit Food Intake Additively",
+      "journal": "Endocrinology",
+      "year": 2005,
+      "citationCount": 369,
+      "doi": "10.1210/en.2005-0237",
+      "sourceUrl": "https://doi.org/10.1210/en.2005-0237",
+      "verified": true
+    },
+    {
+      "title": "Hormonal Regulation of Food Intake",
+      "journal": "Physiological Reviews",
+      "year": 2005,
+      "citationCount": 365,
+      "doi": "10.1152/physrev.00015.2004",
+      "sourceUrl": "https://doi.org/10.1152/physrev.00015.2004",
+      "verified": true
+    },
+    {
+      "title": "Oxyntomodulin increases energy expenditure in addition to decreasing energy intake in overweight and obese humans: a randomised controlled trial",
+      "journal": "International Journal of Obesity",
+      "year": 2006,
+      "citationCount": 357,
+      "doi": "10.1038/sj.ijo.0803344",
+      "sourceUrl": "https://doi.org/10.1038/sj.ijo.0803344",
+      "verified": true
+    },
+    {
+      "title": "Requirement for Leptin in the Induction and Progression of Autoimmune Encephalomyelitis",
+      "journal": "The Journal of Immunology",
+      "year": 2001,
+      "citationCount": 355,
+      "doi": "10.4049/jimmunol.166.10.5909",
+      "sourceUrl": "https://doi.org/10.4049/jimmunol.166.10.5909",
+      "verified": true
+    },
+    {
+      "title": "Effects of exercise on gut peptides, energy intake and appetite",
+      "journal": "Journal of Endocrinology",
+      "year": 2007,
+      "citationCount": 355,
+      "doi": "10.1677/joe-06-0030",
+      "sourceUrl": "https://doi.org/10.1677/joe-06-0030",
+      "verified": true
+    },
+    {
+      "title": "HORMONAL AND METABOLIC RESPONSES TO AN ENKEPHALIN ANALOGUE IN NORMAL MAN",
+      "journal": "The Lancet",
+      "year": 1978,
+      "citationCount": 354,
+      "doi": "10.1016/s0140-6736(78)92100-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(78)92100-1",
+      "verified": true
+    },
+    {
+      "title": "Glucagon-like peptide 1 has a physiological role in the control of postprandial glucose in humans: studies with the antagonist exendin 9-39.",
+      "journal": "Diabetes",
+      "year": 1999,
+      "citationCount": 345,
+      "doi": "10.2337/diabetes.48.1.86",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.48.1.86",
+      "verified": true
+    },
+    {
+      "title": "The distribution of nine peptides in rat spinal cord with special emphasis on the substantia gelatinosa and on the area around the central canal (laminaX)",
+      "journal": "The Journal of Comparative Neurology",
+      "year": 1981,
+      "citationCount": 339,
+      "doi": "10.1002/cne.902010106",
+      "sourceUrl": "https://doi.org/10.1002/cne.902010106",
+      "verified": true
+    },
+    {
+      "title": "Peripheral Oxyntomodulin Reduces Food Intake and Body Weight Gain in Rats",
+      "journal": "Endocrinology",
+      "year": 2004,
+      "citationCount": 338,
+      "doi": "10.1210/en.2003-1338",
+      "sourceUrl": "https://doi.org/10.1210/en.2003-1338",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:15.000Z",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Stephen_Bloom_in_lab_2013.jpg/330px-Stephen_Bloom_in_lab_2013.jpg",
+  "openalexId": "https://openalex.org/A5011196462"
 }

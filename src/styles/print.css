@@ -1,0 +1,380 @@
+/**
+ * MDRPedia — Print Stylesheet
+ * Clean, professional printable doctor profiles for patients
+ */
+
+@media print {
+    /* ─── Reset & Base ─────────────────────────────────────────────────────── */
+
+    *,
+    *::before,
+    *::after {
+        background: transparent !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    html {
+        font-size: 12pt;
+    }
+
+    body {
+        font-family: Georgia, 'Times New Roman', serif;
+        line-height: 1.5;
+        margin: 0;
+        padding: 20pt;
+    }
+
+    /* ─── Hide Non-Essential Elements ──────────────────────────────────────── */
+
+    header,
+    footer,
+    nav,
+    .header,
+    .footer,
+    .nav,
+    .breadcrumb,
+    .sticky-claim-footer,
+    .toc,
+    .profile-sidebar,
+    .media-vault__lightbox,
+    .booking-cta,
+    .similar-doctors,
+    .claim-profile,
+    .share-profile,
+    .citation-hover,
+    .cite-popup,
+    .btn,
+    button:not(.no-print-hide),
+    .video-embed,
+    .animated-stats,
+    .mobile-infobox,
+    [aria-hidden="true"],
+    .sparse-notice,
+    .profile-footer__views,
+    .filter-group,
+    .publications-filters,
+    .publications-more,
+    iframe,
+    video,
+    script,
+    .ai-context,
+    #ai-context {
+        display: none !important;
+    }
+
+    /* ─── Page Setup ───────────────────────────────────────────────────────── */
+
+    @page {
+        size: A4;
+        margin: 2cm;
+    }
+
+    @page :first {
+        margin-top: 1cm;
+    }
+
+    /* ─── Links ────────────────────────────────────────────────────────────── */
+
+    a {
+        text-decoration: underline;
+        color: #000 !important;
+    }
+
+    a[href^="http"]:after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        color: #666 !important;
+    }
+
+    a[href^="#"]:after,
+    a[href^="javascript"]:after {
+        content: "";
+    }
+
+    /* ─── Layout ───────────────────────────────────────────────────────────── */
+
+    .container {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .wiki-grid {
+        display: block !important;
+    }
+
+    .wiki-sidebar {
+        display: block !important;
+        position: static !important;
+        width: 100% !important;
+        float: right;
+        width: 40% !important;
+        margin: 0 0 20pt 20pt;
+        page-break-inside: avoid;
+    }
+
+    .wiki-main {
+        width: 100% !important;
+    }
+
+    .profile-body {
+        display: block !important;
+    }
+
+    /* ─── Profile Header ───────────────────────────────────────────────────── */
+
+    .wiki-header {
+        border-bottom: 2pt solid #000;
+        padding-bottom: 10pt;
+        margin-bottom: 15pt;
+    }
+
+    .wiki-title {
+        font-size: 24pt;
+        font-weight: bold;
+        margin: 0 0 5pt;
+    }
+
+    .wiki-title-deg {
+        font-size: 14pt;
+        font-weight: normal;
+    }
+
+    .wiki-subtitle {
+        font-size: 12pt;
+        color: #333 !important;
+    }
+
+    .historical-badge {
+        border: 1px solid #000;
+        padding: 2pt 6pt;
+        font-size: 8pt;
+    }
+
+    /* ─── InfoBox ──────────────────────────────────────────────────────────── */
+
+    .infobox,
+    .info-box {
+        border: 1px solid #000;
+        padding: 10pt;
+        margin-bottom: 15pt;
+        page-break-inside: avoid;
+    }
+
+    .infobox img,
+    .info-box img {
+        max-width: 150pt;
+        height: auto;
+    }
+
+    .infobox__row,
+    .info-box__row {
+        border-bottom: 1px solid #ccc;
+        padding: 5pt 0;
+    }
+
+    .infobox__label {
+        font-weight: bold;
+        font-size: 9pt;
+    }
+
+    .infobox__value {
+        font-size: 10pt;
+    }
+
+    /* ─── Content Sections ─────────────────────────────────────────────────── */
+
+    .profile-section {
+        page-break-inside: avoid;
+        margin-bottom: 15pt;
+    }
+
+    .profile-section h2 {
+        font-size: 14pt;
+        font-weight: bold;
+        border-bottom: 1pt solid #000;
+        padding-bottom: 5pt;
+        margin-bottom: 10pt;
+        page-break-after: avoid;
+    }
+
+    .profile-section p {
+        orphans: 3;
+        widows: 3;
+    }
+
+    /* ─── Awards ───────────────────────────────────────────────────────────── */
+
+    .awards-grid {
+        display: block !important;
+    }
+
+    .award-card {
+        border: 1px solid #ccc;
+        padding: 8pt;
+        margin-bottom: 8pt;
+        page-break-inside: avoid;
+    }
+
+    .award-year {
+        font-weight: bold;
+    }
+
+    /* ─── Techniques ───────────────────────────────────────────────────────── */
+
+    .techniques-list {
+        list-style: disc;
+        padding-left: 20pt;
+    }
+
+    .technique-item {
+        margin-bottom: 5pt;
+    }
+
+    .technique-icon {
+        display: none;
+    }
+
+    /* ─── Publications ─────────────────────────────────────────────────────── */
+
+    .publications-section {
+        page-break-before: always;
+    }
+
+    .publications-grid {
+        display: block !important;
+    }
+
+    .publication-card {
+        border: 1px solid #ccc;
+        padding: 8pt;
+        margin-bottom: 10pt;
+        page-break-inside: avoid;
+    }
+
+    .publication-card__title {
+        font-weight: bold;
+        font-size: 10pt;
+    }
+
+    .publication-card__meta {
+        font-size: 9pt;
+        color: #333 !important;
+    }
+
+    .publication-card__abstract {
+        font-size: 9pt;
+        color: #333 !important;
+    }
+
+    .badge {
+        border: 1px solid #000;
+        padding: 1pt 4pt;
+        font-size: 7pt;
+    }
+
+    /* ─── References ───────────────────────────────────────────────────────── */
+
+    .reference-list {
+        font-size: 9pt;
+    }
+
+    .reference-item {
+        margin-bottom: 8pt;
+        page-break-inside: avoid;
+    }
+
+    /* ─── Media / Images ───────────────────────────────────────────────────── */
+
+    .media-vault {
+        page-break-inside: avoid;
+    }
+
+    .media-vault__feature {
+        max-width: 200pt;
+    }
+
+    .media-vault__grid {
+        display: none !important; /* Hide gallery, keep main portrait */
+    }
+
+    .media-vault__portrait {
+        max-width: 200pt;
+        height: auto;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* ─── Tables ───────────────────────────────────────────────────────────── */
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th,
+    td {
+        border: 1px solid #000;
+        padding: 5pt;
+        text-align: left;
+    }
+
+    th {
+        font-weight: bold;
+        background: #f0f0f0 !important;
+    }
+
+    /* ─── Print Header/Footer ──────────────────────────────────────────────── */
+
+    .print-header {
+        display: block !important;
+        text-align: center;
+        font-size: 10pt;
+        margin-bottom: 20pt;
+        padding-bottom: 10pt;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .print-footer {
+        display: block !important;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 8pt;
+        color: #666 !important;
+        padding: 10pt;
+        border-top: 1px solid #ccc;
+    }
+
+    /* ─── Utility ──────────────────────────────────────────────────────────── */
+
+    .no-print {
+        display: none !important;
+    }
+
+    .print-only {
+        display: block !important;
+    }
+
+    .page-break {
+        page-break-before: always;
+    }
+
+    .avoid-break {
+        page-break-inside: avoid;
+    }
+}
+
+/* Print-only elements (hidden on screen) */
+.print-only {
+    display: none;
+}

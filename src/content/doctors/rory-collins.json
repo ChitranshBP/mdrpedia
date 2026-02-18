@@ -1,31 +1,496 @@
 {
   "fullName": "Rory Collins",
   "slug": "rory-collins",
-  "title": "MD, PhD",
-  "specialty": "Clinical Trial Methods",
+  "title": "MD",
+  "specialty": "Clinical Trial Methodology",
   "geography": {
-    "city": "Unknown",
-    "country": "UK"
+    "country": "United Kingdom",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">RC</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 49,
-  "hIndex": 196,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 315,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 31563,
+  "livesSaved": 0,
+  "biography": "Sir Rory Edwards Collins FMedSci FRS is a British physician who is professor of medicine and epidemiology at the Clinical Trial Service Unit within the University of Oxford, the head of the Nuffield Department of Population Health and a Fellow of Green Templeton College, Oxford. His work has been in the establishment of large-scale epidemiological studies of the causes, prevention and treatment of heart attacks, other vascular disease, and cancer, while also being closely involved in developing approaches to the combination of results from related studies (\"meta-analyses\"). Since September 2005, he has been the Principal Investigator and Chief Executive of the UK Biobank, a prospective study of 500,000 British people aged 40–69 at recruitment.",
+  "aiSummary": "Rory Collins is a clinical trial methodology specialist with an H-index of 315 at University of Oxford (Faculty). Has been published in The Lancet, New England Journal of Medicine, JAMA. Based in United Kingdom.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
+  "hasInvention": false,
+  "education": [
+    "University of Oxford"
+  ],
+  "socialMedia": {},
   "affiliations": [
     {
-      "hospitalName": "University of Oxford"
+      "hospitalName": "University of Oxford",
+      "role": "Faculty",
+      "hospitalUrl": "#"
     }
   ],
-  "bio": "Rory Collins is a pioneer in Clinical Trial Methods at University of Oxford, UK. With a D-Index of 196 and over 315,630 citations, they are among the world's most influential researchers.",
+  "medicalSpecialty": [
+    "Clinical Trial Methodology"
+  ],
+  "knowsAbout": [
+    "CBELarge-scale statin trials"
+  ],
+  "citations": [
+    {
+      "title": "UK Biobank: An Open Access Resource for Identifying the Causes of a Wide Range of Complex Diseases of Middle and Old Age",
+      "journal": "PLoS Medicine",
+      "year": 2015,
+      "citationCount": 12381,
+      "doi": "10.1371/journal.pmed.1001779",
+      "sourceUrl": "https://doi.org/10.1371/journal.pmed.1001779",
+      "verified": true
+    },
+    {
+      "title": "Age-specific relevance of usual blood pressure to vascular mortality: a meta-analysis of individual data for one million adults in 61 prospective studies",
+      "journal": "The Lancet",
+      "year": 2002,
+      "citationCount": 10112,
+      "doi": "10.1016/s0140-6736(02)11911-8",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(02)11911-8",
+      "verified": true
+    },
+    {
+      "title": "Efficacy and safety of more intensive lowering of LDL cholesterol: a meta-analysis of data from 170 000 participants in 26 randomised trials",
+      "journal": "The Lancet",
+      "year": 2010,
+      "citationCount": 6275,
+      "doi": "10.1016/s0140-6736(10)61350-5",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(10)61350-5",
+      "verified": true
+    },
+    {
+      "title": "Effects of radiotherapy and of differences in the extent of surgery for early breast cancer on local recurrence and 15-year survival: an overview of the randomised trials",
+      "journal": "The Lancet",
+      "year": 2005,
+      "citationCount": 5086,
+      "doi": "10.1016/s0140-6736(05)67887-7",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(05)67887-7",
+      "verified": true
+    },
+    {
+      "title": "Blood pressure, stroke, and coronary heart disease",
+      "journal": "The Lancet",
+      "year": 1990,
+      "citationCount": 4513,
+      "doi": "10.1016/0140-6736(90)90944-z",
+      "sourceUrl": "https://doi.org/10.1016/0140-6736(90)90944-z",
+      "verified": true
+    },
+    {
+      "title": "Prevention of coronary and stroke events with atorvastatin in hypertensive patients who have average or lower-than-average cholesterol concentrations, in the Anglo-Scandinavian Cardiac Outcomes Trial—Lipid Lowering Arm (ASCOT-LLA): a multicentre randomised controlled trial",
+      "journal": "The Lancet",
+      "year": 2003,
+      "citationCount": 3779,
+      "doi": "10.1016/s0140-6736(03)12948-0",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(03)12948-0",
+      "verified": true
+    },
+    {
+      "title": "Beta blockade during and after myocardial infarction: An overview of the randomized trials",
+      "journal": "Progress in Cardiovascular Diseases",
+      "year": 1985,
+      "citationCount": 3225,
+      "doi": "10.1016/s0033-0620(85)80003-7",
+      "sourceUrl": "https://doi.org/10.1016/s0033-0620(85)80003-7",
+      "verified": true
+    },
+    {
+      "title": "Prevention of cardiovascular events with an antihypertensive regimen of amlodipine adding perindopril as required versus atenolol adding bendroflumethiazide as required, in the Anglo-Scandinavian Cardiac Outcomes Trial-Blood Pressure Lowering Arm (ASCOT-BPLA): a multicentre randomised controlled trial",
+      "journal": "The Lancet",
+      "year": 2005,
+      "citationCount": 2904,
+      "doi": "10.1016/s0140-6736(05)67185-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(05)67185-1",
+      "verified": true
+    },
+    {
+      "title": "Randomised trial of intravenous streptokinase, oral aspirin, both, or neither among 17,187 cases of suspected acute myocardial infarction: ISIS-2. ISIS-2 (Second International Study of Infarct Survival) Collaborative Group.",
+      "journal": "PubMed",
+      "year": 1988,
+      "citationCount": 2873,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2527032421",
+      "verified": true
+    },
+    {
+      "title": "Body-mass index and all-cause mortality: individual-participant-data meta-analysis of 239 prospective studies in four continents",
+      "journal": "The Lancet",
+      "year": 2016,
+      "citationCount": 2693,
+      "doi": "10.1016/s0140-6736(16)30175-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(16)30175-1",
+      "verified": true
+    },
+    {
+      "title": "Diabetes Mellitus, Fasting Glucose, and Risk of Cause-Specific Death",
+      "journal": "New England Journal of Medicine",
+      "year": 2011,
+      "citationCount": 2660,
+      "doi": "10.1056/nejmoa1008862",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1008862",
+      "verified": true
+    },
+    {
+      "title": "C-reactive protein concentration and risk of coronary heart disease, stroke, and mortality: an individual participant meta-analysis",
+      "journal": "The Lancet",
+      "year": 2009,
+      "citationCount": 2436,
+      "doi": "10.1016/s0140-6736(09)61717-7",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(09)61717-7",
+      "verified": true
+    },
+    {
+      "title": "The effects of lowering LDL cholesterol with simvastatin plus ezetimibe in patients with chronic kidney disease (Study of Heart and Renal Protection): a randomised placebo-controlled trial",
+      "journal": "The Lancet",
+      "year": 2011,
+      "citationCount": 2423,
+      "doi": "10.1016/s0140-6736(11)60739-3",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(11)60739-3",
+      "verified": true
+    },
+    {
+      "title": "Blood cholesterol and vascular mortality by age, sex, and blood pressure: a meta-analysis of individual data from 61 prospective studies with 55 000 vascular deaths",
+      "journal": "The Lancet",
+      "year": 2007,
+      "citationCount": 2314,
+      "doi": "10.1016/s0140-6736(07)61778-4",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(07)61778-4",
+      "verified": true
+    },
+    {
+      "title": "Association of Fibrinogen, C-reactive Protein, Albumin, or Leukocyte Count With Coronary Heart Disease",
+      "journal": "JAMA",
+      "year": 1998,
+      "citationCount": 2036,
+      "doi": "10.1001/jama.279.18.1477",
+      "sourceUrl": "https://doi.org/10.1001/jama.279.18.1477",
+      "verified": true
+    },
+    {
+      "title": "Long-term effects of continuing adjuvant tamoxifen to 10 years versus stopping at 5 years after diagnosis of oestrogen receptor-positive breast cancer: ATLAS, a randomised trial",
+      "journal": "The Lancet",
+      "year": 2012,
+      "citationCount": 1993,
+      "doi": "10.1016/s0140-6736(12)61963-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(12)61963-1",
+      "verified": true
+    },
+    {
+      "title": "Addition of clopidogrel to aspirin in 45 852 patients with acute myocardial infarction: randomised placebo-controlled trial",
+      "journal": "The Lancet",
+      "year": 2005,
+      "citationCount": 1859,
+      "doi": "10.1016/s0140-6736(05)67660-x",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(05)67660-x",
+      "verified": true
+    },
+    {
+      "title": "Interpretation of the evidence for the efficacy and safety of statin therapy",
+      "journal": "The Lancet",
+      "year": 2016,
+      "citationCount": 1794,
+      "doi": "10.1016/s0140-6736(16)31357-5",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(16)31357-5",
+      "verified": true
+    },
+    {
+      "title": "Newly identified loci that influence lipid concentrations and risk of coronary artery disease",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 1592,
+      "doi": "10.1038/ng.76",
+      "sourceUrl": "https://doi.org/10.1038/ng.76",
+      "verified": true
+    },
+    {
+      "title": "Genetic Variants Associated with Lp(a) Lipoprotein Level and Coronary Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 2009,
+      "citationCount": 1588,
+      "doi": "10.1056/nejmoa0902604",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa0902604",
+      "verified": true
+    },
+    {
+      "title": "SARS-CoV-2 is associated with changes in brain structure in UK Biobank",
+      "journal": "Nature",
+      "year": 2022,
+      "citationCount": 1476,
+      "doi": "10.1038/s41586-022-04569-5",
+      "sourceUrl": "https://doi.org/10.1038/s41586-022-04569-5",
+      "verified": true
+    },
+    {
+      "title": "Efficacy and safety of LDL-lowering therapy among men and women: meta-analysis of individual data from 174 000 participants in 27 randomised trials",
+      "journal": "The Lancet",
+      "year": 2015,
+      "citationCount": 1474,
+      "doi": "10.1016/s0140-6736(14)61368-4",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(14)61368-4",
+      "verified": true
+    },
+    {
+      "title": "Common variants at 30 loci contribute to polygenic dyslipidemia",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 1367,
+      "doi": "10.1038/ng.291",
+      "sourceUrl": "https://doi.org/10.1038/ng.291",
+      "verified": true
+    },
+    {
+      "title": "Chronic infections and coronary heart disease: is there a link?",
+      "journal": "The Lancet",
+      "year": 1997,
+      "citationCount": 1212,
+      "doi": "10.1016/s0140-6736(97)03079-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(97)03079-1",
+      "verified": true
+    },
+    {
+      "title": "Separate and combined associations of body-mass index and abdominal adiposity with cardiovascular disease: collaborative analysis of 58 prospective studies",
+      "journal": "The Lancet",
+      "year": 2011,
+      "citationCount": 1180,
+      "doi": "10.1016/s0140-6736(11)60105-0",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(11)60105-0",
+      "verified": true
+    },
+    {
+      "title": "What makes UK Biobank special?",
+      "journal": "The Lancet",
+      "year": 2012,
+      "citationCount": 1118,
+      "doi": "10.1016/s0140-6736(12)60404-8",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(12)60404-8",
+      "verified": true
+    },
+    {
+      "title": "China Kadoorie Biobank of 0.5 million people: survey methods, baseline characteristics and long-term follow-up",
+      "journal": "International Journal of Epidemiology",
+      "year": 2011,
+      "citationCount": 994,
+      "doi": "10.1093/ije/dyr120",
+      "sourceUrl": "https://doi.org/10.1093/ije/dyr120",
+      "verified": true
+    },
+    {
+      "title": "Early intravenous then oral metoprolol in 45 852 patients with acute myocardial infarction: randomised placebo-controlled trial",
+      "journal": "The Lancet",
+      "year": 2005,
+      "citationCount": 941,
+      "doi": "10.1016/s0140-6736(05)67661-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(05)67661-1",
+      "verified": true
+    },
+    {
+      "title": "Lipoprotein(a) and Coronary Heart Disease",
+      "journal": "Circulation",
+      "year": 2000,
+      "citationCount": 932,
+      "doi": "10.1161/01.cir.102.10.1082",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.102.10.1082",
+      "verified": true
+    },
+    {
+      "title": "Pharmacological blood pressure lowering for primary and secondary prevention of cardiovascular disease across different levels of blood pressure: an individual participant-level data meta-analysis",
+      "journal": "The Lancet",
+      "year": 2021,
+      "citationCount": 915,
+      "doi": "10.1016/s0140-6736(21)00590-0",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(21)00590-0",
+      "verified": true
+    },
+    {
+      "title": "Underestimation of Risk Associations Due to Regression Dilution in Long-term Follow-up of Prospective Studies",
+      "journal": "American Journal of Epidemiology",
+      "year": 1999,
+      "citationCount": 847,
+      "doi": "10.1093/oxfordjournals.aje.a010013",
+      "sourceUrl": "https://doi.org/10.1093/oxfordjournals.aje.a010013",
+      "verified": true
+    },
+    {
+      "title": "Association of Apolipoprotein E Genotypes With Lipid Levels and Coronary Risk",
+      "journal": "JAMA",
+      "year": 2007,
+      "citationCount": 784,
+      "doi": "10.1001/jama.298.11.1300",
+      "sourceUrl": "https://doi.org/10.1001/jama.298.11.1300",
+      "verified": true
+    },
+    {
+      "title": "The UK Biobank imaging enhancement of 100,000 participants: rationale, data collection, management and future directions",
+      "journal": "Nature Communications",
+      "year": 2020,
+      "citationCount": 758,
+      "doi": "10.1038/s41467-020-15948-9",
+      "sourceUrl": "https://doi.org/10.1038/s41467-020-15948-9",
+      "verified": true
+    },
+    {
+      "title": "Efficacy and safety of statin therapy in older people: a meta-analysis of individual participant data from 28 randomised controlled trials",
+      "journal": "The Lancet",
+      "year": 2019,
+      "citationCount": 755,
+      "doi": "10.1016/s0140-6736(18)31942-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(18)31942-1",
+      "verified": true
+    },
+    {
+      "title": "COVID-19 pandemic and admission rates for and management of acute coronary syndromes in England",
+      "journal": "The Lancet",
+      "year": 2020,
+      "citationCount": 737,
+      "doi": "10.1016/s0140-6736(20)31356-8",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(20)31356-8",
+      "verified": true
+    },
+    {
+      "title": "Why do we need some large, simple randomized trials?",
+      "journal": "Statistics in Medicine",
+      "year": 1984,
+      "citationCount": 707,
+      "doi": "10.1002/sim.4780030421",
+      "sourceUrl": "https://doi.org/10.1002/sim.4780030421",
+      "verified": true
+    },
+    {
+      "title": "Unravelling the fetal origins hypothesis: is there really an inverse association between birthweight and subsequent blood pressure?",
+      "journal": "The Lancet",
+      "year": 2002,
+      "citationCount": 707,
+      "doi": "10.1016/s0140-6736(02)09834-3",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(02)09834-3",
+      "verified": true
+    },
+    {
+      "title": "A brief history of human disease genetics",
+      "journal": "Nature",
+      "year": 2020,
+      "citationCount": 702,
+      "doi": "10.1038/s41586-019-1879-7",
+      "sourceUrl": "https://doi.org/10.1038/s41586-019-1879-7",
+      "verified": true
+    },
+    {
+      "title": "A genome-wide association study in Europeans and South Asians identifies five new loci for coronary artery disease",
+      "journal": "Nature Genetics",
+      "year": 2011,
+      "citationCount": 675,
+      "doi": "10.1038/ng.782",
+      "sourceUrl": "https://doi.org/10.1038/ng.782",
+      "verified": true
+    },
+    {
+      "title": "Dietary lipids and blood cholesterol: quantitative meta-analysis of metabolic ward studies",
+      "journal": "BMJ",
+      "year": 1997,
+      "citationCount": 637,
+      "doi": "10.1136/bmj.314.7074.112",
+      "sourceUrl": "https://doi.org/10.1136/bmj.314.7074.112",
+      "verified": true
+    },
+    {
+      "title": "Effects of adjuvant tamoxifen and of cytotoxic therapy on mortality in early breast cancer. An overview of 61 randomized trials among 28,896 women",
+      "journal": "Unknown Journal",
+      "year": 1988,
+      "citationCount": 628,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2608386464",
+      "verified": true
+    },
+    {
+      "title": "Associations of Omega-3 Fatty Acid Supplement Use With Cardiovascular Disease Risks",
+      "journal": "JAMA Cardiology",
+      "year": 2018,
+      "citationCount": 627,
+      "doi": "10.1001/jamacardio.2017.5205",
+      "sourceUrl": "https://doi.org/10.1001/jamacardio.2017.5205",
+      "verified": true
+    },
+    {
+      "title": "Indications for Early Aspirin Use in Acute Ischemic Stroke",
+      "journal": "Stroke",
+      "year": 2000,
+      "citationCount": 597,
+      "doi": "10.1161/01.str.31.6.1240",
+      "sourceUrl": "https://doi.org/10.1161/01.str.31.6.1240",
+      "verified": true
+    },
+    {
+      "title": "Lipoprotein-associated phospholipase A2 and risk of coronary disease, stroke, and mortality: collaborative analysis of 32 prospective studies",
+      "journal": "The Lancet",
+      "year": 2010,
+      "citationCount": 592,
+      "doi": "10.1016/s0140-6736(10)60319-4",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(10)60319-4",
+      "verified": true
+    },
+    {
+      "title": "Blood pressure, antihypertensive drug treatment and the risks of stroke and of coronary heart disease",
+      "journal": "British Medical Bulletin",
+      "year": 1994,
+      "citationCount": 590,
+      "doi": "10.1093/oxfordjournals.bmb.a072892",
+      "sourceUrl": "https://doi.org/10.1093/oxfordjournals.bmb.a072892",
+      "verified": true
+    },
+    {
+      "title": "A comprehensive 1000 Genomes-based genome-wide association meta-analysis of coronary artery disease",
+      "journal": "EUR Research Repository (Erasmus University Rotterdam)",
+      "year": 2015,
+      "citationCount": 588,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2911336777",
+      "verified": true
+    },
+    {
+      "title": "UK Biobank: Current status and what it means for epidemiology",
+      "journal": "Health Policy and Technology",
+      "year": 2012,
+      "citationCount": 555,
+      "doi": "10.1016/j.hlpt.2012.07.003",
+      "sourceUrl": "https://doi.org/10.1016/j.hlpt.2012.07.003",
+      "verified": true
+    },
+    {
+      "title": "Serum cholesterol concentration and coronary heart disease in population with low cholesterol concentrations.",
+      "journal": "BMJ",
+      "year": 1991,
+      "citationCount": 542,
+      "doi": "10.1136/bmj.303.6797.276",
+      "sourceUrl": "https://doi.org/10.1136/bmj.303.6797.276",
+      "verified": true
+    },
+    {
+      "title": "Indications for ACE inhibitors in the early treatment of acute myocardial infarction - Systematic overview of individual data from 100,000 patients in randomized trials",
+      "journal": "Circulation",
+      "year": 1998,
+      "citationCount": 537,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W328545201",
+      "verified": true
+    },
+    {
+      "title": "Prevention of Coronary and Stroke Events with Atorvastatin in Hypertensive Patients who have Average or Lower-than-Average Cholesterol Concentrations, in the Anglo-Scandinavian Cardiac Outcomes Trial???Lipid Lowering Arm (ASCOT-LLA)",
+      "journal": "Drugs",
+      "year": 2004,
+      "citationCount": 521,
+      "doi": "10.2165/00003495-200464002-00005",
+      "sourceUrl": "https://doi.org/10.2165/00003495-200464002-00005",
+      "verified": true
+    }
+  ],
   "awards": [],
-  "education": [],
-  "socialMedia": {},
-  "status": "LIVING"
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:13.000Z",
+  "openalexId": "https://openalex.org/A5090621185"
 }

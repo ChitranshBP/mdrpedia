@@ -1,0 +1,317 @@
+---
+/**
+ * MDRPedia — Edit News Article
+ */
+import Layout from "../../../layouts/Layout.astro";
+import { getEntry } from "astro:content";
+import { requireSuperAdmin } from "../../../lib/rbac";
+
+export const prerender = false;
+
+if (!requireSuperAdmin(Astro.request)) {
+    return Astro.redirect("/login");
+}
+
+const { slug } = Astro.params;
+const adminKey = new URL(Astro.request.url).searchParams.get("key");
+
+const article = await getEntry("news", slug!);
+if (!article) {
+    return Astro.redirect(`/admin/news?key=${adminKey}&error=not_found`);
+}
+
+const categories = [
+    "Policy",
+    "Research",
+    "Technology",
+    "Awards",
+    "Appointments",
+    "Global Health",
+    "Innovation",
+    "Clinical Trials"
+];
+
+const data = article.data;
+---
+
+<Layout title={`Edit: ${data.title} — MDRPedia Admin`}>
+    <div class="container admin-dashboard">
+        <header class="admin-header">
+            <div class="admin-header__top">
+                <span class="badge badge--admin">SUPER ADMIN</span>
+                <h1>Edit Article</h1>
+                <span class="slug-display">/{slug}</span>
+            </div>
+            <div class="admin-actions">
+                <a href={`/news/${slug}`} target="_blank" class="btn btn--outline">
+                    View Live &rarr;
+                </a>
+                <a href={`/admin/news?key=${adminKey}`} class="btn btn--outline">
+                    &larr; Back to News
+                </a>
+            </div>
+        </header>
+
+        <form id="newsForm" class="editor-form">
+            <input type="hidden" id="originalSlug" value={slug} />
+
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label for="title">Title *</label>
+                    <input type="text" id="title" name="title" required value={data.title} />
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="summary">Summary *</label>
+                    <textarea id="summary" name="summary" required rows="3">{data.summary}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category *</label>
+                    <select id="category" name="category" required>
+                        {categories.map(cat => (
+                            <option value={cat} selected={cat === data.category}>{cat}</option>
+                        ))}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Date *</label>
+                    <input type="date" id="date" name="date" required value={data.date} />
+                </div>
+
+                <div class="form-group">
+                    <label for="source">Source *</label>
+                    <input type="text" id="source" name="source" required value={data.source} />
+                </div>
+
+                <div class="form-group">
+                    <label for="url">Source URL</label>
+                    <input type="url" id="url" name="url" value={data.url || ''} placeholder="https://..." />
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="content">Full Content</label>
+                    <textarea id="content" name="content" rows="12">{data.content || ''}</textarea>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn--primary btn--lg">
+                    Save Changes
+                </button>
+                <button type="button" class="btn btn--danger" onclick="deleteArticle()">
+                    Delete Article
+                </button>
+            </div>
+        </form>
+    </div>
+</Layout>
+
+<script define:vars={{ adminKey, slug }}>
+    // Form submission
+    document.getElementById('newsForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const form = e.target;
+        const data = {
+            slug: document.getElementById('originalSlug').value,
+            title: form.title.value,
+            summary: form.summary.value,
+            category: form.category.value,
+            date: form.date.value,
+            source: form.source.value,
+            url: form.url.value || '#',
+            content: form.content.value
+        };
+
+        const res = await fetch(`/api/admin/news?key=${adminKey}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        if (res.ok) {
+            alert('Article updated successfully!');
+        } else {
+            const error = await res.json();
+            alert(`Error: ${error.message || 'Failed to update article'}`);
+        }
+    });
+
+    // Delete
+    window.deleteArticle = async function() {
+        if (!confirm('Delete this article? This cannot be undone.')) return;
+
+        const res = await fetch(`/api/admin/news?key=${adminKey}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ slug })
+        });
+
+        if (res.ok) {
+            window.location.href = `/admin/news?key=${adminKey}`;
+        } else {
+            alert('Failed to delete article');
+        }
+    };
+</script>
+
+<style>
+    .admin-dashboard {
+        padding: 40px 20px;
+        max-width: 900px;
+        color: var(--text-primary);
+    }
+
+    .admin-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 40px;
+    }
+
+    .admin-header__top {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .badge--admin {
+        background: #ffd700;
+        color: #000;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        align-self: flex-start;
+    }
+
+    h1 {
+        font-family: var(--font-serif);
+        font-size: 2rem;
+        margin: 0;
+    }
+
+    .slug-display {
+        font-family: monospace;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+    }
+
+    .admin-actions {
+        display: flex;
+        gap: 12px;
+    }
+
+    /* Form */
+    .editor-form {
+        background: var(--bg-card, #14142a);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        padding: 32px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .form-group.full-width {
+        grid-column: span 2;
+    }
+
+    label {
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+    }
+
+    input, textarea, select {
+        padding: 12px 16px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: var(--text-primary);
+        font-size: 0.95rem;
+        font-family: inherit;
+    }
+
+    input:focus, textarea:focus, select:focus {
+        outline: none;
+        border-color: var(--accent-purple);
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 16px;
+        margin-top: 32px;
+        padding-top: 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* Buttons */
+    .btn {
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+    }
+
+    .btn--primary {
+        background: #8b5cf6;
+        color: white;
+    }
+
+    .btn--outline {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--text-primary);
+    }
+
+    .btn--danger {
+        background: rgba(239, 68, 68, 0.15);
+        color: #ef4444;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .btn--lg {
+        padding: 14px 28px;
+        font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group.full-width {
+            grid-column: span 1;
+        }
+
+        .admin-header {
+            flex-direction: column;
+            gap: 20px;
+        }
+    }
+</style>

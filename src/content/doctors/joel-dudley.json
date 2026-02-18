@@ -1,31 +1,485 @@
 {
   "fullName": "Joel Dudley",
   "slug": "joel-dudley",
-  "title": "MD, PhD",
-  "specialty": "AI & Precision Medicine",
+  "title": "MD",
+  "specialty": "Medicine",
   "geography": {
+    "country": "Unknown",
     "city": "Unknown",
-    "country": "USA"
+    "region": "Unknown"
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23001a4d\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%2300aaff\" text-anchor=\"middle\" dy=\".3em\">JD</text></svg>",
-  "tier": "ELITE",
-  "rankingScore": 36,
-  "hIndex": 143,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 26.5,
+  "hIndex": 75,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 12000,
+  "livesSaved": 0,
+  "biography": "Joel Dudley is currently Associate Professor of Genetics and Genomic Sciences and founding Director of the Institute for Next Generation Healthcare at the Icahn School of Medicine at Mount Sinai. In March, 2018 Dr. Dudley was named Executive Vice President for Precision Health for the Mount Sinai Health System (MSHS). In 2017 he was awarded an Endowed Professorship by Mount Sinai in Biomedical Data Science. Prior to Mount Sinai, he held positions as Co-founder and Director of Informatics at NuMedii, Inc. and Consulting Professor of Systems Medicine in the Department of Pediatrics at Stanford University School of Medicine. His work is focused at the nexus of -omics, digital health, artificial intelligence (AI), scientific wellness, and healthcare delivery. His work has been featured in the Wall Street Journal, Scientific American, MIT Technology Review, CNBC, and other popular media outlets. He was named in 2014 as one of the 100 most creative people in business by Fast Company magazine. He is co-author of the book Exploring Personal Genomics from Oxford University Press. Dr. Dudley received a BS in Microbiology from Arizona State University and an MS and PhD in Biomedical Informatics from Stanford University School of Medicine.",
+  "aiSummary": "Joel Dudley is a medicine specialist with an H-index of 75. Has been published in Cell, Nature Neuroscience, Science Translational Medicine. Based in Unknown, Unknown, Unknown.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Dudley_162R2-2.jpg",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Mount Sinai"
-    }
-  ],
-  "bio": "Joel Dudley is a pioneer in AI & Precision Medicine at Mount Sinai, USA. With a D-Index of 143 and over 120,000 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [],
+  "medicalSpecialty": [
+    "Medicine"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "MEGA4: Molecular Evolutionary Genetics Analysis (MEGA) Software Version 4.0",
+      "journal": "Molecular Biology and Evolution",
+      "year": 2007,
+      "citationCount": 28763,
+      "doi": "10.1093/molbev/msm092",
+      "sourceUrl": "https://doi.org/10.1093/molbev/msm092",
+      "verified": true
+    },
+    {
+      "title": "MEGA: A biologist-centric software for evolutionary analysis of DNA and protein sequences",
+      "journal": "Briefings in Bioinformatics",
+      "year": 2008,
+      "citationCount": 3542,
+      "doi": "10.1093/bib/bbn017",
+      "sourceUrl": "https://doi.org/10.1093/bib/bbn017",
+      "verified": true
+    },
+    {
+      "title": "Deep learning for healthcare: review, opportunities and challenges",
+      "journal": "Briefings in Bioinformatics",
+      "year": 2017,
+      "citationCount": 2815,
+      "doi": "10.1093/bib/bbx044",
+      "sourceUrl": "https://doi.org/10.1093/bib/bbx044",
+      "verified": true
+    },
+    {
+      "title": "Deep Patient: An Unsupervised Representation to Predict the Future of Patients from the Electronic Health Records",
+      "journal": "Scientific Reports",
+      "year": 2016,
+      "citationCount": 1663,
+      "doi": "10.1038/srep26094",
+      "sourceUrl": "https://doi.org/10.1038/srep26094",
+      "verified": true
+    },
+    {
+      "title": "Personal Omics Profiling Reveals Dynamic Molecular and Medical Phenotypes",
+      "journal": "Cell",
+      "year": 2012,
+      "citationCount": 1286,
+      "doi": "10.1016/j.cell.2012.02.009",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2012.02.009",
+      "verified": true
+    },
+    {
+      "title": "TimeTree: a public knowledge-base of divergence times among organisms",
+      "journal": "Bioinformatics",
+      "year": 2006,
+      "citationCount": 1285,
+      "doi": "10.1093/bioinformatics/btl505",
+      "sourceUrl": "https://doi.org/10.1093/bioinformatics/btl505",
+      "verified": true
+    },
+    {
+      "title": "Gene expression elucidates functional impact of polygenic risk for schizophrenia",
+      "journal": "Nature Neuroscience",
+      "year": 2016,
+      "citationCount": 1185,
+      "doi": "10.1038/nn.4399",
+      "sourceUrl": "https://doi.org/10.1038/nn.4399",
+      "verified": true
+    },
+    {
+      "title": "Artificial Intelligence in Cardiology",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2018,
+      "citationCount": 1080,
+      "doi": "10.1016/j.jacc.2018.03.521",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2018.03.521",
+      "verified": true
+    },
+    {
+      "title": "Discovery and Preclinical Validation of Drug Indications Using Compendia of Public Gene Expression Data",
+      "journal": "Science Translational Medicine",
+      "year": 2011,
+      "citationCount": 822,
+      "doi": "10.1126/scitranslmed.3001318",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.3001318",
+      "verified": true
+    },
+    {
+      "title": "Multiscale Analysis of Independent Alzheimer’s Cohorts Finds Disruption of Molecular, Genetic, and Clinical Networks by Human Herpesvirus",
+      "journal": "Neuron",
+      "year": 2018,
+      "citationCount": 706,
+      "doi": "10.1016/j.neuron.2018.05.023",
+      "sourceUrl": "https://doi.org/10.1016/j.neuron.2018.05.023",
+      "verified": true
+    },
+    {
+      "title": "Clinical assessment incorporating a personal genome",
+      "journal": "The Lancet",
+      "year": 2010,
+      "citationCount": 676,
+      "doi": "10.1016/s0140-6736(10)60452-7",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(10)60452-7",
+      "verified": true
+    },
+    {
+      "title": "Computational Repositioning of the Anticonvulsant Topiramate for Inflammatory Bowel Disease",
+      "journal": "Science Translational Medicine",
+      "year": 2011,
+      "citationCount": 612,
+      "doi": "10.1126/scitranslmed.3002648",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.3002648",
+      "verified": true
+    },
+    {
+      "title": "Identification of type 2 diabetes subgroups through topological analysis of patient similarity",
+      "journal": "Science Translational Medicine",
+      "year": 2015,
+      "citationCount": 554,
+      "doi": "10.1126/scitranslmed.aaa9364",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.aaa9364",
+      "verified": true
+    },
+    {
+      "title": "Exploiting drug-disease relationships for computational drug repositioning",
+      "journal": "Briefings in Bioinformatics",
+      "year": 2011,
+      "citationCount": 531,
+      "doi": "10.1093/bib/bbr013",
+      "sourceUrl": "https://doi.org/10.1093/bib/bbr013",
+      "verified": true
+    },
+    {
+      "title": "Natural Language Processing of Clinical Notes on Chronic Diseases: Systematic Review",
+      "journal": "JMIR Medical Informatics",
+      "year": 2019,
+      "citationCount": 523,
+      "doi": "10.2196/12239",
+      "sourceUrl": "https://doi.org/10.2196/12239",
+      "verified": true
+    },
+    {
+      "title": "Machine learning in cardiovascular medicine: are we there yet?",
+      "journal": "Heart",
+      "year": 2018,
+      "citationCount": 511,
+      "doi": "10.1136/heartjnl-2017-311198",
+      "sourceUrl": "https://doi.org/10.1136/heartjnl-2017-311198",
+      "verified": true
+    },
+    {
+      "title": "Necroptosis activation in Alzheimer's disease",
+      "journal": "Nature Neuroscience",
+      "year": 2017,
+      "citationCount": 467,
+      "doi": "10.1038/nn.4608",
+      "sourceUrl": "https://doi.org/10.1038/nn.4608",
+      "verified": true
+    },
+    {
+      "title": "Machine-Learning Algorithms to Automate Morphological and Functional Assessments in 2D Echocardiography",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2016,
+      "citationCount": 394,
+      "doi": "10.1016/j.jacc.2016.08.062",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2016.08.062",
+      "verified": true
+    },
+    {
+      "title": "L1000CDS2: LINCS L1000 characteristic direction signatures search engine",
+      "journal": "npj Systems Biology and Applications",
+      "year": 2016,
+      "citationCount": 368,
+      "doi": "10.1038/npjsba.2016.15",
+      "sourceUrl": "https://doi.org/10.1038/npjsba.2016.15",
+      "verified": true
+    },
+    {
+      "title": "A Drug Repositioning Approach Identifies Tricyclic Antidepressants as Inhibitors of Small Cell Lung Cancer and Other Neuroendocrine Tumors",
+      "journal": "Cancer Discovery",
+      "year": 2013,
+      "citationCount": 362,
+      "doi": "10.1158/2159-8290.cd-13-0183",
+      "sourceUrl": "https://doi.org/10.1158/2159-8290.cd-13-0183",
+      "verified": true
+    },
+    {
+      "title": "Geospatial Resolution of Human and Bacterial Diversity with City-Scale Metagenomics",
+      "journal": "Cell Systems",
+      "year": 2015,
+      "citationCount": 343,
+      "doi": "10.1016/j.cels.2015.01.001",
+      "sourceUrl": "https://doi.org/10.1016/j.cels.2015.01.001",
+      "verified": true
+    },
+    {
+      "title": "Network-Based Elucidation of Human Disease Similarities Reveals Common Functional Modules Enriched for Pluripotent Drug Targets",
+      "journal": "PLoS Computational Biology",
+      "year": 2010,
+      "citationCount": 337,
+      "doi": "10.1371/journal.pcbi.1000662",
+      "sourceUrl": "https://doi.org/10.1371/journal.pcbi.1000662",
+      "verified": true
+    },
+    {
+      "title": "<i>In silico</i> methods for drug repurposing and pharmacology",
+      "journal": "WIREs Systems Biology and Medicine",
+      "year": 2016,
+      "citationCount": 323,
+      "doi": "10.1002/wsbm.1337",
+      "sourceUrl": "https://doi.org/10.1002/wsbm.1337",
+      "verified": true
+    },
+    {
+      "title": "Multiplex qPCR discriminates variants of concern to enhance global surveillance of SARS-CoV-2",
+      "journal": "PLoS Biology",
+      "year": 2021,
+      "citationCount": 229,
+      "doi": "10.1371/journal.pbio.3001236",
+      "sourceUrl": "https://doi.org/10.1371/journal.pbio.3001236",
+      "verified": true
+    },
+    {
+      "title": "The Asthma Mobile Health Study, a large-scale clinical observational study using ResearchKit",
+      "journal": "Nature Biotechnology",
+      "year": 2017,
+      "citationCount": 220,
+      "doi": "10.1038/nbt.3826",
+      "sourceUrl": "https://doi.org/10.1038/nbt.3826",
+      "verified": true
+    },
+    {
+      "title": "Early life stress alters transcriptomic patterning across reward circuitry in male and female mice",
+      "journal": "Nature Communications",
+      "year": 2019,
+      "citationCount": 218,
+      "doi": "10.1038/s41467-019-13085-6",
+      "sourceUrl": "https://doi.org/10.1038/s41467-019-13085-6",
+      "verified": true
+    },
+    {
+      "title": "Mutations in Tetratricopeptide Repeat Domain 7A Result in a Severe Form of Very Early Onset Inflammatory Bowel Disease",
+      "journal": "Gastroenterology",
+      "year": 2014,
+      "citationCount": 205,
+      "doi": "10.1053/j.gastro.2014.01.015",
+      "sourceUrl": "https://doi.org/10.1053/j.gastro.2014.01.015",
+      "verified": true
+    },
+    {
+      "title": "Proposed Requirements for Cardiovascular Imaging-Related Machine Learning Evaluation (PRIME): A Checklist",
+      "journal": "JACC. Cardiovascular imaging",
+      "year": 2020,
+      "citationCount": 205,
+      "doi": "10.1016/j.jcmg.2020.07.015",
+      "sourceUrl": "https://doi.org/10.1016/j.jcmg.2020.07.015",
+      "verified": true
+    },
+    {
+      "title": "Cognitive Machine-Learning Algorithm for Cardiac Imaging",
+      "journal": "Circulation Cardiovascular Imaging",
+      "year": 2016,
+      "citationCount": 198,
+      "doi": "10.1161/circimaging.115.004330",
+      "sourceUrl": "https://doi.org/10.1161/circimaging.115.004330",
+      "verified": true
+    },
+    {
+      "title": "Androgen Deprivation Therapy and Future Alzheimer’s Disease Risk",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2015,
+      "citationCount": 196,
+      "doi": "10.1200/jco.2015.63.6266",
+      "sourceUrl": "https://doi.org/10.1200/jco.2015.63.6266",
+      "verified": true
+    },
+    {
+      "title": "Translational bioinformatics in the era of real-time biomedical, health care and wellness data streams",
+      "journal": "Briefings in Bioinformatics",
+      "year": 2016,
+      "citationCount": 194,
+      "doi": "10.1093/bib/bbv118",
+      "sourceUrl": "https://doi.org/10.1093/bib/bbv118",
+      "verified": true
+    },
+    {
+      "title": "PREDICTIVE MODELING OF HOSPITAL READMISSION RATES USING ELECTRONIC MEDICAL RECORD-WIDE MACHINE LEARNING: A CASE-STUDY USING MOUNT SINAI HEART FAILURE COHORT",
+      "journal": "Unknown Journal",
+      "year": 2016,
+      "citationCount": 180,
+      "doi": "10.1142/9789813207813_0027",
+      "sourceUrl": "https://doi.org/10.1142/9789813207813_0027",
+      "verified": true
+    },
+    {
+      "title": "Landscape of Conditional eQTL in Dorsolateral Prefrontal Cortex and Co-localization with Schizophrenia GWAS",
+      "journal": "The American Journal of Human Genetics",
+      "year": 2018,
+      "citationCount": 164,
+      "doi": "10.1016/j.ajhg.2018.04.011",
+      "sourceUrl": "https://doi.org/10.1016/j.ajhg.2018.04.011",
+      "verified": true
+    },
+    {
+      "title": "Gold Nanoparticle Reprograms Pancreatic Tumor Microenvironment and Inhibits Tumor Growth",
+      "journal": "ACS Nano",
+      "year": 2016,
+      "citationCount": 155,
+      "doi": "10.1021/acsnano.6b02231",
+      "sourceUrl": "https://doi.org/10.1021/acsnano.6b02231",
+      "verified": true
+    },
+    {
+      "title": "A Targetable GATA2-IGF2 Axis Confers Aggressiveness in Lethal Prostate Cancer",
+      "journal": "Cancer Cell",
+      "year": 2015,
+      "citationCount": 153,
+      "doi": "10.1016/j.ccell.2014.11.013",
+      "sourceUrl": "https://doi.org/10.1016/j.ccell.2014.11.013",
+      "verified": true
+    },
+    {
+      "title": "Early introductions and transmission of SARS-CoV-2 variant B.1.1.7 in the United States",
+      "journal": "Cell",
+      "year": 2021,
+      "citationCount": 152,
+      "doi": "10.1016/j.cell.2021.03.061",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2021.03.061",
+      "verified": true
+    },
+    {
+      "title": "Cross-Tissue Regulatory Gene Networks in Coronary Artery Disease",
+      "journal": "Cell Systems",
+      "year": 2016,
+      "citationCount": 150,
+      "doi": "10.1016/j.cels.2016.02.002",
+      "sourceUrl": "https://doi.org/10.1016/j.cels.2016.02.002",
+      "verified": true
+    },
+    {
+      "title": "Phased Whole-Genome Genetic Risk in a Family Quartet Using a Major Allele Reference Sequence",
+      "journal": "PLoS Genetics",
+      "year": 2011,
+      "citationCount": 145,
+      "doi": "10.1371/journal.pgen.1002280",
+      "sourceUrl": "https://doi.org/10.1371/journal.pgen.1002280",
+      "verified": true
+    },
+    {
+      "title": "Unifying immunology with informatics and multiscale biology",
+      "journal": "Nature Immunology",
+      "year": 2014,
+      "citationCount": 144,
+      "doi": "10.1038/ni.2787",
+      "sourceUrl": "https://doi.org/10.1038/ni.2787",
+      "verified": true
+    },
+    {
+      "title": "Genomic and Network Patterns of Schizophrenia Genetic Variation in Human Evolutionary Accelerated Regions",
+      "journal": "Molecular Biology and Evolution",
+      "year": 2015,
+      "citationCount": 142,
+      "doi": "10.1093/molbev/msv031",
+      "sourceUrl": "https://doi.org/10.1093/molbev/msv031",
+      "verified": true
+    },
+    {
+      "title": "Genome-Wide Significant Loci: How Important Are They?",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2015,
+      "citationCount": 139,
+      "doi": "10.1016/j.jacc.2014.12.033",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2014.12.033",
+      "verified": true
+    },
+    {
+      "title": "Polygenic overlap between schizophrenia risk and antipsychotic response: a genomic medicine approach",
+      "journal": "The Lancet Psychiatry",
+      "year": 2016,
+      "citationCount": 134,
+      "doi": "10.1016/s2215-0366(15)00553-2",
+      "sourceUrl": "https://doi.org/10.1016/s2215-0366(15)00553-2",
+      "verified": true
+    },
+    {
+      "title": "In silico research in the era of cloud computing",
+      "journal": "Nature Biotechnology",
+      "year": 2010,
+      "citationCount": 128,
+      "doi": "10.1038/nbt1110-1181",
+      "sourceUrl": "https://doi.org/10.1038/nbt1110-1181",
+      "verified": true
+    },
+    {
+      "title": "Type 2 Diabetes Risk Alleles Demonstrate Extreme Directional Differentiation among Human Populations, Compared to Other Diseases",
+      "journal": "PLoS Genetics",
+      "year": 2012,
+      "citationCount": 126,
+      "doi": "10.1371/journal.pgen.1002621",
+      "sourceUrl": "https://doi.org/10.1371/journal.pgen.1002621",
+      "verified": true
+    },
+    {
+      "title": "Dysregulation of miRNA-9 in a Subset of Schizophrenia Patient-Derived Neural Progenitor Cells",
+      "journal": "Cell Reports",
+      "year": 2016,
+      "citationCount": 124,
+      "doi": "10.1016/j.celrep.2016.03.090",
+      "sourceUrl": "https://doi.org/10.1016/j.celrep.2016.03.090",
+      "verified": true
+    },
+    {
+      "title": "Deficiency of TYROBP, an adapter protein for TREM2 and CR3 receptors, is neuroprotective in a mouse model of early Alzheimer’s pathology",
+      "journal": "Acta Neuropathologica",
+      "year": 2017,
+      "citationCount": 123,
+      "doi": "10.1007/s00401-017-1737-3",
+      "sourceUrl": "https://doi.org/10.1007/s00401-017-1737-3",
+      "verified": true
+    },
+    {
+      "title": "Molecular Evolutionary Genetics Analysis",
+      "journal": "Unknown Journal",
+      "year": 2007,
+      "citationCount": 116,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W124119194",
+      "verified": true
+    },
+    {
+      "title": "Disease Heritability Inferred from Familial Relationships Reported in Medical Records",
+      "journal": "Cell",
+      "year": 2018,
+      "citationCount": 116,
+      "doi": "10.1016/j.cell.2018.04.032",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2018.04.032",
+      "verified": true
+    },
+    {
+      "title": "Viral dynamics of SARS-CoV-2 variants in vaccinated and unvaccinated individuals",
+      "journal": "Unknown Journal",
+      "year": 2021,
+      "citationCount": 115,
+      "doi": "10.1101/2021.02.16.21251535",
+      "sourceUrl": "https://doi.org/10.1101/2021.02.16.21251535",
+      "verified": true
+    },
+    {
+      "title": "Quantifying the impact of immune history and variant on SARS-CoV-2 viral kinetics and infection rebound: A retrospective cohort study",
+      "journal": "eLife",
+      "year": 2022,
+      "citationCount": 113,
+      "doi": "10.7554/elife.81849",
+      "sourceUrl": "https://doi.org/10.7554/elife.81849",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "openalexId": "https://openalex.org/A5043599202"
 }

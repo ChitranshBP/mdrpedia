@@ -1,31 +1,492 @@
 {
   "fullName": "Gordon J. Freeman",
   "slug": "gordon-j-freeman",
-  "title": "MD, PhD",
-  "specialty": "PD-1 Immunotherapy",
+  "title": "MD",
+  "specialty": "PD-1 Signaling",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">GJ</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 49,
-  "hIndex": 195,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 173,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 16179,
+  "livesSaved": 0,
+  "biography": "Gordon J. Freeman is an American immunologist and oncologist at the Dana-Farber Cancer Institute and Harvard Medical School.",
+  "aiSummary": "Gordon J. Freeman is a pd-1 signaling specialist with an H-index of 173 at Harvard University (Faculty). Has been published in Nature Medicine, Nature, New England Journal of Medicine. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Harvard University"
-    }
-  ],
-  "bio": "Gordon J. Freeman is a pioneer in PD-1 Immunotherapy at Harvard University, USA. With a D-Index of 195 and over 161,793 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Harvard University",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "PD-1 Signaling"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Signatures of T cell dysfunction and exclusion predict cancer immunotherapy response",
+      "journal": "Nature Medicine",
+      "year": 2018,
+      "citationCount": 5355,
+      "doi": "10.1038/s41591-018-0136-1",
+      "sourceUrl": "https://doi.org/10.1038/s41591-018-0136-1",
+      "verified": true
+    },
+    {
+      "title": "PD-1 and Its Ligands in Tolerance and Immunity",
+      "journal": "Annual Review of Immunology",
+      "year": 2008,
+      "citationCount": 5242,
+      "doi": "10.1146/annurev.immunol.26.021607.090331",
+      "sourceUrl": "https://doi.org/10.1146/annurev.immunol.26.021607.090331",
+      "verified": true
+    },
+    {
+      "title": "Restoring function in exhausted CD8 T cells during chronic viral infection",
+      "journal": "Nature",
+      "year": 2005,
+      "citationCount": 3908,
+      "doi": "10.1038/nature04444",
+      "sourceUrl": "https://doi.org/10.1038/nature04444",
+      "verified": true
+    },
+    {
+      "title": "PD-1 Blockade with Nivolumab in Relapsed or Refractory Hodgkin's Lymphoma",
+      "journal": "New England Journal of Medicine",
+      "year": 2014,
+      "citationCount": 3514,
+      "doi": "10.1056/nejmoa1411087",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1411087",
+      "verified": true
+    },
+    {
+      "title": "PD-1 expression on HIV-specific T cells is associated with T-cell exhaustion and disease progression",
+      "journal": "Nature",
+      "year": 2006,
+      "citationCount": 2616,
+      "doi": "10.1038/nature05115",
+      "sourceUrl": "https://doi.org/10.1038/nature05115",
+      "verified": true
+    },
+    {
+      "title": "THE B7 FAMILY REVISITED",
+      "journal": "Annual Review of Immunology",
+      "year": 2005,
+      "citationCount": 2277,
+      "doi": "10.1146/annurev.immunol.23.021704.115611",
+      "sourceUrl": "https://doi.org/10.1146/annurev.immunol.23.021704.115611",
+      "verified": true
+    },
+    {
+      "title": "CTLA-4 can function as a negative regulator of T cell activation",
+      "journal": "Immunity",
+      "year": 1994,
+      "citationCount": 2179,
+      "doi": "10.1016/1074-7613(94)90071-x",
+      "sourceUrl": "https://doi.org/10.1016/1074-7613(94)90071-x",
+      "verified": true
+    },
+    {
+      "title": "Coregulation of CD8+ T cell exhaustion by multiple inhibitory receptors during chronic viral infection",
+      "journal": "Nature Immunology",
+      "year": 2008,
+      "citationCount": 2022,
+      "doi": "10.1038/ni.1679",
+      "sourceUrl": "https://doi.org/10.1038/ni.1679",
+      "verified": true
+    },
+    {
+      "title": "PD-L1 regulates the development, maintenance, and function of induced regulatory T cells",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 2009,
+      "citationCount": 2005,
+      "doi": "10.1084/jem.20090847",
+      "sourceUrl": "https://doi.org/10.1084/jem.20090847",
+      "verified": true
+    },
+    {
+      "title": "Defining CD8+ T cells that provide the proliferative burst after PD-1 therapy",
+      "journal": "Nature",
+      "year": 2016,
+      "citationCount": 1979,
+      "doi": "10.1038/nature19330",
+      "sourceUrl": "https://doi.org/10.1038/nature19330",
+      "verified": true
+    },
+    {
+      "title": "Checkpoint blockade cancer immunotherapy targets tumour-specific mutant antigens",
+      "journal": "Nature",
+      "year": 2014,
+      "citationCount": 1956,
+      "doi": "10.1038/nature13988",
+      "sourceUrl": "https://doi.org/10.1038/nature13988",
+      "verified": true
+    },
+    {
+      "title": "CD4+CD25high Regulatory Cells in Human Peripheral Blood",
+      "journal": "The Journal of Immunology",
+      "year": 2001,
+      "citationCount": 1844,
+      "doi": "10.4049/jimmunol.167.3.1245",
+      "sourceUrl": "https://doi.org/10.4049/jimmunol.167.3.1245",
+      "verified": true
+    },
+    {
+      "title": "Programmed Death-1 Ligand 1 Interacts Specifically with the B7-1 Costimulatory Molecule to Inhibit T Cell Responses",
+      "journal": "Immunity",
+      "year": 2007,
+      "citationCount": 1719,
+      "doi": "10.1016/j.immuni.2007.05.016",
+      "sourceUrl": "https://doi.org/10.1016/j.immuni.2007.05.016",
+      "verified": true
+    },
+    {
+      "title": "The B7–CD28 superfamily",
+      "journal": "Nature reviews. Immunology",
+      "year": 2002,
+      "citationCount": 1668,
+      "doi": "10.1038/nri727",
+      "sourceUrl": "https://doi.org/10.1038/nri727",
+      "verified": true
+    },
+    {
+      "title": "Th1-specific cell surface protein Tim-3 regulates macrophage activation and severity of an autoimmune disease",
+      "journal": "Nature",
+      "year": 2002,
+      "citationCount": 1596,
+      "doi": "10.1038/415536a",
+      "sourceUrl": "https://doi.org/10.1038/415536a",
+      "verified": true
+    },
+    {
+      "title": "Adaptive resistance to therapeutic PD-1 blockade is associated with upregulation of alternative immune checkpoints",
+      "journal": "Nature Communications",
+      "year": 2016,
+      "citationCount": 1514,
+      "doi": "10.1038/ncomms10501",
+      "sourceUrl": "https://doi.org/10.1038/ncomms10501",
+      "verified": true
+    },
+    {
+      "title": "The function of programmed cell death 1 and its ligands in regulating autoimmunity and infection",
+      "journal": "Nature Immunology",
+      "year": 2007,
+      "citationCount": 1494,
+      "doi": "10.1038/ni1443",
+      "sourceUrl": "https://doi.org/10.1038/ni1443",
+      "verified": true
+    },
+    {
+      "title": "Combination cancer immunotherapy and new immunomodulatory targets",
+      "journal": "Nature Reviews Drug Discovery",
+      "year": 2015,
+      "citationCount": 1320,
+      "doi": "10.1038/nrd4591",
+      "sourceUrl": "https://doi.org/10.1038/nrd4591",
+      "verified": true
+    },
+    {
+      "title": "Activation of the PD-1 Pathway Contributes to Immune Escape in EGFR-Driven Lung Tumors",
+      "journal": "Cancer Discovery",
+      "year": 2013,
+      "citationCount": 1225,
+      "doi": "10.1158/2159-8290.cd-13-0310",
+      "sourceUrl": "https://doi.org/10.1158/2159-8290.cd-13-0310",
+      "verified": true
+    },
+    {
+      "title": "Tissue expression of PD-L1 mediates peripheral T cell tolerance",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 2006,
+      "citationCount": 1190,
+      "doi": "10.1084/jem.20051776",
+      "sourceUrl": "https://doi.org/10.1084/jem.20051776",
+      "verified": true
+    },
+    {
+      "title": "PD-1 alters T-cell metabolic reprogramming by inhibiting glycolysis and promoting lipolysis and fatty acid oxidation",
+      "journal": "Nature Communications",
+      "year": 2015,
+      "citationCount": 1109,
+      "doi": "10.1038/ncomms7692",
+      "sourceUrl": "https://doi.org/10.1038/ncomms7692",
+      "verified": true
+    },
+    {
+      "title": "Cyclin D–CDK4 kinase destabilizes PD-L1 via cullin 3–SPOP to control cancer immune surveillance",
+      "journal": "Nature",
+      "year": 2017,
+      "citationCount": 1001,
+      "doi": "10.1038/nature25015",
+      "sourceUrl": "https://doi.org/10.1038/nature25015",
+      "verified": true
+    },
+    {
+      "title": "Nivolumab in Patients With Relapsed or Refractory Hematologic Malignancy: Preliminary Results of a Phase Ib Study",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2016,
+      "citationCount": 1000,
+      "doi": "10.1200/jco.2015.65.9789",
+      "sourceUrl": "https://doi.org/10.1200/jco.2015.65.9789",
+      "verified": true
+    },
+    {
+      "title": "<i>Fusobacterium nucleatum</i>in colorectal carcinoma tissue and patient prognosis",
+      "journal": "Gut",
+      "year": 2015,
+      "citationCount": 1000,
+      "doi": "10.1136/gutjnl-2015-310101",
+      "sourceUrl": "https://doi.org/10.1136/gutjnl-2015-310101",
+      "verified": true
+    },
+    {
+      "title": "Rescue of exhausted CD8 T cells by PD-1–targeted therapies is CD28-dependent",
+      "journal": "Science",
+      "year": 2017,
+      "citationCount": 976,
+      "doi": "10.1126/science.aaf0683",
+      "sourceUrl": "https://doi.org/10.1126/science.aaf0683",
+      "verified": true
+    },
+    {
+      "title": "Interplay of somatic alterations and immune infiltration modulates response to PD-1 blockade in advanced clear cell renal cell carcinoma",
+      "journal": "Nature Medicine",
+      "year": 2020,
+      "citationCount": 971,
+      "doi": "10.1038/s41591-020-0839-y",
+      "sourceUrl": "https://doi.org/10.1038/s41591-020-0839-y",
+      "verified": true
+    },
+    {
+      "title": "Blockade of Programmed Death-1 Ligands on Dendritic Cells Enhances T Cell Activation and Cytokine Production",
+      "journal": "The Journal of Immunology",
+      "year": 2003,
+      "citationCount": 953,
+      "doi": "10.4049/jimmunol.170.3.1257",
+      "sourceUrl": "https://doi.org/10.4049/jimmunol.170.3.1257",
+      "verified": true
+    },
+    {
+      "title": "Immunogenic Chemotherapy Sensitizes Tumors to Checkpoint Blockade Therapy",
+      "journal": "Immunity",
+      "year": 2016,
+      "citationCount": 914,
+      "doi": "10.1016/j.immuni.2015.11.024",
+      "sourceUrl": "https://doi.org/10.1016/j.immuni.2015.11.024",
+      "verified": true
+    },
+    {
+      "title": "Cloning of B7-2: a CTLA-4 Counter-Receptor That Costimulates Human T Cell Proliferation",
+      "journal": "Science",
+      "year": 1993,
+      "citationCount": 910,
+      "doi": "10.1126/science.7694363",
+      "sourceUrl": "https://doi.org/10.1126/science.7694363",
+      "verified": true
+    },
+    {
+      "title": "Coinhibitory Pathways in Immunotherapy for Cancer",
+      "journal": "Annual Review of Immunology",
+      "year": 2016,
+      "citationCount": 897,
+      "doi": "10.1146/annurev-immunol-032414-112049",
+      "sourceUrl": "https://doi.org/10.1146/annurev-immunol-032414-112049",
+      "verified": true
+    },
+    {
+      "title": "Successful Anti-PD-1 Cancer Immunotherapy Requires T Cell-Dendritic Cell Crosstalk Involving the Cytokines IFN-γ and IL-12",
+      "journal": "Immunity",
+      "year": 2018,
+      "citationCount": 893,
+      "doi": "10.1016/j.immuni.2018.09.024",
+      "sourceUrl": "https://doi.org/10.1016/j.immuni.2018.09.024",
+      "verified": true
+    },
+    {
+      "title": "PD-L1 on tumor cells is sufficient for immune evasion in immunogenic tumors and inhibits CD8 T cell cytotoxicity",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 2017,
+      "citationCount": 854,
+      "doi": "10.1084/jem.20160801",
+      "sourceUrl": "https://doi.org/10.1084/jem.20160801",
+      "verified": true
+    },
+    {
+      "title": "Cooperation of Tim-3 and PD-1 in CD8 T-cell exhaustion during chronic viral infection",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2010,
+      "citationCount": 844,
+      "doi": "10.1073/pnas.1009731107",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1009731107",
+      "verified": true
+    },
+    {
+      "title": "PD-L1 Expression Is Characteristic of a Subset of Aggressive B-cell Lymphomas and Virus-Associated Malignancies",
+      "journal": "Clinical Cancer Research",
+      "year": 2013,
+      "citationCount": 830,
+      "doi": "10.1158/1078-0432.ccr-13-0855",
+      "sourceUrl": "https://doi.org/10.1158/1078-0432.ccr-13-0855",
+      "verified": true
+    },
+    {
+      "title": "Antigen-specific regulatory T cells develop via the ICOS–ICOS-ligand pathway and inhibit allergen-induced airway hyperreactivity",
+      "journal": "Nature Medicine",
+      "year": 2002,
+      "citationCount": 785,
+      "doi": "10.1038/nm745",
+      "sourceUrl": "https://doi.org/10.1038/nm745",
+      "verified": true
+    },
+    {
+      "title": "<i>PD-L1</i> and <i>PD-L2</i> Genetic Alterations Define Classical Hodgkin Lymphoma and Predict Outcome",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2016,
+      "citationCount": 780,
+      "doi": "10.1200/jco.2016.66.4482",
+      "sourceUrl": "https://doi.org/10.1200/jco.2016.66.4482",
+      "verified": true
+    },
+    {
+      "title": "Enhancing SIV-specific immunity in vivo by PD-1 blockade",
+      "journal": "Nature",
+      "year": 2008,
+      "citationCount": 752,
+      "doi": "10.1038/nature07662",
+      "sourceUrl": "https://doi.org/10.1038/nature07662",
+      "verified": true
+    },
+    {
+      "title": "CDK4/6 Inhibition Augments Antitumor Immunity by Enhancing T-cell Activation",
+      "journal": "Cancer Discovery",
+      "year": 2017,
+      "citationCount": 740,
+      "doi": "10.1158/2159-8290.cd-17-0915",
+      "sourceUrl": "https://doi.org/10.1158/2159-8290.cd-17-0915",
+      "verified": true
+    },
+    {
+      "title": "Dual Blockade of PD-1 and CTLA-4 Combined with Tumor Vaccine Effectively Restores T-Cell Rejection Function in Tumors",
+      "journal": "Cancer Research",
+      "year": 2013,
+      "citationCount": 730,
+      "doi": "10.1158/0008-5472.can-12-4100",
+      "sourceUrl": "https://doi.org/10.1158/0008-5472.can-12-4100",
+      "verified": true
+    },
+    {
+      "title": "Immunologic Purging of Marrow Assessed by PCR before Autologous Bone Marrow Transplantation for B-Cell Lymphoma",
+      "journal": "New England Journal of Medicine",
+      "year": 1991,
+      "citationCount": 686,
+      "doi": "10.1056/nejm199111283252201",
+      "sourceUrl": "https://doi.org/10.1056/nejm199111283252201",
+      "verified": true
+    },
+    {
+      "title": "Intratumoral Activity of the CXCR3 Chemokine System Is Required for the Efficacy of Anti-PD-1 Therapy",
+      "journal": "Immunity",
+      "year": 2019,
+      "citationCount": 675,
+      "doi": "10.1016/j.immuni.2019.04.010",
+      "sourceUrl": "https://doi.org/10.1016/j.immuni.2019.04.010",
+      "verified": true
+    },
+    {
+      "title": "PD-1:PD-L inhibitory pathway affects both CD4+ and CD8+ T cells and is overcome by IL-2",
+      "journal": "European Journal of Immunology",
+      "year": 2002,
+      "citationCount": 665,
+      "doi": "10.1002/1521-4141(200203)32:3<634::aid-immu634>3.0.co;2-9",
+      "sourceUrl": "https://doi.org/10.1002/1521-4141(200203)32:3<634::aid-immu634>3.0.co;2-9",
+      "verified": true
+    },
+    {
+      "title": "LSD1 Ablation Stimulates Anti-tumor Immunity and Enables Checkpoint Blockade",
+      "journal": "Cell",
+      "year": 2018,
+      "citationCount": 658,
+      "doi": "10.1016/j.cell.2018.05.052",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2018.05.052",
+      "verified": true
+    },
+    {
+      "title": "<i>Fusobacterium nucleatum</i>and T Cells in Colorectal Carcinoma",
+      "journal": "JAMA Oncology",
+      "year": 2015,
+      "citationCount": 635,
+      "doi": "10.1001/jamaoncol.2015.1377",
+      "sourceUrl": "https://doi.org/10.1001/jamaoncol.2015.1377",
+      "verified": true
+    },
+    {
+      "title": "In vivo imaging reveals a tumor-associated macrophage–mediated resistance pathway in anti–PD-1 therapy",
+      "journal": "Science Translational Medicine",
+      "year": 2017,
+      "citationCount": 628,
+      "doi": "10.1126/scitranslmed.aal3604",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.aal3604",
+      "verified": true
+    },
+    {
+      "title": "PD-L1-deficient mice show that PD-L1 on T cells, antigen-presenting cells, and host tissues negatively regulates T cells",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2004,
+      "citationCount": 627,
+      "doi": "10.1073/pnas.0307252101",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0307252101",
+      "verified": true
+    },
+    {
+      "title": "Proliferating Transitory T Cells with an Effector-like Transcriptional Signature Emerge from PD-1+ Stem-like CD8+ T Cells during Chronic Infection",
+      "journal": "Immunity",
+      "year": 2019,
+      "citationCount": 625,
+      "doi": "10.1016/j.immuni.2019.11.002",
+      "sourceUrl": "https://doi.org/10.1016/j.immuni.2019.11.002",
+      "verified": true
+    },
+    {
+      "title": "Regulation of PD‐1, PD‐L1, and PD‐L2 expression during normal and autoimmune responses",
+      "journal": "European Journal of Immunology",
+      "year": 2003,
+      "citationCount": 622,
+      "doi": "10.1002/eji.200324228",
+      "sourceUrl": "https://doi.org/10.1002/eji.200324228",
+      "verified": true
+    },
+    {
+      "title": "TIM-1 and TIM-4 Glycoproteins Bind Phosphatidylserine and Mediate Uptake of Apoptotic Cells",
+      "journal": "Immunity",
+      "year": 2007,
+      "citationCount": 618,
+      "doi": "10.1016/j.immuni.2007.11.011",
+      "sourceUrl": "https://doi.org/10.1016/j.immuni.2007.11.011",
+      "verified": true
+    },
+    {
+      "title": "Interaction of Tim-3 and Tim-3 ligand regulates T helper type 1 responses and induction of peripheral tolerance",
+      "journal": "Nature Immunology",
+      "year": 2003,
+      "citationCount": 615,
+      "doi": "10.1038/ni988",
+      "sourceUrl": "https://doi.org/10.1038/ni988",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:16.000Z",
+  "openalexId": "https://openalex.org/A5075310347"
 }

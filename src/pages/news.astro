@@ -1,0 +1,204 @@
+---
+/**
+ * MDRPedia — News & Research
+ * Curated feed of medical research breakthroughs and registry updates.
+ */
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+// Fetch news from content collection
+const newsEntries = await getCollection("news");
+
+// Sort by date descending
+const articles = newsEntries
+    .sort(
+        (a, b) =>
+            new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+    )
+    .map((entry) => ({
+        ...entry.data,
+        id: entry.id,
+        slug: entry.slug,
+    }));
+
+function formatDate(dateStr: string) {
+    return new Date(dateStr).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
+}
+---
+
+<Layout
+    title="News & Research — MDRPedia"
+    description="Stay informed with the latest medical research breakthroughs, registry updates, and global health news from MDRPedia."
+>
+    <div class="news-page">
+        <header class="page-header">
+            <div class="page-header__badge">NEWS & RESEARCH</div>
+            <h1>Medical Research Updates</h1>
+            <p>
+                Curated coverage of breakthroughs, registry updates, and global
+                health developments relevant to the MDRPedia community.
+            </p>
+        </header>
+
+        <div class="news-grid">
+            {
+                articles.map((article, i) => (
+                    <article
+                        class={`news-card ${i === 0 ? "news-card--featured" : ""}`}
+                    >
+                        <div class="news-card__category">
+                            {article.category}
+                        </div>
+                        <h2 class="news-card__title">
+                            <a href={`/news/${article.id}`}>{article.title}</a>
+                        </h2>
+                        <p class="news-card__summary">{article.summary}</p>
+                        <div class="news-card__footer">
+                            <span class="news-card__date">
+                                {formatDate(article.date)}
+                            </span>
+                            <span class="news-card__source">
+                                {article.source}
+                            </span>
+                        </div>
+                    </article>
+                ))
+            }
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .news-page {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 60px 20px 80px;
+    }
+    .page-header {
+        text-align: center;
+        margin-bottom: 48px;
+    }
+    .page-header__badge {
+        display: inline-block;
+        padding: 4px 14px;
+        border-radius: 20px;
+        background: rgba(139, 92, 246, 0.1);
+        color: #a78bfa;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        margin-bottom: 16px;
+    }
+    .page-header h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin-bottom: 12px;
+    }
+    .page-header p {
+        font-size: 1.05rem;
+        color: var(--text-muted);
+        max-width: 560px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    .news-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .news-card {
+        background: var(--bg-card, #16162a);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        padding: 28px 30px;
+        transition:
+            border-color 0.2s,
+            box-shadow 0.2s;
+    }
+    .news-card:hover {
+        border-color: rgba(139, 92, 246, 0.3);
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+    }
+    .news-card--featured {
+        border-color: rgba(139, 92, 246, 0.25);
+        background: linear-gradient(
+            135deg,
+            rgba(139, 92, 246, 0.04) 0%,
+            var(--bg-card, #16162a) 100%
+        );
+    }
+
+    .news-card__category {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text-secondary);
+        margin-bottom: 12px;
+    }
+    .news-card--featured .news-card__category {
+        background: rgba(139, 92, 246, 0.15);
+        color: #a78bfa;
+    }
+
+    .news-card__title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        line-height: 1.4;
+        margin-bottom: 10px;
+    }
+    .news-card__title a {
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: color 0.15s;
+    }
+    .news-card__title a:hover {
+        color: #a78bfa;
+    }
+    .news-card--featured .news-card__title {
+        font-size: 1.4rem;
+    }
+
+    .news-card__summary {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+        margin-bottom: 16px;
+    }
+
+    .news-card__footer {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+    }
+    .news-card__source {
+        color: var(--text-secondary);
+        font-weight: 600;
+    }
+
+    @media (max-width: 600px) {
+        .page-header h1 {
+            font-size: 1.8rem;
+        }
+        .news-card {
+            padding: 20px;
+        }
+        .news-card--featured .news-card__title {
+            font-size: 1.15rem;
+        }
+    }
+</style>

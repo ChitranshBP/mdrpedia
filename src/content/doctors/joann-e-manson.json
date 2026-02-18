@@ -1,36 +1,493 @@
 {
   "fullName": "JoAnn E. Manson",
   "slug": "joann-e-manson",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Women's Health",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">JE</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 80,
-  "hIndex": 320,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 401,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 40147,
+  "livesSaved": 0,
+  "biography": "JoAnn Elisabeth Manson is an American physician and professor known for her pioneering research, public leadership, and advocacy in the fields of epidemiology and women's health.",
+  "aiSummary": "JoAnn E. Manson is a women's health specialist with an H-index of 401 at Harvard Medical School (Faculty). Has been published in New England Journal of Medicine, The Lancet, JAMA. Based in United States.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/7/72/Jmanson.jpg",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Harvard Medical School"
-    }
-  ],
-  "bio": "JoAnn E. Manson is a pioneer in Women's Health at Harvard Medical School, USA. With a D-Index of 320 and over 401,469 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Harvard Medical School",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Women's Health"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "The 2011 Report on Dietary Reference Intakes for Calcium and Vitamin D from the Institute of Medicine: What Clinicians Need to Know",
+      "journal": "The Journal of Clinical Endocrinology & Metabolism",
+      "year": 2010,
+      "citationCount": 3981,
+      "doi": "10.1210/jc.2010-2704",
+      "sourceUrl": "https://doi.org/10.1210/jc.2010-2704",
+      "verified": true
+    },
+    {
+      "title": "Diet, Lifestyle, and the Risk of Type 2 Diabetes Mellitus in Women",
+      "journal": "New England Journal of Medicine",
+      "year": 2001,
+      "citationCount": 2875,
+      "doi": "10.1056/nejmoa010492",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa010492",
+      "verified": true
+    },
+    {
+      "title": "Body-mass index and all-cause mortality: individual-participant-data meta-analysis of 239 prospective studies in four continents",
+      "journal": "The Lancet",
+      "year": 2016,
+      "citationCount": 2693,
+      "doi": "10.1016/s0140-6736(16)30175-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(16)30175-1",
+      "verified": true
+    },
+    {
+      "title": "Lack of Effect of Long-Term Supplementation with Beta Carotene on the Incidence of Malignant Neoplasms and Cardiovascular Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 1996,
+      "citationCount": 2404,
+      "doi": "10.1056/nejm199605023341801",
+      "sourceUrl": "https://doi.org/10.1056/nejm199605023341801",
+      "verified": true
+    },
+    {
+      "title": "Vitamin E Consumption and the Risk of Coronary Disease in Women",
+      "journal": "New England Journal of Medicine",
+      "year": 1993,
+      "citationCount": 2114,
+      "doi": "10.1056/nejm199305203282003",
+      "sourceUrl": "https://doi.org/10.1056/nejm199305203282003",
+      "verified": true
+    },
+    {
+      "title": "Estrogen plus Progestin and the Risk of Coronary Heart Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 2003,
+      "citationCount": 2052,
+      "doi": "10.1056/nejmoa030808",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa030808",
+      "verified": true
+    },
+    {
+      "title": "Postmenopausal Estrogen Therapy and Cardiovascular Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 1991,
+      "citationCount": 2002,
+      "doi": "10.1056/nejm199109123251102",
+      "sourceUrl": "https://doi.org/10.1056/nejm199109123251102",
+      "verified": true
+    },
+    {
+      "title": "Body Weight and Mortality among Women",
+      "journal": "New England Journal of Medicine",
+      "year": 1995,
+      "citationCount": 1992,
+      "doi": "10.1056/nejm199509143331101",
+      "sourceUrl": "https://doi.org/10.1056/nejm199509143331101",
+      "verified": true
+    },
+    {
+      "title": "A Randomized Trial of Low-Dose Aspirin in the Primary Prevention of Cardiovascular Disease in Women",
+      "journal": "New England Journal of Medicine",
+      "year": 2005,
+      "citationCount": 1944,
+      "doi": "10.1056/nejmoa050613",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa050613",
+      "verified": true
+    },
+    {
+      "title": "Calcium plus Vitamin D Supplementation and the Risk of Fractures",
+      "journal": "New England Journal of Medicine",
+      "year": 2006,
+      "citationCount": 1862,
+      "doi": "10.1056/nejmoa055218",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa055218",
+      "verified": true
+    },
+    {
+      "title": "Primary Prevention of Coronary Heart Disease in Women through Diet and Lifestyle",
+      "journal": "New England Journal of Medicine",
+      "year": 2000,
+      "citationCount": 1794,
+      "doi": "10.1056/nejm200007063430103",
+      "sourceUrl": "https://doi.org/10.1056/nejm200007063430103",
+      "verified": true
+    },
+    {
+      "title": "Dietary Fat Intake and the Risk of Coronary Heart Disease in Women",
+      "journal": "New England Journal of Medicine",
+      "year": 1997,
+      "citationCount": 1771,
+      "doi": "10.1056/nejm199711203372102",
+      "sourceUrl": "https://doi.org/10.1056/nejm199711203372102",
+      "verified": true
+    },
+    {
+      "title": "Postmenopausal Hormone Therapy and Risk of Cardiovascular Disease by Age and Years Since Menopause",
+      "journal": "JAMA",
+      "year": 2007,
+      "citationCount": 1699,
+      "doi": "10.1001/jama.297.13.1465",
+      "sourceUrl": "https://doi.org/10.1001/jama.297.13.1465",
+      "verified": true
+    },
+    {
+      "title": "Vitamin D Supplements and Prevention of Cancer and Cardiovascular Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 2018,
+      "citationCount": 1547,
+      "doi": "10.1056/nejmoa1809944",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1809944",
+      "verified": true
+    },
+    {
+      "title": "The Use of Estrogens and Progestins and the Risk of Breast Cancer in Postmenopausal Women",
+      "journal": "New England Journal of Medicine",
+      "year": 1995,
+      "citationCount": 1508,
+      "doi": "10.1056/nejm199506153322401",
+      "sourceUrl": "https://doi.org/10.1056/nejm199506153322401",
+      "verified": true
+    },
+    {
+      "title": "A Prospective Study of Obesity and Risk of Coronary Heart Disease in Women",
+      "journal": "New England Journal of Medicine",
+      "year": 1990,
+      "citationCount": 1409,
+      "doi": "10.1056/nejm199003293221303",
+      "sourceUrl": "https://doi.org/10.1056/nejm199003293221303",
+      "verified": true
+    },
+    {
+      "title": "The Effect of Fruit and Vegetable Intake on Risk for Coronary Heart Disease",
+      "journal": "Annals of Internal Medicine",
+      "year": 2001,
+      "citationCount": 1393,
+      "doi": "10.7326/0003-4819-134-12-200106190-00010",
+      "sourceUrl": "https://doi.org/10.7326/0003-4819-134-12-200106190-00010",
+      "verified": true
+    },
+    {
+      "title": "Walking Compared with Vigorous Exercise for the Prevention of Cardiovascular Events in Women",
+      "journal": "New England Journal of Medicine",
+      "year": 2002,
+      "citationCount": 1326,
+      "doi": "10.1056/nejmoa021067",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa021067",
+      "verified": true
+    },
+    {
+      "title": "Postmenopausal Estrogen and Progestin Use and the Risk of Cardiovascular Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 1996,
+      "citationCount": 1320,
+      "doi": "10.1056/nejm199608153350701",
+      "sourceUrl": "https://doi.org/10.1056/nejm199608153350701",
+      "verified": true
+    },
+    {
+      "title": "Cardiovascular Morbidity and Mortality in Women Diagnosed With Rheumatoid Arthritis",
+      "journal": "Circulation",
+      "year": 2003,
+      "citationCount": 1250,
+      "doi": "10.1161/01.cir.0000054612.26458.b2",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000054612.26458.b2",
+      "verified": true
+    },
+    {
+      "title": "Postmenopausal Hormone Therapy and Mortality",
+      "journal": "New England Journal of Medicine",
+      "year": 1997,
+      "citationCount": 1185,
+      "doi": "10.1056/nejm199706193362501",
+      "sourceUrl": "https://doi.org/10.1056/nejm199706193362501",
+      "verified": true
+    },
+    {
+      "title": "A prospective study of dietary glycemic load, carbohydrate intake, and risk of coronary heart disease in US women",
+      "journal": "American Journal of Clinical Nutrition",
+      "year": 2000,
+      "citationCount": 1169,
+      "doi": "10.1093/ajcn/71.6.1455",
+      "sourceUrl": "https://doi.org/10.1093/ajcn/71.6.1455",
+      "verified": true
+    },
+    {
+      "title": "Inflammatory Markers and the Risk of Coronary Heart Disease in Men and Women",
+      "journal": "New England Journal of Medicine",
+      "year": 2004,
+      "citationCount": 1169,
+      "doi": "10.1056/nejmoa040967",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa040967",
+      "verified": true
+    },
+    {
+      "title": "Physical activity and incidence of non-insulin-dependent diabetes mellitus in women",
+      "journal": "The Lancet",
+      "year": 1991,
+      "citationCount": 1165,
+      "doi": "10.1016/0140-6736(91)90664-b",
+      "sourceUrl": "https://doi.org/10.1016/0140-6736(91)90664-b",
+      "verified": true
+    },
+    {
+      "title": "DNA methylation-based measures of biological age: meta-analysis predicting time to death",
+      "journal": "Aging",
+      "year": 2016,
+      "citationCount": 1163,
+      "doi": "10.18632/aging.101020",
+      "sourceUrl": "https://doi.org/10.18632/aging.101020",
+      "verified": true
+    },
+    {
+      "title": "A Prospective Study of Sleep Duration and Coronary Heart Disease in Women",
+      "journal": "Archives of Internal Medicine",
+      "year": 2003,
+      "citationCount": 1149,
+      "doi": "10.1001/archinte.163.2.205",
+      "sourceUrl": "https://doi.org/10.1001/archinte.163.2.205",
+      "verified": true
+    },
+    {
+      "title": "Vitamin E in the Primary Prevention of Cardiovascular Disease and Cancer",
+      "journal": "JAMA",
+      "year": 2005,
+      "citationCount": 1134,
+      "doi": "10.1001/jama.294.1.56",
+      "sourceUrl": "https://doi.org/10.1001/jama.294.1.56",
+      "verified": true
+    },
+    {
+      "title": "Blood Levels of Long-Chain n–3 Fatty Acids and the Risk of Sudden Death",
+      "journal": "New England Journal of Medicine",
+      "year": 2002,
+      "citationCount": 1132,
+      "doi": "10.1056/nejmoa012918",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa012918",
+      "verified": true
+    },
+    {
+      "title": "The interleukin-6 receptor as a target for prevention of coronary heart disease: a mendelian randomisation analysis",
+      "journal": "The Lancet",
+      "year": 2012,
+      "citationCount": 1123,
+      "doi": "10.1016/s0140-6736(12)60110-x",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(12)60110-x",
+      "verified": true
+    },
+    {
+      "title": "Low-Fat Dietary Pattern and Risk of Cardiovascular Disease",
+      "journal": "JAMA",
+      "year": 2006,
+      "citationCount": 1084,
+      "doi": "10.1001/jama.295.6.655",
+      "sourceUrl": "https://doi.org/10.1001/jama.295.6.655",
+      "verified": true
+    },
+    {
+      "title": "Reproducibility and Validity of a Self-Administered Physical Activity Questionnaire",
+      "journal": "International Journal of Epidemiology",
+      "year": 1994,
+      "citationCount": 1028,
+      "doi": "10.1093/ije/23.5.991",
+      "sourceUrl": "https://doi.org/10.1093/ije/23.5.991",
+      "verified": true
+    },
+    {
+      "title": "Triggering of Sudden Death from Cardiac Causes by Vigorous Exertion",
+      "journal": "New England Journal of Medicine",
+      "year": 2000,
+      "citationCount": 1018,
+      "doi": "10.1056/nejm200011093431902",
+      "sourceUrl": "https://doi.org/10.1056/nejm200011093431902",
+      "verified": true
+    },
+    {
+      "title": "A Prospective Study of Walking as Compared with Vigorous Exercise in the Prevention of Coronary Heart Disease in Women",
+      "journal": "New England Journal of Medicine",
+      "year": 1999,
+      "citationCount": 1012,
+      "doi": "10.1056/nejm199908263410904",
+      "sourceUrl": "https://doi.org/10.1056/nejm199908263410904",
+      "verified": true
+    },
+    {
+      "title": "Cardiovascular Disease in Women",
+      "journal": "Circulation Research",
+      "year": 2016,
+      "citationCount": 1011,
+      "doi": "10.1161/circresaha.116.307547",
+      "sourceUrl": "https://doi.org/10.1161/circresaha.116.307547",
+      "verified": true
+    },
+    {
+      "title": "Calcium plus Vitamin D Supplementation and the Risk of Colorectal Cancer",
+      "journal": "New England Journal of Medicine",
+      "year": 2006,
+      "citationCount": 982,
+      "doi": "10.1056/nejmoa055222",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa055222",
+      "verified": true
+    },
+    {
+      "title": "Plant-Based Dietary Patterns and Incidence of Type 2 Diabetes in US Men and Women: Results from Three Prospective Cohort Studies",
+      "journal": "PLoS Medicine",
+      "year": 2016,
+      "citationCount": 963,
+      "doi": "10.1371/journal.pmed.1002039",
+      "sourceUrl": "https://doi.org/10.1371/journal.pmed.1002039",
+      "verified": true
+    },
+    {
+      "title": "Effect of Estrogen Plus Progestin on Global Cognitive Function in Postmenopausal Women",
+      "journal": "JAMA",
+      "year": 2003,
+      "citationCount": 926,
+      "doi": "10.1001/jama.289.20.2663",
+      "sourceUrl": "https://doi.org/10.1001/jama.289.20.2663",
+      "verified": true
+    },
+    {
+      "title": "Marine n−3 Fatty Acids and Prevention of Cardiovascular Disease and Cancer",
+      "journal": "New England Journal of Medicine",
+      "year": 2018,
+      "citationCount": 926,
+      "doi": "10.1056/nejmoa1811403",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1811403",
+      "verified": true
+    },
+    {
+      "title": "Fruit and vegetable intake and risk of cardiovascular disease: the Women’s Health Study",
+      "journal": "American Journal of Clinical Nutrition",
+      "year": 2000,
+      "citationCount": 923,
+      "doi": "10.1093/ajcn/72.4.922",
+      "sourceUrl": "https://doi.org/10.1093/ajcn/72.4.922",
+      "verified": true
+    },
+    {
+      "title": "Walking Compared With Vigorous Physical Activity and Risk of Type 2 Diabetes in Women",
+      "journal": "JAMA",
+      "year": 1999,
+      "citationCount": 917,
+      "doi": "10.1001/jama.282.15.1433",
+      "sourceUrl": "https://doi.org/10.1001/jama.282.15.1433",
+      "verified": true
+    },
+    {
+      "title": "Menopause Transition and Cardiovascular Disease Risk: Implications for Timing of Early Prevention: A Scientific Statement From the American Heart Association",
+      "journal": "Circulation",
+      "year": 2020,
+      "citationCount": 915,
+      "doi": "10.1161/cir.0000000000000912",
+      "sourceUrl": "https://doi.org/10.1161/cir.0000000000000912",
+      "verified": true
+    },
+    {
+      "title": "Healthful and Unhealthful Plant-Based Diets and the Risk of Coronary Heart Disease in U.S. Adults",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2017,
+      "citationCount": 914,
+      "doi": "10.1016/j.jacc.2017.05.047",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2017.05.047",
+      "verified": true
+    },
+    {
+      "title": "Types of Dietary Fat and Risk of Coronary Heart Disease: A Critical Review",
+      "journal": "Journal of the American College of Nutrition",
+      "year": 2001,
+      "citationCount": 894,
+      "doi": "10.1080/07315724.2001.10719008",
+      "sourceUrl": "https://doi.org/10.1080/07315724.2001.10719008",
+      "verified": true
+    },
+    {
+      "title": "A Prospective Study of Self-Reported Sleep Duration and Incident Diabetes in Women",
+      "journal": "Diabetes Care",
+      "year": 2003,
+      "citationCount": 888,
+      "doi": "10.2337/diacare.26.2.380",
+      "sourceUrl": "https://doi.org/10.2337/diacare.26.2.380",
+      "verified": true
+    },
+    {
+      "title": "Mediterranean Diet and Incidence of and Mortality From Coronary Heart Disease and Stroke in Women",
+      "journal": "Circulation",
+      "year": 2009,
+      "citationCount": 881,
+      "doi": "10.1161/circulationaha.108.816736",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.108.816736",
+      "verified": true
+    },
+    {
+      "title": "Major dietary patterns are related to plasma concentrations of markers of inflammation and endothelial dysfunction",
+      "journal": "American Journal of Clinical Nutrition",
+      "year": 2004,
+      "citationCount": 867,
+      "doi": "10.1093/ajcn/80.4.1029",
+      "sourceUrl": "https://doi.org/10.1093/ajcn/80.4.1029",
+      "verified": true
+    },
+    {
+      "title": "Body Fat Distribution and Risk of Non-Insulin-dependent Diabetes Mellitus in Women: The Nurses' Health Study",
+      "journal": "American Journal of Epidemiology",
+      "year": 1997,
+      "citationCount": 840,
+      "doi": "10.1093/oxfordjournals.aje.a009158",
+      "sourceUrl": "https://doi.org/10.1093/oxfordjournals.aje.a009158",
+      "verified": true
+    },
+    {
+      "title": "Vitamin D and Calcium Intake in Relation to Type 2 Diabetes in Women",
+      "journal": "Diabetes Care",
+      "year": 2006,
+      "citationCount": 834,
+      "doi": "10.2337/diacare.29.03.06.dc05-1961",
+      "sourceUrl": "https://doi.org/10.2337/diacare.29.03.06.dc05-1961",
+      "verified": true
+    },
+    {
+      "title": "Dual Effects of Weight and Weight Gain on Breast Cancer Risk",
+      "journal": "JAMA",
+      "year": 1997,
+      "citationCount": 827,
+      "doi": "10.1001/jama.1997.03550170037029",
+      "sourceUrl": "https://doi.org/10.1001/jama.1997.03550170037029",
+      "verified": true
+    },
+    {
+      "title": "Low-Fat Dietary Pattern and Risk of Invasive Breast Cancer",
+      "journal": "JAMA",
+      "year": 2006,
+      "citationCount": 821,
+      "doi": "10.1001/jama.295.6.629",
+      "sourceUrl": "https://doi.org/10.1001/jama.295.6.629",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:12.000Z",
+  "openalexId": "https://openalex.org/A5049411008"
 }

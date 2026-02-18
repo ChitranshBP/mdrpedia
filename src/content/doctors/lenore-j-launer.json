@@ -1,36 +1,492 @@
 {
   "fullName": "Lenore J. Launer",
   "slug": "lenore-j-launer",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Neuroepidemiology",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">LJ</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 51,
-  "hIndex": 202,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 181,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 16215,
+  "livesSaved": 0,
+  "biography": "The common disease-common variant hypothesis predicts that common disease-causing alleles, or variants, will be found in all human populations which manifest a given disease. Common variants are known to exist in coding and regulatory sequences of genes. According to the CD-CV hypothesis, some of those variants lead to susceptibility to complex polygenic diseases. Each variant at each gene influencing a complex disease will have a small additive or multiplicative effect on the disease phenotype. These diseases, or traits, are evolutionarily neutral in part because so many genes influence the traits. The hypothesis has held in the case of putative causal variants in apolipoprotein E, including APOE ε4, associated with Alzheimer's disease. IL23R has been found to be associated with Crohn's disease; the at-risk allele has a frequency of 93% in the general population.",
+  "aiSummary": "Lenore J. Launer is a neuroepidemiology specialist with an H-index of 181 at National Institutes of Health (Faculty). Has been published in Nature, The Lancet Neurology, Nature Genetics. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "NIH"
-    }
-  ],
-  "bio": "Lenore J. Launer is a pioneer in Neuroepidemiology at NIH, USA. With a D-Index of 202 and over 162,146 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "National Institutes of Health",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Neuroepidemiology"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Vascular Contributions to Cognitive Impairment and Dementia",
+      "journal": "Stroke",
+      "year": 2011,
+      "citationCount": 3633,
+      "doi": "10.1161/str.0b013e3182299496",
+      "sourceUrl": "https://doi.org/10.1161/str.0b013e3182299496",
+      "verified": true
+    },
+    {
+      "title": "Genetic variants in novel pathways influence blood pressure and cardiovascular disease risk",
+      "journal": "Nature",
+      "year": 2011,
+      "citationCount": 2037,
+      "doi": "10.1038/nature10405",
+      "sourceUrl": "https://doi.org/10.1038/nature10405",
+      "verified": true
+    },
+    {
+      "title": "Cerebral microbleeds: a guide to detection and interpretation",
+      "journal": "The Lancet Neurology",
+      "year": 2009,
+      "citationCount": 1754,
+      "doi": "10.1016/s1474-4422(09)70013-4",
+      "sourceUrl": "https://doi.org/10.1016/s1474-4422(09)70013-4",
+      "verified": true
+    },
+    {
+      "title": "Large-scale association analyses identify host factors influencing human gut microbiome composition",
+      "journal": "Nature Genetics",
+      "year": 2021,
+      "citationCount": 1735,
+      "doi": "10.1038/s41588-020-00763-1",
+      "sourceUrl": "https://doi.org/10.1038/s41588-020-00763-1",
+      "verified": true
+    },
+    {
+      "title": "Multiancestry genome-wide association study of 520,000 subjects identifies 32 loci associated with stroke and stroke subtypes",
+      "journal": "Nature Genetics",
+      "year": 2018,
+      "citationCount": 1675,
+      "doi": "10.1038/s41588-018-0058-3",
+      "sourceUrl": "https://doi.org/10.1038/s41588-018-0058-3",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide association study of blood pressure and hypertension",
+      "journal": "Nature Genetics",
+      "year": 2009,
+      "citationCount": 1369,
+      "doi": "10.1038/ng.384",
+      "sourceUrl": "https://doi.org/10.1038/ng.384",
+      "verified": true
+    },
+    {
+      "title": "Intensive vs Standard Blood Pressure Control and Cardiovascular Disease Outcomes in Adults Aged ≥75 Years",
+      "journal": "JAMA",
+      "year": 2016,
+      "citationCount": 1206,
+      "doi": "10.1001/jama.2016.7050",
+      "sourceUrl": "https://doi.org/10.1001/jama.2016.7050",
+      "verified": true
+    },
+    {
+      "title": "Type 2 Diabetes, APOE Gene, and the Risk for Dementia and Related Pathologies",
+      "journal": "Diabetes",
+      "year": 2002,
+      "citationCount": 1186,
+      "doi": "10.2337/diabetes.51.4.1256",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.51.4.1256",
+      "verified": true
+    },
+    {
+      "title": "Nonsteroidal Antiinflammatory Drugs and the Risk of Alzheimer's Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 2001,
+      "citationCount": 1177,
+      "doi": "10.1056/nejmoa010178",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa010178",
+      "verified": true
+    },
+    {
+      "title": "Effect of Intensive vs Standard Blood Pressure Control on Probable Dementia",
+      "journal": "JAMA",
+      "year": 2019,
+      "citationCount": 1133,
+      "doi": "10.1001/jama.2018.21442",
+      "sourceUrl": "https://doi.org/10.1001/jama.2018.21442",
+      "verified": true
+    },
+    {
+      "title": "Midlife blood pressure and dementia: the Honolulu–Asia aging study☆",
+      "journal": "Neurobiology of Aging",
+      "year": 2000,
+      "citationCount": 989,
+      "doi": "10.1016/s0197-4580(00)00096-8",
+      "sourceUrl": "https://doi.org/10.1016/s0197-4580(00)00096-8",
+      "verified": true
+    },
+    {
+      "title": "Genome-Wide Association Analysis Identifies Variants Associated with Nonalcoholic Fatty Liver Disease That Have Distinct Effects on Metabolic Traits",
+      "journal": "PLoS Genetics",
+      "year": 2011,
+      "citationCount": 985,
+      "doi": "10.1371/journal.pgen.1001324",
+      "sourceUrl": "https://doi.org/10.1371/journal.pgen.1001324",
+      "verified": true
+    },
+    {
+      "title": "The Association Between Midlife Blood Pressure Levels and Late-Life Cognitive Function",
+      "journal": "JAMA",
+      "year": 1995,
+      "citationCount": 905,
+      "doi": "10.1001/jama.1995.03530230032026",
+      "sourceUrl": "https://doi.org/10.1001/jama.1995.03530230032026",
+      "verified": true
+    },
+    {
+      "title": "Dietary fat intake and the risk of incident dementia in the Rotterdam study",
+      "journal": "Annals of Neurology",
+      "year": 1997,
+      "citationCount": 884,
+      "doi": "10.1002/ana.410420514",
+      "sourceUrl": "https://doi.org/10.1002/ana.410420514",
+      "verified": true
+    },
+    {
+      "title": "Arterial stiffness, pressure and flow pulsatility and brain structure and function: the Age, Gene/Environment Susceptibility – Reykjavik Study",
+      "journal": "Brain",
+      "year": 2011,
+      "citationCount": 870,
+      "doi": "10.1093/brain/awr253",
+      "sourceUrl": "https://doi.org/10.1093/brain/awr253",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide association analyses identify 18 new loci associated with serum urate concentrations",
+      "journal": "Nature Genetics",
+      "year": 2012,
+      "citationCount": 850,
+      "doi": "10.1038/ng.2500",
+      "sourceUrl": "https://doi.org/10.1038/ng.2500",
+      "verified": true
+    },
+    {
+      "title": "Simple Risk Model Predicts Incidence of Atrial Fibrillation in a Racially and Geographically Diverse Population: the CHARGE‐AF Consortium",
+      "journal": "Journal of the American Heart Association",
+      "year": 2013,
+      "citationCount": 846,
+      "doi": "10.1161/jaha.112.000102",
+      "sourceUrl": "https://doi.org/10.1161/jaha.112.000102",
+      "verified": true
+    },
+    {
+      "title": "New loci associated with kidney function and chronic kidney disease",
+      "journal": "Nature Genetics",
+      "year": 2010,
+      "citationCount": 797,
+      "doi": "10.1038/ng.568",
+      "sourceUrl": "https://doi.org/10.1038/ng.568",
+      "verified": true
+    },
+    {
+      "title": "Multi-ethnic genome-wide association study for atrial fibrillation",
+      "journal": "Nature Genetics",
+      "year": 2018,
+      "citationCount": 784,
+      "doi": "10.1038/s41588-018-0133-9",
+      "sourceUrl": "https://doi.org/10.1038/s41588-018-0133-9",
+      "verified": true
+    },
+    {
+      "title": "Genome-Wide Association Study of Retinopathy in Individuals without Diabetes",
+      "journal": "PLoS ONE",
+      "year": 2013,
+      "citationCount": 760,
+      "doi": "10.1371/journal.pone.0054232",
+      "sourceUrl": "https://doi.org/10.1371/journal.pone.0054232",
+      "verified": true
+    },
+    {
+      "title": "Rates and risk factors for dementia and Alzheimer’s disease",
+      "journal": "Neurology",
+      "year": 1999,
+      "citationCount": 754,
+      "doi": "10.1212/wnl.52.1.78",
+      "sourceUrl": "https://doi.org/10.1212/wnl.52.1.78",
+      "verified": true
+    },
+    {
+      "title": "Association of olfactory dysfunction with risk for future Parkinson's disease",
+      "journal": "Annals of Neurology",
+      "year": 2007,
+      "citationCount": 728,
+      "doi": "10.1002/ana.21291",
+      "sourceUrl": "https://doi.org/10.1002/ana.21291",
+      "verified": true
+    },
+    {
+      "title": "Inflammatory markers and cognition in well-functioning African-American and white elders",
+      "journal": "Neurology",
+      "year": 2003,
+      "citationCount": 705,
+      "doi": "10.1212/01.wnl.0000073620.42047.d7",
+      "sourceUrl": "https://doi.org/10.1212/01.wnl.0000073620.42047.d7",
+      "verified": true
+    },
+    {
+      "title": "Early inflammation and dementia: A 25‐year follow‐up of the Honolulu‐Asia aging study",
+      "journal": "Annals of Neurology",
+      "year": 2002,
+      "citationCount": 705,
+      "doi": "10.1002/ana.10265",
+      "sourceUrl": "https://doi.org/10.1002/ana.10265",
+      "verified": true
+    },
+    {
+      "title": "Impact of Hypertension on Cognitive Function: A Scientific Statement From the American Heart Association",
+      "journal": "Hypertension",
+      "year": 2016,
+      "citationCount": 698,
+      "doi": "10.1161/hyp.0000000000000053",
+      "sourceUrl": "https://doi.org/10.1161/hyp.0000000000000053",
+      "verified": true
+    },
+    {
+      "title": "Inherited causes of clonal haematopoiesis in 97,691 whole genomes",
+      "journal": "Nature",
+      "year": 2020,
+      "citationCount": 694,
+      "doi": "10.1038/s41586-020-2819-2",
+      "sourceUrl": "https://doi.org/10.1038/s41586-020-2819-2",
+      "verified": true
+    },
+    {
+      "title": "Co-regulatory networks of human serum proteins link genetics to disease",
+      "journal": "Science",
+      "year": 2018,
+      "citationCount": 692,
+      "doi": "10.1126/science.aaq1327",
+      "sourceUrl": "https://doi.org/10.1126/science.aaq1327",
+      "verified": true
+    },
+    {
+      "title": "Multiple loci associated with indices of renal function and chronic kidney disease",
+      "journal": "Nature Genetics",
+      "year": 2009,
+      "citationCount": 651,
+      "doi": "10.1038/ng.377",
+      "sourceUrl": "https://doi.org/10.1038/ng.377",
+      "verified": true
+    },
+    {
+      "title": "Gender differences in the incidence of AD and vascular dementia",
+      "journal": "Neurology",
+      "year": 1999,
+      "citationCount": 640,
+      "doi": "10.1212/wnl.53.9.1992",
+      "sourceUrl": "https://doi.org/10.1212/wnl.53.9.1992",
+      "verified": true
+    },
+    {
+      "title": "Cerebral microvascular complications of type 2 diabetes: stroke, cognitive dysfunction, and depression",
+      "journal": "The Lancet Diabetes & Endocrinology",
+      "year": 2020,
+      "citationCount": 637,
+      "doi": "10.1016/s2213-8587(19)30405-x",
+      "sourceUrl": "https://doi.org/10.1016/s2213-8587(19)30405-x",
+      "verified": true
+    },
+    {
+      "title": "Whole‐genome sequencing identifies EN1 as a determinant of bone density and fracture",
+      "journal": "Nature",
+      "year": 2015,
+      "citationCount": 615,
+      "doi": "10.1038/nature14878",
+      "sourceUrl": "https://doi.org/10.1038/nature14878",
+      "verified": true
+    },
+    {
+      "title": "CSF Aβ 42 levels correlate with amyloid-neuropathology in a population-based autopsy study",
+      "journal": "Neurology",
+      "year": 2003,
+      "citationCount": 611,
+      "doi": "10.1212/01.wnl.0000046581.81650.d0",
+      "sourceUrl": "https://doi.org/10.1212/01.wnl.0000046581.81650.d0",
+      "verified": true
+    },
+    {
+      "title": "Meta-analysis identifies six new susceptibility loci for atrial fibrillation",
+      "journal": "Nature Genetics",
+      "year": 2012,
+      "citationCount": 601,
+      "doi": "10.1038/ng.2261",
+      "sourceUrl": "https://doi.org/10.1038/ng.2261",
+      "verified": true
+    },
+    {
+      "title": "Age, Gene/Environment Susceptibility-Reykjavik Study: Multidisciplinary Applied Phenomics",
+      "journal": "American Journal of Epidemiology",
+      "year": 2007,
+      "citationCount": 592,
+      "doi": "10.1093/aje/kwk115",
+      "sourceUrl": "https://doi.org/10.1093/aje/kwk115",
+      "verified": true
+    },
+    {
+      "title": "The prevalence and characteristics of migraine in a population-based cohort",
+      "journal": "Neurology",
+      "year": 1999,
+      "citationCount": 576,
+      "doi": "10.1212/wnl.53.3.537",
+      "sourceUrl": "https://doi.org/10.1212/wnl.53.3.537",
+      "verified": true
+    },
+    {
+      "title": "Effects of intensive glucose lowering on brain structure and function in people with type 2 diabetes (ACCORD MIND): a randomised open-label substudy",
+      "journal": "The Lancet Neurology",
+      "year": 2011,
+      "citationCount": 554,
+      "doi": "10.1016/s1474-4422(11)70188-0",
+      "sourceUrl": "https://doi.org/10.1016/s1474-4422(11)70188-0",
+      "verified": true
+    },
+    {
+      "title": "Stroke genetics informs drug discovery and risk prediction across ancestries",
+      "journal": "Nature",
+      "year": 2022,
+      "citationCount": 550,
+      "doi": "10.1038/s41586-022-05165-3",
+      "sourceUrl": "https://doi.org/10.1038/s41586-022-05165-3",
+      "verified": true
+    },
+    {
+      "title": "Meta-Analysis of Genome-Wide Association Studies in &gt;80 000 Subjects Identifies Multiple Loci for C-Reactive Protein Levels",
+      "journal": "Circulation",
+      "year": 2011,
+      "citationCount": 512,
+      "doi": "10.1161/circulationaha.110.948570",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.110.948570",
+      "verified": true
+    },
+    {
+      "title": "Dietary intake of fatty acids and fish in relation to cognitive performance at middle age",
+      "journal": "Neurology",
+      "year": 2004,
+      "citationCount": 512,
+      "doi": "10.1212/01.wnl.0000103860.75218.a5",
+      "sourceUrl": "https://doi.org/10.1212/01.wnl.0000103860.75218.a5",
+      "verified": true
+    },
+    {
+      "title": "Thirty new loci for age at menarche identified by a meta-analysis of genome-wide association studies",
+      "journal": "Nature Genetics",
+      "year": 2010,
+      "citationCount": 507,
+      "doi": "10.1038/ng.714",
+      "sourceUrl": "https://doi.org/10.1038/ng.714",
+      "verified": true
+    },
+    {
+      "title": "World‐Wide FINGERS Network: A global approach to risk reduction and prevention of dementia",
+      "journal": "Alzheimer s & Dementia",
+      "year": 2020,
+      "citationCount": 485,
+      "doi": "10.1002/alz.12123",
+      "sourceUrl": "https://doi.org/10.1002/alz.12123",
+      "verified": true
+    },
+    {
+      "title": "Common variants in KCNN3 are associated with lone atrial fibrillation",
+      "journal": "Nature Genetics",
+      "year": 2010,
+      "citationCount": 480,
+      "doi": "10.1038/ng.537",
+      "sourceUrl": "https://doi.org/10.1038/ng.537",
+      "verified": true
+    },
+    {
+      "title": "Harmonization of large MRI datasets for the analysis of brain imaging patterns throughout the lifespan",
+      "journal": "NeuroImage",
+      "year": 2019,
+      "citationCount": 480,
+      "doi": "10.1016/j.neuroimage.2019.116450",
+      "sourceUrl": "https://doi.org/10.1016/j.neuroimage.2019.116450",
+      "verified": true
+    },
+    {
+      "title": "A 32-Year Prospective Study of Change in Body Weight and Incident Dementia",
+      "journal": "Archives of Neurology",
+      "year": 2005,
+      "citationCount": 474,
+      "doi": "10.1001/archneur.62.1.55",
+      "sourceUrl": "https://doi.org/10.1001/archneur.62.1.55",
+      "verified": true
+    },
+    {
+      "title": "Body Mass Index, Weight Change, and Risk of Mobility Disability in Middle-aged and Older Women",
+      "journal": "JAMA",
+      "year": 1994,
+      "citationCount": 465,
+      "doi": "10.1001/jama.1994.03510380049036",
+      "sourceUrl": "https://doi.org/10.1001/jama.1994.03510380049036",
+      "verified": true
+    },
+    {
+      "title": "Midlife blood pressure and neuritic plaques, neurofibrillary tangles, and brain weight at death: the HAAS☆",
+      "journal": "Neurobiology of Aging",
+      "year": 2000,
+      "citationCount": 463,
+      "doi": "10.1016/s0197-4580(00)00106-8",
+      "sourceUrl": "https://doi.org/10.1016/s0197-4580(00)00106-8",
+      "verified": true
+    },
+    {
+      "title": "Genomewide Association Studies of Stroke",
+      "journal": "New England Journal of Medicine",
+      "year": 2009,
+      "citationCount": 462,
+      "doi": "10.1056/nejmoa0900094",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa0900094",
+      "verified": true
+    },
+    {
+      "title": "Polyunsaturated Fatty Acids, Antioxidants, and Cognitive Function in Very Old Men",
+      "journal": "American Journal of Epidemiology",
+      "year": 1997,
+      "citationCount": 451,
+      "doi": "10.1093/oxfordjournals.aje.a009029",
+      "sourceUrl": "https://doi.org/10.1093/oxfordjournals.aje.a009029",
+      "verified": true
+    },
+    {
+      "title": "FTO genotype is associated with phenotypic variability of body mass index",
+      "journal": "Nature",
+      "year": 2012,
+      "citationCount": 450,
+      "doi": "10.1038/nature11401",
+      "sourceUrl": "https://doi.org/10.1038/nature11401",
+      "verified": true
+    },
+    {
+      "title": "Cardiovascular risk factors and migraine",
+      "journal": "Neurology",
+      "year": 2005,
+      "citationCount": 450,
+      "doi": "10.1212/01.wnl.0000151857.43225.49",
+      "sourceUrl": "https://doi.org/10.1212/01.wnl.0000151857.43225.49",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:15.000Z",
+  "openalexId": "https://openalex.org/A5018722034"
 }

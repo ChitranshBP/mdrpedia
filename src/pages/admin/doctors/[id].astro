@@ -1,0 +1,1183 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import { ProfileStatus, Tier } from "@prisma/client";
+import type { Profile, Geography, Award, Technique, DoctorHospitalAffiliation, Hospital, Citation } from "@prisma/client";
+import { prisma } from "../../../lib/prisma";
+import { requireSuperAdmin } from "../../../lib/rbac";
+
+export const prerender = false;
+
+if (!requireSuperAdmin(Astro.request)) {
+    return Astro.redirect("/login");
+}
+const { id } = Astro.params; // slug
+const url = new URL(Astro.request.url);
+const adminKey = url.searchParams.get("key");
+
+// Valid enum values for type-safe form handling
+const validStatuses: ProfileStatus[] = Object.values(ProfileStatus);
+const validTiers: Tier[] = Object.values(Tier);
+
+type MentorInfo = { id: string; slug: string; full_name: string; title: string | null };
+
+type ProfileWithRelations = Profile & {
+    geography: Geography | null;
+    awards: Award[];
+    techniques: Technique[];
+    citations: Citation[];
+    affiliations: (DoctorHospitalAffiliation & { hospital: Hospital })[];
+    mentored_by: MentorInfo | null;
+    mentees: MentorInfo[];
+};
+
+let profile: ProfileWithRelations | null = null;
+let allProfiles: { id: string; slug: string; full_name: string }[] = [];
+let error = "";
+let success = "";
+
+// Handle POST
+if (Astro.request.method === "POST") {
+    try {
+        const formData = await Astro.request.formData();
+        const action = formData.get("action")?.toString();
+
+        // Handle award deletion
+        if (action === "delete_award") {
+            const awardId = formData.get("award_id")?.toString();
+            if (awardId) {
+                await prisma.award.delete({ where: { id: awardId } });
+                success = "Award deleted successfully.";
+            }
+        }
+        // Handle technique deletion
+        else if (action === "delete_technique") {
+            const techniqueId = formData.get("technique_id")?.toString();
+            if (techniqueId) {
+                await prisma.technique.delete({ where: { id: techniqueId } });
+                success = "Technique deleted successfully.";
+            }
+        }
+        // Handle new award
+        else if (action === "add_award") {
+            const awardName = formData.get("award_name")?.toString();
+            const issuingBody = formData.get("issuing_body")?.toString();
+            const yearAwarded = parseInt(formData.get("year_awarded")?.toString() || "0");
+            const awardDesc = formData.get("award_description")?.toString();
+
+            if (awardName && issuingBody && yearAwarded) {
+                const existingProfile = await prisma.profile.findUnique({ where: { slug: id } });
+                if (existingProfile) {
+                    await prisma.award.create({
+                        data: {
+                            name: awardName,
+                            issuing_body: issuingBody,
+                            year_awarded: yearAwarded,
+                            description: awardDesc,
+                            profile_id: existingProfile.id,
+                        }
+                    });
+                    success = "Award added successfully.";
+                }
+            }
+        }
+        // Handle new technique
+        else if (action === "add_technique") {
+            const techName = formData.get("tech_name")?.toString();
+            const techDesc = formData.get("tech_description")?.toString();
+            const yearInvented = formData.get("year_invented")?.toString();
+            const isGoldStandard = formData.get("is_gold_standard") === "on";
+
+            if (techName) {
+                const existingProfile = await prisma.profile.findUnique({ where: { slug: id } });
+                if (existingProfile) {
+                    await prisma.technique.create({
+                        data: {
+                            name: techName,
+                            description: techDesc,
+                            year_invented: yearInvented ? parseInt(yearInvented) : null,
+                            is_gold_standard: isGoldStandard,
+                            profile_id: existingProfile.id,
+                        }
+                    });
+                    success = "Technique added successfully.";
+                }
+            }
+        }
+        // Handle citation deletion
+        else if (action === "delete_citation") {
+            const citationId = formData.get("citation_id")?.toString();
+            if (citationId) {
+                await prisma.citation.delete({ where: { id: citationId } });
+                success = "Citation deleted successfully.";
+            }
+        }
+        // Handle new citation
+        else if (action === "add_citation") {
+            const citationTitle = formData.get("citation_title")?.toString();
+            const journal = formData.get("journal")?.toString();
+            const pubYear = formData.get("pub_year")?.toString();
+            const doi = formData.get("doi")?.toString();
+            const pubmedId = formData.get("pubmed_id")?.toString();
+            const citationCount = parseInt(formData.get("citation_count")?.toString() || "0");
+
+            if (citationTitle) {
+                const existingProfile = await prisma.profile.findUnique({ where: { slug: id } });
+                if (existingProfile) {
+                    await prisma.citation.create({
+                        data: {
+                            title: citationTitle,
+                            journal: journal || null,
+                            publication_date: pubYear ? new Date(`${pubYear}-01-01`) : null,
+                            doi: doi || null,
+                            pubmed_id: pubmedId || null,
+                            citation_count: citationCount,
+                            profile_id: existingProfile.id,
+                        }
+                    });
+                    success = "Citation added successfully.";
+                }
+            }
+        }
+        // Handle set mentor
+        else if (action === "set_mentor") {
+            const mentorId = formData.get("mentor_id")?.toString();
+            const existingProfile = await prisma.profile.findUnique({ where: { slug: id } });
+            if (existingProfile) {
+                await prisma.profile.update({
+                    where: { id: existingProfile.id },
+                    data: { mentored_by_id: mentorId || null }
+                });
+                success = mentorId ? "Mentor set successfully." : "Mentor removed.";
+            }
+        }
+        // Handle add mentee
+        else if (action === "add_mentee") {
+            const menteeId = formData.get("mentee_id")?.toString();
+            const existingProfile = await prisma.profile.findUnique({ where: { slug: id } });
+            if (existingProfile && menteeId) {
+                await prisma.profile.update({
+                    where: { id: menteeId },
+                    data: { mentored_by_id: existingProfile.id }
+                });
+                success = "Mentee added successfully.";
+            }
+        }
+        // Handle remove mentee
+        else if (action === "remove_mentee") {
+            const menteeId = formData.get("mentee_id")?.toString();
+            if (menteeId) {
+                await prisma.profile.update({
+                    where: { id: menteeId },
+                    data: { mentored_by_id: null }
+                });
+                success = "Mentee removed successfully.";
+            }
+        }
+        // Handle main profile update
+        else {
+            // Basic Fields
+            const fullName = formData.get("full_name")?.toString();
+            const title = formData.get("title")?.toString();
+            const status = formData.get("status")?.toString();
+            const tier = formData.get("tier")?.toString();
+            const rankingScore = parseFloat(formData.get("ranking_score")?.toString() || "0");
+            const bio = formData.get("bio")?.toString();
+
+            // Additional fields
+            const specialty = formData.get("specialty")?.toString();
+            const subSpecialty = formData.get("sub_specialty")?.toString();
+            const hIndex = parseInt(formData.get("h_index")?.toString() || "0");
+            const yearsActive = parseInt(formData.get("years_active")?.toString() || "0");
+            const verifiedSurgeries = parseInt(formData.get("verified_surgeries")?.toString() || "0");
+            const portraitUrl = formData.get("portrait_url")?.toString();
+            const npiNumber = formData.get("npi_number")?.toString();
+            const orcidId = formData.get("orcid_id")?.toString();
+
+            // Dates
+            const dobStr = formData.get("date_of_birth")?.toString();
+            const dodStr = formData.get("date_of_death")?.toString();
+            const dateOfBirth = dobStr ? new Date(dobStr) : null;
+            const dateOfDeath = dodStr ? new Date(dodStr) : null;
+
+            // Geo
+            const country = formData.get("country")?.toString();
+            const region = formData.get("region")?.toString();
+            const city = formData.get("city")?.toString();
+
+            // Arrays (Comma separated)
+            const specialties =
+                formData
+                    .get("medical_specialty")
+                    ?.toString()
+                    .split(",")
+                    .map((s) => s.trim())
+                    .filter(Boolean) || [];
+            const knowsAbout =
+                formData
+                    .get("knows_about")
+                    ?.toString()
+                    .split(",")
+                    .map((s) => s.trim())
+                    .filter(Boolean) || [];
+
+            // Update Geo
+            let geoId = undefined;
+            if (country) {
+                const geo = await prisma.geography.upsert({
+                    where: {
+                        country_region_city: {
+                            country: country,
+                            region: region || "",
+                            city: city || "",
+                        },
+                    },
+                    update: {},
+                    create: {
+                        country,
+                        region,
+                        city,
+                    },
+                });
+                geoId = geo.id;
+            }
+
+            // Validate enum values before update
+            const validatedStatus = validStatuses.includes(status as ProfileStatus)
+                ? (status as ProfileStatus)
+                : undefined;
+            const validatedTier = validTiers.includes(tier as Tier)
+                ? (tier as Tier)
+                : undefined;
+
+            // Update Profile
+            await prisma.profile.update({
+                where: { slug: id },
+                data: {
+                    full_name: fullName,
+                    title,
+                    specialty: specialty || undefined,
+                    sub_specialty: subSpecialty || null,
+                    status: validatedStatus,
+                    tier: validatedTier,
+                    ranking_score: rankingScore,
+                    h_index: hIndex,
+                    years_active: yearsActive,
+                    verified_surgeries: verifiedSurgeries,
+                    portrait_url: portraitUrl || null,
+                    npi_number: npiNumber || null,
+                    orcid_id: orcidId || null,
+                    date_of_birth: dateOfBirth,
+                    date_of_death: dateOfDeath,
+                    biography: bio,
+                    medical_specialty: specialties,
+                    knows_about: knowsAbout,
+                    geography_id: geoId,
+                },
+            });
+
+            success = "Profile updated successfully.";
+        }
+    } catch (e: unknown) {
+        error = e instanceof Error ? e.message : "An unexpected error occurred";
+    }
+}
+
+// Fetch Profile with related data
+profile = await prisma.profile.findUnique({
+    where: { slug: id },
+    include: {
+        geography: true,
+        awards: { orderBy: { year_awarded: 'desc' } },
+        techniques: { orderBy: { year_invented: 'desc' } },
+        citations: { orderBy: { publication_date: 'desc' } },
+        affiliations: {
+            include: { hospital: true },
+            orderBy: { is_primary: 'desc' }
+        },
+        mentored_by: {
+            select: { id: true, slug: true, full_name: true, title: true }
+        },
+        mentees: {
+            select: { id: true, slug: true, full_name: true, title: true }
+        }
+    },
+});
+
+if (!profile) return Astro.redirect("/404");
+
+// Fetch all profiles for mentor/mentee selection (excluding current profile)
+allProfiles = await prisma.profile.findMany({
+    where: { id: { not: profile.id } },
+    select: { id: true, slug: true, full_name: true },
+    orderBy: { full_name: 'asc' }
+});
+
+// Format dates for input fields
+const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0] : '';
+---
+
+<Layout title={`Edit ${profile.full_name} — Admin`}>
+    <div class="container admin-dashboard">
+        <header class="admin-header">
+            <div>
+                <span class="badge badge--admin">SUPER ADMIN</span>
+                <h1>Edit: {profile.full_name}</h1>
+            </div>
+            <div class="actions">
+                <a
+                    href={`/${profile.slug}`}
+                    target="_blank"
+                    class="btn btn--outline">View Live</a
+                >
+                <a
+                    href={`/admin/doctors?key=${adminKey}`}
+                    class="btn btn--outline">Back to List</a
+                >
+            </div>
+        </header>
+
+        {success && <div class="alert success">{success}</div>}
+        {error && <div class="alert error">{error}</div>}
+
+        <form method="POST" class="edit-form">
+            <div class="form-grid">
+                <!-- Left Column: Main Info -->
+                <div class="main-column">
+                    <div class="card">
+                        <h3>Basic Information</h3>
+                        <div class="form-row">
+                            <div class="form-group flex-2">
+                                <label>Full Name</label>
+                                <input
+                                    type="text"
+                                    name="full_name"
+                                    value={profile.full_name}
+                                    required
+                                />
+                            </div>
+                            <div class="form-group flex-1">
+                                <label>Title (MD, PhD)</label>
+                                <input
+                                    type="text"
+                                    name="title"
+                                    value={profile.title || ""}
+                                />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group flex-1">
+                                <label>Primary Specialty</label>
+                                <input
+                                    type="text"
+                                    name="specialty"
+                                    value={profile.specialty}
+                                    required
+                                />
+                            </div>
+                            <div class="form-group flex-1">
+                                <label>Sub-Specialty</label>
+                                <input
+                                    type="text"
+                                    name="sub_specialty"
+                                    value={profile.sub_specialty || ""}
+                                />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Portrait URL</label>
+                            <input
+                                type="url"
+                                name="portrait_url"
+                                value={profile.portrait_url || ""}
+                                placeholder="https://..."
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label>Biography</label>
+                            <textarea name="bio" rows="10">{profile.biography}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Specialties & Expertise</h3>
+                        <div class="form-group">
+                            <label>Medical Specialties (Comma separated)</label>
+                            <input
+                                type="text"
+                                name="medical_specialty"
+                                value={profile.medical_specialty.join(", ")}
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label>Knows About (Procedures/Conditions)</label>
+                            <textarea name="knows_about" rows="3">{profile.knows_about.join(", ")}</textarea>
+                        </div>
+                    </div>
+
+                    <!-- Awards Section -->
+                    <div class="card">
+                        <h3>Awards & Honors</h3>
+                        {profile.awards.length > 0 ? (
+                            <div class="items-list">
+                                {profile.awards.map((award) => (
+                                    <div class="item-row">
+                                        <div class="item-info">
+                                            <strong>{award.name}</strong>
+                                            <span class="item-meta">{award.issuing_body} ({award.year_awarded})</span>
+                                            {award.description && <p class="item-desc">{award.description}</p>}
+                                        </div>
+                                        <form method="POST" class="inline-form">
+                                            <input type="hidden" name="action" value="delete_award" />
+                                            <input type="hidden" name="award_id" value={award.id} />
+                                            <button type="submit" class="btn btn--danger btn--sm" onclick="return confirm('Delete this award?')">Delete</button>
+                                        </form>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p class="empty-message">No awards added yet.</p>
+                        )}
+
+                        <details class="add-item-section">
+                            <summary class="btn btn--outline btn--sm">+ Add Award</summary>
+                            <form method="POST" class="add-item-form">
+                                <input type="hidden" name="action" value="add_award" />
+                                <div class="form-row">
+                                    <div class="form-group flex-2">
+                                        <label>Award Name</label>
+                                        <input type="text" name="award_name" required />
+                                    </div>
+                                    <div class="form-group flex-1">
+                                        <label>Year</label>
+                                        <input type="number" name="year_awarded" min="1900" max="2030" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Issuing Organization</label>
+                                    <input type="text" name="issuing_body" required />
+                                </div>
+                                <div class="form-group">
+                                    <label>Description (optional)</label>
+                                    <textarea name="award_description" rows="2"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn--primary">Add Award</button>
+                            </form>
+                        </details>
+                    </div>
+
+                    <!-- Techniques Section -->
+                    <div class="card">
+                        <h3>Techniques & Inventions</h3>
+                        {profile.techniques.length > 0 ? (
+                            <div class="items-list">
+                                {profile.techniques.map((tech) => (
+                                    <div class="item-row">
+                                        <div class="item-info">
+                                            <strong>
+                                                {tech.name}
+                                                {tech.is_gold_standard && <span class="badge badge--gold">Gold Standard</span>}
+                                            </strong>
+                                            {tech.year_invented && <span class="item-meta">Invented: {tech.year_invented}</span>}
+                                            {tech.description && <p class="item-desc">{tech.description}</p>}
+                                        </div>
+                                        <form method="POST" class="inline-form">
+                                            <input type="hidden" name="action" value="delete_technique" />
+                                            <input type="hidden" name="technique_id" value={tech.id} />
+                                            <button type="submit" class="btn btn--danger btn--sm" onclick="return confirm('Delete this technique?')">Delete</button>
+                                        </form>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p class="empty-message">No techniques added yet.</p>
+                        )}
+
+                        <details class="add-item-section">
+                            <summary class="btn btn--outline btn--sm">+ Add Technique</summary>
+                            <form method="POST" class="add-item-form">
+                                <input type="hidden" name="action" value="add_technique" />
+                                <div class="form-row">
+                                    <div class="form-group flex-2">
+                                        <label>Technique Name</label>
+                                        <input type="text" name="tech_name" required />
+                                    </div>
+                                    <div class="form-group flex-1">
+                                        <label>Year Invented</label>
+                                        <input type="number" name="year_invented" min="1800" max="2030" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea name="tech_description" rows="2"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="is_gold_standard" />
+                                        Gold Standard Technique
+                                    </label>
+                                </div>
+                                <button type="submit" class="btn btn--primary">Add Technique</button>
+                            </form>
+                        </details>
+                    </div>
+
+                    <!-- Citations/Publications Section -->
+                    <div class="card">
+                        <h3>Publications & Citations</h3>
+                        {profile.citations.length > 0 ? (
+                            <div class="items-list">
+                                {profile.citations.map((citation) => (
+                                    <div class="item-row">
+                                        <div class="item-info">
+                                            <strong>{citation.title}</strong>
+                                            <span class="item-meta">
+                                                {citation.journal && `${citation.journal} `}
+                                                {citation.publication_date && `(${new Date(citation.publication_date).getFullYear()})`}
+                                                {citation.citation_count > 0 && ` · ${citation.citation_count} citations`}
+                                            </span>
+                                            {citation.doi && <span class="item-meta">DOI: {citation.doi}</span>}
+                                            {citation.pubmed_id && <span class="item-meta">PubMed: {citation.pubmed_id}</span>}
+                                        </div>
+                                        <form method="POST" class="inline-form">
+                                            <input type="hidden" name="action" value="delete_citation" />
+                                            <input type="hidden" name="citation_id" value={citation.id} />
+                                            <button type="submit" class="btn btn--danger btn--sm" onclick="return confirm('Delete this citation?')">Delete</button>
+                                        </form>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p class="empty-message">No publications added yet.</p>
+                        )}
+
+                        <details class="add-item-section">
+                            <summary class="btn btn--outline btn--sm">+ Add Publication</summary>
+                            <form method="POST" class="add-item-form">
+                                <input type="hidden" name="action" value="add_citation" />
+                                <div class="form-group">
+                                    <label>Publication Title</label>
+                                    <input type="text" name="citation_title" required />
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group flex-2">
+                                        <label>Journal</label>
+                                        <input type="text" name="journal" />
+                                    </div>
+                                    <div class="form-group flex-1">
+                                        <label>Year</label>
+                                        <input type="number" name="pub_year" min="1900" max="2030" />
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group flex-1">
+                                        <label>DOI</label>
+                                        <input type="text" name="doi" placeholder="10.1000/xyz123" />
+                                    </div>
+                                    <div class="form-group flex-1">
+                                        <label>PubMed ID</label>
+                                        <input type="text" name="pubmed_id" placeholder="12345678" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Citation Count</label>
+                                    <input type="number" name="citation_count" min="0" value="0" />
+                                </div>
+                                <button type="submit" class="btn btn--primary">Add Publication</button>
+                            </form>
+                        </details>
+                    </div>
+
+                    <!-- Surgical Pedigree / Lineage Section -->
+                    <div class="card">
+                        <h3>Surgical Pedigree (Lineage)</h3>
+
+                        <!-- Mentor -->
+                        <div class="lineage-section">
+                            <h4 class="lineage-subtitle">Mentored By</h4>
+                            {profile.mentored_by ? (
+                                <div class="item-row">
+                                    <div class="item-info">
+                                        <strong>
+                                            <a href={`/doctors/${profile.mentored_by.slug}`} target="_blank">
+                                                {profile.mentored_by.full_name}
+                                            </a>
+                                        </strong>
+                                        {profile.mentored_by.title && <span class="item-meta">{profile.mentored_by.title}</span>}
+                                    </div>
+                                    <form method="POST" class="inline-form">
+                                        <input type="hidden" name="action" value="set_mentor" />
+                                        <input type="hidden" name="mentor_id" value="" />
+                                        <button type="submit" class="btn btn--danger btn--sm">Remove</button>
+                                    </form>
+                                </div>
+                            ) : (
+                                <p class="empty-message">No mentor assigned.</p>
+                            )}
+
+                            <details class="add-item-section">
+                                <summary class="btn btn--outline btn--sm">Set Mentor</summary>
+                                <form method="POST" class="add-item-form">
+                                    <input type="hidden" name="action" value="set_mentor" />
+                                    <div class="form-group">
+                                        <label>Select Mentor</label>
+                                        <select name="mentor_id" required>
+                                            <option value="">-- Select a doctor --</option>
+                                            {allProfiles.map((p) => (
+                                                <option value={p.id}>{p.full_name}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn--primary">Set Mentor</button>
+                                </form>
+                            </details>
+                        </div>
+
+                        <!-- Mentees/Students -->
+                        <div class="lineage-section" style="margin-top: 24px;">
+                            <h4 class="lineage-subtitle">Mentored (Students)</h4>
+                            {profile.mentees.length > 0 ? (
+                                <div class="items-list">
+                                    {profile.mentees.map((mentee) => (
+                                        <div class="item-row">
+                                            <div class="item-info">
+                                                <strong>
+                                                    <a href={`/doctors/${mentee.slug}`} target="_blank">
+                                                        {mentee.full_name}
+                                                    </a>
+                                                </strong>
+                                                {mentee.title && <span class="item-meta">{mentee.title}</span>}
+                                            </div>
+                                            <form method="POST" class="inline-form">
+                                                <input type="hidden" name="action" value="remove_mentee" />
+                                                <input type="hidden" name="mentee_id" value={mentee.id} />
+                                                <button type="submit" class="btn btn--danger btn--sm">Remove</button>
+                                            </form>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <p class="empty-message">No students/mentees recorded.</p>
+                            )}
+
+                            <details class="add-item-section">
+                                <summary class="btn btn--outline btn--sm">+ Add Mentee</summary>
+                                <form method="POST" class="add-item-form">
+                                    <input type="hidden" name="action" value="add_mentee" />
+                                    <div class="form-group">
+                                        <label>Select Mentee</label>
+                                        <select name="mentee_id" required>
+                                            <option value="">-- Select a doctor --</option>
+                                            {allProfiles
+                                                .filter(p => !profile.mentees.some(m => m.id === p.id))
+                                                .map((p) => (
+                                                    <option value={p.id}>{p.full_name}</option>
+                                                ))}
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn--primary">Add Mentee</button>
+                                </form>
+                            </details>
+                        </div>
+                    </div>
+
+                    <!-- Affiliations Section (Read-only) -->
+                    <div class="card">
+                        <h3>Hospital Affiliations</h3>
+                        {profile.affiliations.length > 0 ? (
+                            <div class="items-list">
+                                {profile.affiliations.map((aff) => (
+                                    <div class="item-row">
+                                        <div class="item-info">
+                                            <strong>
+                                                {aff.hospital.name}
+                                                {aff.is_primary && <span class="badge badge--primary">Primary</span>}
+                                            </strong>
+                                            <span class="item-meta">
+                                                {aff.role && `${aff.role}`}
+                                                {aff.department && ` - ${aff.department}`}
+                                                {aff.start_year && ` (${aff.start_year}${aff.end_year ? `-${aff.end_year}` : '-present'})`}
+                                            </span>
+                                        </div>
+                                        <a href={`/institutions/${aff.hospital.slug}`} target="_blank" class="btn btn--outline btn--sm">View</a>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p class="empty-message">No hospital affiliations recorded.</p>
+                        )}
+                        <p class="help-text">To manage affiliations, use the Institution admin pages.</p>
+                    </div>
+                </div>
+
+                <!-- Right Column: Meta & Geo -->
+                <div class="sidebar-column">
+                    <div class="card">
+                        <h3>Status & Ranking</h3>
+                        <div class="form-row">
+                            <div class="form-group flex-1">
+                                <label>Status</label>
+                                <select name="status">
+                                    <option value="LIVING" selected={profile.status === "LIVING"}>LIVING</option>
+                                    <option value="HISTORICAL" selected={profile.status === "HISTORICAL"}>HISTORICAL</option>
+                                </select>
+                            </div>
+                            <div class="form-group flex-1">
+                                <label>Tier</label>
+                                <select name="tier">
+                                    <option value="TITAN" selected={profile.tier === "TITAN"}>TITAN</option>
+                                    <option value="ELITE" selected={profile.tier === "ELITE"}>ELITE</option>
+                                    <option value="MASTER" selected={profile.tier === "MASTER"}>MASTER</option>
+                                    <option value="UNRANKED" selected={profile.tier === "UNRANKED"}>UNRANKED</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Ranking Score</label>
+                            <input
+                                type="number"
+                                step="0.01"
+                                name="ranking_score"
+                                value={profile.ranking_score || 0}
+                            />
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Impact Metrics</h3>
+                        <div class="form-row">
+                            <div class="form-group flex-1">
+                                <label>H-Index</label>
+                                <input
+                                    type="number"
+                                    name="h_index"
+                                    value={profile.h_index}
+                                    min="0"
+                                />
+                            </div>
+                            <div class="form-group flex-1">
+                                <label>Years Active</label>
+                                <input
+                                    type="number"
+                                    name="years_active"
+                                    value={profile.years_active}
+                                    min="0"
+                                />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Verified Surgeries</label>
+                            <input
+                                type="number"
+                                name="verified_surgeries"
+                                value={profile.verified_surgeries}
+                                min="0"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Verification IDs</h3>
+                        <div class="form-group">
+                            <label>NPI Number</label>
+                            <input
+                                type="text"
+                                name="npi_number"
+                                value={profile.npi_number || ""}
+                                placeholder="10-digit NPI"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label>ORCID ID</label>
+                            <input
+                                type="text"
+                                name="orcid_id"
+                                value={profile.orcid_id || ""}
+                                placeholder="0000-0000-0000-0000"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Dates</h3>
+                        <div class="form-group">
+                            <label>Date of Birth</label>
+                            <input
+                                type="date"
+                                name="date_of_birth"
+                                value={formatDate(profile.date_of_birth)}
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label>Date of Death (if historical)</label>
+                            <input
+                                type="date"
+                                name="date_of_death"
+                                value={formatDate(profile.date_of_death)}
+                            />
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Geography</h3>
+                        <div class="form-group">
+                            <label>Country</label>
+                            <input
+                                type="text"
+                                name="country"
+                                value={profile.geography?.country || ""}
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label>Region/State</label>
+                            <input
+                                type="text"
+                                name="region"
+                                value={profile.geography?.region || ""}
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label>City</label>
+                            <input
+                                type="text"
+                                name="city"
+                                value={profile.geography?.city || ""}
+                            />
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn--primary full-width">Save Changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</Layout>
+
+<style>
+    .admin-dashboard {
+        padding: 40px 20px;
+        max-width: 1200px;
+        color: var(--text-primary);
+    }
+    .admin-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+    }
+    .badge--admin {
+        background: #ffd700;
+        color: #000;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: bold;
+        font-size: 0.7rem;
+    }
+    h1 {
+        font-family: var(--font-serif);
+        margin: 5px 0 0 0;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 30px;
+    }
+    @media (max-width: 900px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .card {
+        background: var(--bg-card, #14142a);
+        padding: 24px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        margin-bottom: 24px;
+    }
+    h3 {
+        margin-top: 0;
+        color: var(--text-secondary);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .form-group:last-child {
+        margin-bottom: 0;
+    }
+    .form-row {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 20px;
+    }
+    .form-row .form-group {
+        margin-bottom: 0;
+    }
+    .flex-1 {
+        flex: 1;
+    }
+    .flex-2 {
+        flex: 2;
+    }
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+    }
+    .checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+    }
+    .checkbox-label input[type="checkbox"] {
+        width: auto;
+    }
+    input,
+    select,
+    textarea {
+        width: 100%;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 6px;
+        color: white;
+        font-family: inherit;
+    }
+    input:focus,
+    select:focus,
+    textarea:focus {
+        outline: none;
+        border-color: #8b5cf6;
+    }
+    textarea {
+        line-height: 1.5;
+        resize: vertical;
+    }
+
+    /* Items List (Awards, Techniques, Affiliations) */
+    .items-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+    .item-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 12px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .item-info {
+        flex: 1;
+    }
+    .item-info strong {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--text-primary);
+    }
+    .item-meta {
+        display: block;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-top: 4px;
+    }
+    .item-desc {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin: 8px 0 0;
+        line-height: 1.4;
+    }
+    .empty-message {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        font-style: italic;
+        margin: 0 0 16px;
+    }
+    .help-text {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-top: 12px;
+    }
+
+    /* Lineage Section */
+    .lineage-section {
+        padding-bottom: 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .lineage-section:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+    .lineage-subtitle {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin: 0 0 12px;
+        font-weight: 600;
+    }
+    .item-info a {
+        color: #8b5cf6;
+        text-decoration: none;
+    }
+    .item-info a:hover {
+        text-decoration: underline;
+    }
+
+    /* Add Item Section */
+    .add-item-section {
+        margin-top: 16px;
+    }
+    .add-item-section summary {
+        cursor: pointer;
+        list-style: none;
+    }
+    .add-item-section summary::-webkit-details-marker {
+        display: none;
+    }
+    .add-item-form {
+        margin-top: 16px;
+        padding: 16px;
+        background: rgba(139, 92, 246, 0.05);
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        border-radius: 8px;
+    }
+    .inline-form {
+        display: inline;
+    }
+
+    /* Badges */
+    .badge {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    .badge--gold {
+        background: rgba(255, 215, 0, 0.2);
+        color: #ffd700;
+    }
+    .badge--primary {
+        background: rgba(139, 92, 246, 0.2);
+        color: #8b5cf6;
+    }
+
+    /* Buttons */
+    .btn {
+        text-decoration: none;
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 6px;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        text-align: center;
+        transition: all 0.2s;
+    }
+    .btn:hover {
+        opacity: 0.9;
+    }
+    .btn--primary {
+        background: #8b5cf6;
+        color: white;
+    }
+    .btn--outline {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+    }
+    .btn--danger {
+        background: #ef4444;
+        color: white;
+    }
+    .btn--sm {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+    .full-width {
+        width: 100%;
+    }
+    .actions {
+        display: flex;
+        gap: 12px;
+    }
+
+    .alert {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 16px 24px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        animation: slideIn 0.3s ease-out;
+        min-width: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    .success {
+        background: rgba(16, 185, 129, 0.95);
+        color: white;
+        border: 1px solid #059669;
+    }
+    .error {
+        background: rgba(239, 68, 68, 0.95);
+        color: white;
+        border: 1px solid #dc2626;
+    }
+
+    @media (max-width: 600px) {
+        .form-row {
+            flex-direction: column;
+            gap: 0;
+        }
+        .form-row .form-group {
+            margin-bottom: 20px;
+        }
+    }
+</style>
+
+<script>
+    // Loading State
+    const form = document.querySelector("form.edit-form");
+    form?.addEventListener("submit", () => {
+        const btn = form.querySelector('button[type="submit"]');
+        if (btn) {
+            btn.innerHTML = `<span class="spinner"></span> Saving...`;
+            btn.setAttribute("disabled", "true");
+            btn.style.opacity = "0.7";
+            btn.style.cursor = "not-allowed";
+        }
+    });
+
+    // Auto-dismiss Toast
+    const alert = document.querySelector(".alert");
+    if (alert) {
+        setTimeout(() => {
+            alert.style.transition = "opacity 0.5s";
+            alert.style.opacity = "0";
+            setTimeout(() => alert.remove(), 500);
+        }, 4000);
+    }
+</script>

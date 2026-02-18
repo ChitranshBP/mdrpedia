@@ -1,31 +1,493 @@
 {
   "fullName": "Nora D. Volkow",
   "slug": "nora-d-volkow",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Addiction Science",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">ND</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 50,
-  "hIndex": 200,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 170,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 16140,
+  "livesSaved": 0,
+  "biography": "Nora D. Volkow is a Mexican-American psychiatrist. She is currently the director of the National Institute on Drug Abuse (NIDA), which is part of the National Institutes of Health (NIH).",
+  "aiSummary": "Nora D. Volkow is a addiction science specialist with an H-index of 170 at National Institute on Drug Abuse (NIH) (Faculty). Has been published in The Lancet Psychiatry, New England Journal of Medicine, Nature reviews. Neuroscience. Based in United States.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/9/94/Nora-Volkow-2013.jpg",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "NIH (NIDA)"
-    }
-  ],
-  "bio": "Nora D. Volkow is a pioneer in Addiction Science at NIH (NIDA), USA. With a D-Index of 200 and over 161,404 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "National Institute on Drug Abuse (NIH)",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Addiction Science"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Neurocircuitry of Addiction",
+      "journal": "Neuropsychopharmacology",
+      "year": 2009,
+      "citationCount": 5100,
+      "doi": "10.1038/npp.2009.110",
+      "sourceUrl": "https://doi.org/10.1038/npp.2009.110",
+      "verified": true
+    },
+    {
+      "title": "Neurobiology of addiction: a neurocircuitry analysis",
+      "journal": "The Lancet Psychiatry",
+      "year": 2016,
+      "citationCount": 3370,
+      "doi": "10.1016/s2215-0366(16)00104-8",
+      "sourceUrl": "https://doi.org/10.1016/s2215-0366(16)00104-8",
+      "verified": true
+    },
+    {
+      "title": "The Neural Basis of Addiction: A Pathology of Motivation and Choice",
+      "journal": "American Journal of Psychiatry",
+      "year": 2005,
+      "citationCount": 2749,
+      "doi": "10.1176/appi.ajp.162.8.1403",
+      "sourceUrl": "https://doi.org/10.1176/appi.ajp.162.8.1403",
+      "verified": true
+    },
+    {
+      "title": "Adverse Health Effects of Marijuana Use",
+      "journal": "New England Journal of Medicine",
+      "year": 2014,
+      "citationCount": 2657,
+      "doi": "10.1056/nejmra1402309",
+      "sourceUrl": "https://doi.org/10.1056/nejmra1402309",
+      "verified": true
+    },
+    {
+      "title": "Drug Addiction and Its Underlying Neurobiological Basis: Neuroimaging Evidence for the Involvement of the Frontal Cortex",
+      "journal": "American Journal of Psychiatry",
+      "year": 2002,
+      "citationCount": 2648,
+      "doi": "10.1176/appi.ajp.159.10.1642",
+      "sourceUrl": "https://doi.org/10.1176/appi.ajp.159.10.1642",
+      "verified": true
+    },
+    {
+      "title": "Dysfunction of the prefrontal cortex in addiction: neuroimaging findings and clinical implications",
+      "journal": "Nature reviews. Neuroscience",
+      "year": 2011,
+      "citationCount": 2615,
+      "doi": "10.1038/nrn3119",
+      "sourceUrl": "https://doi.org/10.1038/nrn3119",
+      "verified": true
+    },
+    {
+      "title": "Brain dopamine and obesity",
+      "journal": "The Lancet",
+      "year": 2001,
+      "citationCount": 1862,
+      "doi": "10.1016/s0140-6736(00)03643-6",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(00)03643-6",
+      "verified": true
+    },
+    {
+      "title": "Neurobiologic Advances from the Brain Disease Model of Addiction",
+      "journal": "New England Journal of Medicine",
+      "year": 2016,
+      "citationCount": 1784,
+      "doi": "10.1056/nejmra1511480",
+      "sourceUrl": "https://doi.org/10.1056/nejmra1511480",
+      "verified": true
+    },
+    {
+      "title": "Distribution Volume Ratios without Blood Sampling from Graphical Analysis of PET Data",
+      "journal": "Journal of Cerebral Blood Flow & Metabolism",
+      "year": 1996,
+      "citationCount": 1537,
+      "doi": "10.1097/00004647-199609000-00008",
+      "sourceUrl": "https://doi.org/10.1097/00004647-199609000-00008",
+      "verified": true
+    },
+    {
+      "title": "Graphical Analysis of Reversible Radioligand Binding from Time—Activity Measurements Applied to [<i>N</i>-<sup>11</sup>C-Methyl]-(−)-Cocaine PET Studies in Human Subjects",
+      "journal": "Journal of Cerebral Blood Flow & Metabolism",
+      "year": 1990,
+      "citationCount": 1502,
+      "doi": "10.1038/jcbfm.1990.127",
+      "sourceUrl": "https://doi.org/10.1038/jcbfm.1990.127",
+      "verified": true
+    },
+    {
+      "title": "Reward, dopamine and the control of food intake: implications for obesity",
+      "journal": "Trends in Cognitive Sciences",
+      "year": 2010,
+      "citationCount": 1325,
+      "doi": "10.1016/j.tics.2010.11.001",
+      "sourceUrl": "https://doi.org/10.1016/j.tics.2010.11.001",
+      "verified": true
+    },
+    {
+      "title": "The Brain on Drugs: From Reward to Addiction",
+      "journal": "Cell",
+      "year": 2015,
+      "citationCount": 1237,
+      "doi": "10.1016/j.cell.2015.07.046",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2015.07.046",
+      "verified": true
+    },
+    {
+      "title": "Opioid Abuse in Chronic Pain — Misconceptions and Mitigation Strategies",
+      "journal": "New England Journal of Medicine",
+      "year": 2016,
+      "citationCount": 1225,
+      "doi": "10.1056/nejmra1507771",
+      "sourceUrl": "https://doi.org/10.1056/nejmra1507771",
+      "verified": true
+    },
+    {
+      "title": "Cocaine Cues and Dopamine in Dorsal Striatum: Mechanism of Craving in Cocaine Addiction",
+      "journal": "Journal of Neuroscience",
+      "year": 2006,
+      "citationCount": 1152,
+      "doi": "10.1523/jneurosci.1544-06.2006",
+      "sourceUrl": "https://doi.org/10.1523/jneurosci.1544-06.2006",
+      "verified": true
+    },
+    {
+      "title": "How can drug addiction help us understand obesity?",
+      "journal": "Nature Neuroscience",
+      "year": 2005,
+      "citationCount": 1081,
+      "doi": "10.1038/nn1452",
+      "sourceUrl": "https://doi.org/10.1038/nn1452",
+      "verified": true
+    },
+    {
+      "title": "Medication-Assisted Therapies — Tackling the Opioid-Overdose Epidemic",
+      "journal": "New England Journal of Medicine",
+      "year": 2014,
+      "citationCount": 990,
+      "doi": "10.1056/nejmp1402780",
+      "sourceUrl": "https://doi.org/10.1056/nejmp1402780",
+      "verified": true
+    },
+    {
+      "title": "The conception of the ABCD study: From substance use to a broad NIH collaboration",
+      "journal": "Developmental Cognitive Neuroscience",
+      "year": 2017,
+      "citationCount": 988,
+      "doi": "10.1016/j.dcn.2017.10.002",
+      "sourceUrl": "https://doi.org/10.1016/j.dcn.2017.10.002",
+      "verified": true
+    },
+    {
+      "title": "Imaging dopamine's role in drug abuse and addiction",
+      "journal": "Neuropharmacology",
+      "year": 2008,
+      "citationCount": 972,
+      "doi": "10.1016/j.neuropharm.2008.05.022",
+      "sourceUrl": "https://doi.org/10.1016/j.neuropharm.2008.05.022",
+      "verified": true
+    },
+    {
+      "title": "Addiction: Beyond dopamine reward circuitry",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2011,
+      "citationCount": 912,
+      "doi": "10.1073/pnas.1010654108",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1010654108",
+      "verified": true
+    },
+    {
+      "title": "The dopamine motive system: implications for drug and food addiction",
+      "journal": "Nature reviews. Neuroscience",
+      "year": 2017,
+      "citationCount": 902,
+      "doi": "10.1038/nrn.2017.130",
+      "sourceUrl": "https://doi.org/10.1038/nrn.2017.130",
+      "verified": true
+    },
+    {
+      "title": "The addicted human brain: insights from imaging studies",
+      "journal": "Journal of Clinical Investigation",
+      "year": 2003,
+      "citationCount": 860,
+      "doi": "10.1172/jci18533",
+      "sourceUrl": "https://doi.org/10.1172/jci18533",
+      "verified": true
+    },
+    {
+      "title": "Decreased striatal dopaminergic responsiveness in detoxified cocaine-dependent subjects",
+      "journal": "Nature",
+      "year": 1997,
+      "citationCount": 854,
+      "doi": "10.1038/386830a0",
+      "sourceUrl": "https://doi.org/10.1038/386830a0",
+      "verified": true
+    },
+    {
+      "title": "Major increases in opioid analgesic abuse in the United States: Concerns and strategies",
+      "journal": "Drug and Alcohol Dependence",
+      "year": 2005,
+      "citationCount": 836,
+      "doi": "10.1016/j.drugalcdep.2005.05.009",
+      "sourceUrl": "https://doi.org/10.1016/j.drugalcdep.2005.05.009",
+      "verified": true
+    },
+    {
+      "title": "Effects of Cannabis Use on Human Behavior, Including Cognition, Motivation, and Psychosis: A Review",
+      "journal": "JAMA Psychiatry",
+      "year": 2016,
+      "citationCount": 833,
+      "doi": "10.1001/jamapsychiatry.2015.3278",
+      "sourceUrl": "https://doi.org/10.1001/jamapsychiatry.2015.3278",
+      "verified": true
+    },
+    {
+      "title": "β-Amyloid accumulation in the human brain after one night of sleep deprivation",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2018,
+      "citationCount": 820,
+      "doi": "10.1073/pnas.1721694115",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1721694115",
+      "verified": true
+    },
+    {
+      "title": "Overlapping neuronal circuits in addiction and obesity: evidence of systems pathology",
+      "journal": "Philosophical Transactions of the Royal Society B Biological Sciences",
+      "year": 2008,
+      "citationCount": 808,
+      "doi": "10.1098/rstb.2008.0107",
+      "sourceUrl": "https://doi.org/10.1098/rstb.2008.0107",
+      "verified": true
+    },
+    {
+      "title": "Characteristics of Opioid Prescriptions in 2009",
+      "journal": "JAMA",
+      "year": 2011,
+      "citationCount": 796,
+      "doi": "10.1001/jama.2011.401",
+      "sourceUrl": "https://doi.org/10.1001/jama.2011.401",
+      "verified": true
+    },
+    {
+      "title": "Obesity and addiction: neurobiological overlaps",
+      "journal": "Obesity Reviews",
+      "year": 2012,
+      "citationCount": 766,
+      "doi": "10.1111/j.1467-789x.2012.01031.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1467-789x.2012.01031.x",
+      "verified": true
+    },
+    {
+      "title": "Therapeutic Doses of Oral Methylphenidate Significantly Increase Extracellular Dopamine in the Human Brain",
+      "journal": "Journal of Neuroscience",
+      "year": 2001,
+      "citationCount": 759,
+      "doi": "10.1523/jneurosci.21-02-j0001.2001",
+      "sourceUrl": "https://doi.org/10.1523/jneurosci.21-02-j0001.2001",
+      "verified": true
+    },
+    {
+      "title": "Collision of the COVID-19 and Addiction Epidemics",
+      "journal": "Annals of Internal Medicine",
+      "year": 2020,
+      "citationCount": 742,
+      "doi": "10.7326/m20-1212",
+      "sourceUrl": "https://doi.org/10.7326/m20-1212",
+      "verified": true
+    },
+    {
+      "title": "The Neuroscience of Drug Reward and Addiction",
+      "journal": "Physiological Reviews",
+      "year": 2019,
+      "citationCount": 742,
+      "doi": "10.1152/physrev.00014.2018",
+      "sourceUrl": "https://doi.org/10.1152/physrev.00014.2018",
+      "verified": true
+    },
+    {
+      "title": "Evaluating Dopamine Reward Pathway in ADHD",
+      "journal": "JAMA",
+      "year": 2009,
+      "citationCount": 674,
+      "doi": "10.1001/jama.2009.1308",
+      "sourceUrl": "https://doi.org/10.1001/jama.2009.1308",
+      "verified": true
+    },
+    {
+      "title": "COVID-19 risk and outcomes in patients with substance use disorders: analyses from electronic health records in the United States",
+      "journal": "Molecular Psychiatry",
+      "year": 2020,
+      "citationCount": 666,
+      "doi": "10.1038/s41380-020-00880-7",
+      "sourceUrl": "https://doi.org/10.1038/s41380-020-00880-7",
+      "verified": true
+    },
+    {
+      "title": "Inhibition of monoamine oxidase B in the brains of smokers",
+      "journal": "Nature",
+      "year": 1996,
+      "citationCount": 659,
+      "doi": "10.1038/379733a0",
+      "sourceUrl": "https://doi.org/10.1038/379733a0",
+      "verified": true
+    },
+    {
+      "title": "Unmanageable Motivation in Addiction: A Pathology in Prefrontal-Accumbens Glutamate Transmission",
+      "journal": "Neuron",
+      "year": 2005,
+      "citationCount": 651,
+      "doi": "10.1016/j.neuron.2005.02.005",
+      "sourceUrl": "https://doi.org/10.1016/j.neuron.2005.02.005",
+      "verified": true
+    },
+    {
+      "title": "Relationship between subjective effects of cocaine and dopamine transporter occupancy",
+      "journal": "Nature",
+      "year": 1997,
+      "citationCount": 650,
+      "doi": "10.1038/386827a0",
+      "sourceUrl": "https://doi.org/10.1038/386827a0",
+      "verified": true
+    },
+    {
+      "title": "Functional connectivity density mapping",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2010,
+      "citationCount": 637,
+      "doi": "10.1073/pnas.1001414107",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1001414107",
+      "verified": true
+    },
+    {
+      "title": "The Neurocircuitry of Impaired Insight in Drug Addiction",
+      "journal": "Trends in Cognitive Sciences",
+      "year": 2009,
+      "citationCount": 636,
+      "doi": "10.1016/j.tics.2009.06.004",
+      "sourceUrl": "https://doi.org/10.1016/j.tics.2009.06.004",
+      "verified": true
+    },
+    {
+      "title": "Drug addiction: the neurobiology of disrupted self-control",
+      "journal": "Trends in Molecular Medicine",
+      "year": 2006,
+      "citationCount": 620,
+      "doi": "10.1016/j.molmed.2006.10.005",
+      "sourceUrl": "https://doi.org/10.1016/j.molmed.2006.10.005",
+      "verified": true
+    },
+    {
+      "title": "Drug addiction: the neurobiology of behaviour gone awry",
+      "journal": "Nature reviews. Neuroscience",
+      "year": 2004,
+      "citationCount": 619,
+      "doi": "10.1038/nrn1539",
+      "sourceUrl": "https://doi.org/10.1038/nrn1539",
+      "verified": true
+    },
+    {
+      "title": "Increased risk of <scp>COVID</scp>‐19 infection and mortality in people with mental disorders: analysis from electronic health records in the United States",
+      "journal": "World Psychiatry",
+      "year": 2020,
+      "citationCount": 616,
+      "doi": "10.1002/wps.20806",
+      "sourceUrl": "https://doi.org/10.1002/wps.20806",
+      "verified": true
+    },
+    {
+      "title": "The addicted human brain viewed in the light of imaging studies: brain circuits and treatment strategies",
+      "journal": "Neuropharmacology",
+      "year": 2004,
+      "citationCount": 611,
+      "doi": "10.1016/j.neuropharm.2004.07.019",
+      "sourceUrl": "https://doi.org/10.1016/j.neuropharm.2004.07.019",
+      "verified": true
+    },
+    {
+      "title": "Decreases in Dopamine Receptors but not in Dopamine Transporters in Alcoholics",
+      "journal": "Alcoholism Clinical and Experimental Research",
+      "year": 1996,
+      "citationCount": 610,
+      "doi": "10.1111/j.1530-0277.1996.tb05936.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1530-0277.1996.tb05936.x",
+      "verified": true
+    },
+    {
+      "title": "Dopamine in Drug Abuse and Addiction",
+      "journal": "Archives of Neurology",
+      "year": 2007,
+      "citationCount": 590,
+      "doi": "10.1001/archneur.64.11.1575",
+      "sourceUrl": "https://doi.org/10.1001/archneur.64.11.1575",
+      "verified": true
+    },
+    {
+      "title": "Energetic cost of brain functional connectivity",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2013,
+      "citationCount": 582,
+      "doi": "10.1073/pnas.1303346110",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1303346110",
+      "verified": true
+    },
+    {
+      "title": "Prevention and Treatment of Opioid Misuse and Addiction",
+      "journal": "JAMA Psychiatry",
+      "year": 2018,
+      "citationCount": 582,
+      "doi": "10.1001/jamapsychiatry.2018.3126",
+      "sourceUrl": "https://doi.org/10.1001/jamapsychiatry.2018.3126",
+      "verified": true
+    },
+    {
+      "title": "Is Methylphenidate Like Cocaine?",
+      "journal": "Archives of General Psychiatry",
+      "year": 1995,
+      "citationCount": 579,
+      "doi": "10.1001/archpsyc.1995.03950180042006",
+      "sourceUrl": "https://doi.org/10.1001/archpsyc.1995.03950180042006",
+      "verified": true
+    },
+    {
+      "title": "Etiologic Subtypes of Attention-Deficit/Hyperactivity Disorder: Brain Imaging, Molecular Genetic and Environmental Factors and the Dopamine Hypothesis",
+      "journal": "Neuropsychology Review",
+      "year": 2007,
+      "citationCount": 578,
+      "doi": "10.1007/s11065-007-9019-9",
+      "sourceUrl": "https://doi.org/10.1007/s11065-007-9019-9",
+      "verified": true
+    },
+    {
+      "title": "Opioid use disorder",
+      "journal": "Nature Reviews Disease Primers",
+      "year": 2020,
+      "citationCount": 571,
+      "doi": "10.1038/s41572-019-0137-5",
+      "sourceUrl": "https://doi.org/10.1038/s41572-019-0137-5",
+      "verified": true
+    },
+    {
+      "title": "Treating Drug Abuse and Addiction in the Criminal Justice System",
+      "journal": "JAMA",
+      "year": 2009,
+      "citationCount": 566,
+      "doi": "10.1001/jama.2008.976",
+      "sourceUrl": "https://doi.org/10.1001/jama.2008.976",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:16.000Z",
+  "openalexId": "https://openalex.org/A5002969658"
 }

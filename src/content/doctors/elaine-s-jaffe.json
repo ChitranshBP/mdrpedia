@@ -1,36 +1,493 @@
 {
   "fullName": "Elaine S. Jaffe",
   "slug": "elaine-s-jaffe",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Hematopathology",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">ES</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 50,
-  "hIndex": 201,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 176,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 17624,
+  "livesSaved": 0,
+  "biography": "Elaine Sarkin Jaffe is an American pathologist and senior investigator at the National Cancer Institute specializing in hematopathology. She completed her medical education at Cornell University and the University of Pennsylvania, receiving her M.D. degree from University of Pennsylvania in 1969. After an internship at Georgetown University she joined NCI as a resident in anatomic pathology, and has been a senior investigator since 1974, focusing on the classification and definition of lymphomas.",
+  "aiSummary": "Elaine S. Jaffe is a hematopathology specialist with an H-index of 176 at National Institutes of Health (Faculty). Has been published in New England Journal of Medicine, Science, Nature. Based in United States.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Senior_Investigator_at_the_National_Cancer_Institute_Elaine_Sarkin_Jaffe.jpg",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "National Institutes of Health"
-    }
-  ],
-  "bio": "Elaine S. Jaffe is a pioneer in Hematopathology at National Institutes of Health, USA. With a D-Index of 201 and over 176,235 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "National Institutes of Health",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Hematopathology"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "The 2016 revision of the World Health Organization classification of lymphoid neoplasms",
+      "journal": "Blood",
+      "year": 2016,
+      "citationCount": 7633,
+      "doi": "10.1182/blood-2016-01-643569",
+      "sourceUrl": "https://doi.org/10.1182/blood-2016-01-643569",
+      "verified": true
+    },
+    {
+      "title": "The Use of Molecular Profiling to Predict Survival after Chemotherapy for Diffuse Large-B-Cell Lymphoma",
+      "journal": "New England Journal of Medicine",
+      "year": 2002,
+      "citationCount": 3832,
+      "doi": "10.1056/nejmoa012914",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa012914",
+      "verified": true
+    },
+    {
+      "title": "World Health Organization Classification of Neoplastic Diseases of the Hematopoietic and Lymphoid Tissues: Report of the Clinical Advisory Committee Meeting—Airlie House, Virginia, November 1997",
+      "journal": "Journal of Clinical Oncology",
+      "year": 1999,
+      "citationCount": 3282,
+      "doi": "10.1200/jco.1999.17.12.3835",
+      "sourceUrl": "https://doi.org/10.1200/jco.1999.17.12.3835",
+      "verified": true
+    },
+    {
+      "title": "Pathology and Genetics: Tumours of Haematopoietic and Lymphoid Tissues",
+      "journal": "Unknown Journal",
+      "year": 2003,
+      "citationCount": 2166,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W417406195",
+      "verified": true
+    },
+    {
+      "title": "Genetics and Pathogenesis of Diffuse Large B-Cell Lymphoma",
+      "journal": "New England Journal of Medicine",
+      "year": 2018,
+      "citationCount": 2163,
+      "doi": "10.1056/nejmoa1801445",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1801445",
+      "verified": true
+    },
+    {
+      "title": "The 2008 WHO classification of lymphoid neoplasms and beyond: evolving concepts and practical applications",
+      "journal": "Blood",
+      "year": 2011,
+      "citationCount": 1961,
+      "doi": "10.1182/blood-2011-01-293050",
+      "sourceUrl": "https://doi.org/10.1182/blood-2011-01-293050",
+      "verified": true
+    },
+    {
+      "title": "Stromal Gene Signatures in Large-B-Cell Lymphomas",
+      "journal": "New England Journal of Medicine",
+      "year": 2008,
+      "citationCount": 1795,
+      "doi": "10.1056/nejmoa0802885",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa0802885",
+      "verified": true
+    },
+    {
+      "title": "Involvement of the <i>bcl</i> -2 Gene in Human Follicular Lymphoma",
+      "journal": "Science",
+      "year": 1985,
+      "citationCount": 1780,
+      "doi": "10.1126/science.3874430",
+      "sourceUrl": "https://doi.org/10.1126/science.3874430",
+      "verified": true
+    },
+    {
+      "title": "Chronic active B-cell-receptor signalling in diffuse large B-cell lymphoma",
+      "journal": "Nature",
+      "year": 2010,
+      "citationCount": 1624,
+      "doi": "10.1038/nature08638",
+      "sourceUrl": "https://doi.org/10.1038/nature08638",
+      "verified": true
+    },
+    {
+      "title": "Oncogenically active MYD88 mutations in human lymphoma",
+      "journal": "Nature",
+      "year": 2010,
+      "citationCount": 1482,
+      "doi": "10.1038/nature09671",
+      "sourceUrl": "https://doi.org/10.1038/nature09671",
+      "verified": true
+    },
+    {
+      "title": "Prediction of Survival in Follicular Lymphoma Based on Molecular Features of Tumor-Infiltrating Immune Cells",
+      "journal": "New England Journal of Medicine",
+      "year": 2004,
+      "citationCount": 1426,
+      "doi": "10.1056/nejmoa041869",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa041869",
+      "verified": true
+    },
+    {
+      "title": "The International Consensus Classification of Mature Lymphoid Neoplasms: a report from the Clinical Advisory Committee",
+      "journal": "Blood",
+      "year": 2022,
+      "citationCount": 1340,
+      "doi": "10.1182/blood.2022015851",
+      "sourceUrl": "https://doi.org/10.1182/blood.2022015851",
+      "verified": true
+    },
+    {
+      "title": "The 2018 update of the WHO-EORTC classification for primary cutaneous lymphomas",
+      "journal": "Blood",
+      "year": 2019,
+      "citationCount": 1307,
+      "doi": "10.1182/blood-2018-11-881268",
+      "sourceUrl": "https://doi.org/10.1182/blood-2018-11-881268",
+      "verified": true
+    },
+    {
+      "title": "Tumor-Associated Macrophages and Survival in Classic Hodgkin's Lymphoma",
+      "journal": "New England Journal of Medicine",
+      "year": 2010,
+      "citationCount": 1254,
+      "doi": "10.1056/nejmoa0905680",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa0905680",
+      "verified": true
+    },
+    {
+      "title": "Genetic and Functional Drivers of Diffuse Large B Cell Lymphoma",
+      "journal": "Cell",
+      "year": 2017,
+      "citationCount": 1098,
+      "doi": "10.1016/j.cell.2017.09.027",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2017.09.027",
+      "verified": true
+    },
+    {
+      "title": "Molecular Diagnosis of Primary Mediastinal B Cell Lymphoma Identifies a Clinically Favorable Subgroup of Diffuse Large B Cell Lymphoma Related to Hodgkin Lymphoma",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 2003,
+      "citationCount": 1095,
+      "doi": "10.1084/jem.20031074",
+      "sourceUrl": "https://doi.org/10.1084/jem.20031074",
+      "verified": true
+    },
+    {
+      "title": "The t(14;18) Chromosome Translocations Involved in B-Cell Neoplasms Result from Mistakes in VDJ Joining",
+      "journal": "Science",
+      "year": 1985,
+      "citationCount": 1001,
+      "doi": "10.1126/science.3929382",
+      "sourceUrl": "https://doi.org/10.1126/science.3929382",
+      "verified": true
+    },
+    {
+      "title": "Molecular subtypes of diffuse large B-cell lymphoma arise by distinct genetic pathways",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2008,
+      "citationCount": 971,
+      "doi": "10.1073/pnas.0804295105",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0804295105",
+      "verified": true
+    },
+    {
+      "title": "Concurrent Expression of MYC and BCL2 in Diffuse Large B-Cell Lymphoma Treated With Rituximab Plus Cyclophosphamide, Doxorubicin, Vincristine, and Prednisone",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2012,
+      "citationCount": 951,
+      "doi": "10.1200/jco.2011.41.0985",
+      "sourceUrl": "https://doi.org/10.1200/jco.2011.41.0985",
+      "verified": true
+    },
+    {
+      "title": "The proliferation gene expression signature is a quantitative integrator of oncogenic events that predicts survival in mantle cell lymphoma",
+      "journal": "Cancer Cell",
+      "year": 2003,
+      "citationCount": 923,
+      "doi": "10.1016/s1535-6108(03)00028-x",
+      "sourceUrl": "https://doi.org/10.1016/s1535-6108(03)00028-x",
+      "verified": true
+    },
+    {
+      "title": "Burkitt lymphoma pathogenesis and therapeutic targets from structural and functional genomics",
+      "journal": "Nature",
+      "year": 2012,
+      "citationCount": 908,
+      "doi": "10.1038/nature11378",
+      "sourceUrl": "https://doi.org/10.1038/nature11378",
+      "verified": true
+    },
+    {
+      "title": "Molecular Diagnosis of Burkitt's Lymphoma",
+      "journal": "New England Journal of Medicine",
+      "year": 2006,
+      "citationCount": 902,
+      "doi": "10.1056/nejmoa055759",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa055759",
+      "verified": true
+    },
+    {
+      "title": "Oncogenic <i>CARD11</i> Mutations in Human Diffuse Large B Cell Lymphoma",
+      "journal": "Science",
+      "year": 2008,
+      "citationCount": 868,
+      "doi": "10.1126/science.1153629",
+      "sourceUrl": "https://doi.org/10.1126/science.1153629",
+      "verified": true
+    },
+    {
+      "title": "ALK− anaplastic large-cell lymphoma is clinically and immunophenotypically different from both ALK+ ALCL and peripheral T-cell lymphoma, not otherwise specified: report from the International Peripheral T-Cell Lymphoma Project",
+      "journal": "Blood",
+      "year": 2008,
+      "citationCount": 845,
+      "doi": "10.1182/blood-2008-01-134270",
+      "sourceUrl": "https://doi.org/10.1182/blood-2008-01-134270",
+      "verified": true
+    },
+    {
+      "title": "The World Health Organization Classification of Neoplastic Diseases of the Hematopoietic and Lymphoid Tissues",
+      "journal": "Annals of Oncology",
+      "year": 1999,
+      "citationCount": 844,
+      "doi": "10.1023/a:1008375931236",
+      "sourceUrl": "https://doi.org/10.1023/a:1008375931236",
+      "verified": true
+    },
+    {
+      "title": "Contemporary classification of histiocytic disorders",
+      "journal": "Medical and Pediatric Oncology",
+      "year": 1997,
+      "citationCount": 835,
+      "doi": "10.1002/(sici)1096-911x(199709)29:3<157::aid-mpo1>3.0.co;2-c",
+      "sourceUrl": "https://doi.org/10.1002/(sici)1096-911x(199709)29:3<157::aid-mpo1>3.0.co;2-c",
+      "verified": true
+    },
+    {
+      "title": "Report of the Workshop on Nasal and Related Extranodal Angiocentric T/Natural Killer Cell Lymphomas",
+      "journal": "The American Journal of Surgical Pathology",
+      "year": 1996,
+      "citationCount": 732,
+      "doi": "10.1097/00000478-199601000-00012",
+      "sourceUrl": "https://doi.org/10.1097/00000478-199601000-00012",
+      "verified": true
+    },
+    {
+      "title": "Phase II Multi-Institutional Trial of the Histone Deacetylase Inhibitor Romidepsin As Monotherapy for Patients With Cutaneous T-Cell Lymphoma",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2009,
+      "citationCount": 727,
+      "doi": "10.1200/jco.2008.21.6150",
+      "sourceUrl": "https://doi.org/10.1200/jco.2008.21.6150",
+      "verified": true
+    },
+    {
+      "title": "Spectrum of AIDS-associated malignant disorders",
+      "journal": "The Lancet",
+      "year": 1998,
+      "citationCount": 704,
+      "doi": "10.1016/s0140-6736(97)09028-4",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(97)09028-4",
+      "verified": true
+    },
+    {
+      "title": "Tumours of histiocytes and accessory dendritic cells: an immunohistochemical approach to classification from the International Lymphoma Study Group based on 61 cases",
+      "journal": "Histopathology",
+      "year": 2002,
+      "citationCount": 662,
+      "doi": "10.1046/j.1365-2559.2002.01418.x",
+      "sourceUrl": "https://doi.org/10.1046/j.1365-2559.2002.01418.x",
+      "verified": true
+    },
+    {
+      "title": "Risk of lymphoproliferative disorders after bone marrow transplantation: a multi-institutional study.",
+      "journal": "PubMed",
+      "year": 1999,
+      "citationCount": 649,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W71303928",
+      "verified": true
+    },
+    {
+      "title": "A New Immunostain Algorithm Classifies Diffuse Large B-Cell Lymphoma into Molecular Subtypes with High Accuracy",
+      "journal": "Clinical Cancer Research",
+      "year": 2009,
+      "citationCount": 637,
+      "doi": "10.1158/1078-0432.ccr-09-0113",
+      "sourceUrl": "https://doi.org/10.1158/1078-0432.ccr-09-0113",
+      "verified": true
+    },
+    {
+      "title": "Immunoglobulin-Gene Rearrangements as Unique Clonal Markers in Human Lymphoid Neoplasms",
+      "journal": "New England Journal of Medicine",
+      "year": 1983,
+      "citationCount": 610,
+      "doi": "10.1056/nejm198312293092601",
+      "sourceUrl": "https://doi.org/10.1056/nejm198312293092601",
+      "verified": true
+    },
+    {
+      "title": "Determining cell-of-origin subtypes of diffuse large B-cell lymphoma using gene expression in formalin-fixed paraffin-embedded tissue",
+      "journal": "Blood",
+      "year": 2014,
+      "citationCount": 603,
+      "doi": "10.1182/blood-2013-11-536433",
+      "sourceUrl": "https://doi.org/10.1182/blood-2013-11-536433",
+      "verified": true
+    },
+    {
+      "title": "The 2015 World Health Organization Classification of Tumors of the Thymus: Continuity and Changes",
+      "journal": "Journal of Thoracic Oncology",
+      "year": 2015,
+      "citationCount": 593,
+      "doi": "10.1097/jto.0000000000000654",
+      "sourceUrl": "https://doi.org/10.1097/jto.0000000000000654",
+      "verified": true
+    },
+    {
+      "title": "Complete molecular remissions induced by patient-specific vaccination plus granulocyte–monocyte colony-stimulating factor against lymphoma",
+      "journal": "Nature Medicine",
+      "year": 1999,
+      "citationCount": 591,
+      "doi": "10.1038/13928",
+      "sourceUrl": "https://doi.org/10.1038/13928",
+      "verified": true
+    },
+    {
+      "title": "International, evidence-based consensus diagnostic criteria for HHV-8–negative/idiopathic multicentric Castleman disease",
+      "journal": "Blood",
+      "year": 2017,
+      "citationCount": 585,
+      "doi": "10.1182/blood-2016-10-746933",
+      "sourceUrl": "https://doi.org/10.1182/blood-2016-10-746933",
+      "verified": true
+    },
+    {
+      "title": "EBV Positive Mucocutaneous Ulcer—A Study of 26 Cases Associated With Various Sources of Immunosuppression",
+      "journal": "The American Journal of Surgical Pathology",
+      "year": 2010,
+      "citationCount": 561,
+      "doi": "10.1097/pas.0b013e3181cf8622",
+      "sourceUrl": "https://doi.org/10.1097/pas.0b013e3181cf8622",
+      "verified": true
+    },
+    {
+      "title": "The 2008 WHO classification of lymphomas: implications for clinical practice and translational research",
+      "journal": "Hematology",
+      "year": 2009,
+      "citationCount": 560,
+      "doi": "10.1182/asheducation-2009.1.523",
+      "sourceUrl": "https://doi.org/10.1182/asheducation-2009.1.523",
+      "verified": true
+    },
+    {
+      "title": "Dose-Adjusted EPOCH-Rituximab Therapy in Primary Mediastinal B-Cell Lymphoma",
+      "journal": "New England Journal of Medicine",
+      "year": 2013,
+      "citationCount": 551,
+      "doi": "10.1056/nejmoa1214561",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1214561",
+      "verified": true
+    },
+    {
+      "title": "Gene expression signatures delineate biological and prognostic subgroups in peripheral T-cell lymphoma",
+      "journal": "Blood",
+      "year": 2014,
+      "citationCount": 520,
+      "doi": "10.1182/blood-2013-11-536359",
+      "sourceUrl": "https://doi.org/10.1182/blood-2013-11-536359",
+      "verified": true
+    },
+    {
+      "title": "Mantle Cell Lymphoma A Proposal for Unification of Morphologic, Immunologic, and Molecular Data",
+      "journal": "The American Journal of Surgical Pathology",
+      "year": 1992,
+      "citationCount": 518,
+      "doi": "10.1097/00000478-199207000-00001",
+      "sourceUrl": "https://doi.org/10.1097/00000478-199207000-00001",
+      "verified": true
+    },
+    {
+      "title": "Differential efficacy of bortezomib plus chemotherapy within molecular subtypes of diffuse large B-cell lymphoma",
+      "journal": "Blood",
+      "year": 2009,
+      "citationCount": 497,
+      "doi": "10.1182/blood-2009-01-199679",
+      "sourceUrl": "https://doi.org/10.1182/blood-2009-01-199679",
+      "verified": true
+    },
+    {
+      "title": "Adults and children with small non-cleaved-cell lymphoma have a similar excellent outcome when treated with the same chemotherapy regimen.",
+      "journal": "Journal of Clinical Oncology",
+      "year": 1996,
+      "citationCount": 485,
+      "doi": "10.1200/jco.1996.14.3.925",
+      "sourceUrl": "https://doi.org/10.1200/jco.1996.14.3.925",
+      "verified": true
+    },
+    {
+      "title": "Inhibition of B Cell Receptor Signaling by Ibrutinib in Primary CNS Lymphoma",
+      "journal": "Cancer Cell",
+      "year": 2017,
+      "citationCount": 484,
+      "doi": "10.1016/j.ccell.2017.04.012",
+      "sourceUrl": "https://doi.org/10.1016/j.ccell.2017.04.012",
+      "verified": true
+    },
+    {
+      "title": "T-Cell Lymphoma Involving Subcutaneous Tissue",
+      "journal": "The American Journal of Surgical Pathology",
+      "year": 1991,
+      "citationCount": 478,
+      "doi": "10.1097/00000478-199101000-00002",
+      "sourceUrl": "https://doi.org/10.1097/00000478-199101000-00002",
+      "verified": true
+    },
+    {
+      "title": "Revised diagnostic criteria and classification for the autoimmune lymphoproliferative syndrome (ALPS): report from the 2009 NIH International Workshop",
+      "journal": "Blood",
+      "year": 2010,
+      "citationCount": 476,
+      "doi": "10.1182/blood-2010-04-280347",
+      "sourceUrl": "https://doi.org/10.1182/blood-2010-04-280347",
+      "verified": true
+    },
+    {
+      "title": "Phase 2 trial of romidepsin in patients with peripheral T-cell lymphoma",
+      "journal": "Blood",
+      "year": 2011,
+      "citationCount": 476,
+      "doi": "10.1182/blood-2010-10-312603",
+      "sourceUrl": "https://doi.org/10.1182/blood-2010-10-312603",
+      "verified": true
+    },
+    {
+      "title": "ALK-negative anaplastic large cell lymphoma is a genetically heterogeneous disease with widely disparate clinical outcomes",
+      "journal": "Blood",
+      "year": 2014,
+      "citationCount": 457,
+      "doi": "10.1182/blood-2014-04-571091",
+      "sourceUrl": "https://doi.org/10.1182/blood-2014-04-571091",
+      "verified": true
+    },
+    {
+      "title": "Circulating tumour DNA and CT monitoring in patients with untreated diffuse large B-cell lymphoma: a correlative biomarker study",
+      "journal": "The Lancet Oncology",
+      "year": 2015,
+      "citationCount": 447,
+      "doi": "10.1016/s1470-2045(15)70106-3",
+      "sourceUrl": "https://doi.org/10.1016/s1470-2045(15)70106-3",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:15.000Z",
+  "openalexId": "https://openalex.org/A5089779163"
 }

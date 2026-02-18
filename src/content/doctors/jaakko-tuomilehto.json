@@ -1,36 +1,484 @@
 {
   "fullName": "Jaakko Tuomilehto",
   "slug": "jaakko-tuomilehto",
-  "title": "MD, PhD",
-  "specialty": "Diabetes Prevention",
+  "title": "MD",
+  "specialty": "Medicine",
   "geography": {
+    "country": "Unknown",
     "city": "Unknown",
-    "country": "Finland"
+    "region": "Unknown"
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">JT</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 66,
-  "hIndex": 262,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 171,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 34555,
+  "livesSaved": 0,
+  "biography": "The Kelly M. West Award for Outstanding Achievement in Epidemiology is an honor bestowed by the American Diabetes Association. It has been awarded annually to an individual since 1986. The award is named in honor of Kelly M. West.",
+  "aiSummary": "Jaakko Tuomilehto is a medicine specialist with an H-index of 171. Has been published in Nature, New England Journal of Medicine, Nature Genetics. Based in Unknown, Unknown, Unknown.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "University of Helsinki"
-    }
-  ],
-  "bio": "Jaakko Tuomilehto is a pioneer in Diabetes Prevention at University of Helsinki, Finland. With a D-Index of 262 and over 345,545 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [],
+  "medicalSpecialty": [
+    "Medicine"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Analysis of protein-coding genetic variation in 60,706 humans",
+      "journal": "Nature",
+      "year": 2016,
+      "citationCount": 10140,
+      "doi": "10.1038/nature19057",
+      "sourceUrl": "https://doi.org/10.1038/nature19057",
+      "verified": true
+    },
+    {
+      "title": "Cardiovascular Morbidity and Mortality Associated With the Metabolic Syndrome",
+      "journal": "Diabetes Care",
+      "year": 2001,
+      "citationCount": 4767,
+      "doi": "10.2337/diacare.24.4.683",
+      "sourceUrl": "https://doi.org/10.2337/diacare.24.4.683",
+      "verified": true
+    },
+    {
+      "title": "Age-Related Clonal Hematopoiesis Associated with Adverse Outcomes",
+      "journal": "New England Journal of Medicine",
+      "year": 2014,
+      "citationCount": 4536,
+      "doi": "10.1056/nejmoa1408617",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1408617",
+      "verified": true
+    },
+    {
+      "title": "Biological, clinical and population relevance of 95 loci for blood lipids",
+      "journal": "Nature",
+      "year": 2010,
+      "citationCount": 3638,
+      "doi": "10.1038/nature09270",
+      "sourceUrl": "https://doi.org/10.1038/nature09270",
+      "verified": true
+    },
+    {
+      "title": "A reference panel of 64,976 haplotypes for genotype imputation",
+      "journal": "Nature Genetics",
+      "year": 2016,
+      "citationCount": 3164,
+      "doi": "10.1038/ng.3643",
+      "sourceUrl": "https://doi.org/10.1038/ng.3643",
+      "verified": true
+    },
+    {
+      "title": "Genome-Wide Association Analysis Identifies Loci for Type 2 Diabetes and Triglyceride Levels",
+      "journal": "Science",
+      "year": 2007,
+      "citationCount": 2878,
+      "doi": "10.1126/science.1142358",
+      "sourceUrl": "https://doi.org/10.1126/science.1142358",
+      "verified": true
+    },
+    {
+      "title": "A Genome-Wide Association Study of Type 2 Diabetes in Finns Detects Multiple Susceptibility Variants",
+      "journal": "Science",
+      "year": 2007,
+      "citationCount": 2761,
+      "doi": "10.1126/science.1142382",
+      "sourceUrl": "https://doi.org/10.1126/science.1142382",
+      "verified": true
+    },
+    {
+      "title": "Association of the T-cell regulatory gene CTLA4 with susceptibility to autoimmune disease",
+      "journal": "Nature",
+      "year": 2003,
+      "citationCount": 2173,
+      "doi": "10.1038/nature01621",
+      "sourceUrl": "https://doi.org/10.1038/nature01621",
+      "verified": true
+    },
+    {
+      "title": "Novel subgroups of adult-onset diabetes and their association with outcomes: a data-driven cluster analysis of six variables",
+      "journal": "The Lancet Diabetes & Endocrinology",
+      "year": 2018,
+      "citationCount": 2153,
+      "doi": "10.1016/s2213-8587(18)30051-2",
+      "sourceUrl": "https://doi.org/10.1016/s2213-8587(18)30051-2",
+      "verified": true
+    },
+    {
+      "title": "Meta-analysis of genome-wide association data and large-scale replication identifies additional susceptibility loci for type 2 diabetes",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 1864,
+      "doi": "10.1038/ng.120",
+      "sourceUrl": "https://doi.org/10.1038/ng.120",
+      "verified": true
+    },
+    {
+      "title": "Fine-mapping type 2 diabetes loci to single-variant resolution using high-density imputation and islet-specific epigenome maps",
+      "journal": "Nature Genetics",
+      "year": 2018,
+      "citationCount": 1861,
+      "doi": "10.1038/s41588-018-0241-6",
+      "sourceUrl": "https://doi.org/10.1038/s41588-018-0241-6",
+      "verified": true
+    },
+    {
+      "title": "The common PPARγ Pro12Ala polymorphism is associated with decreased risk of type 2 diabetes",
+      "journal": "Nature Genetics",
+      "year": 2000,
+      "citationCount": 1760,
+      "doi": "10.1038/79216",
+      "sourceUrl": "https://doi.org/10.1038/79216",
+      "verified": true
+    },
+    {
+      "title": "Newly identified loci that influence lipid concentrations and risk of coronary artery disease",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 1592,
+      "doi": "10.1038/ng.76",
+      "sourceUrl": "https://doi.org/10.1038/ng.76",
+      "verified": true
+    },
+    {
+      "title": "Common variants at 30 loci contribute to polygenic dyslipidemia",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 1367,
+      "doi": "10.1038/ng.291",
+      "sourceUrl": "https://doi.org/10.1038/ng.291",
+      "verified": true
+    },
+    {
+      "title": "Haplotype tagging for the identification of common disease genes",
+      "journal": "Nature Genetics",
+      "year": 2001,
+      "citationCount": 1175,
+      "doi": "10.1038/ng1001-233",
+      "sourceUrl": "https://doi.org/10.1038/ng1001-233",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide meta-analyses identify multiple loci associated with smoking behavior",
+      "journal": "Nature Genetics",
+      "year": 2010,
+      "citationCount": 1152,
+      "doi": "10.1038/ng.571",
+      "sourceUrl": "https://doi.org/10.1038/ng.571",
+      "verified": true
+    },
+    {
+      "title": "Clinical Risk Factors, DNA Variants, and the Development of Type 2 Diabetes",
+      "journal": "New England Journal of Medicine",
+      "year": 2008,
+      "citationCount": 932,
+      "doi": "10.1056/nejmoa0801869",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa0801869",
+      "verified": true
+    },
+    {
+      "title": "Incidence and trends of childhood type 1 diabetes worldwide 1990-1999.",
+      "journal": "Unknown Journal",
+      "year": 2006,
+      "citationCount": 850,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W796875701",
+      "verified": true
+    },
+    {
+      "title": "Mechanisms by which common variants in the TCF7L2 gene increase risk of type 2 diabetes",
+      "journal": "Journal of Clinical Investigation",
+      "year": 2007,
+      "citationCount": 822,
+      "doi": "10.1172/jci30706",
+      "sourceUrl": "https://doi.org/10.1172/jci30706",
+      "verified": true
+    },
+    {
+      "title": "Relation of Leisure-Time Physical Activity and Cardiorespiratory Fitness to the Risk of Acute Myocardial Infarction in Men",
+      "journal": "New England Journal of Medicine",
+      "year": 1994,
+      "citationCount": 795,
+      "doi": "10.1056/nejm199406023302201",
+      "sourceUrl": "https://doi.org/10.1056/nejm199406023302201",
+      "verified": true
+    },
+    {
+      "title": "An Expanded Genome-Wide Association Study of Type 2 Diabetes in Europeans",
+      "journal": "Diabetes",
+      "year": 2017,
+      "citationCount": 793,
+      "doi": "10.2337/db16-1253",
+      "sourceUrl": "https://doi.org/10.2337/db16-1253",
+      "verified": true
+    },
+    {
+      "title": "Variants in KCNQ1 are associated with susceptibility to type 2 diabetes mellitus",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 766,
+      "doi": "10.1038/ng.207",
+      "sourceUrl": "https://doi.org/10.1038/ng.207",
+      "verified": true
+    },
+    {
+      "title": "Variants in MTNR1B influence fasting glucose levels",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 746,
+      "doi": "10.1038/ng.290",
+      "sourceUrl": "https://doi.org/10.1038/ng.290",
+      "verified": true
+    },
+    {
+      "title": "Common variant in MTNR1B associated with increased risk of type 2 diabetes and impaired early insulin secretion",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 731,
+      "doi": "10.1038/ng.288",
+      "sourceUrl": "https://doi.org/10.1038/ng.288",
+      "verified": true
+    },
+    {
+      "title": "Effect of Valsartan on the Incidence of Diabetes and Cardiovascular Events",
+      "journal": "New England Journal of Medicine",
+      "year": 2010,
+      "citationCount": 664,
+      "doi": "10.1056/nejmoa1001121",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1001121",
+      "verified": true
+    },
+    {
+      "title": "Concordance for Type 1 (insulin-dependent) and Type 2 (non-insulin-dependent) diabetes mellitus in a population-based cohort of twins in Finland",
+      "journal": "Diabetologia",
+      "year": 1992,
+      "citationCount": 650,
+      "doi": "10.1007/bf02221682",
+      "sourceUrl": "https://doi.org/10.1007/bf02221682",
+      "verified": true
+    },
+    {
+      "title": "The many faces of diabetes: a disease with increasing heterogeneity",
+      "journal": "The Lancet",
+      "year": 2013,
+      "citationCount": 638,
+      "doi": "10.1016/s0140-6736(13)62219-9",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(13)62219-9",
+      "verified": true
+    },
+    {
+      "title": "Antibodies to Glutamic Acid Decarboxylase Reveal Latent Autoimmune Diabetes Mellitus in Adults With a Non—Insulin-Dependent Onset of Disease",
+      "journal": "Diabetes",
+      "year": 1993,
+      "citationCount": 562,
+      "doi": "10.2337/diab.42.2.359",
+      "sourceUrl": "https://doi.org/10.2337/diab.42.2.359",
+      "verified": true
+    },
+    {
+      "title": "Physical Activity Attenuates the Influence of FTO Variants on Obesity Risk: A Meta-Analysis of 218,166 Adults and 19,268 Children",
+      "journal": "PLoS Medicine",
+      "year": 2011,
+      "citationCount": 551,
+      "doi": "10.1371/journal.pmed.1001116",
+      "sourceUrl": "https://doi.org/10.1371/journal.pmed.1001116",
+      "verified": true
+    },
+    {
+      "title": "Epigenome-wide association of DNA methylation markers in peripheral blood from Indian Asians and Europeans with incident type 2 diabetes: a nested case-control study",
+      "journal": "The Lancet Diabetes & Endocrinology",
+      "year": 2015,
+      "citationCount": 532,
+      "doi": "10.1016/s2213-8587(15)00127-8",
+      "sourceUrl": "https://doi.org/10.1016/s2213-8587(15)00127-8",
+      "verified": true
+    },
+    {
+      "title": "Clinical and genetic characteristics of type 2 diabetes with and without GAD antibodies.",
+      "journal": "Diabetes",
+      "year": 1999,
+      "citationCount": 505,
+      "doi": "10.2337/diabetes.48.1.150",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.48.1.150",
+      "verified": true
+    },
+    {
+      "title": "Loss-of-function mutations in SLC30A8 protect against type 2 diabetes",
+      "journal": "Nature Genetics",
+      "year": 2014,
+      "citationCount": 488,
+      "doi": "10.1038/ng.2915",
+      "sourceUrl": "https://doi.org/10.1038/ng.2915",
+      "verified": true
+    },
+    {
+      "title": "Sex-stratified Genome-wide Association Studies Including 270,000 Individuals Show Sexual Dimorphism in Genetic Loci for Anthropometric Traits",
+      "journal": "PLoS Genetics",
+      "year": 2013,
+      "citationCount": 451,
+      "doi": "10.1371/journal.pgen.1003500",
+      "sourceUrl": "https://doi.org/10.1371/journal.pgen.1003500",
+      "verified": true
+    },
+    {
+      "title": "Latent Autoimmune Diabetes Mellitus in Adults (LADA): the Role of Antibodies to Glutamic Acid Decarboxylase in Diagnosis and Prediction of Insulin Dependency",
+      "journal": "Diabetic Medicine",
+      "year": 1994,
+      "citationCount": 414,
+      "doi": "10.1111/j.1464-5491.1994.tb00275.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1464-5491.1994.tb00275.x",
+      "verified": true
+    },
+    {
+      "title": "Common variants in the GDF5-UQCC region are associated with variation in human height",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 399,
+      "doi": "10.1038/ng.74",
+      "sourceUrl": "https://doi.org/10.1038/ng.74",
+      "verified": true
+    },
+    {
+      "title": "Genetic Liability of Type 1 Diabetes and the Onset Age Among 22,650 Young Finnish Twin Pairs",
+      "journal": "Diabetes",
+      "year": 2003,
+      "citationCount": 394,
+      "doi": "10.2337/diabetes.52.4.1052",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.52.4.1052",
+      "verified": true
+    },
+    {
+      "title": "A review of the recent epidemiological data on the worldwide incidence of Type 1 (insulin-dependent) diabetes mellitus",
+      "journal": "Diabetologia",
+      "year": 1993,
+      "citationCount": 385,
+      "doi": "10.1007/bf02374468",
+      "sourceUrl": "https://doi.org/10.1007/bf02374468",
+      "verified": true
+    },
+    {
+      "title": "Impact of Type 2 Diabetes Susceptibility Variants on Quantitative Glycemic Traits Reveals Mechanistic Heterogeneity",
+      "journal": "Diabetes",
+      "year": 2013,
+      "citationCount": 378,
+      "doi": "10.2337/db13-0949",
+      "sourceUrl": "https://doi.org/10.2337/db13-0949",
+      "verified": true
+    },
+    {
+      "title": "Common Single Nucleotide Polymorphisms in <i>TCF7L2</i> Are Reproducibly Associated With Type 2 Diabetes and Reduce the Insulin Response to Glucose in Nondiabetic Individuals",
+      "journal": "Diabetes",
+      "year": 2006,
+      "citationCount": 371,
+      "doi": "10.2337/db06-0381",
+      "sourceUrl": "https://doi.org/10.2337/db06-0381",
+      "verified": true
+    },
+    {
+      "title": "Genome-Wide Association Identifies Nine Common Variants Associated With Fasting Proinsulin Levels and Provides New Insights Into the Pathophysiology of Type 2 Diabetes",
+      "journal": "Diabetes",
+      "year": 2011,
+      "citationCount": 366,
+      "doi": "10.2337/db11-0415",
+      "sourceUrl": "https://doi.org/10.2337/db11-0415",
+      "verified": true
+    },
+    {
+      "title": "Predictors of and Longitudinal Changes in Insulin Sensitivity and Secretion Preceding Onset of Type 2 Diabetes",
+      "journal": "Diabetes",
+      "year": 2005,
+      "citationCount": 364,
+      "doi": "10.2337/diabetes.54.1.166",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.54.1.166",
+      "verified": true
+    },
+    {
+      "title": "Early Metabolic Markers of the Development of Dysglycemia and Type 2 Diabetes and Their Physiological Significance",
+      "journal": "Diabetes",
+      "year": 2012,
+      "citationCount": 355,
+      "doi": "10.2337/db12-0707",
+      "sourceUrl": "https://doi.org/10.2337/db12-0707",
+      "verified": true
+    },
+    {
+      "title": "Insulin secretion and insulin sensitivity in relation to glucose tolerance: lessons from the Botnia Study.",
+      "journal": "Diabetes",
+      "year": 2000,
+      "citationCount": 354,
+      "doi": "10.2337/diabetes.49.6.975",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.49.6.975",
+      "verified": true
+    },
+    {
+      "title": "Diabetes Mellitus as a Risk Factor for Death From Stroke",
+      "journal": "Stroke",
+      "year": 1996,
+      "citationCount": 318,
+      "doi": "10.1161/01.str.27.2.210",
+      "sourceUrl": "https://doi.org/10.1161/01.str.27.2.210",
+      "verified": true
+    },
+    {
+      "title": "Adult-Onset Autoimmune Diabetes in Europe Is Prevalent With a Broad Clinical Phenotype",
+      "journal": "Diabetes Care",
+      "year": 2012,
+      "citationCount": 318,
+      "doi": "10.2337/dc12-0931",
+      "sourceUrl": "https://doi.org/10.2337/dc12-0931",
+      "verified": true
+    },
+    {
+      "title": "Common Missense Variant in the Glucokinase Regulatory Protein Gene Is Associated With Increased Plasma Triglyceride and C-Reactive Protein but Lower Fasting Glucose Concentrations",
+      "journal": "Diabetes",
+      "year": 2008,
+      "citationCount": 317,
+      "doi": "10.2337/db08-0516",
+      "sourceUrl": "https://doi.org/10.2337/db08-0516",
+      "verified": true
+    },
+    {
+      "title": "Effects of acarbose on cardiovascular and diabetes outcomes in patients with coronary heart disease and impaired glucose tolerance (ACE): a randomised, double-blind, placebo-controlled trial",
+      "journal": "The Lancet Diabetes & Endocrinology",
+      "year": 2017,
+      "citationCount": 316,
+      "doi": "10.1016/s2213-8587(17)30309-1",
+      "sourceUrl": "https://doi.org/10.1016/s2213-8587(17)30309-1",
+      "verified": true
+    },
+    {
+      "title": "Major histocompatibility complex associations of ankylosing spondylitis are complex and involve further epistasis with ERAP1",
+      "journal": "Nature Communications",
+      "year": 2015,
+      "citationCount": 311,
+      "doi": "10.1038/ncomms8146",
+      "sourceUrl": "https://doi.org/10.1038/ncomms8146",
+      "verified": true
+    },
+    {
+      "title": "Haplotype Structure and Genotype-Phenotype Correlations of the Sulfonylurea Receptor and the Islet ATP-Sensitive Potassium Channel Gene Region",
+      "journal": "Diabetes",
+      "year": 2004,
+      "citationCount": 311,
+      "doi": "10.2337/diabetes.53.5.1360",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.53.5.1360",
+      "verified": true
+    },
+    {
+      "title": "The Emerging Global Epidemic of Type 1 Diabetes",
+      "journal": "Current Diabetes Reports",
+      "year": 2013,
+      "citationCount": 293,
+      "doi": "10.1007/s11892-013-0433-5",
+      "sourceUrl": "https://doi.org/10.1007/s11892-013-0433-5",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "openalexId": "https://openalex.org/A5101494462"
 }

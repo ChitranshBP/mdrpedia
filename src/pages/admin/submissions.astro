@@ -1,0 +1,508 @@
+---
+/**
+ * MDRPedia — Admin Submissions Page
+ * Review and manage pending doctor profile submissions
+ */
+import Layout from "../../layouts/Layout.astro";
+import { prisma } from "../../lib/prisma";
+import { requireSuperAdmin } from "../../lib/rbac";
+
+export const prerender = false;
+
+if (!import.meta.env.ADMIN_ACCESS_KEY) {
+    return new Response("ADMIN_ACCESS_KEY not configured", { status: 500 });
+}
+
+if (!requireSuperAdmin(Astro.request)) {
+    return Astro.redirect("/login");
+}
+
+const url = new URL(Astro.request.url);
+const adminKey = url.searchParams.get("key");
+
+let successMsg = "";
+let errorMsg = "";
+
+// Handle POST actions (approve/reject)
+if (Astro.request.method === "POST") {
+    try {
+        const formData = await Astro.request.formData();
+        const submissionId = formData.get("submission_id")?.toString();
+        const action = formData.get("action")?.toString();
+
+        if (submissionId && action) {
+            if (action === "approve") {
+                // Get the pending profile
+                const pending = await prisma.pendingProfile.findUnique({
+                    where: { id: submissionId },
+                });
+
+                if (pending) {
+                    // Create slug from name
+                    const slug = pending.full_name
+                        .toLowerCase()
+                        .replace(/[^a-z0-9]+/g, "-")
+                        .replace(/(^-|-$)/g, "");
+
+                    // Create geography
+                    const geo = await prisma.geography.upsert({
+                        where: {
+                            country_region_city: {
+                                country: pending.country,
+                                region: "",
+                                city: pending.city || "",
+                            },
+                        },
+                        update: {},
+                        create: {
+                            country: pending.country,
+                            city: pending.city,
+                        },
+                    });
+
+                    // Create the profile
+                    await prisma.profile.create({
+                        data: {
+                            slug,
+                            full_name: pending.full_name,
+                            specialty: pending.specialty,
+                            biography: pending.biography,
+                            npi_number: pending.npi_number,
+                            orcid_id: pending.orcid_id,
+                            geography_id: geo.id,
+                            status: "LIVING",
+                            tier: "UNRANKED",
+                        },
+                    });
+
+                    // Update pending status
+                    await prisma.pendingProfile.update({
+                        where: { id: submissionId },
+                        data: {
+                            status: "APPROVED",
+                            reviewed_by: "Super Admin",
+                            reviewed_at: new Date(),
+                        },
+                    });
+
+                    successMsg = `Profile "${pending.full_name}" created successfully.`;
+                }
+            } else if (action === "reject") {
+                await prisma.pendingProfile.update({
+                    where: { id: submissionId },
+                    data: {
+                        status: "REJECTED",
+                        reviewed_by: "Super Admin",
+                        reviewed_at: new Date(),
+                    },
+                });
+                successMsg = "Submission rejected.";
+            }
+        }
+    } catch (e: unknown) {
+        errorMsg = e instanceof Error ? e.message : "Action failed";
+    }
+}
+
+// Fetch pending submissions
+const pendingSubmissions = await prisma.pendingProfile.findMany({
+    where: { status: "PENDING" },
+    orderBy: { createdAt: "desc" },
+});
+
+// Fetch recently reviewed submissions
+const reviewedSubmissions = await prisma.pendingProfile.findMany({
+    where: { status: { not: "PENDING" } },
+    orderBy: { reviewed_at: "desc" },
+    take: 20,
+});
+---
+
+<Layout title="New Submissions — MDRPedia Admin">
+    <div class="container admin-dashboard">
+        <header class="admin-header">
+            <div class="admin-header__top">
+                <span class="badge badge--admin">SUPER ADMIN</span>
+                <h1>New Profile Submissions</h1>
+            </div>
+            <div class="admin-actions">
+                <a href={`/admin?key=${adminKey}`} class="btn btn--outline">
+                    &larr; Dashboard
+                </a>
+            </div>
+        </header>
+
+        {successMsg && <div class="alert success">{successMsg}</div>}
+        {errorMsg && <div class="alert error">{errorMsg}</div>}
+
+        <section class="section">
+            <h2>Pending Review ({pendingSubmissions.length})</h2>
+            <div class="submissions-grid">
+                {pendingSubmissions.length > 0 ? (
+                    pendingSubmissions.map((sub) => (
+                        <div class="submission-card">
+                            <div class="card-header">
+                                <h3>{sub.full_name}</h3>
+                                <span class="specialty">{sub.specialty}</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="info-row">
+                                    <span class="label">Location:</span>
+                                    <span>{sub.city ? `${sub.city}, ` : ""}{sub.country}</span>
+                                </div>
+                                {sub.hospital && (
+                                    <div class="info-row">
+                                        <span class="label">Hospital:</span>
+                                        <span>{sub.hospital}</span>
+                                    </div>
+                                )}
+                                {sub.orcid_id && (
+                                    <div class="info-row">
+                                        <span class="label">ORCID:</span>
+                                        <span class="mono">{sub.orcid_id}</span>
+                                    </div>
+                                )}
+                                {sub.npi_number && (
+                                    <div class="info-row">
+                                        <span class="label">NPI:</span>
+                                        <span class="mono">{sub.npi_number}</span>
+                                    </div>
+                                )}
+                                {sub.biography && (
+                                    <div class="bio-preview">
+                                        <span class="label">Biography:</span>
+                                        <p>{sub.biography.slice(0, 200)}...</p>
+                                    </div>
+                                )}
+                            </div>
+                            <div class="card-meta">
+                                <div class="contributor">
+                                    <span>Submitted by: {sub.contributor_name}</span>
+                                    <small>{sub.contributor_email}</small>
+                                </div>
+                                <span class="date">{sub.createdAt.toLocaleDateString()}</span>
+                            </div>
+                            <div class="card-actions">
+                                <form method="POST" class="action-form">
+                                    <input type="hidden" name="submission_id" value={sub.id} />
+                                    <button type="submit" name="action" value="approve" class="btn btn--success">
+                                        Approve & Create Profile
+                                    </button>
+                                    <button type="submit" name="action" value="reject" class="btn btn--danger">
+                                        Reject
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <div class="empty-state">
+                        <p>No pending submissions.</p>
+                    </div>
+                )}
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Recently Reviewed</h2>
+            <div class="table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Specialty</th>
+                            <th>Status</th>
+                            <th>Reviewed By</th>
+                            <th>Reviewed At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {reviewedSubmissions.length > 0 ? (
+                            reviewedSubmissions.map((sub) => (
+                                <tr>
+                                    <td>{sub.full_name}</td>
+                                    <td>{sub.specialty}</td>
+                                    <td>
+                                        <span class={`status-badge ${sub.status.toLowerCase()}`}>
+                                            {sub.status}
+                                        </span>
+                                    </td>
+                                    <td>{sub.reviewed_by || "—"}</td>
+                                    <td>{sub.reviewed_at?.toLocaleDateString() || "—"}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colspan="5" class="empty-state">
+                                    No reviewed submissions yet.
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</Layout>
+
+<style>
+    .admin-dashboard {
+        padding: 40px 20px;
+        max-width: 1400px;
+        color: var(--text-primary);
+    }
+
+    .admin-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+    }
+
+    .admin-header__top {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .badge--admin {
+        background: #ffd700;
+        color: #000;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        align-self: flex-start;
+    }
+
+    h1 {
+        font-family: var(--font-serif);
+        font-size: 2rem;
+        margin: 0;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+        margin-bottom: 16px;
+        color: var(--text-secondary);
+    }
+
+    .section {
+        margin-bottom: 48px;
+    }
+
+    .alert {
+        padding: 12px 16px;
+        border-radius: 6px;
+        margin-bottom: 24px;
+    }
+
+    .success {
+        background: rgba(16, 185, 129, 0.15);
+        color: #10b981;
+        border: 1px solid #10b981;
+    }
+
+    .error {
+        background: rgba(239, 68, 68, 0.15);
+        color: #ef4444;
+        border: 1px solid #ef4444;
+    }
+
+    .submissions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        gap: 24px;
+    }
+
+    .submission-card {
+        background: var(--bg-card, #14142a);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .card-header {
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.02);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .card-header h3 {
+        margin: 0 0 4px 0;
+        font-size: 1.25rem;
+        color: white;
+    }
+
+    .specialty {
+        color: var(--accent-purple);
+        font-size: 0.9rem;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .info-row {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+    }
+
+    .label {
+        color: var(--text-muted);
+        min-width: 80px;
+    }
+
+    .mono {
+        font-family: monospace;
+        color: var(--text-secondary);
+    }
+
+    .bio-preview {
+        margin-top: 16px;
+    }
+
+    .bio-preview p {
+        margin: 8px 0 0 0;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .card-meta {
+        padding: 12px 20px;
+        background: rgba(0, 0, 0, 0.2);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.85rem;
+    }
+
+    .contributor {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .contributor small {
+        color: var(--text-muted);
+    }
+
+    .date {
+        color: var(--text-muted);
+    }
+
+    .card-actions {
+        padding: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .action-form {
+        display: flex;
+        gap: 12px;
+    }
+
+    .table-container {
+        background: var(--bg-card, #14142a);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        overflow-x: auto;
+    }
+
+    .admin-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        padding: 14px 16px;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .admin-table th {
+        background: rgba(255, 255, 255, 0.03);
+        font-weight: 600;
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .status-badge {
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .status-badge.approved {
+        background: rgba(34, 197, 94, 0.15);
+        color: #22c55e;
+    }
+
+    .status-badge.rejected {
+        background: rgba(239, 68, 68, 0.15);
+        color: #ef4444;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: var(--text-muted);
+        background: var(--bg-card, #14142a);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+    }
+
+    .btn {
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        border: none;
+        transition: all 0.2s;
+        flex: 1;
+    }
+
+    .btn--outline {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--text-primary);
+    }
+
+    .btn--success {
+        background: rgba(34, 197, 94, 0.2);
+        color: #22c55e;
+        border: 1px solid #22c55e;
+    }
+
+    .btn--success:hover {
+        background: rgba(34, 197, 94, 0.3);
+    }
+
+    .btn--danger {
+        background: rgba(239, 68, 68, 0.2);
+        color: #ef4444;
+        border: 1px solid #ef4444;
+    }
+
+    .btn--danger:hover {
+        background: rgba(239, 68, 68, 0.3);
+    }
+
+    @media (max-width: 500px) {
+        .submissions-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

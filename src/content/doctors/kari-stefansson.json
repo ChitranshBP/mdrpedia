@@ -1,36 +1,485 @@
 {
   "fullName": "Kari Stefansson",
   "slug": "kari-stefansson",
-  "title": "MD, PhD",
-  "specialty": "Population Genetics",
+  "title": "MD",
+  "specialty": "Medicine",
   "geography": {
+    "country": "Unknown",
     "city": "Unknown",
-    "country": "Iceland"
+    "region": "Unknown"
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">KS</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 65,
-  "hIndex": 260,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 217,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 27417,
+  "livesSaved": 0,
+  "biography": "Dr. Kari Stefansson is an Icelandic geneticist and founder of deCODE genetics. He led pioneering studies on the human genome using the Icelandic population to identify genetic risk factors for many common diseases.",
+  "aiSummary": "Kari Stefansson is a medicine specialist with an H-index of 217. Has been published in New England Journal of Medicine, Nature Genetics, Nature. Based in Unknown, Unknown, Unknown.",
+  "portraitUrl": "https://www.decode.com/wp-content/uploads/2017/05/Kari-Stefansson-1.jpg",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "deCODE Genetics"
-    }
-  ],
-  "bio": "Kari Stefansson is a pioneer in Population Genetics at deCODE Genetics, Iceland. With a D-Index of 260 and over 274,167 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [],
+  "medicalSpecialty": [
+    "Medicine"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Variant of <i>TREM2</i> Associated with the Risk of Alzheimer's Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 2012,
+      "citationCount": 2516,
+      "doi": "10.1056/nejmoa1211103",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1211103",
+      "verified": true
+    },
+    {
+      "title": "Identification of common genetic risk variants for autism spectrum disorder",
+      "journal": "Nature Genetics",
+      "year": 2019,
+      "citationCount": 2487,
+      "doi": "10.1038/s41588-019-0344-8",
+      "sourceUrl": "https://doi.org/10.1038/s41588-019-0344-8",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide meta-analysis identifies new loci and functional pathways influencing Alzheimer’s disease risk",
+      "journal": "Nature Genetics",
+      "year": 2019,
+      "citationCount": 2419,
+      "doi": "10.1038/s41588-018-0311-9",
+      "sourceUrl": "https://doi.org/10.1038/s41588-018-0311-9",
+      "verified": true
+    },
+    {
+      "title": "Variant of transcription factor 7-like 2 (TCF7L2) gene confers risk of type 2 diabetes",
+      "journal": "Nature Genetics",
+      "year": 2006,
+      "citationCount": 2251,
+      "doi": "10.1038/ng1732",
+      "sourceUrl": "https://doi.org/10.1038/ng1732",
+      "verified": true
+    },
+    {
+      "title": "Discovery of the first genome-wide significant risk loci for attention deficit/hyperactivity disorder",
+      "journal": "Nature Genetics",
+      "year": 2018,
+      "citationCount": 2250,
+      "doi": "10.1038/s41588-018-0269-7",
+      "sourceUrl": "https://doi.org/10.1038/s41588-018-0269-7",
+      "verified": true
+    },
+    {
+      "title": "Rate of de novo mutations and the importance of father’s age to disease risk",
+      "journal": "Nature",
+      "year": 2012,
+      "citationCount": 2211,
+      "doi": "10.1038/nature11396",
+      "sourceUrl": "https://doi.org/10.1038/nature11396",
+      "verified": true
+    },
+    {
+      "title": "Large-scale meta-analysis of genome-wide association data identifies six new risk loci for Parkinson's disease",
+      "journal": "Nature Genetics",
+      "year": 2014,
+      "citationCount": 1906,
+      "doi": "10.1038/ng.3043",
+      "sourceUrl": "https://doi.org/10.1038/ng.3043",
+      "verified": true
+    },
+    {
+      "title": "Meta-analysis of genome-wide association data and large-scale replication identifies additional susceptibility loci for type 2 diabetes",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 1864,
+      "doi": "10.1038/ng.120",
+      "sourceUrl": "https://doi.org/10.1038/ng.120",
+      "verified": true
+    },
+    {
+      "title": "Large recurrent microdeletions associated with schizophrenia",
+      "journal": "Nature",
+      "year": 2008,
+      "citationCount": 1760,
+      "doi": "10.1038/nature07229",
+      "sourceUrl": "https://doi.org/10.1038/nature07229",
+      "verified": true
+    },
+    {
+      "title": "A high-resolution recombination map of the human genome",
+      "journal": "Nature Genetics",
+      "year": 2002,
+      "citationCount": 1745,
+      "doi": "10.1038/ng917",
+      "sourceUrl": "https://doi.org/10.1038/ng917",
+      "verified": true
+    },
+    {
+      "title": "Common variants conferring risk of schizophrenia",
+      "journal": "Nature",
+      "year": 2009,
+      "citationCount": 1703,
+      "doi": "10.1038/nature08186",
+      "sourceUrl": "https://doi.org/10.1038/nature08186",
+      "verified": true
+    },
+    {
+      "title": "A mutation in APP protects against Alzheimer’s disease and age-related cognitive decline",
+      "journal": "Nature",
+      "year": 2012,
+      "citationCount": 1687,
+      "doi": "10.1038/nature11283",
+      "sourceUrl": "https://doi.org/10.1038/nature11283",
+      "verified": true
+    },
+    {
+      "title": "Common schizophrenia alleles are enriched in mutation-intolerant genes and in regions under strong background selection",
+      "journal": "Nature Genetics",
+      "year": 2018,
+      "citationCount": 1684,
+      "doi": "10.1038/s41588-018-0059-2",
+      "sourceUrl": "https://doi.org/10.1038/s41588-018-0059-2",
+      "verified": true
+    },
+    {
+      "title": "Neuregulin 1 and Susceptibility to Schizophrenia",
+      "journal": "The American Journal of Human Genetics",
+      "year": 2002,
+      "citationCount": 1656,
+      "doi": "10.1086/342734",
+      "sourceUrl": "https://doi.org/10.1086/342734",
+      "verified": true
+    },
+    {
+      "title": "A Common Variant on Chromosome 9p21 Affects the Risk of Myocardial Infarction",
+      "journal": "Science",
+      "year": 2007,
+      "citationCount": 1588,
+      "doi": "10.1126/science.1142842",
+      "sourceUrl": "https://doi.org/10.1126/science.1142842",
+      "verified": true
+    },
+    {
+      "title": "A variant associated with nicotine dependence, lung cancer and peripheral arterial disease",
+      "journal": "Nature",
+      "year": 2008,
+      "citationCount": 1515,
+      "doi": "10.1038/nature06846",
+      "sourceUrl": "https://doi.org/10.1038/nature06846",
+      "verified": true
+    },
+    {
+      "title": "Large-scale integration of the plasma proteome with genetics and disease",
+      "journal": "Nature Genetics",
+      "year": 2021,
+      "citationCount": 1493,
+      "doi": "10.1038/s41588-021-00978-w",
+      "sourceUrl": "https://doi.org/10.1038/s41588-021-00978-w",
+      "verified": true
+    },
+    {
+      "title": "Spread of SARS-CoV-2 in the Icelandic Population",
+      "journal": "New England Journal of Medicine",
+      "year": 2020,
+      "citationCount": 1409,
+      "doi": "10.1056/nejmoa2006100",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa2006100",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide association yields new sequence variants at seven loci that associate with measures of obesity",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 1396,
+      "doi": "10.1038/ng.274",
+      "sourceUrl": "https://doi.org/10.1038/ng.274",
+      "verified": true
+    },
+    {
+      "title": "Genetics of gene expression and its effect on disease",
+      "journal": "Nature",
+      "year": 2008,
+      "citationCount": 1322,
+      "doi": "10.1038/nature06758",
+      "sourceUrl": "https://doi.org/10.1038/nature06758",
+      "verified": true
+    },
+    {
+      "title": "Variants in ELL2 influencing immunoglobulin levels associate with multiple myeloma",
+      "journal": "Nature Communications",
+      "year": 2015,
+      "citationCount": 1208,
+      "doi": "10.1038/ncomms8213",
+      "sourceUrl": "https://doi.org/10.1038/ncomms8213",
+      "verified": true
+    },
+    {
+      "title": "A mega-analysis of genome-wide association studies for major depressive disorder",
+      "journal": "Molecular Psychiatry",
+      "year": 2012,
+      "citationCount": 1153,
+      "doi": "10.1038/mp.2012.21",
+      "sourceUrl": "https://doi.org/10.1038/mp.2012.21",
+      "verified": true
+    },
+    {
+      "title": "A variant in CDKAL1 influences insulin response and risk of type 2 diabetes",
+      "journal": "Nature Genetics",
+      "year": 2007,
+      "citationCount": 1074,
+      "doi": "10.1038/ng2043",
+      "sourceUrl": "https://doi.org/10.1038/ng2043",
+      "verified": true
+    },
+    {
+      "title": "Humoral Immune Response to SARS-CoV-2 in Iceland",
+      "journal": "New England Journal of Medicine",
+      "year": 2020,
+      "citationCount": 1030,
+      "doi": "10.1056/nejmoa2026116",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa2026116",
+      "verified": true
+    },
+    {
+      "title": "The nature of nurture: Effects of parental genotypes",
+      "journal": "Science",
+      "year": 2018,
+      "citationCount": 986,
+      "doi": "10.1126/science.aan6877",
+      "sourceUrl": "https://doi.org/10.1126/science.aan6877",
+      "verified": true
+    },
+    {
+      "title": "Variants conferring risk of atrial fibrillation on chromosome 4q25",
+      "journal": "Nature",
+      "year": 2007,
+      "citationCount": 943,
+      "doi": "10.1038/nature06007",
+      "sourceUrl": "https://doi.org/10.1038/nature06007",
+      "verified": true
+    },
+    {
+      "title": "The gene encoding 5-lipoxygenase activating protein confers risk of myocardial infarction and stroke",
+      "journal": "Nature Genetics",
+      "year": 2004,
+      "citationCount": 924,
+      "doi": "10.1038/ng1311",
+      "sourceUrl": "https://doi.org/10.1038/ng1311",
+      "verified": true
+    },
+    {
+      "title": "Biobank-driven genomic discovery yields new insight into atrial fibrillation biology",
+      "journal": "Nature Genetics",
+      "year": 2018,
+      "citationCount": 897,
+      "doi": "10.1038/s41588-018-0171-3",
+      "sourceUrl": "https://doi.org/10.1038/s41588-018-0171-3",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide association study identifies a second prostate cancer susceptibility variant at 8q24",
+      "journal": "Nature Genetics",
+      "year": 2007,
+      "citationCount": 865,
+      "doi": "10.1038/ng1999",
+      "sourceUrl": "https://doi.org/10.1038/ng1999",
+      "verified": true
+    },
+    {
+      "title": "De novo CNV analysis implicates specific abnormalities of postsynaptic signalling complexes in the pathogenesis of schizophrenia",
+      "journal": "Molecular Psychiatry",
+      "year": 2011,
+      "citationCount": 864,
+      "doi": "10.1038/mp.2011.154",
+      "sourceUrl": "https://doi.org/10.1038/mp.2011.154",
+      "verified": true
+    },
+    {
+      "title": "A common inversion under selection in Europeans",
+      "journal": "Nature Genetics",
+      "year": 2005,
+      "citationCount": 859,
+      "doi": "10.1038/ng1508",
+      "sourceUrl": "https://doi.org/10.1038/ng1508",
+      "verified": true
+    },
+    {
+      "title": "Large-scale whole-genome sequencing of the Icelandic population",
+      "journal": "Nature Genetics",
+      "year": 2015,
+      "citationCount": 810,
+      "doi": "10.1038/ng.3247",
+      "sourceUrl": "https://doi.org/10.1038/ng.3247",
+      "verified": true
+    },
+    {
+      "title": "A common variant associated with prostate cancer in European and African populations",
+      "journal": "Nature Genetics",
+      "year": 2006,
+      "citationCount": 787,
+      "doi": "10.1038/ng1808",
+      "sourceUrl": "https://doi.org/10.1038/ng1808",
+      "verified": true
+    },
+    {
+      "title": "Common variants on chromosomes 2q35 and 16q12 confer susceptibility to estrogen receptor–positive breast cancer",
+      "journal": "Nature Genetics",
+      "year": 2007,
+      "citationCount": 783,
+      "doi": "10.1038/ng2064",
+      "sourceUrl": "https://doi.org/10.1038/ng2064",
+      "verified": true
+    },
+    {
+      "title": "Mapping cis- and trans-regulatory effects across multiple tissues in twins",
+      "journal": "Nature Genetics",
+      "year": 2012,
+      "citationCount": 778,
+      "doi": "10.1038/ng.2394",
+      "sourceUrl": "https://doi.org/10.1038/ng.2394",
+      "verified": true
+    },
+    {
+      "title": "Clonal hematopoiesis, with and without candidate driver mutations, is common in the elderly",
+      "journal": "Blood",
+      "year": 2017,
+      "citationCount": 765,
+      "doi": "10.1182/blood-2017-02-769869",
+      "sourceUrl": "https://doi.org/10.1182/blood-2017-02-769869",
+      "verified": true
+    },
+    {
+      "title": "Sequence variants affecting eosinophil numbers associate with asthma and myocardial infarction",
+      "journal": "Nature Genetics",
+      "year": 2009,
+      "citationCount": 759,
+      "doi": "10.1038/ng.323",
+      "sourceUrl": "https://doi.org/10.1038/ng.323",
+      "verified": true
+    },
+    {
+      "title": "Genetic determinants of hair, eye and skin pigmentation in Europeans",
+      "journal": "Nature Genetics",
+      "year": 2007,
+      "citationCount": 748,
+      "doi": "10.1038/ng.2007.13",
+      "sourceUrl": "https://doi.org/10.1038/ng.2007.13",
+      "verified": true
+    },
+    {
+      "title": "The same sequence variant on 9p21 associates with myocardial infarction, abdominal aortic aneurysm and intracranial aneurysm",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 723,
+      "doi": "10.1038/ng.72",
+      "sourceUrl": "https://doi.org/10.1038/ng.72",
+      "verified": true
+    },
+    {
+      "title": "Two variants on chromosome 17 confer prostate cancer risk, and the one in TCF2 protects against type 2 diabetes",
+      "journal": "Nature Genetics",
+      "year": 2007,
+      "citationCount": 722,
+      "doi": "10.1038/ng2062",
+      "sourceUrl": "https://doi.org/10.1038/ng2062",
+      "verified": true
+    },
+    {
+      "title": "Sequence variants at CHRNB3–CHRNA6 and CYP2A6 affect smoking behavior",
+      "journal": "Nature Genetics",
+      "year": 2010,
+      "citationCount": 691,
+      "doi": "10.1038/ng.573",
+      "sourceUrl": "https://doi.org/10.1038/ng.573",
+      "verified": true
+    },
+    {
+      "title": "Meta-analysis of 375,000 individuals identifies 38 susceptibility loci for migraine",
+      "journal": "Nature Genetics",
+      "year": 2016,
+      "citationCount": 678,
+      "doi": "10.1038/ng.3598",
+      "sourceUrl": "https://doi.org/10.1038/ng.3598",
+      "verified": true
+    },
+    {
+      "title": "Common Sequence Variants in the <i>LOXL1</i> Gene Confer Susceptibility to Exfoliation Glaucoma",
+      "journal": "Science",
+      "year": 2007,
+      "citationCount": 673,
+      "doi": "10.1126/science.1146554",
+      "sourceUrl": "https://doi.org/10.1126/science.1146554",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide analyses of ADHD identify 27 risk loci, refine the genetic architecture and implicate several cognitive domains",
+      "journal": "Nature Genetics",
+      "year": 2023,
+      "citationCount": 672,
+      "doi": "10.1038/s41588-022-01285-8",
+      "sourceUrl": "https://doi.org/10.1038/s41588-022-01285-8",
+      "verified": true
+    },
+    {
+      "title": "Many sequence variants affecting diversity of adult human height",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 671,
+      "doi": "10.1038/ng.122",
+      "sourceUrl": "https://doi.org/10.1038/ng.122",
+      "verified": true
+    },
+    {
+      "title": "Large-scale genome-wide meta-analysis of polycystic ovary syndrome suggests shared genetic architecture for different diagnosis criteria",
+      "journal": "PLoS Genetics",
+      "year": 2018,
+      "citationCount": 661,
+      "doi": "10.1371/journal.pgen.1007813",
+      "sourceUrl": "https://doi.org/10.1371/journal.pgen.1007813",
+      "verified": true
+    },
+    {
+      "title": "Association Between Microdeletion and Microduplication at 16p11.2 and Autism",
+      "journal": "Obstetrical & Gynecological Survey",
+      "year": 2008,
+      "citationCount": 654,
+      "doi": "10.1097/01.ogx.0000316305.61461.6f",
+      "sourceUrl": "https://doi.org/10.1097/01.ogx.0000316305.61461.6f",
+      "verified": true
+    },
+    {
+      "title": "Fine-scale recombination rate differences between sexes, populations and individuals",
+      "journal": "Nature",
+      "year": 2010,
+      "citationCount": 641,
+      "doi": "10.1038/nature09525",
+      "sourceUrl": "https://doi.org/10.1038/nature09525",
+      "verified": true
+    },
+    {
+      "title": "Discovery and systematic characterization of risk variants and genes for coronary artery disease in over a million participants",
+      "journal": "Nature Genetics",
+      "year": 2022,
+      "citationCount": 627,
+      "doi": "10.1038/s41588-022-01233-6",
+      "sourceUrl": "https://doi.org/10.1038/s41588-022-01233-6",
+      "verified": true
+    },
+    {
+      "title": "Parental influence on human germline de novo mutations in 1,548 trios from Iceland",
+      "journal": "Nature",
+      "year": 2017,
+      "citationCount": 614,
+      "doi": "10.1038/nature24018",
+      "sourceUrl": "https://doi.org/10.1038/nature24018",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "openalexId": "https://openalex.org/A5018239255"
 }

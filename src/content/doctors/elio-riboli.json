@@ -1,36 +1,493 @@
 {
   "fullName": "Elio Riboli",
   "slug": "elio-riboli",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Cancer Epidemiology",
   "geography": {
-    "city": "Unknown",
-    "country": "UK"
+    "country": "United Kingdom",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">ER</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 51,
-  "hIndex": 204,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 179,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 17130,
+  "livesSaved": 0,
+  "biography": "5 A Day is any of various national campaigns in developed countries such as the United States, the United Kingdom, France, and Germany, to encourage the consumption of at least five portions of 80 g of fruit and vegetables each day, following a recommendation by the World Health Organization that individuals consume \"a minimum of 400g of fruit and vegetables per day .\" A meta-analysis of the many studies of this issue was published in 2017 and found that consumption of double the minimum recommendation – 800g or ten a day – provided an increased protection against all forms of mortality. In some places, people are being encouraged to aim for not just five portions a day, but seven.",
+  "aiSummary": "Elio Riboli is a cancer epidemiology specialist with an H-index of 179 at Imperial College London (Faculty). Has been published in New England Journal of Medicine, JAMA Internal Medicine, Nature. Based in United Kingdom.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Imperial College London"
-    }
-  ],
-  "bio": "Elio Riboli is a pioneer in Cancer Epidemiology at Imperial College London, UK. With a D-Index of 204 and over 171,304 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Imperial College London",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Cancer Epidemiology"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Food, nutrition, physical activity, and the prevention of cancer: a global perspective",
+      "journal": "Choice Reviews Online",
+      "year": 2008,
+      "citationCount": 5391,
+      "doi": "10.5860/choice.45-5024",
+      "sourceUrl": "https://doi.org/10.5860/choice.45-5024",
+      "verified": true
+    },
+    {
+      "title": "Fruit and vegetable intake and the risk of cardiovascular disease, total cancer and all-cause mortality—a systematic review and dose-response meta-analysis of prospective studies",
+      "journal": "International Journal of Epidemiology",
+      "year": 2016,
+      "citationCount": 2332,
+      "doi": "10.1093/ije/dyw319",
+      "sourceUrl": "https://doi.org/10.1093/ije/dyw319",
+      "verified": true
+    },
+    {
+      "title": "General and Abdominal Adiposity and Risk of Death in Europe",
+      "journal": "New England Journal of Medicine",
+      "year": 2008,
+      "citationCount": 2151,
+      "doi": "10.1056/nejmoa0801891",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa0801891",
+      "verified": true
+    },
+    {
+      "title": "Diet, nutrition and the prevention of chronic diseases",
+      "journal": "Deakin Research Online (Deakin University)",
+      "year": 2003,
+      "citationCount": 1990,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2473408579",
+      "verified": true
+    },
+    {
+      "title": "European Prospective Investigation into Cancer and Nutrition (EPIC): study populations and data collection",
+      "journal": "Public Health Nutrition",
+      "year": 2002,
+      "citationCount": 1835,
+      "doi": "10.1079/phn2002394",
+      "sourceUrl": "https://doi.org/10.1079/phn2002394",
+      "verified": true
+    },
+    {
+      "title": "Association of Leisure-Time Physical Activity With Risk of 26 Types of Cancer in 1.44 Million Adults",
+      "journal": "JAMA Internal Medicine",
+      "year": 2016,
+      "citationCount": 1423,
+      "doi": "10.1001/jamainternmed.2016.1548",
+      "sourceUrl": "https://doi.org/10.1001/jamainternmed.2016.1548",
+      "verified": true
+    },
+    {
+      "title": "A susceptibility locus for lung cancer maps to nicotinic acetylcholine receptor subunit genes on 15q25",
+      "journal": "Nature",
+      "year": 2008,
+      "citationCount": 1283,
+      "doi": "10.1038/nature06885",
+      "sourceUrl": "https://doi.org/10.1038/nature06885",
+      "verified": true
+    },
+    {
+      "title": "Epidemiologic evidence of the protective effect of fruit and vegetables on cancer risk",
+      "journal": "American Journal of Clinical Nutrition",
+      "year": 2003,
+      "citationCount": 1179,
+      "doi": "10.1093/ajcn/78.3.559s",
+      "sourceUrl": "https://doi.org/10.1093/ajcn/78.3.559s",
+      "verified": true
+    },
+    {
+      "title": "Dietary fibre in food and protection against colorectal cancer in the European Prospective Investigation into Cancer and Nutrition (EPIC): an observational study",
+      "journal": "The Lancet",
+      "year": 2003,
+      "citationCount": 1118,
+      "doi": "10.1016/s0140-6736(03)13174-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(03)13174-1",
+      "verified": true
+    },
+    {
+      "title": "Whole grain consumption and risk of cardiovascular disease, cancer, and all cause and cause specific mortality: systematic review and dose-response meta-analysis of prospective studies",
+      "journal": "BMJ",
+      "year": 2016,
+      "citationCount": 977,
+      "doi": "10.1136/bmj.i2716",
+      "sourceUrl": "https://doi.org/10.1136/bmj.i2716",
+      "verified": true
+    },
+    {
+      "title": "The EPIC Project: rationale and study design. European Prospective Investigation into Cancer and Nutrition",
+      "journal": "International Journal of Epidemiology",
+      "year": 1997,
+      "citationCount": 924,
+      "doi": "10.1093/ije/26.suppl_1.s6",
+      "sourceUrl": "https://doi.org/10.1093/ije/26.suppl_1.s6",
+      "verified": true
+    },
+    {
+      "title": "Meat, Fish, and Colorectal Cancer Risk: The European Prospective Investigation into Cancer and Nutrition",
+      "journal": "JNCI Journal of the National Cancer Institute",
+      "year": 2005,
+      "citationCount": 857,
+      "doi": "10.1093/jnci/dji164",
+      "sourceUrl": "https://doi.org/10.1093/jnci/dji164",
+      "verified": true
+    },
+    {
+      "title": "Prediction of acute myeloid leukaemia risk in healthy individuals",
+      "journal": "Nature",
+      "year": 2018,
+      "citationCount": 840,
+      "doi": "10.1038/s41586-018-0317-6",
+      "sourceUrl": "https://doi.org/10.1038/s41586-018-0317-6",
+      "verified": true
+    },
+    {
+      "title": "Modified Mediterranean diet and survival: EPIC-elderly prospective cohort study",
+      "journal": "BMJ",
+      "year": 2005,
+      "citationCount": 756,
+      "doi": "10.1136/bmj.38415.644155.8f",
+      "sourceUrl": "https://doi.org/10.1136/bmj.38415.644155.8f",
+      "verified": true
+    },
+    {
+      "title": "Behavioral and Dietary Risk Factors for Noncommunicable Diseases",
+      "journal": "New England Journal of Medicine",
+      "year": 2013,
+      "citationCount": 729,
+      "doi": "10.1056/nejmra1203528",
+      "sourceUrl": "https://doi.org/10.1056/nejmra1203528",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide association scan identifies a colorectal cancer susceptibility locus on chromosome 8q24",
+      "journal": "Nature Genetics",
+      "year": 2007,
+      "citationCount": 727,
+      "doi": "10.1038/ng2089",
+      "sourceUrl": "https://doi.org/10.1038/ng2089",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide association study identifies variants in the ABO locus associated with susceptibility to pancreatic cancer",
+      "journal": "Nature Genetics",
+      "year": 2009,
+      "citationCount": 714,
+      "doi": "10.1038/ng.429",
+      "sourceUrl": "https://doi.org/10.1038/ng.429",
+      "verified": true
+    },
+    {
+      "title": "Physical activity and risks of breast and colorectal cancer: a Mendelian randomisation analysis",
+      "journal": "Nature Communications",
+      "year": 2020,
+      "citationCount": 670,
+      "doi": "10.1038/s41467-020-14389-8",
+      "sourceUrl": "https://doi.org/10.1038/s41467-020-14389-8",
+      "verified": true
+    },
+    {
+      "title": "A genome-wide association study identifies pancreatic cancer susceptibility loci on chromosomes 13q22.1, 1q32.1 and 5p15.33",
+      "journal": "Nature Genetics",
+      "year": 2010,
+      "citationCount": 604,
+      "doi": "10.1038/ng.522",
+      "sourceUrl": "https://doi.org/10.1038/ng.522",
+      "verified": true
+    },
+    {
+      "title": "Body size and breast cancer risk: Findings from the European prospective investigation into cancer and nutrition (EPIC)",
+      "journal": "International Journal of Cancer",
+      "year": 2004,
+      "citationCount": 579,
+      "doi": "10.1002/ijc.20315",
+      "sourceUrl": "https://doi.org/10.1002/ijc.20315",
+      "verified": true
+    },
+    {
+      "title": "Body Size and Risk of Colon and Rectal Cancer in the European Prospective Investigation Into Cancer and Nutrition (EPIC)",
+      "journal": "JNCI Journal of the National Cancer Institute",
+      "year": 2006,
+      "citationCount": 555,
+      "doi": "10.1093/jnci/djj246",
+      "sourceUrl": "https://doi.org/10.1093/jnci/djj246",
+      "verified": true
+    },
+    {
+      "title": "Identification of 23 new prostate cancer susceptibility loci using the iCOGS custom genotyping array",
+      "journal": "Nature Genetics",
+      "year": 2013,
+      "citationCount": 547,
+      "doi": "10.1038/ng.2560",
+      "sourceUrl": "https://doi.org/10.1038/ng.2560",
+      "verified": true
+    },
+    {
+      "title": "Differences in the prospective association between individual plasma phospholipid saturated fatty acids and incident type 2 diabetes: the EPIC-InterAct case-cohort study",
+      "journal": "The Lancet Diabetes & Endocrinology",
+      "year": 2014,
+      "citationCount": 542,
+      "doi": "10.1016/s2213-8587(14)70146-9",
+      "sourceUrl": "https://doi.org/10.1016/s2213-8587(14)70146-9",
+      "verified": true
+    },
+    {
+      "title": "Postmenopausal serum androgens, oestrogens and breast cancer risk: the European prospective investigation into cancer and nutrition",
+      "journal": "Endocrine Related Cancer",
+      "year": 2005,
+      "citationCount": 513,
+      "doi": "10.1677/erc.1.01038",
+      "sourceUrl": "https://doi.org/10.1677/erc.1.01038",
+      "verified": true
+    },
+    {
+      "title": "Dietary Intake of Fiber and Decreased Risk of Cancers of the Colon and Rectum: Evidence From the Combined Analysis of 13 Case-Control Studies",
+      "journal": "JNCI Journal of the National Cancer Institute",
+      "year": 1992,
+      "citationCount": 507,
+      "doi": "10.1093/jnci/84.24.1887",
+      "sourceUrl": "https://doi.org/10.1093/jnci/84.24.1887",
+      "verified": true
+    },
+    {
+      "title": "Meat consumption and colorectal cancer risk: Dose‐response meta‐analysis of epidemiological studies",
+      "journal": "International Journal of Cancer",
+      "year": 2001,
+      "citationCount": 499,
+      "doi": "10.1002/ijc.10126",
+      "sourceUrl": "https://doi.org/10.1002/ijc.10126",
+      "verified": true
+    },
+    {
+      "title": "Effect of delays in the 2-week-wait cancer referral pathway during the COVID-19 pandemic on cancer survival in the UK: a modelling study",
+      "journal": "The Lancet Oncology",
+      "year": 2020,
+      "citationCount": 486,
+      "doi": "10.1016/s1470-2045(20)30392-2",
+      "sourceUrl": "https://doi.org/10.1016/s1470-2045(20)30392-2",
+      "verified": true
+    },
+    {
+      "title": "A multi-stage genome-wide association study of bladder cancer identifies multiple susceptibility loci",
+      "journal": "Nature Genetics",
+      "year": 2010,
+      "citationCount": 485,
+      "doi": "10.1038/ng.687",
+      "sourceUrl": "https://doi.org/10.1038/ng.687",
+      "verified": true
+    },
+    {
+      "title": "The EPIC Project: Rationale and study design",
+      "journal": "International Journal of Epidemiology",
+      "year": 1997,
+      "citationCount": 476,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2493907721",
+      "verified": true
+    },
+    {
+      "title": "Lung Cancer Occurrence in Never-Smokers: An Analysis of 13 Cohorts and 22 Cancer Registry Studies",
+      "journal": "PLoS Medicine",
+      "year": 2008,
+      "citationCount": 476,
+      "doi": "10.1371/journal.pmed.0050185",
+      "sourceUrl": "https://doi.org/10.1371/journal.pmed.0050185",
+      "verified": true
+    },
+    {
+      "title": "Rare variants of large effect in BRCA2 and CHEK2 affect risk of lung cancer",
+      "journal": "Nature Genetics",
+      "year": 2014,
+      "citationCount": 472,
+      "doi": "10.1038/ng.3002",
+      "sourceUrl": "https://doi.org/10.1038/ng.3002",
+      "verified": true
+    },
+    {
+      "title": "Trans-ancestry genome-wide association meta-analysis of prostate cancer identifies new susceptibility loci and informs genetic risk prediction",
+      "journal": "Nature Genetics",
+      "year": 2021,
+      "citationCount": 470,
+      "doi": "10.1038/s41588-020-00748-0",
+      "sourceUrl": "https://doi.org/10.1038/s41588-020-00748-0",
+      "verified": true
+    },
+    {
+      "title": "Bias in dietary-report instruments and its implications for nutritional epidemiology",
+      "journal": "Public Health Nutrition",
+      "year": 2002,
+      "citationCount": 452,
+      "doi": "10.1079/phn2002383",
+      "sourceUrl": "https://doi.org/10.1079/phn2002383",
+      "verified": true
+    },
+    {
+      "title": "Fruit and Vegetable Intake and Overall Cancer Risk in the European Prospective Investigation Into Cancer and Nutrition (EPIC)",
+      "journal": "JNCI Journal of the National Cancer Institute",
+      "year": 2010,
+      "citationCount": 441,
+      "doi": "10.1093/jnci/djq072",
+      "sourceUrl": "https://doi.org/10.1093/jnci/djq072",
+      "verified": true
+    },
+    {
+      "title": "Meat consumption and mortality - results from the European Prospective Investigation into Cancer and Nutrition",
+      "journal": "BMC Medicine",
+      "year": 2013,
+      "citationCount": 440,
+      "doi": "10.1186/1741-7015-11-63",
+      "sourceUrl": "https://doi.org/10.1186/1741-7015-11-63",
+      "verified": true
+    },
+    {
+      "title": "Serum Sex Steroids in Premenopausal Women and Breast Cancer Risk Within the European Prospective Investigation into Cancer and Nutrition (EPIC)",
+      "journal": "JNCI Journal of the National Cancer Institute",
+      "year": 2005,
+      "citationCount": 422,
+      "doi": "10.1093/jnci/dji132",
+      "sourceUrl": "https://doi.org/10.1093/jnci/dji132",
+      "verified": true
+    },
+    {
+      "title": "Dietary polyphenol intake in Europe: the European Prospective Investigation into Cancer and Nutrition (EPIC) study",
+      "journal": "European Journal of Nutrition",
+      "year": 2015,
+      "citationCount": 417,
+      "doi": "10.1007/s00394-015-0950-x",
+      "sourceUrl": "https://doi.org/10.1007/s00394-015-0950-x",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide association studies identify four ER negative–specific breast cancer risk loci",
+      "journal": "Nature Genetics",
+      "year": 2013,
+      "citationCount": 416,
+      "doi": "10.1038/ng.2561",
+      "sourceUrl": "https://doi.org/10.1038/ng.2561",
+      "verified": true
+    },
+    {
+      "title": "Association Between Low-Density Lipoprotein Cholesterol–Lowering Genetic Variants and Risk of Type 2 Diabetes",
+      "journal": "JAMA",
+      "year": 2016,
+      "citationCount": 407,
+      "doi": "10.1001/jama.2016.14568",
+      "sourceUrl": "https://doi.org/10.1001/jama.2016.14568",
+      "verified": true
+    },
+    {
+      "title": "Plasma antibodies to oral bacteria and risk of pancreatic cancer in a large European prospective cohort study",
+      "journal": "Gut",
+      "year": 2012,
+      "citationCount": 402,
+      "doi": "10.1136/gutjnl-2012-303006",
+      "sourceUrl": "https://doi.org/10.1136/gutjnl-2012-303006",
+      "verified": true
+    },
+    {
+      "title": "Nut consumption and risk of cardiovascular disease, total cancer, all-cause and cause-specific mortality: a systematic review and dose-response meta-analysis of prospective studies",
+      "journal": "BMC Medicine",
+      "year": 2016,
+      "citationCount": 402,
+      "doi": "10.1186/s12916-016-0730-3",
+      "sourceUrl": "https://doi.org/10.1186/s12916-016-0730-3",
+      "verified": true
+    },
+    {
+      "title": "Association between pre-diagnostic circulating vitamin D concentration and risk of colorectal cancer in European populations:a nested case-control study",
+      "journal": "BMJ",
+      "year": 2010,
+      "citationCount": 402,
+      "doi": "10.1136/bmj.b5500",
+      "sourceUrl": "https://doi.org/10.1136/bmj.b5500",
+      "verified": true
+    },
+    {
+      "title": "Breast cancer risk in relation to different types of hormone replacement therapy in the E3N‐EPIC cohort",
+      "journal": "International Journal of Cancer",
+      "year": 2004,
+      "citationCount": 391,
+      "doi": "10.1002/ijc.20710",
+      "sourceUrl": "https://doi.org/10.1002/ijc.20710",
+      "verified": true
+    },
+    {
+      "title": "Dietary intake and blood concentrations of antioxidants and the risk of cardiovascular disease, total cancer, and all-cause mortality: a systematic review and dose-response meta-analysis of prospective studies",
+      "journal": "American Journal of Clinical Nutrition",
+      "year": 2018,
+      "citationCount": 388,
+      "doi": "10.1093/ajcn/nqy097",
+      "sourceUrl": "https://doi.org/10.1093/ajcn/nqy097",
+      "verified": true
+    },
+    {
+      "title": "Sex hormones and risk of breast cancer in premenopausal women: a collaborative reanalysis of individual participant data from seven prospective studies",
+      "journal": "The Lancet Oncology",
+      "year": 2013,
+      "citationCount": 386,
+      "doi": "10.1016/s1470-2045(13)70301-2",
+      "sourceUrl": "https://doi.org/10.1016/s1470-2045(13)70301-2",
+      "verified": true
+    },
+    {
+      "title": "Diet and cancer — the European Prospective Investigation into Cancer and Nutrition",
+      "journal": "Nature reviews. Cancer",
+      "year": 2004,
+      "citationCount": 384,
+      "doi": "10.1038/nrc1298",
+      "sourceUrl": "https://doi.org/10.1038/nrc1298",
+      "verified": true
+    },
+    {
+      "title": "European Prospective Investigation into Cancer and Nutrition (EPIC) calibration study: rationale, design and population characteristics",
+      "journal": "Public Health Nutrition",
+      "year": 2002,
+      "citationCount": 378,
+      "doi": "10.1079/phn2002395",
+      "sourceUrl": "https://doi.org/10.1079/phn2002395",
+      "verified": true
+    },
+    {
+      "title": "Lifestyle factors and risk of multimorbidity of cancer and cardiometabolic diseases: a multinational cohort study",
+      "journal": "BMC Medicine",
+      "year": 2020,
+      "citationCount": 377,
+      "doi": "10.1186/s12916-019-1474-7",
+      "sourceUrl": "https://doi.org/10.1186/s12916-019-1474-7",
+      "verified": true
+    },
+    {
+      "title": "Cigarette Smoking and Pancreatic Cancer: A Pooled Analysis From the Pancreatic Cancer Cohort Consortium",
+      "journal": "American Journal of Epidemiology",
+      "year": 2009,
+      "citationCount": 368,
+      "doi": "10.1093/aje/kwp134",
+      "sourceUrl": "https://doi.org/10.1093/aje/kwp134",
+      "verified": true
+    },
+    {
+      "title": "Diet and cancer prevention: Contributions from the European Prospective Investigation into Cancer and Nutrition (EPIC) study",
+      "journal": "European Journal of Cancer",
+      "year": 2010,
+      "citationCount": 367,
+      "doi": "10.1016/j.ejca.2010.07.025",
+      "sourceUrl": "https://doi.org/10.1016/j.ejca.2010.07.025",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:15.000Z",
+  "openalexId": "https://openalex.org/A5067228080",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/5_a_day_advertisement_at_the_NIH_metro.jpg/330px-5_a_day_advertisement_at_the_NIH_metro.jpg"
 }

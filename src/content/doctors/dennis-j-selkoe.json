@@ -1,36 +1,492 @@
 {
   "fullName": "Dennis J. Selkoe",
   "slug": "dennis-j-selkoe",
-  "title": "MD, PhD",
-  "specialty": "Neurology & Amyloid",
+  "title": "MD",
+  "specialty": "Alzheimer’s & Amyloid",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">DJ</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 51,
-  "hIndex": 203,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 236,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 23683,
+  "livesSaved": 0,
+  "biography": "Dennis J. Selkoe is an American physician (neurologist) known for his research into the molecular basis of Alzheimer's disease. In 1985 he became Co-Director of the Center for Neurological Diseases and from 1990, Vincent and Stella Coates Professor of Neurological Diseases at Harvard Medical School. He is also a Fellow of the AAAS and a member of the National Academy of Medicine.",
+  "aiSummary": "Dennis J. Selkoe is a alzheimer’s & amyloid specialist with an H-index of 236 at Brigham & Women’s Hospital (Faculty). Has been published in Science, Nature Reviews Molecular Cell Biology, Nature. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Brigham & Women's Hospital"
-    }
-  ],
-  "bio": "Dennis J. Selkoe is a pioneer in Neurology & Amyloid at Brigham & Women's Hospital, USA. With a D-Index of 203 and over 236,826 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Brigham & Women’s Hospital",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Alzheimer’s & Amyloid"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "The Amyloid Hypothesis of Alzheimer's Disease: Progress and Problems on the Road to Therapeutics",
+      "journal": "Science",
+      "year": 2002,
+      "citationCount": 13625,
+      "doi": "10.1126/science.1072994",
+      "sourceUrl": "https://doi.org/10.1126/science.1072994",
+      "verified": true
+    },
+    {
+      "title": "Alzheimer's Disease: Genes, Proteins, and Therapy",
+      "journal": "Physiological Reviews",
+      "year": 2001,
+      "citationCount": 6032,
+      "doi": "10.1152/physrev.2001.81.2.741",
+      "sourceUrl": "https://doi.org/10.1152/physrev.2001.81.2.741",
+      "verified": true
+    },
+    {
+      "title": "The amyloid hypothesis of Alzheimer's disease at 25 years",
+      "journal": "EMBO Molecular Medicine",
+      "year": 2016,
+      "citationCount": 5832,
+      "doi": "10.15252/emmm.201606210",
+      "sourceUrl": "https://doi.org/10.15252/emmm.201606210",
+      "verified": true
+    },
+    {
+      "title": "Soluble protein oligomers in neurodegeneration: lessons from the Alzheimer's amyloid β-peptide",
+      "journal": "Nature Reviews Molecular Cell Biology",
+      "year": 2007,
+      "citationCount": 4647,
+      "doi": "10.1038/nrm2101",
+      "sourceUrl": "https://doi.org/10.1038/nrm2101",
+      "verified": true
+    },
+    {
+      "title": "Alzheimer's Disease Is a Synaptic Failure",
+      "journal": "Science",
+      "year": 2002,
+      "citationCount": 4340,
+      "doi": "10.1126/science.1074069",
+      "sourceUrl": "https://doi.org/10.1126/science.1074069",
+      "verified": true
+    },
+    {
+      "title": "Naturally secreted oligomers of amyloid β protein potently inhibit hippocampal long-term potentiation in vivo",
+      "journal": "Nature",
+      "year": 2002,
+      "citationCount": 4233,
+      "doi": "10.1038/416535a",
+      "sourceUrl": "https://doi.org/10.1038/416535a",
+      "verified": true
+    },
+    {
+      "title": "Amyloid-β protein dimers isolated directly from Alzheimer's brains impair synaptic plasticity and memory",
+      "journal": "Nature Medicine",
+      "year": 2008,
+      "citationCount": 3580,
+      "doi": "10.1038/nm1782",
+      "sourceUrl": "https://doi.org/10.1038/nm1782",
+      "verified": true
+    },
+    {
+      "title": "Advancing research diagnostic criteria for Alzheimer's disease: the IWG-2 criteria",
+      "journal": "The Lancet Neurology",
+      "year": 2014,
+      "citationCount": 3219,
+      "doi": "10.1016/s1474-4422(14)70090-0",
+      "sourceUrl": "https://doi.org/10.1016/s1474-4422(14)70090-0",
+      "verified": true
+    },
+    {
+      "title": "Complement and microglia mediate early synapse loss in Alzheimer mouse models",
+      "journal": "Science",
+      "year": 2016,
+      "citationCount": 3160,
+      "doi": "10.1126/science.aad8373",
+      "sourceUrl": "https://doi.org/10.1126/science.aad8373",
+      "verified": true
+    },
+    {
+      "title": "Secreted amyloid β–protein similar to that in the senile plaques of Alzheimer's disease is increased in vivo by the presenilin 1 and 2 and APP mutations linked to familial Alzheimer's disease",
+      "journal": "Nature Medicine",
+      "year": 1996,
+      "citationCount": 2568,
+      "doi": "10.1038/nm0896-864",
+      "sourceUrl": "https://doi.org/10.1038/nm0896-864",
+      "verified": true
+    },
+    {
+      "title": "Two transmembrane aspartates in presenilin-1 required for presenilin endoproteolysis and γ-secretase activity",
+      "journal": "Nature",
+      "year": 1999,
+      "citationCount": 1913,
+      "doi": "10.1038/19077",
+      "sourceUrl": "https://doi.org/10.1038/19077",
+      "verified": true
+    },
+    {
+      "title": "Amyloid β-peptide is produced by cultured cells during normal metabolism",
+      "journal": "Nature",
+      "year": 1992,
+      "citationCount": 1897,
+      "doi": "10.1038/359322a0",
+      "sourceUrl": "https://doi.org/10.1038/359322a0",
+      "verified": true
+    },
+    {
+      "title": "Aβ Oligomers – a decade of discovery",
+      "journal": "Journal of Neurochemistry",
+      "year": 2007,
+      "citationCount": 1896,
+      "doi": "10.1111/j.1471-4159.2006.04426.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1471-4159.2006.04426.x",
+      "verified": true
+    },
+    {
+      "title": "Mutation of the β-amyloid precursor protein in familial Alzheimer's disease increases β-protein production",
+      "journal": "Nature",
+      "year": 1992,
+      "citationCount": 1739,
+      "doi": "10.1038/360672a0",
+      "sourceUrl": "https://doi.org/10.1038/360672a0",
+      "verified": true
+    },
+    {
+      "title": "Isolation and quantification of soluble Alzheimer's β-peptide from biological fluids",
+      "journal": "Nature",
+      "year": 1992,
+      "citationCount": 1737,
+      "doi": "10.1038/359325a0",
+      "sourceUrl": "https://doi.org/10.1038/359325a0",
+      "verified": true
+    },
+    {
+      "title": "Natural oligomers of the amyloid-β protein specifically disrupt cognitive function",
+      "journal": "Nature Neuroscience",
+      "year": 2004,
+      "citationCount": 1662,
+      "doi": "10.1038/nn1372",
+      "sourceUrl": "https://doi.org/10.1038/nn1372",
+      "verified": true
+    },
+    {
+      "title": "Natural Oligomers of the Alzheimer Amyloid-β Protein Induce Reversible Synapse Loss by Modulating an NMDA-Type Glutamate Receptor-Dependent Signaling Pathway",
+      "journal": "Journal of Neuroscience",
+      "year": 2007,
+      "citationCount": 1565,
+      "doi": "10.1523/jneurosci.4970-06.2007",
+      "sourceUrl": "https://doi.org/10.1523/jneurosci.4970-06.2007",
+      "verified": true
+    },
+    {
+      "title": "Insulin-degrading enzyme regulates the levels of insulin, amyloid β-protein, and the β-amyloid precursor protein intracellular domain <i>in vivo</i>",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2003,
+      "citationCount": 1455,
+      "doi": "10.1073/pnas.0230450100",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0230450100",
+      "verified": true
+    },
+    {
+      "title": "Folding proteins in fatal ways",
+      "journal": "Nature",
+      "year": 2003,
+      "citationCount": 1413,
+      "doi": "10.1038/nature02264",
+      "sourceUrl": "https://doi.org/10.1038/nature02264",
+      "verified": true
+    },
+    {
+      "title": "α-Synuclein occurs physiologically as a helically folded tetramer that resists aggregation",
+      "journal": "Nature",
+      "year": 2011,
+      "citationCount": 1206,
+      "doi": "10.1038/nature10324",
+      "sourceUrl": "https://doi.org/10.1038/nature10324",
+      "verified": true
+    },
+    {
+      "title": "Deciphering the Molecular Basis of Memory Failure in Alzheimer's Disease",
+      "journal": "Neuron",
+      "year": 2004,
+      "citationCount": 1196,
+      "doi": "10.1016/j.neuron.2004.09.010",
+      "sourceUrl": "https://doi.org/10.1016/j.neuron.2004.09.010",
+      "verified": true
+    },
+    {
+      "title": "PINK1 and Parkin Target Miro for Phosphorylation and Degradation to Arrest Mitochondrial Motility",
+      "journal": "Cell",
+      "year": 2011,
+      "citationCount": 1143,
+      "doi": "10.1016/j.cell.2011.10.018",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2011.10.018",
+      "verified": true
+    },
+    {
+      "title": "Ubiquitination of a New Form of α-Synuclein by Parkin from Human Brain: Implications for Parkinson's Disease",
+      "journal": "Science",
+      "year": 2001,
+      "citationCount": 1047,
+      "doi": "10.1126/science.1060627",
+      "sourceUrl": "https://doi.org/10.1126/science.1060627",
+      "verified": true
+    },
+    {
+      "title": "Amyloid β-Protein Fibrillogenesis",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1999,
+      "citationCount": 1041,
+      "doi": "10.1074/jbc.274.36.25945",
+      "sourceUrl": "https://doi.org/10.1074/jbc.274.36.25945",
+      "verified": true
+    },
+    {
+      "title": "Amyloid Deposition Is Associated with Impaired Default Network Function in Older Persons without Dementia",
+      "journal": "Neuron",
+      "year": 2009,
+      "citationCount": 1005,
+      "doi": "10.1016/j.neuron.2009.07.003",
+      "sourceUrl": "https://doi.org/10.1016/j.neuron.2009.07.003",
+      "verified": true
+    },
+    {
+      "title": "Soluble oligomers of the amyloid β-protein impair synaptic plasticity and behavior",
+      "journal": "Behavioural Brain Research",
+      "year": 2008,
+      "citationCount": 997,
+      "doi": "10.1016/j.bbr.2008.02.016",
+      "sourceUrl": "https://doi.org/10.1016/j.bbr.2008.02.016",
+      "verified": true
+    },
+    {
+      "title": "Neurotoxicity of Amyloid  -Protein: Synaptic and Network Dysfunction",
+      "journal": "Cold Spring Harbor Perspectives in Medicine",
+      "year": 2012,
+      "citationCount": 990,
+      "doi": "10.1101/cshperspect.a006338",
+      "sourceUrl": "https://doi.org/10.1101/cshperspect.a006338",
+      "verified": true
+    },
+    {
+      "title": "Soluble Oligomers of Amyloid β Protein Facilitate Hippocampal Long-Term Depression by Disrupting Neuronal Glutamate Uptake",
+      "journal": "Neuron",
+      "year": 2009,
+      "citationCount": 935,
+      "doi": "10.1016/j.neuron.2009.05.012",
+      "sourceUrl": "https://doi.org/10.1016/j.neuron.2009.05.012",
+      "verified": true
+    },
+    {
+      "title": "Relationship of microglia and astrocytes to amyloid deposits of Alzheimer disease",
+      "journal": "Journal of Neuroimmunology",
+      "year": 1989,
+      "citationCount": 927,
+      "doi": "10.1016/0165-5728(89)90115-x",
+      "sourceUrl": "https://doi.org/10.1016/0165-5728(89)90115-x",
+      "verified": true
+    },
+    {
+      "title": "Protofibrillar intermediates of amyloid beta-protein induce acute electrophysiological changes and progressive neurotoxicity in cortical neurons.",
+      "journal": "PubMed",
+      "year": 1999,
+      "citationCount": 921,
+      "doi": "10.1523/jneurosci.19-20-08876.1999",
+      "sourceUrl": "https://doi.org/10.1523/jneurosci.19-20-08876.1999",
+      "verified": true
+    },
+    {
+      "title": "Immunochemical identification of the serine protease inhibitor α1-antichymotrypsin in the brain amyloid deposits of Alzheimer's disease",
+      "journal": "Cell",
+      "year": 1988,
+      "citationCount": 906,
+      "doi": "10.1016/0092-8674(88)90462-x",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(88)90462-x",
+      "verified": true
+    },
+    {
+      "title": "Targeting of cell-surface β-amyloid precursor protein to lysosomes: alternative processing into amyloid-bearing fragments",
+      "journal": "Nature",
+      "year": 1992,
+      "citationCount": 884,
+      "doi": "10.1038/357500a0",
+      "sourceUrl": "https://doi.org/10.1038/357500a0",
+      "verified": true
+    },
+    {
+      "title": "Alzheimer's Disease--Genotypes, Phenotype, and Treatments",
+      "journal": "Science",
+      "year": 1997,
+      "citationCount": 877,
+      "doi": "10.1126/science.275.5300.630",
+      "sourceUrl": "https://doi.org/10.1126/science.275.5300.630",
+      "verified": true
+    },
+    {
+      "title": "Soluble amyloid β-protein dimers isolated from Alzheimer cortex directly induce Tau hyperphosphorylation and neuritic degeneration",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2011,
+      "citationCount": 870,
+      "doi": "10.1073/pnas.1017033108",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1017033108",
+      "verified": true
+    },
+    {
+      "title": "Cell biology of protein misfolding: The examples of Alzheimer's and Parkinson's diseases",
+      "journal": "Nature Cell Biology",
+      "year": 2004,
+      "citationCount": 854,
+      "doi": "10.1038/ncb1104-1054",
+      "sourceUrl": "https://doi.org/10.1038/ncb1104-1054",
+      "verified": true
+    },
+    {
+      "title": "The cell biology of β-amyloid precursor protein and presenilin in Alzheimer's disease",
+      "journal": "Trends in Cell Biology",
+      "year": 1998,
+      "citationCount": 853,
+      "doi": "10.1016/s0962-8924(98)01363-4",
+      "sourceUrl": "https://doi.org/10.1016/s0962-8924(98)01363-4",
+      "verified": true
+    },
+    {
+      "title": "Cellular processing of β-amyloid precursor protein and the genesis of amyloid β-peptide",
+      "journal": "Cell",
+      "year": 1993,
+      "citationCount": 827,
+      "doi": "10.1016/0092-8674(93)90312-e",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(93)90312-e",
+      "verified": true
+    },
+    {
+      "title": "Normal and Abnormal Biology of the beta-Amyloid Precursor Protein",
+      "journal": "Annual Review of Neuroscience",
+      "year": 1994,
+      "citationCount": 817,
+      "doi": "10.1146/annurev.ne.17.030194.002421",
+      "sourceUrl": "https://doi.org/10.1146/annurev.ne.17.030194.002421",
+      "verified": true
+    },
+    {
+      "title": "Alzheimer's Disease: Molecular Understanding Predicts Amyloid-Based Therapeutics",
+      "journal": "The Annual Review of Pharmacology and Toxicology",
+      "year": 2003,
+      "citationCount": 814,
+      "doi": "10.1146/annurev.pharmtox.43.100901.140248",
+      "sourceUrl": "https://doi.org/10.1146/annurev.pharmtox.43.100901.140248",
+      "verified": true
+    },
+    {
+      "title": "Protofibrillar Intermediates of Amyloid β-Protein Induce Acute Electrophysiological Changes and Progressive Neurotoxicity in Cortical Neurons",
+      "journal": "Journal of Neuroscience",
+      "year": 1999,
+      "citationCount": 810,
+      "doi": "10.1523/jneurosci.19-20-08876.1999",
+      "sourceUrl": "https://doi.org/10.1523/jneurosci.19-20-08876.1999",
+      "verified": true
+    },
+    {
+      "title": "Insulin-degrading Enzyme Regulates Extracellular Levels of Amyloid β-Protein by Degradation",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1998,
+      "citationCount": 797,
+      "doi": "10.1074/jbc.273.49.32730",
+      "sourceUrl": "https://doi.org/10.1074/jbc.273.49.32730",
+      "verified": true
+    },
+    {
+      "title": "Amyloid β-Protein and the Genetics of Alzheimer's Disease",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1996,
+      "citationCount": 794,
+      "doi": "10.1074/jbc.271.31.18295",
+      "sourceUrl": "https://doi.org/10.1074/jbc.271.31.18295",
+      "verified": true
+    },
+    {
+      "title": "Alzheimer's Disease: A Central Role for Amyloid",
+      "journal": "Journal of Neuropathology & Experimental Neurology",
+      "year": 1994,
+      "citationCount": 751,
+      "doi": "10.1097/00005072-199409000-00003",
+      "sourceUrl": "https://doi.org/10.1097/00005072-199409000-00003",
+      "verified": true
+    },
+    {
+      "title": "γ-Secretase is a membrane protein complex comprised of presenilin, nicastrin, aph-1, and pen-2",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2003,
+      "citationCount": 750,
+      "doi": "10.1073/pnas.1037392100",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1037392100",
+      "verified": true
+    },
+    {
+      "title": "Alterations in Memory Networks in Mild Cognitive Impairment and Alzheimer's Disease: An Independent Component Analysis",
+      "journal": "Journal of Neuroscience",
+      "year": 2006,
+      "citationCount": 745,
+      "doi": "10.1523/jneurosci.2250-06.2006",
+      "sourceUrl": "https://doi.org/10.1523/jneurosci.2250-06.2006",
+      "verified": true
+    },
+    {
+      "title": "Processing of the Amyloid Protein Precursor to Potentially Amyloidogenic Derivatives",
+      "journal": "Science",
+      "year": 1992,
+      "citationCount": 737,
+      "doi": "10.1126/science.1738847",
+      "sourceUrl": "https://doi.org/10.1126/science.1738847",
+      "verified": true
+    },
+    {
+      "title": "Dopamine covalently modifies and functionally inactivates parkin",
+      "journal": "Nature Medicine",
+      "year": 2005,
+      "citationCount": 712,
+      "doi": "10.1038/nm1314",
+      "sourceUrl": "https://doi.org/10.1038/nm1314",
+      "verified": true
+    },
+    {
+      "title": "Enhanced Proteolysis of β-Amyloid in APP Transgenic Mice Prevents Plaque Formation, Secondary Pathology, and Premature Death",
+      "journal": "Neuron",
+      "year": 2003,
+      "citationCount": 701,
+      "doi": "10.1016/s0896-6273(03)00787-6",
+      "sourceUrl": "https://doi.org/10.1016/s0896-6273(03)00787-6",
+      "verified": true
+    },
+    {
+      "title": "Soluble Aβ Oligomers Inhibit Long-Term Potentiation through a Mechanism Involving Excessive Activation of Extrasynaptic NR2B-Containing NMDA Receptors",
+      "journal": "Journal of Neuroscience",
+      "year": 2011,
+      "citationCount": 635,
+      "doi": "10.1523/jneurosci.0203-11.2011",
+      "sourceUrl": "https://doi.org/10.1523/jneurosci.0203-11.2011",
+      "verified": true
+    },
+    {
+      "title": "N<scp>OTCH AND</scp>P<scp>RESENILIN</scp>: Regulated Intramembrane Proteolysis Links Development and Degeneration",
+      "journal": "Annual Review of Neuroscience",
+      "year": 2003,
+      "citationCount": 632,
+      "doi": "10.1146/annurev.neuro.26.041002.131334",
+      "sourceUrl": "https://doi.org/10.1146/annurev.neuro.26.041002.131334",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:13.000Z",
+  "openalexId": "https://openalex.org/A5087935119"
 }

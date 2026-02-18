@@ -93,7 +93,14 @@ const seoDescription =
                                 />
                             ) : (
                                 <div class="w-full h-full bg-gray-800 flex items-center justify-center">
-                                    <span class="text-4xl">🏛️</span>
+                                    <span class="text-4xl font-bold text-gray-500">
+                                        {doc.data.fullName
+                                            .split(" ")
+                                            .map((w: string) => w[0])
+                                            .slice(0, 2)
+                                            .join("")
+                                            .toUpperCase()}
+                                    </span>
                                 </div>
                             )}
                             <div class="absolute inset-0 bg-gradient-to-t from-[#1a052e] to-transparent opacity-80" />

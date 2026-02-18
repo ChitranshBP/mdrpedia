@@ -1,31 +1,493 @@
 {
   "fullName": "Peter J. Ratcliffe",
   "slug": "peter-j-ratcliffe",
-  "title": "MD, PhD",
-  "specialty": "Oxygen Sensing (Nobel)",
+  "title": "MD",
+  "specialty": "Oxygen Sensing",
   "geography": {
-    "city": "Unknown",
-    "country": "UK"
+    "country": "United Kingdom",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23001a4d\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%2300aaff\" text-anchor=\"middle\" dy=\".3em\">PJ</text></svg>",
-  "tier": "ELITE",
-  "rankingScore": 35,
-  "hIndex": 138,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 125,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 9531,
+  "livesSaved": 0,
+  "biography": "Sir Peter John Ratcliffe, FRS, FMedSci is a British physician-scientist who is trained as a nephrologist. He was a practising clinician at the John Radcliffe Hospital, Oxford and Nuffield Professor of Clinical Medicine and head of the Nuffield Department of Clinical Medicine at the University of Oxford from 2004 to 2016. He has been a Fellow of Magdalen College, Oxford since 2004. In 2016 he became Clinical Research Director at the Francis Crick Institute, retaining a position at Oxford as a member of the Ludwig Institute of Cancer Research and director of the Target Discovery Institute, University of Oxford.",
+  "aiSummary": "Peter J. Ratcliffe is a oxygen sensing specialist with an H-index of 125 at University of Oxford (Faculty). Has been published in Science, Nature, Cell. Based in United Kingdom.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/1/19/Peter_J._Ratcliffe_%28cropped%29.jpg",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Francis Crick Institute"
-    }
-  ],
-  "bio": "Peter J. Ratcliffe is a pioneer in Oxygen Sensing (Nobel) at Francis Crick Institute, UK. With a D-Index of 138 and over 95,314 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "University of Oxford",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Oxygen Sensing"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Targeting of HIF-α to the von Hippel-Lindau Ubiquitylation Complex by O <sub>2</sub> -Regulated Prolyl Hydroxylation",
+      "journal": "Science",
+      "year": 2001,
+      "citationCount": 5447,
+      "doi": "10.1126/science.1059796",
+      "sourceUrl": "https://doi.org/10.1126/science.1059796",
+      "verified": true
+    },
+    {
+      "title": "The tumour suppressor protein VHL targets hypoxia-inducible factors for oxygen-dependent proteolysis",
+      "journal": "Nature",
+      "year": 1999,
+      "citationCount": 5152,
+      "doi": "10.1038/20459",
+      "sourceUrl": "https://doi.org/10.1038/20459",
+      "verified": true
+    },
+    {
+      "title": "C. elegans EGL-9 and Mammalian Homologs Define a Family of Dioxygenases that Regulate HIF by Prolyl Hydroxylation",
+      "journal": "Cell",
+      "year": 2001,
+      "citationCount": 3312,
+      "doi": "10.1016/s0092-8674(01)00507-4",
+      "sourceUrl": "https://doi.org/10.1016/s0092-8674(01)00507-4",
+      "verified": true
+    },
+    {
+      "title": "Oxygen Sensing by Metazoans: The Central Role of the HIF Hydroxylase Pathway",
+      "journal": "Molecular Cell",
+      "year": 2008,
+      "citationCount": 3151,
+      "doi": "10.1016/j.molcel.2008.04.009",
+      "sourceUrl": "https://doi.org/10.1016/j.molcel.2008.04.009",
+      "verified": true
+    },
+    {
+      "title": "Regulation of angiogenesis by hypoxia: role of the HIF system",
+      "journal": "Nature Medicine",
+      "year": 2003,
+      "citationCount": 2492,
+      "doi": "10.1038/nm0603-677",
+      "sourceUrl": "https://doi.org/10.1038/nm0603-677",
+      "verified": true
+    },
+    {
+      "title": "Role of HIF-1α in hypoxia-mediated apoptosis, cell proliferation and tumour angiogenesis",
+      "journal": "Nature",
+      "year": 1998,
+      "citationCount": 2475,
+      "doi": "10.1038/28867",
+      "sourceUrl": "https://doi.org/10.1038/28867",
+      "verified": true
+    },
+    {
+      "title": "Oxygen sensing by HIF hydroxylases",
+      "journal": "Nature Reviews Molecular Cell Biology",
+      "year": 2004,
+      "citationCount": 2012,
+      "doi": "10.1038/nrm1366",
+      "sourceUrl": "https://doi.org/10.1038/nrm1366",
+      "verified": true
+    },
+    {
+      "title": "The Expression and Distribution of the Hypoxia-Inducible Factors HIF-1α and HIF-2α in Normal Human Tissues, Cancers, and Tumor-Associated Macrophages",
+      "journal": "American Journal Of Pathology",
+      "year": 2000,
+      "citationCount": 1296,
+      "doi": "10.1016/s0002-9440(10)64554-3",
+      "sourceUrl": "https://doi.org/10.1016/s0002-9440(10)64554-3",
+      "verified": true
+    },
+    {
+      "title": "Hypoxia-inducible expression of tumor-associated carbonic anhydrases.",
+      "journal": "PubMed",
+      "year": 2000,
+      "citationCount": 1283,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2114005496",
+      "verified": true
+    },
+    {
+      "title": "Differential Function of the Prolyl Hydroxylases PHD1, PHD2, and PHD3 in the Regulation of Hypoxia-inducible Factor",
+      "journal": "Journal of Biological Chemistry",
+      "year": 2004,
+      "citationCount": 1091,
+      "doi": "10.1074/jbc.m406026200",
+      "sourceUrl": "https://doi.org/10.1074/jbc.m406026200",
+      "verified": true
+    },
+    {
+      "title": "Hypoxia-inducible factor-1 modulates gene expression in solid tumors and influences both angiogenesis and tumor growth",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1997,
+      "citationCount": 1081,
+      "doi": "10.1073/pnas.94.15.8104",
+      "sourceUrl": "https://doi.org/10.1073/pnas.94.15.8104",
+      "verified": true
+    },
+    {
+      "title": "Hypoxia Inducible Factor-α Binding and Ubiquitylation by the von Hippel-Lindau Tumor Suppressor Protein",
+      "journal": "Journal of Biological Chemistry",
+      "year": 2000,
+      "citationCount": 1042,
+      "doi": "10.1074/jbc.m002740200",
+      "sourceUrl": "https://doi.org/10.1074/jbc.m002740200",
+      "verified": true
+    },
+    {
+      "title": "The oncometabolite 2‐hydroxyglutarate inhibits histone lysine demethylases",
+      "journal": "EMBO Reports",
+      "year": 2011,
+      "citationCount": 1014,
+      "doi": "10.1038/embor.2011.43",
+      "sourceUrl": "https://doi.org/10.1038/embor.2011.43",
+      "verified": true
+    },
+    {
+      "title": "Independent function of two destruction domains in hypoxia-inducible factor-α chains activated by prolyl hydroxylation",
+      "journal": "The EMBO Journal",
+      "year": 2001,
+      "citationCount": 1007,
+      "doi": "10.1093/emboj/20.18.5197",
+      "sourceUrl": "https://doi.org/10.1093/emboj/20.18.5197",
+      "verified": true
+    },
+    {
+      "title": "HIF overexpression correlates with biallelic loss of fumarate hydratase in renal cancer: Novel role of fumarate in regulation of HIF stability",
+      "journal": "Cancer Cell",
+      "year": 2005,
+      "citationCount": 934,
+      "doi": "10.1016/j.ccr.2005.06.017",
+      "sourceUrl": "https://doi.org/10.1016/j.ccr.2005.06.017",
+      "verified": true
+    },
+    {
+      "title": "Contrasting Properties of Hypoxia-Inducible Factor 1 (HIF-1) and HIF-2 in von Hippel-Lindau-Associated Renal Cell Carcinoma",
+      "journal": "Molecular and Cellular Biology",
+      "year": 2005,
+      "citationCount": 924,
+      "doi": "10.1128/mcb.25.13.5675-5686.2005",
+      "sourceUrl": "https://doi.org/10.1128/mcb.25.13.5675-5686.2005",
+      "verified": true
+    },
+    {
+      "title": "Heterozygous Deficiency of PHD2 Restores Tumor Oxygenation and Inhibits Metastasis via Endothelial Normalization",
+      "journal": "Cell",
+      "year": 2009,
+      "citationCount": 802,
+      "doi": "10.1016/j.cell.2009.01.020",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2009.01.020",
+      "verified": true
+    },
+    {
+      "title": "Structural basis for the recognition of hydroxyproline in HIF-1α by pVHL",
+      "journal": "Nature",
+      "year": 2002,
+      "citationCount": 733,
+      "doi": "10.1038/nature00767",
+      "sourceUrl": "https://doi.org/10.1038/nature00767",
+      "verified": true
+    },
+    {
+      "title": "Widespread, hypoxia‐inducible expression of HIF‐2α in distinct cell populations of different organs",
+      "journal": "The FASEB Journal",
+      "year": 2002,
+      "citationCount": 728,
+      "doi": "10.1096/fj.02-0445fje",
+      "sourceUrl": "https://doi.org/10.1096/fj.02-0445fje",
+      "verified": true
+    },
+    {
+      "title": "High-resolution genome-wide mapping of HIF-binding sites by ChIP-seq",
+      "journal": "Blood",
+      "year": 2011,
+      "citationCount": 719,
+      "doi": "10.1182/blood-2010-10-314427",
+      "sourceUrl": "https://doi.org/10.1182/blood-2010-10-314427",
+      "verified": true
+    },
+    {
+      "title": "HIF-1-dependent regulation of hypoxic induction of the cell death factors BNIP3 and NIX in human tumors.",
+      "journal": "PubMed",
+      "year": 2001,
+      "citationCount": 715,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2160664949",
+      "verified": true
+    },
+    {
+      "title": "Hypoxia-inducible Factor (HIF) Asparagine Hydroxylase Is Identical to Factor Inhibiting HIF (FIH) and Is Related to the Cupin Structural Family",
+      "journal": "Journal of Biological Chemistry",
+      "year": 2002,
+      "citationCount": 707,
+      "doi": "10.1074/jbc.c200273200",
+      "sourceUrl": "https://doi.org/10.1074/jbc.c200273200",
+      "verified": true
+    },
+    {
+      "title": "Dynamic regulatory network controlling TH17 cell differentiation",
+      "journal": "Nature",
+      "year": 2013,
+      "citationCount": 687,
+      "doi": "10.1038/nature11981",
+      "sourceUrl": "https://doi.org/10.1038/nature11981",
+      "verified": true
+    },
+    {
+      "title": "Induction of Endothelial PAS Domain Protein-1 by Hypoxia: Characterization and Comparison With Hypoxia-Inducible Factor-1α",
+      "journal": "Blood",
+      "year": 1998,
+      "citationCount": 626,
+      "doi": "10.1182/blood.v92.7.2260",
+      "sourceUrl": "https://doi.org/10.1182/blood.v92.7.2260",
+      "verified": true
+    },
+    {
+      "title": "Hypoxic Regulation of Lactate Dehydrogenase A",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1995,
+      "citationCount": 588,
+      "doi": "10.1074/jbc.270.36.21021",
+      "sourceUrl": "https://doi.org/10.1074/jbc.270.36.21021",
+      "verified": true
+    },
+    {
+      "title": "Expression of Hypoxia-Inducible Factor-1α and -2α in Hypoxic and Ischemic Rat Kidneys",
+      "journal": "Journal of the American Society of Nephrology",
+      "year": 2002,
+      "citationCount": 570,
+      "doi": "10.1097/01.asn.0000017223.49823.2a",
+      "sourceUrl": "https://doi.org/10.1097/01.asn.0000017223.49823.2a",
+      "verified": true
+    },
+    {
+      "title": "Renal Cyst Formation in Fh1-Deficient Mice Is Independent of the Hif/Phd Pathway: Roles for Fumarate in KEAP1 Succination and Nrf2 Signaling",
+      "journal": "Cancer Cell",
+      "year": 2011,
+      "citationCount": 566,
+      "doi": "10.1016/j.ccr.2011.09.006",
+      "sourceUrl": "https://doi.org/10.1016/j.ccr.2011.09.006",
+      "verified": true
+    },
+    {
+      "title": "Hypoxia and Mitochondrial Inhibitors Regulate Expression of Glucose Transporter-1 via Distinct Cis-acting Sequences",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1995,
+      "citationCount": 563,
+      "doi": "10.1074/jbc.270.49.29083",
+      "sourceUrl": "https://doi.org/10.1074/jbc.270.49.29083",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide Association of Hypoxia-inducible Factor (HIF)-1α and HIF-2α DNA Binding with Expression Profiling of Hypoxia-inducible Transcripts",
+      "journal": "Journal of Biological Chemistry",
+      "year": 2009,
+      "citationCount": 545,
+      "doi": "10.1074/jbc.m901790200",
+      "sourceUrl": "https://doi.org/10.1074/jbc.m901790200",
+      "verified": true
+    },
+    {
+      "title": "Activation of Hypoxia-inducible Factor-1; Definition of Regulatory Domains within the α Subunit",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1997,
+      "citationCount": 525,
+      "doi": "10.1074/jbc.272.17.11205",
+      "sourceUrl": "https://doi.org/10.1074/jbc.272.17.11205",
+      "verified": true
+    },
+    {
+      "title": "Oxygen-regulated control elements in the phosphoglycerate kinase 1 and lactate dehydrogenase A genes: similarities with the erythropoietin 3' enhancer.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1994,
+      "citationCount": 523,
+      "doi": "10.1073/pnas.91.14.6496",
+      "sourceUrl": "https://doi.org/10.1073/pnas.91.14.6496",
+      "verified": true
+    },
+    {
+      "title": "HIF activation identifies early lesions in VHL kidneys",
+      "journal": "Cancer Cell",
+      "year": 2002,
+      "citationCount": 478,
+      "doi": "10.1016/s1535-6108(02)00071-5",
+      "sourceUrl": "https://doi.org/10.1016/s1535-6108(02)00071-5",
+      "verified": true
+    },
+    {
+      "title": "Deficiency or inhibition of oxygen sensor Phd1 induces hypoxia tolerance by reprogramming basal metabolism",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 475,
+      "doi": "10.1038/ng.2007.62",
+      "sourceUrl": "https://doi.org/10.1038/ng.2007.62",
+      "verified": true
+    },
+    {
+      "title": "Carbonic anhydrase (CA IX) expression, a potential new intrinsic marker of hypoxia: correlations with tumor oxygen measurements and prognosis in locally advanced carcinoma of the cervix.",
+      "journal": "PubMed",
+      "year": 2001,
+      "citationCount": 465,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2135687519",
+      "verified": true
+    },
+    {
+      "title": "Concordant Regulation of Gene Expression by Hypoxia and 2-Oxoglutarate-dependent Dioxygenase Inhibition",
+      "journal": "Journal of Biological Chemistry",
+      "year": 2006,
+      "citationCount": 461,
+      "doi": "10.1074/jbc.m511408200",
+      "sourceUrl": "https://doi.org/10.1074/jbc.m511408200",
+      "verified": true
+    },
+    {
+      "title": "Prognostic Significance of a Novel Hypoxia-Regulated Marker, Carbonic Anhydrase IX, in Invasive Breast Carcinoma",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2001,
+      "citationCount": 427,
+      "doi": "10.1200/jco.2001.19.16.3660",
+      "sourceUrl": "https://doi.org/10.1200/jco.2001.19.16.3660",
+      "verified": true
+    },
+    {
+      "title": "Inducible operation of the erythropoietin 3' enhancer in multiple cell lines: evidence for a widespread oxygen-sensing mechanism.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1993,
+      "citationCount": 413,
+      "doi": "10.1073/pnas.90.6.2423",
+      "sourceUrl": "https://doi.org/10.1073/pnas.90.6.2423",
+      "verified": true
+    },
+    {
+      "title": "Hypoxia, Hypoxia-inducible Transcription Factors, and Renal Cancer",
+      "journal": "European Urology",
+      "year": 2015,
+      "citationCount": 402,
+      "doi": "10.1016/j.eururo.2015.08.007",
+      "sourceUrl": "https://doi.org/10.1016/j.eururo.2015.08.007",
+      "verified": true
+    },
+    {
+      "title": "Race, community and conflict",
+      "journal": "Unknown Journal",
+      "year": 2022,
+      "citationCount": 398,
+      "doi": "10.4324/9781003333258-8",
+      "sourceUrl": "https://doi.org/10.4324/9781003333258-8",
+      "verified": true
+    },
+    {
+      "title": "Structure of Factor-inhibiting Hypoxia-inducible Factor (HIF) Reveals Mechanism of Oxidative Modification of HIF-1α",
+      "journal": "Journal of Biological Chemistry",
+      "year": 2003,
+      "citationCount": 385,
+      "doi": "10.1074/jbc.c200644200",
+      "sourceUrl": "https://doi.org/10.1074/jbc.c200644200",
+      "verified": true
+    },
+    {
+      "title": "Identification of the renal erythropoietin-producing cells using transgenic mice",
+      "journal": "Kidney International",
+      "year": 1993,
+      "citationCount": 383,
+      "doi": "10.1038/ki.1993.362",
+      "sourceUrl": "https://doi.org/10.1038/ki.1993.362",
+      "verified": true
+    },
+    {
+      "title": "Predominant role of hypoxia-inducible transcription factor (Hif)-1alpha versus Hif-2alpha in regulation of the transcriptional response to hypoxia.",
+      "journal": "PubMed",
+      "year": 2003,
+      "citationCount": 375,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1624342207",
+      "verified": true
+    },
+    {
+      "title": "Oxygen Sensing, Hypoxia-Inducible Factor-1 and the Regulation of Mammalian Gene Expression",
+      "journal": "Journal of Experimental Biology",
+      "year": 1998,
+      "citationCount": 370,
+      "doi": "10.1242/jeb.201.8.1153",
+      "sourceUrl": "https://doi.org/10.1242/jeb.201.8.1153",
+      "verified": true
+    },
+    {
+      "title": "Targeting gene expression to hypoxic tumor cells",
+      "journal": "Nature Medicine",
+      "year": 1997,
+      "citationCount": 367,
+      "doi": "10.1038/nm0597-515",
+      "sourceUrl": "https://doi.org/10.1038/nm0597-515",
+      "verified": true
+    },
+    {
+      "title": "Effect of ascorbate on the activity of hypoxia-inducible factor in cancer cells.",
+      "journal": "PubMed",
+      "year": 2003,
+      "citationCount": 350,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1602815497",
+      "verified": true
+    },
+    {
+      "title": "Signalling hypoxia by HIF hydroxylases",
+      "journal": "Biochemical and Biophysical Research Communications",
+      "year": 2005,
+      "citationCount": 338,
+      "doi": "10.1016/j.bbrc.2005.08.111",
+      "sourceUrl": "https://doi.org/10.1016/j.bbrc.2005.08.111",
+      "verified": true
+    },
+    {
+      "title": "Oxygen sensors and angiogenesis",
+      "journal": "Seminars in Cell and Developmental Biology",
+      "year": 2002,
+      "citationCount": 323,
+      "doi": "10.1006/scdb.2001.0287",
+      "sourceUrl": "https://doi.org/10.1006/scdb.2001.0287",
+      "verified": true
+    },
+    {
+      "title": "Tumor hypoxia induces nuclear paraspeckle formation through HIF-2α dependent transcriptional activation of NEAT1 leading to cancer cell survival",
+      "journal": "Oncogene",
+      "year": 2014,
+      "citationCount": 308,
+      "doi": "10.1038/onc.2014.378",
+      "sourceUrl": "https://doi.org/10.1038/onc.2014.378",
+      "verified": true
+    },
+    {
+      "title": "Hypoxia signaling pathways in cancer metabolism: the importance of co-selecting interconnected physiological pathways",
+      "journal": "Cancer & Metabolism",
+      "year": 2014,
+      "citationCount": 297,
+      "doi": "10.1186/2049-3002-2-3",
+      "sourceUrl": "https://doi.org/10.1186/2049-3002-2-3",
+      "verified": true
+    },
+    {
+      "title": "Mechanisms of hypoxia signalling: new implications for nephrology.",
+      "journal": "Nature reviews. Nephrology",
+      "year": 2020,
+      "citationCount": 279,
+      "doi": "10.1038/s41581-019-0182-z",
+      "sourceUrl": "https://doi.org/10.1038/s41581-019-0182-z",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:23.000Z",
+  "openalexId": "https://openalex.org/A5064727417"
 }

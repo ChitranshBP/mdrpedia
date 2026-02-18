@@ -1,31 +1,492 @@
 {
   "fullName": "Paul Elliott",
   "slug": "paul-elliott",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Environmental Epidemiology",
   "geography": {
-    "city": "Unknown",
-    "country": "UK"
+    "country": "United Kingdom",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">PE</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 46,
-  "hIndex": 185,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 169,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 16940,
+  "livesSaved": 0,
+  "biography": "Paul Elliott is a leading specialist in Environmental Epidemiology at Imperial College London.",
+  "aiSummary": "Paul Elliott is a environmental epidemiology specialist with an H-index of 169 at Imperial College London (Faculty). Has been published in The Lancet, Nature Genetics, BMJ. Based in United Kingdom.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Imperial College London"
-    }
-  ],
-  "bio": "Paul Elliott is a pioneer in Environmental Epidemiology at Imperial College London, UK. With a D-Index of 185 and over 169,396 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Imperial College London",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Environmental Epidemiology"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "UK Biobank: An Open Access Resource for Identifying the Causes of a Wide Range of Complex Diseases of Middle and Old Age",
+      "journal": "PLoS Medicine",
+      "year": 2015,
+      "citationCount": 12381,
+      "doi": "10.1371/journal.pmed.1001779",
+      "sourceUrl": "https://doi.org/10.1371/journal.pmed.1001779",
+      "verified": true
+    },
+    {
+      "title": "Worldwide trends in hypertension prevalence and progress in treatment and control from 1990 to 2019: a pooled analysis of 1201 population-representative studies with 104 million participants",
+      "journal": "The Lancet",
+      "year": 2021,
+      "citationCount": 3403,
+      "doi": "10.1016/s0140-6736(21)01330-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(21)01330-1",
+      "verified": true
+    },
+    {
+      "title": "Discovery and refinement of loci associated with lipid levels",
+      "journal": "Nature Genetics",
+      "year": 2013,
+      "citationCount": 3230,
+      "doi": "10.1038/ng.2797",
+      "sourceUrl": "https://doi.org/10.1038/ng.2797",
+      "verified": true
+    },
+    {
+      "title": "Worldwide trends in blood pressure from 1975 to 2015: a pooled analysis of 1479 population-based measurement studies with 19·1 million participants",
+      "journal": "The Lancet",
+      "year": 2016,
+      "citationCount": 2573,
+      "doi": "10.1016/s0140-6736(16)31919-5",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(16)31919-5",
+      "verified": true
+    },
+    {
+      "title": "New genetic loci implicated in fasting glucose homeostasis and their impact on type 2 diabetes risk",
+      "journal": "Nature Genetics",
+      "year": 2010,
+      "citationCount": 2202,
+      "doi": "10.1038/ng.520",
+      "sourceUrl": "https://doi.org/10.1038/ng.520",
+      "verified": true
+    },
+    {
+      "title": "Six new loci associated with body mass index highlight a neuronal influence on body weight regulation",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 1702,
+      "doi": "10.1038/ng.287",
+      "sourceUrl": "https://doi.org/10.1038/ng.287",
+      "verified": true
+    },
+    {
+      "title": "Variance imputation for overviews of clinical trials with continuous response",
+      "journal": "Journal of Clinical Epidemiology",
+      "year": 1992,
+      "citationCount": 1346,
+      "doi": "10.1016/0895-4356(92)90054-q",
+      "sourceUrl": "https://doi.org/10.1016/0895-4356(92)90054-q",
+      "verified": true
+    },
+    {
+      "title": "Common variants near MC4R are associated with fat mass, weight and risk of obesity",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 1329,
+      "doi": "10.1038/ng.140",
+      "sourceUrl": "https://doi.org/10.1038/ng.140",
+      "verified": true
+    },
+    {
+      "title": "Intersalt: An international study of electrolyte excretion and blood pressure. Results for 24 hour urinary sodium and potassium excretion",
+      "journal": "Unknown Journal",
+      "year": 1988,
+      "citationCount": 1287,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2589721119",
+      "verified": true
+    },
+    {
+      "title": "Socioeconomic status and the 25 × 25 risk factors as determinants of premature mortality: a multicohort study and meta-analysis of 1·7 million men and women",
+      "journal": "The Lancet",
+      "year": 2017,
+      "citationCount": 1246,
+      "doi": "10.1016/s0140-6736(16)32380-7",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(16)32380-7",
+      "verified": true
+    },
+    {
+      "title": "Effect of lower sodium intake on health: systematic review and meta-analyses",
+      "journal": "BMJ",
+      "year": 2013,
+      "citationCount": 1234,
+      "doi": "10.1136/bmj.f1326",
+      "sourceUrl": "https://doi.org/10.1136/bmj.f1326",
+      "verified": true
+    },
+    {
+      "title": "Salt intakes around the world: implications for public health",
+      "journal": "International Journal of Epidemiology",
+      "year": 2009,
+      "citationCount": 1184,
+      "doi": "10.1093/ije/dyp139",
+      "sourceUrl": "https://doi.org/10.1093/ije/dyp139",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide trans-ancestry meta-analysis provides insight into the genetic architecture of type 2 diabetes susceptibility",
+      "journal": "Nature Genetics",
+      "year": 2014,
+      "citationCount": 1070,
+      "doi": "10.1038/ng.2897",
+      "sourceUrl": "https://doi.org/10.1038/ng.2897",
+      "verified": true
+    },
+    {
+      "title": "Human metabolic phenotype diversity and its association with diet and blood pressure",
+      "journal": "Nature",
+      "year": 2008,
+      "citationCount": 1040,
+      "doi": "10.1038/nature06882",
+      "sourceUrl": "https://doi.org/10.1038/nature06882",
+      "verified": true
+    },
+    {
+      "title": "Effect of increased potassium intake on cardiovascular risk factors and disease: systematic review and meta-analyses",
+      "journal": "BMJ",
+      "year": 2013,
+      "citationCount": 943,
+      "doi": "10.1136/bmj.f1378",
+      "sourceUrl": "https://doi.org/10.1136/bmj.f1378",
+      "verified": true
+    },
+    {
+      "title": "The UK Biobank sample handling and storage protocol for the collection, processing and archiving of human blood and urine",
+      "journal": "International Journal of Epidemiology",
+      "year": 2008,
+      "citationCount": 940,
+      "doi": "10.1093/ije/dym276",
+      "sourceUrl": "https://doi.org/10.1093/ije/dym276",
+      "verified": true
+    },
+    {
+      "title": "Common variants associated with plasma triglycerides and risk for coronary artery disease",
+      "journal": "Nature Genetics",
+      "year": 2013,
+      "citationCount": 888,
+      "doi": "10.1038/ng.2795",
+      "sourceUrl": "https://doi.org/10.1038/ng.2795",
+      "verified": true
+    },
+    {
+      "title": "A catalog of genetic loci associated with kidney function from analyses of a million individuals",
+      "journal": "Nature Genetics",
+      "year": 2019,
+      "citationCount": 879,
+      "doi": "10.1038/s41588-019-0407-x",
+      "sourceUrl": "https://doi.org/10.1038/s41588-019-0407-x",
+      "verified": true
+    },
+    {
+      "title": "Loci influencing lipid levels and coronary heart disease risk in 16 European population cohorts",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 854,
+      "doi": "10.1038/ng.269",
+      "sourceUrl": "https://doi.org/10.1038/ng.269",
+      "verified": true
+    },
+    {
+      "title": "Intersalt revisited: further analyses of 24 hour sodium excretion and blood pressure within and across populations",
+      "journal": "BMJ",
+      "year": 1996,
+      "citationCount": 854,
+      "doi": "10.1136/bmj.312.7041.1249",
+      "sourceUrl": "https://doi.org/10.1136/bmj.312.7041.1249",
+      "verified": true
+    },
+    {
+      "title": "Spatial Epidemiology: Current Approaches and Future Challenges",
+      "journal": "Environmental Health Perspectives",
+      "year": 2004,
+      "citationCount": 765,
+      "doi": "10.1289/ehp.6735",
+      "sourceUrl": "https://doi.org/10.1289/ehp.6735",
+      "verified": true
+    },
+    {
+      "title": "Variants in MTNR1B influence fasting glucose levels",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 746,
+      "doi": "10.1038/ng.290",
+      "sourceUrl": "https://doi.org/10.1038/ng.290",
+      "verified": true
+    },
+    {
+      "title": "The Polygenic and Monogenic Basis of Blood Traits and Diseases",
+      "journal": "Cell",
+      "year": 2020,
+      "citationCount": 704,
+      "doi": "10.1016/j.cell.2020.08.008",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2020.08.008",
+      "verified": true
+    },
+    {
+      "title": "Trans-ethnic and Ancestry-Specific Blood-Cell Genetics in 746,667 Individuals from 5 Global Populations",
+      "journal": "Cell",
+      "year": 2020,
+      "citationCount": 687,
+      "doi": "10.1016/j.cell.2020.06.045",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2020.06.045",
+      "verified": true
+    },
+    {
+      "title": "A genome-wide association study in Europeans and South Asians identifies five new loci for coronary artery disease",
+      "journal": "Nature Genetics",
+      "year": 2011,
+      "citationCount": 675,
+      "doi": "10.1038/ng.782",
+      "sourceUrl": "https://doi.org/10.1038/ng.782",
+      "verified": true
+    },
+    {
+      "title": "Effect of Salt Substitution on Cardiovascular Events and Death",
+      "journal": "New England Journal of Medicine",
+      "year": 2021,
+      "citationCount": 663,
+      "doi": "10.1056/nejmoa2105675",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa2105675",
+      "verified": true
+    },
+    {
+      "title": "Mapping urban air pollution using GIS: a regression-based approach",
+      "journal": "International Journal of Geographical Information Systems",
+      "year": 1997,
+      "citationCount": 654,
+      "doi": "10.1080/136588197242158",
+      "sourceUrl": "https://doi.org/10.1080/136588197242158",
+      "verified": true
+    },
+    {
+      "title": "Dysfunction of lipid sensor GPR120 leads to obesity in both mouse and human",
+      "journal": "Nature",
+      "year": 2012,
+      "citationCount": 653,
+      "doi": "10.1038/nature10798",
+      "sourceUrl": "https://doi.org/10.1038/nature10798",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide association study for early-onset and morbid adult obesity identifies three new risk loci in European populations",
+      "journal": "Nature Genetics",
+      "year": 2009,
+      "citationCount": 652,
+      "doi": "10.1038/ng.301",
+      "sourceUrl": "https://doi.org/10.1038/ng.301",
+      "verified": true
+    },
+    {
+      "title": "Rare and low-frequency coding variants alter human adult height",
+      "journal": "Nature",
+      "year": 2017,
+      "citationCount": 647,
+      "doi": "10.1038/nature21039",
+      "sourceUrl": "https://doi.org/10.1038/nature21039",
+      "verified": true
+    },
+    {
+      "title": "Genetic Loci Influencing C-reactive Protein Levels and Risk of Coronary Heart Disease",
+      "journal": "PubMed Central",
+      "year": 2009,
+      "citationCount": 625,
+      "doi": "10.1001/jama.2009.954",
+      "sourceUrl": "https://doi.org/10.1001/jama.2009.954",
+      "verified": true
+    },
+    {
+      "title": "A variant near MTNR1B is associated with increased fasting plasma glucose levels and type 2 diabetes risk",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 606,
+      "doi": "10.1038/ng.277",
+      "sourceUrl": "https://doi.org/10.1038/ng.277",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide association study identifies five loci associated with lung function",
+      "journal": "Nature Genetics",
+      "year": 2009,
+      "citationCount": 593,
+      "doi": "10.1038/ng.501",
+      "sourceUrl": "https://doi.org/10.1038/ng.501",
+      "verified": true
+    },
+    {
+      "title": "Changing international trends in mortality rates for liver, biliary and pancreatic tumours",
+      "journal": "Journal of Hepatology",
+      "year": 2002,
+      "citationCount": 590,
+      "doi": "10.1016/s0168-8278(02)00297-0",
+      "sourceUrl": "https://doi.org/10.1016/s0168-8278(02)00297-0",
+      "verified": true
+    },
+    {
+      "title": "Chlorination disinfection byproducts in water and their association with adverse reproductive outcomes: a review",
+      "journal": "Occupational and Environmental Medicine",
+      "year": 2000,
+      "citationCount": 582,
+      "doi": "10.1136/oem.57.2.73",
+      "sourceUrl": "https://doi.org/10.1136/oem.57.2.73",
+      "verified": true
+    },
+    {
+      "title": "UK Biobank: Current status and what it means for epidemiology",
+      "journal": "Health Policy and Technology",
+      "year": 2012,
+      "citationCount": 555,
+      "doi": "10.1016/j.hlpt.2012.07.003",
+      "sourceUrl": "https://doi.org/10.1016/j.hlpt.2012.07.003",
+      "verified": true
+    },
+    {
+      "title": "A new highly penetrant form of obesity due to deletions on chromosome 16p11.2",
+      "journal": "Nature",
+      "year": 2010,
+      "citationCount": 554,
+      "doi": "10.1038/nature08727",
+      "sourceUrl": "https://doi.org/10.1038/nature08727",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide association study in individuals of South Asian ancestry identifies six new type 2 diabetes susceptibility loci",
+      "journal": "Nature Genetics",
+      "year": 2011,
+      "citationCount": 541,
+      "doi": "10.1038/ng.921",
+      "sourceUrl": "https://doi.org/10.1038/ng.921",
+      "verified": true
+    },
+    {
+      "title": "Dietary Sources of Sodium in China, Japan, the United Kingdom, and the United States, Women and Men Aged 40 to 59 Years: The INTERMAP Study",
+      "journal": "Journal of the American Dietetic Association",
+      "year": 2010,
+      "citationCount": 538,
+      "doi": "10.1016/j.jada.2010.02.007",
+      "sourceUrl": "https://doi.org/10.1016/j.jada.2010.02.007",
+      "verified": true
+    },
+    {
+      "title": "Epigenome-wide association of DNA methylation markers in peripheral blood from Indian Asians and Europeans with incident type 2 diabetes: a nested case-control study",
+      "journal": "The Lancet Diabetes & Endocrinology",
+      "year": 2015,
+      "citationCount": 532,
+      "doi": "10.1016/s2213-8587(15)00127-8",
+      "sourceUrl": "https://doi.org/10.1016/s2213-8587(15)00127-8",
+      "verified": true
+    },
+    {
+      "title": "Interpreting Posterior Relative Risk Estimates in Disease-Mapping Studies",
+      "journal": "Environmental Health Perspectives",
+      "year": 2004,
+      "citationCount": 524,
+      "doi": "10.1289/ehp.6740",
+      "sourceUrl": "https://doi.org/10.1289/ehp.6740",
+      "verified": true
+    },
+    {
+      "title": "Meta-Analysis of Genome-Wide Association Studies in &gt;80 000 Subjects Identifies Multiple Loci for C-Reactive Protein Levels",
+      "journal": "Circulation",
+      "year": 2011,
+      "citationCount": 512,
+      "doi": "10.1161/circulationaha.110.948570",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.110.948570",
+      "verified": true
+    },
+    {
+      "title": "Common genetic variation near MC4R is associated with waist circumference and insulin resistance",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 502,
+      "doi": "10.1038/ng.156",
+      "sourceUrl": "https://doi.org/10.1038/ng.156",
+      "verified": true
+    },
+    {
+      "title": "Predictive Accuracy of a Polygenic Risk Score–Enhanced Prediction Model vs a Clinical Risk Score for Coronary Artery Disease",
+      "journal": "JAMA",
+      "year": 2020,
+      "citationCount": 491,
+      "doi": "10.1001/jama.2019.22241",
+      "sourceUrl": "https://doi.org/10.1001/jama.2019.22241",
+      "verified": true
+    },
+    {
+      "title": "Trans-ethnic association study of blood pressure determinants in over 750,000 individuals",
+      "journal": "Nature Genetics",
+      "year": 2018,
+      "citationCount": 481,
+      "doi": "10.1038/s41588-018-0303-9",
+      "sourceUrl": "https://doi.org/10.1038/s41588-018-0303-9",
+      "verified": true
+    },
+    {
+      "title": "Genetic variant near IRS1 is associated with type 2 diabetes, insulin resistance and hyperinsulinemia",
+      "journal": "Nature Genetics",
+      "year": 2009,
+      "citationCount": 476,
+      "doi": "10.1038/ng.443",
+      "sourceUrl": "https://doi.org/10.1038/ng.443",
+      "verified": true
+    },
+    {
+      "title": "Mirror extreme BMI phenotypes associated with gene dosage at the chromosome 16p11.2 locus",
+      "journal": "Nature",
+      "year": 2011,
+      "citationCount": 474,
+      "doi": "10.1038/nature10406",
+      "sourceUrl": "https://doi.org/10.1038/nature10406",
+      "verified": true
+    },
+    {
+      "title": "Population-Based Genome-wide Association Studies Reveal Six Loci Influencing Plasma Levels of Liver Enzymes",
+      "journal": "The American Journal of Human Genetics",
+      "year": 2008,
+      "citationCount": 461,
+      "doi": "10.1016/j.ajhg.2008.09.012",
+      "sourceUrl": "https://doi.org/10.1016/j.ajhg.2008.09.012",
+      "verified": true
+    },
+    {
+      "title": "Nutrient intakes of middle-aged men and women in China, Japan, United Kingdom, and United States in the late 1990s: The INTERMAP Study",
+      "journal": "Journal of Human Hypertension",
+      "year": 2003,
+      "citationCount": 452,
+      "doi": "10.1038/sj.jhh.1001605",
+      "sourceUrl": "https://doi.org/10.1038/sj.jhh.1001605",
+      "verified": true
+    },
+    {
+      "title": "Risk of cardiovascular disease and all cause mortality among patients with type 2 diabetes prescribed oral antidiabetes drugs: retrospective cohort study using UK general practice research database",
+      "journal": "BMJ",
+      "year": 2009,
+      "citationCount": 437,
+      "doi": "10.1136/bmj.b4731",
+      "sourceUrl": "https://doi.org/10.1136/bmj.b4731",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:15.000Z",
+  "openalexId": "https://openalex.org/A5034710571"
 }

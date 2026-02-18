@@ -1,36 +1,56 @@
 import React, { useState } from 'react';
-import SearchWithAutocomplete from './SearchWithAutocomplete'; // Fixed default import
+import { useToast } from './Toast';
+import { slugify } from '../lib/utils';
 
-export default function LineageMapper() {
-    const [mentor, setMentor] = useState<any>(null);
-    const [student, setStudent] = useState<any>(null);
-    const [relationship, setRelationship] = useState('MENTOR_OF');
+interface PersonSelection {
+    fullName: string;
+    slug?: string;
+}
+
+interface LineageMapperProps {
+    onLinkCreated?: (mentor: PersonSelection, student: PersonSelection) => void;
+}
+
+export default function LineageMapper({ onLinkCreated }: LineageMapperProps) {
+    const [mentor, setMentor] = useState<PersonSelection | null>(null);
+    const [student, setStudent] = useState<PersonSelection | null>(null);
+    const [loading, setLoading] = useState(false);
+
+    // Try to use toast, fallback gracefully if not in provider
+    let toast: ReturnType<typeof useToast> | null = null;
+    try {
+        toast = useToast();
+    } catch {
+        // Not wrapped in ToastProvider
+    }
 
     const handleLink = async () => {
         if (!mentor || !student) return;
 
+        setLoading(true);
         try {
             const res = await fetch('/api/admin/lineage', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                // Assuming 'mentor' object has 'slug' or we need to look it up. 
-                // For this component in vacuum, user types name. 
-                // We'll assume the input was a slug or we map it.
-                // Since the UI inputs are text, let's treat them as SLUGS for now for the API to work.
                 body: JSON.stringify({
-                    mentorSlug: mentor.fullName.toLowerCase().replace(/ /g, '-'),
-                    studentSlug: student.fullName.toLowerCase().replace(/ /g, '-')
+                    mentorSlug: slugify(mentor.fullName),
+                    studentSlug: slugify(student.fullName)
                 })
             });
             const data = await res.json();
-            alert(data.message);
 
             if (data.success) {
+                toast?.success(data.message || 'Lineage link created successfully!');
+                onLinkCreated?.(mentor, student);
                 setMentor(null);
                 setStudent(null);
+            } else {
+                toast?.error(data.message || 'Failed to create lineage link');
             }
-        } catch (err) {
-            alert('Link failed');
+        } catch {
+            toast?.error('Failed to link profiles. Please try again.');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -105,13 +125,23 @@ export default function LineageMapper() {
             <div className="mt-8 flex justify-center">
                 <button
                     onClick={handleLink}
-                    disabled={!mentor || !student}
-                    className={`px-8 py-3 rounded-full font-bold uppercase tracking-widest transition-all ${!mentor || !student
-                        ? 'bg-gray-800 text-gray-600 cursor-not-allowed'
-                        : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg hover:shadow-purple-500/50 transform hover:-translate-y-1'
-                        }`}
+                    disabled={!mentor || !student || loading}
+                    className={`px-8 py-3 rounded-full font-bold uppercase tracking-widest transition-all ${
+                        !mentor || !student || loading
+                            ? 'bg-gray-800 text-gray-600 cursor-not-allowed'
+                            : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg hover:shadow-purple-500/50 transform hover:-translate-y-1'
+                    }`}
+                    aria-busy={loading}
                 >
-                    Link Profiles
+                    {loading ? (
+                        <span className="flex items-center gap-2">
+                            <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                            </svg>
+                            Linking...
+                        </span>
+                    ) : 'Link Profiles'}
                 </button>
             </div>
 

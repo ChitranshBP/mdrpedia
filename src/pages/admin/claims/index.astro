@@ -1,0 +1,560 @@
+---
+/**
+ * MDRPedia — Claims Management Dashboard
+ * View and manage profile claims/verifications
+ */
+import Layout from "../../../layouts/Layout.astro";
+import { prisma } from "../../../lib/prisma";
+import { requireSuperAdmin } from "../../../lib/rbac";
+
+export const prerender = false;
+
+if (!requireSuperAdmin(Astro.request)) {
+    return Astro.redirect("/login");
+}
+
+const adminKey = new URL(Astro.request.url).searchParams.get("key");
+const filterStatus = new URL(Astro.request.url).searchParams.get("status") || "all";
+
+// Get profiles with claims info
+const whereClause = filterStatus !== "all"
+    ? { claim_status: filterStatus as any }
+    : {};
+
+const profiles = await prisma.profile.findMany({
+    where: whereClause,
+    select: {
+        id: true,
+        slug: true,
+        full_name: true,
+        specialty: true,
+        tier: true,
+        claim_status: true,
+        npi_number: true,
+        orcid_id: true,
+        email: true,
+        updatedAt: true,
+        geography: {
+            select: { country: true, city: true }
+        },
+        affiliations: {
+            select: {
+                hospital: { select: { name: true } }
+            },
+            take: 1
+        }
+    },
+    orderBy: [
+        { claim_status: 'asc' },
+        { updatedAt: 'desc' }
+    ],
+    take: 200
+});
+
+// Stats
+const stats = await prisma.profile.groupBy({
+    by: ['claim_status'],
+    _count: true
+});
+
+const statusCounts: Record<string, number> = {
+    UNCLAIMED: 0,
+    PENDING: 0,
+    VERIFIED: 0,
+    REJECTED: 0
+};
+stats.forEach(s => {
+    statusCounts[s.claim_status] = s._count;
+});
+
+const statusColors: Record<string, string> = {
+    UNCLAIMED: '#666',
+    PENDING: '#f59e0b',
+    VERIFIED: '#10b981',
+    REJECTED: '#ef4444'
+};
+
+const statusLabels: Record<string, string> = {
+    UNCLAIMED: 'Unclaimed',
+    PENDING: 'Pending Review',
+    VERIFIED: 'Verified',
+    REJECTED: 'Rejected'
+};
+---
+
+<Layout title="Claims Management — MDRPedia Admin">
+    <div class="container admin-dashboard">
+        <header class="admin-header">
+            <div class="admin-header__top">
+                <span class="badge badge--admin">SUPER ADMIN</span>
+                <h1>Profile Claims</h1>
+            </div>
+            <div class="admin-actions">
+                <a href={`/admin?key=${adminKey}`} class="btn btn--outline">
+                    &larr; Dashboard
+                </a>
+            </div>
+        </header>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            {Object.entries(statusCounts).map(([status, count]) => (
+                <a
+                    href={`/admin/claims?key=${adminKey}&status=${status}`}
+                    class={`stat-card ${filterStatus === status ? 'active' : ''}`}
+                    style={`--stat-color: ${statusColors[status]}`}
+                >
+                    <span class="stat-value">{count}</span>
+                    <span class="stat-label">{statusLabels[status]}</span>
+                </a>
+            ))}
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <span class="filter-label">Filter:</span>
+            <div class="filter-buttons">
+                <a href={`/admin/claims?key=${adminKey}&status=all`} class={`filter-btn ${filterStatus === 'all' ? 'active' : ''}`}>
+                    All
+                </a>
+                <a href={`/admin/claims?key=${adminKey}&status=PENDING`} class={`filter-btn ${filterStatus === 'PENDING' ? 'active' : ''}`}>
+                    Pending
+                </a>
+                <a href={`/admin/claims?key=${adminKey}&status=VERIFIED`} class={`filter-btn ${filterStatus === 'VERIFIED' ? 'active' : ''}`}>
+                    Verified
+                </a>
+                <a href={`/admin/claims?key=${adminKey}&status=REJECTED`} class={`filter-btn ${filterStatus === 'REJECTED' ? 'active' : ''}`}>
+                    Rejected
+                </a>
+            </div>
+        </div>
+
+        <!-- Claims Table -->
+        <div class="table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Doctor</th>
+                        <th>Specialty</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Verification</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {profiles.length > 0 ? (
+                        profiles.map((profile) => (
+                            <tr data-id={profile.id} data-status={profile.claim_status}>
+                                <td>
+                                    <a href={`/doctors/${profile.slug}`} target="_blank" class="doctor-name">
+                                        {profile.full_name}
+                                    </a>
+                                    <span class={`tier-badge tier-${profile.tier.toLowerCase()}`}>
+                                        {profile.tier}
+                                    </span>
+                                    {profile.affiliations?.[0]?.hospital?.name && (
+                                        <p class="affiliation">{profile.affiliations[0].hospital.name}</p>
+                                    )}
+                                </td>
+                                <td>{profile.specialty}</td>
+                                <td>
+                                    {profile.geography?.city && `${profile.geography.city}, `}
+                                    {profile.geography?.country || '-'}
+                                </td>
+                                <td>
+                                    <span class="status-badge" style={`--status-color: ${statusColors[profile.claim_status]}`}>
+                                        {statusLabels[profile.claim_status]}
+                                    </span>
+                                </td>
+                                <td class="verification-cell">
+                                    {profile.npi_number && (
+                                        <span class="verification-badge" title="NPI Verified">
+                                            <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                            </svg>
+                                            NPI
+                                        </span>
+                                    )}
+                                    {profile.orcid_id && (
+                                        <span class="verification-badge" title="ORCID Linked">
+                                            <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                            </svg>
+                                            ORCID
+                                        </span>
+                                    )}
+                                    {profile.email && (
+                                        <span class="verification-badge" title="Email Provided">
+                                            <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
+                                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                                            </svg>
+                                            Email
+                                        </span>
+                                    )}
+                                    {!profile.npi_number && !profile.orcid_id && !profile.email && (
+                                        <span class="no-verification">None</span>
+                                    )}
+                                </td>
+                                <td class="actions-cell">
+                                    {profile.claim_status === 'PENDING' && (
+                                        <>
+                                            <button class="btn btn--sm btn--success" data-action="verify" data-id={profile.id}>
+                                                Verify
+                                            </button>
+                                            <button class="btn btn--sm btn--danger" data-action="reject" data-id={profile.id}>
+                                                Reject
+                                            </button>
+                                        </>
+                                    )}
+                                    {profile.claim_status === 'VERIFIED' && (
+                                        <button class="btn btn--sm btn--outline" data-action="revoke" data-id={profile.id}>
+                                            Revoke
+                                        </button>
+                                    )}
+                                    {profile.claim_status === 'REJECTED' && (
+                                        <button class="btn btn--sm btn--outline" data-action="verify" data-id={profile.id}>
+                                            Re-verify
+                                        </button>
+                                    )}
+                                    {profile.claim_status === 'UNCLAIMED' && (
+                                        <span class="text-muted">No action</span>
+                                    )}
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colspan="6" class="empty-state">
+                                No profiles found with this filter.
+                            </td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</Layout>
+
+<script define:vars={{ adminKey }}>
+    document.querySelectorAll('[data-action]').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            const action = btn.dataset.action;
+            const profileId = btn.dataset.id;
+
+            let newStatus;
+            switch(action) {
+                case 'verify':
+                    newStatus = 'VERIFIED';
+                    break;
+                case 'reject':
+                    if (!confirm('Reject this claim? The doctor will be notified.')) return;
+                    newStatus = 'REJECTED';
+                    break;
+                case 'revoke':
+                    if (!confirm('Revoke verification? This will mark the profile as unclaimed.')) return;
+                    newStatus = 'UNCLAIMED';
+                    break;
+            }
+
+            const res = await fetch(`/api/admin/claims?key=${adminKey}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ profileId, status: newStatus })
+            });
+
+            if (res.ok) {
+                window.location.reload();
+            } else {
+                alert('Failed to update claim status');
+            }
+        });
+    });
+</script>
+
+<style>
+    .admin-dashboard {
+        padding: 40px 20px;
+        max-width: 1400px;
+        color: var(--text-primary);
+    }
+
+    .admin-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+    }
+
+    .admin-header__top {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .badge--admin {
+        background: #ffd700;
+        color: #000;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        align-self: flex-start;
+    }
+
+    h1 {
+        font-family: var(--font-serif);
+        font-size: 2rem;
+        margin: 0;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 32px;
+    }
+
+    .stat-card {
+        background: var(--bg-card, #14142a);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+    .stat-card:hover {
+        border-color: var(--stat-color);
+        transform: translateY(-2px);
+    }
+
+    .stat-card.active {
+        border-color: var(--stat-color);
+        box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+    }
+
+    .stat-value {
+        display: block;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--stat-color);
+    }
+
+    .stat-label {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .filter-label {
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+
+    .filter-buttons {
+        display: flex;
+        gap: 8px;
+    }
+
+    .filter-btn {
+        padding: 6px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: transparent;
+        color: var(--text-secondary);
+        border-radius: 20px;
+        font-size: 0.85rem;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+        border-color: var(--accent-purple);
+        color: var(--accent-purple);
+    }
+
+    .filter-btn.active {
+        background: var(--accent-purple);
+        border-color: var(--accent-purple);
+        color: white;
+    }
+
+    /* Table */
+    .table-container {
+        background: var(--bg-card, #14142a);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .admin-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        padding: 16px;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .admin-table th {
+        background: rgba(255, 255, 255, 0.03);
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+
+    .doctor-name {
+        color: var(--accent-purple);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .doctor-name:hover {
+        text-decoration: underline;
+    }
+
+    .tier-badge {
+        display: inline-block;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.65rem;
+        font-weight: 700;
+        margin-left: 8px;
+        vertical-align: middle;
+    }
+
+    .tier-titan { background: rgba(255, 215, 0, 0.2); color: #ffd700; }
+    .tier-elite { background: rgba(0, 170, 255, 0.2); color: #00aaff; }
+    .tier-master { background: rgba(0, 204, 102, 0.2); color: #00cc66; }
+    .tier-unranked { background: rgba(128, 128, 128, 0.2); color: #888; }
+
+    .affiliation {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin: 4px 0 0;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        background: rgba(var(--status-color), 0.15);
+        color: var(--status-color);
+        border: 1px solid var(--status-color);
+    }
+
+    .verification-cell {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    .verification-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 3px 8px;
+        background: rgba(16, 185, 129, 0.15);
+        color: #10b981;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+
+    .no-verification {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+    }
+
+    .actions-cell {
+        display: flex;
+        gap: 8px;
+    }
+
+    .text-muted {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: var(--text-muted);
+    }
+
+    /* Buttons */
+    .btn {
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+    }
+
+    .btn--outline {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--text-primary);
+    }
+
+    .btn--success {
+        background: rgba(16, 185, 129, 0.2);
+        color: #10b981;
+        border: 1px solid #10b981;
+    }
+
+    .btn--danger {
+        background: rgba(239, 68, 68, 0.15);
+        color: #ef4444;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .btn--sm {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+
+    @media (max-width: 1024px) {
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .admin-header {
+            flex-direction: column;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .admin-table {
+            font-size: 0.85rem;
+        }
+    }
+</style>

@@ -1,31 +1,492 @@
 {
   "fullName": "Svetlana Mojsov",
   "slug": "svetlana-mojsov",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "GLP-1 Biology",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23001a4d\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%2300aaff\" text-anchor=\"middle\" dy=\".3em\">SM</text></svg>",
-  "tier": "ELITE",
-  "rankingScore": 33,
-  "hIndex": 133,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 130,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 13000,
+  "livesSaved": 0,
+  "biography": "Svetlana Mojsov is a Yugoslav-born Macedonian American chemist who is a research associate professor at Rockefeller University. Her research considers peptide synthesis. She discovered the glucagon-like peptide-1 (GLP-1) and uncovered its role in glucose metabolism and the secretion of insulin. Her breakthroughs were transformed by Novo Nordisk into therapeutic agents against diabetes and obesity.",
+  "aiSummary": "Svetlana Mojsov is a glp-1 biology specialist with an H-index of 130 at Rockefeller University (Faculty). Has been published in Proceedings of the National Academy of Sciences, Annals of the New York Academy of Sciences, JAMA. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Rockefeller University"
-    }
-  ],
-  "bio": "Svetlana Mojsov is a pioneer in GLP-1 Biology at Rockefeller University, USA. With a D-Index of 133 and over 130,000 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Rockefeller University",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "GLP-1 Biology"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Glucagon-like peptide I stimulates insulin gene expression and increases cyclic AMP levels in a rat islet cell line.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1987,
+      "citationCount": 871,
+      "doi": "10.1073/pnas.84.10.3434",
+      "sourceUrl": "https://doi.org/10.1073/pnas.84.10.3434",
+      "verified": true
+    },
+    {
+      "title": "Insulinotropin: glucagon-like peptide I (7-37) co-encoded in the glucagon gene is a potent stimulator of insulin release in the perfused rat pancreas.",
+      "journal": "Journal of Clinical Investigation",
+      "year": 1987,
+      "citationCount": 857,
+      "doi": "10.1172/jci112855",
+      "sourceUrl": "https://doi.org/10.1172/jci112855",
+      "verified": true
+    },
+    {
+      "title": "Preproglucagon gene expression in pancreas and intestine diversifies at the level of post-translational processing.",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1986,
+      "citationCount": 708,
+      "doi": "10.1016/s0021-9258(18)67324-7",
+      "sourceUrl": "https://doi.org/10.1016/s0021-9258(18)67324-7",
+      "verified": true
+    },
+    {
+      "title": "Tissue‐specific expression of the human receptor for glucagon‐like peptide‐I: brain, heart and pancreatic forms have the same deduced amino acid sequences",
+      "journal": "FEBS Letters",
+      "year": 1995,
+      "citationCount": 442,
+      "doi": "10.1016/0014-5793(94)01430-9",
+      "sourceUrl": "https://doi.org/10.1016/0014-5793(94)01430-9",
+      "verified": true
+    },
+    {
+      "title": "Dendritic cell–expanded, islet-specific CD4+ CD25+ CD62L+ regulatory T cells restore normoglycemia in diabetic NOD mice",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 2007,
+      "citationCount": 339,
+      "doi": "10.1084/jem.20061631",
+      "sourceUrl": "https://doi.org/10.1084/jem.20061631",
+      "verified": true
+    },
+    {
+      "title": "Insulinotropic Action of Glucagonlike Peptide-I-(7–37) in Diabetic and Nondiabetic Subjects",
+      "journal": "Diabetes Care",
+      "year": 1992,
+      "citationCount": 287,
+      "doi": "10.2337/diacare.15.2.270",
+      "sourceUrl": "https://doi.org/10.2337/diacare.15.2.270",
+      "verified": true
+    },
+    {
+      "title": "Glucagonlike Peptide I (7–37) Actions on Endocrine Pancreas",
+      "journal": "Diabetes",
+      "year": 1989,
+      "citationCount": 277,
+      "doi": "10.2337/diab.38.3.338",
+      "sourceUrl": "https://doi.org/10.2337/diab.38.3.338",
+      "verified": true
+    },
+    {
+      "title": "Efficient Interaction of HIV-1 with Purified Dendritic Cells via Multiple Chemokine Coreceptors",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 1996,
+      "citationCount": 244,
+      "doi": "10.1084/jem.184.6.2433",
+      "sourceUrl": "https://doi.org/10.1084/jem.184.6.2433",
+      "verified": true
+    },
+    {
+      "title": "Improved synthesis of 4-alkoxybenzyl alcohol resin",
+      "journal": "The Journal of Organic Chemistry",
+      "year": 1981,
+      "citationCount": 177,
+      "doi": "10.1021/jo00330a009",
+      "sourceUrl": "https://doi.org/10.1021/jo00330a009",
+      "verified": true
+    },
+    {
+      "title": "Both amidated and nonamidated forms of glucagon-like peptide I are synthesized in the rat intestine and the pancreas.",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1990,
+      "citationCount": 157,
+      "doi": "10.1016/s0021-9258(19)39030-1",
+      "sourceUrl": "https://doi.org/10.1016/s0021-9258(19)39030-1",
+      "verified": true
+    },
+    {
+      "title": "Proglucagon Processing Similar to Normal Islets in Pancreatic α-Like Cell Line Derived From Transgenic Mouse Tumor",
+      "journal": "Diabetes",
+      "year": 1990,
+      "citationCount": 134,
+      "doi": "10.2337/diab.39.4.406",
+      "sourceUrl": "https://doi.org/10.2337/diab.39.4.406",
+      "verified": true
+    },
+    {
+      "title": "Tissue Specific Expression of Different Human ReceptorTypes for Pituitary Adenylate Cyclase Activating Polypeptideand Vasoactive Intestinal Polypeptide: Implications fortheir Role in Human Physiology",
+      "journal": "Journal of Neuroendocrinology",
+      "year": 1996,
+      "citationCount": 107,
+      "doi": "10.1046/j.1365-2826.1996.05191.x",
+      "sourceUrl": "https://doi.org/10.1046/j.1365-2826.1996.05191.x",
+      "verified": true
+    },
+    {
+      "title": "Calcitonin Gene-Related Peptide Decreases Expression of HLA-DR and CD86 by Human Dendritic Cells and Dampens Dendritic Cell-Driven T Cell-Proliferative Responses Via the Type I Calcitonin Gene-Related Peptide Receptor",
+      "journal": "The Journal of Immunology",
+      "year": 2000,
+      "citationCount": 107,
+      "doi": "10.4049/jimmunol.164.7.3494",
+      "sourceUrl": "https://doi.org/10.4049/jimmunol.164.7.3494",
+      "verified": true
+    },
+    {
+      "title": "Glucagon-Like Peptide-I Analogs: Effects on Insulin Secretion and Adenosine 3′,5′-Monophosphate Formation*",
+      "journal": "Endocrinology",
+      "year": 1990,
+      "citationCount": 105,
+      "doi": "10.1210/endo-126-4-2164",
+      "sourceUrl": "https://doi.org/10.1210/endo-126-4-2164",
+      "verified": true
+    },
+    {
+      "title": "Cell-specific post-translational processing of preproglucagon expressed from a metallothionein-glucagon fusion gene.",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1986,
+      "citationCount": 104,
+      "doi": "10.1016/s0021-9258(18)67561-1",
+      "sourceUrl": "https://doi.org/10.1016/s0021-9258(18)67561-1",
+      "verified": true
+    },
+    {
+      "title": "Distribution of GLP‐1 and PACAP receptors in human tissues",
+      "journal": "Acta Physiologica Scandinavica",
+      "year": 1996,
+      "citationCount": 81,
+      "doi": "10.1046/j.1365-201x.1996.42256000.x",
+      "sourceUrl": "https://doi.org/10.1046/j.1365-201x.1996.42256000.x",
+      "verified": true
+    },
+    {
+      "title": "A quantitative evaluation of methods for coupling asparagine",
+      "journal": "The Journal of Organic Chemistry",
+      "year": 1980,
+      "citationCount": 80,
+      "doi": "10.1021/jo01292a001",
+      "sourceUrl": "https://doi.org/10.1021/jo01292a001",
+      "verified": true
+    },
+    {
+      "title": "Glucagonlike peptide I (7-37) actions on endocrine pancreas",
+      "journal": "Diabetes",
+      "year": 1989,
+      "citationCount": 71,
+      "doi": "10.2337/diabetes.38.3.338",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.38.3.338",
+      "verified": true
+    },
+    {
+      "title": "Expression of a Functional Eotaxin (CC Chemokine Ligand 11) Receptor CCR3 by Human Dendritic Cells",
+      "journal": "The Journal of Immunology",
+      "year": 2002,
+      "citationCount": 67,
+      "doi": "10.4049/jimmunol.169.6.2925",
+      "sourceUrl": "https://doi.org/10.4049/jimmunol.169.6.2925",
+      "verified": true
+    },
+    {
+      "title": "Mass Spectrometry Analysis and Quantitation of Peptides Presented on the MHC II Molecules of Mouse Spleen Dendritic Cells",
+      "journal": "Journal of Proteome Research",
+      "year": 2011,
+      "citationCount": 65,
+      "doi": "10.1021/pr200503g",
+      "sourceUrl": "https://doi.org/10.1021/pr200503g",
+      "verified": true
+    },
+    {
+      "title": "Absence of insulinotropic glucagon‐like peptide‐I(7–37) receptors on isolated rat liver hepatocytes",
+      "journal": "FEBS Letters",
+      "year": 1991,
+      "citationCount": 56,
+      "doi": "10.1016/0014-5793(91)80541-a",
+      "sourceUrl": "https://doi.org/10.1016/0014-5793(91)80541-a",
+      "verified": true
+    },
+    {
+      "title": "Glucagon-like Peptide-1 (GLP-1) and the Control of Glucose Metabolism in Mammals and Teleost Fish1",
+      "journal": "American Zoologist",
+      "year": 2000,
+      "citationCount": 52,
+      "doi": "10.1668/0003-1569(2000)040[0246:glpgat]2.0.co;2",
+      "sourceUrl": "https://doi.org/10.1668/0003-1569(2000)040[0246:glpgat]2.0.co;2",
+      "verified": true
+    },
+    {
+      "title": "Proglucagon Gene Expression and Posttranslational Processing in a Hamster Islet Cell Line*",
+      "journal": "Endocrinology",
+      "year": 1988,
+      "citationCount": 49,
+      "doi": "10.1210/endo-123-4-1861",
+      "sourceUrl": "https://doi.org/10.1210/endo-123-4-1861",
+      "verified": true
+    },
+    {
+      "title": "Proglucagon Processing in a Rat Islet Cell Line Resembles Phenotype of Intestine Rather than Pancreas*",
+      "journal": "Endocrinology",
+      "year": 1986,
+      "citationCount": 47,
+      "doi": "10.1210/endo-119-6-2833",
+      "sourceUrl": "https://doi.org/10.1210/endo-119-6-2833",
+      "verified": true
+    },
+    {
+      "title": "Solid-phase synthesis of crystalline glucagon",
+      "journal": "Biochemistry",
+      "year": 1981,
+      "citationCount": 46,
+      "doi": "10.1021/bi00513a036",
+      "sourceUrl": "https://doi.org/10.1021/bi00513a036",
+      "verified": true
+    },
+    {
+      "title": "Identification and Characterization of a Glucagon Receptor from the Goldfish Carassius auratus: Implications for the Evolution of the Ligand Specificity of Glucagon Receptors in Vertebrates",
+      "journal": "Endocrinology",
+      "year": 2004,
+      "citationCount": 37,
+      "doi": "10.1210/en.2003-0597",
+      "sourceUrl": "https://doi.org/10.1210/en.2003-0597",
+      "verified": true
+    },
+    {
+      "title": "An improved synthesis of crystalline mammalian glucagon",
+      "journal": "European Journal of Biochemistry",
+      "year": 1984,
+      "citationCount": 36,
+      "doi": "10.1111/j.1432-1033.1984.tb08599.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1432-1033.1984.tb08599.x",
+      "verified": true
+    },
+    {
+      "title": "Glucagon-like peptide-1 activates the adenylyl cyclase system in rockfish enterocytes and brain membranes",
+      "journal": "Comparative Biochemistry and Physiology Part B Biochemistry and Molecular Biology",
+      "year": 1998,
+      "citationCount": 34,
+      "doi": "10.1016/s0305-0491(98)10110-4",
+      "sourceUrl": "https://doi.org/10.1016/s0305-0491(98)10110-4",
+      "verified": true
+    },
+    {
+      "title": "Isolation and Structure-Function Studies of a Glucagon-Like Peptide 1 Receptor from Goldfish Carassius auratus: Identification of Three Charged Residues in Extracellular Domains Critical for Receptor Function",
+      "journal": "Endocrinology",
+      "year": 2002,
+      "citationCount": 34,
+      "doi": "10.1210/en.2002-220694",
+      "sourceUrl": "https://doi.org/10.1210/en.2002-220694",
+      "verified": true
+    },
+    {
+      "title": "Structural requirements for biological activity of glucagon‐like peptide‐I",
+      "journal": "International journal of peptide & protein research",
+      "year": 1992,
+      "citationCount": 33,
+      "doi": "10.1111/j.1399-3011.1992.tb00309.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1399-3011.1992.tb00309.x",
+      "verified": true
+    },
+    {
+      "title": "Diversification of the functions of proglucagon and glucagon receptor genes in fish",
+      "journal": "General and Comparative Endocrinology",
+      "year": 2018,
+      "citationCount": 31,
+      "doi": "10.1016/j.ygcen.2018.03.003",
+      "sourceUrl": "https://doi.org/10.1016/j.ygcen.2018.03.003",
+      "verified": true
+    },
+    {
+      "title": "Glucagon-like peptide-I-(7–37) suppresses hyperglycemia in rats",
+      "journal": "Metabolism",
+      "year": 1993,
+      "citationCount": 30,
+      "doi": "10.1016/0026-0495(93)90163-i",
+      "sourceUrl": "https://doi.org/10.1016/0026-0495(93)90163-i",
+      "verified": true
+    },
+    {
+      "title": "Multiple Human Receptors for Pituitary Adenylyl Cyclase-Activating Polypeptide and Vasoactive Intestinal Peptide Are Expressed in a Tissue-Specific Mannera",
+      "journal": "Annals of the New York Academy of Sciences",
+      "year": 2006,
+      "citationCount": 30,
+      "doi": "10.1111/j.1749-6632.1996.tb17531.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1749-6632.1996.tb17531.x",
+      "verified": true
+    },
+    {
+      "title": "Expression of Peptide Hormone Genes in Human Islet Cell Tumors",
+      "journal": "Diabetes",
+      "year": 1988,
+      "citationCount": 25,
+      "doi": "10.2337/diab.37.12.1647",
+      "sourceUrl": "https://doi.org/10.2337/diab.37.12.1647",
+      "verified": true
+    },
+    {
+      "title": "Functional studies of a glucagon receptor isolated from frog <i>Rana tigrina rugulosa</i>: implications on the molecular evolution of glucagon receptors in vertebrates",
+      "journal": "FEBS Letters",
+      "year": 1999,
+      "citationCount": 24,
+      "doi": "10.1016/s0014-5793(99)01112-6",
+      "sourceUrl": "https://doi.org/10.1016/s0014-5793(99)01112-6",
+      "verified": true
+    },
+    {
+      "title": "Cloning and Functional Characterization of PACAP‐Specific Receptors in Zebrafish",
+      "journal": "Annals of the New York Academy of Sciences",
+      "year": 1998,
+      "citationCount": 19,
+      "doi": "10.1111/j.1749-6632.1998.tb11161.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1749-6632.1998.tb11161.x",
+      "verified": true
+    },
+    {
+      "title": "Short Communication: The Immunodeficiency Virus Coreceptor, Bonzo/STRL33/TYMSTR, Is Expressed by Macaque and Human Skin- and Blood-Derived Dendritic Cells",
+      "journal": "AIDS Research and Human Retroviruses",
+      "year": 2000,
+      "citationCount": 18,
+      "doi": "10.1089/08892220050075318",
+      "sourceUrl": "https://doi.org/10.1089/08892220050075318",
+      "verified": true
+    },
+    {
+      "title": "Reinvigoration of innate and adaptive immunity via therapeutic cellular vaccine for patients with AML",
+      "journal": "Molecular Therapy — Oncolytics",
+      "year": 2022,
+      "citationCount": 16,
+      "doi": "10.1016/j.omto.2022.09.001",
+      "sourceUrl": "https://doi.org/10.1016/j.omto.2022.09.001",
+      "verified": true
+    },
+    {
+      "title": "Glucagon-like Peptide-1 (GLP-1) and the Control of Glucose Metabolism in Mammals and Teleost Fish",
+      "journal": "American Zoologist",
+      "year": 2000,
+      "citationCount": 10,
+      "doi": "10.1093/icb/40.2.246",
+      "sourceUrl": "https://doi.org/10.1093/icb/40.2.246",
+      "verified": true
+    },
+    {
+      "title": "Structural Mapping and Functional Characterization of Zebrafish Class B G-Protein Coupled Receptor (GPCR) with Dual Ligand Selectivity towards GLP-1 and Glucagon",
+      "journal": "PLoS ONE",
+      "year": 2016,
+      "citationCount": 10,
+      "doi": "10.1371/journal.pone.0167718",
+      "sourceUrl": "https://doi.org/10.1371/journal.pone.0167718",
+      "verified": true
+    },
+    {
+      "title": "Synthesis and hormonal activity of [Tyr 22] glucagon and [desHis 1, Tyr 22] glucagon",
+      "journal": "International journal of peptide & protein research",
+      "year": 1987,
+      "citationCount": 9,
+      "doi": "10.1111/j.1399-3011.1987.tb02282.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1399-3011.1987.tb02282.x",
+      "verified": true
+    },
+    {
+      "title": "Strategy for Identifying Dendritic Cell-Processed CD4+ T Cell Epitopes from the HIV Gag p24 Protein",
+      "journal": "PLoS ONE",
+      "year": 2012,
+      "citationCount": 8,
+      "doi": "10.1371/journal.pone.0041897",
+      "sourceUrl": "https://doi.org/10.1371/journal.pone.0041897",
+      "verified": true
+    },
+    {
+      "title": "The Chemical Synthesis of Glucagon",
+      "journal": "Handbook of experimental pharmacology",
+      "year": 1983,
+      "citationCount": 8,
+      "doi": "10.1007/978-3-642-68866-9_2",
+      "sourceUrl": "https://doi.org/10.1007/978-3-642-68866-9_2",
+      "verified": true
+    },
+    {
+      "title": "Chemistry Matters—From a Putative Peptide to Effective Treatments for Diabetes and Obesity",
+      "journal": "JAMA",
+      "year": 2024,
+      "citationCount": 4,
+      "doi": "10.1001/jama.2024.17571",
+      "sourceUrl": "https://doi.org/10.1001/jama.2024.17571",
+      "verified": true
+    },
+    {
+      "title": "FMRFamide‐like peptides encoded on the flp‐18 precursor gene activate two isoforms of the orphan Caenorhabditis elegans G‐protein‐coupled receptor Y58G8A.4 heterologously expressed in mammalian cells",
+      "journal": "Unknown Journal",
+      "year": 2008,
+      "citationCount": 1,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W3037862799",
+      "verified": true
+    },
+    {
+      "title": "Glucagonlike peptide I (7–37) is a potent stimulator of insulin secretion",
+      "journal": "Peptides",
+      "year": 1988,
+      "citationCount": 1,
+      "doi": "10.1007/978-94-010-9595-2_193",
+      "sourceUrl": "https://doi.org/10.1007/978-94-010-9595-2_193",
+      "verified": true
+    },
+    {
+      "title": "Studies on Solid-Phase Peptide Synthesis: The Synthesis of Glucagon",
+      "journal": "Digital Commons - RU (Rockefeller University)",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.48496/t20p-4p84",
+      "sourceUrl": "https://doi.org/10.48496/t20p-4p84",
+      "verified": true
+    },
+    {
+      "title": "SYNTHESIS OF GLUCAGON-LIKE PEPTIDES: DEVELOPMENT OF SPECIFIC ANTISERA AND ANALYSIS OF PROGLUCAGON PROCESSING",
+      "journal": "Unknown Journal",
+      "year": 1987,
+      "citationCount": 0,
+      "doi": "10.1515/9783110864243-124",
+      "sourceUrl": "https://doi.org/10.1515/9783110864243-124",
+      "verified": true
+    },
+    {
+      "title": "Discovery of Glucagon-Like Peptide-1 and Its Biological Activity",
+      "journal": "JAMA",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.1001/jama.2025.11292",
+      "sourceUrl": "https://doi.org/10.1001/jama.2025.11292",
+      "verified": true
+    },
+    {
+      "title": "ChemInform Abstract: IMPROVED SYNTHESIS OF 4‐ALKOXYBENZYL ALCOHOL RESIN",
+      "journal": "Chemischer Informationsdienst",
+      "year": 1982,
+      "citationCount": 0,
+      "doi": "10.1002/chin.198202096",
+      "sourceUrl": "https://doi.org/10.1002/chin.198202096",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:16.000Z",
+  "openalexId": "https://openalex.org/A5013143800"
 }

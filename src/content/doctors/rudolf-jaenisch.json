@@ -1,36 +1,493 @@
 {
   "fullName": "Rudolf Jaenisch",
   "slug": "rudolf-jaenisch",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Epigenetics",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">RJ</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 58,
-  "hIndex": 233,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 246,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 24663,
+  "livesSaved": 0,
+  "biography": "Rudolf Jaenisch is a professor of biology at the Massachusetts Institute of Technology and a founding member of the Whitehead Institute for Biomedical Research. He is a pioneer of transgenic science, in which an animal’s genetic makeup is altered. Jaenisch has focused on creating genetically modified mice to study cancer, epigenetic reprogramming and neurological diseases.",
+  "aiSummary": "Rudolf Jaenisch is a epigenetics specialist with an H-index of 246 at Massachusetts Institute of Technology (Faculty). Has been published in Nature Genetics, Cell, Proceedings of the National Academy of Sciences. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "MIT"
-    }
-  ],
-  "bio": "Rudolf Jaenisch is a pioneer in Epigenetics at MIT, USA. With a D-Index of 233 and over 246,626 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Massachusetts Institute of Technology",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Epigenetics"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Epigenetic regulation of gene expression: how the genome integrates intrinsic and environmental signals",
+      "journal": "Nature Genetics",
+      "year": 2003,
+      "citationCount": 6207,
+      "doi": "10.1038/ng1089",
+      "sourceUrl": "https://doi.org/10.1038/ng1089",
+      "verified": true
+    },
+    {
+      "title": "A Bivalent Chromatin Structure Marks Key Developmental Genes in Embryonic Stem Cells",
+      "journal": "Cell",
+      "year": 2006,
+      "citationCount": 5344,
+      "doi": "10.1016/j.cell.2006.02.041",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2006.02.041",
+      "verified": true
+    },
+    {
+      "title": "Core Transcriptional Regulatory Circuitry in Human Embryonic Stem Cells",
+      "journal": "Cell",
+      "year": 2005,
+      "citationCount": 4433,
+      "doi": "10.1016/j.cell.2005.08.020",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2005.08.020",
+      "verified": true
+    },
+    {
+      "title": "Histone H3K27ac separates active from poised enhancers and predicts developmental state",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2010,
+      "citationCount": 4356,
+      "doi": "10.1073/pnas.1016071107",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1016071107",
+      "verified": true
+    },
+    {
+      "title": "Chromatin signature reveals over a thousand highly conserved large non-coding RNAs in mammals",
+      "journal": "Nature",
+      "year": 2009,
+      "citationCount": 4152,
+      "doi": "10.1038/nature07672",
+      "sourceUrl": "https://doi.org/10.1038/nature07672",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide maps of chromatin state in pluripotent and lineage-committed cells",
+      "journal": "Nature",
+      "year": 2007,
+      "citationCount": 4101,
+      "doi": "10.1038/nature06008",
+      "sourceUrl": "https://doi.org/10.1038/nature06008",
+      "verified": true
+    },
+    {
+      "title": "Targeted mutation of the DNA methyltransferase gene results in embryonic lethality",
+      "journal": "Cell",
+      "year": 1992,
+      "citationCount": 3935,
+      "doi": "10.1016/0092-8674(92)90611-f",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(92)90611-f",
+      "verified": true
+    },
+    {
+      "title": "One-Step Generation of Mice Carrying Mutations in Multiple Genes by CRISPR/Cas-Mediated Genome Engineering",
+      "journal": "Cell",
+      "year": 2013,
+      "citationCount": 3498,
+      "doi": "10.1016/j.cell.2013.04.025",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2013.04.025",
+      "verified": true
+    },
+    {
+      "title": "In vitro reprogramming of fibroblasts into a pluripotent ES-cell-like state",
+      "journal": "Nature",
+      "year": 2007,
+      "citationCount": 2652,
+      "doi": "10.1038/nature05944",
+      "sourceUrl": "https://doi.org/10.1038/nature05944",
+      "verified": true
+    },
+    {
+      "title": "Genome-scale DNA methylation maps of pluripotent and differentiated cells",
+      "journal": "Nature",
+      "year": 2008,
+      "citationCount": 2503,
+      "doi": "10.1038/nature07107",
+      "sourceUrl": "https://doi.org/10.1038/nature07107",
+      "verified": true
+    },
+    {
+      "title": "Polycomb complexes repress developmental regulators in murine embryonic stem cells",
+      "journal": "Nature",
+      "year": 2006,
+      "citationCount": 2480,
+      "doi": "10.1038/nature04733",
+      "sourceUrl": "https://doi.org/10.1038/nature04733",
+      "verified": true
+    },
+    {
+      "title": "Epigenetic memory in induced pluripotent stem cells",
+      "journal": "Nature",
+      "year": 2010,
+      "citationCount": 2251,
+      "doi": "10.1038/nature09342",
+      "sourceUrl": "https://doi.org/10.1038/nature09342",
+      "verified": true
+    },
+    {
+      "title": "Control of Developmental Regulators by Polycomb in Human Embryonic Stem Cells",
+      "journal": "Cell",
+      "year": 2006,
+      "citationCount": 2241,
+      "doi": "10.1016/j.cell.2006.02.043",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2006.02.043",
+      "verified": true
+    },
+    {
+      "title": "HIF-1α Is Essential for Myeloid Cell-Mediated Inflammation",
+      "journal": "Cell",
+      "year": 2003,
+      "citationCount": 1993,
+      "doi": "10.1016/s0092-8674(03)00154-5",
+      "sourceUrl": "https://doi.org/10.1016/s0092-8674(03)00154-5",
+      "verified": true
+    },
+    {
+      "title": "WT-1 is required for early kidney development",
+      "journal": "Cell",
+      "year": 1993,
+      "citationCount": 1984,
+      "doi": "10.1016/0092-8674(93)90515-r",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(93)90515-r",
+      "verified": true
+    },
+    {
+      "title": "Role for DNA methylation in genomic imprinting",
+      "journal": "Nature",
+      "year": 1993,
+      "citationCount": 1943,
+      "doi": "10.1038/366362a0",
+      "sourceUrl": "https://doi.org/10.1038/366362a0",
+      "verified": true
+    },
+    {
+      "title": "A Chromatin Landmark and Transcription Initiation at Most Promoters in Human Cells",
+      "journal": "Cell",
+      "year": 2007,
+      "citationCount": 1931,
+      "doi": "10.1016/j.cell.2007.05.042",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2007.05.042",
+      "verified": true
+    },
+    {
+      "title": "Directly Reprogrammed Fibroblasts Show Global Epigenetic Remodeling and Widespread Tissue Contribution",
+      "journal": "Cell stem cell",
+      "year": 2007,
+      "citationCount": 1716,
+      "doi": "10.1016/j.stem.2007.05.014",
+      "sourceUrl": "https://doi.org/10.1016/j.stem.2007.05.014",
+      "verified": true
+    },
+    {
+      "title": "MyoD or Myf-5 is required for the formation of skeletal muscle",
+      "journal": "Cell",
+      "year": 1993,
+      "citationCount": 1709,
+      "doi": "10.1016/0092-8674(93)90621-v",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(93)90621-v",
+      "verified": true
+    },
+    {
+      "title": "Role for DNA methylation in genomic imprinting",
+      "journal": "Trends in Genetics",
+      "year": 1994,
+      "citationCount": 1706,
+      "doi": "10.1016/0168-9525(94)90228-3",
+      "sourceUrl": "https://doi.org/10.1016/0168-9525(94)90228-3",
+      "verified": true
+    },
+    {
+      "title": "HDAC2 negatively regulates memory formation and synaptic plasticity",
+      "journal": "Nature",
+      "year": 2009,
+      "citationCount": 1608,
+      "doi": "10.1038/nature07925",
+      "sourceUrl": "https://doi.org/10.1038/nature07925",
+      "verified": true
+    },
+    {
+      "title": "One-Step Generation of Mice Carrying Reporter and Conditional Alleles by CRISPR/Cas-Mediated Genome Engineering",
+      "journal": "Cell",
+      "year": 2013,
+      "citationCount": 1603,
+      "doi": "10.1016/j.cell.2013.08.022",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2013.08.022",
+      "verified": true
+    },
+    {
+      "title": "Targeted Deletion Reveals Essential and Overlapping Functions of the miR-17∼92 Family of miRNA Clusters",
+      "journal": "Cell",
+      "year": 2008,
+      "citationCount": 1587,
+      "doi": "10.1016/j.cell.2008.02.019",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2008.02.019",
+      "verified": true
+    },
+    {
+      "title": "Parkinson's Disease Patient-Derived Induced Pluripotent Stem Cells Free of Viral Reprogramming Factors",
+      "journal": "Cell",
+      "year": 2009,
+      "citationCount": 1533,
+      "doi": "10.1016/j.cell.2009.02.013",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2009.02.013",
+      "verified": true
+    },
+    {
+      "title": "Simplified mammalian DNA isolation procedure",
+      "journal": "Nucleic Acids Research",
+      "year": 1991,
+      "citationCount": 1511,
+      "doi": "10.1093/nar/19.15.4293",
+      "sourceUrl": "https://doi.org/10.1093/nar/19.15.4293",
+      "verified": true
+    },
+    {
+      "title": "Treatment of Sickle Cell Anemia Mouse Model with iPS Cells Generated from Autologous Skin",
+      "journal": "Science",
+      "year": 2007,
+      "citationCount": 1488,
+      "doi": "10.1126/science.1152092",
+      "sourceUrl": "https://doi.org/10.1126/science.1152092",
+      "verified": true
+    },
+    {
+      "title": "Induction of Tumors in Mice by Genomic Hypomethylation",
+      "journal": "Science",
+      "year": 2003,
+      "citationCount": 1479,
+      "doi": "10.1126/science.1083558",
+      "sourceUrl": "https://doi.org/10.1126/science.1083558",
+      "verified": true
+    },
+    {
+      "title": "Dissecting direct reprogramming through integrative genomic analysis",
+      "journal": "Nature",
+      "year": 2008,
+      "citationCount": 1460,
+      "doi": "10.1038/nature07056",
+      "sourceUrl": "https://doi.org/10.1038/nature07056",
+      "verified": true
+    },
+    {
+      "title": "Stem Cells, the Molecular Circuitry of Pluripotency and Nuclear Reprogramming",
+      "journal": "Cell",
+      "year": 2008,
+      "citationCount": 1418,
+      "doi": "10.1016/j.cell.2008.01.015",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2008.01.015",
+      "verified": true
+    },
+    {
+      "title": "Chromosomal Instability and Tumors Promoted by DNA Hypomethylation",
+      "journal": "Science",
+      "year": 2003,
+      "citationCount": 1394,
+      "doi": "10.1126/science.1083557",
+      "sourceUrl": "https://doi.org/10.1126/science.1083557",
+      "verified": true
+    },
+    {
+      "title": "Connecting microRNA Genes to the Core Transcriptional Regulatory Circuitry of Embryonic Stem Cells",
+      "journal": "Cell",
+      "year": 2008,
+      "citationCount": 1359,
+      "doi": "10.1016/j.cell.2008.07.020",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2008.07.020",
+      "verified": true
+    },
+    {
+      "title": "Deficiency of methyl-CpG binding protein-2 in CNS neurons results in a Rett-like phenotype in mice",
+      "journal": "Nature Genetics",
+      "year": 2001,
+      "citationCount": 1266,
+      "doi": "10.1038/85906",
+      "sourceUrl": "https://doi.org/10.1038/85906",
+      "verified": true
+    },
+    {
+      "title": "A Critical Role for Dnmt1 and DNA Methylation in T Cell Development, Function, and Survival",
+      "journal": "Immunity",
+      "year": 2001,
+      "citationCount": 1256,
+      "doi": "10.1016/s1074-7613(01)00227-8",
+      "sourceUrl": "https://doi.org/10.1016/s1074-7613(01)00227-8",
+      "verified": true
+    },
+    {
+      "title": "YAP1 Increases Organ Size and Expands Undifferentiated Progenitor Cells",
+      "journal": "Current Biology",
+      "year": 2007,
+      "citationCount": 1252,
+      "doi": "10.1016/j.cub.2007.10.039",
+      "sourceUrl": "https://doi.org/10.1016/j.cub.2007.10.039",
+      "verified": true
+    },
+    {
+      "title": "Derepression of BDNF Transcription Involves Calcium-Dependent Phosphorylation of MeCP2",
+      "journal": "Science",
+      "year": 2003,
+      "citationCount": 1226,
+      "doi": "10.1126/science.1086446",
+      "sourceUrl": "https://doi.org/10.1126/science.1086446",
+      "verified": true
+    },
+    {
+      "title": "Neurons derived from reprogrammed fibroblasts functionally integrate into the fetal brain and improve symptoms of rats with Parkinson's disease",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2008,
+      "citationCount": 1203,
+      "doi": "10.1073/pnas.0801677105",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0801677105",
+      "verified": true
+    },
+    {
+      "title": "Editing DNA Methylation in the Mammalian Genome",
+      "journal": "Cell",
+      "year": 2016,
+      "citationCount": 1168,
+      "doi": "10.1016/j.cell.2016.08.056",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2016.08.056",
+      "verified": true
+    },
+    {
+      "title": "Genetic engineering of human pluripotent cells using TALE nucleases",
+      "journal": "Nature Biotechnology",
+      "year": 2011,
+      "citationCount": 1142,
+      "doi": "10.1038/nbt.1927",
+      "sourceUrl": "https://doi.org/10.1038/nbt.1927",
+      "verified": true
+    },
+    {
+      "title": "Mutations in T-cell antigen receptor genes α and β block thymocyte development at different stages",
+      "journal": "Nature",
+      "year": 1992,
+      "citationCount": 1113,
+      "doi": "10.1038/360225a0",
+      "sourceUrl": "https://doi.org/10.1038/360225a0",
+      "verified": true
+    },
+    {
+      "title": "Activation of proto-oncogenes by disruption of chromosome neighborhoods",
+      "journal": "Science",
+      "year": 2016,
+      "citationCount": 1085,
+      "doi": "10.1126/science.aad9024",
+      "sourceUrl": "https://doi.org/10.1126/science.aad9024",
+      "verified": true
+    },
+    {
+      "title": "Efficient targeting of expressed and silent genes in human ESCs and iPSCs using zinc-finger nucleases",
+      "journal": "Nature Biotechnology",
+      "year": 2009,
+      "citationCount": 1063,
+      "doi": "10.1038/nbt.1562",
+      "sourceUrl": "https://doi.org/10.1038/nbt.1562",
+      "verified": true
+    },
+    {
+      "title": "Mice lacking brain-derived neurotrophic factor develop with sensory deficits",
+      "journal": "Nature",
+      "year": 1994,
+      "citationCount": 1060,
+      "doi": "10.1038/368147a0",
+      "sourceUrl": "https://doi.org/10.1038/368147a0",
+      "verified": true
+    },
+    {
+      "title": "YY1 Is a Structural Regulator of Enhancer-Promoter Loops",
+      "journal": "Cell",
+      "year": 2017,
+      "citationCount": 1037,
+      "doi": "10.1016/j.cell.2017.11.008",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2017.11.008",
+      "verified": true
+    },
+    {
+      "title": "DGCR8 is essential for microRNA biogenesis and silencing of embryonic stem cell self-renewal",
+      "journal": "Nature Genetics",
+      "year": 2007,
+      "citationCount": 1024,
+      "doi": "10.1038/ng1969",
+      "sourceUrl": "https://doi.org/10.1038/ng1969",
+      "verified": true
+    },
+    {
+      "title": "β2-Microglobulin deficient mice lack CD4−8+ cytolytic T cells",
+      "journal": "Nature",
+      "year": 1990,
+      "citationCount": 1005,
+      "doi": "10.1038/344742a0",
+      "sourceUrl": "https://doi.org/10.1038/344742a0",
+      "verified": true
+    },
+    {
+      "title": "Direct cell reprogramming is a stochastic process amenable to acceleration",
+      "journal": "Nature",
+      "year": 2009,
+      "citationCount": 1000,
+      "doi": "10.1038/nature08592",
+      "sourceUrl": "https://doi.org/10.1038/nature08592",
+      "verified": true
+    },
+    {
+      "title": "Inactivation of MyoD in mice leads to up-regulation of the myogenic HLH gene Myf-5 and results in apparently normal muscle development",
+      "journal": "Cell",
+      "year": 1992,
+      "citationCount": 987,
+      "doi": "10.1016/0092-8674(92)90508-a",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(92)90508-a",
+      "verified": true
+    },
+    {
+      "title": "Non-CpG methylation is prevalent in embryonic stem cells and may be mediated by DNA methyltransferase 3a",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2000,
+      "citationCount": 970,
+      "doi": "10.1073/pnas.97.10.5237",
+      "sourceUrl": "https://doi.org/10.1073/pnas.97.10.5237",
+      "verified": true
+    },
+    {
+      "title": "Targeted mutation of the gene encoding the low affinity NGF receptor p75 leads to deficits in the peripheral sensory nervous system",
+      "journal": "Cell",
+      "year": 1992,
+      "citationCount": 958,
+      "doi": "10.1016/0092-8674(92)90286-l",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(92)90286-l",
+      "verified": true
+    },
+    {
+      "title": "Systematic Identification of Culture Conditions for Induction and Maintenance of Naive Human Pluripotency",
+      "journal": "Cell stem cell",
+      "year": 2014,
+      "citationCount": 881,
+      "doi": "10.1016/j.stem.2014.07.002",
+      "sourceUrl": "https://doi.org/10.1016/j.stem.2014.07.002",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:13.000Z",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Jaenisch_2003_by_Sam_Ogden.jpg/330px-Jaenisch_2003_by_Sam_Ogden.jpg",
+  "openalexId": "https://openalex.org/A5087185533"
 }

@@ -1,0 +1,65 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const prizes = await getCollection("prizes");
+const sortedPrizes = prizes.sort((a, b) =>
+    a.data.name.localeCompare(b.data.name),
+);
+
+const categories = [...new Set(prizes.map((p) => p.data.category))].sort();
+---
+
+<Layout title="Awards & Recognition — MDRPedia">
+    <div class="container py-12">
+        <header class="mb-12 text-center">
+            <h1 class="text-4xl font-bold text-white mb-4">
+                Awards & Recognition
+            </h1>
+            <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                Celebrating excellence in healthcare. Explore the prestigious
+                awards and the medical pioneers who have received them.
+            </p>
+        </header>
+
+        {
+            categories.map((category) => (
+                <section class="mb-16">
+                    <h2 class="text-2xl font-bold text-accent-blue mb-6 border-b border-white/10 pb-2">
+                        {category}
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {sortedPrizes
+                            .filter((p) => p.data.category === category)
+                            .map((prize) => (
+                                <a
+                                    href={`/prizes/${prize.id}`}
+                                    class="group relative overflow-hidden rounded-xl bg-white/5 border border-white/10 hover:border-accent-blue/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                                >
+                                    <div class="aspect-video w-full overflow-hidden bg-white/5 p-6 flex items-center justify-center">
+                                        {prize.data.image ? (
+                                            <img
+                                                src={prize.data.image}
+                                                alt={prize.data.name}
+                                                class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110"
+                                            />
+                                        ) : (
+                                            <span class="text-4xl">🏆</span>
+                                        )}
+                                    </div>
+                                    <div class="p-6">
+                                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-accent-blue transition-colors">
+                                            {prize.data.name}
+                                        </h3>
+                                        <p class="text-sm text-gray-400 line-clamp-3">
+                                            {prize.data.description}
+                                        </p>
+                                    </div>
+                                </a>
+                            ))}
+                    </div>
+                </section>
+            ))
+        }
+    </div>
+</Layout>

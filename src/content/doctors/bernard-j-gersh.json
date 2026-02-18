@@ -1,36 +1,492 @@
 {
   "fullName": "Bernard J. Gersh",
   "slug": "bernard-j-gersh",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Clinical Cardiology",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">BJ</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 50,
-  "hIndex": 201,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 185,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 18559,
+  "livesSaved": 0,
+  "biography": "Phil Gersh was an American talent and literary agent, who established an agency known as The Gersh Agency in 1949, based in Beverly Hills, California, and New York City, representing stars including Humphrey Bogart, David Niven and Richard Burton. He was considered one of the last links between Hollywood's Golden Age and today's corporate-owned movie business.",
+  "aiSummary": "Bernard J. Gersh is a clinical cardiology specialist with an H-index of 185 at Mayo Clinic (Faculty). Has been published in New England Journal of Medicine, The Lancet, Journal of Polymer Science. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Mayo Clinic"
-    }
-  ],
-  "bio": "Bernard J. Gersh is a pioneer in Clinical Cardiology at Mayo Clinic, USA. With a D-Index of 201 and over 185,593 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Mayo Clinic",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Clinical Cardiology"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Percutaneous Coronary Intervention versus Coronary-Artery Bypass Grafting for Severe Coronary Artery Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 2009,
+      "citationCount": 4276,
+      "doi": "10.1056/nejmoa0804626",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa0804626",
+      "verified": true
+    },
+    {
+      "title": "Sirolimus-Eluting Stents versus Standard Stents in Patients with Stenosis in a Native Coronary Artery",
+      "journal": "New England Journal of Medicine",
+      "year": 2003,
+      "citationCount": 4211,
+      "doi": "10.1056/nejmoa035071",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa035071",
+      "verified": true
+    },
+    {
+      "title": "2014 AHA/ACC Guideline for the Management of Patients With Non–ST-Elevation Acute Coronary Syndromes",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2014,
+      "citationCount": 3550,
+      "doi": "10.1016/j.jacc.2014.09.017",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2014.09.017",
+      "verified": true
+    },
+    {
+      "title": "Percutaneous closure of the left atrial appendage versus warfarin therapy for prevention of stroke in patients with atrial fibrillation: a randomised non-inferiority trial",
+      "journal": "The Lancet",
+      "year": 2009,
+      "citationCount": 2186,
+      "doi": "10.1016/s0140-6736(09)61343-x",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(09)61343-x",
+      "verified": true
+    },
+    {
+      "title": "Long-Term Follow-Up of Patients With Mild Coronary Artery Disease and Endothelial Dysfunction",
+      "journal": "Circulation",
+      "year": 2000,
+      "citationCount": 2043,
+      "doi": "10.1161/01.cir.101.9.948",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.101.9.948",
+      "verified": true
+    },
+    {
+      "title": "Twelve or 30 Months of Dual Antiplatelet Therapy after Drug-Eluting Stents",
+      "journal": "New England Journal of Medicine",
+      "year": 2014,
+      "citationCount": 1866,
+      "doi": "10.1056/nejmoa1409312",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1409312",
+      "verified": true
+    },
+    {
+      "title": "Coronary artery bypass graft surgery versus percutaneous coronary intervention in patients with three-vessel disease and left main coronary disease: 5-year follow-up of the randomised, clinical SYNTAX trial",
+      "journal": "The Lancet",
+      "year": 2013,
+      "citationCount": 1756,
+      "doi": "10.1016/s0140-6736(13)60141-5",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(13)60141-5",
+      "verified": true
+    },
+    {
+      "title": "Prospective Randomized Evaluation of the Watchman Left Atrial Appendage Closure Device in Patients With Atrial Fibrillation Versus Long-Term Warfarin Therapy",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2014,
+      "citationCount": 1754,
+      "doi": "10.1016/j.jacc.2014.04.029",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2014.04.029",
+      "verified": true
+    },
+    {
+      "title": "Incidence and Prognostic Importance of Acute Renal Failure After Percutaneous Coronary Intervention",
+      "journal": "Circulation",
+      "year": 2002,
+      "citationCount": 1706,
+      "doi": "10.1161/01.cir.0000016043.87291.33",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000016043.87291.33",
+      "verified": true
+    },
+    {
+      "title": "2014 AHA/ACC Guideline for the Management of Patients With Non–ST-Elevation Acute Coronary Syndromes: Executive Summary",
+      "journal": "Circulation",
+      "year": 2014,
+      "citationCount": 1242,
+      "doi": "10.1161/cir.0000000000000133",
+      "sourceUrl": "https://doi.org/10.1161/cir.0000000000000133",
+      "verified": true
+    },
+    {
+      "title": "Restenosis after percutaneous transluminal coronary angioplasty (PTCA): A report from the PTCA registry of the national heart, lung, and blood institute",
+      "journal": "The American Journal of Cardiology",
+      "year": 1984,
+      "citationCount": 1114,
+      "doi": "10.1016/0002-9149(84)90752-5",
+      "sourceUrl": "https://doi.org/10.1016/0002-9149(84)90752-5",
+      "verified": true
+    },
+    {
+      "title": "2014 AHA/ACC Guideline for the Management of Patients With Non–ST-Elevation Acute Coronary Syndromes",
+      "journal": "Circulation",
+      "year": 2014,
+      "citationCount": 1030,
+      "doi": "10.1161/cir.0000000000000134",
+      "sourceUrl": "https://doi.org/10.1161/cir.0000000000000134",
+      "verified": true
+    },
+    {
+      "title": "Noninvasive identification of patients with early coronary atherosclerosis by assessment of digital reactive hyperemia",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2004,
+      "citationCount": 957,
+      "doi": "10.1016/j.jacc.2004.08.062",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2004.08.062",
+      "verified": true
+    },
+    {
+      "title": "5-Year Outcomes After Left Atrial Appendage Closure",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2017,
+      "citationCount": 954,
+      "doi": "10.1016/j.jacc.2017.10.021",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2017.10.021",
+      "verified": true
+    },
+    {
+      "title": "The Natural History of Lone Atrial Fibrillation",
+      "journal": "New England Journal of Medicine",
+      "year": 1987,
+      "citationCount": 933,
+      "doi": "10.1056/nejm198709103171104",
+      "sourceUrl": "https://doi.org/10.1056/nejm198709103171104",
+      "verified": true
+    },
+    {
+      "title": "Percutaneous Transluminal Coronary Angioplasty in 1985–1986 and 1977–1981",
+      "journal": "New England Journal of Medicine",
+      "year": 1988,
+      "citationCount": 854,
+      "doi": "10.1056/nejm198802043180501",
+      "sourceUrl": "https://doi.org/10.1056/nejm198802043180501",
+      "verified": true
+    },
+    {
+      "title": "Safety of Percutaneous Left Atrial Appendage Closure",
+      "journal": "Circulation",
+      "year": 2011,
+      "citationCount": 852,
+      "doi": "10.1161/circulationaha.110.976449",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.110.976449",
+      "verified": true
+    },
+    {
+      "title": "Marked Inflammatory Sequelae to Implantation of Biodegradable and Nonbiodegradable Polymers in Porcine Coronary Arteries",
+      "journal": "Circulation",
+      "year": 1996,
+      "citationCount": 851,
+      "doi": "10.1161/01.cir.94.7.1690",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.94.7.1690",
+      "verified": true
+    },
+    {
+      "title": "Immediate Angioplasty Compared with the Administration of a Thrombolytic Agent Followed by Conservative Treatment for Myocardial Infarction",
+      "journal": "New England Journal of Medicine",
+      "year": 1993,
+      "citationCount": 816,
+      "doi": "10.1056/nejm199303113281003",
+      "sourceUrl": "https://doi.org/10.1056/nejm199303113281003",
+      "verified": true
+    },
+    {
+      "title": "Anatomical and clinical characteristics to guide decision making between coronary artery bypass surgery and percutaneous coronary intervention for individual patients: development and validation of SYNTAX score II",
+      "journal": "The Lancet",
+      "year": 2013,
+      "citationCount": 813,
+      "doi": "10.1016/s0140-6736(13)60108-7",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(13)60108-7",
+      "verified": true
+    },
+    {
+      "title": "The crystal structure of polycaproamide: Nylon 6",
+      "journal": "Journal of Polymer Science",
+      "year": 1955,
+      "citationCount": 797,
+      "doi": "10.1002/pol.1955.120178401",
+      "sourceUrl": "https://doi.org/10.1002/pol.1955.120178401",
+      "verified": true
+    },
+    {
+      "title": "2014 AHA/ACC Guideline for the Management of Patients With Non–ST-Elevation Acute Coronary Syndromes: Executive Summary",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2014,
+      "citationCount": 780,
+      "doi": "10.1016/j.jacc.2014.09.016",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2014.09.016",
+      "verified": true
+    },
+    {
+      "title": "Randomized Study to Evaluate Sirolimus-Eluting Stents Implanted at Coronary Bifurcation Lesions",
+      "journal": "Circulation",
+      "year": 2004,
+      "citationCount": 766,
+      "doi": "10.1161/01.cir.0000118474.71662.e3",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000118474.71662.e3",
+      "verified": true
+    },
+    {
+      "title": "2012 ACCF/AATS/SCAI/STS Expert Consensus Document on Transcatheter Aortic Valve Replacement",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2012,
+      "citationCount": 741,
+      "doi": "10.1016/j.jacc.2012.01.001",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2012.01.001",
+      "verified": true
+    },
+    {
+      "title": "The impact of renal insufficiency on clinical outcomes in patients undergoing percutaneous coronary interventions",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2002,
+      "citationCount": 735,
+      "doi": "10.1016/s0735-1097(02)01745-x",
+      "sourceUrl": "https://doi.org/10.1016/s0735-1097(02)01745-x",
+      "verified": true
+    },
+    {
+      "title": "A Comparison of Directional Atherectomy with Coronary Angioplasty in Patients with Coronary Artery Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 1993,
+      "citationCount": 697,
+      "doi": "10.1056/nejm199307223290401",
+      "sourceUrl": "https://doi.org/10.1056/nejm199307223290401",
+      "verified": true
+    },
+    {
+      "title": "Localized Intracoronary Gamma-Radiation Therapy to Inhibit the Recurrence of Restenosis after Stenting",
+      "journal": "New England Journal of Medicine",
+      "year": 2001,
+      "citationCount": 651,
+      "doi": "10.1056/nejm200101253440402",
+      "sourceUrl": "https://doi.org/10.1056/nejm200101253440402",
+      "verified": true
+    },
+    {
+      "title": "Outcomes in Patients With De Novo Left Main Disease Treated With Either Percutaneous Coronary Intervention Using Paclitaxel-Eluting Stents or Coronary Artery Bypass Graft Treatment in the Synergy Between Percutaneous Coronary Intervention With TAXUS and Cardiac Surgery (SYNTAX) Trial",
+      "journal": "Circulation",
+      "year": 2010,
+      "citationCount": 640,
+      "doi": "10.1161/circulationaha.109.899211",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.109.899211",
+      "verified": true
+    },
+    {
+      "title": "Assessment of the SYNTAX score in the Syntax study",
+      "journal": "EuroIntervention",
+      "year": 2009,
+      "citationCount": 635,
+      "doi": "10.4244/eijv5i1a9",
+      "sourceUrl": "https://doi.org/10.4244/eijv5i1a9",
+      "verified": true
+    },
+    {
+      "title": "Balloon angioplasty. Natural history of the pathophysiological response to injury in a pig model.",
+      "journal": "Circulation Research",
+      "year": 1985,
+      "citationCount": 632,
+      "doi": "10.1161/01.res.57.1.105",
+      "sourceUrl": "https://doi.org/10.1161/01.res.57.1.105",
+      "verified": true
+    },
+    {
+      "title": "Intravascular ultrasound imaging: In vitro validation and pathologic correlation",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 1990,
+      "citationCount": 623,
+      "doi": "10.1016/0735-1097(90)90472-2",
+      "sourceUrl": "https://doi.org/10.1016/0735-1097(90)90472-2",
+      "verified": true
+    },
+    {
+      "title": "Percutaneous coronary intervention versus coronary artery bypass grafting in patients with three-vessel or left main coronary artery disease: 10-year follow-up of the multicentre randomised controlled SYNTAX trial",
+      "journal": "The Lancet",
+      "year": 2019,
+      "citationCount": 615,
+      "doi": "10.1016/s0140-6736(19)31997-x",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(19)31997-x",
+      "verified": true
+    },
+    {
+      "title": "Spontaneous Coronary Artery Dissection",
+      "journal": "Circulation Cardiovascular Interventions",
+      "year": 2014,
+      "citationCount": 600,
+      "doi": "10.1161/circinterventions.114.001659",
+      "sourceUrl": "https://doi.org/10.1161/circinterventions.114.001659",
+      "verified": true
+    },
+    {
+      "title": "Relationship Between Delay in Performing Direct Coronary Angioplasty and Early Clinical Outcome in Patients With Acute Myocardial Infarction",
+      "journal": "Circulation",
+      "year": 1999,
+      "citationCount": 574,
+      "doi": "10.1161/01.cir.100.1.14",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.100.1.14",
+      "verified": true
+    },
+    {
+      "title": "The restenosis paradigm revisited: An alternative proposal for cellular mechanisms",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 1992,
+      "citationCount": 566,
+      "doi": "10.1016/0735-1097(92)90389-5",
+      "sourceUrl": "https://doi.org/10.1016/0735-1097(92)90389-5",
+      "verified": true
+    },
+    {
+      "title": "Comparison of coronary bypass surgery with drug-eluting stenting for the treatment of left main and/or three-vessel disease: 3-year follow-up of the SYNTAX trial",
+      "journal": "European Heart Journal",
+      "year": 2011,
+      "citationCount": 562,
+      "doi": "10.1093/eurheartj/ehr213",
+      "sourceUrl": "https://doi.org/10.1093/eurheartj/ehr213",
+      "verified": true
+    },
+    {
+      "title": "Pregnancy-Associated Plasma Protein A as a Marker of Acute Coronary Syndromes",
+      "journal": "New England Journal of Medicine",
+      "year": 2001,
+      "citationCount": 558,
+      "doi": "10.1056/nejmoa003147",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa003147",
+      "verified": true
+    },
+    {
+      "title": "Long-term survival of medically treated patients in the Coronary Artery Surgery Study (CASS) Registry.",
+      "journal": "Circulation",
+      "year": 1994,
+      "citationCount": 554,
+      "doi": "10.1161/01.cir.90.6.2645",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.90.6.2645",
+      "verified": true
+    },
+    {
+      "title": "Monoclonal T-Cell Proliferation and Plaque Instability in Acute Coronary Syndromes",
+      "journal": "Circulation",
+      "year": 2000,
+      "citationCount": 552,
+      "doi": "10.1161/01.cir.101.25.2883",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.101.25.2883",
+      "verified": true
+    },
+    {
+      "title": "A Platelet-Inhibitor-Drug Trial in Coronary-Artery Bypass Operations",
+      "journal": "New England Journal of Medicine",
+      "year": 1982,
+      "citationCount": 543,
+      "doi": "10.1056/nejm198207083070201",
+      "sourceUrl": "https://doi.org/10.1056/nejm198207083070201",
+      "verified": true
+    },
+    {
+      "title": "The Clinical Impact of Incomplete Left Atrial Appendage Closure With the Watchman Device in Patients With Atrial Fibrillation",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2012,
+      "citationCount": 530,
+      "doi": "10.1016/j.jacc.2011.11.028",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2011.11.028",
+      "verified": true
+    },
+    {
+      "title": "Left Atrial Appendage Closure as an Alternative to Warfarin for Stroke Prevention in Atrial Fibrillation",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2015,
+      "citationCount": 528,
+      "doi": "10.1016/j.jacc.2015.04.025",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2015.04.025",
+      "verified": true
+    },
+    {
+      "title": "Five-Year Outcomes in Patients With Left Main Disease Treated With Either Percutaneous Coronary Intervention or Coronary Artery Bypass Grafting in the Synergy Between Percutaneous Coronary Intervention With Taxus and Cardiac Surgery Trial",
+      "journal": "Circulation",
+      "year": 2014,
+      "citationCount": 525,
+      "doi": "10.1161/circulationaha.113.006689",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.113.006689",
+      "verified": true
+    },
+    {
+      "title": "Effect of Dipyridamole and Aspirin on Late Vein-Graft Patency after Coronary Bypass Operations",
+      "journal": "New England Journal of Medicine",
+      "year": 1984,
+      "citationCount": 523,
+      "doi": "10.1056/nejm198401263100401",
+      "sourceUrl": "https://doi.org/10.1056/nejm198401263100401",
+      "verified": true
+    },
+    {
+      "title": "Analysis of 1-Year Clinical Outcomes in the SIRIUS Trial",
+      "journal": "Circulation",
+      "year": 2004,
+      "citationCount": 515,
+      "doi": "10.1161/01.cir.0000112572.57794.22",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000112572.57794.22",
+      "verified": true
+    },
+    {
+      "title": "A population study of the natural history of Wolff-Parkinson-White syndrome in Olmsted County, Minnesota, 1953-1989.",
+      "journal": "Circulation",
+      "year": 1993,
+      "citationCount": 505,
+      "doi": "10.1161/01.cir.87.3.866",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.87.3.866",
+      "verified": true
+    },
+    {
+      "title": "2016 Annual Report of The Society of Thoracic Surgeons/American College of Cardiology Transcatheter Valve Therapy Registry",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2016,
+      "citationCount": 489,
+      "doi": "10.1016/j.jacc.2016.11.033",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2016.11.033",
+      "verified": true
+    },
+    {
+      "title": "Link Between the Angiographic Substudy and Mortality Outcomes in a Large Randomized Trial of Myocardial Reperfusion",
+      "journal": "Circulation",
+      "year": 1995,
+      "citationCount": 482,
+      "doi": "10.1161/01.cir.91.7.1923",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.91.7.1923",
+      "verified": true
+    },
+    {
+      "title": "Prognostic Implications of Abnormalities in Renal Function in Patients With Acute Coronary Syndromes",
+      "journal": "Circulation",
+      "year": 2002,
+      "citationCount": 481,
+      "doi": "10.1161/01.cir.0000027560.41358.b3",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000027560.41358.b3",
+      "verified": true
+    },
+    {
+      "title": "Procedural Outcomes of Chronic Total Occlusion Percutaneous Coronary Intervention",
+      "journal": "JACC: Cardiovascular Interventions",
+      "year": 2015,
+      "citationCount": 474,
+      "doi": "10.1016/j.jcin.2014.08.014",
+      "sourceUrl": "https://doi.org/10.1016/j.jcin.2014.08.014",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:14.000Z",
+  "openalexId": "https://openalex.org/A5086188803"
 }

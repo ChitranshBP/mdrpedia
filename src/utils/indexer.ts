@@ -82,6 +82,7 @@ async function notifyGoogle(url: string, type: GoogleNotificationType = 'URL_UPD
             return false;
         }
 
+        // @ts-ignore
         const auth = new google.auth.JWT(
             credentials.client_email,
             undefined,

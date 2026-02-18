@@ -4,7 +4,10 @@
 // Free, unlimited, official US Government data
 // ============================================================================
 
+import { createLogger } from './logger';
+
 const NPPES_BASE = 'https://npiregistry.cms.hhs.gov/api';
+const log = createLogger('NPI');
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -35,6 +38,47 @@ export interface NPIResult {
     enumerationDate: string;
 }
 
+// Raw API response types from NPPES
+interface NPPESResponse {
+    result_count: number;
+    results: NPPESRawResult[];
+}
+
+interface NPPESRawResult {
+    number: string;
+    enumeration_type: string;
+    basic: NPPESBasic;
+    taxonomies?: NPPESTaxonomy[];
+    addresses?: NPPESAddress[];
+}
+
+interface NPPESBasic {
+    first_name?: string;
+    last_name?: string;
+    credential?: string;
+    status?: string;
+    enumeration_date?: string;
+}
+
+interface NPPESTaxonomy {
+    code?: string;
+    desc?: string;
+    primary?: boolean | string;
+    state?: string;
+    license?: string;
+}
+
+interface NPPESAddress {
+    address_purpose?: string;
+    address_1?: string;
+    address_2?: string;
+    city?: string;
+    state?: string;
+    postal_code?: string;
+    country_code?: string;
+    telephone_number?: string;
+}
+
 // ─── Search by Name ─────────────────────────────────────────────────────────
 
 export async function searchNPI(options: {
@@ -58,16 +102,16 @@ export async function searchNPI(options: {
     try {
         const res = await fetch(`${NPPES_BASE}/?${params}`);
         if (!res.ok) {
-            console.error(`[NPI] ${res.status} ${res.statusText}`);
+            log.warn('NPI search failed', { status: res.status, statusText: res.statusText });
             return [];
         }
 
-        const data = await res.json();
+        const data: NPPESResponse = await res.json();
         if (!data?.results?.length) return [];
 
-        return data.results.map((r: any) => parseNPIResult(r)).filter(Boolean) as NPIResult[];
+        return data.results.map((r) => parseNPIResult(r)).filter((r): r is NPIResult => r !== null);
     } catch (error) {
-        console.error('[NPI] Search failed:', error);
+        log.error('NPI search failed', error);
         return [];
     }
 }
@@ -84,12 +128,12 @@ export async function lookupNPI(npiNumber: string): Promise<NPIResult | null> {
         const res = await fetch(`${NPPES_BASE}/?${params}`);
         if (!res.ok) return null;
 
-        const data = await res.json();
+        const data: NPPESResponse = await res.json();
         if (!data?.results?.length) return null;
 
         return parseNPIResult(data.results[0]);
     } catch (error) {
-        console.error('[NPI] Lookup failed:', error);
+        log.error('NPI lookup failed', error);
         return null;
     }
 }
@@ -131,7 +175,7 @@ export async function matchDoctorToNPI(
 
 // ─── Parse Raw API Response ─────────────────────────────────────────────────
 
-function parseNPIResult(raw: any): NPIResult | null {
+function parseNPIResult(raw: NPPESRawResult): NPIResult | null {
     try {
         const basic = raw.basic;
         if (!basic) return null;
@@ -142,14 +186,14 @@ function parseNPIResult(raw: any): NPIResult | null {
             firstName: basic.first_name || '',
             lastName: basic.last_name || '',
             credential: basic.credential || '',
-            taxonomy: (raw.taxonomies || []).map((t: any) => ({
+            taxonomy: (raw.taxonomies || []).map((t: NPPESTaxonomy) => ({
                 code: t.code || '',
                 description: t.desc || '',
                 primary: t.primary === true || t.primary === 'Y',
                 state: t.state || undefined,
                 license: t.license || undefined,
             })),
-            addresses: (raw.addresses || []).map((a: any) => ({
+            addresses: (raw.addresses || []).map((a: NPPESAddress) => ({
                 type: a.address_purpose === 'MAILING' ? 'mailing' : 'practice',
                 line1: a.address_1 || '',
                 line2: a.address_2 || undefined,

@@ -1,36 +1,485 @@
 {
   "fullName": "Steven A. Rosenberg",
   "slug": "steven-a-rosenberg",
-  "title": "MD, PhD",
-  "specialty": "Cancer Immunotherapy",
+  "title": "MD",
+  "specialty": "Medicine",
   "geography": {
+    "country": "Unknown",
     "city": "Unknown",
-    "country": "USA"
+    "region": "Unknown"
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">SA</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 64,
-  "hIndex": 256,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 218,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 28828,
+  "livesSaved": 0,
+  "biography": "Dr. Steven A. Rosenberg is the Chief of Surgery at the National Cancer Institute and a pioneer in cancer immunotherapy. He is known for developing life-saving CAR-T and Tumor-Infiltrating Lymphocyte (TIL) therapies.",
+  "aiSummary": "Steven A. Rosenberg is a medicine specialist with an H-index of 218. Has been published in Nature Medicine, The Lancet, Science. Based in Unknown, Unknown, Unknown.",
+  "portraitUrl": "https://ccr.cancer.gov/sites/default/files/styles/ccr_biography_image/public/rosenberg_steven.jpg",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "National Institutes of Health"
-    }
-  ],
-  "bio": "Steven A. Rosenberg is a pioneer in Cancer Immunotherapy at National Institutes of Health, USA. With a D-Index of 256 and over 288,275 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [],
+  "medicalSpecialty": [
+    "Medicine"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Cancer immunotherapy: moving beyond current vaccines",
+      "journal": "Nature Medicine",
+      "year": 2004,
+      "citationCount": 2950,
+      "doi": "10.1038/nm1100",
+      "sourceUrl": "https://doi.org/10.1038/nm1100",
+      "verified": true
+    },
+    {
+      "title": "T cells expressing CD19 chimeric antigen receptors for acute lymphoblastic leukaemia in children and young adults: a phase 1 dose-escalation trial",
+      "journal": "The Lancet",
+      "year": 2014,
+      "citationCount": 2899,
+      "doi": "10.1016/s0140-6736(14)61403-3",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(14)61403-3",
+      "verified": true
+    },
+    {
+      "title": "Cancer Regression and Autoimmunity in Patients After Clonal Repopulation with Antitumor Lymphocytes",
+      "journal": "Science",
+      "year": 2002,
+      "citationCount": 2791,
+      "doi": "10.1126/science.1076514",
+      "sourceUrl": "https://doi.org/10.1126/science.1076514",
+      "verified": true
+    },
+    {
+      "title": "A Progress Report on the Treatment of 157 Patients with Advanced Cancer Using Lymphokine-Activated Killer Cells and Interleukin-2 or High-Dose Interleukin-2 Alone",
+      "journal": "New England Journal of Medicine",
+      "year": 1987,
+      "citationCount": 2761,
+      "doi": "10.1056/nejm198704093161501",
+      "sourceUrl": "https://doi.org/10.1056/nejm198704093161501",
+      "verified": true
+    },
+    {
+      "title": "A Randomized Trial of Bevacizumab, an Anti–Vascular Endothelial Growth Factor Antibody, for Metastatic Renal Cancer",
+      "journal": "New England Journal of Medicine",
+      "year": 2003,
+      "citationCount": 2699,
+      "doi": "10.1056/nejmoa021491",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa021491",
+      "verified": true
+    },
+    {
+      "title": "Observations on the Systemic Administration of Autologous Lymphokine-Activated Killer Cells and Recombinant Interleukin-2 to Patients with Metastatic Cancer",
+      "journal": "New England Journal of Medicine",
+      "year": 1985,
+      "citationCount": 2629,
+      "doi": "10.1056/nejm198512053132327",
+      "sourceUrl": "https://doi.org/10.1056/nejm198512053132327",
+      "verified": true
+    },
+    {
+      "title": "Cancer Regression in Patients After Transfer of Genetically Engineered Lymphocytes",
+      "journal": "Science",
+      "year": 2006,
+      "citationCount": 2550,
+      "doi": "10.1126/science.1129003",
+      "sourceUrl": "https://doi.org/10.1126/science.1129003",
+      "verified": true
+    },
+    {
+      "title": "Case Report of a Serious Adverse Event Following the Administration of T Cells Transduced With a Chimeric Antigen Receptor Recognizing ERBB2",
+      "journal": "Molecular Therapy",
+      "year": 2010,
+      "citationCount": 2475,
+      "doi": "10.1038/mt.2010.24",
+      "sourceUrl": "https://doi.org/10.1038/mt.2010.24",
+      "verified": true
+    },
+    {
+      "title": "Adoptive cell transfer as personalized immunotherapy for human cancer",
+      "journal": "Science",
+      "year": 2015,
+      "citationCount": 2400,
+      "doi": "10.1126/science.aaa4967",
+      "sourceUrl": "https://doi.org/10.1126/science.aaa4967",
+      "verified": true
+    },
+    {
+      "title": "Use of Tumor-Infiltrating Lymphocytes and Interleukin-2 in the Immunotherapy of Patients with Metastatic Melanoma",
+      "journal": "New England Journal of Medicine",
+      "year": 1988,
+      "citationCount": 2301,
+      "doi": "10.1056/nejm198812223192527",
+      "sourceUrl": "https://doi.org/10.1056/nejm198812223192527",
+      "verified": true
+    },
+    {
+      "title": "Lymphokine-activated killer cell phenomenon. Lysis of natural killer-resistant fresh solid tumor cells by interleukin 2-activated autologous human peripheral blood lymphocytes.",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 1982,
+      "citationCount": 2206,
+      "doi": "10.1084/jem.155.6.1823",
+      "sourceUrl": "https://doi.org/10.1084/jem.155.6.1823",
+      "verified": true
+    },
+    {
+      "title": "Durable Complete Responses in Heavily Pretreated Patients with Metastatic Melanoma Using T-Cell Transfer Immunotherapy",
+      "journal": "Clinical Cancer Research",
+      "year": 2011,
+      "citationCount": 2088,
+      "doi": "10.1158/1078-0432.ccr-11-0116",
+      "sourceUrl": "https://doi.org/10.1158/1078-0432.ccr-11-0116",
+      "verified": true
+    },
+    {
+      "title": "High-Dose Recombinant Interleukin 2 Therapy for Patients With Metastatic Melanoma: Analysis of 270 Patients Treated Between 1985 and 1993",
+      "journal": "Journal of Clinical Oncology",
+      "year": 1999,
+      "citationCount": 2019,
+      "doi": "10.1200/jco.1999.17.7.2105",
+      "sourceUrl": "https://doi.org/10.1200/jco.1999.17.7.2105",
+      "verified": true
+    },
+    {
+      "title": "A New Approach to the Adoptive Immunotherapy of Cancer with Tumor-Infiltrating Lymphocytes",
+      "journal": "Science",
+      "year": 1986,
+      "citationCount": 1853,
+      "doi": "10.1126/science.3489291",
+      "sourceUrl": "https://doi.org/10.1126/science.3489291",
+      "verified": true
+    },
+    {
+      "title": "Immunologic and therapeutic evaluation of a synthetic peptide vaccine for the treatment of patients with metastatic melanoma",
+      "journal": "Nature Medicine",
+      "year": 1998,
+      "citationCount": 1797,
+      "doi": "10.1038/nm0398-321",
+      "sourceUrl": "https://doi.org/10.1038/nm0398-321",
+      "verified": true
+    },
+    {
+      "title": "Tumor antigen–specific CD8 T cells infiltrating the tumor express high levels of PD-1 and are functionally impaired",
+      "journal": "Blood",
+      "year": 2009,
+      "citationCount": 1738,
+      "doi": "10.1182/blood-2008-12-195792",
+      "sourceUrl": "https://doi.org/10.1182/blood-2008-12-195792",
+      "verified": true
+    },
+    {
+      "title": "Cancer Immunotherapy Based on Mutation-Specific CD4+ T Cells in a Patient with Epithelial Cancer",
+      "journal": "Science",
+      "year": 2014,
+      "citationCount": 1687,
+      "doi": "10.1126/science.1251102",
+      "sourceUrl": "https://doi.org/10.1126/science.1251102",
+      "verified": true
+    },
+    {
+      "title": "Adoptive immunotherapy for cancer: harnessing the T cell response",
+      "journal": "Nature reviews. Immunology",
+      "year": 2012,
+      "citationCount": 1665,
+      "doi": "10.1038/nri3191",
+      "sourceUrl": "https://doi.org/10.1038/nri3191",
+      "verified": true
+    },
+    {
+      "title": "Adoptive cell transfer: a clinical path to effective cancer immunotherapy",
+      "journal": "Nature reviews. Cancer",
+      "year": 2008,
+      "citationCount": 1641,
+      "doi": "10.1038/nrc2355",
+      "sourceUrl": "https://doi.org/10.1038/nrc2355",
+      "verified": true
+    },
+    {
+      "title": "Adoptive Cell Transfer Therapy Following Non-Myeloablative but Lymphodepleting Chemotherapy for the Treatment of Patients With Refractory Metastatic Melanoma",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2005,
+      "citationCount": 1616,
+      "doi": "10.1200/jco.2005.00.240",
+      "sourceUrl": "https://doi.org/10.1200/jco.2005.00.240",
+      "verified": true
+    },
+    {
+      "title": "Chemotherapy-Refractory Diffuse Large B-Cell Lymphoma and Indolent B-Cell Malignancies Can Be Effectively Treated With Autologous T Cells Expressing an Anti-CD19 Chimeric Antigen Receptor",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2014,
+      "citationCount": 1596,
+      "doi": "10.1200/jco.2014.56.2025",
+      "sourceUrl": "https://doi.org/10.1200/jco.2014.56.2025",
+      "verified": true
+    },
+    {
+      "title": "Tumor Regression in Patients With Metastatic Synovial Cell Sarcoma and Melanoma Using Genetically Engineered Lymphocytes Reactive With NY-ESO-1",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2011,
+      "citationCount": 1587,
+      "doi": "10.1200/jco.2010.32.2537",
+      "sourceUrl": "https://doi.org/10.1200/jco.2010.32.2537",
+      "verified": true
+    },
+    {
+      "title": "Cancer regression and autoimmunity induced by cytotoxic T lymphocyte-associated antigen 4 blockade in patients with metastatic melanoma",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2003,
+      "citationCount": 1566,
+      "doi": "10.1073/pnas.1533209100",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1533209100",
+      "verified": true
+    },
+    {
+      "title": "T Lymphocyte-Directed Gene Therapy for ADA <sup>−</sup> SCID: Initial Trial Results After 4 Years",
+      "journal": "Science",
+      "year": 1995,
+      "citationCount": 1488,
+      "doi": "10.1126/science.270.5235.475",
+      "sourceUrl": "https://doi.org/10.1126/science.270.5235.475",
+      "verified": true
+    },
+    {
+      "title": "B-cell depletion and remissions of malignancy along with cytokine-associated toxicity in a clinical trial of anti-CD19 chimeric-antigen-receptor–transduced T cells",
+      "journal": "Blood",
+      "year": 2011,
+      "citationCount": 1434,
+      "doi": "10.1182/blood-2011-10-384388",
+      "sourceUrl": "https://doi.org/10.1182/blood-2011-10-384388",
+      "verified": true
+    },
+    {
+      "title": "Gene therapy with human and mouse T-cell receptors mediates cancer regression and targets normal tissues expressing cognate antigen",
+      "journal": "Blood",
+      "year": 2009,
+      "citationCount": 1386,
+      "doi": "10.1182/blood-2009-03-211714",
+      "sourceUrl": "https://doi.org/10.1182/blood-2009-03-211714",
+      "verified": true
+    },
+    {
+      "title": "The Treatment of Soft-tissue Sarcomas of the Extremities",
+      "journal": "Annals of Surgery",
+      "year": 1982,
+      "citationCount": 1341,
+      "doi": "10.1097/00000658-198209000-00009",
+      "sourceUrl": "https://doi.org/10.1097/00000658-198209000-00009",
+      "verified": true
+    },
+    {
+      "title": "Progress in human tumour immunology and immunotherapy",
+      "journal": "Nature",
+      "year": 2001,
+      "citationCount": 1327,
+      "doi": "10.1038/35077246",
+      "sourceUrl": "https://doi.org/10.1038/35077246",
+      "verified": true
+    },
+    {
+      "title": "Eradication of B-lineage cells and regression of lymphoma in a patient treated with autologous T cells genetically engineered to recognize CD19",
+      "journal": "Blood",
+      "year": 2010,
+      "citationCount": 1325,
+      "doi": "10.1182/blood-2010-04-281931",
+      "sourceUrl": "https://doi.org/10.1182/blood-2010-04-281931",
+      "verified": true
+    },
+    {
+      "title": "Adoptive Cell Therapy for Patients With Metastatic Melanoma: Evaluation of Intensive Myeloablative Chemoradiation Preparative Regimens",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2008,
+      "citationCount": 1316,
+      "doi": "10.1200/jco.2008.16.5449",
+      "sourceUrl": "https://doi.org/10.1200/jco.2008.16.5449",
+      "verified": true
+    },
+    {
+      "title": "T-Cell Transfer Therapy Targeting Mutant KRAS in Cancer",
+      "journal": "New England Journal of Medicine",
+      "year": 2016,
+      "citationCount": 1312,
+      "doi": "10.1056/nejmoa1609279",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1609279",
+      "verified": true
+    },
+    {
+      "title": "Gene Transfer into Humans — Immunotherapy of Patients with Advanced Melanoma, Using Tumor-Infiltrating Lymphocytes Modified by Retroviral Gene Transduction",
+      "journal": "New England Journal of Medicine",
+      "year": 1990,
+      "citationCount": 1311,
+      "doi": "10.1056/nejm199008303230904",
+      "sourceUrl": "https://doi.org/10.1056/nejm199008303230904",
+      "verified": true
+    },
+    {
+      "title": "IL-2: The First Effective Immunotherapy for Human Cancer",
+      "journal": "The Journal of Immunology",
+      "year": 2014,
+      "citationCount": 1239,
+      "doi": "10.4049/jimmunol.1490019",
+      "sourceUrl": "https://doi.org/10.4049/jimmunol.1490019",
+      "verified": true
+    },
+    {
+      "title": "A Phase I Study on Adoptive Immunotherapy Using Gene-Modified T Cells for Ovarian Cancer",
+      "journal": "Clinical Cancer Research",
+      "year": 2006,
+      "citationCount": 1227,
+      "doi": "10.1158/1078-0432.ccr-06-1183",
+      "sourceUrl": "https://doi.org/10.1158/1078-0432.ccr-06-1183",
+      "verified": true
+    },
+    {
+      "title": "Phase 2 Trial of Single Agent Ipilimumab (Anti-CTLA-4) for Locally Advanced or Metastatic Pancreatic Adenocarcinoma",
+      "journal": "Journal of Immunotherapy",
+      "year": 2010,
+      "citationCount": 1203,
+      "doi": "10.1097/cji.0b013e3181eec14c",
+      "sourceUrl": "https://doi.org/10.1097/cji.0b013e3181eec14c",
+      "verified": true
+    },
+    {
+      "title": "Cancer Regression and Neurological Toxicity Following Anti-MAGE-A3 TCR Gene Therapy",
+      "journal": "Journal of Immunotherapy",
+      "year": 2013,
+      "citationCount": 1121,
+      "doi": "10.1097/cji.0b013e3182829903",
+      "sourceUrl": "https://doi.org/10.1097/cji.0b013e3182829903",
+      "verified": true
+    },
+    {
+      "title": "Cloning of the gene coding for a shared human melanoma antigen recognized by autologous T cells infiltrating into tumor.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1994,
+      "citationCount": 1097,
+      "doi": "10.1073/pnas.91.9.3515",
+      "sourceUrl": "https://doi.org/10.1073/pnas.91.9.3515",
+      "verified": true
+    },
+    {
+      "title": "Treatment of 283 Consecutive Patients With Metastatic Melanoma or Renal Cell Cancer Using High-Dose Bolus Interleukin 2",
+      "journal": "JAMA",
+      "year": 1994,
+      "citationCount": 1091,
+      "doi": "10.1001/jama.1994.03510360033032",
+      "sourceUrl": "https://doi.org/10.1001/jama.1994.03510360033032",
+      "verified": true
+    },
+    {
+      "title": "PD-1 identifies the patient-specific CD8+ tumor-reactive repertoire infiltrating human tumors",
+      "journal": "Journal of Clinical Investigation",
+      "year": 2014,
+      "citationCount": 1079,
+      "doi": "10.1172/jci73639",
+      "sourceUrl": "https://doi.org/10.1172/jci73639",
+      "verified": true
+    },
+    {
+      "title": "Mining exomic sequencing data to identify mutated antigens recognized by adoptively transferred tumor-reactive T cells",
+      "journal": "Nature Medicine",
+      "year": 2013,
+      "citationCount": 1064,
+      "doi": "10.1038/nm.3161",
+      "sourceUrl": "https://doi.org/10.1038/nm.3161",
+      "verified": true
+    },
+    {
+      "title": "Removal of homeostatic cytokine sinks by lymphodepletion enhances the efficacy of adoptively transferred tumor-specific CD8 <b>+</b> T cells",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 2005,
+      "citationCount": 1034,
+      "doi": "10.1084/jem.20050732",
+      "sourceUrl": "https://doi.org/10.1084/jem.20050732",
+      "verified": true
+    },
+    {
+      "title": "Autoimmunity Correlates With Tumor Regression in Patients With Metastatic Melanoma Treated With Anti–Cytotoxic T-Lymphocyte Antigen-4",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2005,
+      "citationCount": 1007,
+      "doi": "10.1200/jco.2005.06.205",
+      "sourceUrl": "https://doi.org/10.1200/jco.2005.06.205",
+      "verified": true
+    },
+    {
+      "title": "Treatment of Patients With Metastatic Melanoma With Autologous Tumor-Infiltrating Lymphocytes and Interleukin 2",
+      "journal": "JNCI Journal of the National Cancer Institute",
+      "year": 1994,
+      "citationCount": 1007,
+      "doi": "10.1093/jnci/86.15.1159",
+      "sourceUrl": "https://doi.org/10.1093/jnci/86.15.1159",
+      "verified": true
+    },
+    {
+      "title": "Experience with the Use of High-Dose Interleukin-2 in the Treatment of 652 Cancer Patients",
+      "journal": "Annals of Surgery",
+      "year": 1989,
+      "citationCount": 1005,
+      "doi": "10.1097/00000658-198910000-00008",
+      "sourceUrl": "https://doi.org/10.1097/00000658-198910000-00008",
+      "verified": true
+    },
+    {
+      "title": "T Cells Targeting Carcinoembryonic Antigen Can Mediate Regression of Metastatic Colorectal Cancer but Induce Severe Transient Colitis",
+      "journal": "Molecular Therapy",
+      "year": 2010,
+      "citationCount": 994,
+      "doi": "10.1038/mt.2010.272",
+      "sourceUrl": "https://doi.org/10.1038/mt.2010.272",
+      "verified": true
+    },
+    {
+      "title": "Central memory self/tumor-reactive CD8 <sup>+</sup> T cells confer superior antitumor immunity compared with effector memory T cells",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2005,
+      "citationCount": 949,
+      "doi": "10.1073/pnas.0503726102",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0503726102",
+      "verified": true
+    },
+    {
+      "title": "Identification of a human melanoma antigen recognized by tumor-infiltrating lymphocytes associated with in vivo tumor rejection.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1994,
+      "citationCount": 926,
+      "doi": "10.1073/pnas.91.14.6458",
+      "sourceUrl": "https://doi.org/10.1073/pnas.91.14.6458",
+      "verified": true
+    },
+    {
+      "title": "Tumor Regression and Autoimmunity after Reversal of a Functionally Tolerant State of Self-reactive CD8+ T Cells",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 2003,
+      "citationCount": 915,
+      "doi": "10.1084/jem.20030590",
+      "sourceUrl": "https://doi.org/10.1084/jem.20030590",
+      "verified": true
+    },
+    {
+      "title": "gp100 Peptide Vaccine and Interleukin-2 in Patients with Advanced Melanoma",
+      "journal": "New England Journal of Medicine",
+      "year": 2011,
+      "citationCount": 878,
+      "doi": "10.1056/nejmoa1012863",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1012863",
+      "verified": true
+    },
+    {
+      "title": "Adoptive immunotherapy for cancer: building on success",
+      "journal": "Nature reviews. Immunology",
+      "year": 2006,
+      "citationCount": 835,
+      "doi": "10.1038/nri1842",
+      "sourceUrl": "https://doi.org/10.1038/nri1842",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "openalexId": "https://openalex.org/A5072133376"
 }

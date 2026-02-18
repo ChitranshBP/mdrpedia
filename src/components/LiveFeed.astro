@@ -80,7 +80,7 @@ function timeAgo(date: Date): string {
             activities.map((activity) => (
                 <a href={activity.link} class="live-feed__item">
                     <span class="live-feed__icon">
-                        {activity.type === "profile" ? "✅" : "📄"}
+                        {activity.type === "profile" ? "●" : "○"}
                     </span>
                     <span class="live-feed__text">{activity.text}</span>
                     <span class="live-feed__time">

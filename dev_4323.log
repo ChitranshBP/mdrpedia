@@ -4447,3 +4447,36 @@ Possible dynamic routes being matched: src/pages/doctors/[slug].astro.
 22:33:38 [content] Synced content
 22:33:38 [types] Generated 1.61s
 22:33:38 [vite] Re-optimizing dependencies because vite config has changed
+16:27:32 [ERROR] [UnhandledRejection] Astro detected an unhandled rejection. Here's the stack trace:
+Error: ENOENT: no such file or directory, open '/Users/taps/Desktop/MDRPEDIA/mdrpedia/src/pages/admin/doctors/[id].astro'
+    at async open (node:internal/fs/promises:639:25)
+    at async Object.readFile (node:internal/fs/promises:1243:14)
+    at async file:///Users/taps/Desktop/MDRPEDIA/mdrpedia/node_modules/astro/dist/core/routing/manifest/create.js:336:25
+  Hint:
+    Make sure your promises all have an `await` or a `.catch()` handler.
+  Error reference:
+    https://docs.astro.build/en/reference/errors/unhandled-rejection/
+  Stack trace:
+    at async open (node:internal/fs/promises:639:25)
+    [...] See full stack trace in the browser, or rerun with --verbose.
+16:27:50 [ERROR] [UnhandledRejection] Astro detected an unhandled rejection. Here's the stack trace:
+Error: ENOENT: no such file or directory, open '/Users/taps/Desktop/MDRPEDIA/mdrpedia/src/pages/admin/doctors/[id].astro'
+    at async open (node:internal/fs/promises:639:25)
+    at async Object.readFile (node:internal/fs/promises:1243:14)
+    at async file:///Users/taps/Desktop/MDRPEDIA/mdrpedia/node_modules/astro/dist/core/routing/manifest/create.js:336:25
+  Hint:
+    Make sure your promises all have an `await` or a `.catch()` handler.
+  Error reference:
+    https://docs.astro.build/en/reference/errors/unhandled-rejection/
+  Stack trace:
+    at async open (node:internal/fs/promises:639:25)
+    [...] See full stack trace in the browser, or rerun with --verbose.
+16:38:50 Configuration file updated. Restarting...
+16:38:51 [@astrojs/node] Enabling sessions with filesystem storage
+16:38:51 [ERROR] [config] ENOENT: no such file or directory, open '/Users/taps/Desktop/MDRPEDIA/mdrpedia/src/pages/admin/doctors/[id].astro'
+  Stack trace:
+    at async open (node:internal/fs/promises:639:25)
+    [...] See full stack trace in the browser, or rerun with --verbose.
+
+16:38:51 [ERROR] Continuing with previous valid configuration
+

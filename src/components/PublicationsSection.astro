@@ -1,0 +1,630 @@
+---
+/**
+ * MDRPedia — Publications Section Component
+ * Filterable publication cards with year/journal filters, citation counts, and open access badges
+ */
+
+interface Citation {
+    doi?: string;
+    pubmedId?: string;
+    title: string;
+    journal?: string;
+    year?: number;
+    verified?: boolean;
+    abstract?: string;
+    totalCitationCount?: number;
+    evidenceClassification?: string;
+    isOpenAccess?: boolean;
+    openAccessUrl?: string;
+}
+
+interface Props {
+    citations: Citation[];
+    doctorName: string;
+    showAll?: boolean;
+}
+
+const { citations, doctorName, showAll = false } = Astro.props;
+
+// Sort by citation count (highest first), then by year (newest first)
+const sortedCitations = [...citations].sort((a, b) => {
+    const countDiff = (b.totalCitationCount || 0) - (a.totalCitationCount || 0);
+    if (countDiff !== 0) return countDiff;
+    return (b.year || 0) - (a.year || 0);
+});
+
+// Get unique years and journals for filters
+const years = [...new Set(citations.map(c => c.year).filter(Boolean))].sort((a, b) => b! - a!);
+const journals = [...new Set(citations.map(c => c.journal).filter(Boolean))].slice(0, 10);
+
+// Stats
+const totalCitations = citations.reduce((sum, c) => sum + (c.totalCitationCount || 0), 0);
+const openAccessCount = citations.filter(c => c.isOpenAccess).length;
+const verifiedCount = citations.filter(c => c.verified).length;
+
+// Display limit
+const displayCitations = showAll ? sortedCitations : sortedCitations.slice(0, 6);
+const hasMore = sortedCitations.length > 6 && !showAll;
+---
+
+<section class="publications-section" id="section-publications" data-section="Publications">
+    <header class="publications-header">
+        <h2>Publications & Research</h2>
+        <div class="publications-stats">
+            <div class="pub-stat">
+                <span class="pub-stat__value">{citations.length}</span>
+                <span class="pub-stat__label">Papers</span>
+            </div>
+            <div class="pub-stat">
+                <span class="pub-stat__value">{totalCitations.toLocaleString()}</span>
+                <span class="pub-stat__label">Citations</span>
+            </div>
+            <div class="pub-stat">
+                <span class="pub-stat__value">{openAccessCount}</span>
+                <span class="pub-stat__label">Open Access</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Filters -->
+    <div class="publications-filters">
+        <div class="filter-group">
+            <label class="filter-label">Year</label>
+            <select class="filter-select" id="yearFilter">
+                <option value="">All Years</option>
+                {years.map(year => (
+                    <option value={year}>{year}</option>
+                ))}
+            </select>
+        </div>
+        <div class="filter-group">
+            <label class="filter-label">Journal</label>
+            <select class="filter-select" id="journalFilter">
+                <option value="">All Journals</option>
+                {journals.map(journal => (
+                    <option value={journal}>{journal}</option>
+                ))}
+            </select>
+        </div>
+        <div class="filter-group">
+            <label class="filter-label">Sort</label>
+            <select class="filter-select" id="sortFilter">
+                <option value="citations">Most Cited</option>
+                <option value="recent">Most Recent</option>
+                <option value="title">Title A-Z</option>
+            </select>
+        </div>
+        <button class="filter-reset" id="resetFilters" type="button">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+            </svg>
+            Reset
+        </button>
+    </div>
+
+    <!-- Publications Grid -->
+    <div class="publications-grid" id="publicationsGrid">
+        {displayCitations.map((citation, index) => (
+            <article
+                class="publication-card"
+                data-year={citation.year}
+                data-journal={citation.journal}
+                data-citations={citation.totalCitationCount || 0}
+                data-title={citation.title.toLowerCase()}
+            >
+                <div class="publication-card__badges">
+                    {citation.isOpenAccess && (
+                        <span class="badge badge--open-access" title="Open Access">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                            </svg>
+                            Open Access
+                        </span>
+                    )}
+                    {citation.verified && (
+                        <span class="badge badge--verified" title="Verified Publication">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+                            </svg>
+                        </span>
+                    )}
+                    {citation.evidenceClassification && (
+                        <span class={`badge badge--evidence badge--${citation.evidenceClassification.toLowerCase().replace(/_/g, '-')}`}>
+                            {citation.evidenceClassification.replace(/_/g, ' ')}
+                        </span>
+                    )}
+                </div>
+
+                <h3 class="publication-card__title">
+                    {citation.doi ? (
+                        <a href={`https://doi.org/${citation.doi}`} target="_blank" rel="noopener">
+                            {citation.title}
+                        </a>
+                    ) : citation.pubmedId ? (
+                        <a href={`https://pubmed.ncbi.nlm.nih.gov/${citation.pubmedId}`} target="_blank" rel="noopener">
+                            {citation.title}
+                        </a>
+                    ) : (
+                        citation.title
+                    )}
+                </h3>
+
+                <div class="publication-card__meta">
+                    {citation.journal && (
+                        <span class="meta-journal">{citation.journal}</span>
+                    )}
+                    {citation.year && (
+                        <span class="meta-year">{citation.year}</span>
+                    )}
+                </div>
+
+                {citation.abstract && (
+                    <p class="publication-card__abstract">
+                        {citation.abstract.length > 200
+                            ? citation.abstract.slice(0, 200) + '...'
+                            : citation.abstract}
+                    </p>
+                )}
+
+                <footer class="publication-card__footer">
+                    <div class="citation-count" title="Total citations">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5C7 4 7 7 7 7"/>
+                            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5C17 4 17 7 17 7"/>
+                            <path d="M4 22h16"/>
+                            <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+                            <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+                            <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+                        </svg>
+                        <span>{(citation.totalCitationCount || 0).toLocaleString()} citations</span>
+                    </div>
+
+                    <div class="publication-links">
+                        {citation.doi && (
+                            <a href={`https://doi.org/${citation.doi}`} class="pub-link" target="_blank" rel="noopener" title="View on DOI">
+                                DOI
+                            </a>
+                        )}
+                        {citation.pubmedId && (
+                            <a href={`https://pubmed.ncbi.nlm.nih.gov/${citation.pubmedId}`} class="pub-link" target="_blank" rel="noopener" title="View on PubMed">
+                                PubMed
+                            </a>
+                        )}
+                        {citation.openAccessUrl && (
+                            <a href={citation.openAccessUrl} class="pub-link pub-link--pdf" target="_blank" rel="noopener" title="Download PDF">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                                PDF
+                            </a>
+                        )}
+                    </div>
+                </footer>
+            </article>
+        ))}
+    </div>
+
+    <!-- Show More -->
+    {hasMore && (
+        <div class="publications-more">
+            <a href={`?publications=all`} class="btn btn--secondary">
+                View All {citations.length} Publications
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"/>
+                </svg>
+            </a>
+        </div>
+    )}
+
+    <!-- No Results -->
+    <div class="publications-empty" id="publicationsEmpty" style="display: none;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.35-4.35"/>
+        </svg>
+        <p>No publications match your filters.</p>
+        <button class="btn btn--ghost" id="clearFiltersBtn">Clear Filters</button>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const yearFilter = document.getElementById('yearFilter') as HTMLSelectElement;
+        const journalFilter = document.getElementById('journalFilter') as HTMLSelectElement;
+        const sortFilter = document.getElementById('sortFilter') as HTMLSelectElement;
+        const resetBtn = document.getElementById('resetFilters');
+        const clearBtn = document.getElementById('clearFiltersBtn');
+        const grid = document.getElementById('publicationsGrid');
+        const empty = document.getElementById('publicationsEmpty');
+
+        if (!grid) return;
+
+        const cards = Array.from(grid.querySelectorAll('.publication-card')) as HTMLElement[];
+
+        function applyFilters() {
+            const yearVal = yearFilter?.value || '';
+            const journalVal = journalFilter?.value || '';
+            const sortVal = sortFilter?.value || 'citations';
+
+            let visible = 0;
+
+            // Filter
+            cards.forEach(card => {
+                const year = card.dataset.year || '';
+                const journal = card.dataset.journal || '';
+
+                const matchYear = !yearVal || year === yearVal;
+                const matchJournal = !journalVal || journal === journalVal;
+
+                if (matchYear && matchJournal) {
+                    card.style.display = '';
+                    visible++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Sort visible cards
+            const visibleCards = cards.filter(c => c.style.display !== 'none');
+            visibleCards.sort((a, b) => {
+                if (sortVal === 'citations') {
+                    return parseInt(b.dataset.citations || '0') - parseInt(a.dataset.citations || '0');
+                } else if (sortVal === 'recent') {
+                    return parseInt(b.dataset.year || '0') - parseInt(a.dataset.year || '0');
+                } else {
+                    return (a.dataset.title || '').localeCompare(b.dataset.title || '');
+                }
+            });
+
+            // Reorder in DOM
+            visibleCards.forEach(card => grid.appendChild(card));
+
+            // Show/hide empty state
+            if (empty) {
+                empty.style.display = visible === 0 ? 'flex' : 'none';
+            }
+        }
+
+        function resetFilters() {
+            if (yearFilter) yearFilter.value = '';
+            if (journalFilter) journalFilter.value = '';
+            if (sortFilter) sortFilter.value = 'citations';
+            applyFilters();
+        }
+
+        yearFilter?.addEventListener('change', applyFilters);
+        journalFilter?.addEventListener('change', applyFilters);
+        sortFilter?.addEventListener('change', applyFilters);
+        resetBtn?.addEventListener('click', resetFilters);
+        clearBtn?.addEventListener('click', resetFilters);
+    });
+</script>
+
+<style>
+    .publications-section {
+        margin: var(--space-2xl) 0;
+    }
+
+    .publications-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: var(--space-lg);
+        margin-bottom: var(--space-xl);
+        padding-bottom: var(--space-md);
+        border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .publications-header h2 {
+        font-size: 1.5rem;
+        margin: 0;
+    }
+
+    .publications-stats {
+        display: flex;
+        gap: var(--space-lg);
+    }
+
+    .pub-stat {
+        text-align: center;
+    }
+
+    .pub-stat__value {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--accent-purple);
+    }
+
+    .pub-stat__label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-muted);
+    }
+
+    /* Filters */
+    .publications-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-md);
+        margin-bottom: var(--space-lg);
+        padding: var(--space-md);
+        background: var(--bg-card);
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-subtle);
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .filter-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-muted);
+    }
+
+    .filter-select {
+        padding: 6px 12px;
+        background: var(--bg-base);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-sm);
+        color: var(--text-primary);
+        font-size: 0.85rem;
+        min-width: 140px;
+        cursor: pointer;
+    }
+
+    .filter-select:focus {
+        outline: none;
+        border-color: var(--accent-purple);
+    }
+
+    .filter-reset {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-left: auto;
+        padding: 6px 12px;
+        background: transparent;
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-sm);
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        cursor: pointer;
+        align-self: flex-end;
+        transition: all var(--transition-fast);
+    }
+
+    .filter-reset:hover {
+        border-color: var(--accent-purple);
+        color: var(--accent-purple);
+    }
+
+    /* Publications Grid */
+    .publications-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: var(--space-lg);
+    }
+
+    .publication-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        padding: var(--space-lg);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+        transition: all var(--transition-base);
+    }
+
+    .publication-card:hover {
+        border-color: var(--accent-purple);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1);
+    }
+
+    .publication-card__badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 2px 8px;
+        font-size: 0.65rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        border-radius: 999px;
+    }
+
+    .badge--open-access {
+        background: rgba(34, 197, 94, 0.15);
+        color: #22c55e;
+    }
+
+    .badge--verified {
+        background: rgba(59, 130, 246, 0.15);
+        color: #3b82f6;
+    }
+
+    .badge--evidence {
+        background: rgba(139, 92, 246, 0.15);
+        color: var(--accent-purple);
+    }
+
+    .badge--supported {
+        background: rgba(34, 197, 94, 0.15);
+        color: #22c55e;
+    }
+
+    .badge--historical-landmark {
+        background: rgba(234, 179, 8, 0.15);
+        color: #eab308;
+    }
+
+    .publication-card__title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        line-height: 1.4;
+        margin: 0;
+    }
+
+    .publication-card__title a {
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: color var(--transition-fast);
+    }
+
+    .publication-card__title a:hover {
+        color: var(--accent-purple);
+    }
+
+    .publication-card__meta {
+        display: flex;
+        gap: var(--space-sm);
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+
+    .meta-journal {
+        font-style: italic;
+    }
+
+    .meta-year {
+        font-weight: 600;
+    }
+
+    .publication-card__abstract {
+        font-size: 0.8rem;
+        line-height: 1.6;
+        color: var(--text-secondary);
+        margin: 0;
+        flex-grow: 1;
+    }
+
+    .publication-card__footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: var(--space-sm);
+        border-top: 1px solid var(--border-subtle);
+        margin-top: auto;
+    }
+
+    .citation-count {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+
+    .citation-count svg {
+        color: var(--accent-purple);
+    }
+
+    .publication-links {
+        display: flex;
+        gap: 8px;
+    }
+
+    .pub-link {
+        padding: 4px 8px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: var(--accent-purple);
+        background: rgba(139, 92, 246, 0.1);
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+        transition: all var(--transition-fast);
+    }
+
+    .pub-link:hover {
+        background: rgba(139, 92, 246, 0.2);
+    }
+
+    .pub-link--pdf {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background: rgba(34, 197, 94, 0.1);
+        color: #22c55e;
+    }
+
+    .pub-link--pdf:hover {
+        background: rgba(34, 197, 94, 0.2);
+    }
+
+    /* Show More */
+    .publications-more {
+        margin-top: var(--space-xl);
+        text-align: center;
+    }
+
+    .publications-more .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* Empty State */
+    .publications-empty {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: var(--space-2xl);
+        text-align: center;
+        color: var(--text-muted);
+    }
+
+    .publications-empty svg {
+        opacity: 0.3;
+        margin-bottom: var(--space-md);
+    }
+
+    .publications-empty p {
+        margin-bottom: var(--space-md);
+    }
+
+    @media (max-width: 768px) {
+        .publications-header {
+            flex-direction: column;
+        }
+
+        .publications-filters {
+            flex-direction: column;
+        }
+
+        .filter-select {
+            width: 100%;
+        }
+
+        .filter-reset {
+            margin-left: 0;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .publications-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

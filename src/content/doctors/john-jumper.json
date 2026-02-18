@@ -1,31 +1,493 @@
 {
   "fullName": "John Jumper",
   "slug": "john-jumper",
-  "title": "MD, PhD",
-  "specialty": "AlphaFold Protein Prediction",
+  "title": "MD",
+  "specialty": "AlphaFold",
   "geography": {
-    "city": "Unknown",
-    "country": "UK"
+    "country": "United Kingdom",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23001a4d\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%2300aaff\" text-anchor=\"middle\" dy=\".3em\">JJ</text></svg>",
-  "tier": "ELITE",
-  "rankingScore": 33,
-  "hIndex": 132,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 165,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 16500,
+  "livesSaved": 0,
+  "biography": "John Michael Jumper is an American chemist and computer scientist. Jumper and Demis Hassabis were awarded the 2024 Nobel Prize in Chemistry for protein structure prediction.",
+  "aiSummary": "John Jumper is a alphafold specialist with an H-index of 165 at DeepMind (Faculty). Has been published in Nature, Science, Science (New York, N.Y.). Based in United Kingdom.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "DeepMind"
-    }
-  ],
-  "bio": "John Jumper is a pioneer in AlphaFold Protein Prediction at DeepMind, UK. With a D-Index of 132 and over 165,000 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "DeepMind",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "AlphaFold"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Highly accurate protein structure prediction with AlphaFold.",
+      "journal": "Nature",
+      "year": 2022,
+      "citationCount": 38431,
+      "doi": "10.1038/s41586-021-03819-2",
+      "sourceUrl": "https://doi.org/10.1038/s41586-021-03819-2",
+      "verified": true
+    },
+    {
+      "title": "Accurate structure prediction of biomolecular interactions with AlphaFold 3.",
+      "journal": "Nature",
+      "year": 2024,
+      "citationCount": 10302,
+      "doi": "10.1038/s41586-024-07487-w",
+      "sourceUrl": "https://doi.org/10.1038/s41586-024-07487-w",
+      "verified": true
+    },
+    {
+      "title": "AlphaFold Protein Structure Database: massively expanding the structural coverage of protein-sequence space with high-accuracy models.",
+      "journal": "Nucleic acids research",
+      "year": 2022,
+      "citationCount": 7178,
+      "doi": "10.1093/nar/gkab1061",
+      "sourceUrl": "https://doi.org/10.1093/nar/gkab1061",
+      "verified": true
+    },
+    {
+      "title": "Protein complex prediction with AlphaFold-Multimer",
+      "journal": "Unknown Journal",
+      "year": 2021,
+      "citationCount": 3840,
+      "doi": "10.1101/2021.10.04.463034",
+      "sourceUrl": "https://doi.org/10.1101/2021.10.04.463034",
+      "verified": true
+    },
+    {
+      "title": "Improved protein structure prediction using potentials from deep learning.",
+      "journal": "Nature",
+      "year": 2020,
+      "citationCount": 2908,
+      "doi": "10.1038/s41586-019-1923-7",
+      "sourceUrl": "https://doi.org/10.1038/s41586-019-1923-7",
+      "verified": true
+    },
+    {
+      "title": "Highly accurate protein structure prediction for the human proteome.",
+      "journal": "Nature",
+      "year": 2022,
+      "citationCount": 2783,
+      "doi": "10.1038/s41586-021-03828-1",
+      "sourceUrl": "https://doi.org/10.1038/s41586-021-03828-1",
+      "verified": true
+    },
+    {
+      "title": "Atomic-Level Characterization of the Structural Dynamics of Proteins",
+      "journal": "Science",
+      "year": 2010,
+      "citationCount": 1865,
+      "doi": "10.1126/science.1187409",
+      "sourceUrl": "https://doi.org/10.1126/science.1187409",
+      "verified": true
+    },
+    {
+      "title": "Accurate proteome-wide missense variant effect prediction with AlphaMissense.",
+      "journal": "Science (New York, N.Y.)",
+      "year": 2023,
+      "citationCount": 1643,
+      "doi": "10.1126/science.adg7492",
+      "sourceUrl": "https://doi.org/10.1126/science.adg7492",
+      "verified": true
+    },
+    {
+      "title": "AlphaFold Protein Structure Database in 2024: providing structure coverage for over 214 million protein sequences.",
+      "journal": "Nucleic acids research",
+      "year": 2024,
+      "citationCount": 1575,
+      "doi": "10.1093/nar/gkad1011",
+      "sourceUrl": "https://doi.org/10.1093/nar/gkad1011",
+      "verified": true
+    },
+    {
+      "title": "Effective gene expression prediction from sequence by integrating long-range interactions.",
+      "journal": "Nature methods",
+      "year": 2021,
+      "citationCount": 1037,
+      "doi": "10.1038/s41592-021-01252-x",
+      "sourceUrl": "https://doi.org/10.1038/s41592-021-01252-x",
+      "verified": true
+    },
+    {
+      "title": "Applying and improving AlphaFold at CASP14.",
+      "journal": "Proteins",
+      "year": 2022,
+      "citationCount": 387,
+      "doi": "10.1002/prot.26257",
+      "sourceUrl": "https://doi.org/10.1002/prot.26257",
+      "verified": true
+    },
+    {
+      "title": "Oncogenic Mutations Counteract Intrinsic Disorder in the EGFR Kinase and Promote Receptor Dimerization",
+      "journal": "Cell",
+      "year": 2012,
+      "citationCount": 362,
+      "doi": "10.1016/j.cell.2012.02.063",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2012.02.063",
+      "verified": true
+    },
+    {
+      "title": "Protein structure prediction using multiple deep neural networks in the 13th Critical Assessment of Protein Structure Prediction (CASP13).",
+      "journal": "Proteins",
+      "year": 2020,
+      "citationCount": 287,
+      "doi": "10.1002/prot.25834",
+      "sourceUrl": "https://doi.org/10.1002/prot.25834",
+      "verified": true
+    },
+    {
+      "title": "Protein structure predictions to atomic accuracy with AlphaFold.",
+      "journal": "Nature methods",
+      "year": 2022,
+      "citationCount": 271,
+      "doi": "10.1038/s41592-021-01362-6",
+      "sourceUrl": "https://doi.org/10.1038/s41592-021-01362-6",
+      "verified": true
+    },
+    {
+      "title": "Innovative scattering analysis shows that hydrophobic disordered proteins are expanded in water.",
+      "journal": "Science (New York, N.Y.)",
+      "year": 2018,
+      "citationCount": 237,
+      "doi": "10.1126/science.aan5774",
+      "sourceUrl": "https://doi.org/10.1126/science.aan5774",
+      "verified": true
+    },
+    {
+      "title": "Addendum: Accurate structure prediction of biomolecular interactions with AlphaFold 3.",
+      "journal": "Nature",
+      "year": 2025,
+      "citationCount": 232,
+      "doi": "10.1038/s41586-024-08416-7",
+      "sourceUrl": "https://doi.org/10.1038/s41586-024-08416-7",
+      "verified": true
+    },
+    {
+      "title": "Loss of conformational entropy in protein folding calculated using realistic ensembles and its implications for NMR-based calculations",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2014,
+      "citationCount": 119,
+      "doi": "10.1073/pnas.1407768111",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1407768111",
+      "verified": true
+    },
+    {
+      "title": "Effective gene expression prediction from sequence by integrating long-range interactions",
+      "journal": "Unknown Journal",
+      "year": 2021,
+      "citationCount": 77,
+      "doi": "10.1101/2021.04.07.438649",
+      "sourceUrl": "https://doi.org/10.1101/2021.04.07.438649",
+      "verified": true
+    },
+    {
+      "title": "Anti-VEGF treatment of macular edema associated with retinal vein occlusion: patterns of use and effectiveness in clinical practice (ECHO study report 2).",
+      "journal": "Clinical ophthalmology (Auckland, N.Z.)",
+      "year": 2022,
+      "citationCount": 48,
+      "doi": "10.2147/OPTH.S163859",
+      "sourceUrl": "https://doi.org/10.2147/OPTH.S163859",
+      "verified": true
+    },
+    {
+      "title": "Trajectory-based training enables protein simulations with accurate folding and Boltzmann ensembles in cpu-hours.",
+      "journal": "PLoS computational biology",
+      "year": 2019,
+      "citationCount": 45,
+      "doi": "10.1371/journal.pcbi.1006578",
+      "sourceUrl": "https://doi.org/10.1371/journal.pcbi.1006578",
+      "verified": true
+    },
+    {
+      "title": "Accurate calculation of side chain packing and free energy with applications to protein molecular dynamics.",
+      "journal": "PLoS computational biology",
+      "year": 2019,
+      "citationCount": 44,
+      "doi": "10.1371/journal.pcbi.1006342",
+      "sourceUrl": "https://doi.org/10.1371/journal.pcbi.1006342",
+      "verified": true
+    },
+    {
+      "title": "Free-Standing Kinked Silicon Nanowires for Probing Inter- and Intracellular Force Dynamics",
+      "journal": "Nano Letters",
+      "year": 2015,
+      "citationCount": 44,
+      "doi": "10.1021/acs.nanolett.5b01963",
+      "sourceUrl": "https://doi.org/10.1021/acs.nanolett.5b01963",
+      "verified": true
+    },
+    {
+      "title": "Discovery of archaeal fusexins homologous to eukaryotic HAP2/GCS1 gamete fusion proteins.",
+      "journal": "Nature communications",
+      "year": 2022,
+      "citationCount": 41,
+      "doi": "10.1038/s41467-022-31564-1",
+      "sourceUrl": "https://doi.org/10.1038/s41467-022-31564-1",
+      "verified": true
+    },
+    {
+      "title": "Multiple evanescent white dot syndrome following influenza immunization - A multimodal imaging study.",
+      "journal": "American journal of ophthalmology case reports",
+      "year": 2022,
+      "citationCount": 34,
+      "doi": "10.1016/j.ajoc.2020.100845",
+      "sourceUrl": "https://doi.org/10.1016/j.ajoc.2020.100845",
+      "verified": true
+    },
+    {
+      "title": "Response to Comment on \"Innovative scattering analysis shows that hydrophobic disordered proteins are expanded in water\".",
+      "journal": "Science (New York, N.Y.)",
+      "year": 2018,
+      "citationCount": 31,
+      "doi": "10.1126/science.aar7949",
+      "sourceUrl": "https://doi.org/10.1126/science.aar7949",
+      "verified": true
+    },
+    {
+      "title": "Inferring a Continuous Distribution of Atom Coordinates from Cryo-EM Images using VAEs",
+      "journal": "arXiv (Cornell University)",
+      "year": 2021,
+      "citationCount": 31,
+      "doi": "10.48550/arxiv.2106.14108",
+      "sourceUrl": "https://doi.org/10.48550/arxiv.2106.14108",
+      "verified": true
+    },
+    {
+      "title": "3D-Beacons: decreasing the gap between protein sequences and structures through a federated network of protein structure data resources.",
+      "journal": "GigaScience",
+      "year": 2022,
+      "citationCount": 27,
+      "doi": "10.1093/gigascience/giac118",
+      "sourceUrl": "https://doi.org/10.1093/gigascience/giac118",
+      "verified": true
+    },
+    {
+      "title": "Intravitreal Injection Therapy: Current Techniques and Supplemental Services.",
+      "journal": "Journal of vitreoretinal diseases",
+      "year": 2024,
+      "citationCount": 27,
+      "doi": "10.1177/24741264211028441",
+      "sourceUrl": "https://doi.org/10.1177/24741264211028441",
+      "verified": true
+    },
+    {
+      "title": "Structure of the decoy module of human glycoprotein 2 and uromodulin and its interaction with bacterial adhesin FimH.",
+      "journal": "Nature structural &amp; molecular biology",
+      "year": 2022,
+      "citationCount": 26,
+      "doi": "10.1038/s41594-022-00729-3",
+      "sourceUrl": "https://doi.org/10.1038/s41594-022-00729-3",
+      "verified": true
+    },
+    {
+      "title": "Accelerating Large Language Model Decoding with Speculative Sampling",
+      "journal": "arXiv (Cornell University)",
+      "year": 2023,
+      "citationCount": 26,
+      "doi": "10.48550/arxiv.2302.01318",
+      "sourceUrl": "https://doi.org/10.48550/arxiv.2302.01318",
+      "verified": true
+    },
+    {
+      "title": "Discovery of archaeal Fusexins homologous to eukaryotic HAP2/GCS1 gamete fusion proteins",
+      "journal": "Unknown Journal",
+      "year": 2021,
+      "citationCount": 23,
+      "doi": "10.1101/2021.10.13.464100",
+      "sourceUrl": "https://doi.org/10.1101/2021.10.13.464100",
+      "verified": true
+    },
+    {
+      "title": "Rotational Relaxation in <i>ortho</i>-Terphenyl: Using Atomistic Simulations to Bridge Theory and Experiment",
+      "journal": "The Journal of Physical Chemistry B",
+      "year": 2013,
+      "citationCount": 19,
+      "doi": "10.1021/jp402102w",
+      "sourceUrl": "https://doi.org/10.1021/jp402102w",
+      "verified": true
+    },
+    {
+      "title": "FINGERPRINT SIGN OF THE HENLE FIBER LAYER.",
+      "journal": "Retina (Philadelphia, Pa.)",
+      "year": 2021,
+      "citationCount": 16,
+      "doi": "10.1097/IAE.0000000000002875",
+      "sourceUrl": "https://doi.org/10.1097/IAE.0000000000002875",
+      "verified": true
+    },
+    {
+      "title": "Structure of the PAPP-ABP5 complex reveals mechanism of substrate recognition.",
+      "journal": "Nature communications",
+      "year": 2022,
+      "citationCount": 15,
+      "doi": "10.1038/s41467-022-33175-2",
+      "sourceUrl": "https://doi.org/10.1038/s41467-022-33175-2",
+      "verified": true
+    },
+    {
+      "title": "On the Interpretation of Force-Induced Unfolding Studies of Membrane Proteins Using Fast Simulations.",
+      "journal": "Biophysical journal",
+      "year": 2020,
+      "citationCount": 13,
+      "doi": "10.1016/j.bpj.2019.09.011",
+      "sourceUrl": "https://doi.org/10.1016/j.bpj.2019.09.011",
+      "verified": true
+    },
+    {
+      "title": "Effects of Blood Flow Restriction Resistance Training on Autonomic and Endothelial Function in Persons with Parkinson's Disease.",
+      "journal": "Journal of Parkinson's disease",
+      "year": 2024,
+      "citationCount": 11,
+      "doi": "10.3233/JPD-230259",
+      "sourceUrl": "https://doi.org/10.3233/JPD-230259",
+      "verified": true
+    },
+    {
+      "title": "The Protein Structure Prediction Revolution and Its Implications for Medicine: 2023 Albert Lasker Basic Medical Research Award.",
+      "journal": "JAMA",
+      "year": 2023,
+      "citationCount": 11,
+      "doi": "10.1001/jama.2023.17095",
+      "sourceUrl": "https://doi.org/10.1001/jama.2023.17095",
+      "verified": true
+    },
+    {
+      "title": "Optical coherence tomography angiography of diffuse unilateral subacute neuroretinitis.",
+      "journal": "American journal of ophthalmology case reports",
+      "year": 2022,
+      "citationCount": 11,
+      "doi": "10.1016/j.ajoc.2017.06.015",
+      "sourceUrl": "https://doi.org/10.1016/j.ajoc.2017.06.015",
+      "verified": true
+    },
+    {
+      "title": "A Membrane Burial Potential with H-Bonds and Applications to Curved Membranes and Fast Simulations.",
+      "journal": "Biophysical journal",
+      "year": 2019,
+      "citationCount": 9,
+      "doi": "10.1016/j.bpj.2018.10.012",
+      "sourceUrl": "https://doi.org/10.1016/j.bpj.2018.10.012",
+      "verified": true
+    },
+    {
+      "title": "Structural basis of template strand deoxyuridine promoter recognition by a viral RNA polymerase.",
+      "journal": "Nature communications",
+      "year": 2022,
+      "citationCount": 7,
+      "doi": "10.1038/s41467-022-31214-6",
+      "sourceUrl": "https://doi.org/10.1038/s41467-022-31214-6",
+      "verified": true
+    },
+    {
+      "title": "Novel FZD4 and LRP5 mutations in a small cohort of patients with familial exudative vitreoretinopathy (FEVR).",
+      "journal": "Ophthalmic genetics",
+      "year": 2021,
+      "citationCount": 7,
+      "doi": "10.1080/13816810.2020.1855664",
+      "sourceUrl": "https://doi.org/10.1080/13816810.2020.1855664",
+      "verified": true
+    },
+    {
+      "title": "COMBINING EXTERNAL NEEDLE DRAINAGE AND SCLERAL BUCKLING WITH VITRECTOMY FOR THE REPAIR OF BULLOUS RETINAL DETACHMENTS.",
+      "journal": "Retina (Philadelphia, Pa.)",
+      "year": 2018,
+      "citationCount": 7,
+      "doi": "10.1097/IAE.0000000000001948",
+      "sourceUrl": "https://doi.org/10.1097/IAE.0000000000001948",
+      "verified": true
+    },
+    {
+      "title": "CATASTROPHIC, BILATERAL RETINAL VASCULAR OCCLUSION AFTER INTRAVITREAL BEVACIZUMAB INJECTION.",
+      "journal": "Retinal cases &amp; brief reports",
+      "year": 2023,
+      "citationCount": 6,
+      "doi": "10.1097/ICB.0000000000001158",
+      "sourceUrl": "https://doi.org/10.1097/ICB.0000000000001158",
+      "verified": true
+    },
+    {
+      "title": "Genetic Variants of the Beta-Adrenergic Receptor Pathways as Both Risk and Protective Factors for Retinopathy of Prematurity.",
+      "journal": "American journal of ophthalmology",
+      "year": 2024,
+      "citationCount": 4,
+      "doi": "10.1016/j.ajo.2023.12.017",
+      "sourceUrl": "https://doi.org/10.1016/j.ajo.2023.12.017",
+      "verified": true
+    },
+    {
+      "title": "Multimodal imaging of soccer ball-related ocular posterior segment injuries.",
+      "journal": "European journal of ophthalmology",
+      "year": 2022,
+      "citationCount": 4,
+      "doi": "10.1177/11206721221086230",
+      "sourceUrl": "https://doi.org/10.1177/11206721221086230",
+      "verified": true
+    },
+    {
+      "title": "Predictions for AlphaMissense",
+      "journal": "Unknown Journal",
+      "year": 2023,
+      "citationCount": 4,
+      "doi": "10.5281/zenodo.8208688",
+      "sourceUrl": "https://doi.org/10.5281/zenodo.8208688",
+      "verified": true
+    },
+    {
+      "title": "Anti-VEGF Pharmaceutical Prior Authorization in Retina Practices.",
+      "journal": "JAMA ophthalmology",
+      "year": 2024,
+      "citationCount": 3,
+      "doi": "10.1001/jamaophthalmol.2024.2217",
+      "sourceUrl": "https://doi.org/10.1001/jamaophthalmol.2024.2217",
+      "verified": true
+    },
+    {
+      "title": "Treatment and Excision of Retinal Capillary Hemangioblastoma.",
+      "journal": "Ophthalmic surgery, lasers &amp; imaging retina",
+      "year": 2021,
+      "citationCount": 3,
+      "doi": "10.3928/23258160-20210302-09",
+      "sourceUrl": "https://doi.org/10.3928/23258160-20210302-09",
+      "verified": true
+    },
+    {
+      "title": "Maximum-likelihood, self-consistent side chain free energies with applications to protein molecular dynamics",
+      "journal": "arXiv (Cornell University)",
+      "year": 2016,
+      "citationCount": 3,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2544655754",
+      "verified": true
+    },
+    {
+      "title": "Trajectory-Based Parameterization of a Coarse-Grained Forcefield for High-Thoughput Protein Simulation",
+      "journal": "Unknown Journal",
+      "year": 2017,
+      "citationCount": 3,
+      "doi": "10.1101/169326",
+      "sourceUrl": "https://doi.org/10.1101/169326",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:15.000Z",
+  "openalexId": "https://openalex.org/A5059179935",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/John_Jumper%2C_2024_Nobel_Prize_Laureate_in_Chemistry.jpg/330px-John_Jumper%2C_2024_Nobel_Prize_Laureate_in_Chemistry.jpg"
 }

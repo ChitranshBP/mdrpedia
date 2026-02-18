@@ -1,36 +1,493 @@
 {
   "fullName": "Eric J. Nestler",
   "slug": "eric-j-nestler",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Molecular Psychiatry",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">EJ</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 52,
-  "hIndex": 207,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 186,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 16737,
+  "livesSaved": 0,
+  "biography": "Eric J. Nestler is an American neuroscientist and academic psychiatrist whose work focuses on the molecular and cellular mechanisms underlying drug addiction, depression, and stress-related psychiatric disorders. He is the Anne and Joel Ehrenkranz Dean of the Icahn School of Medicine at Mount Sinai and Chief Scientific Officer the Mount Sinai Health System. He was formerly the Nash Family Professor of Neuroscience and a founding director of The Friedman Brain Institute at Mount Sinai. Previously, he served as founding director of the Division of Molecular Psychiatry at Yale University and Chair of the Department of Psychiatry at the University of Texas Southwestern Medical Center at Dallas.",
+  "aiSummary": "Eric J. Nestler is a molecular psychiatry specialist with an H-index of 186 at Icahn School of Medicine at Mount Sinai (Faculty). Has been published in Journal of Neuroscience, Nature, Annual Review of Neuroscience. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Icahn Mt. Sinai"
-    }
-  ],
-  "bio": "Eric J. Nestler is a pioneer in Molecular Psychiatry at Icahn Mt. Sinai, USA. With a D-Index of 207 and over 167,370 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Icahn School of Medicine at Mount Sinai",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Molecular Psychiatry"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Neurobiology of Depression",
+      "journal": "Neuron",
+      "year": 2002,
+      "citationCount": 3143,
+      "doi": "10.1016/s0896-6273(02)00653-0",
+      "sourceUrl": "https://doi.org/10.1016/s0896-6273(02)00653-0",
+      "verified": true
+    },
+    {
+      "title": "Chronic Antidepressant Treatment Increases Neurogenesis in Adult Rat Hippocampus",
+      "journal": "Journal of Neuroscience",
+      "year": 2000,
+      "citationCount": 3084,
+      "doi": "10.1523/jneurosci.20-24-09104.2000",
+      "sourceUrl": "https://doi.org/10.1523/jneurosci.20-24-09104.2000",
+      "verified": true
+    },
+    {
+      "title": "The molecular neurobiology of depression",
+      "journal": "Nature",
+      "year": 2008,
+      "citationCount": 2751,
+      "doi": "10.1038/nature07455",
+      "sourceUrl": "https://doi.org/10.1038/nature07455",
+      "verified": true
+    },
+    {
+      "title": "NEURAL MECHANISMS OF ADDICTION: The Role of Reward-Related Learning and Memory",
+      "journal": "Annual Review of Neuroscience",
+      "year": 2006,
+      "citationCount": 2603,
+      "doi": "10.1146/annurev.neuro.29.051605.113009",
+      "sourceUrl": "https://doi.org/10.1146/annurev.neuro.29.051605.113009",
+      "verified": true
+    },
+    {
+      "title": "Molecular Adaptations Underlying Susceptibility and Resistance to Social Defeat in Brain Reward Regions",
+      "journal": "Cell",
+      "year": 2007,
+      "citationCount": 2278,
+      "doi": "10.1016/j.cell.2007.09.018",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2007.09.018",
+      "verified": true
+    },
+    {
+      "title": "Essential Role of BDNF in the Mesolimbic Dopamine Pathway in Social Defeat Stress",
+      "journal": "Science",
+      "year": 2006,
+      "citationCount": 2113,
+      "doi": "10.1126/science.1120972",
+      "sourceUrl": "https://doi.org/10.1126/science.1120972",
+      "verified": true
+    },
+    {
+      "title": "The Mesolimbic Dopamine Reward Circuit in Depression",
+      "journal": "Biological Psychiatry",
+      "year": 2006,
+      "citationCount": 2011,
+      "doi": "10.1016/j.biopsych.2005.09.018",
+      "sourceUrl": "https://doi.org/10.1016/j.biopsych.2005.09.018",
+      "verified": true
+    },
+    {
+      "title": "Animal models of neuropsychiatric disorders",
+      "journal": "Nature Neuroscience",
+      "year": 2010,
+      "citationCount": 1949,
+      "doi": "10.1038/nn.2647",
+      "sourceUrl": "https://doi.org/10.1038/nn.2647",
+      "verified": true
+    },
+    {
+      "title": "Molecular basis of long-term plasticity underlying addiction",
+      "journal": "Nature reviews. Neuroscience",
+      "year": 2001,
+      "citationCount": 1850,
+      "doi": "10.1038/35053570",
+      "sourceUrl": "https://doi.org/10.1038/35053570",
+      "verified": true
+    },
+    {
+      "title": "The brain reward circuitry in mood disorders",
+      "journal": "Nature reviews. Neuroscience",
+      "year": 2013,
+      "citationCount": 1798,
+      "doi": "10.1038/nrn3381",
+      "sourceUrl": "https://doi.org/10.1038/nrn3381",
+      "verified": true
+    },
+    {
+      "title": "Sustained hippocampal chromatin regulation in a mouse model of depression and antidepressant action",
+      "journal": "Nature Neuroscience",
+      "year": 2006,
+      "citationCount": 1741,
+      "doi": "10.1038/nn1659",
+      "sourceUrl": "https://doi.org/10.1038/nn1659",
+      "verified": true
+    },
+    {
+      "title": "New approaches to antidepressant drug discovery: beyond monoamines",
+      "journal": "Nature reviews. Neuroscience",
+      "year": 2006,
+      "citationCount": 1574,
+      "doi": "10.1038/nrn1846",
+      "sourceUrl": "https://doi.org/10.1038/nrn1846",
+      "verified": true
+    },
+    {
+      "title": "Epigenetic regulation in psychiatric disorders",
+      "journal": "Nature reviews. Neuroscience",
+      "year": 2007,
+      "citationCount": 1389,
+      "doi": "10.1038/nrn2132",
+      "sourceUrl": "https://doi.org/10.1038/nrn2132",
+      "verified": true
+    },
+    {
+      "title": "Is there a common molecular pathway for addiction?",
+      "journal": "Nature Neuroscience",
+      "year": 2005,
+      "citationCount": 1370,
+      "doi": "10.1038/nn1578",
+      "sourceUrl": "https://doi.org/10.1038/nn1578",
+      "verified": true
+    },
+    {
+      "title": "Molecular and Cellular Basis of Addiction",
+      "journal": "Science",
+      "year": 1997,
+      "citationCount": 1323,
+      "doi": "10.1126/science.278.5335.58",
+      "sourceUrl": "https://doi.org/10.1126/science.278.5335.58",
+      "verified": true
+    },
+    {
+      "title": "Psychobiology and molecular genetics of resilience",
+      "journal": "Nature reviews. Neuroscience",
+      "year": 2009,
+      "citationCount": 1250,
+      "doi": "10.1038/nrn2649",
+      "sourceUrl": "https://doi.org/10.1038/nrn2649",
+      "verified": true
+    },
+    {
+      "title": "Neurobiology of resilience",
+      "journal": "Nature Neuroscience",
+      "year": 2012,
+      "citationCount": 1165,
+      "doi": "10.1038/nn.3234",
+      "sourceUrl": "https://doi.org/10.1038/nn.3234",
+      "verified": true
+    },
+    {
+      "title": "Rapid regulation of depression-related behaviours by control of midbrain dopamine neurons",
+      "journal": "Nature",
+      "year": 2012,
+      "citationCount": 1140,
+      "doi": "10.1038/nature11713",
+      "sourceUrl": "https://doi.org/10.1038/nature11713",
+      "verified": true
+    },
+    {
+      "title": "Molecular mechanisms of drug addiction",
+      "journal": "Neuropharmacology",
+      "year": 2004,
+      "citationCount": 1098,
+      "doi": "10.1016/j.neuropharm.2004.06.031",
+      "sourceUrl": "https://doi.org/10.1016/j.neuropharm.2004.06.031",
+      "verified": true
+    },
+    {
+      "title": "Transcriptional and epigenetic mechanisms of addiction",
+      "journal": "Nature reviews. Neuroscience",
+      "year": 2011,
+      "citationCount": 986,
+      "doi": "10.1038/nrn3111",
+      "sourceUrl": "https://doi.org/10.1038/nrn3111",
+      "verified": true
+    },
+    {
+      "title": "Early Life Programming and Neurodevelopmental Disorders",
+      "journal": "Biological Psychiatry",
+      "year": 2010,
+      "citationCount": 943,
+      "doi": "10.1016/j.biopsych.2010.05.028",
+      "sourceUrl": "https://doi.org/10.1016/j.biopsych.2010.05.028",
+      "verified": true
+    },
+    {
+      "title": "ngs.plot: Quick mining and visualization of next-generation sequencing data by integrating genomic databases",
+      "journal": "BMC Genomics",
+      "year": 2014,
+      "citationCount": 914,
+      "doi": "10.1186/1471-2164-15-284",
+      "sourceUrl": "https://doi.org/10.1186/1471-2164-15-284",
+      "verified": true
+    },
+    {
+      "title": "Cell Type–Specific Loss of BDNF Signaling Mimics Optogenetic Control of Cocaine Reward",
+      "journal": "Science",
+      "year": 2010,
+      "citationCount": 879,
+      "doi": "10.1126/science.1188472",
+      "sourceUrl": "https://doi.org/10.1126/science.1188472",
+      "verified": true
+    },
+    {
+      "title": "Mania-like behavior induced by disruption of <i>CLOCK</i>",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2007,
+      "citationCount": 798,
+      "doi": "10.1073/pnas.0609625104",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0609625104",
+      "verified": true
+    },
+    {
+      "title": "Sex-specific transcriptional signatures in human depression",
+      "journal": "Nature Medicine",
+      "year": 2017,
+      "citationCount": 783,
+      "doi": "10.1038/nm.4386",
+      "sourceUrl": "https://doi.org/10.1038/nm.4386",
+      "verified": true
+    },
+    {
+      "title": "Regulation of Cocaine Reward by CREB",
+      "journal": "Science",
+      "year": 1998,
+      "citationCount": 768,
+      "doi": "10.1126/science.282.5397.2272",
+      "sourceUrl": "https://doi.org/10.1126/science.282.5397.2272",
+      "verified": true
+    },
+    {
+      "title": "Chromatin Remodeling Is a Key Mechanism Underlying Cocaine-Induced Plasticity in Striatum",
+      "journal": "Neuron",
+      "year": 2005,
+      "citationCount": 754,
+      "doi": "10.1016/j.neuron.2005.09.023",
+      "sourceUrl": "https://doi.org/10.1016/j.neuron.2005.09.023",
+      "verified": true
+    },
+    {
+      "title": "Impaired adult myelination in the prefrontal cortex of socially isolated mice",
+      "journal": "Nature Neuroscience",
+      "year": 2012,
+      "citationCount": 683,
+      "doi": "10.1038/nn.3263",
+      "sourceUrl": "https://doi.org/10.1038/nn.3263",
+      "verified": true
+    },
+    {
+      "title": "Essential role of brain-derived neurotrophic factor in adult hippocampal function",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2004,
+      "citationCount": 662,
+      "doi": "10.1073/pnas.0402141101",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0402141101",
+      "verified": true
+    },
+    {
+      "title": "The addicted synapse: mechanisms of synaptic and structural plasticity in nucleus accumbens",
+      "journal": "Trends in Neurosciences",
+      "year": 2010,
+      "citationCount": 652,
+      "doi": "10.1016/j.tins.2010.02.002",
+      "sourceUrl": "https://doi.org/10.1016/j.tins.2010.02.002",
+      "verified": true
+    },
+    {
+      "title": "Essential Role of the Histone Methyltransferase G9a in Cocaine-Induced Plasticity",
+      "journal": "Science",
+      "year": 2010,
+      "citationCount": 650,
+      "doi": "10.1126/science.1179438",
+      "sourceUrl": "https://doi.org/10.1126/science.1179438",
+      "verified": true
+    },
+    {
+      "title": "Expression of the transcription factor ΔFosB in the brain controls sensitivity to cocaine",
+      "journal": "Nature",
+      "year": 1999,
+      "citationCount": 639,
+      "doi": "10.1038/45790",
+      "sourceUrl": "https://doi.org/10.1038/45790",
+      "verified": true
+    },
+    {
+      "title": "The orexigenic hormone ghrelin defends against depressive symptoms of chronic stress",
+      "journal": "Nature Neuroscience",
+      "year": 2008,
+      "citationCount": 635,
+      "doi": "10.1038/nn.2139",
+      "sourceUrl": "https://doi.org/10.1038/nn.2139",
+      "verified": true
+    },
+    {
+      "title": "Regulation of gene expression and cocaine reward by CREB and ΔFosB",
+      "journal": "Nature Neuroscience",
+      "year": 2003,
+      "citationCount": 632,
+      "doi": "10.1038/nn1143",
+      "sourceUrl": "https://doi.org/10.1038/nn1143",
+      "verified": true
+    },
+    {
+      "title": "Linking Molecules to Mood: New Insight Into the Biology of Depression",
+      "journal": "American Journal of Psychiatry",
+      "year": 2010,
+      "citationCount": 631,
+      "doi": "10.1176/appi.ajp.2009.10030434",
+      "sourceUrl": "https://doi.org/10.1176/appi.ajp.2009.10030434",
+      "verified": true
+    },
+    {
+      "title": "Antidepressant Effect of Optogenetic Stimulation of the Medial Prefrontal Cortex",
+      "journal": "Journal of Neuroscience",
+      "year": 2010,
+      "citationCount": 622,
+      "doi": "10.1523/jneurosci.1731-10.2010",
+      "sourceUrl": "https://doi.org/10.1523/jneurosci.1731-10.2010",
+      "verified": true
+    },
+    {
+      "title": "ΔFosB: A sustained molecular switch for addiction",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2001,
+      "citationCount": 622,
+      "doi": "10.1073/pnas.191352698",
+      "sourceUrl": "https://doi.org/10.1073/pnas.191352698",
+      "verified": true
+    },
+    {
+      "title": "Antidepressant Actions of Histone Deacetylase Inhibitors",
+      "journal": "Journal of Neuroscience",
+      "year": 2009,
+      "citationCount": 621,
+      "doi": "10.1523/jneurosci.1758-09.2009",
+      "sourceUrl": "https://doi.org/10.1523/jneurosci.1758-09.2009",
+      "verified": true
+    },
+    {
+      "title": "Dnmt3a regulates emotional behavior and spine plasticity in the nucleus accumbens",
+      "journal": "Nature Neuroscience",
+      "year": 2010,
+      "citationCount": 604,
+      "doi": "10.1038/nn.2619",
+      "sourceUrl": "https://doi.org/10.1038/nn.2619",
+      "verified": true
+    },
+    {
+      "title": "Nuclear factor-κB is a critical mediator of stress-impaired neurogenesis and depressive behavior",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2010,
+      "citationCount": 598,
+      "doi": "10.1073/pnas.0910658107",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0910658107",
+      "verified": true
+    },
+    {
+      "title": "Histone Deacetylase 5 Epigenetically Controls Behavioral Adaptations to Chronic Emotional Stimuli",
+      "journal": "Neuron",
+      "year": 2007,
+      "citationCount": 595,
+      "doi": "10.1016/j.neuron.2007.09.032",
+      "sourceUrl": "https://doi.org/10.1016/j.neuron.2007.09.032",
+      "verified": true
+    },
+    {
+      "title": "Opiates inhibit neurogenesis in the adult rat hippocampus",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2000,
+      "citationCount": 591,
+      "doi": "10.1073/pnas.120552597",
+      "sourceUrl": "https://doi.org/10.1073/pnas.120552597",
+      "verified": true
+    },
+    {
+      "title": "Homeostatic and Hedonic Signals Interact in the Regulation of Food Intake",
+      "journal": "Journal of Nutrition",
+      "year": 2009,
+      "citationCount": 589,
+      "doi": "10.3945/jn.108.097618",
+      "sourceUrl": "https://doi.org/10.3945/jn.108.097618",
+      "verified": true
+    },
+    {
+      "title": "Molecular Mechanisms of Drug Reinforcement and Addiction",
+      "journal": "Annual Review of Neuroscience",
+      "year": 1995,
+      "citationCount": 575,
+      "doi": "10.1146/annurev.ne.18.030195.002335",
+      "sourceUrl": "https://doi.org/10.1146/annurev.ne.18.030195.002335",
+      "verified": true
+    },
+    {
+      "title": "The neurobiology of drug addiction",
+      "journal": "Journal of Neuropsychiatry",
+      "year": 1997,
+      "citationCount": 565,
+      "doi": "10.1176/jnp.9.3.482",
+      "sourceUrl": "https://doi.org/10.1176/jnp.9.3.482",
+      "verified": true
+    },
+    {
+      "title": "Induction of a long-lasting AP-1 complex composed of altered Fos-like proteins in brain by chronic cocaine and other chronic treatments",
+      "journal": "Neuron",
+      "year": 1994,
+      "citationCount": 557,
+      "doi": "10.1016/0896-6273(94)90061-2",
+      "sourceUrl": "https://doi.org/10.1016/0896-6273(94)90061-2",
+      "verified": true
+    },
+    {
+      "title": "Preclinical models: status of basic research in depression",
+      "journal": "Biological Psychiatry",
+      "year": 2002,
+      "citationCount": 550,
+      "doi": "10.1016/s0006-3223(02)01405-1",
+      "sourceUrl": "https://doi.org/10.1016/s0006-3223(02)01405-1",
+      "verified": true
+    },
+    {
+      "title": "A general role for adaptations in G-proteins and the cyclic AMP system in mediating the chronic actions of morphine and cocaine on neuronal function",
+      "journal": "Brain Research",
+      "year": 1991,
+      "citationCount": 540,
+      "doi": "10.1016/0006-8993(91)91111-d",
+      "sourceUrl": "https://doi.org/10.1016/0006-8993(91)91111-d",
+      "verified": true
+    },
+    {
+      "title": "DARPP-32: Regulator of the Efficacy of Dopaminergic Neurotransmission",
+      "journal": "Science",
+      "year": 1998,
+      "citationCount": 524,
+      "doi": "10.1126/science.281.5378.838",
+      "sourceUrl": "https://doi.org/10.1126/science.281.5378.838",
+      "verified": true
+    },
+    {
+      "title": "Animal Models of Depression: Molecular Perspectives",
+      "journal": "Current topics in behavioral neurosciences",
+      "year": 2011,
+      "citationCount": 520,
+      "doi": "10.1007/7854_2010_108",
+      "sourceUrl": "https://doi.org/10.1007/7854_2010_108",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:15.000Z",
+  "openalexId": "https://openalex.org/A5049993782",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Nestler_headshot%2839%29.png/330px-Nestler_headshot%2839%29.png"
 }

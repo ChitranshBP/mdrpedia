@@ -63,7 +63,7 @@ const { doctorName, slug } = Astro.props;
                     class="btn btn--primary cite-popup__copy"
                     id="citeCopyBtn"
                 >
-                    📋 Copy APA Citation
+                    Copy APA Citation
                 </button>
             </div>
         </div>
@@ -73,6 +73,10 @@ const { doctorName, slug } = Astro.props;
 <style>
     .cite-popup {
         position: fixed;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 0;
         z-index: 1000;
         pointer-events: none;
     }
@@ -258,10 +262,10 @@ const { doctorName, slug } = Astro.props;
         citeCopyBtn?.addEventListener("click", () => {
             const text = citeAPA?.textContent || "";
             navigator.clipboard.writeText(text).then(() => {
-                if (citeCopyBtn) citeCopyBtn.textContent = "✅ Copied!";
+                if (citeCopyBtn) citeCopyBtn.textContent = "Copied!";
                 setTimeout(() => {
                     if (citeCopyBtn)
-                        citeCopyBtn.textContent = "📋 Copy APA Citation";
+                        citeCopyBtn.textContent = "Copy APA Citation";
                 }, 2000);
             });
         });

@@ -1,0 +1,445 @@
+---
+/**
+ * InfoBox — Wikipedia-style sidebar fact card for doctor profiles
+ * Shows structured biographical data in a clean key-value layout
+ */
+
+import { countryToFlag } from "../lib/country-flags";
+import SuggestEdit from "./SuggestEdit.astro";
+import ImageWithFallback from "./ImageWithFallback";
+
+interface Props {
+    doctor: {
+        fullName: string;
+        title?: string;
+        specialty: string;
+        subSpecialty?: string;
+        geography: { country: string; region?: string; city?: string };
+        status: "LIVING" | "HISTORICAL";
+        tier: "TITAN" | "ELITE" | "MASTER" | "UNRANKED";
+        hIndex: number;
+        yearsActive: number;
+        verifiedSurgeries: number;
+        dateOfBirth?: string;
+        dateOfDeath?: string;
+        portraitUrl?: string;
+        techniquesInvented: string[];
+        orcidId?: string;
+        npiNumber?: string;
+        affiliations?: {
+            hospitalName: string;
+            role?: string;
+            hospitalUrl?: string;
+        }[];
+        mentors?: { name: string; id?: string; title?: string }[];
+        students?: { name: string; id?: string; title?: string }[];
+    };
+}
+
+const { doctor } = Astro.props;
+
+const flag = countryToFlag(doctor.geography.country);
+const location = [
+    doctor.geography.city,
+    doctor.geography.region,
+    doctor.geography.country,
+]
+    .filter(Boolean)
+    .join(", ");
+
+const tierColors: Record<string, string> = {
+    TITAN: "#ffd700",
+    ELITE: "#00aaff",
+    MASTER: "#00cc66",
+    UNRANKED: "#888",
+};
+
+const tierBgs: Record<string, string> = {
+    TITAN: "rgba(255,215,0,0.12)",
+    ELITE: "rgba(0,170,255,0.1)",
+    MASTER: "rgba(0,204,102,0.08)",
+    UNRANKED: "rgba(255,255,255,0.03)",
+};
+
+const tierLabels: Record<string, string> = {
+    TITAN: "Titan",
+    ELITE: "Elite",
+    MASTER: "Master",
+    UNRANKED: "Unranked",
+};
+
+function formatDate(d?: string): string {
+    if (!d) return "";
+    try {
+        const date = new Date(d);
+        return date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+        });
+    } catch {
+        return d;
+    }
+}
+
+const primaryAffiliation = doctor.affiliations?.[0];
+const hasRealPortrait =
+    doctor.portraitUrl && !doctor.portraitUrl.startsWith("data:image/svg");
+---
+
+<aside
+    class="infobox"
+    style={`--ib-accent: ${tierColors[doctor.tier]}; --ib-accent-bg: ${tierBgs[doctor.tier]};`}
+>
+    <!-- Header -->
+    <div class="infobox__header">
+        <span class="infobox__name">{doctor.fullName}</span>
+        {doctor.title && <span class="infobox__title">{doctor.title}</span>}
+    </div>
+
+    <!-- Portrait (Image or Fallback) -->
+    <div class="infobox__portrait-wrap">
+        <ImageWithFallback
+            client:visible
+            src={hasRealPortrait ? doctor.portraitUrl : undefined}
+            alt={`Portrait of ${doctor.fullName}`}
+            tier={doctor.tier}
+            fullName={doctor.fullName}
+            className="infobox__portrait"
+        />
+    </div>
+
+    <!-- Facts table -->
+    <dl class="infobox__facts">
+        {
+            doctor.dateOfBirth && (
+                <div class="infobox__row">
+                    <dt>Born</dt>
+                    <dd>{formatDate(doctor.dateOfBirth)}</dd>
+                </div>
+            )
+        }
+
+        {
+            doctor.status === "HISTORICAL" && doctor.dateOfDeath && (
+                <div class="infobox__row">
+                    <dt>Died</dt>
+                    <dd>{formatDate(doctor.dateOfDeath)}</dd>
+                </div>
+            )
+        }
+
+        <div class="infobox__row">
+            <dt>Nationality</dt>
+            <dd>
+                {flag && <span class="infobox__flag">{flag}</span>}
+                {doctor.geography.country}
+            </dd>
+        </div>
+
+        <div class="infobox__row">
+            <dt>Specialty</dt>
+            <dd>
+                {doctor.specialty}
+                {
+                    doctor.subSpecialty && (
+                        <span class="infobox__sub">{doctor.subSpecialty}</span>
+                    )
+                }
+            </dd>
+        </div>
+
+        {
+            primaryAffiliation && (
+                <div class="infobox__row">
+                    <dt>Institution</dt>
+                    <dd>
+                        {primaryAffiliation.hospitalUrl ? (
+                            <a
+                                href={primaryAffiliation.hospitalUrl}
+                                target="_blank"
+                                rel="noopener"
+                                class="infobox__link"
+                            >
+                                {primaryAffiliation.hospitalName}
+                            </a>
+                        ) : (
+                            primaryAffiliation.hospitalName
+                        )}
+                        {primaryAffiliation.role && (
+                            <span class="infobox__sub">
+                                {primaryAffiliation.role}
+                            </span>
+                        )}
+                    </dd>
+                </div>
+            )
+        }
+
+        <div class="infobox__row">
+            <dt>Location</dt>
+            <dd>{location}</dd>
+        </div>
+
+        <div class="infobox__row">
+            <dt>Years Active</dt>
+            <dd>{doctor.yearsActive}</dd>
+        </div>
+
+        {
+            doctor.techniquesInvented.length > 0 && (
+                <div class="infobox__row">
+                    <dt>Known for</dt>
+                    <dd>
+                        <ul class="infobox__list">
+                            {doctor.techniquesInvented.slice(0, 3).map((t) => (
+                                <li>{t}</li>
+                            ))}
+                        </ul>
+                    </dd>
+                </div>
+            )
+        }
+
+        <div class="infobox__row">
+            <dt>H-Index</dt>
+            <dd>{doctor.hIndex}</dd>
+        </div>
+
+        <div class="infobox__row">
+            <dt>Tier</dt>
+            <dd>
+                <span class="infobox__tier-badge"
+                    >{tierLabels[doctor.tier]}</span
+                >
+            </dd>
+        </div>
+
+        {
+            doctor.orcidId && (
+                <div class="infobox__row">
+                    <dt>ORCID</dt>
+                    <dd>
+                        <a
+                            href={`https://orcid.org/${doctor.orcidId}`}
+                            target="_blank"
+                            rel="noopener"
+                            class="infobox__link"
+                        >
+                            {doctor.orcidId}
+                        </a>
+                    </dd>
+                </div>
+            )
+        }
+
+        {
+            doctor.npiNumber && (
+                <div class="infobox__row">
+                    <dt>NPI</dt>
+                    <dd>{doctor.npiNumber}</dd>
+                </div>
+            )
+        }
+
+        {
+            doctor.mentors && doctor.mentors.length > 0 && (
+                <div class="infobox__row">
+                    <dt>Mentors</dt>
+                    <dd>
+                        {doctor.mentors.map((m, i) => (
+                            <Fragment>
+                                {m.id ? (
+                                    <a
+                                        href={`/doctors/${m.id}`}
+                                        class="infobox__link"
+                                    >
+                                        {m.name}
+                                    </a>
+                                ) : (
+                                    m.name
+                                )}
+                                {i < (doctor.mentors?.length ?? 0) - 1 && ", "}
+                            </Fragment>
+                        ))}
+                    </dd>
+                </div>
+            )
+        }
+
+        {
+            doctor.students && doctor.students.length > 0 && (
+                <div class="infobox__row">
+                    <dt>Notable students</dt>
+                    <dd>
+                        {doctor.students.slice(0, 3).map((s, i) => (
+                            <Fragment>
+                                {s.id ? (
+                                    <a
+                                        href={`/doctors/${s.id}`}
+                                        class="infobox__link"
+                                    >
+                                        {s.name}
+                                    </a>
+                                ) : (
+                                    s.name
+                                )}
+                                {i <
+                                    Math.min(3, doctor.students?.length ?? 0) -
+                                        1 && ", "}
+                            </Fragment>
+                        ))}
+                    </dd>
+                </div>
+            )
+        }
+    </dl>
+
+    <!-- Crowdsource Action -->
+    <div
+        style="padding: 12px 16px; border-top: 1px solid rgba(255,255,255,0.06); text-align: center;"
+    >
+        <SuggestEdit
+            profileSlug={doctor.fullName}
+            doctorName={doctor.fullName}
+        />
+    </div>
+</aside>
+
+<style>
+    .infobox {
+        background: var(--bg-card, #14142a);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        overflow: hidden;
+        font-size: 0.82rem;
+        line-height: 1.5;
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .infobox__header {
+        background: var(--ib-accent-bg);
+        border-bottom: 2px solid var(--ib-accent);
+        padding: 16px;
+        text-align: center;
+    }
+
+    .infobox__name {
+        display: block;
+        font-weight: 700;
+        font-size: 1rem;
+        color: var(--text-primary);
+    }
+
+    .infobox__title {
+        display: block;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-top: 2px;
+    }
+
+    .infobox__portrait-wrap {
+        padding: 12px 16px 0;
+        text-align: center;
+    }
+
+    .infobox__portrait {
+        width: 100%;
+        max-height: 220px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .infobox__facts {
+        padding: 8px 0;
+        margin: 0;
+    }
+
+    .infobox__row {
+        display: flex;
+        padding: 6px 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        gap: 8px;
+    }
+
+    .infobox__row:last-child {
+        border-bottom: none;
+    }
+
+    .infobox__row dt {
+        width: 95px;
+        flex-shrink: 0;
+        font-weight: 600;
+        color: var(--text-muted);
+        font-size: 0.75rem;
+        padding-top: 1px;
+    }
+
+    .infobox__row dd {
+        flex: 1;
+        margin: 0;
+        color: var(--text-secondary);
+        word-break: break-word;
+    }
+
+    .infobox__flag {
+        font-size: 1rem;
+        vertical-align: middle;
+        margin-right: 2px;
+    }
+
+    .infobox__sub {
+        display: block;
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        margin-top: 1px;
+    }
+
+    .infobox__link {
+        color: var(--ib-accent);
+        text-decoration: none;
+    }
+
+    .infobox__link:hover {
+        text-decoration: underline;
+    }
+
+    .infobox__list {
+        margin: 0;
+        padding-left: 14px;
+        list-style: disc;
+    }
+
+    .infobox__list li {
+        margin-bottom: 1px;
+        font-size: 0.78rem;
+    }
+
+    .infobox__tier-badge {
+        display: inline-block;
+        font-weight: 700;
+        font-size: 0.72rem;
+        padding: 2px 8px;
+        border-radius: 4px;
+        background: var(--ib-accent-bg);
+        color: var(--ib-accent);
+        border: 1px solid var(--ib-accent);
+    }
+
+    /* Responsive: on mobile, full width below the hero */
+    @media (max-width: 768px) {
+        .infobox {
+            max-width: 100%;
+            margin: 0 auto 24px;
+        }
+    }
+
+    /* Fix for long words breaking layout */
+    .infobox__row dd {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+</style>

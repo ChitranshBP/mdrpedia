@@ -1,36 +1,492 @@
 {
   "fullName": "Bruce M. Psaty",
   "slug": "bruce-m-psaty",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Cardiovascular Epidemiology",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">BM</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 57,
-  "hIndex": 227,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 228,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 18413,
+  "livesSaved": 0,
+  "biography": "Bruce M. Psaty is a leading specialist in Cardiovascular Epidemiology at University of Washington.",
+  "aiSummary": "Bruce M. Psaty is a cardiovascular epidemiology specialist with an H-index of 228 at University of Washington (Faculty). Has been published in New England Journal of Medicine, Nature, JAMA. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "University of Washington"
-    }
-  ],
-  "bio": "Bruce M. Psaty is a pioneer in Cardiovascular Epidemiology at University of Washington, USA. With a D-Index of 227 and over 184,128 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "University of Washington",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Cardiovascular Epidemiology"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Prediction of Coronary Heart Disease Using Risk Factor Categories",
+      "journal": "Circulation",
+      "year": 1998,
+      "citationCount": 9504,
+      "doi": "10.1161/01.cir.97.18.1837",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.97.18.1837",
+      "verified": true
+    },
+    {
+      "title": "2013 ACC/AHA Guideline on the Treatment of Blood Cholesterol to Reduce Atherosclerotic Cardiovascular Risk in Adults",
+      "journal": "Circulation",
+      "year": 2013,
+      "citationCount": 7083,
+      "doi": "10.1161/01.cir.0000437738.63853.7a",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000437738.63853.7a",
+      "verified": true
+    },
+    {
+      "title": "Prognostic Implications of Echocardiographically Determined Left Ventricular Mass in the Framingham Heart Study",
+      "journal": "New England Journal of Medicine",
+      "year": 1990,
+      "citationCount": 5667,
+      "doi": "10.1056/nejm199005313222203",
+      "sourceUrl": "https://doi.org/10.1056/nejm199005313222203",
+      "verified": true
+    },
+    {
+      "title": "2013 ACC/AHA Guideline on the Assessment of Cardiovascular Risk",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2013,
+      "citationCount": 4871,
+      "doi": "10.1016/j.jacc.2013.11.005",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2013.11.005",
+      "verified": true
+    },
+    {
+      "title": "Impact of Atrial Fibrillation on the Risk of Death",
+      "journal": "Circulation",
+      "year": 1998,
+      "citationCount": 4552,
+      "doi": "10.1161/01.cir.98.10.946",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.98.10.946",
+      "verified": true
+    },
+    {
+      "title": "2013 ACC/AHA Guideline on the Treatment of Blood Cholesterol to Reduce Atherosclerotic Cardiovascular Risk in Adults",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2013,
+      "citationCount": 3813,
+      "doi": "10.1016/j.jacc.2013.11.002",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2013.11.002",
+      "verified": true
+    },
+    {
+      "title": "2013 ACC/AHA Guideline on the Assessment of Cardiovascular Risk",
+      "journal": "Circulation",
+      "year": 2013,
+      "citationCount": 3575,
+      "doi": "10.1161/01.cir.0000437741.48606.98",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000437741.48606.98",
+      "verified": true
+    },
+    {
+      "title": "Third universal definition of myocardial infarction",
+      "journal": "European Heart Journal",
+      "year": 2012,
+      "citationCount": 3042,
+      "doi": "10.1093/eurheartj/ehs184",
+      "sourceUrl": "https://doi.org/10.1093/eurheartj/ehs184",
+      "verified": true
+    },
+    {
+      "title": "Obesity and the Risk of Heart Failure",
+      "journal": "New England Journal of Medicine",
+      "year": 2002,
+      "citationCount": 2970,
+      "doi": "10.1056/nejmoa020245",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa020245",
+      "verified": true
+    },
+    {
+      "title": "Third Universal Definition of Myocardial Infarction",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2012,
+      "citationCount": 2609,
+      "doi": "10.1016/j.jacc.2012.08.001",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2012.08.001",
+      "verified": true
+    },
+    {
+      "title": "Hemodynamic Patterns of Age-Related Changes in Blood Pressure",
+      "journal": "Circulation",
+      "year": 1997,
+      "citationCount": 2266,
+      "doi": "10.1161/01.cir.96.1.308",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.96.1.308",
+      "verified": true
+    },
+    {
+      "title": "The epidemiology of heart failure: The Framingham Study",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 1993,
+      "citationCount": 2253,
+      "doi": "10.1016/0735-1097(93)90455-a",
+      "sourceUrl": "https://doi.org/10.1016/0735-1097(93)90455-a",
+      "verified": true
+    },
+    {
+      "title": "Arterial and Cardiac Aging: Major Shareholders in Cardiovascular Disease Enterprises",
+      "journal": "Circulation",
+      "year": 2003,
+      "citationCount": 2166,
+      "doi": "10.1161/01.cir.0000048892.83521.58",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000048892.83521.58",
+      "verified": true
+    },
+    {
+      "title": "Sequencing of 53,831 diverse genomes from the NHLBI TOPMed Program",
+      "journal": "Nature",
+      "year": 2021,
+      "citationCount": 2162,
+      "doi": "10.1038/s41586-021-03205-y",
+      "sourceUrl": "https://doi.org/10.1038/s41586-021-03205-y",
+      "verified": true
+    },
+    {
+      "title": "Arterial Stiffness and Cardiovascular Events",
+      "journal": "Circulation",
+      "year": 2010,
+      "citationCount": 2152,
+      "doi": "10.1161/circulationaha.109.886655",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.109.886655",
+      "verified": true
+    },
+    {
+      "title": "Long-Term Trends in the Incidence of and Survival with Heart Failure",
+      "journal": "New England Journal of Medicine",
+      "year": 2002,
+      "citationCount": 2141,
+      "doi": "10.1056/nejmoa020265",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa020265",
+      "verified": true
+    },
+    {
+      "title": "The Progression From Hypertension to Congestive Heart Failure",
+      "journal": "JAMA",
+      "year": 1996,
+      "citationCount": 2096,
+      "doi": "10.1001/jama.1996.03530440037034",
+      "sourceUrl": "https://doi.org/10.1001/jama.1996.03530440037034",
+      "verified": true
+    },
+    {
+      "title": "Impact of High-Normal Blood Pressure on the Risk of Cardiovascular Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 2001,
+      "citationCount": 2077,
+      "doi": "10.1056/nejmoa003417",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa003417",
+      "verified": true
+    },
+    {
+      "title": "Prevalence, incidence, prognosis, and predisposing conditions for atrial fibrillation: population-based estimates 11Reprints are not available.",
+      "journal": "The American Journal of Cardiology",
+      "year": 1998,
+      "citationCount": 2021,
+      "doi": "10.1016/s0002-9149(98)00583-9",
+      "sourceUrl": "https://doi.org/10.1016/s0002-9149(98)00583-9",
+      "verified": true
+    },
+    {
+      "title": "Lifetime Risk for Development of Atrial Fibrillation",
+      "journal": "Circulation",
+      "year": 2004,
+      "citationCount": 2015,
+      "doi": "10.1161/01.cir.0000140263.20897.42",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000140263.20897.42",
+      "verified": true
+    },
+    {
+      "title": "Temporal Relations of Atrial Fibrillation and Congestive Heart Failure and Their Joint Influence on Mortality",
+      "journal": "Circulation",
+      "year": 2003,
+      "citationCount": 1943,
+      "doi": "10.1161/01.cir.0000072767.89944.6e",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000072767.89944.6e",
+      "verified": true
+    },
+    {
+      "title": "Survival after the onset of congestive heart failure in Framingham Heart Study subjects.",
+      "journal": "Circulation",
+      "year": 1993,
+      "citationCount": 1866,
+      "doi": "10.1161/01.cir.88.1.107",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.88.1.107",
+      "verified": true
+    },
+    {
+      "title": "Is Pulse Pressure Useful in Predicting Risk for Coronary Heart Disease?",
+      "journal": "Circulation",
+      "year": 1999,
+      "citationCount": 1744,
+      "doi": "10.1161/01.cir.100.4.354",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.100.4.354",
+      "verified": true
+    },
+    {
+      "title": "Impact of Reduced Heart Rate Variability on Risk for Cardiac Events",
+      "journal": "Circulation",
+      "year": 1996,
+      "citationCount": 1723,
+      "doi": "10.1161/01.cir.94.11.2850",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.94.11.2850",
+      "verified": true
+    },
+    {
+      "title": "50 year trends in atrial fibrillation prevalence, incidence, risk factors, and mortality in the Framingham Heart Study: a cohort study",
+      "journal": "The Lancet",
+      "year": 2015,
+      "citationCount": 1688,
+      "doi": "10.1016/s0140-6736(14)61774-8",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(14)61774-8",
+      "verified": true
+    },
+    {
+      "title": "Lifetime Risk for Developing Congestive Heart Failure",
+      "journal": "Circulation",
+      "year": 2002,
+      "citationCount": 1592,
+      "doi": "10.1161/01.cir.0000039105.49749.6f",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000039105.49749.6f",
+      "verified": true
+    },
+    {
+      "title": "The Framingham Heart Study and the epidemiology of cardiovascular disease: a historical perspective",
+      "journal": "The Lancet",
+      "year": 2013,
+      "citationCount": 1557,
+      "doi": "10.1016/s0140-6736(13)61752-3",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(13)61752-3",
+      "verified": true
+    },
+    {
+      "title": "Plasma Natriuretic Peptide Levels and the Risk of Cardiovascular Events and Death",
+      "journal": "New England Journal of Medicine",
+      "year": 2004,
+      "citationCount": 1518,
+      "doi": "10.1056/nejmoa031994",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa031994",
+      "verified": true
+    },
+    {
+      "title": "Changes in Arterial Stiffness and Wave Reflection With Advancing Age in Healthy Men and Women",
+      "journal": "Hypertension",
+      "year": 2004,
+      "citationCount": 1484,
+      "doi": "10.1161/01.hyp.0000128420.01881.aa",
+      "sourceUrl": "https://doi.org/10.1161/01.hyp.0000128420.01881.aa",
+      "verified": true
+    },
+    {
+      "title": "Residual Lifetime Risk for Developing Hypertension in Middle-aged Women and Men",
+      "journal": "JAMA",
+      "year": 2002,
+      "citationCount": 1382,
+      "doi": "10.1001/jama.287.8.1003",
+      "sourceUrl": "https://doi.org/10.1001/jama.287.8.1003",
+      "verified": true
+    },
+    {
+      "title": "Does the Relation of Blood Pressure to Coronary Heart Disease Risk Change With Aging?",
+      "journal": "Circulation",
+      "year": 2001,
+      "citationCount": 1375,
+      "doi": "10.1161/01.cir.103.9.1245",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.103.9.1245",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide association study of blood pressure and hypertension",
+      "journal": "Nature Genetics",
+      "year": 2009,
+      "citationCount": 1369,
+      "doi": "10.1038/ng.384",
+      "sourceUrl": "https://doi.org/10.1038/ng.384",
+      "verified": true
+    },
+    {
+      "title": "Multiple Biomarkers for the Prediction of First Major Cardiovascular Events and Death",
+      "journal": "New England Journal of Medicine",
+      "year": 2006,
+      "citationCount": 1358,
+      "doi": "10.1056/nejmoa055373",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa055373",
+      "verified": true
+    },
+    {
+      "title": "Congestive heart failure in subjects with normal versus reduced left ventricular ejection fraction",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 1999,
+      "citationCount": 1334,
+      "doi": "10.1016/s0735-1097(99)00118-7",
+      "sourceUrl": "https://doi.org/10.1016/s0735-1097(99)00118-7",
+      "verified": true
+    },
+    {
+      "title": "Prevalence and clinical determinants of mitral, tricuspid, and aortic regurgitation (the Framingham Heart Study)",
+      "journal": "The American Journal of Cardiology",
+      "year": 1999,
+      "citationCount": 1322,
+      "doi": "10.1016/s0002-9149(98)01064-9",
+      "sourceUrl": "https://doi.org/10.1016/s0002-9149(98)01064-9",
+      "verified": true
+    },
+    {
+      "title": "DNA methylation age of blood predicts all-cause mortality in later life",
+      "journal": "Genome Biology",
+      "year": 2015,
+      "citationCount": 1304,
+      "doi": "10.1186/s13059-015-0584-6",
+      "sourceUrl": "https://doi.org/10.1186/s13059-015-0584-6",
+      "verified": true
+    },
+    {
+      "title": "Incidence and Prognosis of Syncope",
+      "journal": "New England Journal of Medicine",
+      "year": 2002,
+      "citationCount": 1299,
+      "doi": "10.1056/nejmoa012407",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa012407",
+      "verified": true
+    },
+    {
+      "title": "Serum Uric Acid and Risk for Cardiovascular Disease and Death: The Framingham Heart Study",
+      "journal": "Annals of Internal Medicine",
+      "year": 1999,
+      "citationCount": 1296,
+      "doi": "10.7326/0003-4819-131-1-199907060-00003",
+      "sourceUrl": "https://doi.org/10.7326/0003-4819-131-1-199907060-00003",
+      "verified": true
+    },
+    {
+      "title": "Prediction of Lifetime Risk for Cardiovascular Disease by Risk Factor Burden at 50 Years of Age",
+      "journal": "Circulation",
+      "year": 2006,
+      "citationCount": 1290,
+      "doi": "10.1161/circulationaha.105.548206",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.105.548206",
+      "verified": true
+    },
+    {
+      "title": "Arterial and Cardiac Aging: Major Shareholders in Cardiovascular Disease Enterprises",
+      "journal": "Circulation",
+      "year": 2003,
+      "citationCount": 1229,
+      "doi": "10.1161/01.cir.0000048893.62841.f7",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000048893.62841.f7",
+      "verified": true
+    },
+    {
+      "title": "DNA methylation-based measures of biological age: meta-analysis predicting time to death",
+      "journal": "Aging",
+      "year": 2016,
+      "citationCount": 1163,
+      "doi": "10.18632/aging.101020",
+      "sourceUrl": "https://doi.org/10.18632/aging.101020",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide meta-analyses identify multiple loci associated with smoking behavior",
+      "journal": "Nature Genetics",
+      "year": 2010,
+      "citationCount": 1152,
+      "doi": "10.1038/ng.571",
+      "sourceUrl": "https://doi.org/10.1038/ng.571",
+      "verified": true
+    },
+    {
+      "title": "Prevalence and Clinical Outcome of Mitral-Valve Prolapse",
+      "journal": "New England Journal of Medicine",
+      "year": 1999,
+      "citationCount": 1136,
+      "doi": "10.1056/nejm199907013410101",
+      "sourceUrl": "https://doi.org/10.1056/nejm199907013410101",
+      "verified": true
+    },
+    {
+      "title": "Aortic Stiffness, Blood Pressure Progression, and Incident Hypertension",
+      "journal": "JAMA",
+      "year": 2012,
+      "citationCount": 1074,
+      "doi": "10.1001/2012.jama.10503",
+      "sourceUrl": "https://doi.org/10.1001/2012.jama.10503",
+      "verified": true
+    },
+    {
+      "title": "Rare coding variants in PLCG2, ABI3, and TREM2 implicate microglial-mediated innate immunity in Alzheimer's disease",
+      "journal": "Nature Genetics",
+      "year": 2017,
+      "citationCount": 1062,
+      "doi": "10.1038/ng.3916",
+      "sourceUrl": "https://doi.org/10.1038/ng.3916",
+      "verified": true
+    },
+    {
+      "title": "Assessment of frequency of progression to hypertension in non-hypertensive participants in the Framingham Heart Study: a cohort study",
+      "journal": "The Lancet",
+      "year": 2001,
+      "citationCount": 1060,
+      "doi": "10.1016/s0140-6736(01)06710-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(01)06710-1",
+      "verified": true
+    },
+    {
+      "title": "Echocardiographic predictors of nonrheumatic atrial fibrillation. The Framingham Heart Study.",
+      "journal": "Circulation",
+      "year": 1994,
+      "citationCount": 1046,
+      "doi": "10.1161/01.cir.89.2.724",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.89.2.724",
+      "verified": true
+    },
+    {
+      "title": "Left Atrial Size and the Risk of Stroke and Death",
+      "journal": "Circulation",
+      "year": 1995,
+      "citationCount": 1044,
+      "doi": "10.1161/01.cir.92.4.835",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.92.4.835",
+      "verified": true
+    },
+    {
+      "title": "Development of a risk score for atrial fibrillation (Framingham Heart Study): a community-based cohort study",
+      "journal": "The Lancet",
+      "year": 2009,
+      "citationCount": 1040,
+      "doi": "10.1016/s0140-6736(09)60443-8",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(09)60443-8",
+      "verified": true
+    },
+    {
+      "title": "Impact of Obesity on Plasma Natriuretic Peptide Levels",
+      "journal": "Circulation",
+      "year": 2004,
+      "citationCount": 1019,
+      "doi": "10.1161/01.cir.0000112582.16683.ea",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000112582.16683.ea",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:14.000Z",
+  "openalexId": "https://openalex.org/A5074117194"
 }

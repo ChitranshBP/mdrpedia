@@ -1,31 +1,492 @@
 {
   "fullName": "James G. Herman",
   "slug": "james-g-herman",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "DNA Methylation",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">JG</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 40,
-  "hIndex": 161,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 172,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 17220,
+  "livesSaved": 0,
+  "biography": "James G. Herman is a leading specialist in DNA Methylation at University of Pittsburgh.",
+  "aiSummary": "James G. Herman is a dna methylation specialist with an H-index of 172 at University of Pittsburgh (Faculty). Has been published in Proceedings of the National Academy of Sciences, New England Journal of Medicine, Cell. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "University of Pittsburgh"
-    }
-  ],
-  "bio": "James G. Herman is a pioneer in DNA Methylation at University of Pittsburgh, USA. With a D-Index of 161 and over 172,203 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "University of Pittsburgh",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "DNA Methylation"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Methylation-specific PCR: a novel PCR assay for methylation status of CpG islands.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1996,
+      "citationCount": 5644,
+      "doi": "10.1073/pnas.93.18.9821",
+      "sourceUrl": "https://doi.org/10.1073/pnas.93.18.9821",
+      "verified": true
+    },
+    {
+      "title": "Gene Silencing in Cancer in Association with Promoter Hypermethylation",
+      "journal": "New England Journal of Medicine",
+      "year": 2003,
+      "citationCount": 3387,
+      "doi": "10.1056/nejmra023075",
+      "sourceUrl": "https://doi.org/10.1056/nejmra023075",
+      "verified": true
+    },
+    {
+      "title": "Integrated Genomic Characterization of Papillary Thyroid Carcinoma",
+      "journal": "Cell",
+      "year": 2014,
+      "citationCount": 2974,
+      "doi": "10.1016/j.cell.2014.09.050",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2014.09.050",
+      "verified": true
+    },
+    {
+      "title": "CpG island methylator phenotype in colorectal cancer",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1999,
+      "citationCount": 2498,
+      "doi": "10.1073/pnas.96.15.8681",
+      "sourceUrl": "https://doi.org/10.1073/pnas.96.15.8681",
+      "verified": true
+    },
+    {
+      "title": "Identification of a CpG Island Methylator Phenotype that Defines a Distinct Subgroup of Glioma",
+      "journal": "Cancer Cell",
+      "year": 2010,
+      "citationCount": 2319,
+      "doi": "10.1016/j.ccr.2010.03.017",
+      "sourceUrl": "https://doi.org/10.1016/j.ccr.2010.03.017",
+      "verified": true
+    },
+    {
+      "title": "Inactivation of the DNA-Repair Gene<i>MGMT</i>and the Clinical Response of Gliomas to Alkylating Agents",
+      "journal": "New England Journal of Medicine",
+      "year": 2000,
+      "citationCount": 2187,
+      "doi": "10.1056/nejm200011093431901",
+      "sourceUrl": "https://doi.org/10.1056/nejm200011093431901",
+      "verified": true
+    },
+    {
+      "title": "A gene hypermethylation profile of human cancer.",
+      "journal": "PubMed",
+      "year": 2001,
+      "citationCount": 2034,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1658127082",
+      "verified": true
+    },
+    {
+      "title": "5′ CpG island methylation is associated with transcriptional silencing of the tumour suppressor p16/CDKN2/MTS1 in human cancers",
+      "journal": "Nature Medicine",
+      "year": 1995,
+      "citationCount": 1979,
+      "doi": "10.1038/nm0795-686",
+      "sourceUrl": "https://doi.org/10.1038/nm0795-686",
+      "verified": true
+    },
+    {
+      "title": "Alterations in DNA Methylation: A Fundamental Aspect of Neoplasia",
+      "journal": "Advances in cancer research",
+      "year": 1997,
+      "citationCount": 1940,
+      "doi": "10.1016/s0065-230x(08)60702-2",
+      "sourceUrl": "https://doi.org/10.1016/s0065-230x(08)60702-2",
+      "verified": true
+    },
+    {
+      "title": "Incidence and functional consequences of <i>hMLH1</i> promoter hypermethylation in colorectal carcinoma",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1998,
+      "citationCount": 1863,
+      "doi": "10.1073/pnas.95.12.6870",
+      "sourceUrl": "https://doi.org/10.1073/pnas.95.12.6870",
+      "verified": true
+    },
+    {
+      "title": "Synergy of demethylation and histone deacetylase inhibition in the re-expression of genes silenced in cancer",
+      "journal": "Nature Genetics",
+      "year": 1999,
+      "citationCount": 1850,
+      "doi": "10.1038/5047",
+      "sourceUrl": "https://doi.org/10.1038/5047",
+      "verified": true
+    },
+    {
+      "title": "DNA hypermethylation in tumorigenesis: epigenetics joins genetics",
+      "journal": "Trends in Genetics",
+      "year": 2000,
+      "citationCount": 1631,
+      "doi": "10.1016/s0168-9525(99)01971-x",
+      "sourceUrl": "https://doi.org/10.1016/s0168-9525(99)01971-x",
+      "verified": true
+    },
+    {
+      "title": "Silencing of the VHL tumor-suppressor gene by DNA methylation in renal carcinoma.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1994,
+      "citationCount": 1539,
+      "doi": "10.1073/pnas.91.21.9700",
+      "sourceUrl": "https://doi.org/10.1073/pnas.91.21.9700",
+      "verified": true
+    },
+    {
+      "title": "Inactivation of the CDKN2/p16/MTS1 gene is frequently associated with aberrant DNA methylation in all common human cancers.",
+      "journal": "PubMed",
+      "year": 1995,
+      "citationCount": 1358,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2130198345",
+      "verified": true
+    },
+    {
+      "title": "Inactivation of the DNA repair gene O6-methylguanine-DNA methyltransferase by promoter hypermethylation is a common event in primary human neoplasia.",
+      "journal": "PubMed",
+      "year": 1999,
+      "citationCount": 1263,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2106816824",
+      "verified": true
+    },
+    {
+      "title": "A stem cell–like chromatin pattern may predispose tumor suppressor genes to DNA hypermethylation and heritable silencing",
+      "journal": "Nature Genetics",
+      "year": 2007,
+      "citationCount": 1123,
+      "doi": "10.1038/ng1972",
+      "sourceUrl": "https://doi.org/10.1038/ng1972",
+      "verified": true
+    },
+    {
+      "title": "Epigenetic inactivation of SFRP genes allows constitutive WNT signaling in colorectal cancer",
+      "journal": "Nature Genetics",
+      "year": 2004,
+      "citationCount": 1057,
+      "doi": "10.1038/ng1330",
+      "sourceUrl": "https://doi.org/10.1038/ng1330",
+      "verified": true
+    },
+    {
+      "title": "Dysfunctional KEAP1–NRF2 Interaction in Non-Small-Cell Lung Cancer",
+      "journal": "PLoS Medicine",
+      "year": 2006,
+      "citationCount": 1035,
+      "doi": "10.1371/journal.pmed.0030420",
+      "sourceUrl": "https://doi.org/10.1371/journal.pmed.0030420",
+      "verified": true
+    },
+    {
+      "title": "Inactivation of the apoptosis effector Apaf-1 in malignant melanoma",
+      "journal": "Nature",
+      "year": 2001,
+      "citationCount": 959,
+      "doi": "10.1038/35051606",
+      "sourceUrl": "https://doi.org/10.1038/35051606",
+      "verified": true
+    },
+    {
+      "title": "Aberrant methylation of <i>p16</i> <sup>INK4a</sup> is an early event in lung cancer and a potential biomarker for early diagnosis",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1998,
+      "citationCount": 956,
+      "doi": "10.1073/pnas.95.20.11891",
+      "sourceUrl": "https://doi.org/10.1073/pnas.95.20.11891",
+      "verified": true
+    },
+    {
+      "title": "Detection of aberrant promoter hypermethylation of tumor suppressor genes in serum DNA from non-small cell lung cancer patients.",
+      "journal": "PubMed",
+      "year": 1999,
+      "citationCount": 928,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1929295557",
+      "verified": true
+    },
+    {
+      "title": "A genomic screen for genes upregulated by demethylation and histone deacetylase inhibition in human colorectal cancer",
+      "journal": "Nature Genetics",
+      "year": 2002,
+      "citationCount": 854,
+      "doi": "10.1038/ng892",
+      "sourceUrl": "https://doi.org/10.1038/ng892",
+      "verified": true
+    },
+    {
+      "title": "Predicting lung cancer by detecting aberrant promoter methylation in sputum.",
+      "journal": "PubMed",
+      "year": 2000,
+      "citationCount": 817,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2166075028",
+      "verified": true
+    },
+    {
+      "title": "E-cadherin expression is silenced by DNA hypermethylation in human breast and prostate carcinomas.",
+      "journal": "PubMed",
+      "year": 1995,
+      "citationCount": 801,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1533247917",
+      "verified": true
+    },
+    {
+      "title": "Correlation of O<sup>6</sup>-Methylguanine Methyltransferase (MGMT) Promoter Methylation With Clinical Outcomes in Glioblastoma and Clinical Strategies to Modulate MGMT Activity",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2008,
+      "citationCount": 796,
+      "doi": "10.1200/jco.2007.11.5964",
+      "sourceUrl": "https://doi.org/10.1200/jco.2007.11.5964",
+      "verified": true
+    },
+    {
+      "title": "Cancer as an epigenetic disease: DNA methylation and chromatin alterations in human tumours",
+      "journal": "The Journal of Pathology",
+      "year": 2001,
+      "citationCount": 746,
+      "doi": "10.1002/path.1024",
+      "sourceUrl": "https://doi.org/10.1002/path.1024",
+      "verified": true
+    },
+    {
+      "title": "Analysis of DNA methylation in cancer: location revisited",
+      "journal": "Nature Reviews Clinical Oncology",
+      "year": 2018,
+      "citationCount": 737,
+      "doi": "10.1038/s41571-018-0004-4",
+      "sourceUrl": "https://doi.org/10.1038/s41571-018-0004-4",
+      "verified": true
+    },
+    {
+      "title": "SOCS-1, a negative regulator of the JAK/STAT pathway, is silenced by methylation in human hepatocellular carcinoma and shows growth-suppression activity",
+      "journal": "Nature Genetics",
+      "year": 2001,
+      "citationCount": 732,
+      "doi": "10.1038/ng0501-29",
+      "sourceUrl": "https://doi.org/10.1038/ng0501-29",
+      "verified": true
+    },
+    {
+      "title": "Frequent inactivation of PTEN/MMAC1 in primary prostate cancer.",
+      "journal": "PubMed",
+      "year": 1997,
+      "citationCount": 711,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2117905749",
+      "verified": true
+    },
+    {
+      "title": "Combination Epigenetic Therapy Has Efficacy in Patients with Refractory Advanced Non–Small Cell Lung Cancer",
+      "journal": "Cancer Discovery",
+      "year": 2011,
+      "citationCount": 668,
+      "doi": "10.1158/2159-8290.cd-11-0214",
+      "sourceUrl": "https://doi.org/10.1158/2159-8290.cd-11-0214",
+      "verified": true
+    },
+    {
+      "title": "Abrogation of the Rb/p16 tumor-suppressive pathway in virtually all pancreatic carcinomas.",
+      "journal": "PubMed",
+      "year": 1997,
+      "citationCount": 665,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1565005755",
+      "verified": true
+    },
+    {
+      "title": "Inactivation of LKB1/STK11 is a common event in adenocarcinomas of the lung.",
+      "journal": "PubMed",
+      "year": 2002,
+      "citationCount": 639,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2141744105",
+      "verified": true
+    },
+    {
+      "title": "DNA Methylation Markers and Early Recurrence in Stage I Lung Cancer",
+      "journal": "New England Journal of Medicine",
+      "year": 2008,
+      "citationCount": 598,
+      "doi": "10.1056/nejmoa0706550",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa0706550",
+      "verified": true
+    },
+    {
+      "title": "Hypermethylation-associated inactivation indicates a tumor suppressor role for p15INK4B.",
+      "journal": "PubMed",
+      "year": 1996,
+      "citationCount": 578,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1516326873",
+      "verified": true
+    },
+    {
+      "title": "Gene promoter hypermethylation in tumors and serum of head and neck cancer patients.",
+      "journal": "PubMed",
+      "year": 2000,
+      "citationCount": 548,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1924090634",
+      "verified": true
+    },
+    {
+      "title": "Inactivation of the DNA repair gene O6-methylguanine-DNA methyltransferase by promoter hypermethylation is associated with G to A mutations in K-ras in colorectal tumorigenesis.",
+      "journal": "PubMed",
+      "year": 2000,
+      "citationCount": 543,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2137180582",
+      "verified": true
+    },
+    {
+      "title": "Analysis of adenomatous polyposis coli promoter hypermethylation in human cancer.",
+      "journal": "PubMed",
+      "year": 2000,
+      "citationCount": 525,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2137846548",
+      "verified": true
+    },
+    {
+      "title": "MLH1 promoter hypermethylation is associated with the microsatellite instability phenotype in sporadic endometrial carcinomas",
+      "journal": "Oncogene",
+      "year": 1998,
+      "citationCount": 501,
+      "doi": "10.1038/sj.onc.1202178",
+      "sourceUrl": "https://doi.org/10.1038/sj.onc.1202178",
+      "verified": true
+    },
+    {
+      "title": "Combined DNA Methyltransferase and Histone Deacetylase Inhibition in the Treatment of Myeloid Neoplasms",
+      "journal": "Cancer Research",
+      "year": 2006,
+      "citationCount": 472,
+      "doi": "10.1158/0008-5472.can-06-0080",
+      "sourceUrl": "https://doi.org/10.1158/0008-5472.can-06-0080",
+      "verified": true
+    },
+    {
+      "title": "Hypermethylation-associated inactivation of p14(ARF) is independent of p16(INK4a) methylation and p53 mutational status.",
+      "journal": "PubMed",
+      "year": 2000,
+      "citationCount": 470,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1596185088",
+      "verified": true
+    },
+    {
+      "title": "CpG methylation is maintained in human cancer cells lacking DNMT1",
+      "journal": "Nature",
+      "year": 2000,
+      "citationCount": 455,
+      "doi": "10.1038/35010000",
+      "sourceUrl": "https://doi.org/10.1038/35010000",
+      "verified": true
+    },
+    {
+      "title": "Synergistic activation of functional estrogen receptor (ER)-alpha by DNA methyltransferase and histone deacetylase inhibition in human ER-alpha-negative breast cancer cells.",
+      "journal": "PubMed",
+      "year": 2001,
+      "citationCount": 425,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2100531260",
+      "verified": true
+    },
+    {
+      "title": "Histone modifications and silencing prior to DNA methylation of a tumor suppressor gene",
+      "journal": "Cancer Cell",
+      "year": 2003,
+      "citationCount": 413,
+      "doi": "10.1016/s1535-6108(02)00234-9",
+      "sourceUrl": "https://doi.org/10.1016/s1535-6108(02)00234-9",
+      "verified": true
+    },
+    {
+      "title": "Distinct patterns of inactivation of p15INK4B and p16INK4A characterize the major types of hematological malignancies.",
+      "journal": "PubMed",
+      "year": 1997,
+      "citationCount": 410,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1661110056",
+      "verified": true
+    },
+    {
+      "title": "Methylation Patterns of the E-cadherin 5′ CpG Island Are Unstable and Reflect the Dynamic, Heterogeneous Loss of E-cadherin Expression during Metastatic Progression",
+      "journal": "Journal of Biological Chemistry",
+      "year": 2000,
+      "citationCount": 388,
+      "doi": "10.1074/jbc.275.4.2727",
+      "sourceUrl": "https://doi.org/10.1074/jbc.275.4.2727",
+      "verified": true
+    },
+    {
+      "title": "Promoter Hypermethylation of Multiple Genes in Sputum Precedes Lung Cancer Incidence in a High-Risk Cohort",
+      "journal": "Cancer Research",
+      "year": 2006,
+      "citationCount": 385,
+      "doi": "10.1158/0008-5472.can-05-3408",
+      "sourceUrl": "https://doi.org/10.1158/0008-5472.can-05-3408",
+      "verified": true
+    },
+    {
+      "title": "DNA methylation, chromatin inheritance, and cancer",
+      "journal": "Oncogene",
+      "year": 2001,
+      "citationCount": 384,
+      "doi": "10.1038/sj.onc.1204339",
+      "sourceUrl": "https://doi.org/10.1038/sj.onc.1204339",
+      "verified": true
+    },
+    {
+      "title": "Inhibition of SIRT1 Reactivates Silenced Cancer Genes without Loss of Promoter DNA Hypermethylation",
+      "journal": "PLoS Genetics",
+      "year": 2006,
+      "citationCount": 381,
+      "doi": "10.1371/journal.pgen.0020040",
+      "sourceUrl": "https://doi.org/10.1371/journal.pgen.0020040",
+      "verified": true
+    },
+    {
+      "title": "Hypermethylation of the hMLH1 gene promoter in human gastric cancers with microsatellite instability.",
+      "journal": "PubMed",
+      "year": 1999,
+      "citationCount": 370,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1606687529",
+      "verified": true
+    },
+    {
+      "title": "A systematic profile of DNA methylation in human cancer cell lines.",
+      "journal": "PubMed",
+      "year": 2003,
+      "citationCount": 369,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2135025419",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:15.000Z",
+  "openalexId": "https://openalex.org/A5038831545"
 }

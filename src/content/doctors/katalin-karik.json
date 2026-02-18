@@ -1,31 +1,493 @@
 {
   "fullName": "Katalin Karikó",
   "slug": "katalin-karik",
-  "title": "MD, PhD",
-  "specialty": "mRNA Vaccine Technology",
+  "title": "MD",
+  "specialty": "mRNA Therapeutics",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23001a4d\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%2300aaff\" text-anchor=\"middle\" dy=\".3em\">KK</text></svg>",
-  "tier": "ELITE",
-  "rankingScore": 34,
-  "hIndex": 135,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 150,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 15000,
+  "livesSaved": 0,
+  "biography": "Katalin \"Kati\" Karikó is a Hungarian-American biochemist who specializes in ribonucleic acid (RNA)-mediated mechanisms, particularly in vitro-transcribed messenger RNA (mRNA) for protein replacement therapy. Karikó laid the scientific groundwork for mRNA vaccines, overcoming major obstacles and skepticism in the scientific community. Karikó received the Nobel Prize in Physiology or Medicine in 2023 for her work, along with American immunologist Drew Weissman.",
+  "aiSummary": "Katalin Karikó is a mrna therapeutics specialist with an H-index of 150 at University of Pennsylvania (Faculty). Has been published in Nature reviews. Drug discovery, Nature, Science (New York, N.Y.). Based in United States.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/2/27/Katalin_Karik%C3%B3_by_Michel_2024_02.jpg",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "University of Pennsylvania"
-    }
-  ],
-  "bio": "Katalin Karikó is a pioneer in mRNA Vaccine Technology at University of Pennsylvania, USA. With a D-Index of 135 and over 150,000 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "University of Pennsylvania",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "mRNA Therapeutics"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Suppression of RNA Recognition by Toll-like Receptors: The Impact of Nucleoside Modification and the Evolutionary Origin of RNA",
+      "journal": "Immunity",
+      "year": 2005,
+      "citationCount": 2478,
+      "doi": "10.1016/j.immuni.2005.06.008",
+      "sourceUrl": "https://doi.org/10.1016/j.immuni.2005.06.008",
+      "verified": true
+    },
+    {
+      "title": "mRNA-based therapeutics--developing a new class of drugs.",
+      "journal": "Nature reviews. Drug discovery",
+      "year": 2014,
+      "citationCount": 2117,
+      "doi": "10.1038/nrd4278",
+      "sourceUrl": "https://doi.org/10.1038/nrd4278",
+      "verified": true
+    },
+    {
+      "title": "Incorporation of Pseudouridine Into mRNA Yields Superior Nonimmunogenic Vector With Increased Translational Capacity and Biological Stability",
+      "journal": "Molecular Therapy",
+      "year": 2008,
+      "citationCount": 1754,
+      "doi": "10.1038/mt.2008.200",
+      "sourceUrl": "https://doi.org/10.1038/mt.2008.200",
+      "verified": true
+    },
+    {
+      "title": "COVID-19 vaccine BNT162b1 elicits human antibody and TH1 T cell responses.",
+      "journal": "Nature",
+      "year": 2020,
+      "citationCount": 1731,
+      "doi": "10.1038/s41586-020-2814-7",
+      "sourceUrl": "https://doi.org/10.1038/s41586-020-2814-7",
+      "verified": true
+    },
+    {
+      "title": "mRNA Is an Endogenous Ligand for Toll-like Receptor 3",
+      "journal": "Journal of Biological Chemistry",
+      "year": 2004,
+      "citationCount": 1037,
+      "doi": "10.1074/jbc.m310175200",
+      "sourceUrl": "https://doi.org/10.1074/jbc.m310175200",
+      "verified": true
+    },
+    {
+      "title": "Sequence- and target-independent angiogenesis suppression by siRNA via TLR3",
+      "journal": "Nature",
+      "year": 2008,
+      "citationCount": 916,
+      "doi": "10.1038/nature06765",
+      "sourceUrl": "https://doi.org/10.1038/nature06765",
+      "verified": true
+    },
+    {
+      "title": "Expression kinetics of nucleoside-modified mRNA delivered in lipid nanoparticles to mice by various routes.",
+      "journal": "Journal of controlled release : official journal of the Controlled Release Society",
+      "year": 2016,
+      "citationCount": 900,
+      "doi": "10.1016/j.jconrel.2015.08.007",
+      "sourceUrl": "https://doi.org/10.1016/j.jconrel.2015.08.007",
+      "verified": true
+    },
+    {
+      "title": "Zika virus protection by a single low-dose nucleoside-modified mRNA vaccination.",
+      "journal": "Nature",
+      "year": 2017,
+      "citationCount": 812,
+      "doi": "10.1038/nature21428",
+      "sourceUrl": "https://doi.org/10.1038/nature21428",
+      "verified": true
+    },
+    {
+      "title": "Generating the optimal mRNA for therapy: HPLC purification eliminates immune activation and improves translation of nucleoside-modified, protein-encoding mRNA.",
+      "journal": "Nucleic acids research",
+      "year": 2012,
+      "citationCount": 810,
+      "doi": "10.1093/nar/gkr695",
+      "sourceUrl": "https://doi.org/10.1093/nar/gkr695",
+      "verified": true
+    },
+    {
+      "title": "BNT162b2 vaccine induces neutralizing antibodies and poly-specific T cells in humans.",
+      "journal": "Nature",
+      "year": 2021,
+      "citationCount": 733,
+      "doi": "10.1038/s41586-021-03653-6",
+      "sourceUrl": "https://doi.org/10.1038/s41586-021-03653-6",
+      "verified": true
+    },
+    {
+      "title": "Incorporation of pseudouridine into mRNA enhances translation by diminishing PKR activation",
+      "journal": "Nucleic Acids Research",
+      "year": 2010,
+      "citationCount": 641,
+      "doi": "10.1093/nar/gkq347",
+      "sourceUrl": "https://doi.org/10.1093/nar/gkq347",
+      "verified": true
+    },
+    {
+      "title": "Lipid nanoparticles enhance the efficacy of mRNA and protein subunit vaccines by inducing robust T follicular helper cell and humoral responses.",
+      "journal": "Immunity",
+      "year": 2021,
+      "citationCount": 636,
+      "doi": "10.1016/j.immuni.2021.11.001",
+      "sourceUrl": "https://doi.org/10.1016/j.immuni.2021.11.001",
+      "verified": true
+    },
+    {
+      "title": "DICER1 deficit induces Alu RNA toxicity in age-related macular degeneration.",
+      "journal": "Nature",
+      "year": 2011,
+      "citationCount": 530,
+      "doi": "10.1038/nature09830",
+      "sourceUrl": "https://doi.org/10.1038/nature09830",
+      "verified": true
+    },
+    {
+      "title": "A Facile Method for the Removal of dsRNA Contaminant from In&#xa0;Vitro-Transcribed mRNA.",
+      "journal": "Molecular therapy. Nucleic acids",
+      "year": 2020,
+      "citationCount": 487,
+      "doi": "10.1016/j.omtn.2019.02.018",
+      "sourceUrl": "https://doi.org/10.1016/j.omtn.2019.02.018",
+      "verified": true
+    },
+    {
+      "title": "Small Interfering RNAs Mediate Sequence-Independent Gene Suppression and Induce Immune Activation by Signaling through Toll-Like Receptor 3",
+      "journal": "The Journal of Immunology",
+      "year": 2004,
+      "citationCount": 442,
+      "doi": "10.4049/jimmunol.172.11.6545",
+      "sourceUrl": "https://doi.org/10.4049/jimmunol.172.11.6545",
+      "verified": true
+    },
+    {
+      "title": "A noninflammatory mRNA vaccine for treatment of experimental autoimmune encephalomyelitis.",
+      "journal": "Science (New York, N.Y.)",
+      "year": 2021,
+      "citationCount": 420,
+      "doi": "10.1126/science.aay3638",
+      "sourceUrl": "https://doi.org/10.1126/science.aay3638",
+      "verified": true
+    },
+    {
+      "title": "A Single Immunization with Nucleoside-Modified mRNA Vaccines Elicits Strong Cellular and Humoral Immune Responses against SARS-CoV-2 in Mice.",
+      "journal": "Immunity",
+      "year": 2020,
+      "citationCount": 341,
+      "doi": "10.1016/j.immuni.2020.07.019",
+      "sourceUrl": "https://doi.org/10.1016/j.immuni.2020.07.019",
+      "verified": true
+    },
+    {
+      "title": "Administration of nucleoside-modified mRNA encoding broadly neutralizing antibody protects humanized mice from HIV-1 challenge.",
+      "journal": "Nature communications",
+      "year": 2018,
+      "citationCount": 312,
+      "doi": "10.1038/ncomms14630",
+      "sourceUrl": "https://doi.org/10.1038/ncomms14630",
+      "verified": true
+    },
+    {
+      "title": "Inhibition of HIV-1 Infection by Small Interfering RNA-Mediated RNA Interference",
+      "journal": "The Journal of Immunology",
+      "year": 2002,
+      "citationCount": 301,
+      "doi": "10.4049/jimmunol.169.9.5196",
+      "sourceUrl": "https://doi.org/10.4049/jimmunol.169.9.5196",
+      "verified": true
+    },
+    {
+      "title": "Nucleoside modifications in RNA limit activation of 2'-5'-oligoadenylate synthetase and increase resistance to cleavage by RNase L.",
+      "journal": "Nucleic acids research",
+      "year": 2012,
+      "citationCount": 292,
+      "doi": "10.1093/nar/gkr586",
+      "sourceUrl": "https://doi.org/10.1093/nar/gkr586",
+      "verified": true
+    },
+    {
+      "title": "Increased erythropoiesis in mice injected with submicrogram quantities of pseudouridine-containing mRNA encoding erythropoietin.",
+      "journal": "Molecular therapy : the journal of the American Society of Gene Therapy",
+      "year": 2013,
+      "citationCount": 262,
+      "doi": "10.1038/mt.2012.7",
+      "sourceUrl": "https://doi.org/10.1038/mt.2012.7",
+      "verified": true
+    },
+    {
+      "title": "Inhibition of Toll-like Receptor and Cytokine Signaling—A Unifying Theme in Ischemic Tolerance",
+      "journal": "Journal of Cerebral Blood Flow & Metabolism",
+      "year": 2004,
+      "citationCount": 260,
+      "doi": "10.1097/01.wcb.0000145666.68576.71",
+      "sourceUrl": "https://doi.org/10.1097/01.wcb.0000145666.68576.71",
+      "verified": true
+    },
+    {
+      "title": "Nucleoside-modified mRNA immunization elicits influenza virus hemagglutinin stalk-specific antibodies.",
+      "journal": "Nature communications",
+      "year": 2018,
+      "citationCount": 257,
+      "doi": "10.1038/s41467-018-05482-0",
+      "sourceUrl": "https://doi.org/10.1038/s41467-018-05482-0",
+      "verified": true
+    },
+    {
+      "title": "Elimination of large tumors in mice by mRNA-encoded bispecific antibodies.",
+      "journal": "Nature medicine",
+      "year": 2017,
+      "citationCount": 248,
+      "doi": "10.1038/nm.4356",
+      "sourceUrl": "https://doi.org/10.1038/nm.4356",
+      "verified": true
+    },
+    {
+      "title": "In vitro transcription of long RNA containing modified nucleosides.",
+      "journal": "Methods in molecular biology (Clifton, N.J.)",
+      "year": 2013,
+      "citationCount": 180,
+      "doi": "10.1007/978-1-62703-260-5_2",
+      "sourceUrl": "https://doi.org/10.1007/978-1-62703-260-5_2",
+      "verified": true
+    },
+    {
+      "title": "HIV Gag mRNA Transfection of Dendritic Cells (DC) Delivers Encoded Antigen to MHC Class I and II Molecules, Causes DC Maturation, and Induces a Potent Human In Vitro Primary Immune Response",
+      "journal": "The Journal of Immunology",
+      "year": 2000,
+      "citationCount": 177,
+      "doi": "10.4049/jimmunol.165.8.4710",
+      "sourceUrl": "https://doi.org/10.4049/jimmunol.165.8.4710",
+      "verified": true
+    },
+    {
+      "title": "BNT162b2 induces SARS-CoV-2-neutralising antibodies and T cells in humans",
+      "journal": "Unknown Journal",
+      "year": 2020,
+      "citationCount": 171,
+      "doi": "10.1101/2020.12.09.20245175",
+      "sourceUrl": "https://doi.org/10.1101/2020.12.09.20245175",
+      "verified": true
+    },
+    {
+      "title": "HPLC purification of in vitro transcribed long RNA.",
+      "journal": "Methods in molecular biology (Clifton, N.J.)",
+      "year": 2013,
+      "citationCount": 165,
+      "doi": "10.1007/978-1-62703-260-5_3",
+      "sourceUrl": "https://doi.org/10.1007/978-1-62703-260-5_3",
+      "verified": true
+    },
+    {
+      "title": "Toll-like receptor 4 contributes to poor outcome after intracerebral hemorrhage.",
+      "journal": "Annals of neurology",
+      "year": 2012,
+      "citationCount": 153,
+      "doi": "10.1002/ana.22528",
+      "sourceUrl": "https://doi.org/10.1002/ana.22528",
+      "verified": true
+    },
+    {
+      "title": "Naturally occurring nucleoside modifications suppress the immunostimulatory activity of RNA: implication for therapeutic RNA development.",
+      "journal": "PubMed",
+      "year": 2007,
+      "citationCount": 130,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W191828198",
+      "verified": true
+    },
+    {
+      "title": "Increased radioresistance of ej<i>ras</i>‐transformed human osteosarcoma cells and its modulation by lovastatin, an inhibitor of p21<sup>ras</sup> isoprenylation",
+      "journal": "International Journal of Cancer",
+      "year": 1993,
+      "citationCount": 125,
+      "doi": "10.1002/ijc.2910530222",
+      "sourceUrl": "https://doi.org/10.1002/ijc.2910530222",
+      "verified": true
+    },
+    {
+      "title": "Cutting Edge: Innate Immune System Discriminates between RNA Containing Bacterial versus Eukaryotic Structural Features That Prime for High-Level IL-12 Secretion by Dendritic Cells",
+      "journal": "The Journal of Immunology",
+      "year": 2004,
+      "citationCount": 117,
+      "doi": "10.4049/jimmunol.172.7.3989",
+      "sourceUrl": "https://doi.org/10.4049/jimmunol.172.7.3989",
+      "verified": true
+    },
+    {
+      "title": "CLINICAL, IMMUNOLOGICAL, AND VIROLOGICAL EFFECTS OF AMPLIGEN, A MISMATCHED DOUBLE-STRANDED RNA, IN PATIENTS WITH AIDS OR AIDS-RELATED COMPLEX",
+      "journal": "The Lancet",
+      "year": 1987,
+      "citationCount": 113,
+      "doi": "10.1016/s0140-6736(87)90543-5",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(87)90543-5",
+      "verified": true
+    },
+    {
+      "title": "Interaction of single-chain urokinase-type plasminogen activator with human endothelial cells.",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1990,
+      "citationCount": 108,
+      "doi": "10.1016/s0021-9258(19)39881-3",
+      "sourceUrl": "https://doi.org/10.1016/s0021-9258(19)39881-3",
+      "verified": true
+    },
+    {
+      "title": "Single immunizations of self-amplifying or non-replicating mRNA-LNP vaccines control HPV-associated tumors in mice.",
+      "journal": "Science translational medicine",
+      "year": 2023,
+      "citationCount": 102,
+      "doi": "10.1126/scitranslmed.abn3464",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.abn3464",
+      "verified": true
+    },
+    {
+      "title": "mRNA: Fulfilling the Promise of Gene Therapy.",
+      "journal": "Molecular therapy : the journal of the American Society of Gene Therapy",
+      "year": 2016,
+      "citationCount": 100,
+      "doi": "10.1038/mt.2015.138",
+      "sourceUrl": "https://doi.org/10.1038/mt.2015.138",
+      "verified": true
+    },
+    {
+      "title": "Characterization of HIV-1 Nucleoside-Modified mRNA Vaccines in Rabbits and Rhesus Macaques.",
+      "journal": "Molecular therapy. Nucleic acids",
+      "year": 2024,
+      "citationCount": 98,
+      "doi": "10.1016/j.omtn.2019.03.003",
+      "sourceUrl": "https://doi.org/10.1016/j.omtn.2019.03.003",
+      "verified": true
+    },
+    {
+      "title": "Platelet factor 4 binds to low-density lipoprotein receptors and disrupts the endocytic itinerary, resulting in retention of low-density lipoprotein on the cell surface",
+      "journal": "Blood",
+      "year": 2002,
+      "citationCount": 96,
+      "doi": "10.1182/blood.v99.10.3613",
+      "sourceUrl": "https://doi.org/10.1182/blood.v99.10.3613",
+      "verified": true
+    },
+    {
+      "title": "The Emerging Role of In&#xa0;Vitro-Transcribed mRNA in Adoptive T Cell Immunotherapy.",
+      "journal": "Molecular therapy : the journal of the American Society of Gene Therapy",
+      "year": 2020,
+      "citationCount": 95,
+      "doi": "10.1016/j.ymthe.2019.01.018",
+      "sourceUrl": "https://doi.org/10.1016/j.ymthe.2019.01.018",
+      "verified": true
+    },
+    {
+      "title": "Rapid method for screening and cloning cDNAs generated in differential mRNA display: application of Northern blot for affinity capturing of cDNAs",
+      "journal": "Nucleic Acids Research",
+      "year": 1994,
+      "citationCount": 92,
+      "doi": "10.1093/nar/22.9.1764",
+      "sourceUrl": "https://doi.org/10.1093/nar/22.9.1764",
+      "verified": true
+    },
+    {
+      "title": "gp340 Expressed on Human Genital Epithelia Binds HIV-1 Envelope Protein and Facilitates Viral Transmission",
+      "journal": "The Journal of Immunology",
+      "year": 2007,
+      "citationCount": 86,
+      "doi": "10.4049/jimmunol.179.5.3126",
+      "sourceUrl": "https://doi.org/10.4049/jimmunol.179.5.3126",
+      "verified": true
+    },
+    {
+      "title": "Overexpression of urokinase receptor in mammalian cells following administration of the in vitro transcribed encoding mRNA",
+      "journal": "Gene Therapy",
+      "year": 1999,
+      "citationCount": 85,
+      "doi": "10.1038/sj.gt.3300930",
+      "sourceUrl": "https://doi.org/10.1038/sj.gt.3300930",
+      "verified": true
+    },
+    {
+      "title": "Overexpression of urokinase receptor increases matrix invasion without altering cell migration in a human osteosarcoma cell line.",
+      "journal": "PubMed",
+      "year": 1993,
+      "citationCount": 81,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1557341375",
+      "verified": true
+    },
+    {
+      "title": "Exogenous siRNA Mediates Sequence-Independent Gene Suppression by Signaling through Toll-Like Receptor 3",
+      "journal": "Cells Tissues Organs",
+      "year": 2004,
+      "citationCount": 75,
+      "doi": "10.1159/000079987",
+      "sourceUrl": "https://doi.org/10.1159/000079987",
+      "verified": true
+    },
+    {
+      "title": "Expression of very low density lipoprotein receptor in the vascular wall. Analysis of human tissues by in situ hybridization and immunohistochemistry.",
+      "journal": "PubMed",
+      "year": 1996,
+      "citationCount": 73,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W261035629",
+      "verified": true
+    },
+    {
+      "title": "Neutrophil depletion diminishes monocyte infiltration and improves functional outcome after experimental intracerebral hemorrhage.",
+      "journal": "Acta neurochirurgica. Supplement",
+      "year": 2011,
+      "citationCount": 68,
+      "doi": "10.1007/978-3-7091-0693-8_29",
+      "sourceUrl": "https://doi.org/10.1007/978-3-7091-0693-8_29",
+      "verified": true
+    },
+    {
+      "title": "Lipid nanoparticles enhance the efficacy of mRNA and protein subunit vaccines by inducing robust T follicular helper cell and humoral responses.",
+      "journal": "Immunity",
+      "year": 2024,
+      "citationCount": 53,
+      "doi": "10.1016/j.immuni.2022.05.007",
+      "sourceUrl": "https://doi.org/10.1016/j.immuni.2022.05.007",
+      "verified": true
+    },
+    {
+      "title": "Nucleoside-modified VEGFC mRNA induces organ-specific lymphatic growth and reverses experimental lymphedema.",
+      "journal": "Nature communications",
+      "year": 2021,
+      "citationCount": 52,
+      "doi": "10.1038/s41467-021-23546-6",
+      "sourceUrl": "https://doi.org/10.1038/s41467-021-23546-6",
+      "verified": true
+    },
+    {
+      "title": "In&#xa0;vitro-Transcribed mRNA Therapeutics: Out of the Shadows and Into the Spotlight.",
+      "journal": "Molecular therapy : the journal of the American Society of Gene Therapy",
+      "year": 2020,
+      "citationCount": 48,
+      "doi": "10.1016/j.ymthe.2019.03.009",
+      "sourceUrl": "https://doi.org/10.1016/j.ymthe.2019.03.009",
+      "verified": true
+    },
+    {
+      "title": "Development of GPC2-directed chimeric antigen receptors using mRNA for pediatric brain tumors.",
+      "journal": "Journal for immunotherapy of cancer",
+      "year": 2022,
+      "citationCount": 44,
+      "doi": "10.1136/jitc-2021-004450",
+      "sourceUrl": "https://doi.org/10.1136/jitc-2021-004450",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:16.000Z",
+  "openalexId": "https://openalex.org/A5030598859"
 }

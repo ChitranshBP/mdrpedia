@@ -1,31 +1,493 @@
 {
   "fullName": "Feng Zhang",
   "slug": "feng-zhang",
-  "title": "MD, PhD",
-  "specialty": "CRISPR Gene Editing",
+  "title": "MD",
+  "specialty": "CRISPR Engineering",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23001a4d\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%2300aaff\" text-anchor=\"middle\" dy=\".3em\">FZ</text></svg>",
-  "tier": "ELITE",
-  "rankingScore": 34,
-  "hIndex": 136,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 205,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 16500,
+  "livesSaved": 0,
+  "biography": "Feng Zhang is a Chinese-born American biochemist and neuroscientist. He is the James and Patricia Poitras Professor of Neuroscience at the Massachusetts Institute of Technology and a core institute member of the Broad Institute of MIT and Harvard. He also holds appointments as an investigator at the McGovern Institute for Brain Research, as a professor in the MIT Department of Brain and Cognitive Sciences and Department of Biological Engineering, and as an HHMI investigator. Zhang is most well known for his central role in the development of optogenetics and CRISPR technologies. In 2025, he was awarded National Medal of Technology and Innovation, the highest honor the United States confers for achievements related to technological progress.",
+  "aiSummary": "Feng Zhang is a crispr engineering specialist with an H-index of 205 at Broad Institute (Faculty). Has been published in Nature Chemistry, Nature Reviews Materials, Energy & Environmental Science. Based in United States.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/2/27/Fzhang_at_summit.jpg",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Broad Institute"
-    }
-  ],
-  "bio": "Feng Zhang is a pioneer in CRISPR Gene Editing at Broad Institute, USA. With a D-Index of 136 and over 165,000 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Broad Institute",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "CRISPR Engineering"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "The chemistry of two-dimensional layered transition metal dichalcogenide nanosheets",
+      "journal": "Nature Chemistry",
+      "year": 2013,
+      "citationCount": 9552,
+      "doi": "10.1038/nchem.1589",
+      "sourceUrl": "https://doi.org/10.1038/nchem.1589",
+      "verified": true
+    },
+    {
+      "title": "Recent Advances in Ultrathin Two-Dimensional Nanomaterials",
+      "journal": "Chemical Reviews",
+      "year": 2017,
+      "citationCount": 4918,
+      "doi": "10.1021/acs.chemrev.6b00558",
+      "sourceUrl": "https://doi.org/10.1021/acs.chemrev.6b00558",
+      "verified": true
+    },
+    {
+      "title": "Graphene-based composites",
+      "journal": "Chemical Society Reviews",
+      "year": 2011,
+      "citationCount": 3794,
+      "doi": "10.1039/c1cs15078b",
+      "sourceUrl": "https://doi.org/10.1039/c1cs15078b",
+      "verified": true
+    },
+    {
+      "title": "Graphene‐Based Materials: Synthesis, Characterization, Properties, and Applications",
+      "journal": "Small",
+      "year": 2011,
+      "citationCount": 2521,
+      "doi": "10.1002/smll.201002009",
+      "sourceUrl": "https://doi.org/10.1002/smll.201002009",
+      "verified": true
+    },
+    {
+      "title": "Imparting functionality to a metal–organic framework material by controlled nanoparticle encapsulation",
+      "journal": "Nature Chemistry",
+      "year": 2012,
+      "citationCount": 2102,
+      "doi": "10.1038/nchem.1272",
+      "sourceUrl": "https://doi.org/10.1038/nchem.1272",
+      "verified": true
+    },
+    {
+      "title": "Ultrathin Two-Dimensional Nanomaterials",
+      "journal": "ACS Nano",
+      "year": 2015,
+      "citationCount": 2093,
+      "doi": "10.1021/acsnano.5b05040",
+      "sourceUrl": "https://doi.org/10.1021/acsnano.5b05040",
+      "verified": true
+    },
+    {
+      "title": "Metal dichalcogenide nanosheets: preparation, properties and applications",
+      "journal": "Chemical Society Reviews",
+      "year": 2013,
+      "citationCount": 2001,
+      "doi": "10.1039/c2cs35387c",
+      "sourceUrl": "https://doi.org/10.1039/c2cs35387c",
+      "verified": true
+    },
+    {
+      "title": "Single‐Layer Semiconducting Nanosheets: High‐Yield Preparation and Device Fabrication",
+      "journal": "Angewandte Chemie International Edition",
+      "year": 2011,
+      "citationCount": 1736,
+      "doi": "10.1002/anie.201106004",
+      "sourceUrl": "https://doi.org/10.1002/anie.201106004",
+      "verified": true
+    },
+    {
+      "title": "Preparation and Applications of Mechanically Exfoliated Single-Layer and Multilayer MoS<sub>2</sub>and WSe<sub>2</sub>Nanosheets",
+      "journal": "Accounts of Chemical Research",
+      "year": 2014,
+      "citationCount": 1599,
+      "doi": "10.1021/ar4002312",
+      "sourceUrl": "https://doi.org/10.1021/ar4002312",
+      "verified": true
+    },
+    {
+      "title": "3D Graphene–Cobalt Oxide Electrode for High-Performance Supercapacitor and Enzymeless Glucose Detection",
+      "journal": "ACS Nano",
+      "year": 2012,
+      "citationCount": 1588,
+      "doi": "10.1021/nn300097q",
+      "sourceUrl": "https://doi.org/10.1021/nn300097q",
+      "verified": true
+    },
+    {
+      "title": "Two-dimensional transition metal dichalcogenide nanosheet-based composites",
+      "journal": "Chemical Society Reviews",
+      "year": 2014,
+      "citationCount": 1579,
+      "doi": "10.1039/c4cs00182f",
+      "sourceUrl": "https://doi.org/10.1039/c4cs00182f",
+      "verified": true
+    },
+    {
+      "title": "Two-dimensional semiconductors for transistors",
+      "journal": "Nature Reviews Materials",
+      "year": 2016,
+      "citationCount": 1542,
+      "doi": "10.1038/natrevmats.2016.52",
+      "sourceUrl": "https://doi.org/10.1038/natrevmats.2016.52",
+      "verified": true
+    },
+    {
+      "title": "Fabrication of Single‐ and Multilayer MoS<sub>2</sub> Film‐Based Field‐Effect Transistors for Sensing NO at Room Temperature",
+      "journal": "Small",
+      "year": 2011,
+      "citationCount": 1512,
+      "doi": "10.1002/smll.201101016",
+      "sourceUrl": "https://doi.org/10.1002/smll.201101016",
+      "verified": true
+    },
+    {
+      "title": "2D Transition‐Metal‐Dichalcogenide‐Nanosheet‐Based Composites for Photocatalytic and Electrocatalytic Hydrogen Evolution Reactions",
+      "journal": "Advanced Materials",
+      "year": 2015,
+      "citationCount": 1423,
+      "doi": "10.1002/adma.201503270",
+      "sourceUrl": "https://doi.org/10.1002/adma.201503270",
+      "verified": true
+    },
+    {
+      "title": "Two-dimensional metal–organic framework nanosheets: synthesis and applications",
+      "journal": "Chemical Society Reviews",
+      "year": 2018,
+      "citationCount": 1283,
+      "doi": "10.1039/c8cs00268a",
+      "sourceUrl": "https://doi.org/10.1039/c8cs00268a",
+      "verified": true
+    },
+    {
+      "title": "Synthesis of Few‐Layer MoS<sub>2</sub> Nanosheet‐Coated TiO<sub>2</sub> Nanobelt Heterostructures for Enhanced Photocatalytic Activities",
+      "journal": "Small",
+      "year": 2012,
+      "citationCount": 1245,
+      "doi": "10.1002/smll.201201161",
+      "sourceUrl": "https://doi.org/10.1002/smll.201201161",
+      "verified": true
+    },
+    {
+      "title": "Ultrathin 2D Metal–Organic Framework Nanosheets",
+      "journal": "Advanced Materials",
+      "year": 2015,
+      "citationCount": 1160,
+      "doi": "10.1002/adma.201503648",
+      "sourceUrl": "https://doi.org/10.1002/adma.201503648",
+      "verified": true
+    },
+    {
+      "title": "Single-Layer MoS<sub>2</sub>-Based Nanoprobes for Homogeneous Detection of Biomolecules",
+      "journal": "Journal of the American Chemical Society",
+      "year": 2013,
+      "citationCount": 1049,
+      "doi": "10.1021/ja4019572",
+      "sourceUrl": "https://doi.org/10.1021/ja4019572",
+      "verified": true
+    },
+    {
+      "title": "Preparation of Novel 3D Graphene Networks for Supercapacitor Applications",
+      "journal": "Small",
+      "year": 2011,
+      "citationCount": 1045,
+      "doi": "10.1002/smll.201100990",
+      "sourceUrl": "https://doi.org/10.1002/smll.201100990",
+      "verified": true
+    },
+    {
+      "title": "Ni3S2 nanorods/Ni foam composite electrode with low overpotential for electrocatalytic oxygen evolution",
+      "journal": "Energy & Environmental Science",
+      "year": 2013,
+      "citationCount": 1027,
+      "doi": "10.1039/c3ee41572d",
+      "sourceUrl": "https://doi.org/10.1039/c3ee41572d",
+      "verified": true
+    },
+    {
+      "title": "High phase-purity 1T′-MoS2- and 1T′-MoSe2-layered crystals",
+      "journal": "Nature Chemistry",
+      "year": 2018,
+      "citationCount": 1008,
+      "doi": "10.1038/s41557-018-0035-6",
+      "sourceUrl": "https://doi.org/10.1038/s41557-018-0035-6",
+      "verified": true
+    },
+    {
+      "title": "Hybrid micro-/nano-structures derived from metal–organic frameworks: preparation and applications in energy storage and conversion",
+      "journal": "Chemical Society Reviews",
+      "year": 2017,
+      "citationCount": 996,
+      "doi": "10.1039/c6cs00426a",
+      "sourceUrl": "https://doi.org/10.1039/c6cs00426a",
+      "verified": true
+    },
+    {
+      "title": "Two-Dimensional Metal Nanomaterials: Synthesis, Properties, and Applications",
+      "journal": "Chemical Reviews",
+      "year": 2018,
+      "citationCount": 959,
+      "doi": "10.1021/acs.chemrev.7b00727",
+      "sourceUrl": "https://doi.org/10.1021/acs.chemrev.7b00727",
+      "verified": true
+    },
+    {
+      "title": "The Evolution of Dip‐Pen Nanolithography",
+      "journal": "Angewandte Chemie International Edition",
+      "year": 2003,
+      "citationCount": 934,
+      "doi": "10.1002/anie.200300608",
+      "sourceUrl": "https://doi.org/10.1002/anie.200300608",
+      "verified": true
+    },
+    {
+      "title": "Graphene‐Based Electrodes",
+      "journal": "Advanced Materials",
+      "year": 2012,
+      "citationCount": 914,
+      "doi": "10.1002/adma.201201587",
+      "sourceUrl": "https://doi.org/10.1002/adma.201201587",
+      "verified": true
+    },
+    {
+      "title": "Fabrication of Flexible MoS<sub>2</sub> Thin‐Film Transistor Arrays for Practical Gas‐Sensing Applications",
+      "journal": "Small",
+      "year": 2012,
+      "citationCount": 913,
+      "doi": "10.1002/smll.201201224",
+      "sourceUrl": "https://doi.org/10.1002/smll.201201224",
+      "verified": true
+    },
+    {
+      "title": "Low (Sub-1-Volt) Halfwave Voltage Polymeric Electro-optic Modulators Achieved by Controlling Chromophore Shape",
+      "journal": "Science",
+      "year": 2000,
+      "citationCount": 910,
+      "doi": "10.1126/science.288.5463.119",
+      "sourceUrl": "https://doi.org/10.1126/science.288.5463.119",
+      "verified": true
+    },
+    {
+      "title": "Two-dimensional transition metal dichalcogenide (TMD) nanosheets",
+      "journal": "Chemical Society Reviews",
+      "year": 2015,
+      "citationCount": 906,
+      "doi": "10.1039/c5cs90037a",
+      "sourceUrl": "https://doi.org/10.1039/c5cs90037a",
+      "verified": true
+    },
+    {
+      "title": "Two-dimensional graphene analogues for biomedical applications",
+      "journal": "Chemical Society Reviews",
+      "year": 2014,
+      "citationCount": 890,
+      "doi": "10.1039/c4cs00300d",
+      "sourceUrl": "https://doi.org/10.1039/c4cs00300d",
+      "verified": true
+    },
+    {
+      "title": "Solution-phase epitaxial growth of noble metal nanostructures on dispersible single-layer molybdenum disulfide nanosheets",
+      "journal": "Nature Communications",
+      "year": 2013,
+      "citationCount": 843,
+      "doi": "10.1038/ncomms2472",
+      "sourceUrl": "https://doi.org/10.1038/ncomms2472",
+      "verified": true
+    },
+    {
+      "title": "Recent Development of Advanced Materials with Special Wettability for Selective Oil/Water Separation",
+      "journal": "Small",
+      "year": 2016,
+      "citationCount": 825,
+      "doi": "10.1002/smll.201503685",
+      "sourceUrl": "https://doi.org/10.1002/smll.201503685",
+      "verified": true
+    },
+    {
+      "title": "Three-dimensional graphene materials: preparation, structures and application in supercapacitors",
+      "journal": "Energy & Environmental Science",
+      "year": 2014,
+      "citationCount": 821,
+      "doi": "10.1039/c4ee00050a",
+      "sourceUrl": "https://doi.org/10.1039/c4ee00050a",
+      "verified": true
+    },
+    {
+      "title": "Graphene and Graphene‐Based Materials for Energy Storage Applications",
+      "journal": "Small",
+      "year": 2014,
+      "citationCount": 797,
+      "doi": "10.1002/smll.201303202",
+      "sourceUrl": "https://doi.org/10.1002/smll.201303202",
+      "verified": true
+    },
+    {
+      "title": "Three-Dimensional Graphene Foam Supported Fe<sub>3</sub>O<sub>4</sub> Lithium Battery Anodes with Long Cycle Life and High Rate Capability",
+      "journal": "Nano Letters",
+      "year": 2013,
+      "citationCount": 765,
+      "doi": "10.1021/nl403461n",
+      "sourceUrl": "https://doi.org/10.1021/nl403461n",
+      "verified": true
+    },
+    {
+      "title": "In Situ Synthesis of Metal Nanoparticles on Single-Layer Graphene Oxide and Reduced Graphene Oxide Surfaces",
+      "journal": "The Journal of Physical Chemistry C",
+      "year": 2009,
+      "citationCount": 755,
+      "doi": "10.1021/jp903821n",
+      "sourceUrl": "https://doi.org/10.1021/jp903821n",
+      "verified": true
+    },
+    {
+      "title": "Graphene-based electronic sensors",
+      "journal": "Chemical Science",
+      "year": 2012,
+      "citationCount": 737,
+      "doi": "10.1039/c2sc20205k",
+      "sourceUrl": "https://doi.org/10.1039/c2sc20205k",
+      "verified": true
+    },
+    {
+      "title": "Phase engineering of nanomaterials",
+      "journal": "Nature Reviews Chemistry",
+      "year": 2020,
+      "citationCount": 718,
+      "doi": "10.1038/s41570-020-0173-4",
+      "sourceUrl": "https://doi.org/10.1038/s41570-020-0173-4",
+      "verified": true
+    },
+    {
+      "title": "Interdiffusion Reaction-Assisted Hybridization of Two-Dimensional Metal–Organic Frameworks and Ti<sub>3</sub>C<sub>2</sub>T<sub><i>x</i></sub> Nanosheets for Electrocatalytic Oxygen Evolution",
+      "journal": "ACS Nano",
+      "year": 2017,
+      "citationCount": 713,
+      "doi": "10.1021/acsnano.7b01409",
+      "sourceUrl": "https://doi.org/10.1021/acsnano.7b01409",
+      "verified": true
+    },
+    {
+      "title": "A High‐Rate and Stable Quasi‐Solid‐State Zinc‐Ion Battery with Novel 2D Layered Zinc Orthovanadate Array",
+      "journal": "Advanced Materials",
+      "year": 2018,
+      "citationCount": 697,
+      "doi": "10.1002/adma.201803181",
+      "sourceUrl": "https://doi.org/10.1002/adma.201803181",
+      "verified": true
+    },
+    {
+      "title": "Black Phosphorus Quantum Dots",
+      "journal": "Angewandte Chemie International Edition",
+      "year": 2015,
+      "citationCount": 686,
+      "doi": "10.1002/anie.201409400",
+      "sourceUrl": "https://doi.org/10.1002/anie.201409400",
+      "verified": true
+    },
+    {
+      "title": "Direct Electrochemical Reduction of Single-Layer Graphene Oxide and Subsequent Functionalization with Glucose Oxidase",
+      "journal": "The Journal of Physical Chemistry C",
+      "year": 2009,
+      "citationCount": 674,
+      "doi": "10.1021/jp906348x",
+      "sourceUrl": "https://doi.org/10.1021/jp906348x",
+      "verified": true
+    },
+    {
+      "title": "Synthesis of Two-Dimensional CoS<sub>1.097</sub>/Nitrogen-Doped Carbon Nanocomposites Using Metal–Organic Framework Nanosheets as Precursors for Supercapacitor Application",
+      "journal": "Journal of the American Chemical Society",
+      "year": 2016,
+      "citationCount": 667,
+      "doi": "10.1021/jacs.6b02540",
+      "sourceUrl": "https://doi.org/10.1021/jacs.6b02540",
+      "verified": true
+    },
+    {
+      "title": "One‐pot Synthesis of CdS Nanocrystals Hybridized with Single‐Layer Transition‐Metal Dichalcogenide Nanosheets for Efficient Photocatalytic Hydrogen Evolution",
+      "journal": "Angewandte Chemie International Edition",
+      "year": 2014,
+      "citationCount": 666,
+      "doi": "10.1002/anie.201410172",
+      "sourceUrl": "https://doi.org/10.1002/anie.201410172",
+      "verified": true
+    },
+    {
+      "title": "Synthesis of hexagonal close-packed gold nanostructures",
+      "journal": "Nature Communications",
+      "year": 2011,
+      "citationCount": 661,
+      "doi": "10.1038/ncomms1291",
+      "sourceUrl": "https://doi.org/10.1038/ncomms1291",
+      "verified": true
+    },
+    {
+      "title": "Electrochemical Deposition of ZnO Nanorods on Transparent Reduced Graphene Oxide Electrodes for Hybrid Solar Cells",
+      "journal": "Small",
+      "year": 2009,
+      "citationCount": 660,
+      "doi": "10.1002/smll.200901968",
+      "sourceUrl": "https://doi.org/10.1002/smll.200901968",
+      "verified": true
+    },
+    {
+      "title": "Carbon Fiber Aerogel Made from Raw Cotton: A Novel, Efficient and Recyclable Sorbent for Oils and Organic Solvents",
+      "journal": "Advanced Materials",
+      "year": 2013,
+      "citationCount": 659,
+      "doi": "10.1002/adma.201302435",
+      "sourceUrl": "https://doi.org/10.1002/adma.201302435",
+      "verified": true
+    },
+    {
+      "title": "Solution‐Processed Two‐Dimensional MoS<sub>2</sub> Nanosheets: Preparation, Hybridization, and Applications",
+      "journal": "Angewandte Chemie International Edition",
+      "year": 2016,
+      "citationCount": 655,
+      "doi": "10.1002/anie.201509933",
+      "sourceUrl": "https://doi.org/10.1002/anie.201509933",
+      "verified": true
+    },
+    {
+      "title": "Nitrogen and Sulfur Codoped Graphene: Multifunctional Electrode Materials for High‐Performance Li‐Ion Batteries and Oxygen Reduction Reaction",
+      "journal": "Advanced Materials",
+      "year": 2014,
+      "citationCount": 653,
+      "doi": "10.1002/adma.201401427",
+      "sourceUrl": "https://doi.org/10.1002/adma.201401427",
+      "verified": true
+    },
+    {
+      "title": "Mechanical Exfoliation and Characterization of Single‐ and Few‐Layer Nanosheets of WSe<sub>2</sub>, TaS<sub>2</sub>, and TaSe<sub>2</sub>",
+      "journal": "Small",
+      "year": 2012,
+      "citationCount": 636,
+      "doi": "10.1002/smll.201202919",
+      "sourceUrl": "https://doi.org/10.1002/smll.201202919",
+      "verified": true
+    },
+    {
+      "title": "Wet-chemical synthesis and applications of non-layer structured two-dimensional nanomaterials",
+      "journal": "Nature Communications",
+      "year": 2015,
+      "citationCount": 629,
+      "doi": "10.1038/ncomms8873",
+      "sourceUrl": "https://doi.org/10.1038/ncomms8873",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:15.000Z",
+  "openalexId": "https://openalex.org/A5100408669"
 }

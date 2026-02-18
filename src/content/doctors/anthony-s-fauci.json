@@ -1,31 +1,496 @@
 {
   "fullName": "Anthony S. Fauci",
   "slug": "anthony-s-fauci",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Infectious Diseases",
+  "subSpecialty": null,
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23001a4d\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%2300aaff\" text-anchor=\"middle\" dy=\".3em\">AS</text></svg>",
-  "tier": "ELITE",
-  "rankingScore": 32,
-  "hIndex": 127,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 210,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 21000,
+  "livesSaved": 0,
+  "biography": "Anthony Stephen Fauci is an American physician-scientist and immunologist who served as the director of the National Institute of Allergy and Infectious Diseases (NIAID) from 1984 to 2022, and the chief medical advisor to the president from 2021 to 2022. Fauci was one of the world's most frequently cited scientists across all scientific journals from 1983 to 2002. In 2008, President George W. Bush awarded him the Presidential Medal of Freedom, the highest civilian award in the United States, for his work on the AIDS relief program PEPFAR.",
+  "aiSummary": "Anthony S. Fauci is a infectious diseases specialist with an H-index of 210 at National Institutes of Health (Faculty). Has been published in JAMA, Nature, New England Journal of Medicine. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
+  "hasInvention": false,
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Anthony_Fauci_in_2023_02_%28cropped%29.jpg/330px-Anthony_Fauci_in_2023_02_%28cropped%29.jpg",
+  "galleryUrls": [],
+  "npiNumber": null,
+  "orcidId": null,
+  "medicalSpecialty": [
+    "Infectious Diseases"
+  ],
+  "knowsAbout": [],
   "affiliations": [
     {
-      "hospitalName": "National Institutes of Health"
+      "hospitalName": "National Institutes of Health",
+      "role": "Faculty",
+      "hospitalUrl": "#"
     }
   ],
-  "bio": "Anthony S. Fauci is a pioneer in Infectious Diseases at National Institutes of Health, USA. With a D-Index of 127 and over 210,000 citations, they are among the world's most influential researchers.",
+  "citations": [
+    {
+      "title": "The American College of Rheumatology 1990 criteria for the classification of giant cell arteritis",
+      "journal": "Arthritis & Rheumatism",
+      "year": 1990,
+      "citationCount": 2512,
+      "doi": "10.1002/art.1780330810",
+      "sourceUrl": "https://doi.org/10.1002/art.1780330810",
+      "verified": true
+    },
+    {
+      "title": "The American College of Rheumatology 1990 criteria for the classification of takayasu arteritis",
+      "journal": "Arthritis & Rheumatism",
+      "year": 1990,
+      "citationCount": 2244,
+      "doi": "10.1002/art.1780330811",
+      "sourceUrl": "https://doi.org/10.1002/art.1780330811",
+      "verified": true
+    },
+    {
+      "title": "Coronavirus Infections—More Than Just the Common Cold",
+      "journal": "JAMA",
+      "year": 2020,
+      "citationCount": 2239,
+      "doi": "10.1001/jama.2020.0757",
+      "sourceUrl": "https://doi.org/10.1001/jama.2020.0757",
+      "verified": true
+    },
+    {
+      "title": "The American College of Rheumatology 1990 criteria for the classification of churg‐strauss syndrome (allergic granulomatosis and angiitis)",
+      "journal": "Arthritis & Rheumatism",
+      "year": 1990,
+      "citationCount": 2189,
+      "doi": "10.1002/art.1780330806",
+      "sourceUrl": "https://doi.org/10.1002/art.1780330806",
+      "verified": true
+    },
+    {
+      "title": "The challenge of emerging and re-emerging infectious diseases",
+      "journal": "Nature",
+      "year": 2004,
+      "citationCount": 2084,
+      "doi": "10.1038/nature02759",
+      "sourceUrl": "https://doi.org/10.1038/nature02759",
+      "verified": true
+    },
+    {
+      "title": "Covid-19 — Navigating the Uncharted",
+      "journal": "New England Journal of Medicine",
+      "year": 2020,
+      "citationCount": 2059,
+      "doi": "10.1056/nejme2002387",
+      "sourceUrl": "https://doi.org/10.1056/nejme2002387",
+      "verified": true
+    },
+    {
+      "title": "Wegener's Granulomatosis: Prospective Clinical and Therapeutic Experience With 85 Patients for 21 Years",
+      "journal": "Annals of Internal Medicine",
+      "year": 1983,
+      "citationCount": 2009,
+      "doi": "10.7326/0003-4819-98-1-76",
+      "sourceUrl": "https://doi.org/10.7326/0003-4819-98-1-76",
+      "verified": true
+    },
+    {
+      "title": "Presence of an inducible HIV-1 latent reservoir during highly active antiretroviral therapy",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1997,
+      "citationCount": 1972,
+      "doi": "10.1073/pnas.94.24.13193",
+      "sourceUrl": "https://doi.org/10.1073/pnas.94.24.13193",
+      "verified": true
+    },
+    {
+      "title": "The American College of Rheumatology 1990 criteria for the classification of wegener's granulomatosis",
+      "journal": "Arthritis & Rheumatism",
+      "year": 1990,
+      "citationCount": 1959,
+      "doi": "10.1002/art.1780330807",
+      "sourceUrl": "https://doi.org/10.1002/art.1780330807",
+      "verified": true
+    },
+    {
+      "title": "HIV infection is active and progressive in lymphoid tissue during the clinically latent stage of disease",
+      "journal": "Nature",
+      "year": 1993,
+      "citationCount": 1826,
+      "doi": "10.1038/362355a0",
+      "sourceUrl": "https://doi.org/10.1038/362355a0",
+      "verified": true
+    },
+    {
+      "title": "Detection of AIDS Virus in Macrophages in Brain Tissue from AIDS Patients with Encephalopathy",
+      "journal": "Science",
+      "year": 1986,
+      "citationCount": 1694,
+      "doi": "10.1126/science.3016903",
+      "sourceUrl": "https://doi.org/10.1126/science.3016903",
+      "verified": true
+    },
+    {
+      "title": "Predominant Role of Bacterial Pneumonia as a Cause of Death in Pandemic Influenza: Implications for Pandemic Influenza Preparedness",
+      "journal": "The Journal of Infectious Diseases",
+      "year": 2008,
+      "citationCount": 1619,
+      "doi": "10.1086/591708",
+      "sourceUrl": "https://doi.org/10.1086/591708",
+      "verified": true
+    },
+    {
+      "title": "Abnormalities of B-Cell Activation and Immunoregulation in Patients with the Acquired Immunodeficiency Syndrome",
+      "journal": "New England Journal of Medicine",
+      "year": 1983,
+      "citationCount": 1606,
+      "doi": "10.1056/nejm198308253090803",
+      "sourceUrl": "https://doi.org/10.1056/nejm198308253090803",
+      "verified": true
+    },
+    {
+      "title": "Production of transforming growth factor beta by human T lymphocytes and its potential role in the regulation of T cell growth.",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 1986,
+      "citationCount": 1587,
+      "doi": "10.1084/jem.163.5.1037",
+      "sourceUrl": "https://doi.org/10.1084/jem.163.5.1037",
+      "verified": true
+    },
+    {
+      "title": "The Human Immunodeficiency Virus: Infectivity and Mechanisms of Pathogenesis",
+      "journal": "Science",
+      "year": 1988,
+      "citationCount": 1491,
+      "doi": "10.1126/science.3277274",
+      "sourceUrl": "https://doi.org/10.1126/science.3277274",
+      "verified": true
+    },
+    {
+      "title": "Ending the HIV Epidemic",
+      "journal": "JAMA",
+      "year": 2019,
+      "citationCount": 1429,
+      "doi": "10.1001/jama.2019.1343",
+      "sourceUrl": "https://doi.org/10.1001/jama.2019.1343",
+      "verified": true
+    },
+    {
+      "title": "The Spectrum of Vasculitis",
+      "journal": "Annals of Internal Medicine",
+      "year": 1978,
+      "citationCount": 1204,
+      "doi": "10.7326/0003-4819-89-5-660",
+      "sourceUrl": "https://doi.org/10.7326/0003-4819-89-5-660",
+      "verified": true
+    },
+    {
+      "title": "The Immunopathogenesis of Human Immunodeficiency Virus Infection",
+      "journal": "New England Journal of Medicine",
+      "year": 1993,
+      "citationCount": 1177,
+      "doi": "10.1056/nejm199302043280508",
+      "sourceUrl": "https://doi.org/10.1056/nejm199302043280508",
+      "verified": true
+    },
+    {
+      "title": "Zika Virus in the Americas — Yet Another Arbovirus Threat",
+      "journal": "New England Journal of Medicine",
+      "year": 2016,
+      "citationCount": 1095,
+      "doi": "10.1056/nejmp1600297",
+      "sourceUrl": "https://doi.org/10.1056/nejmp1600297",
+      "verified": true
+    },
+    {
+      "title": "Glucocorticosteroid Therapy: Mechanisms of Action and Clinical Considerations",
+      "journal": "Annals of Internal Medicine",
+      "year": 1976,
+      "citationCount": 1042,
+      "doi": "10.7326/0003-4819-84-3-304",
+      "sourceUrl": "https://doi.org/10.7326/0003-4819-84-3-304",
+      "verified": true
+    },
+    {
+      "title": "Cytokine-Induced Expression of HIV-1 in a Chronically Infected Promonocyte Cell Line",
+      "journal": "Science",
+      "year": 1987,
+      "citationCount": 922,
+      "doi": "10.1126/science.3313729",
+      "sourceUrl": "https://doi.org/10.1126/science.3313729",
+      "verified": true
+    },
+    {
+      "title": "Corticosteroid‐Mediated Immunoregulation in Man",
+      "journal": "Immunological Reviews",
+      "year": 1982,
+      "citationCount": 891,
+      "doi": "10.1111/j.1600-065x.1982.tb00431.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1600-065x.1982.tb00431.x",
+      "verified": true
+    },
+    {
+      "title": "Evidence for HIV-associated B cell exhaustion in a dysfunctional memory B cell compartment in HIV-infected viremic individuals",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 2008,
+      "citationCount": 888,
+      "doi": "10.1084/jem.20072683",
+      "sourceUrl": "https://doi.org/10.1084/jem.20072683",
+      "verified": true
+    },
+    {
+      "title": "Acquired Immunodeficiency Syndrome: Epidemiologic, Clinical, Immunologic, and Therapeutic Considerations",
+      "journal": "Annals of Internal Medicine",
+      "year": 1984,
+      "citationCount": 852,
+      "doi": "10.7326/0003-4819-100-1-92",
+      "sourceUrl": "https://doi.org/10.7326/0003-4819-100-1-92",
+      "verified": true
+    },
+    {
+      "title": "The American College of Rheumatology 1990 criteria for the classification of henoch‐schönlein purpura",
+      "journal": "Arthritis & Rheumatism",
+      "year": 1990,
+      "citationCount": 849,
+      "doi": "10.1002/art.1780330809",
+      "sourceUrl": "https://doi.org/10.1002/art.1780330809",
+      "verified": true
+    },
+    {
+      "title": "HIV-1 and T cell dynamics after interruption of highly active antiretroviral therapy (HAART) in patients with a history of sustained viral suppression",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1999,
+      "citationCount": 849,
+      "doi": "10.1073/pnas.96.26.15109",
+      "sourceUrl": "https://doi.org/10.1073/pnas.96.26.15109",
+      "verified": true
+    },
+    {
+      "title": "The Idiopathic Hypereosinophilic Syndrome",
+      "journal": "Annals of Internal Medicine",
+      "year": 1982,
+      "citationCount": 837,
+      "doi": "10.7326/0003-4819-97-1-78",
+      "sourceUrl": "https://doi.org/10.7326/0003-4819-97-1-78",
+      "verified": true
+    },
+    {
+      "title": "Early establishment of a pool of latently infected, resting CD4 <sup>+</sup> T cells during primary HIV-1 infection",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1998,
+      "citationCount": 828,
+      "doi": "10.1073/pnas.95.15.8869",
+      "sourceUrl": "https://doi.org/10.1073/pnas.95.15.8869",
+      "verified": true
+    },
+    {
+      "title": "WEGENERʼS GRANULOMATOSIS: STUDIES IN EIGHTEEN PATIENTS AND A REVIEW OF THE LITERATURE",
+      "journal": "Medicine",
+      "year": 1973,
+      "citationCount": 793,
+      "doi": "10.1097/00005792-197311000-00002",
+      "sourceUrl": "https://doi.org/10.1097/00005792-197311000-00002",
+      "verified": true
+    },
+    {
+      "title": "Multifactorial Nature of Human Immunodeficiency Virus Disease: Implications for Therapy",
+      "journal": "Science",
+      "year": 1993,
+      "citationCount": 785,
+      "doi": "10.1126/science.8235617",
+      "sourceUrl": "https://doi.org/10.1126/science.8235617",
+      "verified": true
+    },
+    {
+      "title": "Efficient isolation and propagation of human immunodeficiency virus on recombinant colony-stimulating factor 1-treated monocytes.",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 1988,
+      "citationCount": 779,
+      "doi": "10.1084/jem.167.4.1428",
+      "sourceUrl": "https://doi.org/10.1084/jem.167.4.1428",
+      "verified": true
+    },
+    {
+      "title": "Tumor necrosis factor alpha activates human immunodeficiency virus type 1 through induction of nuclear factor binding to the NF-kappa B sites in the long terminal repeat.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1989,
+      "citationCount": 771,
+      "doi": "10.1073/pnas.86.15.5974",
+      "sourceUrl": "https://doi.org/10.1073/pnas.86.15.5974",
+      "verified": true
+    },
+    {
+      "title": "Qualitative Analysis of Immune Function in Patients with the Acquired Immunodeficiency Syndrome",
+      "journal": "New England Journal of Medicine",
+      "year": 1985,
+      "citationCount": 731,
+      "doi": "10.1056/nejm198507113130204",
+      "sourceUrl": "https://doi.org/10.1056/nejm198507113130204",
+      "verified": true
+    },
+    {
+      "title": "Studies in Subjects with Long-Term Nonprogressive Human Immunodeficiency Virus Infection",
+      "journal": "New England Journal of Medicine",
+      "year": 1995,
+      "citationCount": 729,
+      "doi": "10.1056/nejm199501263320402",
+      "sourceUrl": "https://doi.org/10.1056/nejm199501263320402",
+      "verified": true
+    },
+    {
+      "title": "The Reservoir for HIV-1 in Human Peripheral Blood Is a T Cell That Maintains Expression of CD4",
+      "journal": "Science",
+      "year": 1989,
+      "citationCount": 721,
+      "doi": "10.1126/science.2665081",
+      "sourceUrl": "https://doi.org/10.1126/science.2665081",
+      "verified": true
+    },
+    {
+      "title": "Emerging Pandemic Diseases: How We Got to COVID-19",
+      "journal": "Cell",
+      "year": 2020,
+      "citationCount": 720,
+      "doi": "10.1016/j.cell.2020.08.021",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2020.08.021",
+      "verified": true
+    },
+    {
+      "title": "Tumor necrosis factor alpha induces expression of human immunodeficiency virus in a chronically infected T-cell clone.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1989,
+      "citationCount": 716,
+      "doi": "10.1073/pnas.86.7.2365",
+      "sourceUrl": "https://doi.org/10.1073/pnas.86.7.2365",
+      "verified": true
+    },
+    {
+      "title": "HIV Viral Load and Transmissibility of HIV Infection",
+      "journal": "JAMA",
+      "year": 2019,
+      "citationCount": 700,
+      "doi": "10.1001/jama.2018.21167",
+      "sourceUrl": "https://doi.org/10.1001/jama.2018.21167",
+      "verified": true
+    },
+    {
+      "title": "The American College of Rheumatology 1990 criteria for the classification of vasculitis: Introduction",
+      "journal": "Arthritis & Rheumatism",
+      "year": 1990,
+      "citationCount": 689,
+      "doi": "10.1002/art.1780330802",
+      "sourceUrl": "https://doi.org/10.1002/art.1780330802",
+      "verified": true
+    },
+    {
+      "title": "B cells in HIV infection and disease",
+      "journal": "Nature reviews. Immunology",
+      "year": 2009,
+      "citationCount": 668,
+      "doi": "10.1038/nri2524",
+      "sourceUrl": "https://doi.org/10.1038/nri2524",
+      "verified": true
+    },
+    {
+      "title": "NIH Consensus Conference. Helicobacter pylori in peptic ulcer disease. NIH Consensus Development Panel on Helicobacter pylori in Peptic Ulcer Disease",
+      "journal": "JAMA",
+      "year": 1994,
+      "citationCount": 662,
+      "doi": "10.1001/jama.272.1.65",
+      "sourceUrl": "https://doi.org/10.1001/jama.272.1.65",
+      "verified": true
+    },
+    {
+      "title": "Emerging Infectious Diseases: Threats to Human Health and Global Stability",
+      "journal": "PLoS Pathogens",
+      "year": 2013,
+      "citationCount": 628,
+      "doi": "10.1371/journal.ppat.1003467",
+      "sourceUrl": "https://doi.org/10.1371/journal.ppat.1003467",
+      "verified": true
+    },
+    {
+      "title": "The Effect of In Vivo Hydrocortisone on Subpopulations of Human Lymphocytes",
+      "journal": "Journal of Clinical Investigation",
+      "year": 1974,
+      "citationCount": 609,
+      "doi": "10.1172/jci107544",
+      "sourceUrl": "https://doi.org/10.1172/jci107544",
+      "verified": true
+    },
+    {
+      "title": "Circulating CD8+ cytotoxic T lymphocytes specific for HTLV-I pX in patients with HTLV-I associated neurological disease",
+      "journal": "Nature",
+      "year": 1990,
+      "citationCount": 608,
+      "doi": "10.1038/348245a0",
+      "sourceUrl": "https://doi.org/10.1038/348245a0",
+      "verified": true
+    },
+    {
+      "title": "Antimicrobial Resistance",
+      "journal": "JAMA",
+      "year": 2016,
+      "citationCount": 600,
+      "doi": "10.1001/jama.2016.11764",
+      "sourceUrl": "https://doi.org/10.1001/jama.2016.11764",
+      "verified": true
+    },
+    {
+      "title": "The American College of Rheumatology 1990 criteria for the classification of vasculitis: Summary",
+      "journal": "Arthritis & Rheumatism",
+      "year": 1990,
+      "citationCount": 592,
+      "doi": "10.1002/art.1780330812",
+      "sourceUrl": "https://doi.org/10.1002/art.1780330812",
+      "verified": true
+    },
+    {
+      "title": "Persistence of HIV in Gut‐Associated Lymphoid Tissue despite Long‐Term Antiretroviral Therapy",
+      "journal": "The Journal of Infectious Diseases",
+      "year": 2008,
+      "citationCount": 557,
+      "doi": "10.1086/527324",
+      "sourceUrl": "https://doi.org/10.1086/527324",
+      "verified": true
+    },
+    {
+      "title": "HIV-1 envelope protein binds to and signals through integrin α4β7, the gut mucosal homing receptor for peripheral T cells",
+      "journal": "Nature Immunology",
+      "year": 2008,
+      "citationCount": 546,
+      "doi": "10.1038/ni1566",
+      "sourceUrl": "https://doi.org/10.1038/ni1566",
+      "verified": true
+    },
+    {
+      "title": "A strategic approach to COVID-19 vaccine R&amp;D",
+      "journal": "Science",
+      "year": 2020,
+      "citationCount": 535,
+      "doi": "10.1126/science.abc5312",
+      "sourceUrl": "https://doi.org/10.1126/science.abc5312",
+      "verified": true
+    },
+    {
+      "title": "The 1918 Influenza Pandemic: Insights for the 21st Century",
+      "journal": "The Journal of Infectious Diseases",
+      "year": 2007,
+      "citationCount": 530,
+      "doi": "10.1086/511989",
+      "sourceUrl": "https://doi.org/10.1086/511989",
+      "verified": true
+    }
+  ],
   "awards": [],
-  "education": [],
-  "socialMedia": {},
-  "status": "LIVING"
+  "timeline": [],
+  "mentors": [],
+  "students": [],
+  "lastFixedAt": "2026-02-16T05:45:14.000Z",
+  "openalexId": "https://openalex.org/A5031736334"
 }

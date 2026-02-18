@@ -1,21 +1,33 @@
-
 export const prerender = false;
 
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { getCollection } from 'astro:content';
-import { syncDoctorPapers } from '../../../lib/pubmed-sync';
+import { syncDoctorPapers, type PubMedPaper } from '../../../lib/pubmed-sync';
 import { calculateMDRScore } from '../../../lib/mdr-score-engine';
 import { Tier } from '../../../lib/types';
 
 import { systemConfig } from '../../../lib/config-store';
 import { requireSuperAdmin } from '../../../lib/rbac';
 import { logAdminAction } from '../../../lib/audit';
+import { checkRateLimit, getClientIdentifier, rateLimitResponse, RATE_LIMITS } from '../../../lib/rate-limit';
 
+export async function POST({ request }: { request: Request }) {
+    // Rate limiting
+    const clientId = getClientIdentifier(request);
+    const rateCheck = checkRateLimit(clientId, RATE_LIMITS.adminSync);
 
+    if (!rateCheck.allowed) {
+        return rateLimitResponse(rateCheck.resetTime);
+    }
 
-export async function POST({ request }) {
-    if (!requireSuperAdmin(request)) return new Response("Unauthorized", { status: 401 });
+    // Auth check
+    if (!requireSuperAdmin(request)) {
+        return new Response(JSON.stringify({ error: "Unauthorized" }), {
+            status: 401,
+            headers: { "Content-Type": "application/json" }
+        });
+    }
 
     const { action, slug } = await request.json();
 
@@ -52,7 +64,7 @@ export async function POST({ request }) {
     if (action === 'sync_all') {
         const stream = new ReadableStream({
             async start(controller) {
-                const send = (msg, type = 'info') => {
+                const send = (msg: string, type: string = 'info') => {
                     const chunk = JSON.stringify({ message: msg, type }) + '\n';
                     controller.enqueue(encoder.encode(chunk));
                 };
@@ -84,7 +96,7 @@ export async function POST({ request }) {
 
 // ─── Helper: Perform Sync & Update File ─────────────────────────────────────
 
-async function performSync(docEntry) {
+async function performSync(docEntry: { id: string; data: { fullName: string; orcidId?: string; specialty?: string } }) {
     const doc = docEntry.data;
     // Map 'id' to filename (e.g. 'anthony-fauci')
     const jsonPath = path.join(process.cwd(), 'src/content/doctors', `${docEntry.id}.json`);
@@ -194,7 +206,7 @@ function calculateHIndex(citations: number[]): number {
     return h;
 }
 
-function calculateYearsActive(papers: any[]): number {
+function calculateYearsActive(papers: PubMedPaper[]): number {
     if (papers.length === 0) return 0;
     const years = papers.map(p => p.publicationYear || new Date(p.publicationDate).getFullYear()).filter(y => !isNaN(y));
     if (years.length === 0) return 0;

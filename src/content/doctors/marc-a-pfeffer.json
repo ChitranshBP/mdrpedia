@@ -1,36 +1,492 @@
 {
   "fullName": "Marc A. Pfeffer",
   "slug": "marc-a-pfeffer",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Cardiovascular Medicine",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">MA</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 52,
-  "hIndex": 206,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 215,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 21538,
+  "livesSaved": 0,
+  "biography": "Marc A. Pfeffer is a leading specialist in Cardiovascular Medicine at Harvard Medical School.",
+  "aiSummary": "Marc A. Pfeffer is a cardiovascular medicine specialist with an H-index of 215 at Harvard Medical School (Faculty). Has been published in New England Journal of Medicine, The Lancet, JAMA. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Harvard Medical School"
-    }
-  ],
-  "bio": "Marc A. Pfeffer is a pioneer in Cardiovascular Medicine at Harvard Medical School, USA. With a D-Index of 206 and over 215,379 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Harvard Medical School",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Cardiovascular Medicine"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "The Effect of Pravastatin on Coronary Events after Myocardial Infarction in Patients with Average Cholesterol Levels",
+      "journal": "New England Journal of Medicine",
+      "year": 1996,
+      "citationCount": 7469,
+      "doi": "10.1056/nejm199610033351401",
+      "sourceUrl": "https://doi.org/10.1056/nejm199610033351401",
+      "verified": true
+    },
+    {
+      "title": "Effect of Captopril on Mortality and Morbidity in Patients with Left Ventricular Dysfunction after Myocardial Infarction",
+      "journal": "New England Journal of Medicine",
+      "year": 1992,
+      "citationCount": 5928,
+      "doi": "10.1056/nejm199209033271001",
+      "sourceUrl": "https://doi.org/10.1056/nejm199209033271001",
+      "verified": true
+    },
+    {
+      "title": "Intensive versus Moderate Lipid Lowering with Statins after Acute Coronary Syndromes",
+      "journal": "New England Journal of Medicine",
+      "year": 2004,
+      "citationCount": 4891,
+      "doi": "10.1056/nejmoa040583",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa040583",
+      "verified": true
+    },
+    {
+      "title": "Cardiac-Resynchronization Therapy for the Prevention of Heart-Failure Events",
+      "journal": "New England Journal of Medicine",
+      "year": 2009,
+      "citationCount": 3081,
+      "doi": "10.1056/nejmoa0906431",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa0906431",
+      "verified": true
+    },
+    {
+      "title": "Effects of candesartan in patients with chronic heart failure and preserved left-ventricular ejection fraction: the CHARM-Preserved Trial",
+      "journal": "The Lancet",
+      "year": 2003,
+      "citationCount": 2941,
+      "doi": "10.1016/s0140-6736(03)14285-7",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(03)14285-7",
+      "verified": true
+    },
+    {
+      "title": "Ventricular remodeling after myocardial infarction. Experimental observations and clinical implications.",
+      "journal": "Circulation",
+      "year": 1990,
+      "citationCount": 2850,
+      "doi": "10.1161/01.cir.81.4.1161",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.81.4.1161",
+      "verified": true
+    },
+    {
+      "title": "Spironolactone for Heart Failure with Preserved Ejection Fraction",
+      "journal": "New England Journal of Medicine",
+      "year": 2014,
+      "citationCount": 2613,
+      "doi": "10.1056/nejmoa1313731",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1313731",
+      "verified": true
+    },
+    {
+      "title": "Effects of candesartan in patients with chronic heart failure and reduced left-ventricular systolic function taking angiotensin-converting-enzyme inhibitors: the CHARM-Added trial",
+      "journal": "The Lancet",
+      "year": 2003,
+      "citationCount": 2606,
+      "doi": "10.1016/s0140-6736(03)14283-3",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(03)14283-3",
+      "verified": true
+    },
+    {
+      "title": "Valsartan, Captopril, or Both in Myocardial Infarction Complicated by Heart Failure, Left Ventricular Dysfunction, or Both",
+      "journal": "New England Journal of Medicine",
+      "year": 2003,
+      "citationCount": 2475,
+      "doi": "10.1056/nejmoa032292",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa032292",
+      "verified": true
+    },
+    {
+      "title": "C-Reactive Protein Levels and Outcomes after Statin Therapy",
+      "journal": "New England Journal of Medicine",
+      "year": 2005,
+      "citationCount": 2279,
+      "doi": "10.1056/nejmoa042378",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa042378",
+      "verified": true
+    },
+    {
+      "title": "Lixisenatide in Patients with Type 2 Diabetes and Acute Coronary Syndrome",
+      "journal": "New England Journal of Medicine",
+      "year": 2015,
+      "citationCount": 2255,
+      "doi": "10.1056/nejmoa1509225",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1509225",
+      "verified": true
+    },
+    {
+      "title": "Angiotensin–Neprilysin Inhibition in Heart Failure with Preserved Ejection Fraction",
+      "journal": "New England Journal of Medicine",
+      "year": 2019,
+      "citationCount": 2218,
+      "doi": "10.1056/nejmoa1908655",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1908655",
+      "verified": true
+    },
+    {
+      "title": "Renin–Angiotensin–Aldosterone System Inhibitors in Patients with Covid-19",
+      "journal": "New England Journal of Medicine",
+      "year": 2020,
+      "citationCount": 2143,
+      "doi": "10.1056/nejmsr2005760",
+      "sourceUrl": "https://doi.org/10.1056/nejmsr2005760",
+      "verified": true
+    },
+    {
+      "title": "AHA/ACC Guidelines for Secondary Prevention for Patients With Coronary and Other Atherosclerotic Vascular Disease: 2006 Update",
+      "journal": "Circulation",
+      "year": 2006,
+      "citationCount": 2108,
+      "doi": "10.1161/circulationaha.106.174516",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.106.174516",
+      "verified": true
+    },
+    {
+      "title": "Cardiovascular Risk Associated with Celecoxib in a Clinical Trial for Colorectal Adenoma Prevention",
+      "journal": "New England Journal of Medicine",
+      "year": 2005,
+      "citationCount": 2044,
+      "doi": "10.1056/nejmoa050405",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa050405",
+      "verified": true
+    },
+    {
+      "title": "Clopidogrel plus aspirin versus oral anticoagulation for atrial fibrillation in the Atrial fibrillation Clopidogrel Trial with Irbesartan for prevention of Vascular Events (ACTIVE W): a randomised controlled trial",
+      "journal": "The Lancet",
+      "year": 2006,
+      "citationCount": 1948,
+      "doi": "10.1016/s0140-6736(06)68845-4",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(06)68845-4",
+      "verified": true
+    },
+    {
+      "title": "Relation between Renal Dysfunction and Cardiovascular Outcomes after Myocardial Infarction",
+      "journal": "New England Journal of Medicine",
+      "year": 2004,
+      "citationCount": 1909,
+      "doi": "10.1056/nejmoa041365",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa041365",
+      "verified": true
+    },
+    {
+      "title": "Effects of candesartan on mortality and morbidity in patients with chronic heart failure: the CHARM-Overall programme",
+      "journal": "The Lancet",
+      "year": 2003,
+      "citationCount": 1876,
+      "doi": "10.1016/s0140-6736(03)14282-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(03)14282-1",
+      "verified": true
+    },
+    {
+      "title": "Effects of candesartan in patients with chronic heart failure and reduced left-ventricular systolic function intolerant to angiotensin-converting-enzyme inhibitors: the CHARM-Alternative trial",
+      "journal": "The Lancet",
+      "year": 2003,
+      "citationCount": 1666,
+      "doi": "10.1016/s0140-6736(03)14284-5",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(03)14284-5",
+      "verified": true
+    },
+    {
+      "title": "Long-term ACE-inhibitor therapy in patients with heart failure or left-ventricular dysfunction: a systematic overview of data from individual patients",
+      "journal": "The Lancet",
+      "year": 2000,
+      "citationCount": 1587,
+      "doi": "10.1016/s0140-6736(00)02212-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(00)02212-1",
+      "verified": true
+    },
+    {
+      "title": "Long-Term Effects of Pravastatin on Plasma Concentration of C-reactive Protein",
+      "journal": "Circulation",
+      "year": 1999,
+      "citationCount": 1475,
+      "doi": "10.1161/01.cir.100.3.230",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.100.3.230",
+      "verified": true
+    },
+    {
+      "title": "Inflammation, Pravastatin, and the Risk of Coronary Events After Myocardial Infarction in Patients With Average Cholesterol Levels",
+      "journal": "Circulation",
+      "year": 1998,
+      "citationCount": 1385,
+      "doi": "10.1161/01.cir.98.9.839",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.98.9.839",
+      "verified": true
+    },
+    {
+      "title": "Early Intensive vs a Delayed Conservative Simvastatin Strategy in Patients With Acute Coronary Syndromes",
+      "journal": "JAMA",
+      "year": 2004,
+      "citationCount": 1320,
+      "doi": "10.1001/jama.292.11.1307",
+      "sourceUrl": "https://doi.org/10.1001/jama.292.11.1307",
+      "verified": true
+    },
+    {
+      "title": "Cardiorenal End Points in a Trial of Aliskiren for Type 2 Diabetes",
+      "journal": "New England Journal of Medicine",
+      "year": 2012,
+      "citationCount": 1304,
+      "doi": "10.1056/nejmoa1208799",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1208799",
+      "verified": true
+    },
+    {
+      "title": "Myocardial infarct size and ventricular function in rats.",
+      "journal": "Circulation Research",
+      "year": 1979,
+      "citationCount": 1273,
+      "doi": "10.1161/01.res.44.4.503",
+      "sourceUrl": "https://doi.org/10.1161/01.res.44.4.503",
+      "verified": true
+    },
+    {
+      "title": "Kidney Disease as a Risk Factor for Development of Cardiovascular Disease",
+      "journal": "Hypertension",
+      "year": 2003,
+      "citationCount": 1133,
+      "doi": "10.1161/01.hyp.0000102971.85504.7c",
+      "sourceUrl": "https://doi.org/10.1161/01.hyp.0000102971.85504.7c",
+      "verified": true
+    },
+    {
+      "title": "Effect of Captopril on Progressive Ventricular Dilatation after Anterior Myocardial Infarction",
+      "journal": "New England Journal of Medicine",
+      "year": 1988,
+      "citationCount": 1100,
+      "doi": "10.1056/nejm198807143190204",
+      "sourceUrl": "https://doi.org/10.1056/nejm198807143190204",
+      "verified": true
+    },
+    {
+      "title": "Regional Variation in Patients and Outcomes in the Treatment of Preserved Cardiac Function Heart Failure With an Aldosterone Antagonist (TOPCAT) Trial",
+      "journal": "Circulation",
+      "year": 2014,
+      "citationCount": 1003,
+      "doi": "10.1161/circulationaha.114.013255",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.114.013255",
+      "verified": true
+    },
+    {
+      "title": "Cardiovascular Events and Their Reduction With Pravastatin in Diabetic and Glucose-Intolerant Myocardial Infarction Survivors With Average Cholesterol Levels",
+      "journal": "Circulation",
+      "year": 1998,
+      "citationCount": 990,
+      "doi": "10.1161/01.cir.98.23.2513",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.98.23.2513",
+      "verified": true
+    },
+    {
+      "title": "Predictors of mortality and morbidity in patients with chronic heart failure",
+      "journal": "European Heart Journal",
+      "year": 2005,
+      "citationCount": 965,
+      "doi": "10.1093/eurheartj/ehi555",
+      "sourceUrl": "https://doi.org/10.1093/eurheartj/ehi555",
+      "verified": true
+    },
+    {
+      "title": "Elevation of Tumor Necrosis Factor-α and Increased Risk of Recurrent Coronary Events After Myocardial Infarction",
+      "journal": "Circulation",
+      "year": 2000,
+      "citationCount": 931,
+      "doi": "10.1161/01.cir.101.18.2149",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.101.18.2149",
+      "verified": true
+    },
+    {
+      "title": "Red Cell Distribution Width as a Novel Prognostic Marker in Heart Failure",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2007,
+      "citationCount": 930,
+      "doi": "10.1016/j.jacc.2007.02.067",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2007.02.067",
+      "verified": true
+    },
+    {
+      "title": "Renal Function as a Predictor of Outcome in a Broad Spectrum of Patients With Heart Failure",
+      "journal": "Circulation",
+      "year": 2006,
+      "citationCount": 929,
+      "doi": "10.1161/circulationaha.105.580506",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.105.580506",
+      "verified": true
+    },
+    {
+      "title": "A Prospective Evaluation of an Angiotensin-Converting–Enzyme Gene Polymorphism and the Risk of Ischemic Heart Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 1995,
+      "citationCount": 909,
+      "doi": "10.1056/nejm199503163321103",
+      "sourceUrl": "https://doi.org/10.1056/nejm199503163321103",
+      "verified": true
+    },
+    {
+      "title": "Sex Differences in the Management of Coronary Artery Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 1991,
+      "citationCount": 902,
+      "doi": "10.1056/nejm199107253250402",
+      "sourceUrl": "https://doi.org/10.1056/nejm199107253250402",
+      "verified": true
+    },
+    {
+      "title": "A Sensitive Cardiac Troponin T Assay in Stable Coronary Artery Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 2009,
+      "citationCount": 886,
+      "doi": "10.1056/nejmoa0805299",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa0805299",
+      "verified": true
+    },
+    {
+      "title": "Relation Between Serum Phosphate Level and Cardiovascular Event Rate in People With Coronary Disease",
+      "journal": "Circulation",
+      "year": 2005,
+      "citationCount": 882,
+      "doi": "10.1161/circulationaha.105.553198",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.105.553198",
+      "verified": true
+    },
+    {
+      "title": "Influence of Ejection Fraction on Cardiovascular Outcomes in a Broad Spectrum of Heart Failure Patients",
+      "journal": "Circulation",
+      "year": 2005,
+      "citationCount": 865,
+      "doi": "10.1161/circulationaha.105.561423",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.105.561423",
+      "verified": true
+    },
+    {
+      "title": "Controversies in ventricular remodelling",
+      "journal": "The Lancet",
+      "year": 2006,
+      "citationCount": 847,
+      "doi": "10.1016/s0140-6736(06)68074-4",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(06)68074-4",
+      "verified": true
+    },
+    {
+      "title": "Heart failure",
+      "journal": "The Lancet",
+      "year": 2005,
+      "citationCount": 819,
+      "doi": "10.1016/s0140-6736(05)66621-4",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(05)66621-4",
+      "verified": true
+    },
+    {
+      "title": "Quantitative two-dimensional echocardiographic measurements are major predictors of adverse cardiovascular events after acute myocardial infarction. The protective effects of captopril.",
+      "journal": "Circulation",
+      "year": 1994,
+      "citationCount": 815,
+      "doi": "10.1161/01.cir.89.1.68",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.89.1.68",
+      "verified": true
+    },
+    {
+      "title": "Relation Between Red Blood Cell Distribution Width and Cardiovascular Event Rate in People With Coronary Disease",
+      "journal": "Circulation",
+      "year": 2008,
+      "citationCount": 812,
+      "doi": "10.1161/circulationaha.107.727545",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.107.727545",
+      "verified": true
+    },
+    {
+      "title": "Influence of chronic captopril therapy on the infarcted left ventricle of the rat.",
+      "journal": "Circulation Research",
+      "year": 1985,
+      "citationCount": 806,
+      "doi": "10.1161/01.res.57.1.84",
+      "sourceUrl": "https://doi.org/10.1161/01.res.57.1.84",
+      "verified": true
+    },
+    {
+      "title": "Heart Failure With Preserved Ejection Fraction In Perspective",
+      "journal": "Circulation Research",
+      "year": 2019,
+      "citationCount": 796,
+      "doi": "10.1161/circresaha.119.313572",
+      "sourceUrl": "https://doi.org/10.1161/circresaha.119.313572",
+      "verified": true
+    },
+    {
+      "title": "Sudden Death in Patients with Myocardial Infarction and Left Ventricular Dysfunction, Heart Failure, or Both",
+      "journal": "New England Journal of Medicine",
+      "year": 2005,
+      "citationCount": 782,
+      "doi": "10.1056/nejmoa043938",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa043938",
+      "verified": true
+    },
+    {
+      "title": "The Heart in Hypertension",
+      "journal": "New England Journal of Medicine",
+      "year": 1992,
+      "citationCount": 770,
+      "doi": "10.1056/nejm199210013271406",
+      "sourceUrl": "https://doi.org/10.1056/nejm199210013271406",
+      "verified": true
+    },
+    {
+      "title": "Ventricular Remodeling after Myocardial Infarction",
+      "journal": "Advances in experimental medicine and biology",
+      "year": 1993,
+      "citationCount": 758,
+      "doi": "10.1007/978-1-4615-2946-0_25",
+      "sourceUrl": "https://doi.org/10.1007/978-1-4615-2946-0_25",
+      "verified": true
+    },
+    {
+      "title": "Efficacy and safety of statin therapy in older people: a meta-analysis of individual participant data from 28 randomised controlled trials",
+      "journal": "The Lancet",
+      "year": 2019,
+      "citationCount": 755,
+      "doi": "10.1016/s0140-6736(18)31942-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(18)31942-1",
+      "verified": true
+    },
+    {
+      "title": "Left ventricular remodeling after myocardial infarction: a corollary to infarct expansion.",
+      "journal": "Circulation",
+      "year": 1986,
+      "citationCount": 722,
+      "doi": "10.1161/01.cir.74.4.693",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.74.4.693",
+      "verified": true
+    },
+    {
+      "title": "Survival after an experimental myocardial infarction: beneficial effects of long-term therapy with captopril.",
+      "journal": "Circulation",
+      "year": 1985,
+      "citationCount": 714,
+      "doi": "10.1161/01.cir.72.2.406",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.72.2.406",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:14.000Z",
+  "openalexId": "https://openalex.org/A5031560506"
 }

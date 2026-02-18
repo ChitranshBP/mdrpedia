@@ -2,8 +2,13 @@
 import Layout from "../../layouts/Layout.astro";
 import LineageMapper from "../../components/LineageMapper";
 
-// Mock Admin Check
-const isAdmin = true;
+import { requireSuperAdmin } from "../../lib/rbac";
+
+export const prerender = false;
+
+if (!requireSuperAdmin(Astro.request)) {
+    return Astro.redirect("/login");
+}
 ---
 
 <Layout title="Editor Workspace — MDRPedia">

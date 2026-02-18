@@ -1,36 +1,493 @@
 {
   "fullName": "Luigi Ferrucci",
   "slug": "luigi-ferrucci",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Aging Medicine",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">LF</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 64,
-  "hIndex": 255,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 288,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 28857,
+  "livesSaved": 0,
+  "biography": "Luigi Ferrucci is an Italian geriatrician and epidemiologist who conducts research on the causal pathways leading to progressive physical and cognitive decline in older persons. He has served as the scientific director of the National Institute on Aging since 2011.",
+  "aiSummary": "Luigi Ferrucci is a aging medicine specialist with an H-index of 288 at National Institutes of Health (Faculty). Has been published in Science, Nature Medicine, New England Journal of Medicine. Based in United States.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/8/86/Luigi_Ferrucci_2021_%28cropped%29.jpg",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "NIH"
-    }
-  ],
-  "bio": "Luigi Ferrucci is a pioneer in Aging Medicine at NIH, USA. With a D-Index of 255 and over 288,571 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "National Institutes of Health",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Aging Medicine"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "A Short Physical Performance Battery Assessing Lower Extremity Function: Association With Self-Reported Disability and Prediction of Mortality and Nursing Home Admission",
+      "journal": "Journal of Gerontology",
+      "year": 1994,
+      "citationCount": 9339,
+      "doi": "10.1093/geronj/49.2.m85",
+      "sourceUrl": "https://doi.org/10.1093/geronj/49.2.m85",
+      "verified": true
+    },
+    {
+      "title": "A Common Variant in the <i>FTO</i> Gene Is Associated with Body Mass Index and Predisposes to Childhood and Adult Obesity",
+      "journal": "Science",
+      "year": 2007,
+      "citationCount": 4418,
+      "doi": "10.1126/science.1141634",
+      "sourceUrl": "https://doi.org/10.1126/science.1141634",
+      "verified": true
+    },
+    {
+      "title": "Chronic inflammation in the etiology of disease across the life span",
+      "journal": "Nature Medicine",
+      "year": 2019,
+      "citationCount": 4345,
+      "doi": "10.1038/s41591-019-0675-0",
+      "sourceUrl": "https://doi.org/10.1038/s41591-019-0675-0",
+      "verified": true
+    },
+    {
+      "title": "Lower-Extremity Function in Persons over the Age of 70 Years as a Predictor of Subsequent Disability",
+      "journal": "New England Journal of Medicine",
+      "year": 1995,
+      "citationCount": 4016,
+      "doi": "10.1056/nejm199503023320902",
+      "sourceUrl": "https://doi.org/10.1056/nejm199503023320902",
+      "verified": true
+    },
+    {
+      "title": "Untangling the Concepts of Disability, Frailty, and Comorbidity: Implications for Improved Targeting and Care",
+      "journal": "The Journals of Gerontology Series A",
+      "year": 2004,
+      "citationCount": 3976,
+      "doi": "10.1093/gerona/59.3.m255",
+      "sourceUrl": "https://doi.org/10.1093/gerona/59.3.m255",
+      "verified": true
+    },
+    {
+      "title": "An epigenetic biomarker of aging for lifespan and healthspan",
+      "journal": "Aging",
+      "year": 2018,
+      "citationCount": 3244,
+      "doi": "10.18632/aging.101414",
+      "sourceUrl": "https://doi.org/10.18632/aging.101414",
+      "verified": true
+    },
+    {
+      "title": "Inflammageing: chronic inflammation in ageing, cardiovascular disease, and frailty",
+      "journal": "Nature Reviews Cardiology",
+      "year": 2018,
+      "citationCount": 3206,
+      "doi": "10.1038/s41569-018-0064-2",
+      "sourceUrl": "https://doi.org/10.1038/s41569-018-0064-2",
+      "verified": true
+    },
+    {
+      "title": "A reference panel of 64,976 haplotypes for genotype imputation",
+      "journal": "Nature Genetics",
+      "year": 2016,
+      "citationCount": 3164,
+      "doi": "10.1038/ng.3643",
+      "sourceUrl": "https://doi.org/10.1038/ng.3643",
+      "verified": true
+    },
+    {
+      "title": "Lower Extremity Function and Subsequent Disability: Consistency Across Studies, Predictive Models, and Value of Gait Speed Alone Compared With the Short Physical Performance Battery",
+      "journal": "The Journals of Gerontology Series A",
+      "year": 2000,
+      "citationCount": 2852,
+      "doi": "10.1093/gerona/55.4.m221",
+      "sourceUrl": "https://doi.org/10.1093/gerona/55.4.m221",
+      "verified": true
+    },
+    {
+      "title": "The FNIH Sarcopenia Project: Rationale, Study Description, Conference Recommendations, and Final Estimates",
+      "journal": "The Journals of Gerontology Series A",
+      "year": 2014,
+      "citationCount": 2396,
+      "doi": "10.1093/gerona/glu010",
+      "sourceUrl": "https://doi.org/10.1093/gerona/glu010",
+      "verified": true
+    },
+    {
+      "title": "DNA methylation GrimAge strongly predicts lifespan and healthspan",
+      "journal": "Aging",
+      "year": 2019,
+      "citationCount": 2381,
+      "doi": "10.18632/aging.101684",
+      "sourceUrl": "https://doi.org/10.18632/aging.101684",
+      "verified": true
+    },
+    {
+      "title": "Age-associated changes in skeletal muscles and their effect on mobility: an operational diagnosis of sarcopenia",
+      "journal": "Journal of Applied Physiology",
+      "year": 2003,
+      "citationCount": 1929,
+      "doi": "10.1152/japplphysiol.00246.2003",
+      "sourceUrl": "https://doi.org/10.1152/japplphysiol.00246.2003",
+      "verified": true
+    },
+    {
+      "title": "Ankle Brachial Index Combined With Framingham Risk Score to Predict Cardiovascular Events and Mortality",
+      "journal": "JAMA",
+      "year": 2008,
+      "citationCount": 1835,
+      "doi": "10.1001/jama.300.2.197",
+      "sourceUrl": "https://doi.org/10.1001/jama.300.2.197",
+      "verified": true
+    },
+    {
+      "title": "Systematic identification of trans eQTLs as putative drivers of known disease associations",
+      "journal": "Nature Genetics",
+      "year": 2013,
+      "citationCount": 1744,
+      "doi": "10.1038/ng.2756",
+      "sourceUrl": "https://doi.org/10.1038/ng.2756",
+      "verified": true
+    },
+    {
+      "title": "Hearing Loss and Cognitive Decline in Older Adults",
+      "journal": "eScholarship (California Digital Library)",
+      "year": 2013,
+      "citationCount": 1599,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2123719421",
+      "verified": true
+    },
+    {
+      "title": "Research Agenda for Frailty in Older Adults: Toward a Better Understanding of Physiology and Etiology: Summary from the American Geriatrics Society/National Institute on Aging Research Conference on Frailty in Older Adults",
+      "journal": "Journal of the American Geriatrics Society",
+      "year": 2006,
+      "citationCount": 1598,
+      "doi": "10.1111/j.1532-5415.2006.00745.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1532-5415.2006.00745.x",
+      "verified": true
+    },
+    {
+      "title": "Hearing Loss and Incident Dementia",
+      "journal": "Archives of Neurology",
+      "year": 2011,
+      "citationCount": 1483,
+      "doi": "10.1001/archneurol.2010.362",
+      "sourceUrl": "https://doi.org/10.1001/archneurol.2010.362",
+      "verified": true
+    },
+    {
+      "title": "Associations of elevated Interleukin-6 and C-Reactive protein levels with mortality in the elderly",
+      "journal": "The American Journal of Medicine",
+      "year": 1999,
+      "citationCount": 1479,
+      "doi": "10.1016/s0002-9343(99)00066-2",
+      "sourceUrl": "https://doi.org/10.1016/s0002-9343(99)00066-2",
+      "verified": true
+    },
+    {
+      "title": "Prevalence of anemia in persons 65 years and older in the United States: evidence for a high rate of unexplained anemia",
+      "journal": "Blood",
+      "year": 2004,
+      "citationCount": 1429,
+      "doi": "10.1182/blood-2004-05-1812",
+      "sourceUrl": "https://doi.org/10.1182/blood-2004-05-1812",
+      "verified": true
+    },
+    {
+      "title": "Common variants at 30 loci contribute to polygenic dyslipidemia",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 1367,
+      "doi": "10.1038/ng.291",
+      "sourceUrl": "https://doi.org/10.1038/ng.291",
+      "verified": true
+    },
+    {
+      "title": "World guidelines for falls prevention and management for older adults: a global initiative",
+      "journal": "Age and Ageing",
+      "year": 2022,
+      "citationCount": 1312,
+      "doi": "10.1093/ageing/afac205",
+      "sourceUrl": "https://doi.org/10.1093/ageing/afac205",
+      "verified": true
+    },
+    {
+      "title": "Phenotype of Frailty: Characterization in the Women's Health and Aging Studies",
+      "journal": "The Journals of Gerontology Series A",
+      "year": 2006,
+      "citationCount": 1215,
+      "doi": "10.1093/gerona/61.3.262",
+      "sourceUrl": "https://doi.org/10.1093/gerona/61.3.262",
+      "verified": true
+    },
+    {
+      "title": "A proteomic atlas of senescence-associated secretomes for aging biomarker development",
+      "journal": "PLoS Biology",
+      "year": 2020,
+      "citationCount": 1205,
+      "doi": "10.1371/journal.pbio.3000599",
+      "sourceUrl": "https://doi.org/10.1371/journal.pbio.3000599",
+      "verified": true
+    },
+    {
+      "title": "DNA methylation-based measures of biological age: meta-analysis predicting time to death",
+      "journal": "Aging",
+      "year": 2016,
+      "citationCount": 1163,
+      "doi": "10.18632/aging.101020",
+      "sourceUrl": "https://doi.org/10.18632/aging.101020",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide meta-analyses identify multiple loci associated with smoking behavior",
+      "journal": "Nature Genetics",
+      "year": 2010,
+      "citationCount": 1152,
+      "doi": "10.1038/ng.571",
+      "sourceUrl": "https://doi.org/10.1038/ng.571",
+      "verified": true
+    },
+    {
+      "title": "The interleukin-6 receptor as a target for prevention of coronary heart disease: a mendelian randomisation analysis",
+      "journal": "The Lancet",
+      "year": 2012,
+      "citationCount": 1123,
+      "doi": "10.1016/s0140-6736(12)60110-x",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(12)60110-x",
+      "verified": true
+    },
+    {
+      "title": "Sarcopenia With Limited Mobility: An International Consensus",
+      "journal": "Journal of the American Medical Directors Association",
+      "year": 2011,
+      "citationCount": 1114,
+      "doi": "10.1016/j.jamda.2011.04.014",
+      "sourceUrl": "https://doi.org/10.1016/j.jamda.2011.04.014",
+      "verified": true
+    },
+    {
+      "title": "Frailty Assessment in the Cardiovascular Care of Older Adults",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2013,
+      "citationCount": 1111,
+      "doi": "10.1016/j.jacc.2013.09.070",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2013.09.070",
+      "verified": true
+    },
+    {
+      "title": "Genetic variants associated with subjective well-being, depressive symptoms, and neuroticism identified through genome-wide analyses",
+      "journal": "Nature Genetics",
+      "year": 2016,
+      "citationCount": 1107,
+      "doi": "10.1038/ng.3552",
+      "sourceUrl": "https://doi.org/10.1038/ng.3552",
+      "verified": true
+    },
+    {
+      "title": "SARC-F: a symptom score to predict persons with sarcopenia at risk for poor functional outcomes",
+      "journal": "Journal of Cachexia Sarcopenia and Muscle",
+      "year": 2015,
+      "citationCount": 1097,
+      "doi": "10.1002/jcsm.12048",
+      "sourceUrl": "https://doi.org/10.1002/jcsm.12048",
+      "verified": true
+    },
+    {
+      "title": "International Exercise Recommendations in Older Adults (ICFSR): Expert Consensus Guidelines",
+      "journal": "The journal of nutrition health & aging",
+      "year": 2021,
+      "citationCount": 1076,
+      "doi": "10.1007/s12603-021-1665-8",
+      "sourceUrl": "https://doi.org/10.1007/s12603-021-1665-8",
+      "verified": true
+    },
+    {
+      "title": "Age-related and disease-related muscle loss: the effect of diabetes, obesity, and other diseases",
+      "journal": "The Lancet Diabetes & Endocrinology",
+      "year": 2014,
+      "citationCount": 1066,
+      "doi": "10.1016/s2213-8587(14)70034-8",
+      "sourceUrl": "https://doi.org/10.1016/s2213-8587(14)70034-8",
+      "verified": true
+    },
+    {
+      "title": "Sarcopenic obesity: definition, cause and consequences",
+      "journal": "Current Opinion in Clinical Nutrition & Metabolic Care",
+      "year": 2008,
+      "citationCount": 1062,
+      "doi": "10.1097/mco.0b013e328312c37d",
+      "sourceUrl": "https://doi.org/10.1097/mco.0b013e328312c37d",
+      "verified": true
+    },
+    {
+      "title": "Designing Randomized, Controlled Trials Aimed at Preventing or Delaying Functional Decline and Disability in Frail, Older Persons: A Consensus Report",
+      "journal": "Journal of the American Geriatrics Society",
+      "year": 2004,
+      "citationCount": 1018,
+      "doi": "10.1111/j.1532-5415.2004.52174.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1532-5415.2004.52174.x",
+      "verified": true
+    },
+    {
+      "title": "International Clinical Practice Guidelines for Sarcopenia (ICFSR): Screening, Diagnosis and Management",
+      "journal": "The journal of nutrition health & aging",
+      "year": 2018,
+      "citationCount": 1012,
+      "doi": "10.1007/s12603-018-1139-9",
+      "sourceUrl": "https://doi.org/10.1007/s12603-018-1139-9",
+      "verified": true
+    },
+    {
+      "title": "Epigenetic Signatures of Cigarette Smoking",
+      "journal": "Circulation Cardiovascular Genetics",
+      "year": 2016,
+      "citationCount": 961,
+      "doi": "10.1161/circgenetics.116.001506",
+      "sourceUrl": "https://doi.org/10.1161/circgenetics.116.001506",
+      "verified": true
+    },
+    {
+      "title": "Physical Frailty: ICFSR International Clinical Practice Guidelines for Identification and Management",
+      "journal": "The journal of nutrition health & aging",
+      "year": 2019,
+      "citationCount": 944,
+      "doi": "10.1007/s12603-019-1273-z",
+      "sourceUrl": "https://doi.org/10.1007/s12603-019-1273-z",
+      "verified": true
+    },
+    {
+      "title": "Inflammatory Markers and Physical Performance in Older Persons: The InCHIANTI Study",
+      "journal": "The Journals of Gerontology Series A",
+      "year": 2004,
+      "citationCount": 884,
+      "doi": "10.1093/gerona/59.3.m242",
+      "sourceUrl": "https://doi.org/10.1093/gerona/59.3.m242",
+      "verified": true
+    },
+    {
+      "title": "A genome-wide approach accounting for body mass index identifies genetic variants influencing fasting glycemic traits and insulin resistance",
+      "journal": "Nature Genetics",
+      "year": 2012,
+      "citationCount": 880,
+      "doi": "10.1038/ng.2274",
+      "sourceUrl": "https://doi.org/10.1038/ng.2274",
+      "verified": true
+    },
+    {
+      "title": "Hearing Loss Prevalence and Risk Factors Among Older Adults in the United States",
+      "journal": "The Journals of Gerontology Series A",
+      "year": 2011,
+      "citationCount": 879,
+      "doi": "10.1093/gerona/glr002",
+      "sourceUrl": "https://doi.org/10.1093/gerona/glr002",
+      "verified": true
+    },
+    {
+      "title": "The origins of age-related proinflammatory state",
+      "journal": "Blood",
+      "year": 2004,
+      "citationCount": 877,
+      "doi": "10.1182/blood-2004-07-2599",
+      "sourceUrl": "https://doi.org/10.1182/blood-2004-07-2599",
+      "verified": true
+    },
+    {
+      "title": "Epigenetic clock analysis of diet, exercise, education, and lifestyle factors",
+      "journal": "Aging",
+      "year": 2017,
+      "citationCount": 842,
+      "doi": "10.18632/aging.101168",
+      "sourceUrl": "https://doi.org/10.18632/aging.101168",
+      "verified": true
+    },
+    {
+      "title": "Short Physical Performance Battery and all-cause mortality: systematic review and meta-analysis",
+      "journal": "BMC Medicine",
+      "year": 2016,
+      "citationCount": 820,
+      "doi": "10.1186/s12916-016-0763-7",
+      "sourceUrl": "https://doi.org/10.1186/s12916-016-0763-7",
+      "verified": true
+    },
+    {
+      "title": "Subsystems Contributing to the Decline in Ability to Walk: Bridging the Gap Between Epidemiology and Geriatric Practice in the InCHIANTI Study",
+      "journal": "Journal of the American Geriatrics Society",
+      "year": 2000,
+      "citationCount": 802,
+      "doi": "10.1111/j.1532-5415.2000.tb03873.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1532-5415.2000.tb03873.x",
+      "verified": true
+    },
+    {
+      "title": "Serum IL‐6 Level and the Development of Disability in Older Persons",
+      "journal": "Journal of the American Geriatrics Society",
+      "year": 1999,
+      "citationCount": 801,
+      "doi": "10.1111/j.1532-5415.1999.tb01583.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1532-5415.1999.tb01583.x",
+      "verified": true
+    },
+    {
+      "title": "Abundant Quantitative Trait Loci Exist for DNA Methylation and Gene Expression in Human Brain",
+      "journal": "PLoS Genetics",
+      "year": 2010,
+      "citationCount": 799,
+      "doi": "10.1371/journal.pgen.1000952",
+      "sourceUrl": "https://doi.org/10.1371/journal.pgen.1000952",
+      "verified": true
+    },
+    {
+      "title": "Epigenetic clock for skin and blood cells applied to Hutchinson Gilford Progeria Syndrome and ex vivo studies",
+      "journal": "Aging",
+      "year": 2018,
+      "citationCount": 792,
+      "doi": "10.18632/aging.101508",
+      "sourceUrl": "https://doi.org/10.18632/aging.101508",
+      "verified": true
+    },
+    {
+      "title": "Measuring biological aging in humans: A quest",
+      "journal": "Aging Cell",
+      "year": 2019,
+      "citationCount": 712,
+      "doi": "10.1111/acel.13080",
+      "sourceUrl": "https://doi.org/10.1111/acel.13080",
+      "verified": true
+    },
+    {
+      "title": "Interleukin-6 in Aging and Chronic Disease: A Magnificent Pathway",
+      "journal": "The Journals of Gerontology Series A",
+      "year": 2006,
+      "citationCount": 696,
+      "doi": "10.1093/gerona/61.6.575",
+      "sourceUrl": "https://doi.org/10.1093/gerona/61.6.575",
+      "verified": true
+    },
+    {
+      "title": "Sarcopenia: A Time for Action. An SCWD Position Paper",
+      "journal": "Journal of Cachexia Sarcopenia and Muscle",
+      "year": 2019,
+      "citationCount": 692,
+      "doi": "10.1002/jcsm.12483",
+      "sourceUrl": "https://doi.org/10.1002/jcsm.12483",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:13.000Z",
+  "openalexId": "https://openalex.org/A5048196698"
 }

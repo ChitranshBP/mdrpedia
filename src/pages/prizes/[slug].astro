@@ -1,0 +1,217 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import TierBadge from "../../components/TierBadge.astro";
+
+export async function getStaticPaths() {
+    const prizes = await getCollection("prizes");
+    return prizes.map((prize) => ({
+        params: { slug: prize.id },
+        props: { prize },
+    }));
+}
+
+const { prize } = Astro.props;
+const allDoctors = await getCollection("doctors");
+
+// Find winners
+const winners = allDoctors.filter((doctor) => {
+    // Check strict manual list
+    if (prize.data.winners.includes(doctor.id)) return true;
+
+    // Check awards array in doctor profile
+    // We search for the prize name in the doctor's awards
+    return doctor.data.awards?.some((award) => {
+        const awardName = award.name || (award as any).title; // Handle legacy field
+        return awardName?.toLowerCase().includes(prize.data.name.toLowerCase());
+    });
+});
+
+// Sort winners by year (if available) or ranking score
+const sortedWinners = winners.sort((a, b) => {
+    // Try to find year
+    const getYear = (d: any) => {
+        const award = d.data.awards?.find((a: any) =>
+            (a.name || a.title)
+                ?.toLowerCase()
+                .includes(prize.data.name.toLowerCase()),
+        );
+        return award?.year || 0;
+    };
+
+    const yearA = getYear(a);
+    const yearB = getYear(b);
+
+    if (yearA !== yearB) return yearB - yearA; // Newest first
+    return (b.data.rankingScore || 0) - (a.data.rankingScore || 0);
+});
+---
+
+<Layout title={`${prize.data.name} — MDRPedia`}>
+    <div class="container py-12">
+        <div class="max-w-4xl mx-auto">
+            {/* Prize Header */}
+            <div
+                class="flex flex-col md:flex-row gap-8 items-center mb-12 bg-white/5 p-8 rounded-2xl border border-white/10"
+            >
+                <div
+                    class="w-32 h-32 md:w-48 md:h-48 flex-shrink-0 bg-white/10 rounded-full flex items-center justify-center p-4 border-2 border-accent-gold/30 shadow-[0_0_30px_rgba(255,215,0,0.1)]"
+                >
+                    {
+                        prize.data.image ? (
+                            <img
+                                src={prize.data.image}
+                                alt={prize.data.name}
+                                class="w-full h-full object-contain"
+                            />
+                        ) : (
+                            <span class="text-6xl">🏆</span>
+                        )
+                    }
+                </div>
+                <div class="text-center md:text-left">
+                    <span
+                        class="inline-block px-3 py-1 rounded-full bg-accent-blue/10 text-accent-blue text-xs font-bold uppercase mb-3 tracking-wider"
+                    >
+                        {prize.data.category}
+                    </span>
+                    <h1
+                        class="text-4xl md:text-5xl font-bold text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
+                    >
+                        {prize.data.name}
+                    </h1>
+                    <p class="text-lg text-gray-300 leading-relaxed">
+                        {prize.data.description}
+                    </p>
+                </div>
+            </div>
+
+            {/* Winners List */}
+            <h2
+                class="text-2xl font-bold text-white mb-6 flex items-center gap-3"
+            >
+                <span>Laureates & Recipients</span>
+                <span
+                    class="px-2 py-0.5 rounded-full bg-white/10 text-sm text-gray-400 font-normal"
+                    >{sortedWinners.length}</span
+                >
+            </h2>
+
+            {
+                sortedWinners.length > 0 ? (
+                    <div class="grid gap-4">
+                        {sortedWinners.map((doctor) => {
+                            const award = doctor.data.awards?.find((a) =>
+                                (a.name || (a as any).title)
+                                    ?.toLowerCase()
+                                    .includes(prize.data.name.toLowerCase()),
+                            );
+                            const year = award?.year;
+                            const contribution = (award as any)?.contribution;
+
+                            return (
+                                <a
+                                    href={`/doctors/${doctor.id}`}
+                                    class="block group"
+                                >
+                                    <article class="flex flex-col md:flex-row gap-6 p-6 rounded-xl bg-white/5 border border-white/5 hover:border-accent-blue/30 hover:bg-white/10 transition-all duration-300">
+                                        {/* Avatar */}
+                                        <div class="flex-shrink-0">
+                                            <div class="w-16 h-16 rounded-lg overflow-hidden border border-white/10 group-hover:border-accent-blue/50 transition-colors">
+                                                {doctor.data.portraitUrl ? (
+                                                    <img
+                                                        src={
+                                                            doctor.data
+                                                                .portraitUrl
+                                                        }
+                                                        alt={
+                                                            doctor.data.fullName
+                                                        }
+                                                        class="w-full h-full object-cover"
+                                                    />
+                                                ) : (
+                                                    <div class="w-full h-full bg-gray-800 flex items-center justify-center text-xl font-bold text-gray-500">
+                                                        {
+                                                            doctor.data
+                                                                .fullName[0]
+                                                        }
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        {/* Content */}
+                                        <div class="flex-grow">
+                                            <div class="flex items-start justify-between mb-2">
+                                                <div>
+                                                    <h3 class="text-xl font-bold text-white group-hover:text-accent-blue transition-colors flex items-center gap-2">
+                                                        {doctor.data.fullName}
+                                                        <TierBadge
+                                                            tier={
+                                                                doctor.data.tier
+                                                            }
+                                                            size="sm"
+                                                        />
+                                                    </h3>
+                                                    <p class="text-sm text-accent-blue font-medium">
+                                                        {doctor.data.specialty}
+                                                    </p>
+                                                </div>
+                                                {year && (
+                                                    <span class="px-3 py-1 rounded-full bg-accent-gold/10 text-accent-gold text-sm font-bold border border-accent-gold/20">
+                                                        {year}
+                                                    </span>
+                                                )}
+                                            </div>
+
+                                            {contribution ? (
+                                                <p class="text-gray-300 text-sm italic border-l-2 border-accent-gold/50 pl-3 mt-2">
+                                                    "{contribution}"
+                                                </p>
+                                            ) : (
+                                                <p class="text-gray-400 text-sm line-clamp-2 mt-2">
+                                                    {doctor.data.aiSummary ||
+                                                        doctor.data.biography?.slice(
+                                                            0,
+                                                            150,
+                                                        ) + "..."}
+                                                </p>
+                                            )}
+
+                                            <div class="mt-3 flex items-center gap-4 text-xs text-gray-500">
+                                                <span>
+                                                    {
+                                                        doctor.data.geography
+                                                            .country
+                                                    }
+                                                </span>
+                                                {doctor.data.hIndex > 0 && (
+                                                    <>
+                                                        <span class="w-1 h-1 rounded-full bg-gray-600" />
+                                                        <span>
+                                                            H-Index:{" "}
+                                                            {doctor.data.hIndex}
+                                                        </span>
+                                                    </>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </article>
+                                </a>
+                            );
+                        })}
+                    </div>
+                ) : (
+                    <div class="text-center py-12 bg-white/5 rounded-2xl border border-white/5 border-dashed">
+                        <p class="text-gray-400 mb-2">
+                            No recipients found in our database for this award.
+                        </p>
+                        <p class="text-sm text-gray-500">
+                            We are continuously updating our records.
+                        </p>
+                    </div>
+                )
+            }
+        </div>
+    </div>
+</Layout>

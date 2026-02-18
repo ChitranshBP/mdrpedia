@@ -1,14 +1,45 @@
 import React, { useState } from 'react';
+import { useToast } from './Toast';
+import { isValidNPI } from '../lib/utils';
 
-export default function NPIClaimWizard() {
+interface DoctorVerificationData {
+    fullName: string;
+    specialty: string;
+    npi?: string;
+    credential?: string;
+}
+
+interface NPIClaimWizardProps {
+    onSuccess?: (doctor: DoctorVerificationData) => void;
+}
+
+export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
     const [step, setStep] = useState(1);
     const [npi, setNpi] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const [doctorData, setDoctorData] = useState<any>(null);
+    const [doctorData, setDoctorData] = useState<DoctorVerificationData | null>(null);
+
+    // Try to use toast, fallback gracefully if not in provider
+    let toast: ReturnType<typeof useToast> | null = null;
+    try {
+        toast = useToast();
+    } catch {
+        // Not wrapped in ToastProvider, will use inline messages
+    }
+
+    // Validate NPI format as user types
+    const isNpiValid = isValidNPI(npi);
+    const showNpiFormatError = npi.length > 0 && npi.length < 10 && !/^\d*$/.test(npi);
 
     const handleNpiSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (!isNpiValid) {
+            setError('Please enter a valid 10-digit NPI number');
+            return;
+        }
+
         setLoading(true);
         setError('');
 
@@ -19,20 +50,44 @@ export default function NPIClaimWizard() {
             if (data.valid) {
                 setDoctorData(data.doctor);
                 setStep(2);
+                toast?.success('Identity verified successfully!');
             } else {
                 setError(data.message || 'Invalid NPI Number');
+                toast?.error(data.message || 'Invalid NPI Number');
             }
-        } catch (err) {
-            setError('System Error. Please try again.');
+        } catch {
+            const errorMsg = 'System Error. Please try again.';
+            setError(errorMsg);
+            toast?.error(errorMsg);
         } finally {
             setLoading(false);
         }
     };
 
-    const handleClaim = () => {
-        // Here we would create the user account
-        alert(`Profile for ${doctorData.fullName} claimed! Redirecting to portal...`);
-        window.location.href = '/doctor/portal';
+    const handleClaim = async () => {
+        if (!doctorData) return;
+
+        setLoading(true);
+        try {
+            // Here we would create the user account via API
+            toast?.success(`Profile for ${doctorData.fullName} claimed! Redirecting...`);
+            onSuccess?.(doctorData);
+
+            // Short delay for user to see the success message
+            setTimeout(() => {
+                window.location.href = '/doctor/portal';
+            }, 1500);
+        } catch {
+            toast?.error('Failed to claim profile. Please try again.');
+            setLoading(false);
+        }
+    };
+
+    const handleNpiChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // Only allow numeric input
+        const value = e.target.value.replace(/\D/g, '').slice(0, 10);
+        setNpi(value);
+        if (error) setError('');
     };
 
     return (
@@ -56,26 +111,63 @@ export default function NPIClaimWizard() {
                     </div>
 
                     <div>
-                        <label className="block text-xs font-medium text-gray-400 mb-2 uppercase tracking-wide">NPI Number</label>
+                        <label
+                            htmlFor="npi-input"
+                            className="block text-xs font-medium text-gray-400 mb-2 uppercase tracking-wide"
+                        >
+                            Professional ID / NPI
+                        </label>
                         <input
+                            id="npi-input"
                             type="text"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
                             value={npi}
-                            onChange={(e) => setNpi(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                            className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 font-mono text-lg tracking-widest text-center"
-                            placeholder="1234567890"
+                            onChange={handleNpiChange}
+                            className={`w-full bg-black/20 border rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 font-mono text-lg tracking-widest text-center transition-colors ${error || showNpiFormatError
+                                    ? 'border-red-500/50 focus:ring-red-500'
+                                    : isNpiValid
+                                        ? 'border-green-500/50'
+                                        : 'border-white/10'
+                                }`}
+                            placeholder="Enter 10-digit NPI"
+                            aria-describedby="npi-hint npi-error"
+                            aria-invalid={!!error || showNpiFormatError}
+                            maxLength={10}
+                            autoComplete="off"
                         />
-                        {error && <p className="text-red-400 text-xs mt-2 text-center">{error}</p>}
+                        <p id="npi-hint" className="text-gray-500 text-xs mt-1 text-center">
+                            {npi.length}/10 digits {isNpiValid && <span className="text-green-400">Valid format</span>}
+                        </p>
+                        {(error || showNpiFormatError) && (
+                            <p id="npi-error" className="text-red-400 text-xs mt-2 text-center" role="alert">
+                                {error || 'NPI must contain only numbers'}
+                            </p>
+                        )}
                     </div>
 
                     <button
                         type="submit"
-                        disabled={loading || npi.length !== 10}
-                        className={`w-full py-4 rounded-lg font-bold text-sm uppercase tracking-wider transition-all ${loading || npi.length !== 10
-                                ? 'bg-gray-800 text-gray-500 cursor-not-allowed'
-                                : 'bg-white text-purple-900 hover:bg-purple-100 shadow-xl shadow-white/10'
+                        disabled={loading || !isNpiValid}
+                        className={`w-full py-4 rounded-lg font-bold text-sm uppercase tracking-wider transition-all border ${loading || !isNpiValid
+                                ? 'bg-gray-800/50 text-gray-600 border-gray-700 cursor-not-allowed hidden-interact'
+                                : 'bg-white text-purple-900 border-white hover:bg-purple-50 shadow-lg shadow-white/10'
                             }`}
+                        aria-busy={loading}
                     >
-                        {loading ? 'Verifying...' : 'Verify Identity'}
+                        {loading ? (
+                            <span className="flex items-center justify-center gap-2">
+                                <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                                </svg>
+                                Verifying...
+                            </span>
+                        ) : (
+                            <span className={!isNpiValid ? 'opacity-50' : ''}>
+                                {!isNpiValid && npi.length > 0 ? 'Enter Complete NPI' : 'Verify Identity'}
+                            </span>
+                        )}
                     </button>
 
                     <p className="text-center text-[10px] text-gray-600 mt-4">

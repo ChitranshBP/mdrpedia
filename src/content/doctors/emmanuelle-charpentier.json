@@ -1,31 +1,493 @@
 {
   "fullName": "Emmanuelle Charpentier",
   "slug": "emmanuelle-charpentier",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "CRISPR-Cas9",
   "geography": {
-    "city": "Unknown",
-    "country": "Germany"
+    "country": "Germany",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23001a4d\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%2300aaff\" text-anchor=\"middle\" dy=\".3em\">EC</text></svg>",
-  "tier": "ELITE",
-  "rankingScore": 34,
-  "hIndex": 136,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 160,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 16000,
+  "livesSaved": 0,
+  "biography": "Emmanuelle Marie Charpentier is a French professor and researcher in microbiology, genetics, and biochemistry. She has served as a director at the Max Planck Institute for Infection Biology in Berlin since 2015. Three years later, she founded an independent research institute, the Max Planck Unit for the Science of Pathogens. In 2020, Charpentier and American biochemist Jennifer Doudna of the University of California, Berkeley, were awarded the Nobel Prize in Chemistry \"for the development of a method for genome editing\". This was the first science Nobel Prize ever won by two women only.",
+  "aiSummary": "Emmanuelle Charpentier is a crispr-cas9 specialist with an H-index of 160 at Max Planck Unit (Faculty). Has been published in Science, Nature, Nature Reviews Microbiology. Based in Germany.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/6/66/Emmanuelle_Charpentier.jpg",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Max Planck Unit for the Science of Pathogens"
-    }
-  ],
-  "bio": "Emmanuelle Charpentier is a pioneer in CRISPR-Cas9 at Max Planck Unit for the Science of Pathogens, Germany. With a D-Index of 136 and over 160,000 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Max Planck Unit",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "CRISPR-Cas9"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "A Programmable Dual-RNA–Guided DNA Endonuclease in Adaptive Bacterial Immunity",
+      "journal": "Science",
+      "year": 2012,
+      "citationCount": 16711,
+      "doi": "10.1126/science.1225829",
+      "sourceUrl": "https://doi.org/10.1126/science.1225829",
+      "verified": true
+    },
+    {
+      "title": "The new frontier of genome engineering with CRISPR-Cas9",
+      "journal": "Science",
+      "year": 2014,
+      "citationCount": 6680,
+      "doi": "10.1126/science.1258096",
+      "sourceUrl": "https://doi.org/10.1126/science.1258096",
+      "verified": true
+    },
+    {
+      "title": "CRISPR RNA maturation by trans-encoded small RNA and host factor RNase III",
+      "journal": "Nature",
+      "year": 2011,
+      "citationCount": 2514,
+      "doi": "10.1038/nature09886",
+      "sourceUrl": "https://doi.org/10.1038/nature09886",
+      "verified": true
+    },
+    {
+      "title": "An updated evolutionary classification of CRISPR–Cas systems",
+      "journal": "Nature Reviews Microbiology",
+      "year": 2015,
+      "citationCount": 2496,
+      "doi": "10.1038/nrmicro3569",
+      "sourceUrl": "https://doi.org/10.1038/nrmicro3569",
+      "verified": true
+    },
+    {
+      "title": "Evolution and classification of the CRISPR–Cas systems",
+      "journal": "Nature Reviews Microbiology",
+      "year": 2011,
+      "citationCount": 2456,
+      "doi": "10.1038/nrmicro2577",
+      "sourceUrl": "https://doi.org/10.1038/nrmicro2577",
+      "verified": true
+    },
+    {
+      "title": "Evolutionary classification of CRISPR–Cas systems: a burst of class 2 and derived variants",
+      "journal": "Nature Reviews Microbiology",
+      "year": 2019,
+      "citationCount": 2342,
+      "doi": "10.1038/s41579-019-0299-x",
+      "sourceUrl": "https://doi.org/10.1038/s41579-019-0299-x",
+      "verified": true
+    },
+    {
+      "title": "Structures of Cas9 Endonucleases Reveal RNA-Mediated Conformational Activation",
+      "journal": "Science",
+      "year": 2014,
+      "citationCount": 1247,
+      "doi": "10.1126/science.1247997",
+      "sourceUrl": "https://doi.org/10.1126/science.1247997",
+      "verified": true
+    },
+    {
+      "title": "The Biology of CRISPR-Cas: Backward and Forward",
+      "journal": "Cell",
+      "year": 2018,
+      "citationCount": 1043,
+      "doi": "10.1016/j.cell.2017.11.032",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2017.11.032",
+      "verified": true
+    },
+    {
+      "title": "The CRISPR-associated DNA-cleaving enzyme Cpf1 also processes precursor CRISPR RNA",
+      "journal": "Nature",
+      "year": 2016,
+      "citationCount": 989,
+      "doi": "10.1038/nature17945",
+      "sourceUrl": "https://doi.org/10.1038/nature17945",
+      "verified": true
+    },
+    {
+      "title": "Classification and evolution of type II CRISPR-Cas systems",
+      "journal": "Nucleic Acids Research",
+      "year": 2014,
+      "citationCount": 495,
+      "doi": "10.1093/nar/gku241",
+      "sourceUrl": "https://doi.org/10.1093/nar/gku241",
+      "verified": true
+    },
+    {
+      "title": "Adopt a moratorium on heritable genome editing",
+      "journal": "Nature",
+      "year": 2019,
+      "citationCount": 483,
+      "doi": "10.1038/d41586-019-00726-5",
+      "sourceUrl": "https://doi.org/10.1038/d41586-019-00726-5",
+      "verified": true
+    },
+    {
+      "title": "CRISPR-Cas: biology, mechanisms and relevance",
+      "journal": "Philosophical Transactions of the Royal Society B Biological Sciences",
+      "year": 2016,
+      "citationCount": 461,
+      "doi": "10.1098/rstb.2015.0496",
+      "sourceUrl": "https://doi.org/10.1098/rstb.2015.0496",
+      "verified": true
+    },
+    {
+      "title": "Novel Cassette-Based Shuttle Vector System for Gram-Positive Bacteria",
+      "journal": "Applied and Environmental Microbiology",
+      "year": 2004,
+      "citationCount": 388,
+      "doi": "10.1128/aem.70.10.6076-6085.2004",
+      "sourceUrl": "https://doi.org/10.1128/aem.70.10.6076-6085.2004",
+      "verified": true
+    },
+    {
+      "title": "The tracrRNA and Cas9 families of type II CRISPR-Cas immunity systems",
+      "journal": "RNA Biology",
+      "year": 2013,
+      "citationCount": 367,
+      "doi": "10.4161/rna.24321",
+      "sourceUrl": "https://doi.org/10.4161/rna.24321",
+      "verified": true
+    },
+    {
+      "title": "Emergence of vancomycin tolerance in Streptococcus pneumoniae",
+      "journal": "Nature",
+      "year": 1999,
+      "citationCount": 350,
+      "doi": "10.1038/21202",
+      "sourceUrl": "https://doi.org/10.1038/21202",
+      "verified": true
+    },
+    {
+      "title": "Phylogeny of Cas9 determines functional exchangeability of dual-RNA and Cas9 among orthologous type II CRISPR-Cas systems",
+      "journal": "Nucleic Acids Research",
+      "year": 2013,
+      "citationCount": 344,
+      "doi": "10.1093/nar/gkt1074",
+      "sourceUrl": "https://doi.org/10.1093/nar/gkt1074",
+      "verified": true
+    },
+    {
+      "title": "Antibiotic Resistance in <i>Listeria</i> spp",
+      "journal": "Antimicrobial Agents and Chemotherapy",
+      "year": 1999,
+      "citationCount": 323,
+      "doi": "10.1128/aac.43.9.2103",
+      "sourceUrl": "https://doi.org/10.1128/aac.43.9.2103",
+      "verified": true
+    },
+    {
+      "title": "Refined sgRNA efficacy prediction improves large- and small-scale CRISPR–Cas9 applications",
+      "journal": "Nucleic Acids Research",
+      "year": 2017,
+      "citationCount": 309,
+      "doi": "10.1093/nar/gkx1268",
+      "sourceUrl": "https://doi.org/10.1093/nar/gkx1268",
+      "verified": true
+    },
+    {
+      "title": "Biogenesis pathways of RNA guides in archaeal and bacterial CRISPR-Cas adaptive immunity",
+      "journal": "FEMS Microbiology Reviews",
+      "year": 2015,
+      "citationCount": 273,
+      "doi": "10.1093/femsre/fuv023",
+      "sourceUrl": "https://doi.org/10.1093/femsre/fuv023",
+      "verified": true
+    },
+    {
+      "title": "Adaptation in CRISPR-Cas Systems",
+      "journal": "Molecular Cell",
+      "year": 2016,
+      "citationCount": 252,
+      "doi": "10.1016/j.molcel.2016.01.030",
+      "sourceUrl": "https://doi.org/10.1016/j.molcel.2016.01.030",
+      "verified": true
+    },
+    {
+      "title": "Memory of viral infections by CRISPR-Cas adaptive immune systems: Acquisition of new information",
+      "journal": "Virology",
+      "year": 2012,
+      "citationCount": 250,
+      "doi": "10.1016/j.virol.2012.10.003",
+      "sourceUrl": "https://doi.org/10.1016/j.virol.2012.10.003",
+      "verified": true
+    },
+    {
+      "title": "Extracellular Vesicle RNA: A Universal Mediator of Microbial Communication?",
+      "journal": "Trends in Microbiology",
+      "year": 2018,
+      "citationCount": 209,
+      "doi": "10.1016/j.tim.2018.02.009",
+      "sourceUrl": "https://doi.org/10.1016/j.tim.2018.02.009",
+      "verified": true
+    },
+    {
+      "title": "Rewriting a genome",
+      "journal": "Nature",
+      "year": 2013,
+      "citationCount": 208,
+      "doi": "10.1038/495050a",
+      "sourceUrl": "https://doi.org/10.1038/495050a",
+      "verified": true
+    },
+    {
+      "title": "Distinct Polysaccharide Utilization Determines Interspecies Competition between Intestinal Prevotella spp.",
+      "journal": "Cell Host & Microbe",
+      "year": 2020,
+      "citationCount": 200,
+      "doi": "10.1016/j.chom.2020.09.012",
+      "sourceUrl": "https://doi.org/10.1016/j.chom.2020.09.012",
+      "verified": true
+    },
+    {
+      "title": "McsB Is a Protein Arginine Kinase That Phosphorylates and Inhibits the Heat-Shock Regulator CtsR",
+      "journal": "Science",
+      "year": 2009,
+      "citationCount": 182,
+      "doi": "10.1126/science.1170088",
+      "sourceUrl": "https://doi.org/10.1126/science.1170088",
+      "verified": true
+    },
+    {
+      "title": "The Dark Side of the Salad: Salmonella typhimurium Overcomes the Innate Immune Response of Arabidopsis thaliana and Shows an Endopathogenic Lifestyle",
+      "journal": "PLoS ONE",
+      "year": 2008,
+      "citationCount": 173,
+      "doi": "10.1371/journal.pone.0002279",
+      "sourceUrl": "https://doi.org/10.1371/journal.pone.0002279",
+      "verified": true
+    },
+    {
+      "title": "A Two-Component Regulatory System Impacts Extracellular Membrane-Derived Vesicle Production in Group A Streptococcus",
+      "journal": "mBio",
+      "year": 2016,
+      "citationCount": 172,
+      "doi": "10.1128/mbio.00207-16",
+      "sourceUrl": "https://doi.org/10.1128/mbio.00207-16",
+      "verified": true
+    },
+    {
+      "title": "Incidence of Antibiotic Resistance in Listeria Species",
+      "journal": "The Journal of Infectious Diseases",
+      "year": 1995,
+      "citationCount": 162,
+      "doi": "10.1093/infdis/172.1.277",
+      "sourceUrl": "https://doi.org/10.1093/infdis/172.1.277",
+      "verified": true
+    },
+    {
+      "title": "CRISPR germline engineering—the community speaks",
+      "journal": "Nature Biotechnology",
+      "year": 2015,
+      "citationCount": 140,
+      "doi": "10.1038/nbt.3227",
+      "sourceUrl": "https://doi.org/10.1038/nbt.3227",
+      "verified": true
+    },
+    {
+      "title": "CRISPR-Cas in <i>Streptococcus pyogenes</i>",
+      "journal": "RNA Biology",
+      "year": 2019,
+      "citationCount": 124,
+      "doi": "10.1080/15476286.2019.1582974",
+      "sourceUrl": "https://doi.org/10.1080/15476286.2019.1582974",
+      "verified": true
+    },
+    {
+      "title": "Engineering of temperature- and light-switchable Cas9 variants",
+      "journal": "Nucleic Acids Research",
+      "year": 2013,
+      "citationCount": 117,
+      "doi": "10.1093/nar/gkw930",
+      "sourceUrl": "https://doi.org/10.1093/nar/gkw930",
+      "verified": true
+    },
+    {
+      "title": "Penicillin tolerance genes of<i>Streptococcus pneumoniae</i>: the ABC‐type manganese permease complex Psa",
+      "journal": "Molecular Microbiology",
+      "year": 1998,
+      "citationCount": 117,
+      "doi": "10.1046/j.1365-2958.1998.01016.x",
+      "sourceUrl": "https://doi.org/10.1046/j.1365-2958.1998.01016.x",
+      "verified": true
+    },
+    {
+      "title": "Synthesis of group A streptococcal virulence factors is controlled by a regulatory RNA molecule",
+      "journal": "Molecular Microbiology",
+      "year": 2004,
+      "citationCount": 116,
+      "doi": "10.1111/j.1365-2958.2004.04222.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1365-2958.2004.04222.x",
+      "verified": true
+    },
+    {
+      "title": "Plakoglobin Suppresses Epithelial Proliferation and Hair Growth in Vivo",
+      "journal": "The Journal of Cell Biology",
+      "year": 2000,
+      "citationCount": 114,
+      "doi": "10.1083/jcb.149.2.503",
+      "sourceUrl": "https://doi.org/10.1083/jcb.149.2.503",
+      "verified": true
+    },
+    {
+      "title": "DNA and RNA interference mechanisms by CRISPR-Cas surveillance complexes",
+      "journal": "FEMS Microbiology Reviews",
+      "year": 2015,
+      "citationCount": 109,
+      "doi": "10.1093/femsre/fuv019",
+      "sourceUrl": "https://doi.org/10.1093/femsre/fuv019",
+      "verified": true
+    },
+    {
+      "title": "Toxin‐Gene Profile Heterogeneity among Endemic Invasive European Group A Streptococcal Isolates",
+      "journal": "The Journal of Infectious Diseases",
+      "year": 2003,
+      "citationCount": 106,
+      "doi": "10.1086/379230",
+      "sourceUrl": "https://doi.org/10.1086/379230",
+      "verified": true
+    },
+    {
+      "title": "Harnessing CRISPR-Cas9 immunity for genetic engineering",
+      "journal": "Current Opinion in Microbiology",
+      "year": 2014,
+      "citationCount": 97,
+      "doi": "10.1016/j.mib.2014.07.001",
+      "sourceUrl": "https://doi.org/10.1016/j.mib.2014.07.001",
+      "verified": true
+    },
+    {
+      "title": "Signal Transduction by a Death Signal Peptide",
+      "journal": "Molecular Cell",
+      "year": 2000,
+      "citationCount": 95,
+      "doi": "10.1016/s1097-2765(00)80402-5",
+      "sourceUrl": "https://doi.org/10.1016/s1097-2765(00)80402-5",
+      "verified": true
+    },
+    {
+      "title": "Characterization of a new class of tetracycline-resistance gene tet(S) in Listeria monocytogenes BM4210",
+      "journal": "Gene",
+      "year": 1993,
+      "citationCount": 94,
+      "doi": "10.1016/0378-1119(93)90665-p",
+      "sourceUrl": "https://doi.org/10.1016/0378-1119(93)90665-p",
+      "verified": true
+    },
+    {
+      "title": "An overview of RNAs with regulatory functions in gram-positive bacteria",
+      "journal": "Cellular and Molecular Life Sciences",
+      "year": 2009,
+      "citationCount": 93,
+      "doi": "10.1007/s00018-009-0162-8",
+      "sourceUrl": "https://doi.org/10.1007/s00018-009-0162-8",
+      "verified": true
+    },
+    {
+      "title": "Bacterial flagella grow through an injection-diffusion mechanism",
+      "journal": "eLife",
+      "year": 2017,
+      "citationCount": 90,
+      "doi": "10.7554/elife.23136",
+      "sourceUrl": "https://doi.org/10.7554/elife.23136",
+      "verified": true
+    },
+    {
+      "title": "Group A Streptococcus Activates Type I Interferon Production and MyD88-dependent Signaling without Involvement of TLR2, TLR4, and TLR9",
+      "journal": "Journal of Biological Chemistry",
+      "year": 2008,
+      "citationCount": 88,
+      "doi": "10.1074/jbc.m802848200",
+      "sourceUrl": "https://doi.org/10.1074/jbc.m802848200",
+      "verified": true
+    },
+    {
+      "title": "Emergence of the trimethoprim resistance gene dfrD in Listeria monocytogenes BM4293",
+      "journal": "Antimicrobial Agents and Chemotherapy",
+      "year": 1997,
+      "citationCount": 82,
+      "doi": "10.1128/aac.41.5.1134",
+      "sourceUrl": "https://doi.org/10.1128/aac.41.5.1134",
+      "verified": true
+    },
+    {
+      "title": "Identification of a <i>Streptococcus pneumoniae</i> Gene Locus Encoding Proteins of an ABC Phosphate Transporter and a Two-Component Regulatory System",
+      "journal": "Journal of Bacteriology",
+      "year": 1999,
+      "citationCount": 80,
+      "doi": "10.1128/jb.181.4.1126-1133.1999",
+      "sourceUrl": "https://doi.org/10.1128/jb.181.4.1126-1133.1999",
+      "verified": true
+    },
+    {
+      "title": "Improved bi-allelic modification of a transcriptionally silent locus in patient-derived iPSC by Cas9 nickase",
+      "journal": "Scientific Reports",
+      "year": 2016,
+      "citationCount": 77,
+      "doi": "10.1038/srep38198",
+      "sourceUrl": "https://doi.org/10.1038/srep38198",
+      "verified": true
+    },
+    {
+      "title": "Bridge helix arginines play a critical role in Cas9 sensitivity to mismatches",
+      "journal": "Nature Chemical Biology",
+      "year": 2020,
+      "citationCount": 73,
+      "doi": "10.1038/s41589-020-0490-4",
+      "sourceUrl": "https://doi.org/10.1038/s41589-020-0490-4",
+      "verified": true
+    },
+    {
+      "title": "Presence of the Listeria tetracycline resistance gene tet(S) in Enterococcus faecalis",
+      "journal": "Antimicrobial Agents and Chemotherapy",
+      "year": 1994,
+      "citationCount": 71,
+      "doi": "10.1128/aac.38.10.2330",
+      "sourceUrl": "https://doi.org/10.1128/aac.38.10.2330",
+      "verified": true
+    },
+    {
+      "title": "Functional analysis of the group A streptococcal luxS/AI-2 system in metabolism, adaptation to stress and interaction with host cells",
+      "journal": "BMC Microbiology",
+      "year": 2008,
+      "citationCount": 69,
+      "doi": "10.1186/1471-2180-8-188",
+      "sourceUrl": "https://doi.org/10.1186/1471-2180-8-188",
+      "verified": true
+    },
+    {
+      "title": "CRISPR-Cas9-induced t(11;19)/MLL-ENL translocations initiate leukemia in human hematopoietic progenitor cells <i>in vivo</i>",
+      "journal": "Haematologica",
+      "year": 2017,
+      "citationCount": 69,
+      "doi": "10.3324/haematol.2017.164046",
+      "sourceUrl": "https://doi.org/10.3324/haematol.2017.164046",
+      "verified": true
+    },
+    {
+      "title": "Mechanisms of antibiotic resistance and tolerance in",
+      "journal": "Microbes and Infection",
+      "year": 2000,
+      "citationCount": 68,
+      "doi": "10.1016/s1286-4579(00)01345-9",
+      "sourceUrl": "https://doi.org/10.1016/s1286-4579(00)01345-9",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:16.000Z",
+  "openalexId": "https://openalex.org/A5074743574"
 }

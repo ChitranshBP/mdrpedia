@@ -179,6 +179,72 @@ export interface TierTheme {
   gradient: string;
 }
 
+/** Unified profile data passed to DoctorProfile layout */
+export interface ProfileData {
+  fullName: string;
+  title?: string;
+  specialty: string;
+  subSpecialty?: string | null;
+  geography: { country: string; region?: string | null; city?: string | null };
+  status: ProfileStatus | 'LIVING' | 'HISTORICAL';
+  tier: Tier | 'TITAN' | 'ELITE' | 'MASTER' | 'UNRANKED';
+  rankingScore?: number | null;
+  hIndex: number;
+  yearsActive: number;
+  verifiedSurgeries: number;
+  biography?: string | null;
+  portraitUrl?: string | null;
+  galleryUrls?: string[];
+  livesSaved: number;
+  techniquesInvented: string[];
+  hasInvention: boolean;
+  dateOfBirth?: string | null;
+  dateOfDeath?: string | null;
+  npiNumber?: string | null;
+  orcidId?: string | null;
+  medicalSpecialty?: string[];
+  knowsAbout?: string[];
+  affiliations?: {
+    hospitalName: string;
+    role?: string | null;
+    hospitalUrl?: string | null;
+  }[];
+  aiSummary?: string | null;
+  citations?: {
+    doi?: string;
+    pubmedId?: string;
+    title: string;
+    journal?: string;
+    year?: number;
+    verified?: boolean;
+    abstract?: string;
+    totalCitationCount?: number;
+    evidenceClassification?: string;
+    isOpenAccess?: boolean;
+    openAccessUrl?: string;
+  }[];
+  awards?: {
+    name: string;
+    year: number;
+    issuingBody?: string | null;
+    sourceUrl?: string | null;
+  }[];
+  timeline?: { year: number; title: string; description?: string }[];
+  mentors?: { name: string; id?: string; title?: string }[];
+  students?: { name: string; id?: string; title?: string }[];
+  media?: {
+    type: 'IMAGE' | 'VIDEO' | 'DOCUMENT';
+    url: string;
+    title?: string | null;
+    description?: string | null;
+    source?: string | null;
+    video_id?: string | null;
+    thumbnail?: string | null;
+    is_featured?: boolean;
+  }[];
+  totalImpact?: number;
+}
+
 export const TIER_THEMES: Record<Tier, TierTheme> = {
   [Tier.TITAN]: {
     label: 'Titan',
@@ -186,7 +252,7 @@ export const TIER_THEMES: Record<Tier, TierTheme> = {
     bgColor: '#300066',
     borderColor: '#FFD700',
     textColor: '#FFD700',
-    badgeEmoji: '🏆',
+    badgeEmoji: '',
     gradient: 'linear-gradient(135deg, #300066 0%, #1a0033 50%, #300066 100%)',
   },
   [Tier.ELITE]: {
@@ -195,7 +261,7 @@ export const TIER_THEMES: Record<Tier, TierTheme> = {
     bgColor: '#001a4d',
     borderColor: '#00aaff',
     textColor: '#00aaff',
-    badgeEmoji: '🥈',
+    badgeEmoji: '',
     gradient: 'linear-gradient(135deg, #001a4d 0%, #002266 50%, #001a4d 100%)',
   },
   [Tier.MASTER]: {
@@ -204,7 +270,7 @@ export const TIER_THEMES: Record<Tier, TierTheme> = {
     bgColor: '#003322',
     borderColor: '#00cc66',
     textColor: '#00cc66',
-    badgeEmoji: '🥉',
+    badgeEmoji: '',
     gradient: 'linear-gradient(135deg, #003322 0%, #004d33 50%, #003322 100%)',
   },
   [Tier.UNRANKED]: {

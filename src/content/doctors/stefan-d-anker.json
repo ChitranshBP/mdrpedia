@@ -1,36 +1,493 @@
 {
   "fullName": "Stefan D. Anker",
   "slug": "stefan-d-anker",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Heart Failure",
   "geography": {
-    "city": "Unknown",
-    "country": "Germany"
+    "country": "Germany",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">SD</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 51,
-  "hIndex": 204,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 263,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 26376,
+  "livesSaved": 0,
+  "biography": "Stefan D. Anker is a German cardiologist who is Head of Field “Tissue Homeostasis and Cachexia\" at Charité University, Berlin, Germany. Previously, he was Professor of Innovative Clinical Trials at University Medical Center Göttingen in Germany. The main focus of the Innovative Clinical Trials department was research in the field of chronic heart failure, including the development and clinical testing of new therapies.",
+  "aiSummary": "Stefan D. Anker is a heart failure specialist with an H-index of 263 at Charité – Berlin (Faculty). Has been published in New England Journal of Medicine, The Lancet, Nature Reviews Cardiology. Based in Germany.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Charité Berlin"
-    }
-  ],
-  "bio": "Stefan D. Anker is a pioneer in Heart Failure at Charité Berlin, Germany. With a D-Index of 204 and over 263,761 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Charité – Berlin",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Heart Failure"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Corrigendum to: 2021 ESC Guidelines for the diagnosis and treatment of acute and chronic heart failure: Developed by the Task Force for the diagnosis and treatment of acute and chronic heart failure of the European Society of Cardiology (ESC) With the special contribution of the Heart Failure Association (HFA) of the ESC.",
+      "journal": "PubMed",
+      "year": 2021,
+      "citationCount": 19535,
+      "doi": "10.1093/eurheartj/ehab670",
+      "sourceUrl": "https://doi.org/10.1093/eurheartj/ehab670",
+      "verified": true
+    },
+    {
+      "title": "2021 ESC Guidelines for the diagnosis and treatment of acute and chronic heart failure",
+      "journal": "European Heart Journal",
+      "year": 2021,
+      "citationCount": 11871,
+      "doi": "10.1093/eurheartj/ehab368",
+      "sourceUrl": "https://doi.org/10.1093/eurheartj/ehab368",
+      "verified": true
+    },
+    {
+      "title": "Antiinflammatory Therapy with Canakinumab for Atherosclerotic Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 2017,
+      "citationCount": 8661,
+      "doi": "10.1056/nejmoa1707914",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1707914",
+      "verified": true
+    },
+    {
+      "title": "2016 ESC Guidelines for the Diagnosis and Treatment of Acute and Chronic Heart Failure",
+      "journal": "European Journal of Heart Failure",
+      "year": 2016,
+      "citationCount": 5820,
+      "doi": "10.1002/ejhf.592",
+      "sourceUrl": "https://doi.org/10.1002/ejhf.592",
+      "verified": true
+    },
+    {
+      "title": "Empagliflozin in Heart Failure with a Preserved Ejection Fraction",
+      "journal": "New England Journal of Medicine",
+      "year": 2021,
+      "citationCount": 4230,
+      "doi": "10.1056/nejmoa2107038",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa2107038",
+      "verified": true
+    },
+    {
+      "title": "Frailty Consensus: A Call to Action",
+      "journal": "Journal of the American Medical Directors Association",
+      "year": 2013,
+      "citationCount": 3943,
+      "doi": "10.1016/j.jamda.2013.03.022",
+      "sourceUrl": "https://doi.org/10.1016/j.jamda.2013.03.022",
+      "verified": true
+    },
+    {
+      "title": "Cachexia: A new definition",
+      "journal": "Clinical Nutrition",
+      "year": 2008,
+      "citationCount": 2380,
+      "doi": "10.1016/j.clnu.2008.06.013",
+      "sourceUrl": "https://doi.org/10.1016/j.clnu.2008.06.013",
+      "verified": true
+    },
+    {
+      "title": "Effect of Finerenone on Chronic Kidney Disease Outcomes in Type 2 Diabetes",
+      "journal": "New England Journal of Medicine",
+      "year": 2020,
+      "citationCount": 2366,
+      "doi": "10.1056/nejmoa2025845",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa2025845",
+      "verified": true
+    },
+    {
+      "title": "Ferric Carboxymaltose in Patients with Heart Failure and Iron Deficiency",
+      "journal": "New England Journal of Medicine",
+      "year": 2009,
+      "citationCount": 2002,
+      "doi": "10.1056/nejmoa0908355",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa0908355",
+      "verified": true
+    },
+    {
+      "title": "The Seattle Heart Failure Model",
+      "journal": "Circulation",
+      "year": 2006,
+      "citationCount": 1992,
+      "doi": "10.1161/circulationaha.105.584102",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.105.584102",
+      "verified": true
+    },
+    {
+      "title": "ESC Guidelines on diabetes, pre-diabetes, and cardiovascular diseases developed in collaboration with the EASD",
+      "journal": "European Heart Journal",
+      "year": 2013,
+      "citationCount": 1934,
+      "doi": "10.1093/eurheartj/eht108",
+      "sourceUrl": "https://doi.org/10.1093/eurheartj/eht108",
+      "verified": true
+    },
+    {
+      "title": "Consensus definition of sarcopenia, cachexia and pre-cachexia: Joint document elaborated by Special Interest Groups (SIG) “cachexia-anorexia in chronic wasting diseases” and “nutrition in geriatrics”",
+      "journal": "Clinical Nutrition",
+      "year": 2010,
+      "citationCount": 1685,
+      "doi": "10.1016/j.clnu.2009.12.004",
+      "sourceUrl": "https://doi.org/10.1016/j.clnu.2009.12.004",
+      "verified": true
+    },
+    {
+      "title": "Heart Failure: Preventing Disease and Death Worldwide",
+      "journal": "ESC Heart Failure",
+      "year": 2014,
+      "citationCount": 1679,
+      "doi": "10.1002/ehf2.12005",
+      "sourceUrl": "https://doi.org/10.1002/ehf2.12005",
+      "verified": true
+    },
+    {
+      "title": "2014 ESC/ESA Guidelines on non-cardiac surgery: cardiovascular assessment and management",
+      "journal": "European Heart Journal",
+      "year": 2014,
+      "citationCount": 1634,
+      "doi": "10.1093/eurheartj/ehu282",
+      "sourceUrl": "https://doi.org/10.1093/eurheartj/ehu282",
+      "verified": true
+    },
+    {
+      "title": "Universal definition and classification of heart failure: a report of the Heart Failure Society of America, Heart Failure Association of the European Society of Cardiology, Japanese Heart Failure Society and Writing Committee of the Universal Definition of Heart Failure",
+      "journal": "European Journal of Heart Failure",
+      "year": 2021,
+      "citationCount": 1437,
+      "doi": "10.1002/ejhf.2115",
+      "sourceUrl": "https://doi.org/10.1002/ejhf.2115",
+      "verified": true
+    },
+    {
+      "title": "SGLT2 inhibitors in patients with heart failure with reduced ejection fraction: a meta-analysis of the EMPEROR-Reduced and DAPA-HF trials",
+      "journal": "The Lancet",
+      "year": 2020,
+      "citationCount": 1311,
+      "doi": "10.1016/s0140-6736(20)31824-9",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(20)31824-9",
+      "verified": true
+    },
+    {
+      "title": "Beneficial effects of long-term intravenous iron therapy with ferric carboxymaltose in patients with symptomatic heart failure and iron deficiency",
+      "journal": "European Heart Journal",
+      "year": 2014,
+      "citationCount": 1177,
+      "doi": "10.1093/eurheartj/ehu385",
+      "sourceUrl": "https://doi.org/10.1093/eurheartj/ehu385",
+      "verified": true
+    },
+    {
+      "title": "Welcome to the ICD‐10 code for sarcopenia",
+      "journal": "Journal of Cachexia Sarcopenia and Muscle",
+      "year": 2016,
+      "citationCount": 1107,
+      "doi": "10.1002/jcsm.12147",
+      "sourceUrl": "https://doi.org/10.1002/jcsm.12147",
+      "verified": true
+    },
+    {
+      "title": "International Exercise Recommendations in Older Adults (ICFSR): Expert Consensus Guidelines",
+      "journal": "The journal of nutrition health & aging",
+      "year": 2021,
+      "citationCount": 1076,
+      "doi": "10.1007/s12603-021-1665-8",
+      "sourceUrl": "https://doi.org/10.1007/s12603-021-1665-8",
+      "verified": true
+    },
+    {
+      "title": "Cardio-renal syndromes: report from the consensus conference of the Acute Dialysis Quality Initiative",
+      "journal": "European Heart Journal",
+      "year": 2009,
+      "citationCount": 1048,
+      "doi": "10.1093/eurheartj/ehp507",
+      "sourceUrl": "https://doi.org/10.1093/eurheartj/ehp507",
+      "verified": true
+    },
+    {
+      "title": "Cardiovascular and kidney outcomes with finerenone in patients with type 2 diabetes and chronic kidney disease: the FIDELITY pooled analysis",
+      "journal": "European Heart Journal",
+      "year": 2021,
+      "citationCount": 1034,
+      "doi": "10.1093/eurheartj/ehab777",
+      "sourceUrl": "https://doi.org/10.1093/eurheartj/ehab777",
+      "verified": true
+    },
+    {
+      "title": "International Clinical Practice Guidelines for Sarcopenia (ICFSR): Screening, Diagnosis and Management",
+      "journal": "The journal of nutrition health & aging",
+      "year": 2018,
+      "citationCount": 1012,
+      "doi": "10.1007/s12603-018-1139-9",
+      "sourceUrl": "https://doi.org/10.1007/s12603-018-1139-9",
+      "verified": true
+    },
+    {
+      "title": "State of the Science",
+      "journal": "Circulation",
+      "year": 2009,
+      "citationCount": 960,
+      "doi": "10.1161/circulationaha.109.192628",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.109.192628",
+      "verified": true
+    },
+    {
+      "title": "Impact of diabetes on the effects of sodium glucose co-transporter-2 inhibitors on kidney outcomes: collaborative meta-analysis of large placebo-controlled trials",
+      "journal": "The Lancet",
+      "year": 2022,
+      "citationCount": 894,
+      "doi": "10.1016/s0140-6736(22)02074-8",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(22)02074-8",
+      "verified": true
+    },
+    {
+      "title": "Endotoxin and immune activation in chronic heart failure: a prospective cohort study",
+      "journal": "The Lancet",
+      "year": 1999,
+      "citationCount": 873,
+      "doi": "10.1016/s0140-6736(98)09286-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(98)09286-1",
+      "verified": true
+    },
+    {
+      "title": "Epidemiology and One-Year Outcomes in Patients With Chronic Heart Failure and Preserved, Mid-Range and Reduced Ejection Fraction: An Analysis of The ESC Heart Failure Long-Term Registry",
+      "journal": "European Journal of Heart Failure",
+      "year": 2017,
+      "citationCount": 868,
+      "doi": "10.1002/ejhf.813",
+      "sourceUrl": "https://doi.org/10.1002/ejhf.813",
+      "verified": true
+    },
+    {
+      "title": "An overview of sarcopenia: facts and numbers on prevalence and clinical impact",
+      "journal": "Journal of Cachexia Sarcopenia and Muscle",
+      "year": 2010,
+      "citationCount": 858,
+      "doi": "10.1007/s13539-010-0014-2",
+      "sourceUrl": "https://doi.org/10.1007/s13539-010-0014-2",
+      "verified": true
+    },
+    {
+      "title": "Plasma Cytokine Parameters and Mortality in Patients With Chronic Heart Failure",
+      "journal": "Circulation",
+      "year": 2000,
+      "citationCount": 803,
+      "doi": "10.1161/01.cir.102.25.3060",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.102.25.3060",
+      "verified": true
+    },
+    {
+      "title": "Hormonal Changes and Catabolic/Anabolic Imbalance in Chronic Heart Failure and Their Importance for Cardiac Cachexia",
+      "journal": "Circulation",
+      "year": 1997,
+      "citationCount": 797,
+      "doi": "10.1161/01.cir.96.2.526",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.96.2.526",
+      "verified": true
+    },
+    {
+      "title": "Mitochondrial function as a therapeutic target in heart failure",
+      "journal": "Nature Reviews Cardiology",
+      "year": 2016,
+      "citationCount": 750,
+      "doi": "10.1038/nrcardio.2016.203",
+      "sourceUrl": "https://doi.org/10.1038/nrcardio.2016.203",
+      "verified": true
+    },
+    {
+      "title": "Guidelines for pre-operative cardiac risk assessment and perioperative cardiac management in non-cardiac surgery",
+      "journal": "European Heart Journal",
+      "year": 2009,
+      "citationCount": 733,
+      "doi": "10.1093/eurheartj/ehp337",
+      "sourceUrl": "https://doi.org/10.1093/eurheartj/ehp337",
+      "verified": true
+    },
+    {
+      "title": "Impact of Remote Telemedical Management on Mortality and Hospitalizations in Ambulatory Patients With Chronic Heart Failure",
+      "journal": "Circulation",
+      "year": 2011,
+      "citationCount": 713,
+      "doi": "10.1161/circulationaha.111.018473",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.111.018473",
+      "verified": true
+    },
+    {
+      "title": "Sarcopenia: A Time for Action. An SCWD Position Paper",
+      "journal": "Journal of Cachexia Sarcopenia and Muscle",
+      "year": 2019,
+      "citationCount": 692,
+      "doi": "10.1002/jcsm.12483",
+      "sourceUrl": "https://doi.org/10.1002/jcsm.12483",
+      "verified": true
+    },
+    {
+      "title": "Heart failure and kidney dysfunction: epidemiology, mechanisms and management",
+      "journal": "Nature Reviews Nephrology",
+      "year": 2016,
+      "citationCount": 650,
+      "doi": "10.1038/nrneph.2016.113",
+      "sourceUrl": "https://doi.org/10.1038/nrneph.2016.113",
+      "verified": true
+    },
+    {
+      "title": "Altered Intestinal Function in Patients With Chronic Heart Failure",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2007,
+      "citationCount": 634,
+      "doi": "10.1016/j.jacc.2007.07.016",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2007.07.016",
+      "verified": true
+    },
+    {
+      "title": "Inflammatory mediators in chronic heart failure: an overview",
+      "journal": "Heart",
+      "year": 2004,
+      "citationCount": 613,
+      "doi": "10.1136/hrt.2002.007005",
+      "sourceUrl": "https://doi.org/10.1136/hrt.2002.007005",
+      "verified": true
+    },
+    {
+      "title": "Anti-Inflammatory Therapy With Canakinumab for the Prevention of Hospitalization for Heart Failure",
+      "journal": "Circulation",
+      "year": 2019,
+      "citationCount": 605,
+      "doi": "10.1161/circulationaha.118.038010",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.118.038010",
+      "verified": true
+    },
+    {
+      "title": "Clinical Practice Update on Heart Failure 2019: Pharmacotherapy, Procedures, Devices and Patient Management. An Expert Consensus Meeting Report of the Heart Failure Association of the European Society of Cardiology",
+      "journal": "European Journal of Heart Failure",
+      "year": 2019,
+      "citationCount": 600,
+      "doi": "10.1002/ejhf.1531",
+      "sourceUrl": "https://doi.org/10.1002/ejhf.1531",
+      "verified": true
+    },
+    {
+      "title": "2010 Focused Update of ESC Guidelines on device therapy in heart failure",
+      "journal": "EP Europace",
+      "year": 2010,
+      "citationCount": 593,
+      "doi": "10.1093/europace/euq392",
+      "sourceUrl": "https://doi.org/10.1093/europace/euq392",
+      "verified": true
+    },
+    {
+      "title": "Prevalence, incidence, and clinical impact of sarcopenia: facts, numbers, and epidemiology—update 2014",
+      "journal": "Journal of Cachexia Sarcopenia and Muscle",
+      "year": 2014,
+      "citationCount": 590,
+      "doi": "10.1007/s13539-014-0161-y",
+      "sourceUrl": "https://doi.org/10.1007/s13539-014-0161-y",
+      "verified": true
+    },
+    {
+      "title": "Uric Acid and Survival in Chronic Heart Failure",
+      "journal": "Circulation",
+      "year": 2003,
+      "citationCount": 584,
+      "doi": "10.1161/01.cir.0000065637.10517.a0",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000065637.10517.a0",
+      "verified": true
+    },
+    {
+      "title": "Warfarin and Aspirin in Patients with Heart Failure and Sinus Rhythm",
+      "journal": "New England Journal of Medicine",
+      "year": 2012,
+      "citationCount": 571,
+      "doi": "10.1056/nejmoa1202299",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1202299",
+      "verified": true
+    },
+    {
+      "title": "Assessment of Survival in Patients With Primary Pulmonary Hypertension",
+      "journal": "Circulation",
+      "year": 2002,
+      "citationCount": 564,
+      "doi": "10.1161/01.cir.0000022687.18568.2a",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000022687.18568.2a",
+      "verified": true
+    },
+    {
+      "title": "Effects of Xanthine Oxidase Inhibition With Allopurinol on Endothelial Function and Peripheral Blood Flow in Hyperuricemic Patients With Chronic Heart Failure",
+      "journal": "Circulation",
+      "year": 2002,
+      "citationCount": 563,
+      "doi": "10.1161/01.cir.0000017502.58595.ed",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000017502.58595.ed",
+      "verified": true
+    },
+    {
+      "title": "Clinical Correlates and Prognostic Significance of the Ventilatory Response to Exercise in Chronic Heart Failure",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 1997,
+      "citationCount": 562,
+      "doi": "10.1016/s0735-1097(97)00078-8",
+      "sourceUrl": "https://doi.org/10.1016/s0735-1097(97)00078-8",
+      "verified": true
+    },
+    {
+      "title": "Effect of Intravenous Iron Sucrose on Exercise Tolerance in Anemic and Nonanemic Patients With Symptomatic Chronic Heart Failure and Iron Deficiency",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2008,
+      "citationCount": 555,
+      "doi": "10.1016/j.jacc.2007.09.036",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2007.09.036",
+      "verified": true
+    },
+    {
+      "title": "The endotoxin-lipoprotein hypothesis",
+      "journal": "The Lancet",
+      "year": 2000,
+      "citationCount": 530,
+      "doi": "10.1016/s0140-6736(00)02690-8",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(00)02690-8",
+      "verified": true
+    },
+    {
+      "title": "Cachexia as a major underestimated and unmet medical need: facts and numbers",
+      "journal": "Journal of Cachexia Sarcopenia and Muscle",
+      "year": 2010,
+      "citationCount": 522,
+      "doi": "10.1007/s13539-010-0002-6",
+      "sourceUrl": "https://doi.org/10.1007/s13539-010-0002-6",
+      "verified": true
+    },
+    {
+      "title": "Depressed Heart Rate Variability as an Independent Predictor of Death in Chronic Congestive Heart Failure Secondary to Ischemic or Idiopathic Dilated Cardiomyopathy",
+      "journal": "The American Journal of Cardiology",
+      "year": 1997,
+      "citationCount": 490,
+      "doi": "10.1016/s0002-9149(97)00215-4",
+      "sourceUrl": "https://doi.org/10.1016/s0002-9149(97)00215-4",
+      "verified": true
+    },
+    {
+      "title": "Iron management in chronic kidney disease: conclusions from a “Kidney Disease: Improving Global Outcomes” (KDIGO) Controversies Conference",
+      "journal": "Kidney International",
+      "year": 2016,
+      "citationCount": 467,
+      "doi": "10.1016/j.kint.2015.10.002",
+      "sourceUrl": "https://doi.org/10.1016/j.kint.2015.10.002",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:13.000Z",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Stefan_D._Anker.png/330px-Stefan_D._Anker.png",
+  "openalexId": "https://openalex.org/A5003943960"
 }

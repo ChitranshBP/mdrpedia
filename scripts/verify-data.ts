@@ -1,5 +1,5 @@
 
-import 'dotenv/config'; // Load env vars if needed
+// import 'dotenv/config'; // Load env vars if needed
 import { getCollection } from 'astro:content';
 
 async function verify() {

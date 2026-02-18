@@ -1,36 +1,484 @@
 {
   "fullName": "Nicholas J. Wareham",
   "slug": "nicholas-j-wareham",
-  "title": "MD, PhD",
-  "specialty": "Metabolic Research",
+  "title": "MD",
+  "specialty": "Medicine",
   "geography": {
+    "country": "Unknown",
     "city": "Unknown",
-    "country": "UK"
+    "region": "Unknown"
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">NJ</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 68,
-  "hIndex": 271,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 233,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 30799,
+  "livesSaved": 0,
+  "biography": "\nNicholas J. Wareham is a British epidemiologist who researches obesity, diabetes, and other metabolic disorders. He is director of the MRC Epidemiology Unit and co-director of the Institute of Metabolic Science at the University of Cambridge. He is also a Wellcome Trust Senior Fellow in Clinical Science at the University of Cambridge, the director of the University's Centre for Diet and Activity Research (CEDAR), and the co-leader of the University's Aetiology of Diabetes and Related Metabolic Disorders Programme. He was educated at St Thomas's Hospital Medical School and the London School of Hygiene and Tropical Medicine. Before joining the faculty at Cambridge, he worked at Harvard University.",
+  "aiSummary": "Nicholas J. Wareham is a medicine specialist with an H-index of 233. Has been published in Science, Nature, Nature Genetics. Based in Unknown, Unknown, Unknown.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "University of Cambridge"
-    }
-  ],
-  "bio": "Nicholas J. Wareham is a pioneer in Metabolic Research at University of Cambridge, UK. With a D-Index of 271 and over 307,986 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [],
+  "medicalSpecialty": [
+    "Medicine"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "A Common Variant in the <i>FTO</i> Gene Is Associated with Body Mass Index and Predisposes to Childhood and Adult Obesity",
+      "journal": "Science",
+      "year": 2007,
+      "citationCount": 4418,
+      "doi": "10.1126/science.1141634",
+      "sourceUrl": "https://doi.org/10.1126/science.1141634",
+      "verified": true
+    },
+    {
+      "title": "Biological, clinical and population relevance of 95 loci for blood lipids",
+      "journal": "Nature",
+      "year": 2010,
+      "citationCount": 3638,
+      "doi": "10.1038/nature09270",
+      "sourceUrl": "https://doi.org/10.1038/nature09270",
+      "verified": true
+    },
+    {
+      "title": "Congenital leptin deficiency is associated with severe early-onset obesity in humans",
+      "journal": "Nature",
+      "year": 1997,
+      "citationCount": 2924,
+      "doi": "10.1038/43185",
+      "sourceUrl": "https://doi.org/10.1038/43185",
+      "verified": true
+    },
+    {
+      "title": "Gene discovery and polygenic prediction from a genome-wide association study of educational attainment in 1.1 million individuals",
+      "journal": "Nature Genetics",
+      "year": 2018,
+      "citationCount": 2771,
+      "doi": "10.1038/s41588-018-0147-3",
+      "sourceUrl": "https://doi.org/10.1038/s41588-018-0147-3",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide association study identifies novel breast cancer susceptibility loci",
+      "journal": "Nature",
+      "year": 2007,
+      "citationCount": 2329,
+      "doi": "10.1038/nature05887",
+      "sourceUrl": "https://doi.org/10.1038/nature05887",
+      "verified": true
+    },
+    {
+      "title": "Meta-analysis of genome-wide association data and large-scale replication identifies additional susceptibility loci for type 2 diabetes",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 1864,
+      "doi": "10.1038/ng.120",
+      "sourceUrl": "https://doi.org/10.1038/ng.120",
+      "verified": true
+    },
+    {
+      "title": "Common genetic determinants of vitamin D insufficiency: a genome-wide association study",
+      "journal": "The Lancet",
+      "year": 2010,
+      "citationCount": 1525,
+      "doi": "10.1016/s0140-6736(10)60588-0",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(10)60588-0",
+      "verified": true
+    },
+    {
+      "title": "Triglycerides and the Risk of Coronary Heart Disease",
+      "journal": "Circulation",
+      "year": 2006,
+      "citationCount": 1408,
+      "doi": "10.1161/circulationaha.106.637793",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.106.637793",
+      "verified": true
+    },
+    {
+      "title": "Large Scale Population Assessment of Physical Activity Using Wrist Worn Accelerometers: The UK Biobank Study",
+      "journal": "PLoS ONE",
+      "year": 2017,
+      "citationCount": 1184,
+      "doi": "10.1371/journal.pone.0169649",
+      "sourceUrl": "https://doi.org/10.1371/journal.pone.0169649",
+      "verified": true
+    },
+    {
+      "title": "The interleukin-6 receptor as a target for prevention of coronary heart disease: a mendelian randomisation analysis",
+      "journal": "The Lancet",
+      "year": 2012,
+      "citationCount": 1123,
+      "doi": "10.1016/s0140-6736(12)60110-x",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(12)60110-x",
+      "verified": true
+    },
+    {
+      "title": "World Health Organization cardiovascular disease risk charts: revised models to estimate risk in 21 global regions",
+      "journal": "The Lancet Global Health",
+      "year": 2019,
+      "citationCount": 1108,
+      "doi": "10.1016/s2214-109x(19)30318-3",
+      "sourceUrl": "https://doi.org/10.1016/s2214-109x(19)30318-3",
+      "verified": true
+    },
+    {
+      "title": "Association of Cardiometabolic Multimorbidity With Mortality",
+      "journal": "JAMA",
+      "year": 2015,
+      "citationCount": 1044,
+      "doi": "10.1001/jama.2015.7008",
+      "sourceUrl": "https://doi.org/10.1001/jama.2015.7008",
+      "verified": true
+    },
+    {
+      "title": "Association of Hemoglobin A<sub>1c</sub> with Cardiovascular Disease and Mortality in Adults: The European Prospective Investigation into Cancer in Norfolk",
+      "journal": "Annals of Internal Medicine",
+      "year": 2004,
+      "citationCount": 979,
+      "doi": "10.7326/0003-4819-141-6-200409210-00006",
+      "sourceUrl": "https://doi.org/10.7326/0003-4819-141-6-200409210-00006",
+      "verified": true
+    },
+    {
+      "title": "Epigenetic Signatures of Cigarette Smoking",
+      "journal": "Circulation Cardiovascular Genetics",
+      "year": 2016,
+      "citationCount": 961,
+      "doi": "10.1161/circgenetics.116.001506",
+      "sourceUrl": "https://doi.org/10.1161/circgenetics.116.001506",
+      "verified": true
+    },
+    {
+      "title": "Associations of type 1 and type 2 diabetes with COVID-19-related mortality in England: a whole-population study",
+      "journal": "The Lancet Diabetes & Endocrinology",
+      "year": 2020,
+      "citationCount": 951,
+      "doi": "10.1016/s2213-8587(20)30272-2",
+      "sourceUrl": "https://doi.org/10.1016/s2213-8587(20)30272-2",
+      "verified": true
+    },
+    {
+      "title": "Risk factors for COVID-19-related mortality in people with type 1 and type 2 diabetes in England: a population-based cohort study",
+      "journal": "The Lancet Diabetes & Endocrinology",
+      "year": 2020,
+      "citationCount": 926,
+      "doi": "10.1016/s2213-8587(20)30271-0",
+      "sourceUrl": "https://doi.org/10.1016/s2213-8587(20)30271-0",
+      "verified": true
+    },
+    {
+      "title": "Application of the Theory of Planned Behaviour in Behaviour Change Interventions: A Systematic Review",
+      "journal": "Psychology and Health",
+      "year": 2002,
+      "citationCount": 881,
+      "doi": "10.1080/08870440290013644a",
+      "sourceUrl": "https://doi.org/10.1080/08870440290013644a",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide association analyses identify 18 new loci associated with serum urate concentrations",
+      "journal": "Nature Genetics",
+      "year": 2012,
+      "citationCount": 850,
+      "doi": "10.1038/ng.2500",
+      "sourceUrl": "https://doi.org/10.1038/ng.2500",
+      "verified": true
+    },
+    {
+      "title": "Prediction of acute myeloid leukaemia risk in healthy individuals",
+      "journal": "Nature",
+      "year": 2018,
+      "citationCount": 840,
+      "doi": "10.1038/s41586-018-0317-6",
+      "sourceUrl": "https://doi.org/10.1038/s41586-018-0317-6",
+      "verified": true
+    },
+    {
+      "title": "Combined Impact of Health Behaviours and Mortality in Men and Women: The EPIC-Norfolk Prospective Population Study",
+      "journal": "PLoS Medicine",
+      "year": 2008,
+      "citationCount": 829,
+      "doi": "10.1371/journal.pmed.0050012",
+      "sourceUrl": "https://doi.org/10.1371/journal.pmed.0050012",
+      "verified": true
+    },
+    {
+      "title": "Validity and repeatability of a simple index derived from the short physical activity questionnaire used in the European Prospective Investigation into Cancer and Nutrition (EPIC) study",
+      "journal": "Public Health Nutrition",
+      "year": 2003,
+      "citationCount": 822,
+      "doi": "10.1079/phn2002439",
+      "sourceUrl": "https://doi.org/10.1079/phn2002439",
+      "verified": true
+    },
+    {
+      "title": "Endogenous Testosterone and Mortality Due to All Causes, Cardiovascular Disease, and Cancer in Men",
+      "journal": "Circulation",
+      "year": 2007,
+      "citationCount": 736,
+      "doi": "10.1161/circulationaha.107.719005",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.107.719005",
+      "verified": true
+    },
+    {
+      "title": "Using human genetics to understand the disease impacts of testosterone in men and women",
+      "journal": "Nature Medicine",
+      "year": 2020,
+      "citationCount": 726,
+      "doi": "10.1038/s41591-020-0751-5",
+      "sourceUrl": "https://doi.org/10.1038/s41591-020-0751-5",
+      "verified": true
+    },
+    {
+      "title": "HMG-coenzyme A reductase inhibition, type 2 diabetes, and bodyweight: evidence from genetic analysis and randomised trials",
+      "journal": "The Lancet",
+      "year": 2014,
+      "citationCount": 702,
+      "doi": "10.1016/s0140-6736(14)61183-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(14)61183-1",
+      "verified": true
+    },
+    {
+      "title": "Variability in the Heritability of Body Mass Index: A Systematic Review and Meta-Regression",
+      "journal": "Frontiers in Endocrinology",
+      "year": 2012,
+      "citationCount": 688,
+      "doi": "10.3389/fendo.2012.00029",
+      "sourceUrl": "https://doi.org/10.3389/fendo.2012.00029",
+      "verified": true
+    },
+    {
+      "title": "Epidemiology of diabetes",
+      "journal": "Medicine",
+      "year": 2014,
+      "citationCount": 678,
+      "doi": "10.1016/j.mpmed.2014.09.007",
+      "sourceUrl": "https://doi.org/10.1016/j.mpmed.2014.09.007",
+      "verified": true
+    },
+    {
+      "title": "Reliability and validity of the combined heart rate and movement sensor Actiheart",
+      "journal": "European Journal of Clinical Nutrition",
+      "year": 2005,
+      "citationCount": 671,
+      "doi": "10.1038/sj.ejcn.1602118",
+      "sourceUrl": "https://doi.org/10.1038/sj.ejcn.1602118",
+      "verified": true
+    },
+    {
+      "title": "Association between alcohol and cardiovascular disease: Mendelian randomisation analysis based on individual participant data",
+      "journal": "BMJ",
+      "year": 2014,
+      "citationCount": 665,
+      "doi": "10.1136/bmj.g4164",
+      "sourceUrl": "https://doi.org/10.1136/bmj.g4164",
+      "verified": true
+    },
+    {
+      "title": "Autocalibration of accelerometer data for free-living physical activity assessment using local gravity and temperature: an evaluation on four continents",
+      "journal": "Journal of Applied Physiology",
+      "year": 2014,
+      "citationCount": 655,
+      "doi": "10.1152/japplphysiol.00421.2014",
+      "sourceUrl": "https://doi.org/10.1152/japplphysiol.00421.2014",
+      "verified": true
+    },
+    {
+      "title": "Meta-analysis and imputation refines the association of 15q25 with smoking quantity",
+      "journal": "Nature Genetics",
+      "year": 2010,
+      "citationCount": 616,
+      "doi": "10.1038/ng.572",
+      "sourceUrl": "https://doi.org/10.1038/ng.572",
+      "verified": true
+    },
+    {
+      "title": "Baseline Serum 25-Hydroxy Vitamin D Is Predictive of Future Glycemic Status and Insulin Resistance",
+      "journal": "Diabetes",
+      "year": 2008,
+      "citationCount": 599,
+      "doi": "10.2337/db08-0593",
+      "sourceUrl": "https://doi.org/10.2337/db08-0593",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide association study identifies five loci associated with lung function",
+      "journal": "Nature Genetics",
+      "year": 2009,
+      "citationCount": 593,
+      "doi": "10.1038/ng.501",
+      "sourceUrl": "https://doi.org/10.1038/ng.501",
+      "verified": true
+    },
+    {
+      "title": "Integrative genomic analysis implicates limited peripheral adipose storage capacity in the pathogenesis of human insulin resistance",
+      "journal": "Nature Genetics",
+      "year": 2016,
+      "citationCount": 592,
+      "doi": "10.1038/ng.3714",
+      "sourceUrl": "https://doi.org/10.1038/ng.3714",
+      "verified": true
+    },
+    {
+      "title": "Mapping the proteo-genomic convergence of human diseases",
+      "journal": "Science",
+      "year": 2021,
+      "citationCount": 582,
+      "doi": "10.1126/science.abj1541",
+      "sourceUrl": "https://doi.org/10.1126/science.abj1541",
+      "verified": true
+    },
+    {
+      "title": "Assessment of physical activity in youth",
+      "journal": "Journal of Applied Physiology",
+      "year": 2008,
+      "citationCount": 579,
+      "doi": "10.1152/japplphysiol.00094.2008",
+      "sourceUrl": "https://doi.org/10.1152/japplphysiol.00094.2008",
+      "verified": true
+    },
+    {
+      "title": "Relation between plasma ascorbic acid and mortality in men and women in EPIC-Norfolk prospective study: a prospective population study",
+      "journal": "The Lancet",
+      "year": 2001,
+      "citationCount": 567,
+      "doi": "10.1016/s0140-6736(00)04128-3",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(00)04128-3",
+      "verified": true
+    },
+    {
+      "title": "New genetic signals for lung function highlight pathways and chronic obstructive pulmonary disease associations across multiple ancestries",
+      "journal": "Nature Genetics",
+      "year": 2019,
+      "citationCount": 567,
+      "doi": "10.1038/s41588-018-0321-7",
+      "sourceUrl": "https://doi.org/10.1038/s41588-018-0321-7",
+      "verified": true
+    },
+    {
+      "title": "A Family with Severe Insulin Resistance and Diabetes Due to a Mutation in <i>AKT2</i>",
+      "journal": "Science",
+      "year": 2004,
+      "citationCount": 554,
+      "doi": "10.1126/science.1096706",
+      "sourceUrl": "https://doi.org/10.1126/science.1096706",
+      "verified": true
+    },
+    {
+      "title": "Differences in the prospective association between individual plasma phospholipid saturated fatty acids and incident type 2 diabetes: the EPIC-InterAct case-cohort study",
+      "journal": "The Lancet Diabetes & Endocrinology",
+      "year": 2014,
+      "citationCount": 542,
+      "doi": "10.1016/s2213-8587(14)70146-9",
+      "sourceUrl": "https://doi.org/10.1016/s2213-8587(14)70146-9",
+      "verified": true
+    },
+    {
+      "title": "GDF15 mediates the effects of metformin on body weight and energy balance",
+      "journal": "Nature",
+      "year": 2019,
+      "citationCount": 539,
+      "doi": "10.1038/s41586-019-1911-y",
+      "sourceUrl": "https://doi.org/10.1038/s41586-019-1911-y",
+      "verified": true
+    },
+    {
+      "title": "Early Age at Menarche Associated with Cardiovascular Disease and Mortality",
+      "journal": "The Journal of Clinical Endocrinology & Metabolism",
+      "year": 2009,
+      "citationCount": 536,
+      "doi": "10.1210/jc.2009-1789",
+      "sourceUrl": "https://doi.org/10.1210/jc.2009-1789",
+      "verified": true
+    },
+    {
+      "title": "Features of the Metabolic Syndrome Are Associated With Objectively Measured Physical Activity and Fitness in Danish Children",
+      "journal": "Diabetes Care",
+      "year": 2004,
+      "citationCount": 533,
+      "doi": "10.2337/diacare.27.9.2141",
+      "sourceUrl": "https://doi.org/10.2337/diacare.27.9.2141",
+      "verified": true
+    },
+    {
+      "title": "Frequency of the WHO metabolic syndrome in European cohorts, and an alternative definition of an insulin resistance syndrome.",
+      "journal": "PubMed",
+      "year": 2002,
+      "citationCount": 526,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2151256084",
+      "verified": true
+    },
+    {
+      "title": "Causal mechanisms and balancing selection inferred from genetic associations with polycystic ovary syndrome",
+      "journal": "Nature Communications",
+      "year": 2015,
+      "citationCount": 520,
+      "doi": "10.1038/ncomms9464",
+      "sourceUrl": "https://doi.org/10.1038/ncomms9464",
+      "verified": true
+    },
+    {
+      "title": "Novel Loci for Adiponectin Levels and Their Influence on Type 2 Diabetes and Metabolic Traits: A Multi-Ethnic Meta-Analysis of 45,891 Individuals",
+      "journal": "PLoS Genetics",
+      "year": 2012,
+      "citationCount": 501,
+      "doi": "10.1371/journal.pgen.1002607",
+      "sourceUrl": "https://doi.org/10.1371/journal.pgen.1002607",
+      "verified": true
+    },
+    {
+      "title": "Criterion-related validity of the last 7-day, short form of the International Physical Activity Questionnaire in Swedish adults",
+      "journal": "Public Health Nutrition",
+      "year": 2006,
+      "citationCount": 498,
+      "doi": "10.1079/phn2005840",
+      "sourceUrl": "https://doi.org/10.1079/phn2005840",
+      "verified": true
+    },
+    {
+      "title": "Plasma protein patterns as comprehensive indicators of health",
+      "journal": "Nature Medicine",
+      "year": 2019,
+      "citationCount": 497,
+      "doi": "10.1038/s41591-019-0665-2",
+      "sourceUrl": "https://doi.org/10.1038/s41591-019-0665-2",
+      "verified": true
+    },
+    {
+      "title": "Genomic and phenotypic insights from an atlas of genetic effects on DNA methylation",
+      "journal": "Nature Genetics",
+      "year": 2021,
+      "citationCount": 497,
+      "doi": "10.1038/s41588-021-00923-x",
+      "sourceUrl": "https://doi.org/10.1038/s41588-021-00923-x",
+      "verified": true
+    },
+    {
+      "title": "Trans-ethnic association study of blood pressure determinants in over 750,000 individuals",
+      "journal": "Nature Genetics",
+      "year": 2018,
+      "citationCount": 481,
+      "doi": "10.1038/s41588-018-0303-9",
+      "sourceUrl": "https://doi.org/10.1038/s41588-018-0303-9",
+      "verified": true
+    },
+    {
+      "title": "Circulating concentrations of insulin-like growth factor-I and development of glucose intolerance: a prospective observational study",
+      "journal": "The Lancet",
+      "year": 2002,
+      "citationCount": 479,
+      "doi": "10.1016/s0140-6736(02)08655-5",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(02)08655-5",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "openalexId": "https://openalex.org/A5100717719"
 }

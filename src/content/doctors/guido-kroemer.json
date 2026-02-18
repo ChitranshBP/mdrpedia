@@ -1,36 +1,492 @@
 {
   "fullName": "Guido Kroemer",
   "slug": "guido-kroemer",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Autophagy",
   "geography": {
-    "city": "Unknown",
-    "country": "France"
+    "country": "France",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">GK</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 74,
-  "hIndex": 297,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 418,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 41877,
+  "livesSaved": 0,
+  "biography": "Guido Kroemer is a cell biologist who has made contributions to the understanding of the role of mitochondria in cell death. He is a member of multiple scientific academies in Europe and is one of the most highly cited authors in cell biology.",
+  "aiSummary": "Guido Kroemer is a autophagy specialist with an H-index of 418 at Université Paris Cité (Faculty). Has been published in Cell, Science, Nature. Based in France.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Université Paris Cité"
-    }
-  ],
-  "bio": "Guido Kroemer is a pioneer in Autophagy at Université Paris Cité, France. With a D-Index of 297 and over 418,768 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Université Paris Cité",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Autophagy"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "The Hallmarks of Aging",
+      "journal": "Cell",
+      "year": 2013,
+      "citationCount": 14260,
+      "doi": "10.1016/j.cell.2013.05.039",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2013.05.039",
+      "verified": true
+    },
+    {
+      "title": "Autophagy in the Pathogenesis of Disease",
+      "journal": "Cell",
+      "year": 2008,
+      "citationCount": 6930,
+      "doi": "10.1016/j.cell.2007.12.018",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2007.12.018",
+      "verified": true
+    },
+    {
+      "title": "Gut microbiome influences efficacy of PD-1–based immunotherapy against epithelial tumors",
+      "journal": "Science",
+      "year": 2017,
+      "citationCount": 5135,
+      "doi": "10.1126/science.aan3706",
+      "sourceUrl": "https://doi.org/10.1126/science.aan3706",
+      "verified": true
+    },
+    {
+      "title": "Hallmarks of aging: An expanding universe",
+      "journal": "Cell",
+      "year": 2023,
+      "citationCount": 4853,
+      "doi": "10.1016/j.cell.2022.11.001",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2022.11.001",
+      "verified": true
+    },
+    {
+      "title": "Molecular characterization of mitochondrial apoptosis-inducing factor",
+      "journal": "Nature",
+      "year": 1999,
+      "citationCount": 4034,
+      "doi": "10.1038/17135",
+      "sourceUrl": "https://doi.org/10.1038/17135",
+      "verified": true
+    },
+    {
+      "title": "Ferroptosis: molecular mechanisms and health implications",
+      "journal": "Cell Research",
+      "year": 2020,
+      "citationCount": 3746,
+      "doi": "10.1038/s41422-020-00441-1",
+      "sourceUrl": "https://doi.org/10.1038/s41422-020-00441-1",
+      "verified": true
+    },
+    {
+      "title": "Self-eating and self-killing: crosstalk between autophagy and apoptosis",
+      "journal": "Nature Reviews Molecular Cell Biology",
+      "year": 2007,
+      "citationCount": 3602,
+      "doi": "10.1038/nrm2239",
+      "sourceUrl": "https://doi.org/10.1038/nrm2239",
+      "verified": true
+    },
+    {
+      "title": "Mitochondrial Membrane Permeabilization in Cell Death",
+      "journal": "Physiological Reviews",
+      "year": 2007,
+      "citationCount": 3531,
+      "doi": "10.1152/physrev.00013.2006",
+      "sourceUrl": "https://doi.org/10.1152/physrev.00013.2006",
+      "verified": true
+    },
+    {
+      "title": "Autophagy and the Integrated Stress Response",
+      "journal": "Molecular Cell",
+      "year": 2010,
+      "citationCount": 3436,
+      "doi": "10.1016/j.molcel.2010.09.023",
+      "sourceUrl": "https://doi.org/10.1016/j.molcel.2010.09.023",
+      "verified": true
+    },
+    {
+      "title": "The Pathophysiology of Mitochondrial Cell Death",
+      "journal": "Science",
+      "year": 2004,
+      "citationCount": 3317,
+      "doi": "10.1126/science.1099320",
+      "sourceUrl": "https://doi.org/10.1126/science.1099320",
+      "verified": true
+    },
+    {
+      "title": "Classification of cell death: recommendations of the Nomenclature Committee on Cell Death 2009",
+      "journal": "Cell Death and Differentiation",
+      "year": 2008,
+      "citationCount": 3300,
+      "doi": "10.1038/cdd.2008.150",
+      "sourceUrl": "https://doi.org/10.1038/cdd.2008.150",
+      "verified": true
+    },
+    {
+      "title": "Anticancer immunotherapy by CTLA-4 blockade relies on the gut microbiota",
+      "journal": "Science",
+      "year": 2015,
+      "citationCount": 3297,
+      "doi": "10.1126/science.aad1329",
+      "sourceUrl": "https://doi.org/10.1126/science.aad1329",
+      "verified": true
+    },
+    {
+      "title": "Immunogenic Cell Death in Cancer Therapy",
+      "journal": "Annual Review of Immunology",
+      "year": 2012,
+      "citationCount": 3128,
+      "doi": "10.1146/annurev-immunol-032712-100008",
+      "sourceUrl": "https://doi.org/10.1146/annurev-immunol-032712-100008",
+      "verified": true
+    },
+    {
+      "title": "Mitochondrial control of cell death",
+      "journal": "Nature Medicine",
+      "year": 2000,
+      "citationCount": 3097,
+      "doi": "10.1038/74994",
+      "sourceUrl": "https://doi.org/10.1038/74994",
+      "verified": true
+    },
+    {
+      "title": "Calreticulin exposure dictates the immunogenicity of cancer cell death",
+      "journal": "Nature Medicine",
+      "year": 2006,
+      "citationCount": 3004,
+      "doi": "10.1038/nm1523",
+      "sourceUrl": "https://doi.org/10.1038/nm1523",
+      "verified": true
+    },
+    {
+      "title": "Toll-like receptor 4–dependent contribution of the immune system to anticancer chemotherapy and radiotherapy",
+      "journal": "Nature Medicine",
+      "year": 2007,
+      "citationCount": 2920,
+      "doi": "10.1038/nm1622",
+      "sourceUrl": "https://doi.org/10.1038/nm1622",
+      "verified": true
+    },
+    {
+      "title": "Immunogenic cell death in cancer and infectious disease",
+      "journal": "Nature reviews. Immunology",
+      "year": 2016,
+      "citationCount": 2831,
+      "doi": "10.1038/nri.2016.107",
+      "sourceUrl": "https://doi.org/10.1038/nri.2016.107",
+      "verified": true
+    },
+    {
+      "title": "Broadening horizons: the role of ferroptosis in cancer",
+      "journal": "Nature Reviews Clinical Oncology",
+      "year": 2021,
+      "citationCount": 2731,
+      "doi": "10.1038/s41571-020-00462-0",
+      "sourceUrl": "https://doi.org/10.1038/s41571-020-00462-0",
+      "verified": true
+    },
+    {
+      "title": "Biological Functions of Autophagy Genes: A Disease Perspective",
+      "journal": "Cell",
+      "year": 2019,
+      "citationCount": 2707,
+      "doi": "10.1016/j.cell.2018.09.048",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2018.09.048",
+      "verified": true
+    },
+    {
+      "title": "Molecular mechanisms of cisplatin resistance",
+      "journal": "Oncogene",
+      "year": 2011,
+      "citationCount": 2697,
+      "doi": "10.1038/onc.2011.384",
+      "sourceUrl": "https://doi.org/10.1038/onc.2011.384",
+      "verified": true
+    },
+    {
+      "title": "The molecular machinery of regulated cell death",
+      "journal": "Cell Research",
+      "year": 2019,
+      "citationCount": 2410,
+      "doi": "10.1038/s41422-019-0164-5",
+      "sourceUrl": "https://doi.org/10.1038/s41422-019-0164-5",
+      "verified": true
+    },
+    {
+      "title": "Molecular definitions of cell death subroutines: recommendations of the Nomenclature Committee on Cell Death 2012",
+      "journal": "Cell Death and Differentiation",
+      "year": 2011,
+      "citationCount": 2401,
+      "doi": "10.1038/cdd.2011.96",
+      "sourceUrl": "https://doi.org/10.1038/cdd.2011.96",
+      "verified": true
+    },
+    {
+      "title": "Molecular mechanisms of necroptosis: an ordered cellular explosion",
+      "journal": "Nature Reviews Molecular Cell Biology",
+      "year": 2010,
+      "citationCount": 2312,
+      "doi": "10.1038/nrm2970",
+      "sourceUrl": "https://doi.org/10.1038/nrm2970",
+      "verified": true
+    },
+    {
+      "title": "Tumor Cell Metabolism: Cancer's Achilles' Heel",
+      "journal": "Cancer Cell",
+      "year": 2008,
+      "citationCount": 2255,
+      "doi": "10.1016/j.ccr.2008.05.005",
+      "sourceUrl": "https://doi.org/10.1016/j.ccr.2008.05.005",
+      "verified": true
+    },
+    {
+      "title": "The immune contexture in cancer prognosis and treatment",
+      "journal": "Nature Reviews Clinical Oncology",
+      "year": 2017,
+      "citationCount": 2209,
+      "doi": "10.1038/nrclinonc.2017.101",
+      "sourceUrl": "https://doi.org/10.1038/nrclinonc.2017.101",
+      "verified": true
+    },
+    {
+      "title": "Self-consumption: the interplay of autophagy and apoptosis",
+      "journal": "Nature Reviews Molecular Cell Biology",
+      "year": 2014,
+      "citationCount": 2116,
+      "doi": "10.1038/nrm3735",
+      "sourceUrl": "https://doi.org/10.1038/nrm3735",
+      "verified": true
+    },
+    {
+      "title": "Autophagy and Aging",
+      "journal": "Cell",
+      "year": 2011,
+      "citationCount": 2046,
+      "doi": "10.1016/j.cell.2011.07.030",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2011.07.030",
+      "verified": true
+    },
+    {
+      "title": "THE MITOCHONDRIAL DEATH/LIFE REGULATOR IN APOPTOSIS AND NECROSIS",
+      "journal": "Annual Review of Physiology",
+      "year": 1998,
+      "citationCount": 1965,
+      "doi": "10.1146/annurev.physiol.60.1.619",
+      "sourceUrl": "https://doi.org/10.1146/annurev.physiol.60.1.619",
+      "verified": true
+    },
+    {
+      "title": "The Intestinal Microbiota Modulates the Anticancer Immune Effects of Cyclophosphamide",
+      "journal": "Science",
+      "year": 2013,
+      "citationCount": 1956,
+      "doi": "10.1126/science.1240537",
+      "sourceUrl": "https://doi.org/10.1126/science.1240537",
+      "verified": true
+    },
+    {
+      "title": "Activation of the NLRP3 inflammasome in dendritic cells induces IL-1β–dependent adaptive immunity against tumors",
+      "journal": "Nature Medicine",
+      "year": 2009,
+      "citationCount": 1799,
+      "doi": "10.1038/nm.2028",
+      "sourceUrl": "https://doi.org/10.1038/nm.2028",
+      "verified": true
+    },
+    {
+      "title": "Macrophages and Metabolism in the Tumor Microenvironment",
+      "journal": "Cell Metabolism",
+      "year": 2019,
+      "citationCount": 1779,
+      "doi": "10.1016/j.cmet.2019.06.001",
+      "sourceUrl": "https://doi.org/10.1016/j.cmet.2019.06.001",
+      "verified": true
+    },
+    {
+      "title": "The proto-oncogene Bcl-2 and its role in regulating apoptosis",
+      "journal": "Nature Medicine",
+      "year": 1997,
+      "citationCount": 1759,
+      "doi": "10.1038/nm0697-614",
+      "sourceUrl": "https://doi.org/10.1038/nm0697-614",
+      "verified": true
+    },
+    {
+      "title": "Immunological aspects of cancer chemotherapy",
+      "journal": "Nature reviews. Immunology",
+      "year": 2007,
+      "citationCount": 1648,
+      "doi": "10.1038/nri2216",
+      "sourceUrl": "https://doi.org/10.1038/nri2216",
+      "verified": true
+    },
+    {
+      "title": "Targeting mitochondria for cancer therapy",
+      "journal": "Nature Reviews Drug Discovery",
+      "year": 2010,
+      "citationCount": 1610,
+      "doi": "10.1038/nrd3137",
+      "sourceUrl": "https://doi.org/10.1038/nrd3137",
+      "verified": true
+    },
+    {
+      "title": "Inhibition of Macroautophagy Triggers Apoptosis",
+      "journal": "Molecular and Cellular Biology",
+      "year": 2005,
+      "citationCount": 1602,
+      "doi": "10.1128/mcb.25.3.1025-1040.2005",
+      "sourceUrl": "https://doi.org/10.1128/mcb.25.3.1025-1040.2005",
+      "verified": true
+    },
+    {
+      "title": "Induction of autophagy by spermidine promotes longevity",
+      "journal": "Nature Cell Biology",
+      "year": 2009,
+      "citationCount": 1593,
+      "doi": "10.1038/ncb1975",
+      "sourceUrl": "https://doi.org/10.1038/ncb1975",
+      "verified": true
+    },
+    {
+      "title": "Molecular definitions of autophagy and related processes",
+      "journal": "The EMBO Journal",
+      "year": 2017,
+      "citationCount": 1572,
+      "doi": "10.15252/embj.201796697",
+      "sourceUrl": "https://doi.org/10.15252/embj.201796697",
+      "verified": true
+    },
+    {
+      "title": "Sequential reduction of mitochondrial transmembrane potential and generation of reactive oxygen species in early programmed cell death.",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 1995,
+      "citationCount": 1563,
+      "doi": "10.1084/jem.182.2.367",
+      "sourceUrl": "https://doi.org/10.1084/jem.182.2.367",
+      "verified": true
+    },
+    {
+      "title": "Mitochondrial control of apoptosis",
+      "journal": "Immunology Today",
+      "year": 1997,
+      "citationCount": 1484,
+      "doi": "10.1016/s0167-5699(97)80014-x",
+      "sourceUrl": "https://doi.org/10.1016/s0167-5699(97)80014-x",
+      "verified": true
+    },
+    {
+      "title": "Immunological Effects of Conventional Chemotherapy and Targeted Anticancer Agents",
+      "journal": "Cancer Cell",
+      "year": 2015,
+      "citationCount": 1462,
+      "doi": "10.1016/j.ccell.2015.10.012",
+      "sourceUrl": "https://doi.org/10.1016/j.ccell.2015.10.012",
+      "verified": true
+    },
+    {
+      "title": "Caspase-dependent immunogenicity of doxorubicin-induced tumor cell death",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 2005,
+      "citationCount": 1449,
+      "doi": "10.1084/jem.20050915",
+      "sourceUrl": "https://doi.org/10.1084/jem.20050915",
+      "verified": true
+    },
+    {
+      "title": "Organelle-specific initiation of cell death pathways",
+      "journal": "Nature Cell Biology",
+      "year": 2001,
+      "citationCount": 1446,
+      "doi": "10.1038/ncb1101-e255",
+      "sourceUrl": "https://doi.org/10.1038/ncb1101-e255",
+      "verified": true
+    },
+    {
+      "title": "Autophagy in major human diseases",
+      "journal": "The EMBO Journal",
+      "year": 2021,
+      "citationCount": 1432,
+      "doi": "10.15252/embj.2021108863",
+      "sourceUrl": "https://doi.org/10.15252/embj.2021108863",
+      "verified": true
+    },
+    {
+      "title": "Autophagic cell death: the story of a misnomer",
+      "journal": "Nature Reviews Molecular Cell Biology",
+      "year": 2008,
+      "citationCount": 1416,
+      "doi": "10.1038/nrm2529",
+      "sourceUrl": "https://doi.org/10.1038/nrm2529",
+      "verified": true
+    },
+    {
+      "title": "Lysosomal membrane permeabilization in cell death",
+      "journal": "Oncogene",
+      "year": 2008,
+      "citationCount": 1381,
+      "doi": "10.1038/onc.2008.310",
+      "sourceUrl": "https://doi.org/10.1038/onc.2008.310",
+      "verified": true
+    },
+    {
+      "title": "Mechanisms of cytochrome c release from mitochondria",
+      "journal": "Cell Death and Differentiation",
+      "year": 2006,
+      "citationCount": 1377,
+      "doi": "10.1038/sj.cdd.4401950",
+      "sourceUrl": "https://doi.org/10.1038/sj.cdd.4401950",
+      "verified": true
+    },
+    {
+      "title": "Mitochondrial control of nuclear apoptosis.",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 1996,
+      "citationCount": 1361,
+      "doi": "10.1084/jem.183.4.1533",
+      "sourceUrl": "https://doi.org/10.1084/jem.183.4.1533",
+      "verified": true
+    },
+    {
+      "title": "Essential role of the mitochondrial apoptosis-inducing factor in programmed cell death",
+      "journal": "Nature",
+      "year": 2001,
+      "citationCount": 1343,
+      "doi": "10.1038/35069004",
+      "sourceUrl": "https://doi.org/10.1038/35069004",
+      "verified": true
+    },
+    {
+      "title": "Targeting the tumor microenvironment: removing obstruction to anticancer immune responses and immunotherapy",
+      "journal": "Annals of Oncology",
+      "year": 2016,
+      "citationCount": 1326,
+      "doi": "10.1093/annonc/mdw168",
+      "sourceUrl": "https://doi.org/10.1093/annonc/mdw168",
+      "verified": true
+    },
+    {
+      "title": "Autophagy-Dependent Anticancer Immune Responses Induced by Chemotherapeutic Agents in Mice",
+      "journal": "Science",
+      "year": 2011,
+      "citationCount": 1295,
+      "doi": "10.1126/science.1208347",
+      "sourceUrl": "https://doi.org/10.1126/science.1208347",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:12.000Z",
+  "openalexId": "https://openalex.org/A5075296559"
 }

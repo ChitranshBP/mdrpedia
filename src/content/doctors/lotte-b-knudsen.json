@@ -1,31 +1,491 @@
 {
   "fullName": "Lotte B. Knudsen",
   "slug": "lotte-b-knudsen",
-  "title": "MD, PhD",
-  "specialty": "GLP-1 Drug Design",
+  "title": "MD",
+  "specialty": "GLP-1 Drug Development",
   "geography": {
-    "city": "Unknown",
-    "country": "Denmark"
+    "country": "Denmark",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">LB</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 39,
-  "hIndex": 154,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 14.4,
+  "hIndex": 138,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 13800,
+  "livesSaved": 0,
+  "biography": "Lotte Bjerre Knudsen is a Danish scientist and university professor. She led the development of liraglutide and oversaw the development of semaglutide, two notable drugs approved for indications in the treatment of diabetes and obesity.",
+  "aiSummary": "Lotte B. Knudsen is a glp-1 drug development specialist with an H-index of 138 at Novo Nordisk (Faculty). Has been published in Nature, Nature medicine, Science translational medicine. Based in Denmark.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Novo Nordisk"
-    }
-  ],
-  "bio": "Lotte B. Knudsen is a pioneer in GLP-1 Drug Design at Novo Nordisk, Denmark. With a D-Index of 154 and over 138,000 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Novo Nordisk",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "GLP-1 Drug Development"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "A comprehensive spatio-cellular map of the human hypothalamus.",
+      "journal": "Nature",
+      "year": 2025,
+      "citationCount": 54,
+      "doi": "10.1038/s41586-024-08504-8",
+      "sourceUrl": "https://doi.org/10.1038/s41586-024-08504-8",
+      "verified": true
+    },
+    {
+      "title": "Proteomic changes upon treatment with semaglutide in individuals with obesity.",
+      "journal": "Nature medicine",
+      "year": 2025,
+      "citationCount": 46,
+      "doi": "10.1038/s41591-024-03355-2",
+      "sourceUrl": "https://doi.org/10.1038/s41591-024-03355-2",
+      "verified": true
+    },
+    {
+      "title": "Glp1r-Lepr coexpressing neurons modulate the suppression of food intake and body weight by a GLP-1/leptin dual agonist.",
+      "journal": "Science translational medicine",
+      "year": 2024,
+      "citationCount": 21,
+      "doi": "10.1126/scitranslmed.adk4908",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.adk4908",
+      "verified": true
+    },
+    {
+      "title": "AR coactivators, CBP/p300, are critical mediators of DNA repair in prostate cancer.",
+      "journal": "Oncogene",
+      "year": 2024,
+      "citationCount": 14,
+      "doi": "10.1038/s41388-024-03148-4",
+      "sourceUrl": "https://doi.org/10.1038/s41388-024-03148-4",
+      "verified": true
+    },
+    {
+      "title": "Barriers and new opportunities in developing effective therapies for diabetic neuropathy: International expert consensus recommendations.",
+      "journal": "Diabetes research and clinical practice",
+      "year": 2025,
+      "citationCount": 6,
+      "doi": "10.1016/j.diabres.2025.112010",
+      "sourceUrl": "https://doi.org/10.1016/j.diabres.2025.112010",
+      "verified": true
+    },
+    {
+      "title": "Facilitators and challenges of implementing a digital patient education programme for rheumatoid arthritis into clinical practice.",
+      "journal": "BMC health services research",
+      "year": 2024,
+      "citationCount": 6,
+      "doi": "10.1186/s12913-024-11597-6",
+      "sourceUrl": "https://doi.org/10.1186/s12913-024-11597-6",
+      "verified": true
+    },
+    {
+      "title": "GLP-1 for Treating Obesity-Origin, History, and Evolution: 2024 Lasker-DeBakey Clinical Medical Research Award.",
+      "journal": "JAMA",
+      "year": 2024,
+      "citationCount": 5,
+      "doi": "10.1001/jama.2024.18000",
+      "sourceUrl": "https://doi.org/10.1001/jama.2024.18000",
+      "verified": true
+    },
+    {
+      "title": "NORDIC denoising on VASO data.",
+      "journal": "Frontiers in neuroscience",
+      "year": 2025,
+      "citationCount": 5,
+      "doi": "10.3389/fnins.2024.1499762",
+      "sourceUrl": "https://doi.org/10.3389/fnins.2024.1499762",
+      "verified": true
+    },
+    {
+      "title": "Insight into protein crosslinking and casein polymerization in pre- and posthydrolyzed lactose-free ultra-high-temperature milk during long-term storage.",
+      "journal": "Journal of dairy science",
+      "year": 2024,
+      "citationCount": 5,
+      "doi": "10.3168/jds.2024-25103",
+      "sourceUrl": "https://doi.org/10.3168/jds.2024-25103",
+      "verified": true
+    },
+    {
+      "title": "Models of Endocrine-Disrupting Effects: Human Placental Steroidogenesis.",
+      "journal": "Basic &amp; clinical pharmacology &amp; toxicology",
+      "year": 2025,
+      "citationCount": 4,
+      "doi": "10.1111/bcpt.70073",
+      "sourceUrl": "https://doi.org/10.1111/bcpt.70073",
+      "verified": true
+    },
+    {
+      "title": "Short-term gradient imperfections in high-resolution EPI lead to Fuzzy Ripple artifacts.",
+      "journal": "Magnetic resonance in medicine",
+      "year": 2025,
+      "citationCount": 4,
+      "doi": "10.1002/mrm.30489",
+      "sourceUrl": "https://doi.org/10.1002/mrm.30489",
+      "verified": true
+    },
+    {
+      "title": "Serum concentrations of per- and poly-fluoroalkyl substances (PFAS) in Danish pregnant women-temporal trends during pregnancy, correlations with partners, associations with physical activity, and blood lipid concentrations.",
+      "journal": "Environmental health : a global access science source",
+      "year": 2025,
+      "citationCount": 3,
+      "doi": "10.1186/s12940-025-01170-x",
+      "sourceUrl": "https://doi.org/10.1186/s12940-025-01170-x",
+      "verified": true
+    },
+    {
+      "title": "On the Ultrastructure of Aberrant Basaloid Cells in Idiopathic Pulmonary Fibrosis.",
+      "journal": "American journal of respiratory cell and molecular biology",
+      "year": 2024,
+      "citationCount": 3,
+      "doi": "10.1165/rcmb.2024-0218LE",
+      "sourceUrl": "https://doi.org/10.1165/rcmb.2024-0218LE",
+      "verified": true
+    },
+    {
+      "title": "Ceftriaxone to Prevent Early-Onset Pneumonia in Comatose Patients Following Out-of-Hospital Cardiac Arrest: A Pilot Randomized Controlled Trial and Resistome Assessment (PROTECT).",
+      "journal": "Chest",
+      "year": 2026,
+      "citationCount": 2,
+      "doi": "10.1016/j.chest.2025.08.007",
+      "sourceUrl": "https://doi.org/10.1016/j.chest.2025.08.007",
+      "verified": true
+    },
+    {
+      "title": "Development and validation of a patient knowledge questionnaire for rheumatoid arthritis (PKQ-RA-11) in Danish and German.",
+      "journal": "Scandinavian journal of rheumatology",
+      "year": 2025,
+      "citationCount": 2,
+      "doi": "10.1080/03009742.2025.2463734",
+      "sourceUrl": "https://doi.org/10.1080/03009742.2025.2463734",
+      "verified": true
+    },
+    {
+      "title": "Point-of-Care Ultrasound, an Integral Role in the Future of Enhanced Recovery After Surgery?",
+      "journal": "Anesthesia and analgesia",
+      "year": 2025,
+      "citationCount": 2,
+      "doi": "10.1213/ANE.0000000000007196",
+      "sourceUrl": "https://doi.org/10.1213/ANE.0000000000007196",
+      "verified": true
+    },
+    {
+      "title": "The effectiveness of diabetes training of psychiatric health professionals on individuals with diabetes and psychiatric disorders - a pragmatic controlled trial in Denmark.",
+      "journal": "BMC medical education",
+      "year": 2024,
+      "citationCount": 1,
+      "doi": "10.1186/s12909-024-06288-z",
+      "sourceUrl": "https://doi.org/10.1186/s12909-024-06288-z",
+      "verified": true
+    },
+    {
+      "title": "Author Correction: A comprehensive spatio-cellular map of the human hypothalamus.",
+      "journal": "Nature",
+      "year": 2025,
+      "citationCount": 1,
+      "doi": "10.1038/s41586-025-08826-1",
+      "sourceUrl": "https://doi.org/10.1038/s41586-025-08826-1",
+      "verified": true
+    },
+    {
+      "title": "Chemical risk analysis competence in the Nordics is at stake.",
+      "journal": "Environmental science and pollution research international",
+      "year": 2025,
+      "citationCount": 1,
+      "doi": "10.1007/s11356-025-36318-2",
+      "sourceUrl": "https://doi.org/10.1007/s11356-025-36318-2",
+      "verified": true
+    },
+    {
+      "title": "Reflection of serum PCB concentrations in silicone wristbands, hand wipes, indoor air, and dust and the associations between exposure and thyroid hormone homeostasis.",
+      "journal": "Environmental research",
+      "year": 2026,
+      "citationCount": 1,
+      "doi": "10.1016/j.envres.2025.123432",
+      "sourceUrl": "https://doi.org/10.1016/j.envres.2025.123432",
+      "verified": true
+    },
+    {
+      "title": "Reduced surfactant protein B levels impede unfolding of the pulmonary blood-gas barrier during inspiration in mice.",
+      "journal": "Journal of applied physiology (Bethesda, Md. : 1985)",
+      "year": 2025,
+      "citationCount": 1,
+      "doi": "10.1152/japplphysiol.00234.2025",
+      "sourceUrl": "https://doi.org/10.1152/japplphysiol.00234.2025",
+      "verified": true
+    },
+    {
+      "title": "Shortcut to the needle in the haystack? Screening for maturity onset diabetes of the young in a population of women with gestational diabetes.",
+      "journal": "Diabetic medicine : a journal of the British Diabetic Association",
+      "year": 2025,
+      "citationCount": 1,
+      "doi": "10.1111/dme.70021",
+      "sourceUrl": "https://doi.org/10.1111/dme.70021",
+      "verified": true
+    },
+    {
+      "title": "The laminar pattern of proprioceptive activation in human primary motor cortex.",
+      "journal": "Cerebral cortex (New York, N.Y. : 1991)",
+      "year": 2025,
+      "citationCount": 1,
+      "doi": "10.1093/cercor/bhaf076",
+      "sourceUrl": "https://doi.org/10.1093/cercor/bhaf076",
+      "verified": true
+    },
+    {
+      "title": "Poststroke Translocator Protein Expression Dynamics and Correlations to Chronic Infarction: A [123I]-CLINDE-SPECT Study.",
+      "journal": "Journal of neuroimaging : official journal of the American Society of Neuroimaging",
+      "year": 2025,
+      "citationCount": 1,
+      "doi": "10.1111/jon.70002",
+      "sourceUrl": "https://doi.org/10.1111/jon.70002",
+      "verified": true
+    },
+    {
+      "title": "Does exercise truly affect brain-wide glucose metabolism?",
+      "journal": "The Journal of physiology",
+      "year": 2025,
+      "citationCount": 1,
+      "doi": "10.1113/JP288329",
+      "sourceUrl": "https://doi.org/10.1113/JP288329",
+      "verified": true
+    },
+    {
+      "title": "Immunogenicity of SARS-CoV-2 primary vaccination and boosters in patients with immune-mediated inflammatory diseases: Impact of immunosuppressive therapy.",
+      "journal": "Vaccine",
+      "year": 2026,
+      "citationCount": 0,
+      "doi": "10.1016/j.vaccine.2025.128155",
+      "sourceUrl": "https://doi.org/10.1016/j.vaccine.2025.128155",
+      "verified": true
+    },
+    {
+      "title": "A Personalized and Smartphone-Based Serious Gaming App Targeting Cognitive Impairments in Alcohol Use Disorder: Double-Blinded, Randomized Controlled Efficacy Trial Among Outpatients.",
+      "journal": "JMIR mental health",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.2196/67167",
+      "sourceUrl": "https://doi.org/10.2196/67167",
+      "verified": true
+    },
+    {
+      "title": "Modulation of metabolic, inflammatory and fibrotic pathways by semaglutide in metabolic dysfunction-associated steatohepatitis.",
+      "journal": "Nature medicine",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.1038/s41591-025-03799-0",
+      "sourceUrl": "https://doi.org/10.1038/s41591-025-03799-0",
+      "verified": true
+    },
+    {
+      "title": "Repurposing glucagon-like peptide-1 receptor agonists for the treatment of neurodegenerative disorders.",
+      "journal": "Nature aging",
+      "year": 2026,
+      "citationCount": 0,
+      "doi": "10.1038/s43587-025-01029-3",
+      "sourceUrl": "https://doi.org/10.1038/s43587-025-01029-3",
+      "verified": true
+    },
+    {
+      "title": "Impact of thermal and physiological denoising on laminar functional connectivity.",
+      "journal": "Scientific reports",
+      "year": 2026,
+      "citationCount": 0,
+      "doi": "10.1038/s41598-026-37599-4",
+      "sourceUrl": "https://doi.org/10.1038/s41598-026-37599-4",
+      "verified": true
+    },
+    {
+      "title": "Ultra-high-resolution synchrotron phase-contrast CT enables microstructural pulmonary imaging at clinical dose levels.",
+      "journal": "Respiratory research",
+      "year": 2026,
+      "citationCount": 0,
+      "doi": "10.1186/s12931-026-03561-1",
+      "sourceUrl": "https://doi.org/10.1186/s12931-026-03561-1",
+      "verified": true
+    },
+    {
+      "title": "Computational modeling and simulation for medical devices: a summary of the 2024 FDA/MDIC Symposium.",
+      "journal": "Progress in biomedical engineering (Bristol, England)",
+      "year": 2026,
+      "citationCount": 0,
+      "doi": "10.1088/2516-1091/ae1c05",
+      "sourceUrl": "https://doi.org/10.1088/2516-1091/ae1c05",
+      "verified": true
+    },
+    {
+      "title": "Prevalence and predictors of prolonged grief disorder, anxiety and depression in bereaved ALS family caregivers: a national survey of distress and support needs after bereavement.",
+      "journal": "Amyotrophic lateral sclerosis &amp; frontotemporal degeneration",
+      "year": 2026,
+      "citationCount": 0,
+      "doi": "10.1080/21678421.2025.2523948",
+      "sourceUrl": "https://doi.org/10.1080/21678421.2025.2523948",
+      "verified": true
+    },
+    {
+      "title": "Release of &#x3b2;-casomorphin-7 in A1/A1 and A2/A2 dairy systems: Insights from simulated semi-dynamic gastrointestinal digestion.",
+      "journal": "Food chemistry",
+      "year": 2026,
+      "citationCount": 0,
+      "doi": "10.1016/j.foodchem.2026.148157",
+      "sourceUrl": "https://doi.org/10.1016/j.foodchem.2026.148157",
+      "verified": true
+    },
+    {
+      "title": "Cerebral glucose metabolism: the potential missing link in autism research-a literature&#xa0;review and meta-analytic synthesis.",
+      "journal": "Journal of neural transmission (Vienna, Austria : 1996)",
+      "year": 2026,
+      "citationCount": 0,
+      "doi": "10.1007/s00702-025-03093-w",
+      "sourceUrl": "https://doi.org/10.1007/s00702-025-03093-w",
+      "verified": true
+    },
+    {
+      "title": "The lifespan continuum of brain disorders: investigating links between neurodevelopmental and neurodegenerative disease-chicken or egg?",
+      "journal": "Journal of neural transmission (Vienna, Austria : 1996)",
+      "year": 2026,
+      "citationCount": 0,
+      "doi": "10.1007/s00702-025-03078-9",
+      "sourceUrl": "https://doi.org/10.1007/s00702-025-03078-9",
+      "verified": true
+    },
+    {
+      "title": "Deep inflations maintain surfactant function and alveolar fluid balance in lungs with reduced surfactant protein B levels during mechanical ventilation.",
+      "journal": "Journal of applied physiology (Bethesda, Md. : 1985)",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.1152/japplphysiol.00768.2025",
+      "sourceUrl": "https://doi.org/10.1152/japplphysiol.00768.2025",
+      "verified": true
+    },
+    {
+      "title": "To the homeRNAmax: Developing an Improved Blood Self-Collection and Stabilization Platform for Remote Transcriptomic Studies.",
+      "journal": "bioRxiv : the preprint server for biology",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.1101/2025.11.24.690053",
+      "sourceUrl": "https://doi.org/10.1101/2025.11.24.690053",
+      "verified": true
+    },
+    {
+      "title": "Characterization of alveolar epithelial cells type II during postnatal lung development in relation to alveolarization - Stereological studies of rat lungs.",
+      "journal": "PloS one",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.1371/journal.pone.0337002",
+      "sourceUrl": "https://doi.org/10.1371/journal.pone.0337002",
+      "verified": true
+    },
+    {
+      "title": "Spanning spatial scales with functional imaging in the human brain at 10.5 Tesla.",
+      "journal": "bioRxiv : the preprint server for biology",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.1101/2024.12.20.629800",
+      "sourceUrl": "https://doi.org/10.1101/2024.12.20.629800",
+      "verified": true
+    },
+    {
+      "title": "Liraglutide upregulates the Cftr gene and regulates the mucus transcriptome profile in Brunner's glands in mice.",
+      "journal": "Clinical and translational medicine",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.1002/ctm2.70510",
+      "sourceUrl": "https://doi.org/10.1002/ctm2.70510",
+      "verified": true
+    },
+    {
+      "title": "Suspended Tissue Engineering with Assemblable Microfluidics (STEAM).",
+      "journal": "bioRxiv : the preprint server for biology",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.1101/2025.10.28.684690",
+      "sourceUrl": "https://doi.org/10.1101/2025.10.28.684690",
+      "verified": true
+    },
+    {
+      "title": "The classic azole antifungal drugs affect steroidogenic activity in a human term placenta model.",
+      "journal": "Pharmacological research",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.1016/j.phrs.2025.107940",
+      "sourceUrl": "https://doi.org/10.1016/j.phrs.2025.107940",
+      "verified": true
+    },
+    {
+      "title": "Correction: The expression of the surfactant proteins SP-A and SP-B during postnatal alveolarization of the rat lung.",
+      "journal": "PloS one",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.1371/journal.pone.0329954",
+      "sourceUrl": "https://doi.org/10.1371/journal.pone.0329954",
+      "verified": true
+    },
+    {
+      "title": "A Numerical Alternative to MR Thermometry for Safety Validation of Multi-Channel RF Transmit Coils.",
+      "journal": "bioRxiv : the preprint server for biology",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.1101/2025.06.07.657475",
+      "sourceUrl": "https://doi.org/10.1101/2025.06.07.657475",
+      "verified": true
+    },
+    {
+      "title": "Multimodal neuroimaging insights into the neurobiology of healthy aging across the lifespan.",
+      "journal": "European journal of nuclear medicine and molecular imaging",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.1007/s00259-025-07100-w",
+      "sourceUrl": "https://doi.org/10.1007/s00259-025-07100-w",
+      "verified": true
+    },
+    {
+      "title": "Dissimilarities in volume and function of social brain regions in autism.",
+      "journal": "Journal of neural transmission (Vienna, Austria : 1996)",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.1007/s00702-025-02934-y",
+      "sourceUrl": "https://doi.org/10.1007/s00702-025-02934-y",
+      "verified": true
+    },
+    {
+      "title": "Solid-phase supported direct 18F-radiofluorination of peptides.",
+      "journal": "Bioorganic &amp; medicinal chemistry letters",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.1016/j.bmcl.2025.130118",
+      "sourceUrl": "https://doi.org/10.1016/j.bmcl.2025.130118",
+      "verified": true
+    },
+    {
+      "title": "Thresholding and Perfusion Considerations in Interpreting Reduced Brain Responsiveness With Escitalopram.",
+      "journal": "The American journal of psychiatry",
+      "year": 2026,
+      "citationCount": 0,
+      "doi": "10.1176/appi.ajp.20250735",
+      "sourceUrl": "https://doi.org/10.1176/appi.ajp.20250735",
+      "verified": true
+    },
+    {
+      "title": "Editorial: Reviews in: regulatory science 2024-2025.",
+      "journal": "Frontiers in medicine",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.3389/fmed.2025.1705977",
+      "sourceUrl": "https://doi.org/10.3389/fmed.2025.1705977",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:16.000Z"
 }

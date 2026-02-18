@@ -1,4 +1,11 @@
 import { prisma } from './prisma';
+import { createLogger } from './logger';
+import { getClientIP } from './utils';
+
+const log = createLogger('Audit');
+
+/** Details object for admin action logging */
+type AdminActionDetails = Record<string, unknown> | undefined;
 
 /**
  * Log administrative actions to the database
@@ -6,11 +13,11 @@ import { prisma } from './prisma';
 export async function logAdminAction(
     action: string,
     target: string | undefined,
-    details: any | undefined,
+    details: AdminActionDetails,
     request: Request
 ) {
     try {
-        const ipAddress = request.headers.get('x-forwarded-for') || 'unknown';
+        const ipAddress = getClientIP(request);
         const userAgent = request.headers.get('user-agent') || 'unknown';
 
         await prisma.adminLog.create({
@@ -23,6 +30,6 @@ export async function logAdminAction(
             }
         });
     } catch (error) {
-        console.error("Failed to log admin action:", error);
+        log.error('Failed to log admin action', error, { action, target });
     }
 }

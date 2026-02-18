@@ -59,7 +59,14 @@ const leaders = doctors.filter((doc) =>
                                 />
                             ) : (
                                 <div class="w-full h-full bg-gray-800 flex items-center justify-center">
-                                    <span class="text-4xl">🏛️</span>
+                                    <span class="text-4xl font-bold text-gray-500">
+                                        {doc.data.fullName
+                                            .split(" ")
+                                            .map((w: string) => w[0])
+                                            .slice(0, 2)
+                                            .join("")
+                                            .toUpperCase()}
+                                    </span>
                                 </div>
                             )}
                             {/* Blue Overlay Gradient */}

@@ -1,36 +1,493 @@
 {
   "fullName": "Jens J. Holst",
   "slug": "jens-j-holst",
-  "title": "MD, PhD",
-  "specialty": "GLP-1 Biology",
+  "title": "MD",
+  "specialty": "Incretin Hormones",
   "geography": {
-    "city": "Unknown",
-    "country": "Denmark"
+    "country": "Denmark",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">JJ</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 50,
-  "hIndex": 201,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 193,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 16017,
+  "livesSaved": 0,
+  "biography": "Jens Juul Holst is a Danish physician and physiologist. He is known for discovering and describing the hormone glucagon-like peptide-1 (GLP-1), a hormone in the gut that plays an important role in the onset and development of Type 2 diabetes. In collaboration with researcher and author Arne Astrup, he discovered that GLP-1 acts as a satiety hormone in humans.",
+  "aiSummary": "Jens J. Holst is a incretin hormones specialist with an H-index of 193 at University of Copenhagen (Faculty). Has been published in Nature Reviews Disease Primers, The Lancet, New England Journal of Medicine. Based in Denmark.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/9/90/Jens_Holstad_OB.F05984b.jpg",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "University of Copenhagen"
-    }
-  ],
-  "bio": "Jens J. Holst is a pioneer in GLP-1 Biology at University of Copenhagen, Denmark. With a D-Index of 201 and over 160,171 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "University of Copenhagen",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Incretin Hormones"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "The Physiology of Glucagon-like Peptide 1",
+      "journal": "Physiological Reviews",
+      "year": 2007,
+      "citationCount": 3165,
+      "doi": "10.1152/physrev.00034.2006",
+      "sourceUrl": "https://doi.org/10.1152/physrev.00034.2006",
+      "verified": true
+    },
+    {
+      "title": "Type 2 diabetes mellitus",
+      "journal": "Nature Reviews Disease Primers",
+      "year": 2015,
+      "citationCount": 2419,
+      "doi": "10.1038/nrdp.2015.19",
+      "sourceUrl": "https://doi.org/10.1038/nrdp.2015.19",
+      "verified": true
+    },
+    {
+      "title": "Preserved incretin activity of glucagon-like peptide 1 [7-36 amide] but not of synthetic human gastric inhibitory polypeptide in patients with type-2 diabetes mellitus.",
+      "journal": "Journal of Clinical Investigation",
+      "year": 1993,
+      "citationCount": 1621,
+      "doi": "10.1172/jci116186",
+      "sourceUrl": "https://doi.org/10.1172/jci116186",
+      "verified": true
+    },
+    {
+      "title": "Glucagon-like peptide 1 (GLP-1)",
+      "journal": "Molecular Metabolism",
+      "year": 2019,
+      "citationCount": 1604,
+      "doi": "10.1016/j.molmet.2019.09.010",
+      "sourceUrl": "https://doi.org/10.1016/j.molmet.2019.09.010",
+      "verified": true
+    },
+    {
+      "title": "Glucagon-like peptide 1 promotes satiety and suppresses energy intake in humans.",
+      "journal": "Journal of Clinical Investigation",
+      "year": 1998,
+      "citationCount": 1379,
+      "doi": "10.1172/jci990",
+      "sourceUrl": "https://doi.org/10.1172/jci990",
+      "verified": true
+    },
+    {
+      "title": "Effect of 6-week course of glucagon-like peptide 1 on glycaemic control, insulin sensitivity, and β-cell function in type 2 diabetes: a parallel-group study",
+      "journal": "The Lancet",
+      "year": 2002,
+      "citationCount": 1290,
+      "doi": "10.1016/s0140-6736(02)07952-7",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(02)07952-7",
+      "verified": true
+    },
+    {
+      "title": "Normalization of fasting hyperglycaemia by exogenous glucagon-like peptide 1 (7-36 amide) in Type 2 (non-insulin-dependent) diabetic patients",
+      "journal": "Diabetologia",
+      "year": 1993,
+      "citationCount": 1082,
+      "doi": "10.1007/bf00401145",
+      "sourceUrl": "https://doi.org/10.1007/bf00401145",
+      "verified": true
+    },
+    {
+      "title": "Switching from Insulin to Oral Sulfonylureas in Patients with Diabetes Due to Kir6.2 Mutations",
+      "journal": "New England Journal of Medicine",
+      "year": 2006,
+      "citationCount": 979,
+      "doi": "10.1056/nejmoa061759",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa061759",
+      "verified": true
+    },
+    {
+      "title": "Improvement of Insulin Sensitivity after Lean Donor Feces in Metabolic Syndrome Is Driven by Baseline Intestinal Microbiota Composition",
+      "journal": "Cell Metabolism",
+      "year": 2017,
+      "citationCount": 963,
+      "doi": "10.1016/j.cmet.2017.09.008",
+      "sourceUrl": "https://doi.org/10.1016/j.cmet.2017.09.008",
+      "verified": true
+    },
+    {
+      "title": "Inhibition of gastric inhibitory polypeptide signaling prevents obesity",
+      "journal": "Nature Medicine",
+      "year": 2002,
+      "citationCount": 940,
+      "doi": "10.1038/nm727",
+      "sourceUrl": "https://doi.org/10.1038/nm727",
+      "verified": true
+    },
+    {
+      "title": "Tissue and Plasma Concentrations of Amidated and Glycine-Extended Glucagon-Like Peptide I in Humans",
+      "journal": "Diabetes",
+      "year": 1994,
+      "citationCount": 884,
+      "doi": "10.2337/diab.43.4.535",
+      "sourceUrl": "https://doi.org/10.2337/diab.43.4.535",
+      "verified": true
+    },
+    {
+      "title": "Reduced Postprandial Concentrations of Intact Biologically Active Glucagon-Like Peptide 1 in Type 2 Diabetic Patients",
+      "journal": "Diabetes",
+      "year": 2001,
+      "citationCount": 877,
+      "doi": "10.2337/diabetes.50.3.609",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.50.3.609",
+      "verified": true
+    },
+    {
+      "title": "Antidiabetogenic Effect of Glucagon-like Peptide-1 (7–36)amide in Normal Subjects and Patients with Diabetes Mellitus",
+      "journal": "New England Journal of Medicine",
+      "year": 1992,
+      "citationCount": 868,
+      "doi": "10.1056/nejm199205143262003",
+      "sourceUrl": "https://doi.org/10.1056/nejm199205143262003",
+      "verified": true
+    },
+    {
+      "title": "Determinants of the Impaired Secretion of Glucagon-Like Peptide-1 in Type 2 Diabetic Patients",
+      "journal": "The Journal of Clinical Endocrinology & Metabolism",
+      "year": 2001,
+      "citationCount": 834,
+      "doi": "10.1210/jcem.86.8.7750",
+      "sourceUrl": "https://doi.org/10.1210/jcem.86.8.7750",
+      "verified": true
+    },
+    {
+      "title": "Glucagon-like peptide 1 inhibition of gastric emptying outweighs its insulinotropic effects in healthy humans",
+      "journal": "American Journal of Physiology-Endocrinology and Metabolism",
+      "year": 1997,
+      "citationCount": 811,
+      "doi": "10.1152/ajpendo.1997.273.5.e981",
+      "sourceUrl": "https://doi.org/10.1152/ajpendo.1997.273.5.e981",
+      "verified": true
+    },
+    {
+      "title": "Degradation of glucagon-like peptide-1 by human plasma in vitro yields an N-terminally truncated peptide that is a major endogenous metabolite in vivo.",
+      "journal": "The Journal of Clinical Endocrinology & Metabolism",
+      "year": 1995,
+      "citationCount": 754,
+      "doi": "10.1210/jcem.80.3.7883856",
+      "sourceUrl": "https://doi.org/10.1210/jcem.80.3.7883856",
+      "verified": true
+    },
+    {
+      "title": "Both subcutaneously and intravenously administered glucagon-like peptide I are rapidly degraded from the NH2-terminus in type II diabetic patients and in healthy subjects",
+      "journal": "Diabetes",
+      "year": 1995,
+      "citationCount": 716,
+      "doi": "10.2337/diabetes.44.9.1126",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.44.9.1126",
+      "verified": true
+    },
+    {
+      "title": "Truncated GLP-1 (proglucagon 78?107-amide) inhibits gastric and pancreatic functions in man",
+      "journal": "Digestive Diseases and Sciences",
+      "year": 1993,
+      "citationCount": 668,
+      "doi": "10.1007/bf01316798",
+      "sourceUrl": "https://doi.org/10.1007/bf01316798",
+      "verified": true
+    },
+    {
+      "title": "Effects of glucagon-like peptide-1 on endothelial function in type 2 diabetes patients with stable coronary artery disease",
+      "journal": "American Journal of Physiology-Endocrinology and Metabolism",
+      "year": 2004,
+      "citationCount": 666,
+      "doi": "10.1152/ajpendo.00237.2004",
+      "sourceUrl": "https://doi.org/10.1152/ajpendo.00237.2004",
+      "verified": true
+    },
+    {
+      "title": "Distribution of glucagon-like peptide-1 and other preproglucagon-derived peptides in the rat hypothalamus and brainstem",
+      "journal": "Neuroscience",
+      "year": 1997,
+      "citationCount": 655,
+      "doi": "10.1016/s0306-4522(96)00434-4",
+      "sourceUrl": "https://doi.org/10.1016/s0306-4522(96)00434-4",
+      "verified": true
+    },
+    {
+      "title": "Both Subcutaneously and Intravenously Administered Glucagon-Like Peptide I Are Rapidly Degraded From the NH2-Terminus in Type II Diabetic Patients and in Healthy Subjects",
+      "journal": "Diabetes",
+      "year": 1995,
+      "citationCount": 649,
+      "doi": "10.2337/diab.44.9.1126",
+      "sourceUrl": "https://doi.org/10.2337/diab.44.9.1126",
+      "verified": true
+    },
+    {
+      "title": "Role of incretin hormones in the regulation of insulin secretion in diabetic and nondiabetic humans",
+      "journal": "American Journal of Physiology-Endocrinology and Metabolism",
+      "year": 2004,
+      "citationCount": 605,
+      "doi": "10.1152/ajpendo.00545.2003",
+      "sourceUrl": "https://doi.org/10.1152/ajpendo.00545.2003",
+      "verified": true
+    },
+    {
+      "title": "Truncated glucagon‐like peptide I, an insulin‐releasing hormone from the distal gut",
+      "journal": "FEBS Letters",
+      "year": 1987,
+      "citationCount": 601,
+      "doi": "10.1016/0014-5793(87)81430-8",
+      "sourceUrl": "https://doi.org/10.1016/0014-5793(87)81430-8",
+      "verified": true
+    },
+    {
+      "title": "A Meta-Analysis of the Effect of Glucagon-Like Peptide-1 (7–36) Amide on Ad Libitum Energy Intake in Humans",
+      "journal": "The Journal of Clinical Endocrinology & Metabolism",
+      "year": 2001,
+      "citationCount": 598,
+      "doi": "10.1210/jcem.86.9.7877",
+      "sourceUrl": "https://doi.org/10.1210/jcem.86.9.7877",
+      "verified": true
+    },
+    {
+      "title": "Serum Bile Acids Are Higher in Humans With Prior Gastric Bypass: Potential Contribution to Improved Glucose and Lipid Metabolism",
+      "journal": "Obesity",
+      "year": 2009,
+      "citationCount": 583,
+      "doi": "10.1038/oby.2009.102",
+      "sourceUrl": "https://doi.org/10.1038/oby.2009.102",
+      "verified": true
+    },
+    {
+      "title": "Glucagon-Like Peptide-1-(7–36)Amide Is Transformed to Glucagon-Like Peptide-1-(9–36)Amide by Dipeptidyl Peptidase IV in the Capillaries Supplying the L Cells of the Porcine Intestine<sup>1</sup>",
+      "journal": "Endocrinology",
+      "year": 1999,
+      "citationCount": 578,
+      "doi": "10.1210/endo.140.11.7143",
+      "sourceUrl": "https://doi.org/10.1210/endo.140.11.7143",
+      "verified": true
+    },
+    {
+      "title": "Effects of Glucagon-Like Peptide 1 on Counterregulatory Hormone Responses, Cognitive Functions, and Insulin Secretion during Hyperinsulinemic, Stepped Hypoglycemic Clamp Experiments in Healthy Volunteers",
+      "journal": "The Journal of Clinical Endocrinology & Metabolism",
+      "year": 2002,
+      "citationCount": 572,
+      "doi": "10.1210/jcem.87.3.8355",
+      "sourceUrl": "https://doi.org/10.1210/jcem.87.3.8355",
+      "verified": true
+    },
+    {
+      "title": "The Influence of GLP-1 on Glucose-Stimulated Insulin Secretion",
+      "journal": "Diabetes",
+      "year": 2003,
+      "citationCount": 571,
+      "doi": "10.2337/diabetes.52.2.380",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.52.2.380",
+      "verified": true
+    },
+    {
+      "title": "Impact of oral vancomycin on gut microbiota, bile acid metabolism, and insulin sensitivity",
+      "journal": "Journal of Hepatology",
+      "year": 2013,
+      "citationCount": 566,
+      "doi": "10.1016/j.jhep.2013.11.034",
+      "sourceUrl": "https://doi.org/10.1016/j.jhep.2013.11.034",
+      "verified": true
+    },
+    {
+      "title": "Lower blood glucose, hyperglucagonemia, and pancreatic α cell hyperplasia in glucagon receptor knockout mice",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2003,
+      "citationCount": 552,
+      "doi": "10.1073/pnas.0237106100",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0237106100",
+      "verified": true
+    },
+    {
+      "title": "Exenatide reduces reperfusion injury in patients with ST-segment elevation myocardial infarction",
+      "journal": "European Heart Journal",
+      "year": 2011,
+      "citationCount": 538,
+      "doi": "10.1093/eurheartj/ehr309",
+      "sourceUrl": "https://doi.org/10.1093/eurheartj/ehr309",
+      "verified": true
+    },
+    {
+      "title": "Glucagon-like peptide 2 improves nutrient absorption and nutritional status in short-bowel patients with no colon",
+      "journal": "Gastroenterology",
+      "year": 2001,
+      "citationCount": 524,
+      "doi": "10.1053/gast.2001.22555",
+      "sourceUrl": "https://doi.org/10.1053/gast.2001.22555",
+      "verified": true
+    },
+    {
+      "title": "Incretin Secretion in Relation to Meal Size and Body Weight in Healthy Subjects and People with Type 1 and Type 2 Diabetes Mellitus",
+      "journal": "The Journal of Clinical Endocrinology & Metabolism",
+      "year": 2003,
+      "citationCount": 515,
+      "doi": "10.1210/jc.2002-021873",
+      "sourceUrl": "https://doi.org/10.1210/jc.2002-021873",
+      "verified": true
+    },
+    {
+      "title": "Defective amplification of the late phase insulin response to glucose by GIP in obese Type II diabetic patients",
+      "journal": "Diabetologia",
+      "year": 2002,
+      "citationCount": 509,
+      "doi": "10.1007/s00125-002-0878-6",
+      "sourceUrl": "https://doi.org/10.1007/s00125-002-0878-6",
+      "verified": true
+    },
+    {
+      "title": "The incretin system and its role in type 2 diabetes mellitus",
+      "journal": "Molecular and Cellular Endocrinology",
+      "year": 2008,
+      "citationCount": 506,
+      "doi": "10.1016/j.mce.2008.08.012",
+      "sourceUrl": "https://doi.org/10.1016/j.mce.2008.08.012",
+      "verified": true
+    },
+    {
+      "title": "Effect of Single Oral Doses of Sitagliptin, a Dipeptidyl Peptidase-4 Inhibitor, on Incretin and Plasma Glucose Levels after an Oral Glucose Tolerance Test in Patients with Type 2 Diabetes",
+      "journal": "The Journal of Clinical Endocrinology & Metabolism",
+      "year": 2006,
+      "citationCount": 498,
+      "doi": "10.1210/jc.2006-1009",
+      "sourceUrl": "https://doi.org/10.1210/jc.2006-1009",
+      "verified": true
+    },
+    {
+      "title": "Statin therapy is associated with lower prevalence of gut microbiota dysbiosis",
+      "journal": "Nature",
+      "year": 2020,
+      "citationCount": 488,
+      "doi": "10.1038/s41586-020-2269-x",
+      "sourceUrl": "https://doi.org/10.1038/s41586-020-2269-x",
+      "verified": true
+    },
+    {
+      "title": "Glucagon-Like Peptides GLP-1 and GLP-2, Predicted Products of the Glucagon Gene, Are Secreted Separately from Pig Small Intestine but Not Pancreas*",
+      "journal": "Endocrinology",
+      "year": 1986,
+      "citationCount": 488,
+      "doi": "10.1210/endo-119-4-1467",
+      "sourceUrl": "https://doi.org/10.1210/endo-119-4-1467",
+      "verified": true
+    },
+    {
+      "title": "Inhibition of the activity of dipeptidyl-peptidase IV as a treatment for type 2 diabetes.",
+      "journal": "Diabetes",
+      "year": 1998,
+      "citationCount": 486,
+      "doi": "10.2337/diabetes.47.11.1663",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.47.11.1663",
+      "verified": true
+    },
+    {
+      "title": "Gastric emptying, glucose responses, and insulin secretion after a liquid test meal: effects of exogenous glucagon-like peptide-1 (GLP-1)-(7-36) amide in type 2 (noninsulin-dependent) diabetic patients.",
+      "journal": "The Journal of Clinical Endocrinology & Metabolism",
+      "year": 1996,
+      "citationCount": 468,
+      "doi": "10.1210/jcem.81.1.8550773",
+      "sourceUrl": "https://doi.org/10.1210/jcem.81.1.8550773",
+      "verified": true
+    },
+    {
+      "title": "Energy intake and appetite are suppressed by glucagon-like peptide-1 (GLP-1) in obese men.",
+      "journal": "International Journal of Obesity",
+      "year": 1999,
+      "citationCount": 464,
+      "doi": "10.1038/sj.ijo.0800818",
+      "sourceUrl": "https://doi.org/10.1038/sj.ijo.0800818",
+      "verified": true
+    },
+    {
+      "title": "Glycemia and insulinemia in healthy subjects after lactose-equivalent meals of milk and other food proteins: the role of plasma amino acids and incretins",
+      "journal": "American Journal of Clinical Nutrition",
+      "year": 2004,
+      "citationCount": 460,
+      "doi": "10.1093/ajcn/80.5.1246",
+      "sourceUrl": "https://doi.org/10.1093/ajcn/80.5.1246",
+      "verified": true
+    },
+    {
+      "title": "Secretion of glucagon-like peptide-1 (GLP-1) in type 2 diabetes: what is up, what is down?",
+      "journal": "Diabetologia",
+      "year": 2010,
+      "citationCount": 459,
+      "doi": "10.1007/s00125-010-1896-4",
+      "sourceUrl": "https://doi.org/10.1007/s00125-010-1896-4",
+      "verified": true
+    },
+    {
+      "title": "Impact of postprandial glycaemia on health and prevention of disease",
+      "journal": "Obesity Reviews",
+      "year": 2012,
+      "citationCount": 458,
+      "doi": "10.1111/j.1467-789x.2012.01011.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1467-789x.2012.01011.x",
+      "verified": true
+    },
+    {
+      "title": "Similar Elimination Rates of Glucagon-Like Peptide-1 in Obese Type 2 Diabetic Patients and Healthy Subjects",
+      "journal": "The Journal of Clinical Endocrinology & Metabolism",
+      "year": 2003,
+      "citationCount": 437,
+      "doi": "10.1210/jc.2002-021053",
+      "sourceUrl": "https://doi.org/10.1210/jc.2002-021053",
+      "verified": true
+    },
+    {
+      "title": "Tirzepatide is an imbalanced and biased dual GIP and GLP-1 receptor agonist",
+      "journal": "JCI Insight",
+      "year": 2020,
+      "citationCount": 436,
+      "doi": "10.1172/jci.insight.140532",
+      "sourceUrl": "https://doi.org/10.1172/jci.insight.140532",
+      "verified": true
+    },
+    {
+      "title": "Incretins, insulin secretion and Type 2 diabetes mellitus",
+      "journal": "Diabetologia",
+      "year": 2004,
+      "citationCount": 436,
+      "doi": "10.1007/s00125-004-1342-6",
+      "sourceUrl": "https://doi.org/10.1007/s00125-004-1342-6",
+      "verified": true
+    },
+    {
+      "title": "Whole grain-rich diet reduces body weight and systemic low-grade inflammation without inducing major changes of the gut microbiome: a randomised cross-over trial",
+      "journal": "Gut",
+      "year": 2017,
+      "citationCount": 431,
+      "doi": "10.1136/gutjnl-2017-314786",
+      "sourceUrl": "https://doi.org/10.1136/gutjnl-2017-314786",
+      "verified": true
+    },
+    {
+      "title": "The role of postprandial releases of insulin and incretin hormones in meal-induced satiety—effect of obesity and weight reduction",
+      "journal": "International Journal of Obesity",
+      "year": 2001,
+      "citationCount": 428,
+      "doi": "10.1038/sj.ijo.0801655",
+      "sourceUrl": "https://doi.org/10.1038/sj.ijo.0801655",
+      "verified": true
+    },
+    {
+      "title": "Defective prohormone processing and altered pancreatic islet morphology in mice lacking active SPC2",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1997,
+      "citationCount": 424,
+      "doi": "10.1073/pnas.94.13.6646",
+      "sourceUrl": "https://doi.org/10.1073/pnas.94.13.6646",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:16.000Z",
+  "openalexId": "https://openalex.org/A5085434984"
 }

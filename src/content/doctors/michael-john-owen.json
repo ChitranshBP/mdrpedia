@@ -1,31 +1,492 @@
 {
   "fullName": "Michael John Owen",
   "slug": "michael-john-owen",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Neuropsychiatric Genetics",
   "geography": {
-    "city": "Unknown",
-    "country": "UK"
+    "country": "United Kingdom",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">MJ</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 49,
-  "hIndex": 197,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 208,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 20835,
+  "livesSaved": 0,
+  "biography": "Sir Michael John Owen FRCPsych FMedSci FLSW is a Welsh research scientist in the area of psychiatry, currently the head of the Division of Psychological Medicine and Clinical Neurosciences at Cardiff University.",
+  "aiSummary": "Michael John Owen is a neuropsychiatric genetics specialist with an H-index of 208 at Cardiff University (Faculty). Has been published in Nature Genetics, JAMA Psychiatry, Nature medicine. Based in United Kingdom.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Cardiff University"
-    }
-  ],
-  "bio": "Michael John Owen is a pioneer in Neuropsychiatric Genetics at Cardiff University, UK. With a D-Index of 197 and over 208,350 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Cardiff University",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Neuropsychiatric Genetics"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Identification of 15 genetic loci associated with risk of major depression in individuals of European descent",
+      "journal": "Nature Genetics",
+      "year": 2016,
+      "citationCount": 827,
+      "doi": "10.1038/ng.3623",
+      "sourceUrl": "https://doi.org/10.1038/ng.3623",
+      "verified": true
+    },
+    {
+      "title": "Widespread white matter microstructural differences in schizophrenia across 4322 individuals: results from the ENIGMA Schizophrenia DTI Working Group",
+      "journal": "Molecular Psychiatry",
+      "year": 2017,
+      "citationCount": 705,
+      "doi": "10.1038/mp.2017.170",
+      "sourceUrl": "https://doi.org/10.1038/mp.2017.170",
+      "verified": true
+    },
+    {
+      "title": "Comprehensive Whole-Genome and Candidate Gene Analysis for Response to Statin Therapy in the Treating to New Targets (TNT) Cohort",
+      "journal": "Circulation Cardiovascular Genetics",
+      "year": 2009,
+      "citationCount": 196,
+      "doi": "10.1161/circgenetics.108.818062",
+      "sourceUrl": "https://doi.org/10.1161/circgenetics.108.818062",
+      "verified": true
+    },
+    {
+      "title": "Association of White Matter With Core Cognitive Deficits in Patients With Schizophrenia",
+      "journal": "JAMA Psychiatry",
+      "year": 2017,
+      "citationCount": 140,
+      "doi": "10.1001/jamapsychiatry.2017.2228",
+      "sourceUrl": "https://doi.org/10.1001/jamapsychiatry.2017.2228",
+      "verified": true
+    },
+    {
+      "title": "PDE4B polymorphisms and decreased PDE4B expression are associated with schizophrenia",
+      "journal": "Schizophrenia Research",
+      "year": 2008,
+      "citationCount": 134,
+      "doi": "10.1016/j.schres.2008.01.029",
+      "sourceUrl": "https://doi.org/10.1016/j.schres.2008.01.029",
+      "verified": true
+    },
+    {
+      "title": "Smoking Cessation Pharmacogenetics: Analysis of Varenicline and Bupropion in Placebo-Controlled Clinical Trials",
+      "journal": "Neuropsychopharmacology",
+      "year": 2011,
+      "citationCount": 119,
+      "doi": "10.1038/npp.2011.232",
+      "sourceUrl": "https://doi.org/10.1038/npp.2011.232",
+      "verified": true
+    },
+    {
+      "title": "Heterochronicity of white matter development and aging explains regional patient control differences in schizophrenia",
+      "journal": "Human Brain Mapping",
+      "year": 2016,
+      "citationCount": 63,
+      "doi": "10.1002/hbm.23336",
+      "sourceUrl": "https://doi.org/10.1002/hbm.23336",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide association study identifies multiple novel loci associated with disease progression in subjects with mild cognitive impairment",
+      "journal": "Translational Psychiatry",
+      "year": 2011,
+      "citationCount": 43,
+      "doi": "10.1038/tp.2011.50",
+      "sourceUrl": "https://doi.org/10.1038/tp.2011.50",
+      "verified": true
+    },
+    {
+      "title": "A survey of rare coding variants in candidate genes in schizophrenia by deep sequencing",
+      "journal": "Molecular Psychiatry",
+      "year": 2013,
+      "citationCount": 34,
+      "doi": "10.1038/mp.2013.131",
+      "sourceUrl": "https://doi.org/10.1038/mp.2013.131",
+      "verified": true
+    },
+    {
+      "title": "GBA mutations in Parkinson disease: earlier death but similar neuropathological features",
+      "journal": "European Journal of Neurology",
+      "year": 2017,
+      "citationCount": 32,
+      "doi": "10.1111/ene.13395",
+      "sourceUrl": "https://doi.org/10.1111/ene.13395",
+      "verified": true
+    },
+    {
+      "title": "Genetic Association of the CCR5 Region With Lipid Levels in At-Risk Cardiovascular Patients",
+      "journal": "Circulation Cardiovascular Genetics",
+      "year": 2010,
+      "citationCount": 30,
+      "doi": "10.1161/circgenetics.109.897793",
+      "sourceUrl": "https://doi.org/10.1161/circgenetics.109.897793",
+      "verified": true
+    },
+    {
+      "title": "Potassium channel gene associations with joint processing speed and white matter impairments in schizophrenia",
+      "journal": "Genes Brain & Behavior",
+      "year": 2017,
+      "citationCount": 26,
+      "doi": "10.1111/gbb.12372",
+      "sourceUrl": "https://doi.org/10.1111/gbb.12372",
+      "verified": true
+    },
+    {
+      "title": "Biomarkers to predict risk of venous thromboembolism in patients with rheumatoid arthritis receiving tofacitinib or tumour necrosis factor inhibitors",
+      "journal": "RMD Open",
+      "year": 2022,
+      "citationCount": 24,
+      "doi": "10.1136/rmdopen-2022-002571",
+      "sourceUrl": "https://doi.org/10.1136/rmdopen-2022-002571",
+      "verified": true
+    },
+    {
+      "title": "Expression of CETP and of splice variants induces the same level of ER stress despite secretion efficiency differences",
+      "journal": "Journal of Lipid Research",
+      "year": 2008,
+      "citationCount": 21,
+      "doi": "10.1194/jlr.m800078-jlr200",
+      "sourceUrl": "https://doi.org/10.1194/jlr.m800078-jlr200",
+      "verified": true
+    },
+    {
+      "title": "Frequency and function of CETP variants among individuals of Asian ancestry",
+      "journal": "Atherosclerosis",
+      "year": 2008,
+      "citationCount": 17,
+      "doi": "10.1016/j.atherosclerosis.2008.03.013",
+      "sourceUrl": "https://doi.org/10.1016/j.atherosclerosis.2008.03.013",
+      "verified": true
+    },
+    {
+      "title": "Human infections with highly pathogenic avian influenza A(H5N1) viruses in the United States from March 2024 to May 2025.",
+      "journal": "Nature medicine",
+      "year": 2025,
+      "citationCount": 15,
+      "doi": "10.1038/s41591-025-03905-2",
+      "sourceUrl": "https://doi.org/10.1038/s41591-025-03905-2",
+      "verified": true
+    },
+    {
+      "title": "Functional confirmation that the R1488* variant in SCN9A results in complete loss-of-function of Nav1.7",
+      "journal": "BMC Medical Genetics",
+      "year": 2018,
+      "citationCount": 10,
+      "doi": "10.1186/s12881-018-0643-4",
+      "sourceUrl": "https://doi.org/10.1186/s12881-018-0643-4",
+      "verified": true
+    },
+    {
+      "title": "Study design for development of novel safety biomarkers of drug-induced liver injury by the translational safety biomarker pipeline (TransBioLine) consortium: a study protocol for a nested case–control study",
+      "journal": "Diagnostic and Prognostic Research",
+      "year": 2023,
+      "citationCount": 9,
+      "doi": "10.1186/s41512-023-00155-z",
+      "sourceUrl": "https://doi.org/10.1186/s41512-023-00155-z",
+      "verified": true
+    },
+    {
+      "title": "Early Manifestations of Neurodevelopmental Copy Number Variants in Children: A Population-Based Investigation.",
+      "journal": "Biological psychiatry",
+      "year": 2025,
+      "citationCount": 7,
+      "doi": "10.1016/j.biopsych.2025.03.004",
+      "sourceUrl": "https://doi.org/10.1016/j.biopsych.2025.03.004",
+      "verified": true
+    },
+    {
+      "title": "Whole-exome sequencing analysis identifies risk genes for schizophrenia.",
+      "journal": "Nature communications",
+      "year": 2025,
+      "citationCount": 6,
+      "doi": "10.1038/s41467-025-62429-y",
+      "sourceUrl": "https://doi.org/10.1038/s41467-025-62429-y",
+      "verified": true
+    },
+    {
+      "title": "Sequence Analysis of the IL28A/IL28B Inverted Gene Duplication That Contains Polymorphisms Associated with Treatment Response in Hepatitis C Patients",
+      "journal": "PLoS ONE",
+      "year": 2012,
+      "citationCount": 6,
+      "doi": "10.1371/journal.pone.0029983",
+      "sourceUrl": "https://doi.org/10.1371/journal.pone.0029983",
+      "verified": true
+    },
+    {
+      "title": "Genomics of schizophrenia, bipolar disorder and major depressive disorder.",
+      "journal": "Nature reviews. Genetics",
+      "year": 2025,
+      "citationCount": 3,
+      "doi": "10.1038/s41576-025-00843-0",
+      "sourceUrl": "https://doi.org/10.1038/s41576-025-00843-0",
+      "verified": true
+    },
+    {
+      "title": "Evidence for Longitudinally Polarized W Bosons in the Electroweak Production of Same-Sign W Boson Pairs in Association with Two Jets in pp Collisions at sqrt[s]=13&#x2009;&#x2009;TeV with the ATLAS Detector.",
+      "journal": "Physical review letters",
+      "year": 2025,
+      "citationCount": 3,
+      "doi": "10.1103/bpln-ccql",
+      "sourceUrl": "https://doi.org/10.1103/bpln-ccql",
+      "verified": true
+    },
+    {
+      "title": "Multifaceted characterization of antibacterial resin composites: A scoping review on efficacy, properties, and in vivo performance.",
+      "journal": "The Japanese dental science review",
+      "year": 2025,
+      "citationCount": 2,
+      "doi": "10.1016/j.jdsr.2025.05.003",
+      "sourceUrl": "https://doi.org/10.1016/j.jdsr.2025.05.003",
+      "verified": true
+    },
+    {
+      "title": "The Role of SLC39A8.p.(Ala391Thr) in Schizophrenia Symptom Severity and Cognitive Ability: Cross-Sectional Studies of Schizophrenia and the General UK Population.",
+      "journal": "American journal of medical genetics. Part B, Neuropsychiatric genetics : the official publication of the International Society of Psychiatric Genetics",
+      "year": 2025,
+      "citationCount": 2,
+      "doi": "10.1002/ajmg.b.33037",
+      "sourceUrl": "https://doi.org/10.1002/ajmg.b.33037",
+      "verified": true
+    },
+    {
+      "title": "Copy number variants and their implications for developmental and behavioural problems in cleft lip and/or palate.",
+      "journal": "Human molecular genetics",
+      "year": 2025,
+      "citationCount": 2,
+      "doi": "10.1093/hmg/ddaf115",
+      "sourceUrl": "https://doi.org/10.1093/hmg/ddaf115",
+      "verified": true
+    },
+    {
+      "title": "Longitudinal evaluation of serum neurofilament light levels in normal healthy volunteers: defining a threshold of concern",
+      "journal": "Journal of Neurology",
+      "year": 2025,
+      "citationCount": 2,
+      "doi": "10.1007/s00415-025-13246-2",
+      "sourceUrl": "https://doi.org/10.1007/s00415-025-13246-2",
+      "verified": true
+    },
+    {
+      "title": "Effects of Shared and Nonshared Schizophrenia and Bipolar Disorder Alleles on Cognition and Educational Attainment in the UK Biobank.",
+      "journal": "Biological psychiatry global open science",
+      "year": 2025,
+      "citationCount": 1,
+      "doi": "10.1016/j.bpsgos.2025.100601",
+      "sourceUrl": "https://doi.org/10.1016/j.bpsgos.2025.100601",
+      "verified": true
+    },
+    {
+      "title": "Physical Activity Volume and Intensity for Healthy Body Mass Index and Cardiorespiratory Fitness: Enhancing the Translation of Children's and Adolescents'&#xa0;Accelerometer Physical Activity Reference Values.",
+      "journal": "Scandinavian journal of medicine &amp; science in sports",
+      "year": 2025,
+      "citationCount": 1,
+      "doi": "10.1111/sms.70118",
+      "sourceUrl": "https://doi.org/10.1111/sms.70118",
+      "verified": true
+    },
+    {
+      "title": "Type 1 classical dendritic cells govern long-term cardiac allograft acceptance.",
+      "journal": "The Journal of clinical investigation",
+      "year": 2025,
+      "citationCount": 1,
+      "doi": "10.1172/JCI192811",
+      "sourceUrl": "https://doi.org/10.1172/JCI192811",
+      "verified": true
+    },
+    {
+      "title": "Evidence for the Collective Nature of Radial Flow in Pb+Pb Collisions with the ATLAS Detector.",
+      "journal": "Physical review letters",
+      "year": 2026,
+      "citationCount": 1,
+      "doi": "10.1103/ldcn-r2lq",
+      "sourceUrl": "https://doi.org/10.1103/ldcn-r2lq",
+      "verified": true
+    },
+    {
+      "title": "Sleep deprivation impairs team performance and cohesion.",
+      "journal": "Sleep",
+      "year": 2026,
+      "citationCount": 1,
+      "doi": "10.1093/sleep/zsaf288",
+      "sourceUrl": "https://doi.org/10.1093/sleep/zsaf288",
+      "verified": true
+    },
+    {
+      "title": "Hair growth rate estimation in North American ursids.",
+      "journal": "Conservation physiology",
+      "year": 2025,
+      "citationCount": 1,
+      "doi": "10.1093/conphys/coaf075",
+      "sourceUrl": "https://doi.org/10.1093/conphys/coaf075",
+      "verified": true
+    },
+    {
+      "title": "Evaluating past and future contributions of conservation programs to species recovery.",
+      "journal": "Conservation biology : the journal of the Society for Conservation Biology",
+      "year": 2025,
+      "citationCount": 1,
+      "doi": "10.1111/cobi.70183",
+      "sourceUrl": "https://doi.org/10.1111/cobi.70183",
+      "verified": true
+    },
+    {
+      "title": "Relationships between diffusion tensor parameters and measures of skeletal muscle fiber size and strength after anterior cruciate ligament injury.",
+      "journal": "Magnetic resonance imaging",
+      "year": 2025,
+      "citationCount": 1,
+      "doi": "10.1016/j.mri.2025.110489",
+      "sourceUrl": "https://doi.org/10.1016/j.mri.2025.110489",
+      "verified": true
+    },
+    {
+      "title": "Inequalities of the Waiting Time for Education Health and Care Plan Provision for Pupils With Intellectual Developmental Disabilities: A Brief Report.",
+      "journal": "Journal of intellectual disability research : JIDR",
+      "year": 2025,
+      "citationCount": 1,
+      "doi": "10.1111/jir.13239",
+      "sourceUrl": "https://doi.org/10.1111/jir.13239",
+      "verified": true
+    },
+    {
+      "title": "Investigation and optimization of DNA isolation efficiency using ferrite-based magnetic nanoparticles.",
+      "journal": "Biotechnology reports (Amsterdam, Netherlands)",
+      "year": 2025,
+      "citationCount": 1,
+      "doi": "10.1016/j.btre.2025.e00904",
+      "sourceUrl": "https://doi.org/10.1016/j.btre.2025.e00904",
+      "verified": true
+    },
+    {
+      "title": "A Prospective Study of Maternal Supportiveness among ADHD and non-ADHD Children and Adolescents.",
+      "journal": "Child psychiatry and human development",
+      "year": 2025,
+      "citationCount": 1,
+      "doi": "10.1007/s10578-025-01889-1",
+      "sourceUrl": "https://doi.org/10.1007/s10578-025-01889-1",
+      "verified": true
+    },
+    {
+      "title": "Feline Shoulder Arthrodesis Using 3D-printed Patient-specific Guides.",
+      "journal": "Veterinary and comparative orthopaedics and traumatology : V.C.O.T",
+      "year": 2026,
+      "citationCount": 1,
+      "doi": "10.1055/a-2511-8272",
+      "sourceUrl": "https://doi.org/10.1055/a-2511-8272",
+      "verified": true
+    },
+    {
+      "title": "Genome-Wide Association Study of Varenicline-Aided Smoking Cessation",
+      "journal": "Nicotine & Tobacco Research",
+      "year": 2025,
+      "citationCount": 1,
+      "doi": "10.1093/ntr/ntaf009",
+      "sourceUrl": "https://doi.org/10.1093/ntr/ntaf009",
+      "verified": true
+    },
+    {
+      "title": "Enhancing maternal and newborn outcomes in Ghana: a comprehensive randomized controlled trial evaluation of obstetric triage effectiveness and midwives training.",
+      "journal": "BMC health services research",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.1186/s12913-025-13132-7",
+      "sourceUrl": "https://doi.org/10.1186/s12913-025-13132-7",
+      "verified": true
+    },
+    {
+      "title": "Author Correction: Fine-mapping genomic loci refines bipolar disorder risk genes.",
+      "journal": "Nature neuroscience",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.1038/s41593-025-02133-8",
+      "sourceUrl": "https://doi.org/10.1038/s41593-025-02133-8",
+      "verified": true
+    },
+    {
+      "title": "Penetrance of Neurodevelopmental Copy Number Variants Is Associated With Variations in Cortical Morphology.",
+      "journal": "Biological psychiatry. Cognitive neuroscience and neuroimaging",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.1016/j.bpsc.2025.05.010",
+      "sourceUrl": "https://doi.org/10.1016/j.bpsc.2025.05.010",
+      "verified": true
+    },
+    {
+      "title": "The influence of genetic factors on education health and care plan obtainment for pupils with intellectual developmental disabilities.",
+      "journal": "Scientific reports",
+      "year": 2026,
+      "citationCount": 0,
+      "doi": "10.1038/s41598-026-36227-5",
+      "sourceUrl": "https://doi.org/10.1038/s41598-026-36227-5",
+      "verified": true
+    },
+    {
+      "title": "Genetics to Improve Outcomes in Schizophrenia (GENios): A within-case molecular genetic study protocol.",
+      "journal": "PloS one",
+      "year": 2026,
+      "citationCount": 0,
+      "doi": "10.1371/journal.pone.0340584",
+      "sourceUrl": "https://doi.org/10.1371/journal.pone.0340584",
+      "verified": true
+    },
+    {
+      "title": "Effect of gait pattern on patellofemoral joint stress during walking in individuals with patellar instability.",
+      "journal": "Clinical biomechanics (Bristol, Avon)",
+      "year": 2026,
+      "citationCount": 0,
+      "doi": "10.1016/j.clinbiomech.2025.106738",
+      "sourceUrl": "https://doi.org/10.1016/j.clinbiomech.2025.106738",
+      "verified": true
+    },
+    {
+      "title": "The Quest for Functional Ingredients for Sustainable Aquaculture Feeds in Sub-Saharan Africa.",
+      "journal": "Aquaculture nutrition",
+      "year": 2026,
+      "citationCount": 0,
+      "doi": "10.1155/anu/9937988",
+      "sourceUrl": "https://doi.org/10.1155/anu/9937988",
+      "verified": true
+    },
+    {
+      "title": "Properties of PVA, Chitosan, and Collagen Solutions and Their Role in Electrospinning: Insights from Simulations and Experiments.",
+      "journal": "The journal of physical chemistry. B",
+      "year": 2026,
+      "citationCount": 0,
+      "doi": "10.1021/acs.jpcb.5c06703",
+      "sourceUrl": "https://doi.org/10.1021/acs.jpcb.5c06703",
+      "verified": true
+    },
+    {
+      "title": "A Systematic Review and Meta-analysis of Anterior Cruciate Ligament Injury Prevention Programs: Training to Stay in the Game.",
+      "journal": "The American journal of sports medicine",
+      "year": 2026,
+      "citationCount": 0,
+      "doi": "10.1177/03635465251376670",
+      "sourceUrl": "https://doi.org/10.1177/03635465251376670",
+      "verified": true
+    },
+    {
+      "title": "Maternal Care and Cub Development in the Polar Bear (Ursus maritimus).",
+      "journal": "Zoo biology",
+      "year": 2026,
+      "citationCount": 0,
+      "doi": "10.1002/zoo.70037",
+      "sourceUrl": "https://doi.org/10.1002/zoo.70037",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:14.000Z",
+  "openalexId": "https://openalex.org/A5071941379"
 }

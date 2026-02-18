@@ -1,36 +1,497 @@
 {
   "fullName": "Matthias Mann",
   "slug": "matthias-mann",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Proteomics",
   "geography": {
-    "city": "Unknown",
-    "country": "Germany"
+    "country": "Germany",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">MM</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 66,
-  "hIndex": 262,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 342,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 34256,
+  "livesSaved": 0,
+  "biography": "Matthias Mann is a German physicist and biochemist. He is doing research in the area of mass spectrometry and proteomics.",
+  "aiSummary": "Matthias Mann is a proteomics specialist with an H-index of 342 at Max Planck Institute (Faculty). Has been published in Nature Biotechnology, Nature Methods, Science. Based in Germany.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
+  "hasInvention": false,
+  "education": [
+    "Max Planck Institute"
+  ],
+  "socialMedia": {},
   "affiliations": [
     {
-      "hospitalName": "Max Planck Institute"
+      "hospitalName": "Max Planck Institute",
+      "role": "Faculty",
+      "hospitalUrl": "#"
     }
   ],
-  "bio": "Matthias Mann is a pioneer in Proteomics at Max Planck Institute, Germany. With a D-Index of 262 and over 342,563 citations, they are among the world's most influential researchers.",
-  "awards": [
+  "medicalSpecialty": [
+    "Proteomics"
+  ],
+  "knowsAbout": [
+    "Leibniz Prize"
+  ],
+  "citations": [
     {
-      "name": "High Impact Researcher",
-      "year": 2024
+      "title": "MaxQuant enables high peptide identification rates, individualized p.p.b.-range mass accuracies and proteome-wide protein quantification",
+      "journal": "Nature Biotechnology",
+      "year": 2008,
+      "citationCount": 15303,
+      "doi": "10.1038/nbt.1511",
+      "sourceUrl": "https://doi.org/10.1038/nbt.1511",
+      "verified": true
+    },
+    {
+      "title": "Mass Spectrometric Sequencing of Proteins from Silver-Stained Polyacrylamide Gels",
+      "journal": "Analytical Chemistry",
+      "year": 1996,
+      "citationCount": 9019,
+      "doi": "10.1021/ac950914h",
+      "sourceUrl": "https://doi.org/10.1021/ac950914h",
+      "verified": true
+    },
+    {
+      "title": "Universal sample preparation method for proteome analysis",
+      "journal": "Nature Methods",
+      "year": 2009,
+      "citationCount": 8466,
+      "doi": "10.1038/nmeth.1322",
+      "sourceUrl": "https://doi.org/10.1038/nmeth.1322",
+      "verified": true
+    },
+    {
+      "title": "The Perseus computational platform for comprehensive analysis of (prote)omics data",
+      "journal": "Nature Methods",
+      "year": 2016,
+      "citationCount": 8463,
+      "doi": "10.1038/nmeth.3901",
+      "sourceUrl": "https://doi.org/10.1038/nmeth.3901",
+      "verified": true
+    },
+    {
+      "title": "Electrospray Ionization for Mass Spectrometry of Large Biomolecules",
+      "journal": "Science",
+      "year": 1989,
+      "citationCount": 7489,
+      "doi": "10.1126/science.2675315",
+      "sourceUrl": "https://doi.org/10.1126/science.2675315",
+      "verified": true
+    },
+    {
+      "title": "Mass spectrometry-based proteomics",
+      "journal": "Nature",
+      "year": 2003,
+      "citationCount": 6811,
+      "doi": "10.1038/nature01511",
+      "sourceUrl": "https://doi.org/10.1038/nature01511",
+      "verified": true
+    },
+    {
+      "title": "Andromeda: A Peptide Search Engine Integrated into the MaxQuant Environment",
+      "journal": "Journal of Proteome Research",
+      "year": 2011,
+      "citationCount": 5744,
+      "doi": "10.1021/pr101065j",
+      "sourceUrl": "https://doi.org/10.1021/pr101065j",
+      "verified": true
+    },
+    {
+      "title": "Stable Isotope Labeling by Amino Acids in Cell Culture, SILAC, as a Simple and Accurate Approach to Expression Proteomics",
+      "journal": "Molecular & Cellular Proteomics",
+      "year": 2002,
+      "citationCount": 5569,
+      "doi": "10.1074/mcp.m200025-mcp200",
+      "sourceUrl": "https://doi.org/10.1074/mcp.m200025-mcp200",
+      "verified": true
+    },
+    {
+      "title": "Accurate Proteome-wide Label-free Quantification by Delayed Normalization and Maximal Peptide Ratio Extraction, Termed MaxLFQ",
+      "journal": "Molecular & Cellular Proteomics",
+      "year": 2014,
+      "citationCount": 5326,
+      "doi": "10.1074/mcp.m113.031591",
+      "sourceUrl": "https://doi.org/10.1074/mcp.m113.031591",
+      "verified": true
+    },
+    {
+      "title": "In-gel digestion for mass spectrometric characterization of proteins and proteomes",
+      "journal": "Nature Protocols",
+      "year": 2006,
+      "citationCount": 5016,
+      "doi": "10.1038/nprot.2006.468",
+      "sourceUrl": "https://doi.org/10.1038/nprot.2006.468",
+      "verified": true
+    },
+    {
+      "title": "Protocol for micro-purification, enrichment, pre-fractionation and storage of peptides for proteomics using StageTips",
+      "journal": "Nature Protocols",
+      "year": 2007,
+      "citationCount": 4712,
+      "doi": "10.1038/nprot.2007.261",
+      "sourceUrl": "https://doi.org/10.1038/nprot.2007.261",
+      "verified": true
+    },
+    {
+      "title": "Lysine Acetylation Targets Protein Complexes and Co-Regulates Major Cellular Functions",
+      "journal": "Science",
+      "year": 2009,
+      "citationCount": 3992,
+      "doi": "10.1126/science.1175371",
+      "sourceUrl": "https://doi.org/10.1126/science.1175371",
+      "verified": true
+    },
+    {
+      "title": "Systematic identification of protein complexes in Saccharomyces cerevisiae by mass spectrometry",
+      "journal": "Nature",
+      "year": 2002,
+      "citationCount": 3592,
+      "doi": "10.1038/415180a",
+      "sourceUrl": "https://doi.org/10.1038/415180a",
+      "verified": true
+    },
+    {
+      "title": "Global, In Vivo, and Site-Specific Phosphorylation Dynamics in Signaling Networks",
+      "journal": "Cell",
+      "year": 2006,
+      "citationCount": 3509,
+      "doi": "10.1016/j.cell.2006.09.026",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2006.09.026",
+      "verified": true
+    },
+    {
+      "title": "FLICE, A Novel FADD-Homologous ICE/CED-3–like Protease, Is Recruited to the CD95 (Fas/APO-1) Death-Inducing Signaling Complex",
+      "journal": "Cell",
+      "year": 1996,
+      "citationCount": 3047,
+      "doi": "10.1016/s0092-8674(00)81266-0",
+      "sourceUrl": "https://doi.org/10.1016/s0092-8674(00)81266-0",
+      "verified": true
+    },
+    {
+      "title": "Stop and Go Extraction Tips for Matrix-Assisted Laser Desorption/Ionization, Nanoelectrospray, and LC/MS Sample Pretreatment in Proteomics",
+      "journal": "Analytical Chemistry",
+      "year": 2002,
+      "citationCount": 2743,
+      "doi": "10.1021/ac026117i",
+      "sourceUrl": "https://doi.org/10.1021/ac026117i",
+      "verified": true
+    },
+    {
+      "title": "A generic protein purification method for protein complex characterization and proteome exploration",
+      "journal": "Nature Biotechnology",
+      "year": 1999,
+      "citationCount": 2697,
+      "doi": "10.1038/13732",
+      "sourceUrl": "https://doi.org/10.1038/13732",
+      "verified": true
+    },
+    {
+      "title": "Proteomics to study genes and genomes",
+      "journal": "Nature",
+      "year": 2000,
+      "citationCount": 2361,
+      "doi": "10.1038/35015709",
+      "sourceUrl": "https://doi.org/10.1038/35015709",
+      "verified": true
+    },
+    {
+      "title": "Mass-spectrometric exploration of proteome structure and function",
+      "journal": "Nature",
+      "year": 2016,
+      "citationCount": 2203,
+      "doi": "10.1038/nature19949",
+      "sourceUrl": "https://doi.org/10.1038/nature19949",
+      "verified": true
+    },
+    {
+      "title": "Proteomic analysis of post-translational modifications",
+      "journal": "Nature Biotechnology",
+      "year": 2003,
+      "citationCount": 2106,
+      "doi": "10.1038/nbt0303-255",
+      "sourceUrl": "https://doi.org/10.1038/nbt0303-255",
+      "verified": true
+    },
+    {
+      "title": "Exponentially Modified Protein Abundance Index (emPAI) for Estimation of Absolute Protein Amount in Proteomics by the Number of Sequenced Peptides per Protein",
+      "journal": "Molecular & Cellular Proteomics",
+      "year": 2005,
+      "citationCount": 2071,
+      "doi": "10.1074/mcp.m500061-mcp200",
+      "sourceUrl": "https://doi.org/10.1074/mcp.m500061-mcp200",
+      "verified": true
+    },
+    {
+      "title": "IKK-1 and IKK-2: Cytokine-Activated IκB Kinases Essential for NF-κB Activation",
+      "journal": "Science",
+      "year": 1997,
+      "citationCount": 2039,
+      "doi": "10.1126/science.278.5339.860",
+      "sourceUrl": "https://doi.org/10.1126/science.278.5339.860",
+      "verified": true
+    },
+    {
+      "title": "Analytical Properties of the Nanoelectrospray Ion Source",
+      "journal": "Analytical Chemistry",
+      "year": 1996,
+      "citationCount": 1842,
+      "doi": "10.1021/ac9509519",
+      "sourceUrl": "https://doi.org/10.1021/ac9509519",
+      "verified": true
+    },
+    {
+      "title": "Minimal, encapsulated proteomic-sample processing applied to copy-number estimation in eukaryotic cells",
+      "journal": "Nature Methods",
+      "year": 2014,
+      "citationCount": 1808,
+      "doi": "10.1038/nmeth.2834",
+      "sourceUrl": "https://doi.org/10.1038/nmeth.2834",
+      "verified": true
+    },
+    {
+      "title": "Femtomole sequencing of proteins from polyacrylamide gels by nano-electrospray mass spectrometry",
+      "journal": "Nature",
+      "year": 1996,
+      "citationCount": 1676,
+      "doi": "10.1038/379466a0",
+      "sourceUrl": "https://doi.org/10.1038/379466a0",
+      "verified": true
+    },
+    {
+      "title": "L-Arginine Modulates T Cell Metabolism and Enhances Survival and Anti-tumor Activity",
+      "journal": "Cell",
+      "year": 2016,
+      "citationCount": 1606,
+      "doi": "10.1016/j.cell.2016.09.031",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2016.09.031",
+      "verified": true
+    },
+    {
+      "title": "Mass spectrometry–based proteomics turns quantitative",
+      "journal": "Nature Chemical Biology",
+      "year": 2005,
+      "citationCount": 1554,
+      "doi": "10.1038/nchembio736",
+      "sourceUrl": "https://doi.org/10.1038/nchembio736",
+      "verified": true
+    },
+    {
+      "title": "Electrospray ionization–principles and practice",
+      "journal": "Mass Spectrometry Reviews",
+      "year": 1990,
+      "citationCount": 1541,
+      "doi": "10.1002/mas.1280090103",
+      "sourceUrl": "https://doi.org/10.1002/mas.1280090103",
+      "verified": true
+    },
+    {
+      "title": "Parts per Million Mass Accuracy on an Orbitrap Mass Spectrometer via Lock Mass Injection into a C-trap",
+      "journal": "Molecular & Cellular Proteomics",
+      "year": 2005,
+      "citationCount": 1528,
+      "doi": "10.1074/mcp.t500030-mcp200",
+      "sourceUrl": "https://doi.org/10.1074/mcp.t500030-mcp200",
+      "verified": true
+    },
+    {
+      "title": "Quantitative Phosphoproteomics Reveals Widespread Full Phosphorylation Site Occupancy During Mitosis",
+      "journal": "Science Signaling",
+      "year": 2010,
+      "citationCount": 1503,
+      "doi": "10.1126/scisignal.2000475",
+      "sourceUrl": "https://doi.org/10.1126/scisignal.2000475",
+      "verified": true
+    },
+    {
+      "title": "Error-Tolerant Identification of Peptides in Sequence Databases by Peptide Sequence Tags",
+      "journal": "Analytical Chemistry",
+      "year": 1994,
+      "citationCount": 1472,
+      "doi": "10.1021/ac00096a002",
+      "sourceUrl": "https://doi.org/10.1021/ac00096a002",
+      "verified": true
+    },
+    {
+      "title": "Linking genome and proteome by mass spectrometry: Large-scale identification of yeast proteins from two dimensional gels",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1996,
+      "citationCount": 1433,
+      "doi": "10.1073/pnas.93.25.14440",
+      "sourceUrl": "https://doi.org/10.1073/pnas.93.25.14440",
+      "verified": true
+    },
+    {
+      "title": "A Human Interactome in Three Quantitative Dimensions Organized by Stoichiometries and Abundances",
+      "journal": "Cell",
+      "year": 2015,
+      "citationCount": 1361,
+      "doi": "10.1016/j.cell.2015.09.053",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2015.09.053",
+      "verified": true
+    },
+    {
+      "title": "Proteomic characterization of the human centrosome by protein correlation profiling",
+      "journal": "Nature",
+      "year": 2003,
+      "citationCount": 1309,
+      "doi": "10.1038/nature02166",
+      "sourceUrl": "https://doi.org/10.1038/nature02166",
+      "verified": true
+    },
+    {
+      "title": "The growing landscape of lysine acetylation links metabolism and cell signalling",
+      "journal": "Nature Reviews Molecular Cell Biology",
+      "year": 2014,
+      "citationCount": 1290,
+      "doi": "10.1038/nrm3841",
+      "sourceUrl": "https://doi.org/10.1038/nrm3841",
+      "verified": true
+    },
+    {
+      "title": "Reverse Transcriptase Motifs in the Catalytic Subunit of Telomerase",
+      "journal": "Science",
+      "year": 1997,
+      "citationCount": 1259,
+      "doi": "10.1126/science.276.5312.561",
+      "sourceUrl": "https://doi.org/10.1126/science.276.5312.561",
+      "verified": true
+    },
+    {
+      "title": "Analysis of Proteins and Proteomes by Mass Spectrometry",
+      "journal": "Annual Review of Biochemistry",
+      "year": 2001,
+      "citationCount": 1219,
+      "doi": "10.1146/annurev.biochem.70.1.437",
+      "sourceUrl": "https://doi.org/10.1146/annurev.biochem.70.1.437",
+      "verified": true
+    },
+    {
+      "title": "Trypsin Cleaves Exclusively C-terminal to Arginine and Lysine Residues",
+      "journal": "Molecular & Cellular Proteomics",
+      "year": 2004,
+      "citationCount": 1205,
+      "doi": "10.1074/mcp.t400003-mcp200",
+      "sourceUrl": "https://doi.org/10.1074/mcp.t400003-mcp200",
+      "verified": true
+    },
+    {
+      "title": "The abc's (and xyz's) of peptide sequencing",
+      "journal": "Nature Reviews Molecular Cell Biology",
+      "year": 2004,
+      "citationCount": 1139,
+      "doi": "10.1038/nrm1468",
+      "sourceUrl": "https://doi.org/10.1038/nrm1468",
+      "verified": true
+    },
+    {
+      "title": "Nucleolar proteome dynamics",
+      "journal": "Nature",
+      "year": 2005,
+      "citationCount": 1138,
+      "doi": "10.1038/nature03207",
+      "sourceUrl": "https://doi.org/10.1038/nature03207",
+      "verified": true
+    },
+    {
+      "title": "Circular non-coding RNA ANRIL modulates ribosomal RNA maturation and atherosclerosis in humans",
+      "journal": "Nature Communications",
+      "year": 2016,
+      "citationCount": 1119,
+      "doi": "10.1038/ncomms12429",
+      "sourceUrl": "https://doi.org/10.1038/ncomms12429",
+      "verified": true
+    },
+    {
+      "title": "miRNPs: a novel class of ribonucleoproteins containing numerous microRNAs",
+      "journal": "Genes & Development",
+      "year": 2002,
+      "citationCount": 1067,
+      "doi": "10.1101/gad.974702",
+      "sourceUrl": "https://doi.org/10.1101/gad.974702",
+      "verified": true
+    },
+    {
+      "title": "Phosphoproteomics reveals that Parkinson's disease kinase LRRK2 regulates a subset of Rab GTPases",
+      "journal": "eLife",
+      "year": 2016,
+      "citationCount": 1041,
+      "doi": "10.7554/elife.12813",
+      "sourceUrl": "https://doi.org/10.7554/elife.12813",
+      "verified": true
+    },
+    {
+      "title": "Glucosylation of Rho proteins by Clostridium difficile toxin B",
+      "journal": "Nature",
+      "year": 1995,
+      "citationCount": 1033,
+      "doi": "10.1038/375500a0",
+      "sourceUrl": "https://doi.org/10.1038/375500a0",
+      "verified": true
+    },
+    {
+      "title": "Deep proteome and transcriptome mapping of a human cancer cell line",
+      "journal": "Molecular Systems Biology",
+      "year": 2011,
+      "citationCount": 1026,
+      "doi": "10.1038/msb.2011.81",
+      "sourceUrl": "https://doi.org/10.1038/msb.2011.81",
+      "verified": true
+    },
+    {
+      "title": "Directed Proteomic Analysis of the Human Nucleolus",
+      "journal": "Current Biology",
+      "year": 2002,
+      "citationCount": 1012,
+      "doi": "10.1016/s0960-9822(01)00650-9",
+      "sourceUrl": "https://doi.org/10.1016/s0960-9822(01)00650-9",
+      "verified": true
+    },
+    {
+      "title": "Ultradeep Human Phosphoproteome Reveals a Distinct Regulatory Nature of Tyr and Ser/Thr-Based Signaling",
+      "journal": "Cell Reports",
+      "year": 2014,
+      "citationCount": 1007,
+      "doi": "10.1016/j.celrep.2014.07.036",
+      "sourceUrl": "https://doi.org/10.1016/j.celrep.2014.07.036",
+      "verified": true
+    },
+    {
+      "title": "From genomics to proteomics",
+      "journal": "Nature",
+      "year": 2003,
+      "citationCount": 999,
+      "doi": "10.1038/nature01510",
+      "sourceUrl": "https://doi.org/10.1038/nature01510",
+      "verified": true
+    },
+    {
+      "title": "Higher-energy C-trap dissociation for peptide modification analysis",
+      "journal": "Nature Methods",
+      "year": 2007,
+      "citationCount": 998,
+      "doi": "10.1038/nmeth1060",
+      "sourceUrl": "https://doi.org/10.1038/nmeth1060",
+      "verified": true
+    },
+    {
+      "title": "Online Parallel Accumulation–Serial Fragmentation (PASEF) with a Novel Trapped Ion Mobility Mass Spectrometer",
+      "journal": "Molecular & Cellular Proteomics",
+      "year": 2018,
+      "citationCount": 974,
+      "doi": "10.1074/mcp.tir118.000900",
+      "sourceUrl": "https://doi.org/10.1074/mcp.tir118.000900",
+      "verified": true
     }
   ],
-  "education": [],
-  "socialMedia": {},
-  "status": "LIVING"
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:13.000Z",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Matthias_Mann_LectureZurich.JPG/330px-Matthias_Mann_LectureZurich.JPG",
+  "openalexId": "https://openalex.org/A5090940750"
 }

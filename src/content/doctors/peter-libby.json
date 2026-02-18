@@ -1,36 +1,492 @@
 {
   "fullName": "Peter Libby",
   "slug": "peter-libby",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Atherosclerosis",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">PL</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 65,
-  "hIndex": 259,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 297,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 29764,
+  "livesSaved": 0,
+  "biography": "Peter Libby is an American physician, focusing in atherosclerosis, cardiology, and cardiovascular prevention, currently the Mallinckrodt Professor of Medicine, Harvard Medical School at Mass General Brigham.",
+  "aiSummary": "Peter Libby is a atherosclerosis specialist with an H-index of 297 at Brigham & Women’s Hospital (Faculty). Has been published in Nature, New England Journal of Medicine, Nature Reviews Disease Primers. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Brigham & Women's Hospital"
-    }
-  ],
-  "bio": "Peter Libby is a pioneer in Atherosclerosis at Brigham & Women's Hospital, USA. With a D-Index of 259 and over 297,635 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Brigham & Women’s Hospital",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Atherosclerosis"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Inflammation in atherosclerosis",
+      "journal": "Nature",
+      "year": 2002,
+      "citationCount": 8043,
+      "doi": "10.1038/nature01323",
+      "sourceUrl": "https://doi.org/10.1038/nature01323",
+      "verified": true
+    },
+    {
+      "title": "Inflammation and Atherosclerosis",
+      "journal": "Circulation",
+      "year": 2002,
+      "citationCount": 7601,
+      "doi": "10.1161/hc0902.104353",
+      "sourceUrl": "https://doi.org/10.1161/hc0902.104353",
+      "verified": true
+    },
+    {
+      "title": "Rosuvastatin to Prevent Vascular Events in Men and Women with Elevated C-Reactive Protein",
+      "journal": "New England Journal of Medicine",
+      "year": 2008,
+      "citationCount": 6504,
+      "doi": "10.1056/nejmoa0807646",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa0807646",
+      "verified": true
+    },
+    {
+      "title": "Progress and challenges in translating the biology of atherosclerosis",
+      "journal": "Nature",
+      "year": 2011,
+      "citationCount": 3901,
+      "doi": "10.1038/nature10146",
+      "sourceUrl": "https://doi.org/10.1038/nature10146",
+      "verified": true
+    },
+    {
+      "title": "Braunwald's Heart Disease: A Textbook of Cardiovascular Medicine",
+      "journal": "Medical Entomology and Zoology",
+      "year": 2011,
+      "citationCount": 3778,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1565566980",
+      "verified": true
+    },
+    {
+      "title": "Inflammation in Atherosclerosis",
+      "journal": "Arteriosclerosis Thrombosis and Vascular Biology",
+      "year": 2012,
+      "citationCount": 3669,
+      "doi": "10.1161/atvbaha.108.179705",
+      "sourceUrl": "https://doi.org/10.1161/atvbaha.108.179705",
+      "verified": true
+    },
+    {
+      "title": "Rosuvastatin to Prevent Vascular Events in Men and Women With Elevated C-Reactive Protein",
+      "journal": "Obstetrical & Gynecological Survey",
+      "year": 2009,
+      "citationCount": 3657,
+      "doi": "10.1097/01.ogx.0000344393.60303.0a",
+      "sourceUrl": "https://doi.org/10.1097/01.ogx.0000344393.60303.0a",
+      "verified": true
+    },
+    {
+      "title": "Atherosclerosis",
+      "journal": "Nature Reviews Disease Primers",
+      "year": 2019,
+      "citationCount": 2816,
+      "doi": "10.1038/s41572-019-0106-z",
+      "sourceUrl": "https://doi.org/10.1038/s41572-019-0106-z",
+      "verified": true
+    },
+    {
+      "title": "Diabetes and Atherosclerosis",
+      "journal": "JAMA",
+      "year": 2002,
+      "citationCount": 2670,
+      "doi": "10.1001/jama.287.19.2570",
+      "sourceUrl": "https://doi.org/10.1001/jama.287.19.2570",
+      "verified": true
+    },
+    {
+      "title": "From Vulnerable Plaque to Vulnerable Patient",
+      "journal": "Circulation",
+      "year": 2003,
+      "citationCount": 2667,
+      "doi": "10.1161/01.cir.0000087481.55887.c9",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000087481.55887.c9",
+      "verified": true
+    },
+    {
+      "title": "Clonal Hematopoiesis and Risk of Atherosclerotic Cardiovascular Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 2017,
+      "citationCount": 2468,
+      "doi": "10.1056/nejmoa1701719",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1701719",
+      "verified": true
+    },
+    {
+      "title": "The changing landscape of atherosclerosis",
+      "journal": "Nature",
+      "year": 2021,
+      "citationCount": 2420,
+      "doi": "10.1038/s41586-021-03392-8",
+      "sourceUrl": "https://doi.org/10.1038/s41586-021-03392-8",
+      "verified": true
+    },
+    {
+      "title": "From Vulnerable Plaque to Vulnerable Patient",
+      "journal": "Circulation",
+      "year": 2003,
+      "citationCount": 2230,
+      "doi": "10.1161/01.cir.0000087480.94275.97",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000087480.94275.97",
+      "verified": true
+    },
+    {
+      "title": "The healing myocardium sequentially mobilizes two monocyte subsets with divergent and complementary functions",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 2007,
+      "citationCount": 2224,
+      "doi": "10.1084/jem.20070885",
+      "sourceUrl": "https://doi.org/10.1084/jem.20070885",
+      "verified": true
+    },
+    {
+      "title": "The immune response in atherosclerosis: a double-edged sword",
+      "journal": "Nature reviews. Immunology",
+      "year": 2006,
+      "citationCount": 2162,
+      "doi": "10.1038/nri1882",
+      "sourceUrl": "https://doi.org/10.1038/nri1882",
+      "verified": true
+    },
+    {
+      "title": "Identification of Splenic Reservoir Monocytes and Their Deployment to Inflammatory Sites",
+      "journal": "Science",
+      "year": 2009,
+      "citationCount": 2146,
+      "doi": "10.1126/science.1175202",
+      "sourceUrl": "https://doi.org/10.1126/science.1175202",
+      "verified": true
+    },
+    {
+      "title": "Inflammation in Atherosclerosis",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2009,
+      "citationCount": 2115,
+      "doi": "10.1016/j.jacc.2009.09.009",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2009.09.009",
+      "verified": true
+    },
+    {
+      "title": "Molecular Bases of the Acute Coronary Syndromes",
+      "journal": "Circulation",
+      "year": 1995,
+      "citationCount": 2027,
+      "doi": "10.1161/01.cir.91.11.2844",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.91.11.2844",
+      "verified": true
+    },
+    {
+      "title": "Effect of Very High-Intensity Statin Therapy on Regression of Coronary Atherosclerosis",
+      "journal": "JAMA",
+      "year": 2006,
+      "citationCount": 2017,
+      "doi": "10.1001/jama.295.13.jpc60002",
+      "sourceUrl": "https://doi.org/10.1001/jama.295.13.jpc60002",
+      "verified": true
+    },
+    {
+      "title": "Pathophysiology of Coronary Artery Disease",
+      "journal": "Circulation",
+      "year": 2005,
+      "citationCount": 1946,
+      "doi": "10.1161/circulationaha.105.537878",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.105.537878",
+      "verified": true
+    },
+    {
+      "title": "Nitric oxide decreases cytokine-induced endothelial activation. Nitric oxide selectively reduces endothelial expression of adhesion molecules and proinflammatory cytokines.",
+      "journal": "Journal of Clinical Investigation",
+      "year": 1995,
+      "citationCount": 1780,
+      "doi": "10.1172/jci118074",
+      "sourceUrl": "https://doi.org/10.1172/jci118074",
+      "verified": true
+    },
+    {
+      "title": "Absence of Monocyte Chemoattractant Protein-1 Reduces Atherosclerosis in Low Density Lipoprotein Receptor–Deficient Mice",
+      "journal": "Molecular Cell",
+      "year": 1998,
+      "citationCount": 1562,
+      "doi": "10.1016/s1097-2765(00)80139-2",
+      "sourceUrl": "https://doi.org/10.1016/s1097-2765(00)80139-2",
+      "verified": true
+    },
+    {
+      "title": "Current Concepts of the Pathogenesis of the Acute Coronary Syndromes",
+      "journal": "Circulation",
+      "year": 2001,
+      "citationCount": 1552,
+      "doi": "10.1161/01.cir.104.3.365",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.104.3.365",
+      "verified": true
+    },
+    {
+      "title": "Ly-6Chi monocytes dominate hypercholesterolemia-associated monocytosis and give rise to macrophages in atheromata",
+      "journal": "Journal of Clinical Investigation",
+      "year": 2007,
+      "citationCount": 1247,
+      "doi": "10.1172/jci29950",
+      "sourceUrl": "https://doi.org/10.1172/jci29950",
+      "verified": true
+    },
+    {
+      "title": "Low-Dose Methotrexate for the Prevention of Atherosclerotic Events",
+      "journal": "New England Journal of Medicine",
+      "year": 2018,
+      "citationCount": 1244,
+      "doi": "10.1056/nejmoa1809798",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1809798",
+      "verified": true
+    },
+    {
+      "title": "Mechanisms of Acute Coronary Syndromes and Their Implications for Therapy",
+      "journal": "New England Journal of Medicine",
+      "year": 2013,
+      "citationCount": 1221,
+      "doi": "10.1056/nejmra1216063",
+      "sourceUrl": "https://doi.org/10.1056/nejmra1216063",
+      "verified": true
+    },
+    {
+      "title": "Effect of Antihypertensive Agents on Cardiovascular Events in Patients With Coronary Disease and Normal Blood Pressure",
+      "journal": "JAMA",
+      "year": 2004,
+      "citationCount": 1147,
+      "doi": "10.1001/jama.292.18.2217",
+      "sourceUrl": "https://doi.org/10.1001/jama.292.18.2217",
+      "verified": true
+    },
+    {
+      "title": "Inflammation and cardiovascular disease mechanisms",
+      "journal": "American Journal of Clinical Nutrition",
+      "year": 2006,
+      "citationCount": 1083,
+      "doi": "10.1093/ajcn/83.2.456s",
+      "sourceUrl": "https://doi.org/10.1093/ajcn/83.2.456s",
+      "verified": true
+    },
+    {
+      "title": "Myocardial infarction accelerates atherosclerosis",
+      "journal": "Nature",
+      "year": 2012,
+      "citationCount": 1063,
+      "doi": "10.1038/nature11260",
+      "sourceUrl": "https://doi.org/10.1038/nature11260",
+      "verified": true
+    },
+    {
+      "title": "Innate and Adaptive Immunity in the Pathogenesis of Atherosclerosis",
+      "journal": "Circulation Research",
+      "year": 2002,
+      "citationCount": 1023,
+      "doi": "10.1161/01.res.0000029784.15893.10",
+      "sourceUrl": "https://doi.org/10.1161/01.res.0000029784.15893.10",
+      "verified": true
+    },
+    {
+      "title": "Reduction in C-reactive protein and LDL cholesterol and cardiovascular event rates after initiation of rosuvastatin: a prospective study of the JUPITER trial",
+      "journal": "The Lancet",
+      "year": 2009,
+      "citationCount": 1017,
+      "doi": "10.1016/s0140-6736(09)60447-5",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(09)60447-5",
+      "verified": true
+    },
+    {
+      "title": "Local proliferation dominates lesional macrophage accumulation in atherosclerosis",
+      "journal": "Nature Medicine",
+      "year": 2013,
+      "citationCount": 1016,
+      "doi": "10.1038/nm.3258",
+      "sourceUrl": "https://doi.org/10.1038/nm.3258",
+      "verified": true
+    },
+    {
+      "title": "COVID-19 is, in the end, an endothelial disease",
+      "journal": "European Heart Journal",
+      "year": 2020,
+      "citationCount": 979,
+      "doi": "10.1093/eurheartj/ehaa623",
+      "sourceUrl": "https://doi.org/10.1093/eurheartj/ehaa623",
+      "verified": true
+    },
+    {
+      "title": "Obesity, inflammation, and atherosclerosis",
+      "journal": "Nature Reviews Cardiology",
+      "year": 2009,
+      "citationCount": 963,
+      "doi": "10.1038/nrcardio.2009.55",
+      "sourceUrl": "https://doi.org/10.1038/nrcardio.2009.55",
+      "verified": true
+    },
+    {
+      "title": "Macrophages Facilitate Electrical Conduction in the Heart",
+      "journal": "Cell",
+      "year": 2017,
+      "citationCount": 935,
+      "doi": "10.1016/j.cell.2017.03.050",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2017.03.050",
+      "verified": true
+    },
+    {
+      "title": "PDGF-dependent tyrosine phosphorylation stimulates production of novel polyphosphoinositides in intact cells",
+      "journal": "Cell",
+      "year": 1989,
+      "citationCount": 924,
+      "doi": "10.1016/0092-8674(89)90182-7",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(89)90182-7",
+      "verified": true
+    },
+    {
+      "title": "Inflammation in Atherosclerosis: From Vascular Biology to Biomarker Discovery and Risk Prediction",
+      "journal": "Clinical Chemistry",
+      "year": 2007,
+      "citationCount": 918,
+      "doi": "10.1373/clinchem.2007.097360",
+      "sourceUrl": "https://doi.org/10.1373/clinchem.2007.097360",
+      "verified": true
+    },
+    {
+      "title": "Reduction of atherosclerosis in mice by inhibition of CD40 signalling",
+      "journal": "Nature",
+      "year": 1998,
+      "citationCount": 912,
+      "doi": "10.1038/28204",
+      "sourceUrl": "https://doi.org/10.1038/28204",
+      "verified": true
+    },
+    {
+      "title": "Targeting inflammation in atherosclerosis — from experimental insights to the clinic",
+      "journal": "Nature Reviews Drug Discovery",
+      "year": 2021,
+      "citationCount": 905,
+      "doi": "10.1038/s41573-021-00198-1",
+      "sourceUrl": "https://doi.org/10.1038/s41573-021-00198-1",
+      "verified": true
+    },
+    {
+      "title": "Braunwald's heart disease",
+      "journal": "Elsevier eBooks",
+      "year": 2015,
+      "citationCount": 888,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2582861166",
+      "verified": true
+    },
+    {
+      "title": "Effect of Two Intensive Statin Regimens on Progression of Coronary Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 2011,
+      "citationCount": 874,
+      "doi": "10.1056/nejmoa1110874",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1110874",
+      "verified": true
+    },
+    {
+      "title": "Therapeutic siRNA silencing in inflammatory monocytes in mice",
+      "journal": "Nature Biotechnology",
+      "year": 2011,
+      "citationCount": 824,
+      "doi": "10.1038/nbt.1989",
+      "sourceUrl": "https://doi.org/10.1038/nbt.1989",
+      "verified": true
+    },
+    {
+      "title": "Targeted deletion of matrix metalloproteinase-9 attenuates left ventricular enlargement and collagen accumulation after experimental myocardial infarction",
+      "journal": "Journal of Clinical Investigation",
+      "year": 2000,
+      "citationCount": 805,
+      "doi": "10.1172/jci8768",
+      "sourceUrl": "https://doi.org/10.1172/jci8768",
+      "verified": true
+    },
+    {
+      "title": "Cardiovascular benefits and diabetes risks of statin therapy in primary prevention: an analysis from the JUPITER trial",
+      "journal": "The Lancet",
+      "year": 2012,
+      "citationCount": 795,
+      "doi": "10.1016/s0140-6736(12)61190-8",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(12)61190-8",
+      "verified": true
+    },
+    {
+      "title": "A guiding map for inflammation",
+      "journal": "Nature Immunology",
+      "year": 2017,
+      "citationCount": 793,
+      "doi": "10.1038/ni.3790",
+      "sourceUrl": "https://doi.org/10.1038/ni.3790",
+      "verified": true
+    },
+    {
+      "title": "Inflammation in Atherosclerosis: Transition From Theory to Practice",
+      "journal": "Circulation Journal",
+      "year": 2010,
+      "citationCount": 792,
+      "doi": "10.1253/circj.cj-09-0706",
+      "sourceUrl": "https://doi.org/10.1253/circj.cj-09-0706",
+      "verified": true
+    },
+    {
+      "title": "Interleukin-1β inhibition and the prevention of recurrent cardiovascular events: Rationale and Design of the Canakinumab Anti-inflammatory Thrombosis Outcomes Study (CANTOS)",
+      "journal": "American Heart Journal",
+      "year": 2011,
+      "citationCount": 785,
+      "doi": "10.1016/j.ahj.2011.06.012",
+      "sourceUrl": "https://doi.org/10.1016/j.ahj.2011.06.012",
+      "verified": true
+    },
+    {
+      "title": "The multifaceted contributions of leukocyte subsets to atherosclerosis: lessons from mouse models",
+      "journal": "Nature reviews. Immunology",
+      "year": 2008,
+      "citationCount": 772,
+      "doi": "10.1038/nri2415",
+      "sourceUrl": "https://doi.org/10.1038/nri2415",
+      "verified": true
+    },
+    {
+      "title": "Genetic deficiency and pharmacological stabilization of mast cells reduce diet-induced obesity and diabetes in mice",
+      "journal": "Nature Medicine",
+      "year": 2009,
+      "citationCount": 767,
+      "doi": "10.1038/nm.1994",
+      "sourceUrl": "https://doi.org/10.1038/nm.1994",
+      "verified": true
+    },
+    {
+      "title": "Inflammation and plaque vulnerability",
+      "journal": "Journal of Internal Medicine",
+      "year": 2015,
+      "citationCount": 767,
+      "doi": "10.1111/joim.12406",
+      "sourceUrl": "https://doi.org/10.1111/joim.12406",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:13.000Z",
+  "openalexId": "https://openalex.org/A5043201732"
 }

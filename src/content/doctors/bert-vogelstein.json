@@ -1,36 +1,479 @@
 {
+  "hIndex": 494,
+  "tier": "UNRANKED",
+  "test": true,
   "fullName": "Bert Vogelstein",
-  "slug": "bert-vogelstein",
-  "title": "MD, PhD",
-  "specialty": "Cancer Genetics",
+  "specialty": "Cancer Genomics",
+  "rankingScore": 28,
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States"
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">BV</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 72,
-  "hIndex": 289,
-  "citations": [],
-  "yearsActive": 30,
-  "verifiedSurgeries": 0,
-  "livesSaved": 49441,
-  "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
+  "status": "LIVING",
+  "medicalSpecialty": [
+    "Cancer Genomics"
+  ],
   "affiliations": [
     {
-      "hospitalName": "Johns Hopkins University"
+      "hospitalName": "Johns Hopkins University",
+      "role": "Faculty",
+      "hospitalUrl": "#"
     }
   ],
-  "bio": "Bert Vogelstein is a pioneer in Cancer Genetics at Johns Hopkins University, USA. With a D-Index of 289 and over 494,405 citations, they are among the world's most influential researchers.",
-  "awards": [
+  "lastFixedAt": "2026-02-16T05:45:12.000Z",
+  "openalexId": "https://openalex.org/A5072858943",
+  "citations": [
     {
-      "name": "High Impact Researcher",
-      "year": 2024
+      "title": "A technique for radiolabeling DNA restriction endonuclease fragments to high specific activity",
+      "journal": "Analytical Biochemistry",
+      "year": 1983,
+      "citationCount": 25152,
+      "doi": "10.1016/0003-2697(83)90418-9",
+      "sourceUrl": "https://doi.org/10.1016/0003-2697(83)90418-9",
+      "verified": true
+    },
+    {
+      "title": "A genetic model for colorectal tumorigenesis",
+      "journal": "Cell",
+      "year": 1990,
+      "citationCount": 12014,
+      "doi": "10.1016/0092-8674(90)90186-i",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(90)90186-i",
+      "verified": true
+    },
+    {
+      "title": "PD-1 Blockade in Tumors with Mismatch-Repair Deficiency",
+      "journal": "New England Journal of Medicine",
+      "year": 2015,
+      "citationCount": 9212,
+      "doi": "10.1056/nejmoa1500596",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1500596",
+      "verified": true
+    },
+    {
+      "title": "p53 Mutations in Human Cancers",
+      "journal": "Science",
+      "year": 1991,
+      "citationCount": 8083,
+      "doi": "10.1126/science.1905840",
+      "sourceUrl": "https://doi.org/10.1126/science.1905840",
+      "verified": true
+    },
+    {
+      "title": "Cancer Genome Landscapes",
+      "journal": "Science",
+      "year": 2013,
+      "citationCount": 7831,
+      "doi": "10.1126/science.1235122",
+      "sourceUrl": "https://doi.org/10.1126/science.1235122",
+      "verified": true
+    },
+    {
+      "title": "Genetic Alterations during Colorectal-Tumor Development",
+      "journal": "New England Journal of Medicine",
+      "year": 1988,
+      "citationCount": 6726,
+      "doi": "10.1056/nejm198809013190901",
+      "sourceUrl": "https://doi.org/10.1056/nejm198809013190901",
+      "verified": true
+    },
+    {
+      "title": "Surfing the p53 network",
+      "journal": "Nature",
+      "year": 2000,
+      "citationCount": 6573,
+      "doi": "10.1038/35042675",
+      "sourceUrl": "https://doi.org/10.1038/35042675",
+      "verified": true
+    },
+    {
+      "title": "Mismatch repair deficiency predicts response of solid tumors to PD-1 blockade",
+      "journal": "Science",
+      "year": 2017,
+      "citationCount": 6430,
+      "doi": "10.1126/science.aan6733",
+      "sourceUrl": "https://doi.org/10.1126/science.aan6733",
+      "verified": true
+    },
+    {
+      "title": "<i>IDH1</i>and<i>IDH2</i>Mutations in Gliomas",
+      "journal": "New England Journal of Medicine",
+      "year": 2009,
+      "citationCount": 5797,
+      "doi": "10.1056/nejmoa0808710",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa0808710",
+      "verified": true
+    },
+    {
+      "title": "An Integrated Genomic Analysis of Human Glioblastoma Multiforme",
+      "journal": "Science",
+      "year": 2008,
+      "citationCount": 5753,
+      "doi": "10.1126/science.1164382",
+      "sourceUrl": "https://doi.org/10.1126/science.1164382",
+      "verified": true
+    },
+    {
+      "title": "Detection of Circulating Tumor DNA in Early- and Late-Stage Human Malignancies",
+      "journal": "Science Translational Medicine",
+      "year": 2014,
+      "citationCount": 4939,
+      "doi": "10.1126/scitranslmed.3007094",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.3007094",
+      "verified": true
+    },
+    {
+      "title": "Lessons from Hereditary Colorectal Cancer",
+      "journal": "Cell",
+      "year": 1996,
+      "citationCount": 4910,
+      "doi": "10.1016/s0092-8674(00)81333-1",
+      "sourceUrl": "https://doi.org/10.1016/s0092-8674(00)81333-1",
+      "verified": true
+    },
+    {
+      "title": "Identification of c- <i>MYC</i> as a Target of the APC Pathway",
+      "journal": "Science",
+      "year": 1998,
+      "citationCount": 4527,
+      "doi": "10.1126/science.281.5382.1509",
+      "sourceUrl": "https://doi.org/10.1126/science.281.5382.1509",
+      "verified": true
+    },
+    {
+      "title": "Cancer genes and the pathways they control",
+      "journal": "Nature Medicine",
+      "year": 2004,
+      "citationCount": 4223,
+      "doi": "10.1038/nm1087",
+      "sourceUrl": "https://doi.org/10.1038/nm1087",
+      "verified": true
+    },
+    {
+      "title": "Genetic instabilities in human cancers",
+      "journal": "Nature",
+      "year": 1998,
+      "citationCount": 4155,
+      "doi": "10.1038/25292",
+      "sourceUrl": "https://doi.org/10.1038/25292",
+      "verified": true
+    },
+    {
+      "title": "Core Signaling Pathways in Human Pancreatic Cancers Revealed by Global Genomic Analyses",
+      "journal": "Science",
+      "year": 2008,
+      "citationCount": 4003,
+      "doi": "10.1126/science.1164368",
+      "sourceUrl": "https://doi.org/10.1126/science.1164368",
+      "verified": true
+    },
+    {
+      "title": "Activation of β-Catenin-Tcf Signaling in Colon Cancer by Mutations in β-Catenin or APC",
+      "journal": "Science",
+      "year": 1997,
+      "citationCount": 3896,
+      "doi": "10.1126/science.275.5307.1787",
+      "sourceUrl": "https://doi.org/10.1126/science.275.5307.1787",
+      "verified": true
+    },
+    {
+      "title": "Participation of p53 protein in the cellular response to DNA damage.",
+      "journal": "PubMed",
+      "year": 1991,
+      "citationCount": 3800,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1847864430",
+      "verified": true
+    },
+    {
+      "title": "Serial Analysis of Gene Expression",
+      "journal": "Science",
+      "year": 1995,
+      "citationCount": 3712,
+      "doi": "10.1126/science.270.5235.484",
+      "sourceUrl": "https://doi.org/10.1126/science.270.5235.484",
+      "verified": true
+    },
+    {
+      "title": "High Frequency of Mutations of the <i>PIK3CA</i> Gene in Human Cancers",
+      "journal": "Science",
+      "year": 2004,
+      "citationCount": 3400,
+      "doi": "10.1126/science.1096502",
+      "sourceUrl": "https://doi.org/10.1126/science.1096502",
+      "verified": true
+    },
+    {
+      "title": "Constitutive Transcriptional Activation by a β-Catenin-Tcf Complex in APC <sup>−/−</sup> Colon Carcinoma",
+      "journal": "Science",
+      "year": 1997,
+      "citationCount": 3258,
+      "doi": "10.1126/science.275.5307.1784",
+      "sourceUrl": "https://doi.org/10.1126/science.275.5307.1784",
+      "verified": true
+    },
+    {
+      "title": "A simplified system for generating recombinant adenoviruses",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1998,
+      "citationCount": 3222,
+      "doi": "10.1073/pnas.95.5.2509",
+      "sourceUrl": "https://doi.org/10.1073/pnas.95.5.2509",
+      "verified": true
+    },
+    {
+      "title": "The Consensus Coding Sequences of Human Breast and Colorectal Cancers",
+      "journal": "Science",
+      "year": 2006,
+      "citationCount": 3158,
+      "doi": "10.1126/science.1133427",
+      "sourceUrl": "https://doi.org/10.1126/science.1133427",
+      "verified": true
+    },
+    {
+      "title": "The Genomic Landscapes of Human Breast and Colorectal Cancers",
+      "journal": "Science",
+      "year": 2007,
+      "citationCount": 2824,
+      "doi": "10.1126/science.1145720",
+      "sourceUrl": "https://doi.org/10.1126/science.1145720",
+      "verified": true
+    },
+    {
+      "title": "Requirement for p53 and p21 to Sustain G <sub>2</sub> Arrest After DNA Damage",
+      "journal": "Science",
+      "year": 1998,
+      "citationCount": 2800,
+      "doi": "10.1126/science.282.5393.1497",
+      "sourceUrl": "https://doi.org/10.1126/science.282.5393.1497",
+      "verified": true
+    },
+    {
+      "title": "Mutations in the p53 gene occur in diverse human tumour types",
+      "journal": "Nature",
+      "year": 1989,
+      "citationCount": 2766,
+      "doi": "10.1038/342705a0",
+      "sourceUrl": "https://doi.org/10.1038/342705a0",
+      "verified": true
+    },
+    {
+      "title": "Clues to the Pathogenesis of Familial Colorectal Cancer",
+      "journal": "Science",
+      "year": 1993,
+      "citationCount": 2713,
+      "doi": "10.1126/science.8484121",
+      "sourceUrl": "https://doi.org/10.1126/science.8484121",
+      "verified": true
+    },
+    {
+      "title": "Detection and localization of surgically resectable cancers with a multi-analyte blood test",
+      "journal": "Science",
+      "year": 2018,
+      "citationCount": 2676,
+      "doi": "10.1126/science.aar3247",
+      "sourceUrl": "https://doi.org/10.1126/science.aar3247",
+      "verified": true
+    },
+    {
+      "title": "Circulating mutant DNA to assess tumor dynamics",
+      "journal": "Nature Medicine",
+      "year": 2008,
+      "citationCount": 2655,
+      "doi": "10.1038/nm.1789",
+      "sourceUrl": "https://doi.org/10.1038/nm.1789",
+      "verified": true
+    },
+    {
+      "title": "A model for p53-induced apoptosis",
+      "journal": "Nature",
+      "year": 1997,
+      "citationCount": 2488,
+      "doi": "10.1038/38525",
+      "sourceUrl": "https://doi.org/10.1038/38525",
+      "verified": true
+    },
+    {
+      "title": "Distant metastasis occurs late during the genetic evolution of pancreatic cancer",
+      "journal": "Nature",
+      "year": 2010,
+      "citationCount": 2476,
+      "doi": "10.1038/nature09515",
+      "sourceUrl": "https://doi.org/10.1038/nature09515",
+      "verified": true
+    },
+    {
+      "title": "Hypomethylation distinguishes genes of some human cancers from their normal counterparts",
+      "journal": "Nature",
+      "year": 1983,
+      "citationCount": 2421,
+      "doi": "10.1038/301089a0",
+      "sourceUrl": "https://doi.org/10.1038/301089a0",
+      "verified": true
+    },
+    {
+      "title": "Identification of FAP Locus Genes from Chromosome 5q21",
+      "journal": "Science",
+      "year": 1991,
+      "citationCount": 2353,
+      "doi": "10.1126/science.1651562",
+      "sourceUrl": "https://doi.org/10.1126/science.1651562",
+      "verified": true
+    },
+    {
+      "title": "Mutations of a mutS homolog in hereditary nonpolyposis colorectal cancer",
+      "journal": "Cell",
+      "year": 1993,
+      "citationCount": 2279,
+      "doi": "10.1016/0092-8674(93)90330-s",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(93)90330-s",
+      "verified": true
+    },
+    {
+      "title": "Inactivation of the Type II TGF-β Receptor in Colon Cancer Cells with Microsatellite Instability",
+      "journal": "Science",
+      "year": 1995,
+      "citationCount": 2269,
+      "doi": "10.1126/science.7761852",
+      "sourceUrl": "https://doi.org/10.1126/science.7761852",
+      "verified": true
+    },
+    {
+      "title": "Chromosome 17 Deletions and p53 Gene Mutations in Colorectal Carcinomas",
+      "journal": "Science",
+      "year": 1989,
+      "citationCount": 2071,
+      "doi": "10.1126/science.2649981",
+      "sourceUrl": "https://doi.org/10.1126/science.2649981",
+      "verified": true
+    },
+    {
+      "title": "Definition of a consensus binding site for p53",
+      "journal": "Nature Genetics",
+      "year": 1992,
+      "citationCount": 1990,
+      "doi": "10.1038/ng0492-45",
+      "sourceUrl": "https://doi.org/10.1038/ng0492-45",
+      "verified": true
+    },
+    {
+      "title": "Genetic instability in colorectal cancers",
+      "journal": "Nature",
+      "year": 1997,
+      "citationCount": 1986,
+      "doi": "10.1038/386623a0",
+      "sourceUrl": "https://doi.org/10.1038/386623a0",
+      "verified": true
+    },
+    {
+      "title": "Amplification of a gene encoding a p53-associated protein in human sarcomas",
+      "journal": "Nature",
+      "year": 1992,
+      "citationCount": 1953,
+      "doi": "10.1038/358080a0",
+      "sourceUrl": "https://doi.org/10.1038/358080a0",
+      "verified": true
+    },
+    {
+      "title": "Variation in cancer risk among tissues can be explained by the number of stem cell divisions",
+      "journal": "Science",
+      "year": 2015,
+      "citationCount": 1914,
+      "doi": "10.1126/science.1260825",
+      "sourceUrl": "https://doi.org/10.1126/science.1260825",
+      "verified": true
+    },
+    {
+      "title": "p53 function and dysfunction",
+      "journal": "Cell",
+      "year": 1992,
+      "citationCount": 1896,
+      "doi": "10.1016/0092-8674(92)90421-8",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(92)90421-8",
+      "verified": true
+    },
+    {
+      "title": "Mutations of Chromosome 5q21 Genes in FAP and Colorectal Cancer Patients",
+      "journal": "Science",
+      "year": 1991,
+      "citationCount": 1891,
+      "doi": "10.1126/science.1651563",
+      "sourceUrl": "https://doi.org/10.1126/science.1651563",
+      "verified": true
+    },
+    {
+      "title": "Incidence and functional consequences of <i>hMLH1</i> promoter hypermethylation in colorectal carcinoma",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1998,
+      "citationCount": 1863,
+      "doi": "10.1073/pnas.95.12.6870",
+      "sourceUrl": "https://doi.org/10.1073/pnas.95.12.6870",
+      "verified": true
+    },
+    {
+      "title": "Prevalence of ras gene mutations in human colorectal cancers",
+      "journal": "Nature",
+      "year": 1987,
+      "citationCount": 1858,
+      "doi": "10.1038/327293a0",
+      "sourceUrl": "https://doi.org/10.1038/327293a0",
+      "verified": true
+    },
+    {
+      "title": "The multistep nature of cancer",
+      "journal": "Trends in Genetics",
+      "year": 1993,
+      "citationCount": 1853,
+      "doi": "10.1016/0168-9525(93)90209-z",
+      "sourceUrl": "https://doi.org/10.1016/0168-9525(93)90209-z",
+      "verified": true
+    },
+    {
+      "title": "Genes Expressed in Human Tumor Endothelium",
+      "journal": "Science",
+      "year": 2000,
+      "citationCount": 1839,
+      "doi": "10.1126/science.289.5482.1197",
+      "sourceUrl": "https://doi.org/10.1126/science.289.5482.1197",
+      "verified": true
+    },
+    {
+      "title": "Mutation of a <i>mutL</i> Homolog in Hereditary Colon Cancer",
+      "journal": "Science",
+      "year": 1994,
+      "citationCount": 1832,
+      "doi": "10.1126/science.8128251",
+      "sourceUrl": "https://doi.org/10.1126/science.8128251",
+      "verified": true
+    },
+    {
+      "title": "Suppression of Human Colorectal Carcinoma Cell Growth by Wild-Type p53",
+      "journal": "Science",
+      "year": 1990,
+      "citationCount": 1784,
+      "doi": "10.1126/science.2144057",
+      "sourceUrl": "https://doi.org/10.1126/science.2144057",
+      "verified": true
+    },
+    {
+      "title": "Identification of a Chromosome 18q Gene that Is Altered in Colorectal Cancers",
+      "journal": "Science",
+      "year": 1990,
+      "citationCount": 1738,
+      "doi": "10.1126/science.2294591",
+      "sourceUrl": "https://doi.org/10.1126/science.2294591",
+      "verified": true
+    },
+    {
+      "title": "The molecular evolution of acquired resistance to targeted EGFR blockade in colorectal cancers",
+      "journal": "Nature",
+      "year": 2012,
+      "citationCount": 1714,
+      "doi": "10.1038/nature11219",
+      "sourceUrl": "https://doi.org/10.1038/nature11219",
+      "verified": true
     }
   ],
-  "education": [],
-  "socialMedia": {},
-  "status": "LIVING"
+  "biography": "Bert Vogelstein is director of the Ludwig Center, Clayton Professor of Oncology and Pathology and a Howard Hughes Medical Institute investigator at The Johns Hopkins Medical School and Sidney Kimmel Comprehensive Cancer Center. A pioneer in the field of cancer genomics, his studies on colorectal cancers revealed that they result from the sequential accumulation of mutations in oncogenes and tumor suppressor genes. These studies now form the paradigm for modern cancer research and provided the basis for the notion of the somatic evolution of cancer.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Bert_Vogelstein_giving_the_Trent_Lecture.jpg/330px-Bert_Vogelstein_giving_the_Trent_Lecture.jpg",
+  "aiSummary": "Bert Vogelstein is a cancer genomics specialist with an H-index of 494 at Johns Hopkins University (Faculty). Has been published in Cell, New England Journal of Medicine, Science. Based in United States."
 }

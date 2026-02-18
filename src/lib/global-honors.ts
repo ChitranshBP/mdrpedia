@@ -286,7 +286,7 @@ export function getHonorStyle(tier: HonorTier): {
                 borderColor: '#FFD700',          // Gold
                 textColor: '#FFD700',
                 fontFamily: "'Lora', serif",
-                icon: '🏛️',
+                icon: 'GL',
             };
         case HonorTier.NATIONAL_HONOR:
             return {
@@ -294,7 +294,7 @@ export function getHonorStyle(tier: HonorTier): {
                 borderColor: '#C0C0C0',          // Silver
                 textColor: '#E0E0E0',
                 fontFamily: "'Inter', sans-serif",
-                icon: '🎖️',
+                icon: 'NH',
             };
         case HonorTier.PROFESSIONAL_EXCELLENCE:
             return {
@@ -302,7 +302,7 @@ export function getHonorStyle(tier: HonorTier): {
                 borderColor: '#4a6fa5',
                 textColor: '#8ab4f8',
                 fontFamily: "'Lora', serif",
-                icon: '🏅',
+                icon: 'PE',
             };
         default:
             return {

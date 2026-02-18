@@ -1,47 +1,495 @@
 {
-    "fullName": "Eric Topol",
-    "slug": "eric-topol",
-    "title": "MD",
-    "specialty": "Cardiology",
-    "geography": {
-        "city": "La Jolla",
-        "country": "USA"
+  "fullName": "Eric Topol",
+  "slug": "eric-topol",
+  "title": "MD",
+  "specialty": "Cardiology",
+  "geography": {
+    "country": "Global",
+    "city": "Unknown",
+    "region": "Unknown"
+  },
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 202,
+  "yearsActive": 0,
+  "verifiedSurgeries": 0,
+  "livesSaved": 0,
+  "biography": "Eric Jeffrey Topol is an American cardiologist, scientist, and author. He is the founder and director of the Scripps Research Translational Institute, a professor of Molecular Medicine and Executive Vice-President at Scripps Research Institute, and a senior consultant at the Division of Cardiovascular Diseases at Scripps Clinic in La Jolla, California.",
+  "aiSummary": "Eric Topol is a cardiology specialist with an H-index of 202 at Scripps Research (Member). Has been published in Nature Medicine, Nature Reviews Microbiology, JAMA. Based in Unknown, Unknown, Global.",
+  "techniquesInvented": [],
+  "hasInvention": false,
+  "education": [
+    "Scripps Research"
+  ],
+  "socialMedia": {},
+  "affiliations": [
+    {
+      "hospitalName": "Scripps Research",
+      "role": "Member",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Cardiology"
+  ],
+  "knowsAbout": [
+    "Top Doctor Awards"
+  ],
+  "citations": [
+    {
+      "title": "High-performance medicine: the convergence of human and artificial intelligence",
+      "journal": "Nature Medicine",
+      "year": 2018,
+      "citationCount": 7168,
+      "doi": "10.1038/s41591-018-0300-7",
+      "sourceUrl": "https://doi.org/10.1038/s41591-018-0300-7",
+      "verified": true
     },
-    "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Eric_Topol_2018.jpg/800px-Eric_Topol_2018.jpg",
-    "tier": "TITAN",
-    "rankingScore": 96,
-    "hIndex": 240,
-    "citations": [],
-    "yearsActive": 40,
-    "verifiedSurgeries": 0,
-    "livesSaved": 50000,
-    "techniquesInvented": [
-        "Genetic Risk Scores for Heart Attack"
-    ],
-    "isPioneer": true,
-    "isLeader": true,
-    "affiliations": [
-        {
-            "hospitalName": "Scripps Research"
-        }
-    ],
-    "bio": "Eric Topol is a cardiologist, scientist, and author. He is the founder and director of the Scripps Research Translational Institute. Topol is a leading voice in digital medicine, genomics, and the use of AI in healthcare, having published over 1,200 peer-reviewed articles.",
-    "awards": [
-        {
-            "name": "Top 10 Most Cited Researcher in Medicine",
-            "year": 2015
-        },
-        {
-            "name": "Cleveland Clinic Founder's Award",
-            "year": 2010
-        }
-    ],
-    "education": [
-        "University of Virginia (BA)",
-        "University of Rochester (MD)"
-    ],
-    "socialMedia": {
-        "twitter": "https://twitter.com/EricTopol"
+    {
+      "title": "Long COVID: major findings, mechanisms and recommendations",
+      "journal": "Nature Reviews Microbiology",
+      "year": 2023,
+      "citationCount": 3812,
+      "doi": "10.1038/s41579-022-00846-2",
+      "sourceUrl": "https://doi.org/10.1038/s41579-022-00846-2",
+      "verified": true
     },
-    "status": "LIVING"
+    {
+      "title": "Early and Sustained Dual Oral Antiplatelet Therapy Following Percutaneous Coronary Intervention",
+      "journal": "JAMA",
+      "year": 2002,
+      "citationCount": 3072,
+      "doi": "10.1001/jama.288.19.2411",
+      "sourceUrl": "https://doi.org/10.1001/jama.288.19.2411",
+      "verified": true
+    },
+    {
+      "title": "Clopidogrel and Aspirin versus Aspirin Alone for the Prevention of Atherothrombotic Events",
+      "journal": "New England Journal of Medicine",
+      "year": 2006,
+      "citationCount": 2799,
+      "doi": "10.1056/nejmoa060989",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa060989",
+      "verified": true
+    },
+    {
+      "title": "Prevalence of Asymptomatic SARS-CoV-2 Infection",
+      "journal": "Annals of Internal Medicine",
+      "year": 2020,
+      "citationCount": 2437,
+      "doi": "10.7326/m20-3012",
+      "sourceUrl": "https://doi.org/10.7326/m20-3012",
+      "verified": true
+    },
+    {
+      "title": "AI in health and medicine",
+      "journal": "Nature Medicine",
+      "year": 2022,
+      "citationCount": 2180,
+      "doi": "10.1038/s41591-021-01614-0",
+      "sourceUrl": "https://doi.org/10.1038/s41591-021-01614-0",
+      "verified": true
+    },
+    {
+      "title": "A comparison of deep learning performance against health-care professionals in detecting diseases from medical imaging: a systematic review and meta-analysis",
+      "journal": "The Lancet Digital Health",
+      "year": 2019,
+      "citationCount": 1694,
+      "doi": "10.1016/s2589-7500(19)30123-2",
+      "sourceUrl": "https://doi.org/10.1016/s2589-7500(19)30123-2",
+      "verified": true
+    },
+    {
+      "title": "The personal and clinical utility of polygenic risk scores",
+      "journal": "Nature Reviews Genetics",
+      "year": 2018,
+      "citationCount": 1620,
+      "doi": "10.1038/s41576-018-0018-x",
+      "sourceUrl": "https://doi.org/10.1038/s41576-018-0018-x",
+      "verified": true
+    },
+    {
+      "title": "Coronary morphologic and clinical determinants of procedural outcome with angioplasty for multivessel coronary disease. Implications for patient selection. Multivessel Angioplasty Prognosis Study Group.",
+      "journal": "Circulation",
+      "year": 1990,
+      "citationCount": 1337,
+      "doi": "10.1161/01.cir.82.4.1193",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.82.4.1193",
+      "verified": true
+    },
+    {
+      "title": "Foundation models for generalist medical artificial intelligence",
+      "journal": "Nature",
+      "year": 2023,
+      "citationCount": 1326,
+      "doi": "10.1038/s41586-023-05881-4",
+      "sourceUrl": "https://doi.org/10.1038/s41586-023-05881-4",
+      "verified": true
+    },
+    {
+      "title": "Effect of stromal-cell-derived factor 1 on stem-cell homing and tissue regeneration in ischaemic cardiomyopathy",
+      "journal": "The Lancet",
+      "year": 2003,
+      "citationCount": 1271,
+      "doi": "10.1016/s0140-6736(03)14232-8",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(03)14232-8",
+      "verified": true
+    },
+    {
+      "title": "Deep learning-enabled medical computer vision",
+      "journal": "npj Digital Medicine",
+      "year": 2021,
+      "citationCount": 1161,
+      "doi": "10.1038/s41746-020-00376-2",
+      "sourceUrl": "https://doi.org/10.1038/s41746-020-00376-2",
+      "verified": true
+    },
+    {
+      "title": "Bivalirudin and Provisional Glycoprotein IIb/IIIa Blockade Compared With Heparin and Planned Glycoprotein IIb/IIIa Blockade During Percutaneous Coronary Intervention",
+      "journal": "JAMA",
+      "year": 2003,
+      "citationCount": 1160,
+      "doi": "10.1001/jama.289.7.853",
+      "sourceUrl": "https://doi.org/10.1001/jama.289.7.853",
+      "verified": true
+    },
+    {
+      "title": "State of Telehealth",
+      "journal": "New England Journal of Medicine",
+      "year": 2016,
+      "citationCount": 1150,
+      "doi": "10.1056/nejmra1601705",
+      "sourceUrl": "https://doi.org/10.1056/nejmra1601705",
+      "verified": true
+    },
+    {
+      "title": "Effect of Antihypertensive Agents on Cardiovascular Events in Patients With Coronary Disease and Normal Blood Pressure",
+      "journal": "JAMA",
+      "year": 2004,
+      "citationCount": 1147,
+      "doi": "10.1001/jama.292.18.2217",
+      "sourceUrl": "https://doi.org/10.1001/jama.292.18.2217",
+      "verified": true
+    },
+    {
+      "title": "Cardiac Troponin T Levels for Risk Stratification in Acute Myocardial Ischemia",
+      "journal": "New England Journal of Medicine",
+      "year": 1996,
+      "citationCount": 1128,
+      "doi": "10.1056/nejm199610313351801",
+      "sourceUrl": "https://doi.org/10.1056/nejm199610313351801",
+      "verified": true
+    },
+    {
+      "title": "Randomised placebo-controlled and balloon-angioplasty-controlled trial to assess safety of coronary stenting with use of platelet glycoprotein-IIb/IIIa blockade",
+      "journal": "The Lancet",
+      "year": 1998,
+      "citationCount": 1096,
+      "doi": "10.1016/s0140-6736(98)85010-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(98)85010-1",
+      "verified": true
+    },
+    {
+      "title": "Our Preoccupation With Coronary Luminology",
+      "journal": "Circulation",
+      "year": 1995,
+      "citationCount": 1095,
+      "doi": "10.1161/01.cir.92.8.2333",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.92.8.2333",
+      "verified": true
+    },
+    {
+      "title": "Predictors of 30-Day Mortality in the Era of Reperfusion for Acute Myocardial Infarction",
+      "journal": "Circulation",
+      "year": 1995,
+      "citationCount": 1091,
+      "doi": "10.1161/01.cir.91.6.1659",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.91.6.1659",
+      "verified": true
+    },
+    {
+      "title": "Human genetic variation and its contribution to complex traits",
+      "journal": "Nature Reviews Genetics",
+      "year": 2009,
+      "citationCount": 1088,
+      "doi": "10.1038/nrg2554",
+      "sourceUrl": "https://doi.org/10.1038/nrg2554",
+      "verified": true
+    },
+    {
+      "title": "Use of antioxidant vitamins for the prevention of cardiovascular disease: meta-analysis of randomised trials",
+      "journal": "The Lancet",
+      "year": 2003,
+      "citationCount": 1080,
+      "doi": "10.1016/s0140-6736(03)13637-9",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(03)13637-9",
+      "verified": true
+    },
+    {
+      "title": "Aortocoronary Saphenous Vein Graft Disease",
+      "journal": "Circulation",
+      "year": 1998,
+      "citationCount": 1072,
+      "doi": "10.1161/01.cir.97.9.916",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.97.9.916",
+      "verified": true
+    },
+    {
+      "title": "Prognostic Value of Myeloperoxidase in Patients with Chest Pain",
+      "journal": "New England Journal of Medicine",
+      "year": 2003,
+      "citationCount": 1070,
+      "doi": "10.1056/nejmoa035003",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa035003",
+      "verified": true
+    },
+    {
+      "title": "A prospective, blinded determination of the natural history of aspirin resistance among stable patients with cardiovascular disease",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2003,
+      "citationCount": 1016,
+      "doi": "10.1016/s0735-1097(02)03014-0",
+      "sourceUrl": "https://doi.org/10.1016/s0735-1097(02)03014-0",
+      "verified": true
+    },
+    {
+      "title": "Platelet glycoprotein IIb/IIIa inhibitors in acute coronary syndromes: a meta-analysis of all major randomised clinical trials",
+      "journal": "The Lancet",
+      "year": 2002,
+      "citationCount": 1003,
+      "doi": "10.1016/s0140-6736(02)07442-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(02)07442-1",
+      "verified": true
+    },
+    {
+      "title": "Deep Medicine: How Artificial Intelligence Can Make Healthcare Human Again",
+      "journal": "Unknown Journal",
+      "year": 2019,
+      "citationCount": 996,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2955653438",
+      "verified": true
+    },
+    {
+      "title": "Applications of digital technology in COVID-19 pandemic planning and response",
+      "journal": "The Lancet Digital Health",
+      "year": 2020,
+      "citationCount": 985,
+      "doi": "10.1016/s2589-7500(20)30142-4",
+      "sourceUrl": "https://doi.org/10.1016/s2589-7500(20)30142-4",
+      "verified": true
+    },
+    {
+      "title": "Artificial intelligence versus clinicians: systematic review of design, reporting standards, and claims of deep learning studies",
+      "journal": "BMJ",
+      "year": 2020,
+      "citationCount": 971,
+      "doi": "10.1136/bmj.m689",
+      "sourceUrl": "https://doi.org/10.1136/bmj.m689",
+      "verified": true
+    },
+    {
+      "title": "Predictors of Outcome in Patients With Acute Coronary Syndromes Without Persistent ST-Segment Elevation",
+      "journal": "Circulation",
+      "year": 2000,
+      "citationCount": 960,
+      "doi": "10.1161/01.cir.101.22.2557",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.101.22.2557",
+      "verified": true
+    },
+    {
+      "title": "Multimodal biomedical AI",
+      "journal": "Nature Medicine",
+      "year": 2022,
+      "citationCount": 952,
+      "doi": "10.1038/s41591-022-01981-2",
+      "sourceUrl": "https://doi.org/10.1038/s41591-022-01981-2",
+      "verified": true
+    },
+    {
+      "title": "A Randomized Trial of Immediate versus Delayed Elective Angioplasty after Intravenous Tissue Plasminogen Activator in Acute Myocardial Infarction",
+      "journal": "New England Journal of Medicine",
+      "year": 1987,
+      "citationCount": 945,
+      "doi": "10.1056/nejm198709033171001",
+      "sourceUrl": "https://doi.org/10.1056/nejm198709033171001",
+      "verified": true
+    },
+    {
+      "title": "Textbook of Cardiovascular Medicine",
+      "journal": "Unknown Journal",
+      "year": 1997,
+      "citationCount": 945,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1498242025",
+      "verified": true
+    },
+    {
+      "title": "The gene encoding 5-lipoxygenase activating protein confers risk of myocardial infarction and stroke",
+      "journal": "Nature Genetics",
+      "year": 2004,
+      "citationCount": 924,
+      "doi": "10.1038/ng1311",
+      "sourceUrl": "https://doi.org/10.1038/ng1311",
+      "verified": true
+    },
+    {
+      "title": "Sex, Clinical Presentation, and Outcome in Patients with Acute Coronary Syndromes",
+      "journal": "New England Journal of Medicine",
+      "year": 1999,
+      "citationCount": 894,
+      "doi": "10.1056/nejm199907223410402",
+      "sourceUrl": "https://doi.org/10.1056/nejm199907223410402",
+      "verified": true
+    },
+    {
+      "title": "Marked Inflammatory Sequelae to Implantation of Biodegradable and Nonbiodegradable Polymers in Porcine Coronary Arteries",
+      "journal": "Circulation",
+      "year": 1996,
+      "citationCount": 851,
+      "doi": "10.1161/01.cir.94.7.1690",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.94.7.1690",
+      "verified": true
+    },
+    {
+      "title": "Randomised trial of coronary intervention with antibody against platelet IIb/IIIa iritegrin for reduction of clinical restenosis: results at six months",
+      "journal": "The Lancet",
+      "year": 1994,
+      "citationCount": 840,
+      "doi": "10.1016/s0140-6736(94)90007-8",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(94)90007-8",
+      "verified": true
+    },
+    {
+      "title": "Profile and prevalence of aspirin resistance in patients with cardiovascular disease",
+      "journal": "The American Journal of Cardiology",
+      "year": 2001,
+      "citationCount": 819,
+      "doi": "10.1016/s0002-9149(01)01631-9",
+      "sourceUrl": "https://doi.org/10.1016/s0002-9149(01)01631-9",
+      "verified": true
+    },
+    {
+      "title": "Assessing the impact of population stratification on genetic association studies",
+      "journal": "Nature Genetics",
+      "year": 2004,
+      "citationCount": 814,
+      "doi": "10.1038/ng1333",
+      "sourceUrl": "https://doi.org/10.1038/ng1333",
+      "verified": true
+    },
+    {
+      "title": "The imperative for regulatory oversight of large language models (or generative AI) in healthcare",
+      "journal": "npj Digital Medicine",
+      "year": 2023,
+      "citationCount": 805,
+      "doi": "10.1038/s41746-023-00873-0",
+      "sourceUrl": "https://doi.org/10.1038/s41746-023-00873-0",
+      "verified": true
+    },
+    {
+      "title": "Patients With Prior Myocardial Infarction, Stroke, or Symptomatic Peripheral Arterial Disease in the CHARISMA Trial",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2007,
+      "citationCount": 799,
+      "doi": "10.1016/j.jacc.2007.03.025",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2007.03.025",
+      "verified": true
+    },
+    {
+      "title": "The emerging field of mobile health",
+      "journal": "Science Translational Medicine",
+      "year": 2015,
+      "citationCount": 780,
+      "doi": "10.1126/scitranslmed.aaa3487",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.aaa3487",
+      "verified": true
+    },
+    {
+      "title": "Variability in platelet responsiveness to clopidogrel among 544 individuals",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2005,
+      "citationCount": 776,
+      "doi": "10.1016/j.jacc.2004.09.067",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2004.09.067",
+      "verified": true
+    },
+    {
+      "title": "Recognition of the Importance of Embolization in Atherosclerotic Vascular Disease",
+      "journal": "Circulation",
+      "year": 2000,
+      "citationCount": 767,
+      "doi": "10.1161/01.cir.101.5.570",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.101.5.570",
+      "verified": true
+    },
+    {
+      "title": "Platelet Glycoprotein IIb/IIIa Receptors in Cardiovascular Medicine",
+      "journal": "New England Journal of Medicine",
+      "year": 1995,
+      "citationCount": 759,
+      "doi": "10.1056/nejm199506083322306",
+      "sourceUrl": "https://doi.org/10.1056/nejm199506083322306",
+      "verified": true
+    },
+    {
+      "title": "Risk Factors, Angiographic Patterns, and Outcomes in Patients With Ventricular Septal Defect Complicating Acute Myocardial Infarction",
+      "journal": "Circulation",
+      "year": 2000,
+      "citationCount": 746,
+      "doi": "10.1161/01.cir.101.1.27",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.101.1.27",
+      "verified": true
+    },
+    {
+      "title": "Randomized, Placebo-Controlled Trial of Platelet Glycoprotein IIb/IIIa Blockade With Primary Angioplasty for Acute Myocardial Infarction",
+      "journal": "Circulation",
+      "year": 1998,
+      "citationCount": 723,
+      "doi": "10.1161/01.cir.98.8.734",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.98.8.734",
+      "verified": true
+    },
+    {
+      "title": "Textbook of interventional cardiology",
+      "journal": "Unknown Journal",
+      "year": 1994,
+      "citationCount": 711,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2131384376",
+      "verified": true
+    },
+    {
+      "title": "Protein carbamylation links inflammation, smoking, uremia and atherogenesis",
+      "journal": "Nature Medicine",
+      "year": 2007,
+      "citationCount": 699,
+      "doi": "10.1038/nm1637",
+      "sourceUrl": "https://doi.org/10.1038/nm1637",
+      "verified": true
+    },
+    {
+      "title": "A Comparison of Directional Atherectomy with Coronary Angioplasty in Patients with Coronary Artery Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 1993,
+      "citationCount": 697,
+      "doi": "10.1056/nejm199307223290401",
+      "sourceUrl": "https://doi.org/10.1056/nejm199307223290401",
+      "verified": true
+    },
+    {
+      "title": "Facilitated PCI in Patients with ST-Elevation Myocardial Infarction",
+      "journal": "New England Journal of Medicine",
+      "year": 2008,
+      "citationCount": 692,
+      "doi": "10.1056/nejmoa0706816",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa0706816",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "openalexId": "https://openalex.org/A5084515381",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Eric_Topol_in_2026.jpg/330px-Eric_Topol_in_2026.jpg"
 }

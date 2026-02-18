@@ -43,6 +43,8 @@ const canonicalURL = new URL(
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
+		{ogImage && <meta name="twitter:image" content={ogImage} />}
+		<meta name="twitter:site" content="@mdrpedia" />
 
 		<link rel="canonical" href={canonicalURL.href} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -54,25 +56,31 @@ const canonicalURL = new URL(
 			<div class="container">
 				<nav class="site-nav">
 					<a href="/" class="site-logo">
-						<span class="site-logo__icon">🏛️</span>
+						<span class="site-logo__icon"
+							><svg
+								width="20"
+								height="20"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								><path
+									d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"
+								></path></svg
+							></span
+						>
 						<span class="site-logo__text"
 							>MDR<strong>Pedia</strong></span
 						>
 					</a>
 					<div class="site-nav__links">
 						<a href="/doctors" class="nav-link">Browse</a>
+						<a href="/rankings" class="nav-link">Rankings</a>
+						<a href="/hospitals" class="nav-link">Hospitals</a>
+						<a href="/prizes" class="nav-link">Awards</a>
 						<a href="/communities" class="nav-link">Communities</a>
-						<a href="/nobel-laureates" class="nav-link"
-							>Nobel Laureates</a
-						>
-						<a href="/global-leaders" class="nav-link"
-							>Global Leaders</a
-						>
-						<a href="/compare" class="nav-link">Compare</a>
-						<a
-							href="/doctor/claim"
-							class="nav-link"
-							style="color: var(--accent-purple); font-weight: 700;"
+						<a href="/news" class="nav-link">News</a>
+						<a href="/doctor/claim" class="nav-link nav-link--cta"
 							>Claim Profile</a
 						>
 					</div>
@@ -89,13 +97,46 @@ const canonicalURL = new URL(
 			<div class="container">
 				<div class="footer-content">
 					<div class="footer-brand">
-						<span class="site-logo__icon">🏛️</span>
-						<span>MDRPedia</span>
+						<a href="/" class="site-logo">
+							<span class="site-logo__icon"
+								><svg
+									width="20"
+									height="20"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									><path
+										d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"
+									></path></svg
+								></span
+							>
+							<span class="site-logo__text"
+								>MDR<strong>Pedia</strong></span
+							>
+						</a>
 						<p class="footer-tagline">
 							The Gold Standard for Medical Professional
-							Verification
+							Verification. Quantifying the Unquantifiable.
 						</p>
 					</div>
+
+					<div class="footer-links">
+						<h4>Platform</h4>
+						<a href="/about">About Us</a>
+						<a href="/rankings">Rankings</a>
+						<a href="/doctors">Browse Doctors</a>
+						<a href="/communities">Communities</a>
+					</div>
+
+					<div class="footer-links">
+						<h4>Legal & Support</h4>
+						<a href="/privacy">Privacy Policy</a>
+						<a href="/terms">Terms of Service</a>
+						<a href="/contact">Contact Support</a>
+						<a href="/doctor/claim">Claim Profile</a>
+					</div>
+
 					<div class="footer-meta">
 						<p>
 							© {new Date().getFullYear()} MDRPedia. All data is verified
@@ -104,7 +145,7 @@ const canonicalURL = new URL(
 						<p class="footer-trust">
 							Every fact is backed by a DOI-verified citation.
 						</p>
-						<div style="margin-top: 1rem; opacity: 0.3;">
+						<div style="margin-top: 1rem; opacity: 0.5;">
 							<a
 								href="/login"
 								style="color: inherit; text-decoration: none; font-size: 0.75rem;"
@@ -170,6 +211,13 @@ const canonicalURL = new URL(
 	.nav-link:hover {
 		color: var(--text-primary);
 	}
+	.nav-link--cta {
+		color: var(--accent-purple);
+		font-weight: 600;
+	}
+	.nav-link--cta:hover {
+		color: var(--accent-purple-light, #a78bfa);
+	}
 
 	.site-footer {
 		margin-top: var(--space-3xl);
@@ -215,9 +263,35 @@ const canonicalURL = new URL(
 		.footer-content {
 			flex-direction: column;
 			align-items: flex-start;
+			gap: var(--space-lg);
 		}
 		.footer-meta {
 			text-align: left;
+			margin-top: var(--space-md);
 		}
+	}
+
+	.footer-links {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xs);
+	}
+
+	.footer-links h4 {
+		font-size: 0.9rem;
+		font-weight: 600;
+		color: var(--text-primary);
+		margin-bottom: var(--space-xs);
+	}
+
+	.footer-links a {
+		font-size: 0.85rem;
+		color: var(--text-secondary);
+		text-decoration: none;
+		transition: color var(--transition-fast);
+	}
+
+	.footer-links a:hover {
+		color: var(--accent-purple);
 	}
 </style>

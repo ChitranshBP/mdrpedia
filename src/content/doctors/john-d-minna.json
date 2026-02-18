@@ -1,36 +1,493 @@
 {
   "fullName": "John D. Minna",
   "slug": "john-d-minna",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Lung Cancer Biology",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">JD</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 51,
-  "hIndex": 205,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 173,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 15685,
+  "livesSaved": 0,
+  "biography": "John B. Gorrie was a Nevisian-born American physician and scientist, credited as the inventor of mechanical refrigeration.",
+  "aiSummary": "John D. Minna is a lung cancer biology specialist with an H-index of 173 at UT Southwestern (Faculty). Has been published in Proceedings of the National Academy of Sciences, JAMA, Nature. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "UT Southwestern"
-    }
-  ],
-  "bio": "John D. Minna is a pioneer in Lung Cancer Biology at UT Southwestern, USA. With a D-Index of 205 and over 156,846 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "UT Southwestern",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Lung Cancer Biology"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Detection and isolation of type C retrovirus particles from fresh and cultured lymphocytes of a patient with cutaneous T-cell lymphoma",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1980,
+      "citationCount": 5043,
+      "doi": "10.1073/pnas.77.12.7415",
+      "sourceUrl": "https://doi.org/10.1073/pnas.77.12.7415",
+      "verified": true
+    },
+    {
+      "title": "Evaluation of a tetrazolium-based semiautomated colorimetric assay: assessment of chemosensitivity testing.",
+      "journal": "PubMed",
+      "year": 1987,
+      "citationCount": 3830,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2140927361",
+      "verified": true
+    },
+    {
+      "title": "Using Multiplexed Assays of Oncogenic Drivers in Lung Cancers to Select Targeted Drugs",
+      "journal": "JAMA",
+      "year": 2014,
+      "citationCount": 1708,
+      "doi": "10.1001/jama.2014.3741",
+      "sourceUrl": "https://doi.org/10.1001/jama.2014.3741",
+      "verified": true
+    },
+    {
+      "title": "Bombesin-like peptides can function as autocrine growth factors in human small-cell lung cancer",
+      "journal": "Nature",
+      "year": 1985,
+      "citationCount": 1352,
+      "doi": "10.1038/316823a0",
+      "sourceUrl": "https://doi.org/10.1038/316823a0",
+      "verified": true
+    },
+    {
+      "title": "p53: A Frequent Target for Genetic Abnormalities in Lung Cancer",
+      "journal": "Science",
+      "year": 1989,
+      "citationCount": 1229,
+      "doi": "10.1126/science.2554494",
+      "sourceUrl": "https://doi.org/10.1126/science.2554494",
+      "verified": true
+    },
+    {
+      "title": "Molecular subtypes of small cell lung cancer: a synthesis of human and mouse model data",
+      "journal": "Nature reviews. Cancer",
+      "year": 2019,
+      "citationCount": 1214,
+      "doi": "10.1038/s41568-019-0133-9",
+      "sourceUrl": "https://doi.org/10.1038/s41568-019-0133-9",
+      "verified": true
+    },
+    {
+      "title": "Characterizing the cancer genome in lung adenocarcinoma",
+      "journal": "Nature",
+      "year": 2007,
+      "citationCount": 1116,
+      "doi": "10.1038/nature06358",
+      "sourceUrl": "https://doi.org/10.1038/nature06358",
+      "verified": true
+    },
+    {
+      "title": "An Epithelial–Mesenchymal Transition Gene Signature Predicts Resistance to EGFR and PI3K Inhibitors and Identifies Axl as a Therapeutic Target for Overcoming EGFR Inhibitor Resistance",
+      "journal": "Clinical Cancer Research",
+      "year": 2012,
+      "citationCount": 1095,
+      "doi": "10.1158/1078-0432.ccr-12-1558",
+      "sourceUrl": "https://doi.org/10.1158/1078-0432.ccr-12-1558",
+      "verified": true
+    },
+    {
+      "title": "Comprehensive genomic analysis identifies SOX2 as a frequently amplified gene in small-cell lung cancer",
+      "journal": "Nature Genetics",
+      "year": 2012,
+      "citationCount": 1075,
+      "doi": "10.1038/ng.2405",
+      "sourceUrl": "https://doi.org/10.1038/ng.2405",
+      "verified": true
+    },
+    {
+      "title": "A small-cell lung cancer genome with complex signatures of tobacco exposure",
+      "journal": "Nature",
+      "year": 2009,
+      "citationCount": 1056,
+      "doi": "10.1038/nature08629",
+      "sourceUrl": "https://doi.org/10.1038/nature08629",
+      "verified": true
+    },
+    {
+      "title": "BRAF and RAS mutations in human lung cancer and melanoma.",
+      "journal": "PubMed",
+      "year": 2002,
+      "citationCount": 1027,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1819015028",
+      "verified": true
+    },
+    {
+      "title": "High-throughput oncogene mutation profiling in human cancer",
+      "journal": "Nature Genetics",
+      "year": 2007,
+      "citationCount": 995,
+      "doi": "10.1038/ng1975",
+      "sourceUrl": "https://doi.org/10.1038/ng1975",
+      "verified": true
+    },
+    {
+      "title": "SOX2 is an amplified lineage-survival oncogene in lung and esophageal squamous cell carcinomas",
+      "journal": "Nature Genetics",
+      "year": 2009,
+      "citationCount": 942,
+      "doi": "10.1038/ng.465",
+      "sourceUrl": "https://doi.org/10.1038/ng.465",
+      "verified": true
+    },
+    {
+      "title": "Amplification and expression of the c-myc oncogene in human lung cancer cell lines",
+      "journal": "Nature",
+      "year": 1983,
+      "citationCount": 926,
+      "doi": "10.1038/306194a0",
+      "sourceUrl": "https://doi.org/10.1038/306194a0",
+      "verified": true
+    },
+    {
+      "title": "Abnormalities in Structure and Expression of the Human Retinoblastoma Gene in SCLC",
+      "journal": "Science",
+      "year": 1988,
+      "citationCount": 914,
+      "doi": "10.1126/science.2838909",
+      "sourceUrl": "https://doi.org/10.1126/science.2838909",
+      "verified": true
+    },
+    {
+      "title": "Small-cell lung cancer: what we know, what we need to know and the path forward",
+      "journal": "Nature reviews. Cancer",
+      "year": 2017,
+      "citationCount": 885,
+      "doi": "10.1038/nrc.2017.87",
+      "sourceUrl": "https://doi.org/10.1038/nrc.2017.87",
+      "verified": true
+    },
+    {
+      "title": "Co-occurring Genomic Alterations Define Major Subsets of <i>KRAS</i> -Mutant Lung Adenocarcinoma with Distinct Biology, Immune Profiles, and Therapeutic Vulnerabilities",
+      "journal": "Cancer Discovery",
+      "year": 2015,
+      "citationCount": 878,
+      "doi": "10.1158/2159-8290.cd-14-1236",
+      "sourceUrl": "https://doi.org/10.1158/2159-8290.cd-14-1236",
+      "verified": true
+    },
+    {
+      "title": "Patterns of transcription factor programs and immune pathway activation define four major subtypes of SCLC with distinct therapeutic vulnerabilities",
+      "journal": "Cancer Cell",
+      "year": 2021,
+      "citationCount": 859,
+      "doi": "10.1016/j.ccell.2020.12.014",
+      "sourceUrl": "https://doi.org/10.1016/j.ccell.2020.12.014",
+      "verified": true
+    },
+    {
+      "title": "Molecular Profiling of Breast Cancer Cell Lines Defines Relevant Tumor Models and Provides a Resource for Cancer Gene Discovery",
+      "journal": "PLoS ONE",
+      "year": 2009,
+      "citationCount": 786,
+      "doi": "10.1371/journal.pone.0006146",
+      "sourceUrl": "https://doi.org/10.1371/journal.pone.0006146",
+      "verified": true
+    },
+    {
+      "title": "NRF2 regulates serine biosynthesis in non–small cell lung cancer",
+      "journal": "Nature Genetics",
+      "year": 2015,
+      "citationCount": 760,
+      "doi": "10.1038/ng.3421",
+      "sourceUrl": "https://doi.org/10.1038/ng.3421",
+      "verified": true
+    },
+    {
+      "title": "Evaluation of a tetrazolium-based semiautomated colorimetric assay: assessment of radiosensitivity.",
+      "journal": "PubMed",
+      "year": 1987,
+      "citationCount": 701,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2138717871",
+      "verified": true
+    },
+    {
+      "title": "Somatic Mutations of the <i>HER2</i> Kinase Domain in Lung Adenocarcinomas",
+      "journal": "Cancer Research",
+      "year": 2005,
+      "citationCount": 672,
+      "doi": "10.1158/0008-5472.can-04-4235",
+      "sourceUrl": "https://doi.org/10.1158/0008-5472.can-04-4235",
+      "verified": true
+    },
+    {
+      "title": "L-myc, a new myc-related gene amplified and expressed in human small cell lung cancer",
+      "journal": "Nature",
+      "year": 1985,
+      "citationCount": 662,
+      "doi": "10.1038/318069a0",
+      "sourceUrl": "https://doi.org/10.1038/318069a0",
+      "verified": true
+    },
+    {
+      "title": "Immortalization of Human Bronchial Epithelial Cells in the Absence of Viral Oncoproteins",
+      "journal": "Cancer Research",
+      "year": 2004,
+      "citationCount": 657,
+      "doi": "10.1158/0008-5472.can-04-3703",
+      "sourceUrl": "https://doi.org/10.1158/0008-5472.can-04-3703",
+      "verified": true
+    },
+    {
+      "title": "A pan-cancer proteomic perspective on The Cancer Genome Atlas",
+      "journal": "Nature Communications",
+      "year": 2014,
+      "citationCount": 617,
+      "doi": "10.1038/ncomms4887",
+      "sourceUrl": "https://doi.org/10.1038/ncomms4887",
+      "verified": true
+    },
+    {
+      "title": "Autocrine TNFα Signaling Renders Human Cancer Cells Susceptible to Smac-Mimetic-Induced Apoptosis",
+      "journal": "Cancer Cell",
+      "year": 2007,
+      "citationCount": 566,
+      "doi": "10.1016/j.ccr.2007.08.029",
+      "sourceUrl": "https://doi.org/10.1016/j.ccr.2007.08.029",
+      "verified": true
+    },
+    {
+      "title": "Mechanical regulation of glycolysis via cytoskeleton architecture",
+      "journal": "Nature",
+      "year": 2020,
+      "citationCount": 566,
+      "doi": "10.1038/s41586-020-1998-1",
+      "sourceUrl": "https://doi.org/10.1038/s41586-020-1998-1",
+      "verified": true
+    },
+    {
+      "title": "Proteomic Profiling Identifies Dysregulated Pathways in Small Cell Lung Cancer and Novel Therapeutic Targets Including PARP1",
+      "journal": "Cancer Discovery",
+      "year": 2012,
+      "citationCount": 555,
+      "doi": "10.1158/2159-8290.cd-12-0112",
+      "sourceUrl": "https://doi.org/10.1158/2159-8290.cd-12-0112",
+      "verified": true
+    },
+    {
+      "title": "An Integrated View of Copy Number and Allelic Alterations in the Cancer Genome Using Single Nucleotide Polymorphism Arrays",
+      "journal": "Cancer Research",
+      "year": 2004,
+      "citationCount": 548,
+      "doi": "10.1158/0008-5472.can-03-3308",
+      "sourceUrl": "https://doi.org/10.1158/0008-5472.can-03-3308",
+      "verified": true
+    },
+    {
+      "title": "Differential expression of myc family genes during murine development",
+      "journal": "Nature",
+      "year": 1986,
+      "citationCount": 544,
+      "doi": "10.1038/319780a0",
+      "sourceUrl": "https://doi.org/10.1038/319780a0",
+      "verified": true
+    },
+    {
+      "title": "Frequent inactivation of the retinoblastoma anti-oncogene is restricted to a subset of human tumor cells.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1990,
+      "citationCount": 541,
+      "doi": "10.1073/pnas.87.7.2775",
+      "sourceUrl": "https://doi.org/10.1073/pnas.87.7.2775",
+      "verified": true
+    },
+    {
+      "title": "The 630-kb lung cancer homozygous deletion region on human chromosome 3p21.3: identification and evaluation of the resident candidate tumor suppressor genes. The International Lung Cancer Chromosome 3p21.3 Tumor Suppressor Gene Consortium.",
+      "journal": "PubMed",
+      "year": 2000,
+      "citationCount": 540,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1609687385",
+      "verified": true
+    },
+    {
+      "title": "Focus on lung cancer",
+      "journal": "Cancer Cell",
+      "year": 2002,
+      "citationCount": 533,
+      "doi": "10.1016/s1535-6108(02)00027-2",
+      "sourceUrl": "https://doi.org/10.1016/s1535-6108(02)00027-2",
+      "verified": true
+    },
+    {
+      "title": "Restoring E-Cadherin Expression Increases Sensitivity to Epidermal Growth Factor Receptor Inhibitors in Lung Cancer Cell Lines",
+      "journal": "Cancer Research",
+      "year": 2006,
+      "citationCount": 524,
+      "doi": "10.1158/0008-5472.can-05-1988",
+      "sourceUrl": "https://doi.org/10.1158/0008-5472.can-05-1988",
+      "verified": true
+    },
+    {
+      "title": "Effect of KRAS Oncogene Substitutions on Protein Behavior: Implications for Signaling and Clinical Outcome",
+      "journal": "JNCI Journal of the National Cancer Institute",
+      "year": 2012,
+      "citationCount": 521,
+      "doi": "10.1093/jnci/djr523",
+      "sourceUrl": "https://doi.org/10.1093/jnci/djr523",
+      "verified": true
+    },
+    {
+      "title": "EGFR-Mediated Beclin 1 Phosphorylation in Autophagy Suppression, Tumor Progression, and Tumor Chemoresistance",
+      "journal": "Cell",
+      "year": 2013,
+      "citationCount": 519,
+      "doi": "10.1016/j.cell.2013.08.015",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2013.08.015",
+      "verified": true
+    },
+    {
+      "title": "ASCL1 and NEUROD1 Reveal Heterogeneity in Pulmonary Neuroendocrine Tumors and Regulate Distinct Genetic Programs",
+      "journal": "Cell Reports",
+      "year": 2016,
+      "citationCount": 512,
+      "doi": "10.1016/j.celrep.2016.06.081",
+      "sourceUrl": "https://doi.org/10.1016/j.celrep.2016.06.081",
+      "verified": true
+    },
+    {
+      "title": "Activating Mutations of the Noonan Syndrome-Associated <b> <i>SHP2/PTPN11</i> </b> Gene in Human Solid Tumors and Adult Acute Myelogenous Leukemia",
+      "journal": "Cancer Research",
+      "year": 2004,
+      "citationCount": 504,
+      "doi": "10.1158/0008-5472.can-04-1923",
+      "sourceUrl": "https://doi.org/10.1158/0008-5472.can-04-1923",
+      "verified": true
+    },
+    {
+      "title": "<i>PTEN</i> Loss Contributes to Erlotinib Resistance in EGFR-Mutant Lung Cancer by Activation of Akt and EGFR",
+      "journal": "Cancer Research",
+      "year": 2009,
+      "citationCount": 492,
+      "doi": "10.1158/0008-5472.can-08-4055",
+      "sourceUrl": "https://doi.org/10.1158/0008-5472.can-08-4055",
+      "verified": true
+    },
+    {
+      "title": "High Levels of Intracellular Bombesin Characterize Human Small-Cell Lung Carcinoma",
+      "journal": "Science",
+      "year": 1981,
+      "citationCount": 490,
+      "doi": "10.1126/science.6272398",
+      "sourceUrl": "https://doi.org/10.1126/science.6272398",
+      "verified": true
+    },
+    {
+      "title": "Characterization of variant subclasses of cell lines derived from small cell lung cancer having distinctive biochemical, morphological, and growth properties.",
+      "journal": "PubMed",
+      "year": 1985,
+      "citationCount": 489,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2165994277",
+      "verified": true
+    },
+    {
+      "title": "Molecular Damage in the Bronchial Epithelium of Current and Former Smokers",
+      "journal": "JNCI Journal of the National Cancer Institute",
+      "year": 1997,
+      "citationCount": 486,
+      "doi": "10.1093/jnci/89.18.1366",
+      "sourceUrl": "https://doi.org/10.1093/jnci/89.18.1366",
+      "verified": true
+    },
+    {
+      "title": "CNS metastases in small cell bronchogenic carcinoma.Increasing frequency and changing pattern with lengthening survival",
+      "journal": "Cancer",
+      "year": 1979,
+      "citationCount": 483,
+      "doi": "10.1002/1097-0142(197911)44:5<1885::aid-cncr2820440550>3.0.co;2-f",
+      "sourceUrl": "https://doi.org/10.1002/1097-0142(197911)44:5<1885::aid-cncr2820440550>3.0.co;2-f",
+      "verified": true
+    },
+    {
+      "title": "Synthetic lethal screen identification of chemosensitizer loci in cancer cells",
+      "journal": "Nature",
+      "year": 2007,
+      "citationCount": 475,
+      "doi": "10.1038/nature05697",
+      "sourceUrl": "https://doi.org/10.1038/nature05697",
+      "verified": true
+    },
+    {
+      "title": "Loss of heterozygosity of chromosome 3p markers in small-cell lung cancer",
+      "journal": "Nature",
+      "year": 1987,
+      "citationCount": 470,
+      "doi": "10.1038/329451a0",
+      "sourceUrl": "https://doi.org/10.1038/329451a0",
+      "verified": true
+    },
+    {
+      "title": "Specific Chromosome Defect Associated with Human Small-Cell Lung Cancer: Deletion 3p(14-23)",
+      "journal": "Science",
+      "year": 1982,
+      "citationCount": 451,
+      "doi": "10.1126/science.6274023",
+      "sourceUrl": "https://doi.org/10.1126/science.6274023",
+      "verified": true
+    },
+    {
+      "title": "P53 gene mutations in non-small-cell lung cancer cell lines and their correlation with the presence of ras mutations and clinical features",
+      "journal": "Lung Cancer",
+      "year": 1992,
+      "citationCount": 447,
+      "doi": "10.1016/0169-5002(92)90040-q",
+      "sourceUrl": "https://doi.org/10.1016/0169-5002(92)90040-q",
+      "verified": true
+    },
+    {
+      "title": "Aberrant Epidermal Growth Factor Receptor Signaling and Enhanced Sensitivity to EGFR Inhibitors in Lung Cancer",
+      "journal": "Cancer Research",
+      "year": 2005,
+      "citationCount": 433,
+      "doi": "10.1158/0008-5472.226.65.1",
+      "sourceUrl": "https://doi.org/10.1158/0008-5472.226.65.1",
+      "verified": true
+    },
+    {
+      "title": "<i>PIK3CA</i> Mutations and Copy Number Gains in Human Lung Cancers",
+      "journal": "Cancer Research",
+      "year": 2008,
+      "citationCount": 426,
+      "doi": "10.1158/0008-5472.can-07-5084",
+      "sourceUrl": "https://doi.org/10.1158/0008-5472.can-07-5084",
+      "verified": true
+    },
+    {
+      "title": "Multi-institutional Oncogenic Driver Mutation Analysis in Lung Adenocarcinoma: The Lung Cancer Mutation Consortium Experience",
+      "journal": "Journal of Thoracic Oncology",
+      "year": 2015,
+      "citationCount": 420,
+      "doi": "10.1097/jto.0000000000000516",
+      "sourceUrl": "https://doi.org/10.1097/jto.0000000000000516",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:16.000Z",
+  "openalexId": "https://openalex.org/A5048865240",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Gorrie.jpg"
 }

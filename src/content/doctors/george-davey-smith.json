@@ -1,36 +1,493 @@
 {
   "fullName": "George Davey Smith",
   "slug": "george-davey-smith",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Genetic Epidemiology",
   "geography": {
-    "city": "Unknown",
-    "country": "UK"
+    "country": "United Kingdom",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">GD</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 70,
-  "hIndex": 281,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 409,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 40912,
+  "livesSaved": 0,
+  "biography": "George Davey Smith is a British epidemiologist. He has been professor of clinical epidemiology at the University of Bristol since 1994, honorary professor of public health at the University of Glasgow since 1996, and visiting professor at the London School of Hygiene and Tropical Medicine since 1999.",
+  "aiSummary": "George Davey Smith is a genetic epidemiology specialist with an H-index of 409 at University of Bristol (Faculty). Has been published in BMJ, Science, JAMA. Based in United Kingdom.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/0/05/EWS13.12_-_crop_-_George_Davey-Smith.jpg",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "University of Bristol"
-    }
-  ],
-  "bio": "George Davey Smith is a pioneer in Genetic Epidemiology at University of Bristol, UK. With a D-Index of 281 and over 409,117 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "University of Bristol",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Genetic Epidemiology"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Bias in meta-analysis detected by a simple, graphical test",
+      "journal": "BMJ",
+      "year": 1997,
+      "citationCount": 54220,
+      "doi": "10.1136/bmj.315.7109.629",
+      "sourceUrl": "https://doi.org/10.1136/bmj.315.7109.629",
+      "verified": true
+    },
+    {
+      "title": "Mendelian randomization with invalid instruments: effect estimation and bias detection through Egger regression",
+      "journal": "International Journal of Epidemiology",
+      "year": 2015,
+      "citationCount": 10145,
+      "doi": "10.1093/ije/dyv080",
+      "sourceUrl": "https://doi.org/10.1093/ije/dyv080",
+      "verified": true
+    },
+    {
+      "title": "Consistent Estimation in Mendelian Randomization with Some Invalid Instruments Using a Weighted Median Estimator",
+      "journal": "Genetic Epidemiology",
+      "year": 2016,
+      "citationCount": 9195,
+      "doi": "10.1002/gepi.21965",
+      "sourceUrl": "https://doi.org/10.1002/gepi.21965",
+      "verified": true
+    },
+    {
+      "title": "The MR-Base platform supports systematic causal inference across the human phenome",
+      "journal": "eLife",
+      "year": 2018,
+      "citationCount": 8000,
+      "doi": "10.7554/elife.34408",
+      "sourceUrl": "https://doi.org/10.7554/elife.34408",
+      "verified": true
+    },
+    {
+      "title": "‘Mendelian randomization’: can genetic epidemiology contribute to understanding environmental determinants of disease?*",
+      "journal": "International Journal of Epidemiology",
+      "year": 2003,
+      "citationCount": 6197,
+      "doi": "10.1093/ije/dyg070",
+      "sourceUrl": "https://doi.org/10.1093/ije/dyg070",
+      "verified": true
+    },
+    {
+      "title": "Mendelian randomization: genetic anchors for causal inference in epidemiological studies",
+      "journal": "Human Molecular Genetics",
+      "year": 2014,
+      "citationCount": 4853,
+      "doi": "10.1093/hmg/ddu328",
+      "sourceUrl": "https://doi.org/10.1093/hmg/ddu328",
+      "verified": true
+    },
+    {
+      "title": "Mendelian randomization: Using genes as instruments for making causal inferences in epidemiology",
+      "journal": "Statistics in Medicine",
+      "year": 2007,
+      "citationCount": 4818,
+      "doi": "10.1002/sim.3034",
+      "sourceUrl": "https://doi.org/10.1002/sim.3034",
+      "verified": true
+    },
+    {
+      "title": "Reading Mendelian randomisation studies: a guide, glossary, and checklist for clinicians",
+      "journal": "BMJ",
+      "year": 2018,
+      "citationCount": 4513,
+      "doi": "10.1136/bmj.k601",
+      "sourceUrl": "https://doi.org/10.1136/bmj.k601",
+      "verified": true
+    },
+    {
+      "title": "A Common Variant in the <i>FTO</i> Gene Is Associated with Body Mass Index and Predisposes to Childhood and Adult Obesity",
+      "journal": "Science",
+      "year": 2007,
+      "citationCount": 4418,
+      "doi": "10.1126/science.1141634",
+      "sourceUrl": "https://doi.org/10.1126/science.1141634",
+      "verified": true
+    },
+    {
+      "title": "Strengthening the Reporting of Observational Studies in Epidemiology Using Mendelian Randomization",
+      "journal": "JAMA",
+      "year": 2021,
+      "citationCount": 3678,
+      "doi": "10.1001/jama.2021.18236",
+      "sourceUrl": "https://doi.org/10.1001/jama.2021.18236",
+      "verified": true
+    },
+    {
+      "title": "Health inequalities among British civil servants: the Whitehall II study",
+      "journal": "The Lancet",
+      "year": 1991,
+      "citationCount": 3611,
+      "doi": "10.1016/0140-6736(91)93068-k",
+      "sourceUrl": "https://doi.org/10.1016/0140-6736(91)93068-k",
+      "verified": true
+    },
+    {
+      "title": "Robust inference in summary data Mendelian randomization via the zero modal pleiotropy assumption",
+      "journal": "International Journal of Epidemiology",
+      "year": 2017,
+      "citationCount": 3512,
+      "doi": "10.1093/ije/dyx102",
+      "sourceUrl": "https://doi.org/10.1093/ije/dyx102",
+      "verified": true
+    },
+    {
+      "title": "A reference panel of 64,976 haplotypes for genotype imputation",
+      "journal": "Nature Genetics",
+      "year": 2016,
+      "citationCount": 3164,
+      "doi": "10.1038/ng.3643",
+      "sourceUrl": "https://doi.org/10.1038/ng.3643",
+      "verified": true
+    },
+    {
+      "title": "Cohort Profile: The ‘Children of the 90s’—the index offspring of the Avon Longitudinal Study of Parents and Children",
+      "journal": "International Journal of Epidemiology",
+      "year": 2012,
+      "citationCount": 3128,
+      "doi": "10.1093/ije/dys064",
+      "sourceUrl": "https://doi.org/10.1093/ije/dys064",
+      "verified": true
+    },
+    {
+      "title": "Body-mass index and all-cause mortality: individual-participant-data meta-analysis of 239 prospective studies in four continents",
+      "journal": "The Lancet",
+      "year": 2016,
+      "citationCount": 2693,
+      "doi": "10.1016/s0140-6736(16)30175-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(16)30175-1",
+      "verified": true
+    },
+    {
+      "title": "Orienting the causal relationship between imprecisely measured traits using GWAS summary data",
+      "journal": "PLoS Genetics",
+      "year": 2017,
+      "citationCount": 2636,
+      "doi": "10.1371/journal.pgen.1007081",
+      "sourceUrl": "https://doi.org/10.1371/journal.pgen.1007081",
+      "verified": true
+    },
+    {
+      "title": "Cohort Profile: The Avon Longitudinal Study of Parents and Children: ALSPAC mothers cohort",
+      "journal": "International Journal of Epidemiology",
+      "year": 2012,
+      "citationCount": 2610,
+      "doi": "10.1093/ije/dys066",
+      "sourceUrl": "https://doi.org/10.1093/ije/dys066",
+      "verified": true
+    },
+    {
+      "title": "Identification of common genetic risk variants for autism spectrum disorder",
+      "journal": "Nature Genetics",
+      "year": 2019,
+      "citationCount": 2487,
+      "doi": "10.1038/s41588-019-0344-8",
+      "sourceUrl": "https://doi.org/10.1038/s41588-019-0344-8",
+      "verified": true
+    },
+    {
+      "title": "Meta-analysis: Principles and procedures",
+      "journal": "BMJ",
+      "year": 1997,
+      "citationCount": 2396,
+      "doi": "10.1136/bmj.315.7121.1533",
+      "sourceUrl": "https://doi.org/10.1136/bmj.315.7121.1533",
+      "verified": true
+    },
+    {
+      "title": "Systematic Reviews in Health Care : Meta-Analysis in Context",
+      "journal": "Unknown Journal",
+      "year": 2000,
+      "citationCount": 2322,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2081040380",
+      "verified": true
+    },
+    {
+      "title": "Investigating and dealing with publication and other biases in meta-analysis",
+      "journal": "BMJ",
+      "year": 2001,
+      "citationCount": 2138,
+      "doi": "10.1136/bmj.323.7304.101",
+      "sourceUrl": "https://doi.org/10.1136/bmj.323.7304.101",
+      "verified": true
+    },
+    {
+      "title": "Mendelian randomization",
+      "journal": "Nature Reviews Methods Primers",
+      "year": 2022,
+      "citationCount": 1959,
+      "doi": "10.1038/s43586-021-00092-5",
+      "sourceUrl": "https://doi.org/10.1038/s43586-021-00092-5",
+      "verified": true
+    },
+    {
+      "title": "A framework for the investigation of pleiotropy in two‐sample summary data Mendelian randomization",
+      "journal": "Statistics in Medicine",
+      "year": 2017,
+      "citationCount": 1950,
+      "doi": "10.1002/sim.7221",
+      "sourceUrl": "https://doi.org/10.1002/sim.7221",
+      "verified": true
+    },
+    {
+      "title": "Using published data in Mendelian randomization: a blueprint for efficient identification of causal risk factors",
+      "journal": "European Journal of Epidemiology",
+      "year": 2015,
+      "citationCount": 1838,
+      "doi": "10.1007/s10654-015-0011-z",
+      "sourceUrl": "https://doi.org/10.1007/s10654-015-0011-z",
+      "verified": true
+    },
+    {
+      "title": "Statins for the primary prevention of cardiovascular disease",
+      "journal": "Cochrane Database of Systematic Reviews",
+      "year": 2013,
+      "citationCount": 1824,
+      "doi": "10.1002/14651858.cd004816.pub5",
+      "sourceUrl": "https://doi.org/10.1002/14651858.cd004816.pub5",
+      "verified": true
+    },
+    {
+      "title": "Guidelines for performing Mendelian randomization investigations",
+      "journal": "Wellcome Open Research",
+      "year": 2019,
+      "citationCount": 1821,
+      "doi": "10.12688/wellcomeopenres.15555.1",
+      "sourceUrl": "https://doi.org/10.12688/wellcomeopenres.15555.1",
+      "verified": true
+    },
+    {
+      "title": "Interpretation of the evidence for the efficacy and safety of statin therapy",
+      "journal": "The Lancet",
+      "year": 2016,
+      "citationCount": 1794,
+      "doi": "10.1016/s0140-6736(16)31357-5",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(16)31357-5",
+      "verified": true
+    },
+    {
+      "title": "Six new loci associated with body mass index highlight a neuronal influence on body weight regulation",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 1702,
+      "doi": "10.1038/ng.287",
+      "sourceUrl": "https://doi.org/10.1038/ng.287",
+      "verified": true
+    },
+    {
+      "title": "Assessing the suitability of summary data for two-sample Mendelian randomization analyses using MR-Egger regression: the role of the I2 statistic",
+      "journal": "International Journal of Epidemiology",
+      "year": 2016,
+      "citationCount": 1684,
+      "doi": "10.1093/ije/dyw220",
+      "sourceUrl": "https://doi.org/10.1093/ije/dyw220",
+      "verified": true
+    },
+    {
+      "title": "Evaluating the potential role of pleiotropy in Mendelian randomization studies",
+      "journal": "Human Molecular Genetics",
+      "year": 2018,
+      "citationCount": 1600,
+      "doi": "10.1093/hmg/ddy163",
+      "sourceUrl": "https://doi.org/10.1093/hmg/ddy163",
+      "verified": true
+    },
+    {
+      "title": "Newly identified loci that influence lipid concentrations and risk of coronary artery disease",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 1592,
+      "doi": "10.1038/ng.76",
+      "sourceUrl": "https://doi.org/10.1038/ng.76",
+      "verified": true
+    },
+    {
+      "title": "Strengthening the reporting of observational studies in epidemiology using mendelian randomisation (STROBE-MR): explanation and elaboration",
+      "journal": "BMJ",
+      "year": 2021,
+      "citationCount": 1587,
+      "doi": "10.1136/bmj.n2233",
+      "sourceUrl": "https://doi.org/10.1136/bmj.n2233",
+      "verified": true
+    },
+    {
+      "title": "Social Determinants of Risk and Outcomes for Cardiovascular Disease",
+      "journal": "Circulation",
+      "year": 2015,
+      "citationCount": 1376,
+      "doi": "10.1161/cir.0000000000000228",
+      "sourceUrl": "https://doi.org/10.1161/cir.0000000000000228",
+      "verified": true
+    },
+    {
+      "title": "<i>meta-analysis</i> bias in location and selection of studies",
+      "journal": "BMJ",
+      "year": 1998,
+      "citationCount": 1372,
+      "doi": "10.1136/bmj.316.7124.61",
+      "sourceUrl": "https://doi.org/10.1136/bmj.316.7124.61",
+      "verified": true
+    },
+    {
+      "title": "Guidelines for performing Mendelian randomization investigations",
+      "journal": "Wellcome Open Research",
+      "year": 2020,
+      "citationCount": 1340,
+      "doi": "10.12688/wellcomeopenres.15555.2",
+      "sourceUrl": "https://doi.org/10.12688/wellcomeopenres.15555.2",
+      "verified": true
+    },
+    {
+      "title": "Common variants near MC4R are associated with fat mass, weight and risk of obesity",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 1329,
+      "doi": "10.1038/ng.140",
+      "sourceUrl": "https://doi.org/10.1038/ng.140",
+      "verified": true
+    },
+    {
+      "title": "Using multiple genetic variants as instrumental variables for modifiable risk factors",
+      "journal": "Statistical Methods in Medical Research",
+      "year": 2011,
+      "citationCount": 1306,
+      "doi": "10.1177/0962280210394459",
+      "sourceUrl": "https://doi.org/10.1177/0962280210394459",
+      "verified": true
+    },
+    {
+      "title": "Mendelian randomization: prospects, potentials, and limitations",
+      "journal": "International Journal of Epidemiology",
+      "year": 2004,
+      "citationCount": 1264,
+      "doi": "10.1093/ije/dyh132",
+      "sourceUrl": "https://doi.org/10.1093/ije/dyh132",
+      "verified": true
+    },
+    {
+      "title": "Recent Developments in Mendelian Randomization Studies",
+      "journal": "Current Epidemiology Reports",
+      "year": 2017,
+      "citationCount": 1213,
+      "doi": "10.1007/s40471-017-0128-6",
+      "sourceUrl": "https://doi.org/10.1007/s40471-017-0128-6",
+      "verified": true
+    },
+    {
+      "title": "Problems of reporting genetic associations with complex outcomes",
+      "journal": "The Lancet",
+      "year": 2003,
+      "citationCount": 1204,
+      "doi": "10.1016/s0140-6736(03)12715-8",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(03)12715-8",
+      "verified": true
+    },
+    {
+      "title": "Effect of Infant Feeding on the Risk of Obesity Across the Life Course: A Quantitative Review of Published Evidence",
+      "journal": "PEDIATRICS",
+      "year": 2005,
+      "citationCount": 1166,
+      "doi": "10.1542/peds.2004-1176",
+      "sourceUrl": "https://doi.org/10.1542/peds.2004-1176",
+      "verified": true
+    },
+    {
+      "title": "The UK10K project identifies rare variants in health and disease",
+      "journal": "Nature",
+      "year": 2015,
+      "citationCount": 1161,
+      "doi": "10.1038/nature14962",
+      "sourceUrl": "https://doi.org/10.1038/nature14962",
+      "verified": true
+    },
+    {
+      "title": "Triangulation in aetiological epidemiology",
+      "journal": "International Journal of Epidemiology",
+      "year": 2016,
+      "citationCount": 1152,
+      "doi": "10.1093/ije/dyw314",
+      "sourceUrl": "https://doi.org/10.1093/ije/dyw314",
+      "verified": true
+    },
+    {
+      "title": "Mendelian randomisation for mediation analysis: current methods and challenges for implementation",
+      "journal": "European Journal of Epidemiology",
+      "year": 2021,
+      "citationCount": 1127,
+      "doi": "10.1007/s10654-021-00757-1",
+      "sourceUrl": "https://doi.org/10.1007/s10654-021-00757-1",
+      "verified": true
+    },
+    {
+      "title": "The interleukin-6 receptor as a target for prevention of coronary heart disease: a mendelian randomisation analysis",
+      "journal": "The Lancet",
+      "year": 2012,
+      "citationCount": 1123,
+      "doi": "10.1016/s0140-6736(12)60110-x",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(12)60110-x",
+      "verified": true
+    },
+    {
+      "title": "Plasma Fibrinogen Level and the Risk of Major Cardiovascular Diseases and Nonvascular Mortality",
+      "journal": "JAMA",
+      "year": 2005,
+      "citationCount": 1109,
+      "doi": "10.1001/jama.294.14.1799",
+      "sourceUrl": "https://doi.org/10.1001/jama.294.14.1799",
+      "verified": true
+    },
+    {
+      "title": "An examination of multivariable Mendelian randomization in the single-sample and two-sample summary data settings",
+      "journal": "International Journal of Epidemiology",
+      "year": 2018,
+      "citationCount": 1102,
+      "doi": "10.1093/ije/dyy262",
+      "sourceUrl": "https://doi.org/10.1093/ije/dyy262",
+      "verified": true
+    },
+    {
+      "title": "Mapping the human genetic architecture of COVID-19",
+      "journal": "Nature",
+      "year": 2021,
+      "citationCount": 1079,
+      "doi": "10.1038/s41586-021-03767-x",
+      "sourceUrl": "https://doi.org/10.1038/s41586-021-03767-x",
+      "verified": true
+    },
+    {
+      "title": "Improving the accuracy of two-sample summary-data Mendelian randomization: moving beyond the NOME assumption",
+      "journal": "International Journal of Epidemiology",
+      "year": 2018,
+      "citationCount": 988,
+      "doi": "10.1093/ije/dyy258",
+      "sourceUrl": "https://doi.org/10.1093/ije/dyy258",
+      "verified": true
+    },
+    {
+      "title": "<i>Meta-analysis</i> Spurious precision? Meta-analysis of observational studies",
+      "journal": "BMJ",
+      "year": 1998,
+      "citationCount": 981,
+      "doi": "10.1136/bmj.316.7125.140",
+      "sourceUrl": "https://doi.org/10.1136/bmj.316.7125.140",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:12.000Z",
+  "openalexId": "https://openalex.org/A5013184354"
 }

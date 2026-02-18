@@ -1,31 +1,492 @@
 {
   "fullName": "Robert A. Weinberg",
   "slug": "robert-a-weinberg",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Oncogene Discovery",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23001a4d\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%2300aaff\" text-anchor=\"middle\" dy=\".3em\">RA</text></svg>",
-  "tier": "ELITE",
-  "rankingScore": 33,
-  "hIndex": 130,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 210,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 21000,
+  "livesSaved": 0,
+  "biography": "Robert Allan Weinberg is an American biologist, Daniel K. Ludwig Professor for Cancer Research at Massachusetts Institute of Technology (MIT), director of the Ludwig Center of the MIT, and American Cancer Society Research Professor. His research is in the area of oncogenes and the genetic basis of human cancer.",
+  "aiSummary": "Robert A. Weinberg is a oncogene discovery specialist with an H-index of 210 at MIT (Faculty). Has been published in Cell, Nature Medicine, Science. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Massachusetts Institute of Technology"
-    }
-  ],
-  "bio": "Robert A. Weinberg is a pioneer in Oncogene Discovery at Massachusetts Institute of Technology, USA. With a D-Index of 130 and over 210,000 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "MIT",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Oncogene Discovery"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Hallmarks of Cancer: The Next Generation",
+      "journal": "Cell",
+      "year": 2011,
+      "citationCount": 65004,
+      "doi": "10.1016/j.cell.2011.02.013",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2011.02.013",
+      "verified": true
+    },
+    {
+      "title": "The Hallmarks of Cancer",
+      "journal": "Cell",
+      "year": 2000,
+      "citationCount": 28298,
+      "doi": "10.1016/s0092-8674(00)81683-9",
+      "sourceUrl": "https://doi.org/10.1016/s0092-8674(00)81683-9",
+      "verified": true
+    },
+    {
+      "title": "The basics of epithelial-mesenchymal transition",
+      "journal": "Journal of Clinical Investigation",
+      "year": 2009,
+      "citationCount": 9945,
+      "doi": "10.1172/jci39104",
+      "sourceUrl": "https://doi.org/10.1172/jci39104",
+      "verified": true
+    },
+    {
+      "title": "The Epithelial-Mesenchymal Transition Generates Cells with Properties of Stem Cells",
+      "journal": "Cell",
+      "year": 2008,
+      "citationCount": 8630,
+      "doi": "10.1016/j.cell.2008.03.027",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2008.03.027",
+      "verified": true
+    },
+    {
+      "title": "Understanding the tumor immune microenvironment (TIME) for effective therapy",
+      "journal": "Nature Medicine",
+      "year": 2018,
+      "citationCount": 5638,
+      "doi": "10.1038/s41591-018-0014-x",
+      "sourceUrl": "https://doi.org/10.1038/s41591-018-0014-x",
+      "verified": true
+    },
+    {
+      "title": "The retinoblastoma protein and cell cycle control",
+      "journal": "Cell",
+      "year": 1995,
+      "citationCount": 4874,
+      "doi": "10.1016/0092-8674(95)90385-2",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(95)90385-2",
+      "verified": true
+    },
+    {
+      "title": "A Perspective on Cancer Cell Metastasis",
+      "journal": "Science",
+      "year": 2011,
+      "citationCount": 4808,
+      "doi": "10.1126/science.1203543",
+      "sourceUrl": "https://doi.org/10.1126/science.1203543",
+      "verified": true
+    },
+    {
+      "title": "Tumor Metastasis: Molecular Insights and Evolving Paradigms",
+      "journal": "Cell",
+      "year": 2011,
+      "citationCount": 4033,
+      "doi": "10.1016/j.cell.2011.09.024",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2011.09.024",
+      "verified": true
+    },
+    {
+      "title": "Twist, a Master Regulator of Morphogenesis, Plays an Essential Role in Tumor Metastasis",
+      "journal": "Cell",
+      "year": 2004,
+      "citationCount": 3810,
+      "doi": "10.1016/j.cell.2004.06.006",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2004.06.006",
+      "verified": true
+    },
+    {
+      "title": "New insights into the mechanisms of epithelial–mesenchymal transition and implications for cancer",
+      "journal": "Nature Reviews Molecular Cell Biology",
+      "year": 2018,
+      "citationCount": 3809,
+      "doi": "10.1038/s41580-018-0080-4",
+      "sourceUrl": "https://doi.org/10.1038/s41580-018-0080-4",
+      "verified": true
+    },
+    {
+      "title": "Stromal Fibroblasts Present in Invasive Human Breast Carcinomas Promote Tumor Growth and Angiogenesis through Elevated SDF-1/CXCL12 Secretion",
+      "journal": "Cell",
+      "year": 2005,
+      "citationCount": 3679,
+      "doi": "10.1016/j.cell.2005.02.034",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2005.02.034",
+      "verified": true
+    },
+    {
+      "title": "Transitions between epithelial and mesenchymal states: acquisition of malignant and stem cell traits",
+      "journal": "Nature reviews. Cancer",
+      "year": 2009,
+      "citationCount": 3268,
+      "doi": "10.1038/nrc2620",
+      "sourceUrl": "https://doi.org/10.1038/nrc2620",
+      "verified": true
+    },
+    {
+      "title": "Mesenchymal stem cells within tumour stroma promote breast cancer metastasis",
+      "journal": "Nature",
+      "year": 2007,
+      "citationCount": 3169,
+      "doi": "10.1038/nature06188",
+      "sourceUrl": "https://doi.org/10.1038/nature06188",
+      "verified": true
+    },
+    {
+      "title": "Emerging Biological Principles of Metastasis",
+      "journal": "Cell",
+      "year": 2017,
+      "citationCount": 3019,
+      "doi": "10.1016/j.cell.2016.11.037",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2016.11.037",
+      "verified": true
+    },
+    {
+      "title": "Epithelial-Mesenchymal Transition: At the Crossroads of Development and Tumor Metastasis",
+      "journal": "Developmental Cell",
+      "year": 2008,
+      "citationCount": 3004,
+      "doi": "10.1016/j.devcel.2008.05.009",
+      "sourceUrl": "https://doi.org/10.1016/j.devcel.2008.05.009",
+      "verified": true
+    },
+    {
+      "title": "A human DNA segment with properties of the gene that predisposes to retinoblastoma and osteosarcoma",
+      "journal": "Nature",
+      "year": 1986,
+      "citationCount": 2971,
+      "doi": "10.1038/323643a0",
+      "sourceUrl": "https://doi.org/10.1038/323643a0",
+      "verified": true
+    },
+    {
+      "title": "Tumorigenic conversion of primary embryo fibroblasts requires at least two cooperating oncogenes",
+      "journal": "Nature",
+      "year": 1983,
+      "citationCount": 2857,
+      "doi": "10.1038/304596a0",
+      "sourceUrl": "https://doi.org/10.1038/304596a0",
+      "verified": true
+    },
+    {
+      "title": "hSIR2SIRT1 Functions as an NAD-Dependent p53 Deacetylase",
+      "journal": "Cell",
+      "year": 2001,
+      "citationCount": 2621,
+      "doi": "10.1016/s0092-8674(01)00527-x",
+      "sourceUrl": "https://doi.org/10.1016/s0092-8674(01)00527-x",
+      "verified": true
+    },
+    {
+      "title": "Tumour invasion and metastasis initiated by microRNA-10b in breast cancer",
+      "journal": "Nature",
+      "year": 2007,
+      "citationCount": 2594,
+      "doi": "10.1038/nature06174",
+      "sourceUrl": "https://doi.org/10.1038/nature06174",
+      "verified": true
+    },
+    {
+      "title": "An embryonic stem cell–like gene expression signature in poorly differentiated aggressive human tumors",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 2541,
+      "doi": "10.1038/ng.127",
+      "sourceUrl": "https://doi.org/10.1038/ng.127",
+      "verified": true
+    },
+    {
+      "title": "EMT, CSCs, and drug resistance: the mechanistic link and clinical implications",
+      "journal": "Nature Reviews Clinical Oncology",
+      "year": 2017,
+      "citationCount": 2483,
+      "doi": "10.1038/nrclinonc.2017.44",
+      "sourceUrl": "https://doi.org/10.1038/nrclinonc.2017.44",
+      "verified": true
+    },
+    {
+      "title": "Identification of Selective Inhibitors of Cancer Stem Cells by High-Throughput Screening",
+      "journal": "Cell",
+      "year": 2009,
+      "citationCount": 2364,
+      "doi": "10.1016/j.cell.2009.06.034",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2009.06.034",
+      "verified": true
+    },
+    {
+      "title": "Creation of human tumour cells with defined genetic elements",
+      "journal": "Nature",
+      "year": 1999,
+      "citationCount": 2322,
+      "doi": "10.1038/22780",
+      "sourceUrl": "https://doi.org/10.1038/22780",
+      "verified": true
+    },
+    {
+      "title": "Guidelines and definitions for research on epithelial–mesenchymal transition",
+      "journal": "Nature Reviews Molecular Cell Biology",
+      "year": 2020,
+      "citationCount": 2190,
+      "doi": "10.1038/s41580-020-0237-9",
+      "sourceUrl": "https://doi.org/10.1038/s41580-020-0237-9",
+      "verified": true
+    },
+    {
+      "title": "Tumor spectrum analysis in p53-mutant mice",
+      "journal": "Current Biology",
+      "year": 1994,
+      "citationCount": 2066,
+      "doi": "10.1016/s0960-9822(00)00002-6",
+      "sourceUrl": "https://doi.org/10.1016/s0960-9822(00)00002-6",
+      "verified": true
+    },
+    {
+      "title": "EMT in cancer",
+      "journal": "Nature reviews. Cancer",
+      "year": 2018,
+      "citationCount": 1921,
+      "doi": "10.1038/nrc.2017.118",
+      "sourceUrl": "https://doi.org/10.1038/nrc.2017.118",
+      "verified": true
+    },
+    {
+      "title": "hEST2, the Putative Human Telomerase Catalytic Subunit Gene, Is Up-Regulated in Tumor Cells and during Immortalization",
+      "journal": "Cell",
+      "year": 1997,
+      "citationCount": 1795,
+      "doi": "10.1016/s0092-8674(00)80538-3",
+      "sourceUrl": "https://doi.org/10.1016/s0092-8674(00)80538-3",
+      "verified": true
+    },
+    {
+      "title": "Tumor Suppressor Genes",
+      "journal": "Science",
+      "year": 1991,
+      "citationCount": 1775,
+      "doi": "10.1126/science.1659741",
+      "sourceUrl": "https://doi.org/10.1126/science.1659741",
+      "verified": true
+    },
+    {
+      "title": "Effects of an Rb mutation in the mouse",
+      "journal": "Nature",
+      "year": 1992,
+      "citationCount": 1769,
+      "doi": "10.1038/359295a0",
+      "sourceUrl": "https://doi.org/10.1038/359295a0",
+      "verified": true
+    },
+    {
+      "title": "Lentivirus-delivered stable gene silencing by RNAi in primary cells",
+      "journal": "RNA",
+      "year": 2003,
+      "citationCount": 1620,
+      "doi": "10.1261/rna.2192803",
+      "sourceUrl": "https://doi.org/10.1261/rna.2192803",
+      "verified": true
+    },
+    {
+      "title": "Loss of E-Cadherin Promotes Metastasis via Multiple Downstream Transcriptional Pathways",
+      "journal": "Cancer Research",
+      "year": 2008,
+      "citationCount": 1502,
+      "doi": "10.1158/0008-5472.can-07-2938",
+      "sourceUrl": "https://doi.org/10.1158/0008-5472.can-07-2938",
+      "verified": true
+    },
+    {
+      "title": "Ras oncogenes: split personalities",
+      "journal": "Nature Reviews Molecular Cell Biology",
+      "year": 2008,
+      "citationCount": 1439,
+      "doi": "10.1038/nrm2438",
+      "sourceUrl": "https://doi.org/10.1038/nrm2438",
+      "verified": true
+    },
+    {
+      "title": "Association between an oncogene and an anti-oncogene: the adenovirus E1A proteins bind to the retinoblastoma gene product",
+      "journal": "Nature",
+      "year": 1988,
+      "citationCount": 1432,
+      "doi": "10.1038/334124a0",
+      "sourceUrl": "https://doi.org/10.1038/334124a0",
+      "verified": true
+    },
+    {
+      "title": "The Biology of Cancer",
+      "journal": "W.W. Norton & Company eBooks",
+      "year": 2006,
+      "citationCount": 1412,
+      "doi": "10.1201/9780203852569",
+      "sourceUrl": "https://doi.org/10.1201/9780203852569",
+      "verified": true
+    },
+    {
+      "title": "Mechanism of activation of a human oncogene",
+      "journal": "Nature",
+      "year": 1982,
+      "citationCount": 1407,
+      "doi": "10.1038/300143a0",
+      "sourceUrl": "https://doi.org/10.1038/300143a0",
+      "verified": true
+    },
+    {
+      "title": "miR-9, a MYC/MYCN-activated microRNA, regulates E-cadherin and cancer metastasis",
+      "journal": "Nature Cell Biology",
+      "year": 2010,
+      "citationCount": 1318,
+      "doi": "10.1038/ncb2024",
+      "sourceUrl": "https://doi.org/10.1038/ncb2024",
+      "verified": true
+    },
+    {
+      "title": "Association of Sos Ras exchange protein with Grb2 is implicated in tyrosine kinase signal transduction and transformation",
+      "journal": "Nature",
+      "year": 1993,
+      "citationCount": 1225,
+      "doi": "10.1038/363045a0",
+      "sourceUrl": "https://doi.org/10.1038/363045a0",
+      "verified": true
+    },
+    {
+      "title": "The neu oncogene: an erb-B-related gene encoding a 185,000-Mr tumour antigen",
+      "journal": "Nature",
+      "year": 1984,
+      "citationCount": 1166,
+      "doi": "10.1038/312513a0",
+      "sourceUrl": "https://doi.org/10.1038/312513a0",
+      "verified": true
+    },
+    {
+      "title": "The epigenetics of epithelial-mesenchymal plasticity in cancer",
+      "journal": "Nature Medicine",
+      "year": 2013,
+      "citationCount": 1138,
+      "doi": "10.1038/nm.3336",
+      "sourceUrl": "https://doi.org/10.1038/nm.3336",
+      "verified": true
+    },
+    {
+      "title": "Cellular Oncogenes and Multistep Carcinogenesis",
+      "journal": "Science",
+      "year": 1983,
+      "citationCount": 1136,
+      "doi": "10.1126/science.6356358",
+      "sourceUrl": "https://doi.org/10.1126/science.6356358",
+      "verified": true
+    },
+    {
+      "title": "Normal and neoplastic nonstem cells can spontaneously convert to a stem-like state",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2011,
+      "citationCount": 1134,
+      "doi": "10.1073/pnas.1102454108",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1102454108",
+      "verified": true
+    },
+    {
+      "title": "The neu oncogene encodes an epidermal growth factor receptor-related protein",
+      "journal": "Nature",
+      "year": 1986,
+      "citationCount": 1128,
+      "doi": "10.1038/319226a0",
+      "sourceUrl": "https://doi.org/10.1038/319226a0",
+      "verified": true
+    },
+    {
+      "title": "Human Keratinocytes That Express hTERT and Also Bypass a p16<sup>INK4a</sup>-Enforced Mechanism That Limits Life Span Become Immortal yet Retain Normal Growth and Differentiation Characteristics",
+      "journal": "Molecular and Cellular Biology",
+      "year": 2000,
+      "citationCount": 1082,
+      "doi": "10.1128/mcb.20.4.1436-1447.2000",
+      "sourceUrl": "https://doi.org/10.1128/mcb.20.4.1436-1447.2000",
+      "verified": true
+    },
+    {
+      "title": "Functional Inactivation of the Retinoblastoma Protein Requires Sequential Modification by at Least Two Distinct Cyclin-cdk Complexes",
+      "journal": "Molecular and Cellular Biology",
+      "year": 1998,
+      "citationCount": 1069,
+      "doi": "10.1128/mcb.18.2.753",
+      "sourceUrl": "https://doi.org/10.1128/mcb.18.2.753",
+      "verified": true
+    },
+    {
+      "title": "Expression cloning of the TGF-β type II receptor, a functional transmembrane serine/threonine kinase",
+      "journal": "Cell",
+      "year": 1992,
+      "citationCount": 1063,
+      "doi": "10.1016/0092-8674(92)90152-3",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(92)90152-3",
+      "verified": true
+    },
+    {
+      "title": "Core epithelial-to-mesenchymal transition interactome gene-expression signature is associated with claudin-low and metaplastic breast cancer subtypes",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2010,
+      "citationCount": 1037,
+      "doi": "10.1073/pnas.1004900107",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1004900107",
+      "verified": true
+    },
+    {
+      "title": "Inhibition of telomerase limits the growth of human cancer cells",
+      "journal": "Nature Medicine",
+      "year": 1999,
+      "citationCount": 1031,
+      "doi": "10.1038/13495",
+      "sourceUrl": "https://doi.org/10.1038/13495",
+      "verified": true
+    },
+    {
+      "title": "Cyclin D1 provides a link between development and oncogenesis in the retina and breast",
+      "journal": "Cell",
+      "year": 1995,
+      "citationCount": 1029,
+      "doi": "10.1016/0092-8674(95)90034-9",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(95)90034-9",
+      "verified": true
+    },
+    {
+      "title": "The signals and pathways activating cellular senescence",
+      "journal": "The International Journal of Biochemistry & Cell Biology",
+      "year": 2004,
+      "citationCount": 1018,
+      "doi": "10.1016/j.biocel.2004.10.013",
+      "sourceUrl": "https://doi.org/10.1016/j.biocel.2004.10.013",
+      "verified": true
+    },
+    {
+      "title": "Multiple independent activations of the neu oncogene by a point mutation altering the transmembrane domain of p185",
+      "journal": "Cell",
+      "year": 1986,
+      "citationCount": 1014,
+      "doi": "10.1016/0092-8674(86)90779-8",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(86)90779-8",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:14.000Z",
+  "openalexId": "https://openalex.org/A5012557712"
 }

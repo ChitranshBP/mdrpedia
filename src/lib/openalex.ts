@@ -6,6 +6,15 @@
 
 const OPENALEX_BASE = 'https://api.openalex.org';
 const USER_AGENT = 'MDRPedia/1.0 (mailto:admin@mdrpedia.com)';
+const OPENALEX_API_KEY = process.env.OPENALEX_API_KEY || import.meta.env.OPENALEX_API_KEY || '';
+
+// ─── Usage Tracking ────────────────────────────────────────────────────────
+export const usageStats = {
+    requests: 0,
+    remaining: 0,
+    limit: 0,
+    resetDate: ''
+};
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -15,6 +24,7 @@ export interface OpenAlexAuthor {
     orcid?: string;
     works_count: number;
     cited_by_count: number;
+    relevance_score?: number;
     summary_stats?: {
         h_index: number;
         i10_index: number;
@@ -108,22 +118,32 @@ async function fetchOpenAlex<T>(endpoint: string, params: Record<string, string>
     const url = new URL(`${OPENALEX_BASE}${endpoint}`);
     Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
 
-    // Add polite pool email
+    // Add polite pool email and API Key
     url.searchParams.set('mailto', 'admin@mdrpedia.com');
+    if (OPENALEX_API_KEY) {
+        url.searchParams.set('api_key', OPENALEX_API_KEY);
+    }
 
     try {
         const res = await fetch(url.toString(), {
             headers: { 'User-Agent': USER_AGENT },
         });
 
+        // Track API usage headers
+        const limit = res.headers.get('x-rate-limit-limit');
+        const remaining = res.headers.get('x-rate-limit-remaining');
+        if (limit) usageStats.limit = parseInt(limit, 10);
+        if (remaining) usageStats.remaining = parseInt(remaining, 10);
+        usageStats.requests++;
+
         if (!res.ok) {
-            console.error(`[OpenAlex] ${res.status} for ${endpoint}`);
+            // Silent fail for non-critical API errors
             return null;
         }
 
         return (await res.json()) as T;
-    } catch (error) {
-        console.error(`[OpenAlex] Fetch failed for ${endpoint}:`, error);
+    } catch {
+        // Silent fail for network errors - OpenAlex is non-critical
         return null;
     }
 }
@@ -163,6 +183,7 @@ export async function searchAuthors(options: {
     hIndexMin?: number;
     country?: string;
     specialty?: string;
+    name?: string;
     page?: number;
     perPage?: number;
 }): Promise<{ results: OpenAlexAuthor[]; count: number }> {
@@ -189,6 +210,10 @@ export async function searchAuthors(options: {
         page: String(options.page || 1),
         sort: 'summary_stats.h_index:desc',
     };
+
+    if (options.name) {
+        params.search = options.name;
+    }
 
     if (filters.length > 0) {
         params.filter = filters.join(',');
@@ -313,4 +338,8 @@ export function classifySpecialty(topics?: { display_name: string; subfield?: { 
     }
 
     return { specialty: topics[0]?.subfield?.display_name || 'Medicine' };
+}
+
+export function getOpenAlexQuota() {
+    return usageStats;
 }

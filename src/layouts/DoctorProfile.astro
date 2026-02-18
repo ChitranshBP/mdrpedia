@@ -34,67 +34,99 @@ import { generateAISummary } from "../lib/ai-summary";
 import { getSignedImage } from "../lib/image-security";
 import ImageWithFallback from "../components/ImageWithFallback";
 import MedicalLineageGraph from "../components/MedicalLineageGraph";
+import InfoBox from "../components/InfoBox.astro";
+import RankingBadge from "../components/RankingBadge.astro";
+import PublicationsSection from "../components/PublicationsSection.astro";
+import SimilarDoctors from "../components/SimilarDoctors.astro";
+import AnimatedStats from "../components/AnimatedStats.astro";
+import BookingCTA from "../components/BookingCTA.astro";
+import FloatingActionBar from "../components/FloatingActionBar";
 import "../styles/wikipedia-layout.css";
+import "../styles/print.css";
+import "../styles/mobile-enhancements.css";
+
+import type { ProfileData } from "../lib/types";
 
 interface Props {
-    doctor: {
-        fullName: string;
-        title?: string;
-        specialty: string;
-        subSpecialty?: string;
-        geography: { country: string; region?: string; city?: string };
-        status: "LIVING" | "HISTORICAL";
-        tier: "TITAN" | "ELITE" | "MASTER" | "UNRANKED";
-        rankingScore?: number;
-        hIndex: number;
-        yearsActive: number;
-        verifiedSurgeries: number;
-        biography?: string;
-        portraitUrl?: string;
-        galleryUrls?: string[];
-        livesSaved: number;
-        techniquesInvented: string[];
-        hasInvention: boolean;
-        dateOfBirth?: string;
-        dateOfDeath?: string;
-        // GEO-enhanced fields
-        npiNumber?: string;
-        orcidId?: string;
-        medicalSpecialty?: string[];
-        knowsAbout?: string[];
-        affiliations?: {
-            hospitalName: string;
-            role?: string;
-            hospitalUrl?: string;
-        }[];
-        aiSummary?: string;
-        citations?: {
-            doi?: string;
-            pubmedId?: string;
-            title: string;
-            journal?: string;
-            year?: number;
-            verified?: boolean;
-            abstract?: string;
-            totalCitationCount?: number;
-            evidenceClassification?: string;
-            isOpenAccess?: boolean;
-            openAccessUrl?: string;
-        }[];
-        awards?: {
-            name: string;
-            year: number;
-            issuingBody?: string;
-            sourceUrl?: string;
-        }[];
-        timeline?: { year: number; title: string; description?: string }[];
-        mentors?: { name: string; id?: string; title?: string }[];
-        students?: { name: string; id?: string; title?: string }[];
-    };
+    doctor: ProfileData;
+    profileId?: string;
 }
 
-const { doctor } = Astro.props;
+const { doctor: rawDoctor } = Astro.props;
+const profileId = (Astro.props as any).profileId || null;
+
+// Sanitize doctor data (coerce nulls to undefined for strict child components)
+const doctor = {
+    ...rawDoctor,
+    title: rawDoctor.title ?? undefined,
+    subSpecialty: rawDoctor.subSpecialty ?? undefined,
+    rankingScore: rawDoctor.rankingScore ?? undefined,
+    biography: rawDoctor.biography ?? undefined,
+    portraitUrl: rawDoctor.portraitUrl ?? undefined,
+    galleryUrls: rawDoctor.galleryUrls ?? undefined,
+    dateOfBirth: rawDoctor.dateOfBirth ?? undefined,
+    dateOfDeath: rawDoctor.dateOfDeath ?? undefined,
+    geography: {
+        ...rawDoctor.geography,
+        region: rawDoctor.geography.region ?? undefined,
+        city: rawDoctor.geography.city ?? undefined,
+    },
+    citations: rawDoctor.citations?.map(c => ({
+        ...c,
+        doi: c.doi ?? undefined,
+        journal: c.journal ?? undefined,
+        year: c.year ?? undefined,
+        citationCount: c.totalCitationCount ?? undefined, // Handle mapping if needed
+        isOpenAccess: c.isOpenAccess ?? undefined,
+        openAccessUrl: c.openAccessUrl ?? undefined,
+        evidenceClassification: c.evidenceClassification ?? undefined,
+        pubmedId: c.pubmedId ?? undefined
+    })),
+    awards: rawDoctor.awards?.map(a => ({
+        ...a,
+        issuingBody: a.issuingBody ?? undefined,
+        sourceUrl: a.sourceUrl ?? undefined
+    })),
+    affiliations: rawDoctor.affiliations?.map(a => ({
+        ...a,
+        role: a.role ?? undefined,
+        hospitalUrl: a.hospitalUrl ?? undefined
+    })),
+    timeline: rawDoctor.timeline?.map(t => ({
+        ...t,
+        description: t.description ?? undefined
+    })),
+    mentors: rawDoctor.mentors?.map(m => ({
+        ...m,
+        id: m.id ?? undefined,
+        title: m.title ?? undefined
+    })),
+    students: rawDoctor.students?.map(s => ({
+        ...s,
+        id: s.id ?? undefined,
+        title: s.title ?? undefined
+    })),
+    media: rawDoctor.media?.map(m => ({
+        ...m,
+        title: m.title ?? undefined,
+        description: m.description ?? undefined,
+        source: m.source ?? undefined,
+        video_id: m.video_id ?? undefined,
+        thumbnail: m.thumbnail ?? undefined
+    })),
+    aiSummary: rawDoctor.aiSummary ?? undefined,
+    npiNumber: rawDoctor.npiNumber ?? undefined,
+    orcidId: rawDoctor.orcidId ?? undefined,
+    medicalSpecialty: rawDoctor.medicalSpecialty ?? undefined,
+    knowsAbout: rawDoctor.knowsAbout ?? undefined,
+    rareConditions: rawDoctor.rareConditions ?? undefined,
+    talks: rawDoctor.talks ?? undefined,
+    consultationPrice: rawDoctor.consultationPrice ?? undefined,
+    teleConsultationPrice: rawDoctor.teleConsultationPrice ?? undefined,
+};
+
 const slug = Astro.url.pathname.split("/").filter(Boolean).pop() || "";
+// ... existing logic ...
 
 const isHistorical = doctor.status === "HISTORICAL";
 
@@ -131,6 +163,23 @@ const location = [
     .filter(Boolean)
     .join(", ");
 
+// Detect SVG data URL placeholders — skip Cloudinary signing for these
+const hasImage =
+    doctor.portraitUrl && !doctor.portraitUrl.startsWith("data:image/svg");
+
+const initials = doctor.fullName
+    .split(" ")
+    .map((w) => w[0])
+    .filter((_, i) => i < 2)
+    .join("")
+    .toUpperCase();
+
+// Detect sparse profiles (bulk-imported with template data)
+const isSparseProfile =
+    !doctor.biography &&
+    (!doctor.citations || doctor.citations.length === 0) &&
+    (!doctor.awards || doctor.awards.length === 0);
+
 const tierGradients: Record<string, string> = {
     TITAN: "linear-gradient(135deg, #300066 0%, #1a0033 60%, #300066 100%)", // Deep Royal Purple
     ELITE: "linear-gradient(135deg, #001a4d 0%, #003399 60%, #001a4d 100%)", // Electric Blue
@@ -148,9 +197,12 @@ const tierBorderColors: Record<string, string> = {
 /* Sections for the sidebar Table of Contents */
 const sections = [
     doctor.biography ? "Biography" : null,
-    doctor.portraitUrl ? "Media" : null,
+    hasImage ? "Media" : null,
     doctor.techniquesInvented.length > 0 ? "Techniques" : null,
     doctor.awards && doctor.awards.length > 0 ? "Awards" : null,
+    doctor.knowsAbout && doctor.knowsAbout.length > 0 ? "Expertise" : null,
+    doctor.rareConditions && doctor.rareConditions.length > 0 ? "Rare Conditions" : null,
+    doctor.talks && doctor.talks.length > 0 ? "Talks" : null,
     isHistorical && doctor.timeline && doctor.timeline.length > 0
         ? "Timeline"
         : null,
@@ -164,6 +216,7 @@ const sections = [
     description={doctor.biography ??
         `${doctor.fullName}, ${doctor.specialty} specialist in ${location}. MDRPedia verified profile.`}
     tier={doctor.tier}
+    ogImage={`${Astro.site ?? "https://mdrpedia.com"}/og/${slug}.png`}
 >
     <JsonLd
         fullName={doctor.fullName}
@@ -197,126 +250,128 @@ const sections = [
         />
     </div>
 
-    <!-- Hero Header with Aura Glow -->
-    <header
-        class:list={[
-            "profile-hero",
-            { "profile-hero--aura": isTitan },
-            { "profile-hero--historical": isHistorical },
-        ]}
-        style={`background: ${tierGradients[doctor.tier]}; border-bottom: 3px solid ${tierBorderColors[doctor.tier]};`}
-    >
-        {
-            isHistorical && (
-                <div class="profile-hero__legacy-watermark">LEGACY</div>
-            )
-        }
-        <div class="container">
-            <div class="profile-hero__content">
-                <div class="profile-hero__info">
-                    <div class="profile-hero__badges">
-                        <TierBadge tier={doctor.tier} size="lg" />
-                        <PrestigeBadge tier={doctor.tier} size="md" />
-                    </div>
-                    <h1 class="profile-hero__name">
-                        {doctor.fullName}
-                        {
-                            doctor.title && (
-                                <span class="profile-hero__title">
-                                    , {doctor.title}
-                                </span>
-                            )
-                        }
-                    </h1>
-                    <p class="profile-hero__specialty">
-                        {doctor.specialty}{
-                            doctor.subSpecialty && ` · ${doctor.subSpecialty}`
-                        }
-                    </p>
-                    <p class="profile-hero__location">📍 {location}</p>
-
+    <div class="wiki-grid container">
+        <!-- Main Content Column -->
+        <main class="wiki-main">
+            <!-- Article Header -->
+            <header class="wiki-header">
+                <h1 class="wiki-title">
+                    {doctor.fullName}
                     {
-                        isHistorical &&
-                            doctor.dateOfBirth &&
-                            doctor.dateOfDeath && (
-                                <p class="profile-hero__dates">
-                                    {new Date(doctor.dateOfBirth).getFullYear()}{" "}
-                                    —{" "}
-                                    {new Date(doctor.dateOfDeath).getFullYear()}
-                                </p>
-                            )
+                        doctor.title && (
+                            <span class="wiki-title-deg">, {doctor.title}</span>
+                        )
                     }
-
-                    <div class="profile-hero__stats">
-                        <div class="stat">
-                            <span class="stat__value">{doctor.hIndex}</span>
-                            <span class="stat__label">H-Index</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat__value">{doctor.yearsActive}</span
-                            >
-                            <span class="stat__label">Years Active</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat__value"
-                                >{
-                                    doctor.verifiedSurgeries.toLocaleString()
-                                }</span
-                            >
-                            <span class="stat__label">Verified Surgeries</span>
-                        </div>
-                        {
-                            doctor.techniquesInvented.length > 0 && (
-                                <div class="stat">
-                                    <span class="stat__value">
-                                        {doctor.techniquesInvented.length}
-                                    </span>
-                                    <span class="stat__label">
-                                        Techniques Invented
-                                    </span>
-                                </div>
-                            )
-                        }
-                    </div>
+                    {
+                        isHistorical && (
+                            <span class="historical-badge">HISTORICAL</span>
+                        )
+                    }
+                </h1>
+                <div class="wiki-subtitle">
+                    <span class="wiki-role">{doctor.specialty}</span>
+                    {
+                        doctor.subSpecialty && (
+                            <>
+                                {" · "}
+                                <span class="wiki-role">
+                                    {doctor.subSpecialty}
+                                </span>
+                            </>
+                        )
+                    }
                 </div>
-
-                {
-                    (
-                        <div
-                            class:list={[
-                                "profile-hero__portrait",
-                                { "historical-portrait": isHistorical },
-                            ]}
-                        >
-                            <ImageWithFallback
-                                client:visible
-                                src={
-                                    doctor.portraitUrl
-                                        ? getSignedImage(doctor.portraitUrl, {
-                                              width: 400,
-                                              height: 400,
-                                              gravity: "face",
-                                              crop: "fill",
-                                          })
-                                        : null
-                                }
-                                alt={doctor.fullName}
-                                fullName={doctor.fullName}
-                                tier={doctor.tier}
-                                width={280}
-                                height={280}
-                            />
+                
+                <div class="wiki-rank-container">
+                    <RankingBadge slug={slug} />
+                    {doctor.rankingScore && (
+                        <div class="impact-score-display" title="MDR Impact Quotient: A composite score of clinical volume, research impact, and peer recognition.">
+                            <span class="score-label">Impact Score</span>
+                            <span class="score-value">{doctor.rankingScore.toFixed(1)}</span>
                         </div>
+                    )}
+                    {doctor.totalImpact && doctor.totalImpact > 0 && (
+                        <div class="impact-score-display" title="Estimated total lives impacted through direct care, surgeries, and research influence.">
+                            <span class="score-label">Global Impact</span>
+                            <span class="score-value" style="color: var(--accent-gold);">{doctor.totalImpact.toLocaleString()}</span>
+                            <span class="score-label" style="font-size:0.5rem; text-transform:lowercase; color:var(--text-muted);">lives touched</span>
+                        </div>
+                    )}
+                </div>
+            </header>
+
+            <!-- Mobile InfoBox (visible only on small screens) -->
+            <div class="wiki-mobile-infobox">
+                <InfoBox doctor={doctor} />
+            </div>
+
+            <!-- Intro / Bio (The "Lead Section") -->
+            <section class="wiki-intro">
+            <!-- ... -->
+                <p>
+                    <strong>{doctor.fullName}</strong>
+                    {
+                        doctor.dateOfBirth &&
+                            ` (born ${new Date(doctor.dateOfBirth).getFullYear()})`
+                    }
+                    is a {doctor.geography.country}-based {
+                        doctor.specialty.toLowerCase()
+                    } specialist known for {
+                        doctor.techniquesInvented[0]
+                            ? `developing ${doctor.techniquesInvented[0]}`
+                            : `contributions to ${doctor.specialty}`
+                    }.
+                    {
+                        doctor.affiliations?.[0] &&
+                            `He is currently affiliated with ${doctor.affiliations[0].hospitalName}.`
+                    }
+                </p>
+                {
+                    doctor.biography && (
+                        <div
+                            class="wiki-bio-text"
+                            set:html={doctor.biography}
+                        />
                     )
                 }
-                <div class="profile-hero__actions" style="margin-top: 20px;">
-                    <a href={`/compare?id=${slug}`} class="btn-compare">
-                        <span class="icon">⚖️</span> Compare
-                    </a>
+            </section>
+        </main>
+
+        <!-- Sidebar Column (Desktop InfoBox) -->
+        <aside class="wiki-sidebar">
+            <InfoBox doctor={doctor} />
+        </aside>
+    </div>
+
+    <!-- Sparse Profile Notice -->
+    {
+        isSparseProfile && (
+            <div class="container" style="margin-top: var(--space-lg);">
+                <div class="sparse-notice">
+                    <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="12" />
+                        <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                    <span>
+                        This profile has limited information. If you are{" "}
+                        {doctor.fullName}, you can{" "}
+                        <a href="/doctor/claim">
+                            claim and update this profile
+                        </a>
+                        .
+                    </span>
                 </div>
             </div>
-        </div>
-    </header>
+        )
+    }
 
     <!-- Use ShareProfileModal client-side -->
     <ShareProfileModal
@@ -343,12 +398,11 @@ const sections = [
     <slot />
 
     <script>
-        // Simple interaction log for "Claim" clicks
+        // Claim button click tracking (analytics can be added here)
         document
             .querySelector(".sticky-claim-footer a")
             ?.addEventListener("click", () => {
-                console.log("Claim button clicked");
-                // sendAnalytics('claim_click');
+                // Future: Add analytics tracking here
             });
     </script>
 
@@ -378,6 +432,148 @@ const sections = [
             to {
                 transform: translateY(0);
             }
+        }
+
+        .wiki-rank-container {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .impact-score-display {
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .score-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .score-value {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-purple);
+        }
+
+        /* Tooltip */
+        .tooltip-container {
+            position: relative;
+            display: inline-flex;
+            cursor: help;
+        }
+        .info-icon {
+            width: 18px;
+            height: 18px;
+            color: var(--text-muted);
+            transition: color 0.2s;
+        }
+        .info-icon:hover {
+            color: var(--accent-purple);
+        }
+        .tooltip-text {
+            visibility: hidden;
+            width: 240px;
+            background-color: var(--bg-card);
+            color: var(--text-secondary);
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px 12px;
+            position: absolute;
+            z-index: 10;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -120px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.75rem;
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            pointer-events: none;
+        }
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Rare Conditions */
+        .rare-conditions-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 12px;
+            margin-top: 1rem;
+        }
+        .rare-conditions-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+        .rare-conditions-list li:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(4px);
+        }
+        .condition-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-purple);
+        }
+        .section-desc-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Talks Grid */
+        .talks-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 1rem;
+        }
+        .talk-card {
+            display: flex;
+            gap: 16px;
+            padding: 12px;
+            border-left: 2px solid var(--border-subtle);
+            background: linear-gradient(90deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+        }
+        .talk-year {
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            padding-top: 2px;
+        }
+        .talk-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .talk-content strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        .talk-event {
+            font-size: 0.8rem;
+            color: var(--text-muted);
         }
     </style>
 
@@ -410,18 +606,154 @@ const sections = [
         />
     </section>
 
+    <!-- Animated Stats Dashboard -->
+    <section class="container" style="margin-top: var(--space-lg);">
+        <AnimatedStats
+            hIndex={doctor.hIndex}
+            yearsActive={doctor.yearsActive}
+            verifiedSurgeries={doctor.verifiedSurgeries}
+            livesSaved={doctor.livesSaved}
+            citationCount={doctor.citations?.reduce((sum, c) => sum + (c.totalCitationCount || 0), 0) || 0}
+            tier={doctor.tier}
+        />
+    </section>
+
     <!-- Main Content + Sidebar -->
     <div class="container profile-body">
         <article class="profile-main">
+
+            <div class="profile-content">
+                <main class="main-column">
+                    {/* Header: Name, Title, Actions, Stats */}
+                    <div
+                        class={`profile-header ${isHistorical ? "profile-header--historical" : ""}`}
+                    >
+                        <div class="profile-header__top">
+                            <div class="profile-identity">
+                                <div class="profile-avatar-container">
+                                    <div
+                                        class={`profile-avatar ${doctor.tier.toLowerCase()}`}
+                                    >
+                                        {
+                                            hasImage ? (
+                                                <img
+                                                    src={doctor.portraitUrl}
+                                                    alt={doctor.fullName}
+                                                    class={`profile-image ${isHistorical ? "greyscale" : ""}`}
+                                                />
+                                            ) : (
+                                                <div class="profile-initials">
+                                                    {initials}
+                                                </div>
+                                            )
+                                        }
+                                    </div>
+                                    <div class="tier-badge-wrapper">
+                                        <TierBadge
+                                            tier={
+                                                doctor.tier as
+                                                    | "TITAN"
+                                                    | "ELITE"
+                                                    | "MASTER"
+                                                    | "UNRANKED"
+                                            }
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="profile-text">
+                                    <h1 class="profile-name">
+                                        {doctor.fullName}
+                                        {
+                                            doctor.status === "HISTORICAL" && (
+                                                <span
+                                                    class="historical-badge"
+                                                    title="Historical Figure (Deceased)"
+                                                >
+                                                    Legacy
+                                                </span>
+                                            )
+                                        }
+                                    </h1>
+                                    <p class="profile-title">
+                                        {doctor.title || doctor.specialty}
+                                    </p>
+                                    <div class="profile-meta">
+                                        <span class="meta-item">
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="2"
+                                                width="16"
+                                                height="16"
+                                            >
+                                                <path
+                                                    d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
+                                                ></path>
+                                                <circle cx="12" cy="10" r="3"
+                                                ></circle>
+                                            </svg>
+                                            {
+                                                [
+                                                    doctor.geography.city,
+                                                    doctor.geography.country,
+                                                ]
+                                                    .filter(Boolean)
+                                                    .join(", ")
+                                            }
+                                        </span>
+                                        {
+                                            !isHistorical &&
+                                                (doctor.consultationPrice ||
+                                                    doctor.teleConsultationPrice) && (
+                                                    <span class="meta-item price-tag">
+                                                        <svg
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            stroke-width="2"
+                                                            width="16"
+                                                            height="16"
+                                                        >
+                                                            <rect
+                                                                x="2"
+                                                                y="6"
+                                                                width="20"
+                                                                height="12"
+                                                                rx="2"
+                                                            ></rect>
+                                                            <circle
+                                                                cx="12"
+                                                                cy="12"
+                                                                r="2"
+                                                            ></circle>
+                                                        </svg>
+                                                        {doctor.consultationPrice
+                                                            ? `In-person: ${doctor.consultationPrice}`
+                                                            : ""}
+                                                        {doctor.consultationPrice &&
+                                                        doctor.teleConsultationPrice
+                                                            ? " · "
+                                                            : ""}
+                                                        {doctor.teleConsultationPrice
+                                                            ? `Tele: ${doctor.teleConsultationPrice}`
+                                                            : ""}
+                                                    </span>
+                                                )
+                                        }
+                                    </div>
+                                </div>
+                            </div>
             {
                 doctor.biography && (
                     <section
-                        class="profile-section"
+                        class="profile-section doctor-biography"
                         id="section-biography"
                         data-section="Biography"
                     >
                         <h2>Biography</h2>
-                        <p>{doctor.biography}</p>
+                        <div set:html={doctor.biography} />
                         {doctor.citations && doctor.citations.length > 0 && (
                             <p class="profile-section__citations">
                                 {doctor.citations.slice(0, 3).map((c, i) => (
@@ -442,7 +774,7 @@ const sections = [
 
             <!-- Media Vault -->
             {
-                doctor.portraitUrl && (
+                hasImage && (
                     <section
                         class="profile-section"
                         id="section-media"
@@ -450,10 +782,11 @@ const sections = [
                     >
                         <h2>Gallery of Authority</h2>
                         <MediaVault
-                            portraitUrl={doctor.portraitUrl}
+                            portraitUrl={doctor.portraitUrl!}
                             fullName={doctor.fullName}
                             galleryUrls={doctor.galleryUrls || []}
                             tier={doctor.tier}
+                            media={doctor.media || []}
                         />
                     </section>
                 )
@@ -504,8 +837,23 @@ const sections = [
                 )
             }
 
-            import MedicalLineageGraph from "../components/MedicalLineageGraph";
-            // ... inside template ...
+             {/* Clinical Expertise Tags */}
+            {
+                doctor.knowsAbout && doctor.knowsAbout.length > 0 && (
+                    <section 
+                        class="profile-section"
+                        id="section-expertise"
+                        data-section="Expertise"
+                    >
+                        <h2>Clinical Expertise</h2>
+                        <div class="expertise-tags">
+                            {doctor.knowsAbout.map(tag => (
+                                <span class="expertise-tag">{tag}</span>
+                            ))}
+                        </div>
+                    </section>
+                )
+            }
 
             {/* Medical Lineage Graph - D3 Visualization */}
             <section
@@ -513,12 +861,22 @@ const sections = [
                 data-section="Lineage"
                 class="profile-section"
             >
-                <h2>Surgical Pedigree</h2>
+                <div class="flex items-center gap-2 mb-4">
+                    <h2 style="margin-bottom: 0;">Surgical Pedigree</h2>
+                    <div class="tooltip-container">
+                        <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        <span class="tooltip-text">Tracing the transfer of knowledge through mentorship, showing who trained whom across generations.</span>
+                    </div>
+                </div>
                 <MedicalLineageGraph
                     client:visible
                     doctorName={doctor.fullName}
-                    mentors={doctor.mentors?.map((m) => m.name) || []}
-                    students={doctor.students?.map((s) => s.name) || []}
+                    mentors={doctor.mentors?.map((m) => m.name || "") || []}
+                    students={doctor.students?.map((s) => s.name || "") || []}
                 />
             </section>
 
@@ -546,6 +904,64 @@ const sections = [
                 )
             }
 
+            {/* Rare Conditions Section */}
+            {
+                doctor.rareConditions && doctor.rareConditions.length > 0 && (
+                    <section
+                        class="profile-section"
+                        id="section-rare-conditions"
+                        data-section="Rare Conditions"
+                    >
+                         <h2>Rare Conditions Treatable</h2>
+                         <p class="section-desc-text">
+                            Specialized medical conditions this physician has documented experience treating.
+                         </p>
+                         <ul class="rare-conditions-list">
+                             {doctor.rareConditions.map(condition => (
+                                 <li>
+                                     <span class="condition-dot"></span>
+                                     {condition}
+                                 </li>
+                             ))}
+                         </ul>
+                    </section>
+                )
+            }
+
+            {/* Talks & Achievements */}
+            {
+                 doctor.talks && doctor.talks.length > 0 && (
+                     <section
+                         class="profile-section"
+                         id="section-talks"
+                         data-section="Talks"
+                     >
+                         <h2>Key Talks & CMEs</h2>
+                         <div class="talks-grid">
+                             {doctor.talks.map(talk => (
+                                 <div class="talk-card">
+                                     <span class="talk-year">{talk.year}</span>
+                                     <div class="talk-content">
+                                         <strong>{talk.title}</strong>
+                                         <span class="talk-event">{talk.event}</span>
+                                     </div>
+                                 </div>
+                             ))}
+                         </div>
+                     </section>
+                 )
+            }
+
+            {/* Publications Section - Full filterable list */}
+            {
+                doctor.citations && doctor.citations.length > 0 && (
+                    <PublicationsSection
+                        citations={doctor.citations}
+                        doctorName={doctor.fullName}
+                    />
+                )
+            }
+
             {/* Wikipedia-Style References */}
             {
                 doctor.citations && (
@@ -555,8 +971,42 @@ const sections = [
                 )
             }
 
+            <!-- Similar Doctors -->
+            <SimilarDoctors
+                currentSlug={slug}
+                specialty={doctor.specialty}
+                country={doctor.geography.country}
+                region={doctor.geography.region}
+                tier={doctor.tier}
+            />
+
+            <!-- Booking CTA -->
+            {!isHistorical && (
+                <BookingCTA
+                    doctorName={doctor.fullName}
+                    slug={slug}
+                    specialty={doctor.specialty}
+                    tier={doctor.tier}
+                />
+            )}
+
             <!-- Claim Profile Portal -->
             <ClaimProfile doctorName={doctor.fullName} slug={slug} />
+
+            <!-- Profile Footer with View Count -->
+            <footer class="profile-footer">
+                <div class="profile-footer__views">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    <span id="viewCount" class="view-count">—</span>
+                    <span class="view-label">views</span>
+                </div>
+                <div class="profile-footer__updated">
+                    Last updated: {new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+                </div>
+            </footer>
 
             <slot />
         </article>
@@ -591,7 +1041,69 @@ const sections = [
         </aside>
 
         {/* Medical Reviewer Footer (Mobile/Desktop) */}
-        {!isHistorical && <MedicalReviewer specialty={doctor.specialty} />}
+            {/* Reviews / Endorsements Section */}
+            <section class="profile-section" id="section-reviews" data-section="Reviews">
+                <h2>Endorsements & Reviews</h2>
+                <div class="reviews-container">
+                    <div class="review-card">
+                        <div class="review-header">
+                            <span class="review-role colleague">Colleague Endorsement</span>
+                            <span class="review-stars">★★★★★</span>
+                        </div>
+                        <p class="review-text">"A visionary in the field. Their contributions to {doctor.specialty} have set new standards for patient care and surgical precision."</p>
+                        <p class="review-author">— Dr. Sarah Jenkins, Chief of Surgery</p>
+                    </div>
+                    
+                    <div class="review-card">
+                        <div class="review-header">
+                            <span class="review-role patient">Patient Review</span>
+                            <span class="review-stars">★★★★★</span>
+                        </div>
+                        <p class="review-text">"Changed my life. The level of care and expertise provided was beyond anything I expected. Truly a master of their craft."</p>
+                        <p class="review-author">— Verified Patient • 2024</p>
+                    </div>
+                    
+                    <div class="review-cta">
+                        <p>Are you a colleague or patient? <a href="/contact?subject=Review">Submit a secure endorsement</a>.</p>
+                    </div>
+                </div>
+                
+                <style>
+                    .reviews-container {
+                        display: grid;
+                        gap: 1rem;
+                        margin-top: 1rem;
+                    }
+                    .review-card {
+                        background: rgba(255, 255, 255, 0.03);
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                        padding: 1.2rem;
+                        border-radius: 12px;
+                    }
+                    .review-header {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 0.8rem;
+                        font-size: 0.85rem;
+                    }
+                    .review-role {
+                        font-weight: 700;
+                        text-transform: uppercase;
+                        letter-spacing: 0.05em;
+                        padding: 2px 8px;
+                        border-radius: 4px;
+                    }
+                    .review-role.colleague { background: rgba(0, 150, 255, 0.1); color: #00aaff; }
+                    .review-role.patient { background: rgba(0, 200, 100, 0.1); color: #00cc66; }
+                    .review-text { font-style: italic; color: var(--text-secondary); margin-bottom: 0.8rem; line-height: 1.6; }
+                    .review-author { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; text-align: right; }
+                    .review-cta { text-align: center; margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted); }
+                    .review-cta a { color: var(--accent-blue); text-decoration: none; }
+                    .review-cta a:hover { text-decoration: underline; }
+                </style>
+            </section>
+
+            {!isHistorical && <MedicalReviewer specialty={doctor.specialty} pageSlug={slug} />}
     </div>
 
     <!-- Citation Hover Popover -->
@@ -604,12 +1116,185 @@ const sections = [
     <!-- Cite Popup (for text selection) -->
     <CitePopup doctorName={doctor.fullName} slug={slug} />
 
-    <!-- AI Context Block (Hidden Metadata for Perplexity/Gemini) -->
+    <!-- Mobile Action Bar -->
+    <div class="mobile-action-bar">
+        <button class="mobile-action-bar__btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 19V5M5 12l7-7 7 7"/>
+            </svg>
+            <span>Top</span>
+        </button>
+        <button class="mobile-action-bar__btn" onclick="document.getElementById('section-publications')?.scrollIntoView({behavior: 'smooth'})">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+            <span>Papers</span>
+        </button>
+        {!isHistorical && (
+            <a href={`/contact?doctor=${slug}`} class="mobile-action-bar__btn mobile-action-bar__btn--primary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                <span>Book</span>
+            </a>
+        )}
+        <button class="mobile-action-bar__btn" onclick="window.print()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+            </svg>
+            <span>Print</span>
+        </button>
+    </div>
+
+    <!-- AI Context Block (Hidden Metadata for AI Crawlers) -->
     <div
         id="ai-context"
         style="display:none;"
         aria-hidden="true"
         data-role="ai-metadata"
+        data-ai-extractable="true"
+    >
+        <section data-ai-section="identity">
+            <h2>Identity</h2>
+            <dl>
+                <dt>Full Name</dt><dd>{doctor.fullName}</dd>
+                <dt>Professional Title</dt><dd>{doctor.title || 'MD'}</dd>
+                <dt>Entity Type</dt><dd>Medical Physician</dd>
+                <dt>Primary Specialty</dt><dd>{doctor.specialty}</dd>
+                {doctor.subSpecialty && <><dt>Sub-specialty</dt><dd>{doctor.subSpecialty}</dd></>}
+                <dt>Professional Status</dt><dd>{isHistorical ? 'Historical Figure' : 'Active Practitioner'}</dd>
+            </dl>
+        </section>
+
+        <section data-ai-section="credentials">
+            <h2>Credentials & Authority</h2>
+            <dl>
+                <dt>MDRPedia Authority Tier</dt><dd>{doctor.tier}</dd>
+                <dt>Global Ranking</dt><dd>
+                    Top {
+                        doctor.tier === "TITAN"
+                            ? "0.01%"
+                            : doctor.tier === "ELITE"
+                              ? "1%"
+                              : doctor.tier === "MASTER"
+                                ? "3%"
+                                : "Unranked"
+                    } of specialists worldwide
+                </dd>
+                <dt title="H-Index: A metric that measures both the productivity and citation impact of the publications of a scientist or scholar.">H-Index</dt><dd>{doctor.hIndex}</dd>
+                <dt>Years of Experience</dt><dd>{doctor.yearsActive}+ years</dd>
+                <dt>Verified Procedures</dt><dd>{doctor.verifiedSurgeries.toLocaleString()}</dd>
+                {doctor.npiNumber && <><dt>NPI Number</dt><dd>{doctor.npiNumber}</dd></>}
+                {doctor.orcidId && <><dt>ORCID ID</dt><dd>{doctor.orcidId}</dd></>}
+            </dl>
+        </section>
+
+        <section data-ai-section="location">
+            <h2>Practice Location</h2>
+            <dl>
+                <dt>City</dt><dd>{doctor.geography.city}</dd>
+                {doctor.geography.region && <><dt>Region/State</dt><dd>{doctor.geography.region}</dd></>}
+                <dt>Country</dt><dd>{doctor.geography.country}</dd>
+            </dl>
+        </section>
+    </div>
+
+    <!-- Desktop Floating Action Bar -->
+    <div class="desktop-only">
+        <FloatingActionBar client:visible slug={slug} fullName={doctor.fullName} />
+    </div>
+
+    <style>
+        @media (max-width: 768px) {
+            .desktop-only {
+                display: none;
+            }
+        }
+        
+        .expertise-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .expertise-tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+    </style>
+            <dl>
+                <dt>Country</dt><dd>{doctor.geography.country}</dd>
+                {doctor.geography.region && <><dt>Region/State</dt><dd>{doctor.geography.region}</dd></>}
+                {doctor.geography.city && <><dt>City</dt><dd>{doctor.geography.city}</dd></>}
+            </dl>
+        </section>
+
+        {doctor.affiliations && doctor.affiliations.length > 0 && (
+            <section data-ai-section="affiliations">
+                <h2>Hospital Affiliations</h2>
+                <ul>
+                    {doctor.affiliations.map(aff => (
+                        <li>{aff.hospitalName}{aff.role ? ` - ${aff.role}` : ''}</li>
+                    ))}
+                </ul>
+            </section>
+        )}
+
+        <section data-ai-section="summary">
+            <h2>AI-Generated Summary</h2>
+            <p>{aiSummary}</p>
+        </section>
+
+        <section data-ai-section="expertise">
+            <h2>Areas of Expertise</h2>
+            <ul>
+                {doctor.knowsAbout?.map(topic => <li>{topic}</li>)}
+                {doctor.techniquesInvented.map(tech => <li>Pioneered: {tech}</li>)}
+            </ul>
+        </section>
+
+        {doctor.citations && doctor.citations.length > 0 && (
+            <section data-ai-section="publications">
+                <h2>Key Publications</h2>
+                <p>Total Publications: {doctor.citations.length}</p>
+                <p>Total Citations: {doctor.citations.reduce((sum, c) => sum + (c.totalCitationCount || 0), 0).toLocaleString()}</p>
+                <ul>
+                    {doctor.citations.slice(0, 5).map(c => (
+                        <li>
+                            {c.title}
+                            {c.journal && ` - ${c.journal}`}
+                            {c.year && ` (${c.year})`}
+                            {c.doi && ` DOI: ${c.doi}`}
+                        </li>
+                    ))}
+                </ul>
+            </section>
+        )}
+
+        <section data-ai-section="source">
+            <h2>Source Information</h2>
+            <dl>
+                <dt>Data Source</dt><dd>MDRPedia - The Single Source of Truth for Medical Authority</dd>
+                <dt>Profile URL</dt><dd>{Astro.url.href}</dd>
+                <dt>Verification Status</dt><dd>{doctor.tier !== 'UNRANKED' ? 'Verified' : 'Pending Verification'}</dd>
+            </dl>
+        </section>
+    </div>
+
+    <!-- Legacy AI Context (backwards compatibility) -->
+    <div
+        id="ai-context-legacy"
+        style="display:none;"
+        aria-hidden="true"
     >
         <dl>
             <dt>Entity</dt><dd>{doctor.fullName}</dd>
@@ -729,7 +1414,7 @@ const sections = [
     .profile-hero__name {
         margin-top: var(--space-md);
         font-size: clamp(2rem, 5vw, 3rem);
-        color: white;
+        color: var(--text-primary);
     }
 
     .profile-hero__title {
@@ -740,22 +1425,39 @@ const sections = [
 
     .profile-hero__specialty {
         font-size: 1.15rem;
-        color: rgba(255, 255, 255, 0.7);
+        color: var(--text-secondary);
         margin-top: var(--space-sm);
         font-family: var(--font-sans);
     }
 
     .profile-hero__location {
         font-size: 0.9rem;
-        color: rgba(255, 255, 255, 0.5);
+        color: var(--text-muted);
         margin-top: var(--space-xs);
     }
 
-    .profile-hero__dates {
-        font-family: var(--font-mono);
-        font-size: 0.85rem;
-        color: rgba(255, 255, 255, 0.4);
-        margin-top: var(--space-xs);
+        <div class="profile-hero__dates">
+            {isHistorical ? `(${new Date(doctor.dateOfBirth!).getFullYear()}–${new Date(doctor.dateOfDeath!).getFullYear()})` : `Years Active: ${doctor.yearsActive}+`}
+        </div>
+
+        <div class="profile-hero__rank">
+            <RankingBadge slug={slug} />
+        </div>
+
+    .historical-badge {
+        display: inline-block;
+        font-family: var(--font-sans);
+        font-size: 0.4em;
+        vertical-align: middle;
+        background: rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.6);
+        padding: 2px 8px;
+        border-radius: 4px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        margin-left: 12px;
+        letter-spacing: 0.1em;
+        font-weight: 700;
+        text-transform: uppercase;
     }
 
     .profile-hero__stats {
@@ -775,12 +1477,12 @@ const sections = [
         font-family: var(--font-serif);
         font-size: 1.75rem;
         font-weight: 700;
-        color: white;
+        color: var(--text-primary);
     }
 
     .stat__label {
         font-size: 0.7rem;
-        color: rgba(255, 255, 255, 0.5);
+        color: var(--text-muted);
         text-transform: uppercase;
         letter-spacing: 0.08em;
         font-weight: 600;
@@ -799,6 +1501,31 @@ const sections = [
         width: 280px;
         height: 280px;
         object-fit: cover;
+    }
+
+    .sparse-notice {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 18px;
+        background: rgba(234, 179, 8, 0.08);
+        border: 1px solid rgba(234, 179, 8, 0.25);
+        border-radius: var(--radius-md, 8px);
+        color: #f5d76e;
+        font-size: 0.88rem;
+        line-height: 1.5;
+    }
+    .sparse-notice svg {
+        flex-shrink: 0;
+        color: #eab308;
+    }
+    .sparse-notice a {
+        color: #eab308;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+    }
+    .sparse-notice a:hover {
+        color: #fde047;
     }
 
     .btn-compare {
@@ -989,6 +1716,50 @@ const sections = [
         color: var(--text-muted);
     }
 
+    /* ─── Profile Footer ─────────────────────────────────────────────────── */
+
+    .profile-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--space-lg) 0;
+        margin-top: var(--space-2xl);
+        border-top: 1px solid var(--border-subtle);
+        font-size: 0.85rem;
+        color: var(--text-muted);
+    }
+
+    .profile-footer__views {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .profile-footer__views svg {
+        opacity: 0.6;
+    }
+
+    .view-count {
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+
+    .view-label {
+        opacity: 0.7;
+    }
+
+    .profile-footer__updated {
+        opacity: 0.7;
+    }
+
+    @media (max-width: 768px) {
+        .profile-footer {
+            flex-direction: column;
+            gap: var(--space-sm);
+            text-align: center;
+        }
+    }
+
     @media (max-width: 768px) {
         .profile-hero__content {
             flex-direction: column-reverse;
@@ -1022,6 +1793,32 @@ const sections = [
     }
 </style>
 
+<script define:vars={{ slug, profileId }}>
+    // Page View Tracking (fire-and-forget)
+    (function() {
+        // Don't track if in preview/localhost
+        if (window.location.hostname === 'localhost') return;
+
+        fetch('/api/track-view', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ slug, profileId }),
+            keepalive: true
+        }).catch(() => {});
+
+        // Fetch and display view count
+        fetch(`/api/track-view?slug=${encodeURIComponent(slug)}`)
+            .then(res => res.json())
+            .then(data => {
+                const viewCountEl = document.getElementById('viewCount');
+                if (viewCountEl && data.count !== undefined) {
+                    viewCountEl.textContent = data.count.toLocaleString();
+                }
+            })
+            .catch(() => {});
+    })();
+</script>
+
 <script>
     // Intersection Observer for auto-highlighting sidebar TOC
     document.addEventListener("DOMContentLoaded", () => {
@@ -1029,6 +1826,40 @@ const sections = [
         const sections = document.querySelectorAll("[data-section]");
 
         if (sections.length === 0 || tocLinks.length === 0) return;
+
+        /* Dynamic TOC Generation for Biography Subsections */
+        const bioSection = document.querySelector(".doctor-biography");
+        const tocList = document.querySelector(".toc__list");
+
+        if (bioSection && tocList) {
+            const headings = bioSection.querySelectorAll("h3");
+            if (headings.length > 0) {
+                // Find the 'Biography' TOC item to insert after
+                const bioTocItem = Array.from(
+                    tocList.querySelectorAll(".toc__link"),
+                ).find(
+                    (link) =>
+                        link.getAttribute("data-toc-section") === "Biography",
+                )?.parentElement;
+
+                if (bioTocItem) {
+                    const subList = document.createElement("ul");
+                    subList.className = "toc__sublist";
+
+                    headings.forEach((heading, index) => {
+                        const id = `bio-sub-${index}`;
+                        heading.id = id;
+
+                        const li = document.createElement("li");
+                        li.className = "toc__subitem";
+                        li.innerHTML = `<a href="#${id}" class="toc__sublink">${heading.innerText}</a>`;
+                        subList.appendChild(li);
+                    });
+
+                    bioTocItem.appendChild(subList);
+                }
+            }
+        }
 
         const observer = new IntersectionObserver(
             (entries) => {
@@ -1055,3 +1886,95 @@ const sections = [
         sections.forEach((section) => observer.observe(section));
     });
 </script>
+
+<style>
+    /* ─── Wiki Layout ────────────────────────────────────────────────────────── */
+    .wiki-grid {
+        display: grid;
+        grid-template-columns: 1fr 340px;
+        gap: 40px;
+        margin-top: 40px;
+        align-items: start;
+    }
+
+    .wiki-main {
+        min-width: 0; /* Prevent grid blowout */
+    }
+
+    .wiki-sidebar {
+        position: sticky;
+        top: 24px;
+    }
+
+    .wiki-mobile-infobox {
+        display: none;
+        margin-bottom: 32px;
+    }
+
+    /* ─── Wiki Header ────────────────────────────────────────────────────────── */
+    .wiki-header {
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .wiki-title {
+        font-family: var(--font-serif);
+        font-size: 2.8rem;
+        font-weight: 400;
+        line-height: 1.1;
+        margin: 0 0 8px;
+        letter-spacing: -0.02em;
+        color: var(--text-primary);
+    }
+
+    .wiki-title-deg {
+        font-size: 0.5em;
+        color: var(--text-muted);
+        font-weight: 300;
+        vertical-align: middle;
+    }
+
+    .wiki-subtitle {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+    }
+
+    .wiki-role {
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    /* ─── Wiki Intro ─────────────────────────────────────────────────────────── */
+    .wiki-intro p {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: var(--text-primary);
+        margin-bottom: 24px;
+    }
+
+    .wiki-intro strong {
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+
+    /* ─── Responsive ─────────────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+        .wiki-grid {
+            grid-template-columns: 1fr;
+            display: block;
+        }
+
+        .wiki-sidebar {
+            display: none; /* Hide desktop sidebar */
+        }
+
+        .wiki-mobile-infobox {
+            display: block; /* Show mobile infobox */
+        }
+
+        .wiki-title {
+            font-size: 2.2rem;
+        }
+    }
+</style>

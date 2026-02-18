@@ -1,0 +1,106 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { prisma } from "../lib/prisma";
+import { marked } from "marked";
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+
+// Handle root path or strict slug matching
+const pageSlug = slug || "home"; // But home is usually index.astro.
+
+// If slug is undefined, we might be at root, but index.astro handles that.
+// This route handles /about, /terms, etc.
+
+if (!slug) {
+    return Astro.redirect("/");
+}
+
+const page = await prisma.contentPage.findUnique({
+    where: { slug: slug },
+});
+
+if (!page || !page.published) {
+    return Astro.redirect("/404");
+}
+
+const contentHtml = marked.parse(page.content);
+---
+
+<Layout
+    title={`${page.seo_title || page.title} — MDRPedia`}
+    description={page.seo_desc || ""}
+>
+    <div class="container content-page">
+        <header class="page-header">
+            <h1>{page.title}</h1>
+        </header>
+
+        <article class="prose" set:html={contentHtml} />
+
+        <div class="page-meta">
+            <small>Last updated: {page.updatedAt.toLocaleDateString()}</small>
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .content-page {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 60px 20px;
+        background: var(--bg-main);
+        color: var(--text-primary);
+    }
+
+    .page-header {
+        margin-bottom: 40px;
+        text-align: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 20px;
+    }
+
+    .page-header h1 {
+        font-size: 2.5rem;
+        font-family: var(--font-serif);
+        margin: 0;
+    }
+
+    .prose {
+        line-height: 1.7;
+        font-size: 1.1rem;
+    }
+
+    .prose :global(h2) {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-family: var(--font-serif);
+        color: var(--text-primary);
+    }
+
+    .prose :global(p) {
+        margin-bottom: 1.5rem;
+        color: var(--text-secondary);
+    }
+
+    .prose :global(a) {
+        color: var(--accent-purple);
+        text-decoration: underline;
+    }
+
+    .prose :global(ul),
+    .prose :global(ol) {
+        margin-bottom: 1.5rem;
+        padding-left: 1.5rem;
+        color: var(--text-secondary);
+    }
+
+    .page-meta {
+        margin-top: 60px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--text-muted);
+        text-align: center;
+    }
+</style>

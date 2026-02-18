@@ -1,0 +1,396 @@
+---
+/**
+ * MDRPedia — Search Results Page
+ * Displays search results for doctor queries
+ */
+import Layout from "../layouts/Layout.astro";
+import TierBadge from "../components/TierBadge.astro";
+import { getCollection } from "astro:content";
+
+const query = Astro.url.searchParams.get("q")?.trim() || "";
+const allDoctors = await getCollection("doctors");
+
+// Search logic
+let results: typeof allDoctors = [];
+if (query.length >= 2) {
+    const q = query.toLowerCase();
+    results = allDoctors
+        .filter((d) => {
+            const searchText = `${d.data.fullName} ${d.data.specialty || ""} ${d.data.geography?.country || ""} ${d.data.geography?.city || ""}`.toLowerCase();
+            return searchText.includes(q);
+        })
+        .sort((a, b) => {
+            // Titans first, then Elite, then Master
+            const tierOrder: Record<string, number> = { TITAN: 0, ELITE: 1, MASTER: 2, UNRANKED: 3 };
+            return (tierOrder[a.data.tier] ?? 3) - (tierOrder[b.data.tier] ?? 3);
+        })
+        .slice(0, 50); // Limit to 50 results
+}
+---
+
+<Layout title={query ? `Search: ${query} — MDRPedia` : "Search — MDRPedia"}>
+    <section class="search-page">
+        <div class="container">
+            <!-- Search Header -->
+            <div class="search-header">
+                <h1>Search Results</h1>
+                <form action="/search" method="get" class="search-form">
+                    <div class="search-bar">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.3-4.3"></path>
+                        </svg>
+                        <input
+                            type="text"
+                            name="q"
+                            value={query}
+                            placeholder="Search doctors by name, specialty, or location..."
+                            class="search-input"
+                            autocomplete="off"
+                            autofocus
+                        />
+                        <button type="submit" class="search-submit">Search</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Results -->
+            {query.length >= 2 ? (
+                <div class="results-section">
+                    <p class="results-count">
+                        {results.length === 0
+                            ? `No results found for "${query}"`
+                            : `Found ${results.length} result${results.length === 1 ? "" : "s"} for "${query}"`
+                        }
+                    </p>
+
+                    {results.length > 0 && (
+                        <div class="results-grid">
+                            {results.map((doctor) => {
+                                const d = doctor.data;
+                                const location = [d.geography?.city, d.geography?.country]
+                                    .filter(Boolean)
+                                    .join(", ");
+                                const initials = d.fullName
+                                    .split(" ")
+                                    .map((w: string) => w[0])
+                                    .filter((_: string, i: number) => i < 2)
+                                    .join("")
+                                    .toUpperCase();
+                                const hasImage = d.portraitUrl && !d.portraitUrl.startsWith("data:");
+
+                                return (
+                                    <a href={`/doctors/${doctor.id}`} class={`result-card result-card--${d.tier.toLowerCase()}`}>
+                                        <div class={`result-avatar avatar--${d.tier.toLowerCase()}`}>
+                                            {hasImage ? (
+                                                <img src={d.portraitUrl} alt={d.fullName} loading="lazy" />
+                                            ) : (
+                                                <span class="avatar-initials">{initials}</span>
+                                            )}
+                                        </div>
+                                        <div class="result-info">
+                                            <div class="result-header">
+                                                <h3 class="result-name">{d.fullName}</h3>
+                                                <TierBadge tier={d.tier as "TITAN" | "ELITE" | "MASTER" | "UNRANKED"} size="sm" />
+                                            </div>
+                                            <p class="result-specialty">{d.specialty}</p>
+                                            {location && <p class="result-location">{location}</p>}
+                                            <div class="result-stats">
+                                                <span>H-Index: <strong>{d.hIndex || "—"}</strong></span>
+                                                <span>Citations: <strong>{d.citations?.length || 0}</strong></span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                );
+                            })}
+                        </div>
+                    )}
+
+                    {results.length === 0 && (
+                        <div class="no-results">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="64" height="64">
+                                <circle cx="11" cy="11" r="8"/>
+                                <path d="m21 21-4.3-4.3"/>
+                            </svg>
+                            <h3>No doctors found</h3>
+                            <p>Try a different search term or browse all profiles</p>
+                            <a href="/doctors" class="btn btn--primary">Browse All Doctors</a>
+                        </div>
+                    )}
+                </div>
+            ) : query.length > 0 ? (
+                <div class="no-results">
+                    <p>Please enter at least 2 characters to search</p>
+                </div>
+            ) : (
+                <div class="no-results">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="64" height="64">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="m21 21-4.3-4.3"/>
+                    </svg>
+                    <h3>Search MDRPedia</h3>
+                    <p>Find verified medical professionals by name, specialty, or location</p>
+                </div>
+            )}
+        </div>
+    </section>
+</Layout>
+
+<style>
+    .search-page {
+        padding: 48px 0 80px;
+        min-height: 70vh;
+    }
+
+    .search-header {
+        margin-bottom: 40px;
+    }
+
+    .search-header h1 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 24px;
+    }
+
+    .search-form {
+        max-width: 700px;
+    }
+
+    .search-bar {
+        display: flex;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .search-icon {
+        width: 20px;
+        height: 20px;
+        margin-left: 16px;
+        color: var(--text-muted);
+        flex-shrink: 0;
+    }
+
+    .search-input {
+        flex: 1;
+        padding: 14px 16px;
+        font-size: 1rem;
+        background: transparent;
+        border: none;
+        color: white;
+        outline: none;
+    }
+
+    .search-input::placeholder {
+        color: var(--text-muted);
+    }
+
+    .search-submit {
+        padding: 14px 24px;
+        background: var(--accent-purple);
+        color: white;
+        border: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background 0.15s;
+    }
+
+    .search-submit:hover {
+        background: #7c3aed;
+    }
+
+    .results-count {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        margin-bottom: 24px;
+    }
+
+    .results-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .result-card {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 14px;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+    .result-card:hover {
+        background: rgba(255, 255, 255, 0.04);
+        border-color: rgba(255, 255, 255, 0.1);
+        transform: translateX(4px);
+    }
+
+    .result-card--titan:hover {
+        border-color: rgba(255, 215, 0, 0.3);
+    }
+
+    .result-card--elite:hover {
+        border-color: rgba(0, 170, 255, 0.3);
+    }
+
+    .result-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 14px;
+        overflow: hidden;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.05);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .avatar--titan {
+        border-color: rgba(255, 215, 0, 0.4);
+        background: rgba(255, 215, 0, 0.08);
+    }
+
+    .avatar--elite {
+        border-color: rgba(0, 170, 255, 0.4);
+        background: rgba(0, 170, 255, 0.08);
+    }
+
+    .avatar--master {
+        border-color: rgba(0, 204, 102, 0.4);
+        background: rgba(0, 204, 102, 0.08);
+    }
+
+    .result-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .avatar-initials {
+        font-weight: 700;
+        font-size: 1rem;
+        color: var(--text-muted);
+    }
+
+    .avatar--titan .avatar-initials { color: #ffd700; }
+    .avatar--elite .avatar-initials { color: #00aaff; }
+    .avatar--master .avatar-initials { color: #00cc66; }
+
+    .result-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .result-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 4px;
+    }
+
+    .result-name {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: white;
+        margin: 0;
+    }
+
+    .result-card--titan .result-name {
+        color: #ffd700;
+    }
+
+    .result-specialty {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin-bottom: 2px;
+    }
+
+    .result-location {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+    }
+
+    .result-stats {
+        display: flex;
+        gap: 20px;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+
+    .result-stats strong {
+        color: var(--text-secondary);
+    }
+
+    .no-results {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--text-muted);
+    }
+
+    .no-results svg {
+        opacity: 0.3;
+        margin-bottom: 20px;
+    }
+
+    .no-results h3 {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+        margin-bottom: 8px;
+    }
+
+    .no-results p {
+        font-size: 0.95rem;
+        margin-bottom: 24px;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 24px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: all 0.15s;
+    }
+
+    .btn--primary {
+        background: var(--accent-purple);
+        color: white;
+    }
+
+    .btn--primary:hover {
+        background: #7c3aed;
+    }
+
+    @media (max-width: 640px) {
+        .result-card {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .result-header {
+            flex-wrap: wrap;
+        }
+
+        .search-bar {
+            flex-wrap: wrap;
+        }
+
+        .search-submit {
+            width: 100%;
+        }
+    }
+</style>

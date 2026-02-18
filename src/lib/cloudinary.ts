@@ -1,4 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary';
+import type { UploadApiOptions } from 'cloudinary';
 
 // Configure Cloudinary with environment variables
 cloudinary.config({
@@ -16,7 +17,7 @@ cloudinary.config({
  */
 export async function uploadImage(filePath: string, publicId?: string, folder = 'doctors') {
     try {
-        const options: any = {
+        const options: UploadApiOptions = {
             folder,
             overwrite: true,
             resource_type: 'image',
@@ -29,7 +30,7 @@ export async function uploadImage(filePath: string, publicId?: string, folder = 
         const result = await cloudinary.uploader.upload(filePath, options);
         return result;
     } catch (error) {
-        console.error('Cloudinary Upload Error:', error);
+        // Re-throw without logging - let caller handle error
         throw error;
     }
 }

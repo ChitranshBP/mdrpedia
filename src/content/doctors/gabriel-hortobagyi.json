@@ -1,36 +1,492 @@
 {
   "fullName": "Gabriel Hortobagyi",
   "slug": "gabriel-hortobagyi",
-  "title": "MD, PhD",
-  "specialty": "Breast Cancer",
+  "title": "MD",
+  "specialty": "Breast Oncology",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">GH</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 51,
-  "hIndex": 205,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 186,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 15751,
+  "livesSaved": 0,
+  "biography": "High-dose chemotherapy and bone marrow transplant (HDC/BMT), also high-dose chemotherapy with autologous bone marrow transplant, was an ineffective treatment regimen for metastatic breast cancer, and later high-risk breast cancer, that was considered promising during the 1980s and 1990s. With an overall idea that more is better, this process involved taking cells from the person's bone marrow to store in a lab, then to give such high doses of chemotherapy drugs that the remaining bone marrow was destroyed, and then to inject the cells taken earlier back into the body as replacement. It was ultimately determined to be no more effective than normal treatment, and to have significantly higher side effects, including treatment-related death.",
+  "aiSummary": "Gabriel Hortobagyi is a breast oncology specialist with an H-index of 186 at MD Anderson Cancer Center (Faculty). Has been published in New England Journal of Medicine, Cancer Cell, The Lancet Oncology. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "MD Anderson Cancer Center"
-    }
-  ],
-  "bio": "Gabriel Hortobagyi is a pioneer in Breast Cancer at MD Anderson Cancer Center, USA. With a D-Index of 205 and over 157,507 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "MD Anderson Cancer Center",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Breast Oncology"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Response to Neoadjuvant Therapy and Long-Term Survival in Patients With Triple-Negative Breast Cancer",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2008,
+      "citationCount": 2854,
+      "doi": "10.1200/jco.2007.14.4147",
+      "sourceUrl": "https://doi.org/10.1200/jco.2007.14.4147",
+      "verified": true
+    },
+    {
+      "title": "Everolimus in Postmenopausal Hormone-Receptor–Positive Advanced Breast Cancer",
+      "journal": "New England Journal of Medicine",
+      "year": 2011,
+      "citationCount": 2777,
+      "doi": "10.1056/nejmoa1109653",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1109653",
+      "verified": true
+    },
+    {
+      "title": "Ribociclib as First-Line Therapy for HR-Positive, Advanced Breast Cancer",
+      "journal": "New England Journal of Medicine",
+      "year": 2016,
+      "citationCount": 1904,
+      "doi": "10.1056/nejmoa1609709",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1609709",
+      "verified": true
+    },
+    {
+      "title": "Breast Cancer Molecular Subtypes Respond Differently to Preoperative Chemotherapy",
+      "journal": "Clinical Cancer Research",
+      "year": 2005,
+      "citationCount": 1867,
+      "doi": "10.1158/1078-0432.ccr-04-2421",
+      "sourceUrl": "https://doi.org/10.1158/1078-0432.ccr-04-2421",
+      "verified": true
+    },
+    {
+      "title": "PTEN activation contributes to tumor inhibition by trastuzumab, and loss of PTEN predicts trastuzumab resistance in patients",
+      "journal": "Cancer Cell",
+      "year": 2004,
+      "citationCount": 1846,
+      "doi": "10.1016/j.ccr.2004.06.022",
+      "sourceUrl": "https://doi.org/10.1016/j.ccr.2004.06.022",
+      "verified": true
+    },
+    {
+      "title": "Future of Cancer Incidence in the United States: Burdens Upon an Aging, Changing Nation",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2009,
+      "citationCount": 1710,
+      "doi": "10.1200/jco.2008.20.8983",
+      "sourceUrl": "https://doi.org/10.1200/jco.2008.20.8983",
+      "verified": true
+    },
+    {
+      "title": "Measurement of Residual Breast Cancer Burden to Predict Survival After Neoadjuvant Chemotherapy",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2007,
+      "citationCount": 1611,
+      "doi": "10.1200/jco.2007.10.6823",
+      "sourceUrl": "https://doi.org/10.1200/jco.2007.10.6823",
+      "verified": true
+    },
+    {
+      "title": "Prognostic and predictive value of the 21-gene recurrence score assay in postmenopausal women with node-positive, oestrogen-receptor-positive breast cancer on chemotherapy: a retrospective analysis of a randomised trial",
+      "journal": "The Lancet Oncology",
+      "year": 2009,
+      "citationCount": 1384,
+      "doi": "10.1016/s1470-2045(09)70314-6",
+      "sourceUrl": "https://doi.org/10.1016/s1470-2045(09)70314-6",
+      "verified": true
+    },
+    {
+      "title": "Clinical Course of Breast Cancer Patients With Complete Pathologic Primary Tumor and Axillary Lymph Node Response to Doxorubicin-Based Neoadjuvant Chemotherapy",
+      "journal": "Journal of Clinical Oncology",
+      "year": 1999,
+      "citationCount": 1331,
+      "doi": "10.1200/jco.1999.17.2.460",
+      "sourceUrl": "https://doi.org/10.1200/jco.1999.17.2.460",
+      "verified": true
+    },
+    {
+      "title": "Tucatinib, Trastuzumab, and Capecitabine for HER2-Positive Metastatic Breast Cancer",
+      "journal": "New England Journal of Medicine",
+      "year": 2019,
+      "citationCount": 1256,
+      "doi": "10.1056/nejmoa1914609",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1914609",
+      "verified": true
+    },
+    {
+      "title": "ESR1 ligand-binding domain mutations in hormone-resistant breast cancer",
+      "journal": "Nature Genetics",
+      "year": 2013,
+      "citationCount": 1207,
+      "doi": "10.1038/ng.2822",
+      "sourceUrl": "https://doi.org/10.1038/ng.2822",
+      "verified": true
+    },
+    {
+      "title": "Significantly Higher Pathologic Complete Remission Rate After Neoadjuvant Therapy With Trastuzumab, Paclitaxel, and Epirubicin Chemotherapy: Results of a Randomized Trial in Human Epidermal Growth Factor Receptor 2–Positive Operable Breast Cancer",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2005,
+      "citationCount": 1161,
+      "doi": "10.1200/jco.2005.07.032",
+      "sourceUrl": "https://doi.org/10.1200/jco.2005.07.032",
+      "verified": true
+    },
+    {
+      "title": "The HER-2 Receptor and Breast Cancer: Ten Years of Targeted Anti–HER-2 Therapy and Personalized Medicine",
+      "journal": "The Oncologist",
+      "year": 2009,
+      "citationCount": 1141,
+      "doi": "10.1634/theoncologist.2008-0230",
+      "sourceUrl": "https://doi.org/10.1634/theoncologist.2008-0230",
+      "verified": true
+    },
+    {
+      "title": "Circulating Tumor Cells: A Novel Prognostic Factor for Newly Diagnosed Metastatic Breast Cancer",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2005,
+      "citationCount": 1124,
+      "doi": "10.1200/jco.2005.08.140",
+      "sourceUrl": "https://doi.org/10.1200/jco.2005.08.140",
+      "verified": true
+    },
+    {
+      "title": "Glycosylation and stabilization of programmed death ligand-1 suppresses T-cell activity",
+      "journal": "Nature Communications",
+      "year": 2016,
+      "citationCount": 1074,
+      "doi": "10.1038/ncomms12632",
+      "sourceUrl": "https://doi.org/10.1038/ncomms12632",
+      "verified": true
+    },
+    {
+      "title": "Efficacy of Pamidronate in Reducing Skeletal Complications in Patients with Breast Cancer and Lytic Bone Metastases",
+      "journal": "New England Journal of Medicine",
+      "year": 1996,
+      "citationCount": 1025,
+      "doi": "10.1056/nejm199612123352401",
+      "sourceUrl": "https://doi.org/10.1056/nejm199612123352401",
+      "verified": true
+    },
+    {
+      "title": "Breast Cancer—Major changes in the American Joint Committee on Cancer eighth edition cancer staging manual",
+      "journal": "CA A Cancer Journal for Clinicians",
+      "year": 2017,
+      "citationCount": 959,
+      "doi": "10.3322/caac.21393",
+      "sourceUrl": "https://doi.org/10.3322/caac.21393",
+      "verified": true
+    },
+    {
+      "title": "PARP Inhibitor Upregulates PD-L1 Expression and Enhances Cancer-Associated Immunosuppression",
+      "journal": "Clinical Cancer Research",
+      "year": 2017,
+      "citationCount": 941,
+      "doi": "10.1158/1078-0432.ccr-16-3215",
+      "sourceUrl": "https://doi.org/10.1158/1078-0432.ccr-16-3215",
+      "verified": true
+    },
+    {
+      "title": "Mechanisms of Disease: understanding resistance to HER2-targeted therapy in human breast cancer",
+      "journal": "Nature Clinical Practice Oncology",
+      "year": 2006,
+      "citationCount": 912,
+      "doi": "10.1038/ncponc0509",
+      "sourceUrl": "https://doi.org/10.1038/ncponc0509",
+      "verified": true
+    },
+    {
+      "title": "Overview of Resistance to Systemic Therapy in Patients with Breast Cancer",
+      "journal": "Advances in experimental medicine and biology",
+      "year": 2007,
+      "citationCount": 912,
+      "doi": "10.1007/978-0-387-74039-3_1",
+      "sourceUrl": "https://doi.org/10.1007/978-0-387-74039-3_1",
+      "verified": true
+    },
+    {
+      "title": "Metformin and Pathologic Complete Responses to Neoadjuvant Chemotherapy in Diabetic Patients With Breast Cancer",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2009,
+      "citationCount": 871,
+      "doi": "10.1200/jco.2009.19.6410",
+      "sourceUrl": "https://doi.org/10.1200/jco.2009.19.6410",
+      "verified": true
+    },
+    {
+      "title": "Characterization of a Naturally Occurring Breast Cancer Subset Enriched in Epithelial-to-Mesenchymal Transition and Stem Cell Characteristics",
+      "journal": "Cancer Research",
+      "year": 2009,
+      "citationCount": 853,
+      "doi": "10.1158/0008-5472.can-08-3441",
+      "sourceUrl": "https://doi.org/10.1158/0008-5472.can-08-3441",
+      "verified": true
+    },
+    {
+      "title": "Updated results from MONALEESA-2, a phase III trial of first-line ribociclib plus letrozole versus placebo plus letrozole in hormone receptor-positive, HER2-negative advanced breast cancer",
+      "journal": "Annals of Oncology",
+      "year": 2018,
+      "citationCount": 834,
+      "doi": "10.1093/annonc/mdy155",
+      "sourceUrl": "https://doi.org/10.1093/annonc/mdy155",
+      "verified": true
+    },
+    {
+      "title": "THE IMPACT OF NATIONAL CANCER ACT",
+      "journal": "JNCI Journal of the National Cancer Institute",
+      "year": 1991,
+      "citationCount": 802,
+      "doi": "10.1093/jnci/83.24.1797",
+      "sourceUrl": "https://doi.org/10.1093/jnci/83.24.1797",
+      "verified": true
+    },
+    {
+      "title": "Treatment of Breast Cancer",
+      "journal": "New England Journal of Medicine",
+      "year": 1998,
+      "citationCount": 779,
+      "doi": "10.1056/nejm199810013391407",
+      "sourceUrl": "https://doi.org/10.1056/nejm199810013391407",
+      "verified": true
+    },
+    {
+      "title": "Breast carcinoma in men",
+      "journal": "Cancer",
+      "year": 2004,
+      "citationCount": 778,
+      "doi": "10.1002/cncr.20312",
+      "sourceUrl": "https://doi.org/10.1002/cncr.20312",
+      "verified": true
+    },
+    {
+      "title": "Role of epidermal growth factor receptor in breast cancer",
+      "journal": "Breast Cancer Research and Treatment",
+      "year": 2012,
+      "citationCount": 767,
+      "doi": "10.1007/s10549-012-2289-9",
+      "sourceUrl": "https://doi.org/10.1007/s10549-012-2289-9",
+      "verified": true
+    },
+    {
+      "title": "Prognosis of Women With Metastatic Breast Cancer by <i>HER2</i> Status and Trastuzumab Treatment: An Institutional-Based Review",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2009,
+      "citationCount": 756,
+      "doi": "10.1200/jco.2008.19.9844",
+      "sourceUrl": "https://doi.org/10.1200/jco.2008.19.9844",
+      "verified": true
+    },
+    {
+      "title": "Long-term follow-up of patients with complete remission following combination chemotherapy for metastatic breast cancer.",
+      "journal": "Journal of Clinical Oncology",
+      "year": 1996,
+      "citationCount": 753,
+      "doi": "10.1200/jco.1996.14.8.2197",
+      "sourceUrl": "https://doi.org/10.1200/jco.1996.14.8.2197",
+      "verified": true
+    },
+    {
+      "title": "Deubiquitination and Stabilization of PD-L1 by CSN5",
+      "journal": "Cancer Cell",
+      "year": 2016,
+      "citationCount": 736,
+      "doi": "10.1016/j.ccell.2016.10.010",
+      "sourceUrl": "https://doi.org/10.1016/j.ccell.2016.10.010",
+      "verified": true
+    },
+    {
+      "title": "Male breast cancer",
+      "journal": "The Lancet",
+      "year": 2006,
+      "citationCount": 729,
+      "doi": "10.1016/s0140-6736(06)68226-3",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(06)68226-3",
+      "verified": true
+    },
+    {
+      "title": "Recommendations From an International Expert Panel on the Use of Neoadjuvant (Primary) Systemic Treatment of Operable Breast Cancer: An Update",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2006,
+      "citationCount": 717,
+      "doi": "10.1200/jco.2005.02.6187",
+      "sourceUrl": "https://doi.org/10.1200/jco.2005.02.6187",
+      "verified": true
+    },
+    {
+      "title": "Pharmacogenomic Predictor of Sensitivity to Preoperative Chemotherapy With Paclitaxel and Fluorouracil, Doxorubicin, and Cyclophosphamide in Breast Cancer",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2006,
+      "citationCount": 715,
+      "doi": "10.1200/jco.2006.05.6861",
+      "sourceUrl": "https://doi.org/10.1200/jco.2006.05.6861",
+      "verified": true
+    },
+    {
+      "title": "Differential Response to Neoadjuvant Chemotherapy Among 7 Triple-Negative Breast Cancer Molecular Subtypes",
+      "journal": "Clinical Cancer Research",
+      "year": 2013,
+      "citationCount": 698,
+      "doi": "10.1158/1078-0432.ccr-13-0799",
+      "sourceUrl": "https://doi.org/10.1158/1078-0432.ccr-13-0799",
+      "verified": true
+    },
+    {
+      "title": "ERK promotes tumorigenesis by inhibiting FOXO3a via MDM2-mediated degradation",
+      "journal": "Nature Cell Biology",
+      "year": 2008,
+      "citationCount": 693,
+      "doi": "10.1038/ncb1676",
+      "sourceUrl": "https://doi.org/10.1038/ncb1676",
+      "verified": true
+    },
+    {
+      "title": "Long-Term Prognostic Risk After Neoadjuvant Chemotherapy Associated With Residual Cancer Burden and Breast Cancer Subtype",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2017,
+      "citationCount": 685,
+      "doi": "10.1200/jco.2015.63.1010",
+      "sourceUrl": "https://doi.org/10.1200/jco.2015.63.1010",
+      "verified": true
+    },
+    {
+      "title": "Anthrazykline in der Krebstherapie",
+      "journal": "Drugs",
+      "year": 1997,
+      "citationCount": 670,
+      "doi": "10.2165/00003495-199700544-00003",
+      "sourceUrl": "https://doi.org/10.2165/00003495-199700544-00003",
+      "verified": true
+    },
+    {
+      "title": "Bone Imaging in Metastatic Breast Cancer",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2004,
+      "citationCount": 642,
+      "doi": "10.1200/jco.2004.08.181",
+      "sourceUrl": "https://doi.org/10.1200/jco.2004.08.181",
+      "verified": true
+    },
+    {
+      "title": "Frequency and Risk Factors Associated With Osteonecrosis of the Jaw in Cancer Patients Treated With Intravenous Bisphosphonates",
+      "journal": "Journal of Bone and Mineral Research",
+      "year": 2008,
+      "citationCount": 632,
+      "doi": "10.1359/jbmr.080205",
+      "sourceUrl": "https://doi.org/10.1359/jbmr.080205",
+      "verified": true
+    },
+    {
+      "title": "Eighth Edition of the AJCC Cancer Staging Manual: Breast Cancer",
+      "journal": "Annals of Surgical Oncology",
+      "year": 2018,
+      "citationCount": 630,
+      "doi": "10.1245/s10434-018-6486-6",
+      "sourceUrl": "https://doi.org/10.1245/s10434-018-6486-6",
+      "verified": true
+    },
+    {
+      "title": "Phase I and pharmacokinetic study of ABI-007, a Cremophor-free, protein-stabilized, nanoparticle formulation of paclitaxel.",
+      "journal": "PubMed",
+      "year": 2002,
+      "citationCount": 630,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2111970355",
+      "verified": true
+    },
+    {
+      "title": "Circulating Tumor Cells and Response to Chemotherapy in Metastatic Breast Cancer: SWOG S0500",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2014,
+      "citationCount": 629,
+      "doi": "10.1200/jco.2014.56.2561",
+      "sourceUrl": "https://doi.org/10.1200/jco.2014.56.2561",
+      "verified": true
+    },
+    {
+      "title": "Congestive Heart Failure in Older Women Treated With Adjuvant Anthracycline Chemotherapy for Breast Cancer",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2007,
+      "citationCount": 625,
+      "doi": "10.1200/jco.2006.10.4976",
+      "sourceUrl": "https://doi.org/10.1200/jco.2006.10.4976",
+      "verified": true
+    },
+    {
+      "title": "Epidermal Growth Factor Receptor Cooperates with Signal Transducer and Activator of Transcription 3 to Induce Epithelial-Mesenchymal Transition in Cancer Cells via Up-regulation of <i>TWIST</i> Gene Expression",
+      "journal": "Cancer Research",
+      "year": 2007,
+      "citationCount": 625,
+      "doi": "10.1158/0008-5472.can-07-0575",
+      "sourceUrl": "https://doi.org/10.1158/0008-5472.can-07-0575",
+      "verified": true
+    },
+    {
+      "title": "IKKβ Suppression of TSC1 Links Inflammation and Tumor Angiogenesis via the mTOR Pathway",
+      "journal": "Cell",
+      "year": 2007,
+      "citationCount": 624,
+      "doi": "10.1016/j.cell.2007.05.058",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2007.05.058",
+      "verified": true
+    },
+    {
+      "title": "Gene Expression Profiles in Paraffin-Embedded Core Biopsy Tissue Predict Response to Chemotherapy in Women With Locally Advanced Breast Cancer",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2005,
+      "citationCount": 616,
+      "doi": "10.1200/jco.2005.02.0818",
+      "sourceUrl": "https://doi.org/10.1200/jco.2005.02.0818",
+      "verified": true
+    },
+    {
+      "title": "Pamidronate Reduces Skeletal Morbidity in Women With Advanced Breast Cancer and Lytic Bone Lesions: A Randomized, Placebo-Controlled Trial",
+      "journal": "Journal of Clinical Oncology",
+      "year": 1999,
+      "citationCount": 605,
+      "doi": "10.1200/jco.1999.17.3.846",
+      "sourceUrl": "https://doi.org/10.1200/jco.1999.17.3.846",
+      "verified": true
+    },
+    {
+      "title": "Incidence and Outcome of <i>BRCA</i> Mutations in Unselected Patients with Triple Receptor-Negative Breast Cancer",
+      "journal": "Clinical Cancer Research",
+      "year": 2011,
+      "citationCount": 598,
+      "doi": "10.1158/1078-0432.ccr-10-2560",
+      "sourceUrl": "https://doi.org/10.1158/1078-0432.ccr-10-2560",
+      "verified": true
+    },
+    {
+      "title": "Clinical and Pathologic Characteristics of Patients With <i>BRCA</i>-Positive and <i>BRCA</i>-Negative Breast Cancer",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2008,
+      "citationCount": 598,
+      "doi": "10.1200/jco.2008.16.6231",
+      "sourceUrl": "https://doi.org/10.1200/jco.2008.16.6231",
+      "verified": true
+    },
+    {
+      "title": "Prognostic Value of Pathologic Complete Response After Primary Chemotherapy in Relation to Hormone Receptor Status and Other Factors",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2006,
+      "citationCount": 596,
+      "doi": "10.1200/jco.2005.02.6914",
+      "sourceUrl": "https://doi.org/10.1200/jco.2005.02.6914",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:16.000Z",
+  "openalexId": "https://openalex.org/A5018617106"
 }

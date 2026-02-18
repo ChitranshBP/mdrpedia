@@ -1,31 +1,497 @@
 {
   "fullName": "Demis Hassabis",
   "slug": "demis-hassabis",
-  "title": "MD, PhD",
-  "specialty": "AI in Structural Biology",
+  "title": "MD",
+  "specialty": "AI Structural Biology",
   "geography": {
-    "city": "Unknown",
-    "country": "UK"
+    "country": "United Kingdom",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23001a4d\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%2300aaff\" text-anchor=\"middle\" dy=\".3em\">DH</text></svg>",
-  "tier": "ELITE",
-  "rankingScore": 33,
-  "hIndex": 132,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 170,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 17000,
+  "livesSaved": 0,
+  "biography": "Sir Demis Hassabis is a British artificial intelligence (AI) researcher and entrepreneur. He is the chief executive officer and co-founder of Google DeepMind and Isomorphic Labs, and a UK Government AI Adviser. In 2024, Hassabis and John M. Jumper were jointly awarded the Nobel Prize in Chemistry for their AI research contributions for protein structure prediction.",
+  "aiSummary": "Demis Hassabis is a ai structural biology specialist with an H-index of 170 at DeepMind (Faculty). Has been published in Nature, Proceedings of the National Academy of Sciences, Science (New York, N.Y.). Based in United Kingdom.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
+  "hasInvention": false,
+  "education": [
+    "Deep"
+  ],
+  "socialMedia": {},
   "affiliations": [
     {
-      "hospitalName": "DeepMind"
+      "hospitalName": "DeepMind",
+      "role": "Faculty",
+      "hospitalUrl": "#"
     }
   ],
-  "bio": "Demis Hassabis is a pioneer in AI in Structural Biology at DeepMind, UK. With a D-Index of 132 and over 170,000 citations, they are among the world's most influential researchers.",
+  "medicalSpecialty": [
+    "AI Structural Biology"
+  ],
+  "knowsAbout": [
+    "Computational Biology"
+  ],
+  "citations": [
+    {
+      "title": "Highly accurate protein structure prediction with AlphaFold.",
+      "journal": "Nature",
+      "year": 2022,
+      "citationCount": 38431,
+      "doi": "10.1038/s41586-021-03819-2",
+      "sourceUrl": "https://doi.org/10.1038/s41586-021-03819-2",
+      "verified": true
+    },
+    {
+      "title": "Human-level control through deep reinforcement learning",
+      "journal": "Nature",
+      "year": 2015,
+      "citationCount": 28660,
+      "doi": "10.1038/nature14236",
+      "sourceUrl": "https://doi.org/10.1038/nature14236",
+      "verified": true
+    },
+    {
+      "title": "Mastering the game of Go with deep neural networks and tree search",
+      "journal": "Nature",
+      "year": 2016,
+      "citationCount": 15444,
+      "doi": "10.1038/nature16961",
+      "sourceUrl": "https://doi.org/10.1038/nature16961",
+      "verified": true
+    },
+    {
+      "title": "Accurate structure prediction of biomolecular interactions with AlphaFold 3.",
+      "journal": "Nature",
+      "year": 2024,
+      "citationCount": 10302,
+      "doi": "10.1038/s41586-024-07487-w",
+      "sourceUrl": "https://doi.org/10.1038/s41586-024-07487-w",
+      "verified": true
+    },
+    {
+      "title": "AlphaFold Protein Structure Database: massively expanding the structural coverage of protein-sequence space with high-accuracy models.",
+      "journal": "Nucleic acids research",
+      "year": 2022,
+      "citationCount": 7178,
+      "doi": "10.1093/nar/gkab1061",
+      "sourceUrl": "https://doi.org/10.1093/nar/gkab1061",
+      "verified": true
+    },
+    {
+      "title": "Overcoming catastrophic forgetting in neural networks",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2017,
+      "citationCount": 6606,
+      "doi": "10.1073/pnas.1611835114",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1611835114",
+      "verified": true
+    },
+    {
+      "title": "Mastering the game of Go without human knowledge.",
+      "journal": "Nature",
+      "year": 2018,
+      "citationCount": 6460,
+      "doi": "10.1038/nature24270",
+      "sourceUrl": "https://doi.org/10.1038/nature24270",
+      "verified": true
+    },
+    {
+      "title": "Protein complex prediction with AlphaFold-Multimer",
+      "journal": "Unknown Journal",
+      "year": 2021,
+      "citationCount": 3840,
+      "doi": "10.1101/2021.10.04.463034",
+      "sourceUrl": "https://doi.org/10.1101/2021.10.04.463034",
+      "verified": true
+    },
+    {
+      "title": "Improved protein structure prediction using potentials from deep learning.",
+      "journal": "Nature",
+      "year": 2020,
+      "citationCount": 2908,
+      "doi": "10.1038/s41586-019-1923-7",
+      "sourceUrl": "https://doi.org/10.1038/s41586-019-1923-7",
+      "verified": true
+    },
+    {
+      "title": "Highly accurate protein structure prediction for the human proteome.",
+      "journal": "Nature",
+      "year": 2022,
+      "citationCount": 2783,
+      "doi": "10.1038/s41586-021-03828-1",
+      "sourceUrl": "https://doi.org/10.1038/s41586-021-03828-1",
+      "verified": true
+    },
+    {
+      "title": "A general reinforcement learning algorithm that masters chess, shogi, and Go through self-play.",
+      "journal": "Science (New York, N.Y.)",
+      "year": 2019,
+      "citationCount": 2460,
+      "doi": "10.1126/science.aar6404",
+      "sourceUrl": "https://doi.org/10.1126/science.aar6404",
+      "verified": true
+    },
+    {
+      "title": "Grandmaster level in StarCraft II using multi-agent reinforcement learning.",
+      "journal": "Nature",
+      "year": 2020,
+      "citationCount": 2425,
+      "doi": "10.1038/s41586-019-1724-z",
+      "sourceUrl": "https://doi.org/10.1038/s41586-019-1724-z",
+      "verified": true
+    },
+    {
+      "title": "International evaluation of an AI system for breast cancer screening.",
+      "journal": "Nature",
+      "year": 2020,
+      "citationCount": 2372,
+      "doi": "10.1038/s41586-019-1799-6",
+      "sourceUrl": "https://doi.org/10.1038/s41586-019-1799-6",
+      "verified": true
+    },
+    {
+      "title": "Clinically applicable deep learning for diagnosis and referral in retinal disease.",
+      "journal": "Nature medicine",
+      "year": 2019,
+      "citationCount": 2019,
+      "doi": "10.1038/s41591-018-0107-6",
+      "sourceUrl": "https://doi.org/10.1038/s41591-018-0107-6",
+      "verified": true
+    },
+    {
+      "title": "Accurate proteome-wide missense variant effect prediction with AlphaMissense.",
+      "journal": "Science (New York, N.Y.)",
+      "year": 2023,
+      "citationCount": 1643,
+      "doi": "10.1126/science.adg7492",
+      "sourceUrl": "https://doi.org/10.1126/science.adg7492",
+      "verified": true
+    },
+    {
+      "title": "AlphaFold Protein Structure Database in 2024: providing structure coverage for over 214 million protein sequences.",
+      "journal": "Nucleic acids research",
+      "year": 2024,
+      "citationCount": 1575,
+      "doi": "10.1093/nar/gkad1011",
+      "sourceUrl": "https://doi.org/10.1093/nar/gkad1011",
+      "verified": true
+    },
+    {
+      "title": "Patients with hippocampal amnesia cannot imagine new experiences",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2007,
+      "citationCount": 1422,
+      "doi": "10.1073/pnas.0610561104",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0610561104",
+      "verified": true
+    },
+    {
+      "title": "Hybrid computing using a neural network with dynamic external memory",
+      "journal": "Nature",
+      "year": 2016,
+      "citationCount": 1392,
+      "doi": "10.1038/nature20101",
+      "sourceUrl": "https://doi.org/10.1038/nature20101",
+      "verified": true
+    },
+    {
+      "title": "The Future of Memory: Remembering, Imagining, and the Brain",
+      "journal": "Neuron",
+      "year": 2012,
+      "citationCount": 1384,
+      "doi": "10.1016/j.neuron.2012.11.001",
+      "sourceUrl": "https://doi.org/10.1016/j.neuron.2012.11.001",
+      "verified": true
+    },
+    {
+      "title": "Deconstructing episodic memory with construction",
+      "journal": "Trends in Cognitive Sciences",
+      "year": 2007,
+      "citationCount": 1260,
+      "doi": "10.1016/j.tics.2007.05.001",
+      "sourceUrl": "https://doi.org/10.1016/j.tics.2007.05.001",
+      "verified": true
+    },
+    {
+      "title": "Neuroscience-Inspired Artificial Intelligence.",
+      "journal": "Neuron",
+      "year": 2017,
+      "citationCount": 1189,
+      "doi": "10.1016/j.neuron.2017.06.011",
+      "sourceUrl": "https://doi.org/10.1016/j.neuron.2017.06.011",
+      "verified": true
+    },
+    {
+      "title": "Mastering Chess and Shogi by Self-Play with a General Reinforcement Learning Algorithm",
+      "journal": "arXiv (Cornell University)",
+      "year": 2017,
+      "citationCount": 1078,
+      "doi": "10.48550/arxiv.1712.01815",
+      "sourceUrl": "https://doi.org/10.48550/arxiv.1712.01815",
+      "verified": true
+    },
+    {
+      "title": "Mastering Atari, Go, chess and shogi by planning with a learned model.",
+      "journal": "Nature",
+      "year": 2021,
+      "citationCount": 988,
+      "doi": "10.1038/s41586-020-03051-4",
+      "sourceUrl": "https://doi.org/10.1038/s41586-020-03051-4",
+      "verified": true
+    },
+    {
+      "title": "When Fear Is Near: Threat Imminence Elicits Prefrontal-Periaqueductal Gray Shifts in Humans",
+      "journal": "Science",
+      "year": 2007,
+      "citationCount": 971,
+      "doi": "10.1126/science.1144298",
+      "sourceUrl": "https://doi.org/10.1126/science.1144298",
+      "verified": true
+    },
+    {
+      "title": "A clinically applicable approach to continuous prediction of future acute kidney injury.",
+      "journal": "Nature",
+      "year": 2019,
+      "citationCount": 886,
+      "doi": "10.1038/s41586-019-1390-1",
+      "sourceUrl": "https://doi.org/10.1038/s41586-019-1390-1",
+      "verified": true
+    },
+    {
+      "title": "Using Imagination to Understand the Neural Basis of Episodic Memory",
+      "journal": "Journal of Neuroscience",
+      "year": 2007,
+      "citationCount": 757,
+      "doi": "10.1523/jneurosci.4549-07.2007",
+      "sourceUrl": "https://doi.org/10.1523/jneurosci.4549-07.2007",
+      "verified": true
+    },
+    {
+      "title": "Tackling Climate Change with Machine Learning",
+      "journal": "OPUS 4 (Zuse Institute Berlin)",
+      "year": 2022,
+      "citationCount": 748,
+      "doi": "10.1145/3485128",
+      "sourceUrl": "https://doi.org/10.1145/3485128",
+      "verified": true
+    },
+    {
+      "title": "What Learning Systems do Intelligent Agents Need? Complementary Learning Systems Theory Updated",
+      "journal": "Trends in Cognitive Sciences",
+      "year": 2016,
+      "citationCount": 680,
+      "doi": "10.1016/j.tics.2016.05.004",
+      "sourceUrl": "https://doi.org/10.1016/j.tics.2016.05.004",
+      "verified": true
+    },
+    {
+      "title": "Magnetic control of tokamak plasmas through deep reinforcement learning.",
+      "journal": "Nature",
+      "year": 2022,
+      "citationCount": 580,
+      "doi": "10.1038/s41586-021-04301-9",
+      "sourceUrl": "https://doi.org/10.1038/s41586-021-04301-9",
+      "verified": true
+    },
+    {
+      "title": "Vector-based navigation using grid-like representations in artificial agents.",
+      "journal": "Nature",
+      "year": 2018,
+      "citationCount": 554,
+      "doi": "10.1038/s41586-018-0102-6",
+      "sourceUrl": "https://doi.org/10.1038/s41586-018-0102-6",
+      "verified": true
+    },
+    {
+      "title": "Prefrontal cortex as a meta-reinforcement learning system.",
+      "journal": "Nature neuroscience",
+      "year": 2019,
+      "citationCount": 499,
+      "doi": "10.1038/s41593-018-0147-8",
+      "sourceUrl": "https://doi.org/10.1038/s41593-018-0147-8",
+      "verified": true
+    },
+    {
+      "title": "Reinforcement Learning, Fast and Slow.",
+      "journal": "Trends in cognitive sciences",
+      "year": 2020,
+      "citationCount": 499,
+      "doi": "10.1016/j.tics.2019.02.006",
+      "sourceUrl": "https://doi.org/10.1016/j.tics.2019.02.006",
+      "verified": true
+    },
+    {
+      "title": "From Threat to Fear: The Neural Organization of Defensive Fear Systems in Humans",
+      "journal": "Journal of Neuroscience",
+      "year": 2009,
+      "citationCount": 492,
+      "doi": "10.1523/jneurosci.2378-09.2009",
+      "sourceUrl": "https://doi.org/10.1523/jneurosci.2378-09.2009",
+      "verified": true
+    },
+    {
+      "title": "The construction system of the brain",
+      "journal": "Philosophical Transactions of the Royal Society B Biological Sciences",
+      "year": 2009,
+      "citationCount": 487,
+      "doi": "10.1098/rstb.2008.0296",
+      "sourceUrl": "https://doi.org/10.1098/rstb.2008.0296",
+      "verified": true
+    },
+    {
+      "title": "Human-level performance in 3D multiplayer games with population-based reinforcement learning.",
+      "journal": "Science (New York, N.Y.)",
+      "year": 2019,
+      "citationCount": 395,
+      "doi": "10.1126/science.aau6249",
+      "sourceUrl": "https://doi.org/10.1126/science.aau6249",
+      "verified": true
+    },
+    {
+      "title": "Applying and improving AlphaFold at CASP14.",
+      "journal": "Proteins",
+      "year": 2022,
+      "citationCount": 387,
+      "doi": "10.1002/prot.26257",
+      "sourceUrl": "https://doi.org/10.1002/prot.26257",
+      "verified": true
+    },
+    {
+      "title": "Noisy Networks for Exploration",
+      "journal": "arXiv (Cornell University)",
+      "year": 2017,
+      "citationCount": 387,
+      "doi": "10.48550/arxiv.1706.10295",
+      "sourceUrl": "https://doi.org/10.48550/arxiv.1706.10295",
+      "verified": true
+    },
+    {
+      "title": "Discovering faster matrix multiplication algorithms with reinforcement learning.",
+      "journal": "Nature",
+      "year": 2022,
+      "citationCount": 381,
+      "doi": "10.1038/s41586-022-05172-4",
+      "sourceUrl": "https://doi.org/10.1038/s41586-022-05172-4",
+      "verified": true
+    },
+    {
+      "title": "Parallel WaveNet: Fast High-Fidelity Speech Synthesis",
+      "journal": "arXiv (Cornell University)",
+      "year": 2017,
+      "citationCount": 343,
+      "doi": "10.48550/arxiv.1711.10433",
+      "sourceUrl": "https://doi.org/10.48550/arxiv.1711.10433",
+      "verified": true
+    },
+    {
+      "title": "Advancing mathematics by guiding human intuition with AI.",
+      "journal": "Nature",
+      "year": 2022,
+      "citationCount": 339,
+      "doi": "10.1038/s41586-021-04086-x",
+      "sourceUrl": "https://doi.org/10.1038/s41586-021-04086-x",
+      "verified": true
+    },
+    {
+      "title": "Neural scene representation and rendering.",
+      "journal": "Science (New York, N.Y.)",
+      "year": 2018,
+      "citationCount": 339,
+      "doi": "10.1126/science.aar6170",
+      "sourceUrl": "https://doi.org/10.1126/science.aar6170",
+      "verified": true
+    },
+    {
+      "title": "Hippocampal place cells construct reward related sequences through unexplored space",
+      "journal": "eLife",
+      "year": 2015,
+      "citationCount": 337,
+      "doi": "10.7554/elife.06063",
+      "sourceUrl": "https://doi.org/10.7554/elife.06063",
+      "verified": true
+    },
+    {
+      "title": "Unveiling the predictive power of static structure in glassy systems",
+      "journal": "Nature Physics",
+      "year": 2020,
+      "citationCount": 318,
+      "doi": "10.1038/s41567-020-0842-8",
+      "sourceUrl": "https://doi.org/10.1038/s41567-020-0842-8",
+      "verified": true
+    },
+    {
+      "title": "Pushing the frontiers of density functionals by solving the fractional electron problem.",
+      "journal": "Science (New York, N.Y.)",
+      "year": 2021,
+      "citationCount": 303,
+      "doi": "10.1126/science.abj6511",
+      "sourceUrl": "https://doi.org/10.1126/science.abj6511",
+      "verified": true
+    },
+    {
+      "title": "Parallel WaveNet: Fast High-Fidelity Speech Synthesis",
+      "journal": "arXiv (Cornell University)",
+      "year": 2017,
+      "citationCount": 289,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2769810959",
+      "verified": true
+    },
+    {
+      "title": "Protein structure prediction using multiple deep neural networks in the 13th Critical Assessment of Protein Structure Prediction (CASP13).",
+      "journal": "Proteins",
+      "year": 2020,
+      "citationCount": 287,
+      "doi": "10.1002/prot.25834",
+      "sourceUrl": "https://doi.org/10.1002/prot.25834",
+      "verified": true
+    },
+    {
+      "title": "Tracking the Emergence of Conceptual Knowledge during Human Decision Making",
+      "journal": "Neuron",
+      "year": 2009,
+      "citationCount": 273,
+      "doi": "10.1016/j.neuron.2009.07.030",
+      "sourceUrl": "https://doi.org/10.1016/j.neuron.2009.07.030",
+      "verified": true
+    },
+    {
+      "title": "Noisy Networks For Exploration",
+      "journal": "arXiv (Cornell University)",
+      "year": 2018,
+      "citationCount": 272,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2964174623",
+      "verified": true
+    },
+    {
+      "title": "Protein structure predictions to atomic accuracy with AlphaFold.",
+      "journal": "Nature methods",
+      "year": 2022,
+      "citationCount": 271,
+      "doi": "10.1038/s41592-021-01362-6",
+      "sourceUrl": "https://doi.org/10.1038/s41592-021-01362-6",
+      "verified": true
+    },
+    {
+      "title": "Predicting conversion to wet age-related macular degeneration using deep learning.",
+      "journal": "Nature medicine",
+      "year": 2020,
+      "citationCount": 247,
+      "doi": "10.1038/s41591-020-0867-7",
+      "sourceUrl": "https://doi.org/10.1038/s41591-020-0867-7",
+      "verified": true
+    }
+  ],
   "awards": [],
-  "education": [],
-  "socialMedia": {},
-  "status": "LIVING"
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:15.000Z",
+  "openalexId": "https://openalex.org/A5005349213",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Demis_Hassabis%2C_2024_Nobel_Prize_Laureate_in_Chemistry_7_%28cropped%29.jpg/330px-Demis_Hassabis%2C_2024_Nobel_Prize_Laureate_in_Chemistry_7_%28cropped%29.jpg"
 }

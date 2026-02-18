@@ -90,7 +90,7 @@ export function generateAISummary(data: AISummaryInput): string {
     // Sentence 2: Key achievements
     const achievements: string[] = [];
 
-    if (data.techniquesInvented.length > 0) {
+    if (data.techniquesInvented?.length > 0) {
         const techniques = data.techniquesInvented.slice(0, 3);
         achievements.push(`pioneered ${techniques.join(', ')}`);
     }

@@ -1,0 +1,374 @@
+---
+/**
+ * MDRPedia — Similar Doctors Component
+ * Shows related specialists in the same specialty/region
+ */
+
+import { prisma } from '../lib/prisma';
+
+interface Props {
+    currentSlug: string;
+    specialty: string;
+    country: string;
+    region?: string | null;
+    tier: string;
+    limit?: number;
+}
+
+const { currentSlug, specialty, country, region, tier, limit = 4 } = Astro.props;
+
+// Fetch similar doctors from the same specialty and region
+const similarDoctors = await prisma.profile.findMany({
+    where: {
+        slug: { not: currentSlug },
+        specialty: specialty,
+        geography: {
+            country: country,
+            ...(region ? { region: region } : {})
+        }
+    },
+    select: {
+        slug: true,
+        full_name: true,
+        title: true,
+        specialty: true,
+        sub_specialty: true,
+        tier: true,
+        portrait_url: true,
+        h_index: true,
+        years_active: true,
+        geography: {
+            select: {
+                city: true,
+                region: true,
+                country: true
+            }
+        },
+        _count: {
+            select: {
+                citations: true
+            }
+        }
+    },
+    orderBy: [
+        { tier: 'asc' }, // TITAN first
+        { h_index: 'desc' }
+    ],
+    take: limit
+});
+
+// If not enough from same region, get more from same specialty
+let additionalDoctors: typeof similarDoctors = [];
+if (similarDoctors.length < limit) {
+    additionalDoctors = await prisma.profile.findMany({
+        where: {
+            slug: {
+                not: currentSlug,
+                notIn: similarDoctors.map(d => d.slug)
+            },
+            specialty: specialty,
+        },
+        select: {
+            slug: true,
+            full_name: true,
+            title: true,
+            specialty: true,
+            sub_specialty: true,
+            tier: true,
+            portrait_url: true,
+            h_index: true,
+            years_active: true,
+            geography: {
+                select: {
+                    city: true,
+                    region: true,
+                    country: true
+                }
+            },
+            _count: {
+                select: {
+                    citations: true
+                }
+            }
+        },
+        orderBy: [
+            { tier: 'asc' },
+            { h_index: 'desc' }
+        ],
+        take: limit - similarDoctors.length
+    });
+}
+
+const allSimilar = [...similarDoctors, ...additionalDoctors];
+
+const tierColors: Record<string, string> = {
+    TITAN: 'var(--titan-border, #FFD700)',
+    ELITE: 'var(--elite-border, #00aaff)',
+    MASTER: 'var(--master-border, #00cc66)',
+    UNRANKED: 'var(--border-subtle)'
+};
+
+const tierLabels: Record<string, string> = {
+    TITAN: 'Titan',
+    ELITE: 'Elite',
+    MASTER: 'Master',
+    UNRANKED: ''
+};
+---
+
+{allSimilar.length > 0 && (
+    <section class="similar-doctors">
+        <header class="similar-doctors__header">
+            <h3>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+                Related Specialists
+            </h3>
+            <a href={`/search?specialty=${encodeURIComponent(specialty)}`} class="view-all-link">
+                View All
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"/>
+                </svg>
+            </a>
+        </header>
+
+        <div class="similar-doctors__grid">
+            {allSimilar.map((doctor) => (
+                <a href={`/doctors/${doctor.slug}`} class="doctor-card" style={`--tier-color: ${tierColors[doctor.tier]}`}>
+                    <div class="doctor-card__portrait">
+                        {doctor.portrait_url && !doctor.portrait_url.startsWith('data:') ? (
+                            <img
+                                src={doctor.portrait_url}
+                                alt={doctor.full_name}
+                                loading="lazy"
+                                width="80"
+                                height="80"
+                            />
+                        ) : (
+                            <div class="doctor-card__avatar">
+                                {doctor.full_name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                            </div>
+                        )}
+                        {tierLabels[doctor.tier] && (
+                            <span class="doctor-card__tier-badge">{tierLabels[doctor.tier]}</span>
+                        )}
+                    </div>
+                    <div class="doctor-card__info">
+                        <h4 class="doctor-card__name">
+                            {doctor.full_name}
+                            {doctor.title && <span class="doctor-card__title">, {doctor.title}</span>}
+                        </h4>
+                        <p class="doctor-card__specialty">
+                            {doctor.sub_specialty || doctor.specialty}
+                        </p>
+                        <p class="doctor-card__location">
+                            {[doctor.geography?.city, doctor.geography?.region, doctor.geography?.country]
+                                .filter(Boolean)
+                                .slice(0, 2)
+                                .join(', ')}
+                        </p>
+                        <div class="doctor-card__stats">
+                            <span class="stat" title="H-Index">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 20V10"/>
+                                    <path d="M18 20V4"/>
+                                    <path d="M6 20v-4"/>
+                                </svg>
+                                {doctor.h_index}
+                            </span>
+                            <span class="stat" title="Publications">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                                </svg>
+                                {doctor._count.citations}
+                            </span>
+                            <span class="stat" title="Years Active">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12 6 12 12 16 14"/>
+                                </svg>
+                                {doctor.years_active}y
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            ))}
+        </div>
+    </section>
+)}
+
+<style>
+    .similar-doctors {
+        margin: var(--space-2xl) 0;
+        padding: var(--space-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+    }
+
+    .similar-doctors__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--space-lg);
+    }
+
+    .similar-doctors__header h3 {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0;
+        color: var(--text-primary);
+    }
+
+    .similar-doctors__header svg {
+        color: var(--accent-purple);
+    }
+
+    .view-all-link {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 0.85rem;
+        color: var(--accent-purple);
+        text-decoration: none;
+        font-weight: 500;
+        transition: gap var(--transition-fast);
+    }
+
+    .view-all-link:hover {
+        gap: 8px;
+    }
+
+    .similar-doctors__grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: var(--space-md);
+    }
+
+    .doctor-card {
+        display: flex;
+        gap: var(--space-md);
+        padding: var(--space-md);
+        background: var(--bg-base);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        text-decoration: none;
+        transition: all var(--transition-base);
+    }
+
+    .doctor-card:hover {
+        border-color: var(--tier-color);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .doctor-card__portrait {
+        position: relative;
+        flex-shrink: 0;
+    }
+
+    .doctor-card__portrait img {
+        width: 64px;
+        height: 64px;
+        object-fit: cover;
+        border-radius: var(--radius-md);
+        border: 2px solid var(--tier-color);
+    }
+
+    .doctor-card__avatar {
+        width: 64px;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, var(--accent-purple), #6366f1);
+        border-radius: var(--radius-md);
+        color: white;
+        font-weight: 700;
+        font-size: 1.1rem;
+        border: 2px solid var(--tier-color);
+    }
+
+    .doctor-card__tier-badge {
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 1px 6px;
+        background: var(--tier-color);
+        color: #000;
+        font-size: 0.6rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        border-radius: 999px;
+        white-space: nowrap;
+    }
+
+    .doctor-card__info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .doctor-card__name {
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin: 0 0 2px;
+        color: var(--text-primary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .doctor-card__title {
+        font-weight: 400;
+        color: var(--text-muted);
+        font-size: 0.85em;
+    }
+
+    .doctor-card__specialty {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin: 0 0 2px;
+    }
+
+    .doctor-card__location {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin: 0 0 8px;
+    }
+
+    .doctor-card__stats {
+        display: flex;
+        gap: var(--space-sm);
+    }
+
+    .doctor-card__stats .stat {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        padding: 2px 6px;
+        background: rgba(139, 92, 246, 0.08);
+        border-radius: var(--radius-sm);
+    }
+
+    .doctor-card__stats .stat svg {
+        color: var(--accent-purple);
+    }
+
+    @media (max-width: 640px) {
+        .similar-doctors__grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

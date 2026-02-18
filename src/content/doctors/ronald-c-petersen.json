@@ -1,36 +1,492 @@
 {
   "fullName": "Ronald C. Petersen",
   "slug": "ronald-c-petersen",
-  "title": "MD, PhD",
-  "specialty": "Alzheimer's",
+  "title": "MD",
+  "specialty": "Alzheimer’s Disease",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">RC</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 56,
-  "hIndex": 222,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 239,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 23968,
+  "livesSaved": 0,
+  "biography": "The Potamkin Prize for Research in Pick's, Alzheimer's, and Related Diseases was established in 1988 and is sponsored by the American Academy of Neurology. The prize is funded through the philanthropy of the Potamkin Foundation. The prize is awarded for achievements on emerging areas of research in Pick's disease, Alzheimer's disease and other dementias.",
+  "aiSummary": "Ronald C. Petersen is a alzheimer’s disease specialist with an H-index of 239 at Mayo Clinic (Faculty). Has been published in The Lancet Neurology, The Lancet, Nature Reviews Disease Primers. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Mayo Clinic"
-    }
-  ],
-  "bio": "Ronald C. Petersen is a pioneer in Alzheimer's at Mayo Clinic, USA. With a D-Index of 222 and over 239,682 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Mayo Clinic",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Alzheimer’s Disease"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "The diagnosis of mild cognitive impairment due to Alzheimer's disease: Recommendations from the National Institute on Aging‐Alzheimer's Association workgroups on diagnostic guidelines for Alzheimer's disease",
+      "journal": "Alzheimer s & Dementia",
+      "year": 2011,
+      "citationCount": 9860,
+      "doi": "10.1016/j.jalz.2011.03.008",
+      "sourceUrl": "https://doi.org/10.1016/j.jalz.2011.03.008",
+      "verified": true
+    },
+    {
+      "title": "Mild cognitive impairment as a diagnostic entity",
+      "journal": "Journal of Internal Medicine",
+      "year": 2004,
+      "citationCount": 7686,
+      "doi": "10.1111/j.1365-2796.2004.01388.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1365-2796.2004.01388.x",
+      "verified": true
+    },
+    {
+      "title": "Mild cognitive impairment – beyond controversies, towards a consensus: report of the International Working Group on Mild Cognitive Impairment",
+      "journal": "Journal of Internal Medicine",
+      "year": 2004,
+      "citationCount": 4883,
+      "doi": "10.1111/j.1365-2796.2004.01380.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1365-2796.2004.01380.x",
+      "verified": true
+    },
+    {
+      "title": "Expanded GGGGCC Hexanucleotide Repeat in Noncoding Region of C9ORF72 Causes Chromosome 9p-Linked FTD and ALS",
+      "journal": "Neuron",
+      "year": 2011,
+      "citationCount": 4864,
+      "doi": "10.1016/j.neuron.2011.09.011",
+      "sourceUrl": "https://doi.org/10.1016/j.neuron.2011.09.011",
+      "verified": true
+    },
+    {
+      "title": "Hypothetical model of dynamic biomarkers of the Alzheimer's pathological cascade",
+      "journal": "The Lancet Neurology",
+      "year": 2009,
+      "citationCount": 4635,
+      "doi": "10.1016/s1474-4422(09)70299-6",
+      "sourceUrl": "https://doi.org/10.1016/s1474-4422(09)70299-6",
+      "verified": true
+    },
+    {
+      "title": "Tracking pathophysiological processes in Alzheimer's disease: an updated hypothetical model of dynamic biomarkers",
+      "journal": "The Lancet Neurology",
+      "year": 2013,
+      "citationCount": 4301,
+      "doi": "10.1016/s1474-4422(12)70291-0",
+      "sourceUrl": "https://doi.org/10.1016/s1474-4422(12)70291-0",
+      "verified": true
+    },
+    {
+      "title": "Mild cognitive impairment",
+      "journal": "The Lancet",
+      "year": 2006,
+      "citationCount": 3801,
+      "doi": "10.1016/s0140-6736(06)68542-5",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(06)68542-5",
+      "verified": true
+    },
+    {
+      "title": "A conceptual framework for research on subjective cognitive decline in preclinical Alzheimer's disease",
+      "journal": "Alzheimer s & Dementia",
+      "year": 2014,
+      "citationCount": 2877,
+      "doi": "10.1016/j.jalz.2014.01.001",
+      "sourceUrl": "https://doi.org/10.1016/j.jalz.2014.01.001",
+      "verified": true
+    },
+    {
+      "title": "The Diagnosis of Mild Cognitive Impairment due to Alzheimer’s Disease: Recommendations from the National Institute on Aging-Alzheimer’s Association Workgroups on Diagnostic Guidelines for Alzheimer’s Disease",
+      "journal": "FOCUS The Journal of Lifelong Learning in Psychiatry",
+      "year": 2013,
+      "citationCount": 2629,
+      "doi": "10.1176/appi.focus.11.1.96",
+      "sourceUrl": "https://doi.org/10.1176/appi.focus.11.1.96",
+      "verified": true
+    },
+    {
+      "title": "Diagnostic criteria for mild cognitive impairment in Parkinson's disease: <i>Movement</i> Disorder Society Task Force guidelines",
+      "journal": "Movement Disorders",
+      "year": 2012,
+      "citationCount": 2440,
+      "doi": "10.1002/mds.24893",
+      "sourceUrl": "https://doi.org/10.1002/mds.24893",
+      "verified": true
+    },
+    {
+      "title": "Alzheimer's Disease Neuroimaging Initiative (ADNI)",
+      "journal": "Neurology",
+      "year": 2009,
+      "citationCount": 2415,
+      "doi": "10.1212/wnl.0b013e3181cb3e25",
+      "sourceUrl": "https://doi.org/10.1212/wnl.0b013e3181cb3e25",
+      "verified": true
+    },
+    {
+      "title": "Alzheimer disease",
+      "journal": "Nature Reviews Disease Primers",
+      "year": 2021,
+      "citationCount": 2165,
+      "doi": "10.1038/s41572-021-00269-y",
+      "sourceUrl": "https://doi.org/10.1038/s41572-021-00269-y",
+      "verified": true
+    },
+    {
+      "title": "Practice parameter: Early detection of dementia: Mild cognitive impairment (an evidence-based review) [RETIRED]",
+      "journal": "Neurology",
+      "year": 2001,
+      "citationCount": 2068,
+      "doi": "10.1212/wnl.56.9.1133",
+      "sourceUrl": "https://doi.org/10.1212/wnl.56.9.1133",
+      "verified": true
+    },
+    {
+      "title": "Cerebrospinal fluid biomarker signature in Alzheimer's disease neuroimaging initiative subjects",
+      "journal": "Annals of Neurology",
+      "year": 2009,
+      "citationCount": 2056,
+      "doi": "10.1002/ana.21610",
+      "sourceUrl": "https://doi.org/10.1002/ana.21610",
+      "verified": true
+    },
+    {
+      "title": "Practice guideline update summary: Mild cognitive impairment [RETIRED]",
+      "journal": "Neurology",
+      "year": 2017,
+      "citationCount": 2050,
+      "doi": "10.1212/wnl.0000000000004826",
+      "sourceUrl": "https://doi.org/10.1212/wnl.0000000000004826",
+      "verified": true
+    },
+    {
+      "title": "A/T/N: An unbiased descriptive classification scheme for Alzheimer disease biomarkers",
+      "journal": "Neurology",
+      "year": 2016,
+      "citationCount": 1783,
+      "doi": "10.1212/wnl.0000000000002923",
+      "sourceUrl": "https://doi.org/10.1212/wnl.0000000000002923",
+      "verified": true
+    },
+    {
+      "title": "The Alzheimer's Disease Neuroimaging Initiative",
+      "journal": "Neuroimaging Clinics of North America",
+      "year": 2005,
+      "citationCount": 1505,
+      "doi": "10.1016/j.nic.2005.09.008",
+      "sourceUrl": "https://doi.org/10.1016/j.nic.2005.09.008",
+      "verified": true
+    },
+    {
+      "title": "Alzheimer’s Disease Neuroimaging Initiative",
+      "journal": "Advances in behavioral biology",
+      "year": 2007,
+      "citationCount": 1501,
+      "doi": "10.1007/978-0-387-72076-0_18",
+      "sourceUrl": "https://doi.org/10.1007/978-0-387-72076-0_18",
+      "verified": true
+    },
+    {
+      "title": "Neuronal loss correlates with but exceeds neurofibrillary tangles in Alzheimer's disease",
+      "journal": "Annals of Neurology",
+      "year": 1997,
+      "citationCount": 1467,
+      "doi": "10.1002/ana.410410106",
+      "sourceUrl": "https://doi.org/10.1002/ana.410410106",
+      "verified": true
+    },
+    {
+      "title": "Mild Cognitive Impairment",
+      "journal": "Archives of Neurology",
+      "year": 2009,
+      "citationCount": 1409,
+      "doi": "10.1001/archneurol.2009.266",
+      "sourceUrl": "https://doi.org/10.1001/archneurol.2009.266",
+      "verified": true
+    },
+    {
+      "title": "Mild Cognitive Impairment",
+      "journal": "New England Journal of Medicine",
+      "year": 2011,
+      "citationCount": 1245,
+      "doi": "10.1056/nejmcp0910237",
+      "sourceUrl": "https://doi.org/10.1056/nejmcp0910237",
+      "verified": true
+    },
+    {
+      "title": "Ways toward an early diagnosis in Alzheimer's disease: The Alzheimer's Disease Neuroimaging Initiative (ADNI)",
+      "journal": "Alzheimer s & Dementia",
+      "year": 2005,
+      "citationCount": 1206,
+      "doi": "10.1016/j.jalz.2005.06.003",
+      "sourceUrl": "https://doi.org/10.1016/j.jalz.2005.06.003",
+      "verified": true
+    },
+    {
+      "title": "Early role of vascular dysregulation on late-onset Alzheimer’s disease based on multifactorial data-driven analysis",
+      "journal": "Nature Communications",
+      "year": 2016,
+      "citationCount": 1129,
+      "doi": "10.1038/ncomms11934",
+      "sourceUrl": "https://doi.org/10.1038/ncomms11934",
+      "verified": true
+    },
+    {
+      "title": "Medial temporal atrophy on MRI in normal aging and very mild Alzheimer's disease",
+      "journal": "Neurology",
+      "year": 1997,
+      "citationCount": 1117,
+      "doi": "10.1212/wnl.49.3.786",
+      "sourceUrl": "https://doi.org/10.1212/wnl.49.3.786",
+      "verified": true
+    },
+    {
+      "title": "Serial PIB and MRI in normal, mild cognitive impairment and Alzheimer's disease: implications for sequence of pathological events in Alzheimer's disease",
+      "journal": "Brain",
+      "year": 2009,
+      "citationCount": 1072,
+      "doi": "10.1093/brain/awp062",
+      "sourceUrl": "https://doi.org/10.1093/brain/awp062",
+      "verified": true
+    },
+    {
+      "title": "Classifying neurocognitive disorders: the DSM-5 approach",
+      "journal": "Nature Reviews Neurology",
+      "year": 2014,
+      "citationCount": 1000,
+      "doi": "10.1038/nrneurol.2014.181",
+      "sourceUrl": "https://doi.org/10.1038/nrneurol.2014.181",
+      "verified": true
+    },
+    {
+      "title": "The Alzheimer's Disease Neuroimaging Initiative: A review of papers published since its inception",
+      "journal": "Alzheimer s & Dementia",
+      "year": 2013,
+      "citationCount": 991,
+      "doi": "10.1016/j.jalz.2013.05.1769",
+      "sourceUrl": "https://doi.org/10.1016/j.jalz.2013.05.1769",
+      "verified": true
+    },
+    {
+      "title": "Neuropathologically defined subtypes of Alzheimer's disease with distinct clinical characteristics: a retrospective study",
+      "journal": "The Lancet Neurology",
+      "year": 2011,
+      "citationCount": 960,
+      "doi": "10.1016/s1474-4422(11)70156-9",
+      "sourceUrl": "https://doi.org/10.1016/s1474-4422(11)70156-9",
+      "verified": true
+    },
+    {
+      "title": "11C PiB and structural MRI provide complementary information in imaging of Alzheimer's disease and amnestic mild cognitive impairment",
+      "journal": "Brain",
+      "year": 2008,
+      "citationCount": 948,
+      "doi": "10.1093/brain/awm336",
+      "sourceUrl": "https://doi.org/10.1093/brain/awm336",
+      "verified": true
+    },
+    {
+      "title": "Increased Risk of Type 2 Diabetes in Alzheimer Disease",
+      "journal": "Diabetes",
+      "year": 2004,
+      "citationCount": 938,
+      "doi": "10.2337/diabetes.53.2.474",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.53.2.474",
+      "verified": true
+    },
+    {
+      "title": "Rates of hippocampal atrophy correlate with change in clinical status in aging and AD",
+      "journal": "Neurology",
+      "year": 2000,
+      "citationCount": 931,
+      "doi": "10.1212/wnl.55.4.484",
+      "sourceUrl": "https://doi.org/10.1212/wnl.55.4.484",
+      "verified": true
+    },
+    {
+      "title": "Defining imaging biomarker cut points for brain aging and Alzheimer's disease",
+      "journal": "Alzheimer s & Dementia",
+      "year": 2016,
+      "citationCount": 924,
+      "doi": "10.1016/j.jalz.2016.08.005",
+      "sourceUrl": "https://doi.org/10.1016/j.jalz.2016.08.005",
+      "verified": true
+    },
+    {
+      "title": "Identification of preclinical Alzheimer's disease by a profile of pathogenic proteins in neurally derived blood exosomes: A case‐control study",
+      "journal": "Alzheimer s & Dementia",
+      "year": 2014,
+      "citationCount": 911,
+      "doi": "10.1016/j.jalz.2014.06.008",
+      "sourceUrl": "https://doi.org/10.1016/j.jalz.2014.06.008",
+      "verified": true
+    },
+    {
+      "title": "Mild Cognitive Impairment as a Clinical Entity and Treatment Target",
+      "journal": "Archives of Neurology",
+      "year": 2005,
+      "citationCount": 908,
+      "doi": "10.1001/archneur.62.7.1160",
+      "sourceUrl": "https://doi.org/10.1001/archneur.62.7.1160",
+      "verified": true
+    },
+    {
+      "title": "Aging, Memory, and Mild Cognitive Impairment",
+      "journal": "International Psychogeriatrics",
+      "year": 1997,
+      "citationCount": 876,
+      "doi": "10.1017/s1041610297004717",
+      "sourceUrl": "https://doi.org/10.1017/s1041610297004717",
+      "verified": true
+    },
+    {
+      "title": "MR‐based hippocampal volumetry in the diagnosis of Alzheimer's disease",
+      "journal": "Neurology",
+      "year": 1992,
+      "citationCount": 871,
+      "doi": "10.1212/wnl.42.1.183",
+      "sourceUrl": "https://doi.org/10.1212/wnl.42.1.183",
+      "verified": true
+    },
+    {
+      "title": "Physical Exercise as a Preventive or Disease-Modifying Treatment of Dementia and Brain Aging",
+      "journal": "Mayo Clinic Proceedings",
+      "year": 2011,
+      "citationCount": 850,
+      "doi": "10.4065/mcp.2011.0252",
+      "sourceUrl": "https://doi.org/10.4065/mcp.2011.0252",
+      "verified": true
+    },
+    {
+      "title": "Mild Cognitive Impairment",
+      "journal": "CONTINUUM Lifelong Learning in Neurology",
+      "year": 2016,
+      "citationCount": 821,
+      "doi": "10.1212/con.0000000000000313",
+      "sourceUrl": "https://doi.org/10.1212/con.0000000000000313",
+      "verified": true
+    },
+    {
+      "title": "Comparison of different MRI brain atrophy rate measures with clinical disease progression in AD",
+      "journal": "Neurology",
+      "year": 2004,
+      "citationCount": 819,
+      "doi": "10.1212/01.wnl.0000110315.26026.ef",
+      "sourceUrl": "https://doi.org/10.1212/01.wnl.0000110315.26026.ef",
+      "verified": true
+    },
+    {
+      "title": "The Mayo Clinic Study of Aging: Design and Sampling, Participation, Baseline Measures and Sample Characteristics",
+      "journal": "Neuroepidemiology",
+      "year": 2008,
+      "citationCount": 774,
+      "doi": "10.1159/000115751",
+      "sourceUrl": "https://doi.org/10.1159/000115751",
+      "verified": true
+    },
+    {
+      "title": "Normative spatiotemporal gait parameters in older adults",
+      "journal": "Gait & Posture",
+      "year": 2011,
+      "citationCount": 766,
+      "doi": "10.1016/j.gaitpost.2011.03.024",
+      "sourceUrl": "https://doi.org/10.1016/j.gaitpost.2011.03.024",
+      "verified": true
+    },
+    {
+      "title": "Prevalence of mild cognitive impairment is higher in men",
+      "journal": "Neurology",
+      "year": 2010,
+      "citationCount": 726,
+      "doi": "10.1212/wnl.0b013e3181f11d85",
+      "sourceUrl": "https://doi.org/10.1212/wnl.0b013e3181f11d85",
+      "verified": true
+    },
+    {
+      "title": "Amyloid deposition, hypometabolism, and longitudinal cognitive decline",
+      "journal": "Annals of Neurology",
+      "year": 2012,
+      "citationCount": 722,
+      "doi": "10.1002/ana.23650",
+      "sourceUrl": "https://doi.org/10.1002/ana.23650",
+      "verified": true
+    },
+    {
+      "title": "Development of Cognitive Instruments for Use in Clinical Trials of Antidementia Drugs",
+      "journal": "Alzheimer Disease & Associated Disorders",
+      "year": 1997,
+      "citationCount": 674,
+      "doi": "10.1097/00002093-199700112-00003",
+      "sourceUrl": "https://doi.org/10.1097/00002093-199700112-00003",
+      "verified": true
+    },
+    {
+      "title": "A randomized, double-blind, placebo-controlled trial of resveratrol for Alzheimer disease",
+      "journal": "Neurology",
+      "year": 2015,
+      "citationCount": 671,
+      "doi": "10.1212/wnl.0000000000002035",
+      "sourceUrl": "https://doi.org/10.1212/wnl.0000000000002035",
+      "verified": true
+    },
+    {
+      "title": "Detecting Dementia With the Mini-Mental State Examination in Highly Educated Individuals",
+      "journal": "Archives of Neurology",
+      "year": 2008,
+      "citationCount": 663,
+      "doi": "10.1001/archneur.65.7.963",
+      "sourceUrl": "https://doi.org/10.1001/archneur.65.7.963",
+      "verified": true
+    },
+    {
+      "title": "Neuropathology of Cognitively Normal Elderly",
+      "journal": "Journal of Neuropathology & Experimental Neurology",
+      "year": 2003,
+      "citationCount": 660,
+      "doi": "10.1093/jnen/62.11.1087",
+      "sourceUrl": "https://doi.org/10.1093/jnen/62.11.1087",
+      "verified": true
+    },
+    {
+      "title": "Association of Mediterranean Diet with Mild Cognitive Impairment and Alzheimer's Disease: A Systematic Review and Meta-Analysis",
+      "journal": "Journal of Alzheimer s Disease",
+      "year": 2014,
+      "citationCount": 652,
+      "doi": "10.3233/jad-130830",
+      "sourceUrl": "https://doi.org/10.3233/jad-130830",
+      "verified": true
+    },
+    {
+      "title": "Mild Cognitive Impairment:<i>An Overview</i>",
+      "journal": "CNS Spectrums",
+      "year": 2008,
+      "citationCount": 651,
+      "doi": "10.1017/s1092852900016151",
+      "sourceUrl": "https://doi.org/10.1017/s1092852900016151",
+      "verified": true
+    },
+    {
+      "title": "Neuropathology of nondemented aging: Presumptive evidence for preclinical Alzheimer disease",
+      "journal": "Neurobiology of Aging",
+      "year": 2009,
+      "citationCount": 647,
+      "doi": "10.1016/j.neurobiolaging.2009.04.002",
+      "sourceUrl": "https://doi.org/10.1016/j.neurobiolaging.2009.04.002",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:13.000Z",
+  "openalexId": "https://openalex.org/A5045246745"
 }

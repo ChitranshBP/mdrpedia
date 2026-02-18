@@ -1,0 +1,350 @@
+---
+/**
+ * SuggestEdit — Modal for users to recommend changes to a doctor profile
+ * Includes identity verification fields and honeypot for bot protection.
+ */
+
+interface Props {
+    profileSlug: string;
+    doctorName: string;
+}
+
+const { profileSlug, doctorName } = Astro.props;
+---
+
+<button id="btn-suggest-edit" class="btn-text">
+    <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        style="margin-right:4px; opacity:0.7"
+    >
+        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+        ></path>
+        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+        ></path>
+    </svg>
+    Suggest an edit
+</button>
+
+<dialog id="suggest-modal" class="modal">
+    <form method="dialog" class="modal-box">
+        <button class="btn-close">✕</button>
+        <h3 class="modal-title">Suggest an edit</h3>
+        <p class="modal-desc">
+            Help us improve the accuracy of <strong>{doctorName}</strong>'s
+            profile. Your suggestion will be reviewed by our editors.
+        </p>
+
+        <div class="form-content">
+            <!-- Edit Details -->
+            <div class="form-group">
+                <label for="field-name">Which section needs improvement?</label>
+                <select id="field-name" name="field_name" required>
+                    <option value="" disabled selected>Select a field...</option
+                    >
+                    <option value="biography">Biography / About</option>
+                    <option value="specialty">Specialty / Sub-specialty</option>
+                    <option value="hospital">Hospital / Affiliation</option>
+                    <option value="dateOfBirth">Date of Birth</option>
+                    <option value="education">Education / Mentors</option>
+                    <option value="stats">Stats (H-Index, Surgeries)</option>
+                    <option value="techniques">Techniques / Inventions</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="new-value">Proposed Change</label>
+                <textarea
+                    id="new-value"
+                    name="new_value"
+                    rows="3"
+                    placeholder="Enter the correct information here..."
+                    required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="reason">Source / Reason (Optional)</label>
+                <input
+                    type="text"
+                    id="reason"
+                    name="reason"
+                    placeholder="e.g. Official hospital website, LinkedIn..."
+                />
+            </div>
+
+            <hr class="divider" />
+
+            <!-- Identity -->
+            <div class="form-group">
+                <label for="contributor-name">Your Name</label>
+                <input
+                    type="text"
+                    id="contributor-name"
+                    name="contributor_name"
+                    required
+                />
+            </div>
+
+            <div class="form-group">
+                <label for="contributor-email"
+                    >Your Email (for verification)</label
+                >
+                <input
+                    type="email"
+                    id="contributor-email"
+                    name="contributor_email"
+                    required
+                />
+            </div>
+
+            <div class="form-group">
+                <label for="contributor-social"
+                    >LinkedIn / Twitter (Optional)</label
+                >
+                <input
+                    type="url"
+                    id="contributor-social"
+                    name="contributor_social"
+                    placeholder="https://linkedin.com/in/..."
+                />
+                <small>Helps us verify your expertise.</small>
+            </div>
+
+            <!-- Honeypot -->
+            <div style="display:none" aria-hidden="true">
+                <input type="checkbox" name="honeypot_filled" tabindex="-1" />
+            </div>
+
+            <!-- Hidden Context -->
+            <input type="hidden" name="profile_slug" value={profileSlug} />
+
+            <div class="form-actions">
+                <button type="submit" id="btn-submit-edit" class="btn-primary"
+                    >Submit Suggestion</button
+                >
+            </div>
+        </div>
+    </form>
+</dialog>
+
+<script>
+    const btn = document.getElementById("btn-suggest-edit");
+    const modal = document.getElementById("suggest-modal");
+    const closeBtn = modal?.querySelector(".btn-close");
+    const submitBtn = document.getElementById("btn-submit-edit");
+
+    if (btn && modal && closeBtn) {
+        btn.addEventListener("click", () => {
+            // @ts-ignore
+            modal.showModal();
+        });
+
+        closeBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            // @ts-ignore
+            modal.close();
+        });
+
+        // Close on backdrop click
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                // @ts-ignore
+                modal.close();
+            }
+        });
+
+        submitBtn?.addEventListener("click", async (e) => {
+            e.preventDefault(); // Handle submission manually
+
+            const inputs = modal.querySelectorAll("input, select, textarea");
+            const data: Record<string, any> = {};
+            let valid = true;
+
+            inputs.forEach((input: any) => {
+                if (input.name) {
+                    if (input.type === "checkbox") {
+                        data[input.name] = input.checked;
+                    } else {
+                        data[input.name] = input.value;
+                        if (input.required && !input.value) {
+                            input.style.borderColor = "red";
+                            valid = false;
+                        } else {
+                            input.style.borderColor = "";
+                        }
+                    }
+                }
+            });
+
+            if (!valid) return;
+
+            // Disable button
+            submitBtn.textContent = "Submitting...";
+            // @ts-ignore
+            submitBtn.disabled = true;
+
+            try {
+                const res = await fetch("/api/suggest-edit", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data),
+                });
+
+                if (res.ok) {
+                    alert(
+                        "Thank you! Your suggestion has been submitted for review.",
+                    );
+                    // @ts-ignore
+                    modal.close();
+                    // @ts-ignore
+                    inputs.forEach((i: any) => (i.value = ""));
+                } else {
+                    alert("Something went wrong. Please try again.");
+                }
+            } catch (err) {
+                alert("Error submitting form.");
+            } finally {
+                submitBtn.textContent = "Submit Suggestion";
+                // @ts-ignore
+                submitBtn.disabled = false;
+            }
+        });
+    }
+</script>
+
+<style>
+    .btn-text {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        font-size: 0.75rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        padding: 0;
+        margin-top: 12px;
+    }
+    .btn-text:hover {
+        color: var(--text-primary);
+        text-decoration: underline;
+    }
+
+    .modal {
+        padding: 0;
+        border: none;
+        background: transparent;
+        max-width: 480px;
+        width: 90%;
+    }
+
+    .modal::backdrop {
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(4px);
+    }
+
+    .modal-box {
+        background: var(--bg-card, #16162a);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 24px;
+        color: var(--text-primary);
+        position: relative;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .btn-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        font-size: 1.2rem;
+    }
+
+    .modal-title {
+        margin: 0 0 8px;
+        font-family: var(--font-serif);
+        font-size: 1.5rem;
+    }
+
+    .modal-desc {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 24px;
+        line-height: 1.5;
+    }
+
+    .form-group {
+        margin-bottom: 16px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--text-primary);
+        font-family: inherit;
+        font-size: 0.9rem;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #8b5cf6;
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .form-group small {
+        display: block;
+        margin-top: 4px;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+    }
+
+    .divider {
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin: 20px 0;
+    }
+
+    .btn-primary {
+        width: 100%;
+        padding: 12px;
+        background: #8b5cf6;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .btn-primary:hover {
+        background: #7c3aed;
+    }
+
+    .btn-primary:disabled {
+        opacity: 0.7;
+        cursor: default;
+    }
+</style>

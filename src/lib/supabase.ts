@@ -1,10 +1,12 @@
 import { createClient } from '@supabase/supabase-js';
+import { createLogger } from './logger';
 
+const log = createLogger('Supabase');
 const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
-    console.warn('⚠️ Supabase URL or Anon Key is missing. Check your .env file.');
+    log.warn('Supabase URL or Anon Key is missing. Check your .env file.');
 }
 
 /**

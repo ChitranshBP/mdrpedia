@@ -1,0 +1,144 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import ImageWithFallback from "../../components/ImageWithFallback";
+
+// Fetch all doctors
+const doctors = await getCollection("doctors");
+
+// Aggregate data by Hospital
+const hospitalMap = new Map<
+    string,
+    {
+        name: string;
+        count: number;
+        livesSaved: number;
+        surgeries: number;
+        impactScore: number;
+        topDoctors: any[];
+    }
+>();
+
+doctors.forEach((doc) => {
+    const d = doc.data;
+    if (d.affiliations && d.affiliations.length > 0) {
+        // We only credit the PRIMARY affiliation (first one) to avoid double counting for now,
+        // or we can credit all. Let's credit all but weighted?
+        // For simplicity, let's credit the first one as primary institution.
+        // User asked for "segment for hospitals ... and impact they create".
+
+        // Let's aggregate for ALL affiliations to be generous.
+        d.affiliations.forEach((aff) => {
+            const name = aff.hospitalName.trim();
+            if (!hospitalMap.has(name)) {
+                hospitalMap.set(name, {
+                    name,
+                    count: 0,
+                    livesSaved: 0,
+                    surgeries: 0,
+                    impactScore: 0,
+                    topDoctors: [],
+                });
+            }
+
+            const stats = hospitalMap.get(name)!;
+            stats.count += 1;
+            stats.livesSaved += d.livesSaved || 0;
+            stats.surgeries += d.verifiedSurgeries || 0;
+            stats.impactScore +=
+                (d.livesSaved || 0) + (d.verifiedSurgeries || 0);
+
+            // Add to top doctors if not already there (allocating distinct per hospital)
+            if (!stats.topDoctors.find((td: any) => td.slug === doc.slug)) {
+                stats.topDoctors.push({
+                    slug: doc.slug,
+                    name: d.fullName,
+                    tier: d.tier,
+                    impact: (d.livesSaved || 0) + (d.verifiedSurgeries || 0),
+                });
+            }
+        });
+    }
+});
+
+// Convert to array and sort
+const hospitals = Array.from(hospitalMap.values())
+    .filter((h) => h.impactScore > 0) // Only show active hospitals
+    .sort((a, b) => b.impactScore - a.impactScore);
+---
+
+<Layout title="Top Hospitals & Medical Institutions — MDRPedia">
+    <div class="container py-12">
+        <header class="mb-12 text-center">
+            <h1 class="text-4xl font-bold text-white mb-4">
+                Global Hospital Impact Rankings
+            </h1>
+            <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                Tracking the cumulative impact of medical institutions based on
+                lives saved and successful surgeries performed by their
+                affiliated experts.
+            </p>
+        </header>
+
+        <div class="space-y-6">
+            {
+                hospitals.map((hospital, index) => (
+                    <div class="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-colors flex flex-col md:flex-row items-center gap-8">
+                        {/* Rank */}
+                        <div class="flex-shrink-0 flex flex-col items-center">
+                            <span class="text-xs uppercase tracking-wider text-gray-500 mb-1">
+                                Rank
+                            </span>
+                            <span class="text-4xl font-bold text-accent-gold">
+                                #{index + 1}
+                            </span>
+                        </div>
+
+                        {/* Info */}
+                        <div class="flex-grow text-center md:text-left">
+                            <h2 class="text-2xl font-bold text-white mb-2">
+                                {hospital.name}
+                            </h2>
+                            <div class="flex flex-wrap gap-4 justify-center md:justify-start text-sm text-gray-400">
+                                <span class="flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-accent-blue" />
+                                    {hospital.count} Affiliated Doctors
+                                </span>
+                                <span class="flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-green-500" />
+                                    {hospital.livesSaved.toLocaleString()} Lives
+                                    Saved
+                                </span>
+                                <span class="flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-purple-500" />
+                                    {hospital.surgeries.toLocaleString()}{" "}
+                                    Verified Surgeries
+                                </span>
+                            </div>
+                        </div>
+
+                        {/* Impact Score */}
+                        <div class="flex-shrink-0 text-center px-6 py-4 bg-white/5 rounded-lg border border-white/10">
+                            <div class="text-xs uppercase tracking-wider text-gray-500 mb-1">
+                                Total Impact Score
+                            </div>
+                            <div class="text-3xl font-bold text-white">
+                                {hospital.impactScore.toLocaleString()}
+                            </div>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+
+        {
+            hospitals.length === 0 && (
+                <div class="text-center py-20">
+                    <p class="text-gray-500">
+                        No institutional data available yet.
+                    </p>
+                </div>
+            )
+        }
+    </div>
+</Layout>

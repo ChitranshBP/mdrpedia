@@ -1,31 +1,493 @@
 {
   "fullName": "Carl H. June",
   "slug": "carl-h-june",
-  "title": "MD, PhD",
-  "specialty": "CAR-T Cell Therapy",
+  "title": "MD",
+  "specialty": "CAR-T Therapy",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">CH</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 48,
-  "hIndex": 193,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 176,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 15884,
+  "livesSaved": 0,
+  "biography": "Carl H. June is an American immunologist and oncologist. He is currently the Richard W. Vague Professor in Immunotherapy in the Department of Pathology and Laboratory Medicine at the Perelman School of Medicine of the University of Pennsylvania. He is most well known for his research on T cell therapies for the treatment of several forms of cancers.\nIn 2020 he was elected to the American Philosophical Society.",
+  "aiSummary": "Carl H. June is a car-t therapy specialist with an H-index of 176 at University of Pennsylvania (Faculty). Has been published in New England Journal of Medicine, Science, Nature Reviews Drug Discovery. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "University of Pennsylvania"
-    }
-  ],
-  "bio": "Carl H. June is a pioneer in CAR-T Cell Therapy at University of Pennsylvania, USA. With a D-Index of 193 and over 158,837 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "University of Pennsylvania",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "CAR-T Therapy"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Tisagenlecleucel in Children and Young Adults with B-Cell Lymphoblastic Leukemia",
+      "journal": "New England Journal of Medicine",
+      "year": 2018,
+      "citationCount": 5383,
+      "doi": "10.1056/nejmoa1709866",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1709866",
+      "verified": true
+    },
+    {
+      "title": "Chimeric Antigen Receptor T Cells for Sustained Remissions in Leukemia",
+      "journal": "New England Journal of Medicine",
+      "year": 2014,
+      "citationCount": 5267,
+      "doi": "10.1056/nejmoa1407222",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1407222",
+      "verified": true
+    },
+    {
+      "title": "Chimeric Antigen Receptor–Modified T Cells in Chronic Lymphoid Leukemia",
+      "journal": "New England Journal of Medicine",
+      "year": 2011,
+      "citationCount": 3485,
+      "doi": "10.1056/nejmoa1103849",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1103849",
+      "verified": true
+    },
+    {
+      "title": "Chimeric Antigen Receptor–Modified T Cells for Acute Lymphoid Leukemia",
+      "journal": "New England Journal of Medicine",
+      "year": 2013,
+      "citationCount": 3432,
+      "doi": "10.1056/nejmoa1215134",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1215134",
+      "verified": true
+    },
+    {
+      "title": "Cytokine Storm",
+      "journal": "New England Journal of Medicine",
+      "year": 2020,
+      "citationCount": 3032,
+      "doi": "10.1056/nejmra2026131",
+      "sourceUrl": "https://doi.org/10.1056/nejmra2026131",
+      "verified": true
+    },
+    {
+      "title": "CAR T cell immunotherapy for human cancer",
+      "journal": "Science",
+      "year": 2018,
+      "citationCount": 2961,
+      "doi": "10.1126/science.aar6711",
+      "sourceUrl": "https://doi.org/10.1126/science.aar6711",
+      "verified": true
+    },
+    {
+      "title": "Delivery technologies for cancer immunotherapy",
+      "journal": "Nature Reviews Drug Discovery",
+      "year": 2019,
+      "citationCount": 2521,
+      "doi": "10.1038/s41573-018-0006-z",
+      "sourceUrl": "https://doi.org/10.1038/s41573-018-0006-z",
+      "verified": true
+    },
+    {
+      "title": "T Cells with Chimeric Antigen Receptors Have Potent Antitumor Effects and Can Establish Memory in Patients with Advanced Leukemia",
+      "journal": "Science Translational Medicine",
+      "year": 2011,
+      "citationCount": 2374,
+      "doi": "10.1126/scitranslmed.3002842",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.3002842",
+      "verified": true
+    },
+    {
+      "title": "Chimeric Antigen Receptor Therapy",
+      "journal": "New England Journal of Medicine",
+      "year": 2018,
+      "citationCount": 2144,
+      "doi": "10.1056/nejmra1706169",
+      "sourceUrl": "https://doi.org/10.1056/nejmra1706169",
+      "verified": true
+    },
+    {
+      "title": "Cytokine release syndrome in severe COVID-19",
+      "journal": "Science",
+      "year": 2020,
+      "citationCount": 1994,
+      "doi": "10.1126/science.abb8925",
+      "sourceUrl": "https://doi.org/10.1126/science.abb8925",
+      "verified": true
+    },
+    {
+      "title": "A human memory T cell subset with stem cell–like properties",
+      "journal": "Nature Medicine",
+      "year": 2011,
+      "citationCount": 1881,
+      "doi": "10.1038/nm.2446",
+      "sourceUrl": "https://doi.org/10.1038/nm.2446",
+      "verified": true
+    },
+    {
+      "title": "Chimeric Antigen Receptor T Cells in Refractory B-Cell Lymphomas",
+      "journal": "New England Journal of Medicine",
+      "year": 2017,
+      "citationCount": 1803,
+      "doi": "10.1056/nejmoa1708566",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1708566",
+      "verified": true
+    },
+    {
+      "title": "Chimeric antigen receptor T cells persist and induce sustained remissions in relapsed refractory chronic lymphocytic leukemia",
+      "journal": "Science Translational Medicine",
+      "year": 2015,
+      "citationCount": 1695,
+      "doi": "10.1126/scitranslmed.aac5415",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.aac5415",
+      "verified": true
+    },
+    {
+      "title": "A single dose of peripherally infused EGFRvIII-directed CAR T cells mediates antigen loss and induces adaptive resistance in patients with recurrent glioblastoma",
+      "journal": "Science Translational Medicine",
+      "year": 2017,
+      "citationCount": 1688,
+      "doi": "10.1126/scitranslmed.aaa0984",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.aaa0984",
+      "verified": true
+    },
+    {
+      "title": "Determinants of response and resistance to CD19 chimeric antigen receptor (CAR) T cell therapy of chronic lymphocytic leukemia",
+      "journal": "Nature Medicine",
+      "year": 2018,
+      "citationCount": 1666,
+      "doi": "10.1038/s41591-018-0010-1",
+      "sourceUrl": "https://doi.org/10.1038/s41591-018-0010-1",
+      "verified": true
+    },
+    {
+      "title": "The CD28 Signaling Pathway Regulates Glucose Metabolism",
+      "journal": "Immunity",
+      "year": 2002,
+      "citationCount": 1409,
+      "doi": "10.1016/s1074-7613(02)00323-0",
+      "sourceUrl": "https://doi.org/10.1016/s1074-7613(02)00323-0",
+      "verified": true
+    },
+    {
+      "title": "CRISPR-engineered T cells in patients with refractory cancer",
+      "journal": "Science",
+      "year": 2020,
+      "citationCount": 1380,
+      "doi": "10.1126/science.aba7365",
+      "sourceUrl": "https://doi.org/10.1126/science.aba7365",
+      "verified": true
+    },
+    {
+      "title": "Gene Editing of <i>CCR5</i> in Autologous CD4 T Cells of Persons Infected with HIV",
+      "journal": "New England Journal of Medicine",
+      "year": 2014,
+      "citationCount": 1328,
+      "doi": "10.1056/nejmoa1300662",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1300662",
+      "verified": true
+    },
+    {
+      "title": "The B7 and CD28 receptor families",
+      "journal": "Immunology Today",
+      "year": 1994,
+      "citationCount": 1314,
+      "doi": "10.1016/0167-5699(94)90080-9",
+      "sourceUrl": "https://doi.org/10.1016/0167-5699(94)90080-9",
+      "verified": true
+    },
+    {
+      "title": "Human chimeric antigen receptor macrophages for cancer immunotherapy",
+      "journal": "Nature Biotechnology",
+      "year": 2020,
+      "citationCount": 1308,
+      "doi": "10.1038/s41587-020-0462-y",
+      "sourceUrl": "https://doi.org/10.1038/s41587-020-0462-y",
+      "verified": true
+    },
+    {
+      "title": "SHP-1 and SHP-2 Associate with Immunoreceptor Tyrosine-Based Switch Motif of Programmed Death 1 upon Primary Human T Cell Stimulation, but Only Receptor Ligation Prevents T Cell Activation",
+      "journal": "The Journal of Immunology",
+      "year": 2004,
+      "citationCount": 1213,
+      "doi": "10.4049/jimmunol.173.2.945",
+      "sourceUrl": "https://doi.org/10.4049/jimmunol.173.2.945",
+      "verified": true
+    },
+    {
+      "title": "Chimeric Receptors Containing CD137 Signal Transduction Domains Mediate Enhanced Survival of T Cells and Increased Antileukemic Efficacy In Vivo",
+      "journal": "Molecular Therapy",
+      "year": 2009,
+      "citationCount": 1166,
+      "doi": "10.1038/mt.2009.83",
+      "sourceUrl": "https://doi.org/10.1038/mt.2009.83",
+      "verified": true
+    },
+    {
+      "title": "Distinct Signaling of Coreceptors Regulates Specific Metabolism Pathways and Impacts Memory Development in CAR T Cells",
+      "journal": "Immunity",
+      "year": 2016,
+      "citationCount": 1144,
+      "doi": "10.1016/j.immuni.2016.01.021",
+      "sourceUrl": "https://doi.org/10.1016/j.immuni.2016.01.021",
+      "verified": true
+    },
+    {
+      "title": "Cardiovascular toxicity and titin cross-reactivity of affinity-enhanced T cells in myeloma and melanoma",
+      "journal": "Blood",
+      "year": 2013,
+      "citationCount": 1124,
+      "doi": "10.1182/blood-2013-03-490565",
+      "sourceUrl": "https://doi.org/10.1182/blood-2013-03-490565",
+      "verified": true
+    },
+    {
+      "title": "Regulatory CD4(+)CD25(+) T cells in tumors from patients with early-stage non-small cell lung cancer and late-stage ovarian cancer.",
+      "journal": "PubMed",
+      "year": 2001,
+      "citationCount": 1119,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2102537478",
+      "verified": true
+    },
+    {
+      "title": "Identification of Predictive Biomarkers for Cytokine Release Syndrome after Chimeric Antigen Receptor T-cell Therapy for Acute Lymphoblastic Leukemia",
+      "journal": "Cancer Discovery",
+      "year": 2016,
+      "citationCount": 1047,
+      "doi": "10.1158/2159-8290.cd-16-0040",
+      "sourceUrl": "https://doi.org/10.1158/2159-8290.cd-16-0040",
+      "verified": true
+    },
+    {
+      "title": "The Principles of Engineering Immune Cells to Treat Cancer",
+      "journal": "Cell",
+      "year": 2017,
+      "citationCount": 1046,
+      "doi": "10.1016/j.cell.2017.01.016",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2017.01.016",
+      "verified": true
+    },
+    {
+      "title": "Engineered T cells: the promise and challenges of cancer immunotherapy",
+      "journal": "Nature reviews. Cancer",
+      "year": 2016,
+      "citationCount": 1038,
+      "doi": "10.1038/nrc.2016.97",
+      "sourceUrl": "https://doi.org/10.1038/nrc.2016.97",
+      "verified": true
+    },
+    {
+      "title": "Infusion of ex vivo expanded T regulatory cells in adults transplanted with umbilical cord blood: safety profile and detection kinetics",
+      "journal": "Blood",
+      "year": 2010,
+      "citationCount": 1011,
+      "doi": "10.1182/blood-2010-07-293795",
+      "sourceUrl": "https://doi.org/10.1182/blood-2010-07-293795",
+      "verified": true
+    },
+    {
+      "title": "Establishment of HIV-1 resistance in CD4+ T cells by genome editing using zinc-finger nucleases",
+      "journal": "Nature Biotechnology",
+      "year": 2008,
+      "citationCount": 996,
+      "doi": "10.1038/nbt1410",
+      "sourceUrl": "https://doi.org/10.1038/nbt1410",
+      "verified": true
+    },
+    {
+      "title": "Multiplex Genome Editing to Generate Universal CAR T Cells Resistant to PD1 Inhibition",
+      "journal": "Clinical Cancer Research",
+      "year": 2016,
+      "citationCount": 908,
+      "doi": "10.1158/1078-0432.ccr-16-1300",
+      "sourceUrl": "https://doi.org/10.1158/1078-0432.ccr-16-1300",
+      "verified": true
+    },
+    {
+      "title": "Regulation of Lymphokine Messenger RNA Stability by a Surface-Mediated T Cell Activation Pathway",
+      "journal": "Science",
+      "year": 1989,
+      "citationCount": 891,
+      "doi": "10.1126/science.2540528",
+      "sourceUrl": "https://doi.org/10.1126/science.2540528",
+      "verified": true
+    },
+    {
+      "title": "Control of large, established tumor xenografts with genetically retargeted human T cells containing CD28 and CD137 domains",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2009,
+      "citationCount": 881,
+      "doi": "10.1073/pnas.0813101106",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0813101106",
+      "verified": true
+    },
+    {
+      "title": "Decade-long leukaemia remissions with persistence of CD4+ CAR T cells",
+      "journal": "Nature",
+      "year": 2022,
+      "citationCount": 848,
+      "doi": "10.1038/s41586-021-04390-6",
+      "sourceUrl": "https://doi.org/10.1038/s41586-021-04390-6",
+      "verified": true
+    },
+    {
+      "title": "Mesothelin-Specific Chimeric Antigen Receptor mRNA-Engineered T Cells Induce Antitumor Activity in Solid Malignancies",
+      "journal": "Cancer Immunology Research",
+      "year": 2013,
+      "citationCount": 844,
+      "doi": "10.1158/2326-6066.cir-13-0170",
+      "sourceUrl": "https://doi.org/10.1158/2326-6066.cir-13-0170",
+      "verified": true
+    },
+    {
+      "title": "NY-ESO-1–specific TCR–engineered T cells mediate sustained antigen-specific antitumor effects in myeloma",
+      "journal": "Nature Medicine",
+      "year": 2015,
+      "citationCount": 831,
+      "doi": "10.1038/nm.3910",
+      "sourceUrl": "https://doi.org/10.1038/nm.3910",
+      "verified": true
+    },
+    {
+      "title": "Disruption of TET2 promotes the therapeutic efficacy of CD19-targeted T cells",
+      "journal": "Nature",
+      "year": 2018,
+      "citationCount": 825,
+      "doi": "10.1038/s41586-018-0178-z",
+      "sourceUrl": "https://doi.org/10.1038/s41586-018-0178-z",
+      "verified": true
+    },
+    {
+      "title": "B cell maturation antigen–specific CAR T cells are clinically active in multiple myeloma",
+      "journal": "Journal of Clinical Investigation",
+      "year": 2019,
+      "citationCount": 762,
+      "doi": "10.1172/jci126397",
+      "sourceUrl": "https://doi.org/10.1172/jci126397",
+      "verified": true
+    },
+    {
+      "title": "Targeting cardiac fibrosis with engineered T cells",
+      "journal": "Nature",
+      "year": 2019,
+      "citationCount": 749,
+      "doi": "10.1038/s41586-019-1546-z",
+      "sourceUrl": "https://doi.org/10.1038/s41586-019-1546-z",
+      "verified": true
+    },
+    {
+      "title": "Cutting Edge: Regulatory T Cells from Lung Cancer Patients Directly Inhibit Autologous T Cell Proliferation",
+      "journal": "The Journal of Immunology",
+      "year": 2002,
+      "citationCount": 696,
+      "doi": "10.4049/jimmunol.168.9.4272",
+      "sourceUrl": "https://doi.org/10.4049/jimmunol.168.9.4272",
+      "verified": true
+    },
+    {
+      "title": "Role of the CD28 receptor in T-cell activation",
+      "journal": "Immunology Today",
+      "year": 1990,
+      "citationCount": 676,
+      "doi": "10.1016/0167-5699(90)90085-n",
+      "sourceUrl": "https://doi.org/10.1016/0167-5699(90)90085-n",
+      "verified": true
+    },
+    {
+      "title": "CD28 activation pathway regulates the production of multiple T-cell-derived lymphokines/cytokines.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1989,
+      "citationCount": 659,
+      "doi": "10.1073/pnas.86.4.1333",
+      "sourceUrl": "https://doi.org/10.1073/pnas.86.4.1333",
+      "verified": true
+    },
+    {
+      "title": "Identification of a Titin-Derived HLA-A1–Presented Peptide as a Cross-Reactive Target for Engineered MAGE A3–Directed T Cells",
+      "journal": "Science Translational Medicine",
+      "year": 2013,
+      "citationCount": 655,
+      "doi": "10.1126/scitranslmed.3006034",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.3006034",
+      "verified": true
+    },
+    {
+      "title": "Decade-Long Safety and Function of Retroviral-Modified Chimeric Antigen Receptor T Cells",
+      "journal": "Science Translational Medicine",
+      "year": 2012,
+      "citationCount": 640,
+      "doi": "10.1126/scitranslmed.3003761",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.3003761",
+      "verified": true
+    },
+    {
+      "title": "Induction of resistance to chimeric antigen receptor T cell therapy by transduction of a single leukemic B cell",
+      "journal": "Nature Medicine",
+      "year": 2018,
+      "citationCount": 619,
+      "doi": "10.1038/s41591-018-0201-9",
+      "sourceUrl": "https://doi.org/10.1038/s41591-018-0201-9",
+      "verified": true
+    },
+    {
+      "title": "Targeting Fibroblast Activation Protein in Tumor Stroma with Chimeric Antigen Receptor T Cells Can Inhibit Tumor Growth and Augment Host Immunity without Severe Toxicity",
+      "journal": "Cancer Immunology Research",
+      "year": 2013,
+      "citationCount": 615,
+      "doi": "10.1158/2326-6066.cir-13-0027",
+      "sourceUrl": "https://doi.org/10.1158/2326-6066.cir-13-0027",
+      "verified": true
+    },
+    {
+      "title": "Chimeric Antigen Receptor T Cells against CD19 for Multiple Myeloma",
+      "journal": "New England Journal of Medicine",
+      "year": 2015,
+      "citationCount": 614,
+      "doi": "10.1056/nejmoa1504542",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1504542",
+      "verified": true
+    },
+    {
+      "title": "Antibody-modified T cells: CARs take the front seat for hematologic malignancies",
+      "journal": "Blood",
+      "year": 2014,
+      "citationCount": 606,
+      "doi": "10.1182/blood-2013-11-492231",
+      "sourceUrl": "https://doi.org/10.1182/blood-2013-11-492231",
+      "verified": true
+    },
+    {
+      "title": "Dominant-Negative TGF-β Receptor Enhances PSMA-Targeted Human CAR T Cell Proliferation And Augments Prostate Cancer Eradication",
+      "journal": "Molecular Therapy",
+      "year": 2018,
+      "citationCount": 585,
+      "doi": "10.1016/j.ymthe.2018.05.003",
+      "sourceUrl": "https://doi.org/10.1016/j.ymthe.2018.05.003",
+      "verified": true
+    },
+    {
+      "title": "T Cells Expressing Chimeric Antigen Receptors Can Cause Anaphylaxis in Humans",
+      "journal": "Cancer Immunology Research",
+      "year": 2013,
+      "citationCount": 579,
+      "doi": "10.1158/2326-6066.cir-13-0006",
+      "sourceUrl": "https://doi.org/10.1158/2326-6066.cir-13-0006",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:16.000Z",
+  "openalexId": "https://openalex.org/A5008558372",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/J._P._Allison_%26_C._H._June_%282015%29_%28June_cropped%29.JPG/330px-J._P._Allison_%26_C._H._June_%282015%29_%28June_cropped%29.JPG"
 }

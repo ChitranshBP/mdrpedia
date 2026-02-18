@@ -1,36 +1,485 @@
 {
   "fullName": "Robert J. Lefkowitz",
   "slug": "robert-j-lefkowitz",
-  "title": "MD, PhD",
-  "specialty": "GPCR Signaling",
+  "title": "MD",
+  "specialty": "Medicine",
   "geography": {
+    "country": "Unknown",
     "city": "Unknown",
-    "country": "USA"
+    "region": "Unknown"
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">RJ</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 65,
-  "hIndex": 261,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 213,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 20850,
+  "livesSaved": 0,
+  "biography": "Robert Joseph Lefkowitz is an American physician and biochemist. He is best known for his discoveries that reveal the inner workings of an important family of G protein-coupled receptors, for which he was awarded the 2012 Nobel Prize for Chemistry with Brian Kobilka. He is currently an Investigator with the Howard Hughes Medical Institute as well as a James B. Duke Professor of Medicine and Professor of Biochemistry and Chemistry at Duke University.",
+  "aiSummary": "Robert J. Lefkowitz is a medicine specialist with an H-index of 213. Has been published in Nature Reviews Molecular Cell Biology, Science, Nature. Based in Unknown, Unknown, Unknown.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Robert_Lefkowitz_2_2012.jpg",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Duke University"
-    }
-  ],
-  "bio": "Robert J. Lefkowitz is a pioneer in GPCR Signaling at Duke University, USA. With a D-Index of 261 and over 208,499 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [],
+  "medicalSpecialty": [
+    "Medicine"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Seven-transmembrane receptors",
+      "journal": "Nature Reviews Molecular Cell Biology",
+      "year": 2002,
+      "citationCount": 2651,
+      "doi": "10.1038/nrm908",
+      "sourceUrl": "https://doi.org/10.1038/nrm908",
+      "verified": true
+    },
+    {
+      "title": "Transduction of Receptor Signals by ß-Arrestins",
+      "journal": "Science",
+      "year": 2005,
+      "citationCount": 1691,
+      "doi": "10.1126/science.1109237",
+      "sourceUrl": "https://doi.org/10.1126/science.1109237",
+      "verified": true
+    },
+    {
+      "title": "A ternary complex model explains the agonist-specific binding properties of the adenylate cyclase-coupled beta-adrenergic receptor.",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1980,
+      "citationCount": 1597,
+      "doi": "10.1016/s0021-9258(20)79672-9",
+      "sourceUrl": "https://doi.org/10.1016/s0021-9258(20)79672-9",
+      "verified": true
+    },
+    {
+      "title": "β-Arrestin-Dependent Formation of β <sub>2</sub> Adrenergic Receptor-Src Protein Kinase Complexes",
+      "journal": "Science",
+      "year": 1999,
+      "citationCount": 1472,
+      "doi": "10.1126/science.283.5402.655",
+      "sourceUrl": "https://doi.org/10.1126/science.283.5402.655",
+      "verified": true
+    },
+    {
+      "title": "β-Arrestins and Cell Signaling",
+      "journal": "Annual Review of Physiology",
+      "year": 2007,
+      "citationCount": 1367,
+      "doi": "10.1146/annurev.physiol.69.022405.154749",
+      "sourceUrl": "https://doi.org/10.1146/annurev.physiol.69.022405.154749",
+      "verified": true
+    },
+    {
+      "title": "G PROTEIN–COUPLED RECEPTOR KINASES",
+      "journal": "Annual Review of Biochemistry",
+      "year": 1998,
+      "citationCount": 1367,
+      "doi": "10.1146/annurev.biochem.67.1.653",
+      "sourceUrl": "https://doi.org/10.1146/annurev.biochem.67.1.653",
+      "verified": true
+    },
+    {
+      "title": "Switching of the coupling of the β2-adrenergic receptor to different G proteins by protein kinase A",
+      "journal": "Nature",
+      "year": 1997,
+      "citationCount": 1265,
+      "doi": "10.1038/36362",
+      "sourceUrl": "https://doi.org/10.1038/36362",
+      "verified": true
+    },
+    {
+      "title": "Cloning of the gene and cDNA for mammalian β-adrenergic receptor and homology with rhodopsin",
+      "journal": "Nature",
+      "year": 1986,
+      "citationCount": 1264,
+      "doi": "10.1038/321075a0",
+      "sourceUrl": "https://doi.org/10.1038/321075a0",
+      "verified": true
+    },
+    {
+      "title": "Turning off the signal: desensitization of β‐adrenergic receptor function",
+      "journal": "The FASEB Journal",
+      "year": 1990,
+      "citationCount": 1255,
+      "doi": "10.1096/fasebj.4.11.2165947",
+      "sourceUrl": "https://doi.org/10.1096/fasebj.4.11.2165947",
+      "verified": true
+    },
+    {
+      "title": "A mutation-induced activated state of the beta 2-adrenergic receptor. Extending the ternary complex model.",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1993,
+      "citationCount": 1247,
+      "doi": "10.1016/s0021-9258(18)53442-6",
+      "sourceUrl": "https://doi.org/10.1016/s0021-9258(18)53442-6",
+      "verified": true
+    },
+    {
+      "title": "International Union of Pharmacology nomenclature of adrenoceptors.",
+      "journal": "Pharmacological Reviews",
+      "year": 1994,
+      "citationCount": 1214,
+      "doi": "10.1016/s0031-6997(25)06780-8",
+      "sourceUrl": "https://doi.org/10.1016/s0031-6997(25)06780-8",
+      "verified": true
+    },
+    {
+      "title": "β-Arrestin: a Protein that Regulates β-adrenergic Receptor Function",
+      "journal": "Science",
+      "year": 1990,
+      "citationCount": 1200,
+      "doi": "10.1126/science.2163110",
+      "sourceUrl": "https://doi.org/10.1126/science.2163110",
+      "verified": true
+    },
+    {
+      "title": "The role of β-arrestins in the termination and transduction of G-protein-coupled receptor signals",
+      "journal": "Journal of Cell Science",
+      "year": 2002,
+      "citationCount": 1102,
+      "doi": "10.1242/jcs.115.3.455",
+      "sourceUrl": "https://doi.org/10.1242/jcs.115.3.455",
+      "verified": true
+    },
+    {
+      "title": "Enhanced Morphine Analgesia in Mice Lacking β-Arrestin 2",
+      "journal": "Science",
+      "year": 1999,
+      "citationCount": 1056,
+      "doi": "10.1126/science.286.5449.2495",
+      "sourceUrl": "https://doi.org/10.1126/science.286.5449.2495",
+      "verified": true
+    },
+    {
+      "title": "G Protein-coupled Receptors",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1998,
+      "citationCount": 1055,
+      "doi": "10.1074/jbc.273.30.18677",
+      "sourceUrl": "https://doi.org/10.1074/jbc.273.30.18677",
+      "verified": true
+    },
+    {
+      "title": "An Akt/β-Arrestin 2/PP2A Signaling Complex Mediates Dopaminergic Neurotransmission and Behavior",
+      "journal": "Cell",
+      "year": 2005,
+      "citationCount": 956,
+      "doi": "10.1016/j.cell.2005.05.012",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2005.05.012",
+      "verified": true
+    },
+    {
+      "title": "Seven-transmembrane-spanning receptors and heart function",
+      "journal": "Nature",
+      "year": 2002,
+      "citationCount": 940,
+      "doi": "10.1038/415206a",
+      "sourceUrl": "https://doi.org/10.1038/415206a",
+      "verified": true
+    },
+    {
+      "title": "μ-Opioid receptor desensitization by β-arrestin-2 determines morphine tolerance but not dependence",
+      "journal": "Nature",
+      "year": 2000,
+      "citationCount": 901,
+      "doi": "10.1038/35047086",
+      "sourceUrl": "https://doi.org/10.1038/35047086",
+      "verified": true
+    },
+    {
+      "title": "DESENSITIZATION OF G PROTEIN–COUPLED RECEPTORS AND NEURONAL FUNCTIONS",
+      "journal": "Annual Review of Neuroscience",
+      "year": 2004,
+      "citationCount": 851,
+      "doi": "10.1146/annurev.neuro.27.070203.144206",
+      "sourceUrl": "https://doi.org/10.1146/annurev.neuro.27.070203.144206",
+      "verified": true
+    },
+    {
+      "title": "Regulation of Receptor Fate by Ubiquitination of Activated β <sub>2</sub> -Adrenergic Receptor and β-Arrestin",
+      "journal": "Science",
+      "year": 2001,
+      "citationCount": 810,
+      "doi": "10.1126/science.1063866",
+      "sourceUrl": "https://doi.org/10.1126/science.1063866",
+      "verified": true
+    },
+    {
+      "title": "Activation and targeting of extracellular signal-regulated kinases by β-arrestin scaffolds",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2001,
+      "citationCount": 809,
+      "doi": "10.1073/pnas.041604898",
+      "sourceUrl": "https://doi.org/10.1073/pnas.041604898",
+      "verified": true
+    },
+    {
+      "title": "β-Arrestin 2: A Receptor-Regulated MAPK Scaffold for the Activation of JNK3",
+      "journal": "Science",
+      "year": 2000,
+      "citationCount": 808,
+      "doi": "10.1126/science.290.5496.1574",
+      "sourceUrl": "https://doi.org/10.1126/science.290.5496.1574",
+      "verified": true
+    },
+    {
+      "title": "Teaching old receptors new tricks: biasing seven-transmembrane receptors",
+      "journal": "Nature Reviews Drug Discovery",
+      "year": 2010,
+      "citationCount": 807,
+      "doi": "10.1038/nrd3024",
+      "sourceUrl": "https://doi.org/10.1038/nrd3024",
+      "verified": true
+    },
+    {
+      "title": "Constitutive activity of receptors coupled to guanine nucleotide regulatory proteins",
+      "journal": "Trends in Pharmacological Sciences",
+      "year": 1993,
+      "citationCount": 804,
+      "doi": "10.1016/0165-6147(93)90048-o",
+      "sourceUrl": "https://doi.org/10.1016/0165-6147(93)90048-o",
+      "verified": true
+    },
+    {
+      "title": "Cloning, Sequencing, and Expression of the Gene Coding for the Human Platelet α <sub>2</sub> -Adrenergic Receptor",
+      "journal": "Science",
+      "year": 1987,
+      "citationCount": 789,
+      "doi": "10.1126/science.2823383",
+      "sourceUrl": "https://doi.org/10.1126/science.2823383",
+      "verified": true
+    },
+    {
+      "title": "Chimeric α <sub>2</sub> -,β <sub>2</sub> -Adrenergic Receptors: Delineation of Domains Involved in Effector Coupling and Ligand Binding Specificity",
+      "journal": "Science",
+      "year": 1988,
+      "citationCount": 769,
+      "doi": "10.1126/science.2836950",
+      "sourceUrl": "https://doi.org/10.1126/science.2836950",
+      "verified": true
+    },
+    {
+      "title": "β-Arrestin-dependent, G Protein-independent ERK1/2 Activation by the β2 Adrenergic Receptor",
+      "journal": "Journal of Biological Chemistry",
+      "year": 2005,
+      "citationCount": 750,
+      "doi": "10.1074/jbc.m506576200",
+      "sourceUrl": "https://doi.org/10.1074/jbc.m506576200",
+      "verified": true
+    },
+    {
+      "title": "Enhanced Myocardial Function in Transgenic Mice Overexpressing the β <sub>2</sub> -Adrenergic Receptor",
+      "journal": "Science",
+      "year": 1994,
+      "citationCount": 745,
+      "doi": "10.1126/science.8160017",
+      "sourceUrl": "https://doi.org/10.1126/science.8160017",
+      "verified": true
+    },
+    {
+      "title": "Molecular mechanisms of receptor desensitization using the β-adrenergic receptor-coupled adenylate cyclase system as a model",
+      "journal": "Nature",
+      "year": 1985,
+      "citationCount": 736,
+      "doi": "10.1038/317124a0",
+      "sourceUrl": "https://doi.org/10.1038/317124a0",
+      "verified": true
+    },
+    {
+      "title": "Biased signalling: from simple switches to allosteric microprocessors",
+      "journal": "Nature Reviews Drug Discovery",
+      "year": 2018,
+      "citationCount": 716,
+      "doi": "10.1038/nrd.2017.229",
+      "sourceUrl": "https://doi.org/10.1038/nrd.2017.229",
+      "verified": true
+    },
+    {
+      "title": "International Union of Pharmacology. X. Recommendation for nomenclature of alpha 1-adrenoceptors: consensus update.",
+      "journal": "Pharmacological Reviews",
+      "year": 1995,
+      "citationCount": 716,
+      "doi": "10.1016/s0031-6997(25)06845-0",
+      "sourceUrl": "https://doi.org/10.1016/s0031-6997(25)06845-0",
+      "verified": true
+    },
+    {
+      "title": "Role of βγ Subunits of G Proteins in Targeting the β-Adrenergic Receptor Kinase to Membrane-Bound Receptors",
+      "journal": "Science",
+      "year": 1992,
+      "citationCount": 715,
+      "doi": "10.1126/science.1325672",
+      "sourceUrl": "https://doi.org/10.1126/science.1325672",
+      "verified": true
+    },
+    {
+      "title": "Cardiac Function in Mice Overexpressing the β-Adrenergic Receptor Kinase or a βARK Inhibitor",
+      "journal": "Science",
+      "year": 1995,
+      "citationCount": 714,
+      "doi": "10.1126/science.7761854",
+      "sourceUrl": "https://doi.org/10.1126/science.7761854",
+      "verified": true
+    },
+    {
+      "title": "β-arrestin-mediated receptor trafficking and signal transduction",
+      "journal": "Trends in Pharmacological Sciences",
+      "year": 2011,
+      "citationCount": 692,
+      "doi": "10.1016/j.tips.2011.05.002",
+      "sourceUrl": "https://doi.org/10.1016/j.tips.2011.05.002",
+      "verified": true
+    },
+    {
+      "title": "Regulation of tyrosine kinase cascades by G-protein-coupled receptors",
+      "journal": "Current Opinion in Cell Biology",
+      "year": 1999,
+      "citationCount": 690,
+      "doi": "10.1016/s0955-0674(99)80023-4",
+      "sourceUrl": "https://doi.org/10.1016/s0955-0674(99)80023-4",
+      "verified": true
+    },
+    {
+      "title": "cDNA for the human beta 2-adrenergic receptor: a protein with multiple membrane-spanning domains and encoded by a gene whose chromosomal location is shared with that of the receptor for platelet-derived growth factor.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1987,
+      "citationCount": 682,
+      "doi": "10.1073/pnas.84.1.46",
+      "sourceUrl": "https://doi.org/10.1073/pnas.84.1.46",
+      "verified": true
+    },
+    {
+      "title": "Regulation of transmembrane signaling by receptor phosphorylation",
+      "journal": "Cell",
+      "year": 1987,
+      "citationCount": 675,
+      "doi": "10.1016/0092-8674(87)90700-8",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(87)90700-8",
+      "verified": true
+    },
+    {
+      "title": "Beta-adrenergic receptors: biochemical mechanisms of physiological regulation",
+      "journal": "Physiological Reviews",
+      "year": 1984,
+      "citationCount": 672,
+      "doi": "10.1152/physrev.1984.64.2.661",
+      "sourceUrl": "https://doi.org/10.1152/physrev.1984.64.2.661",
+      "verified": true
+    },
+    {
+      "title": "Independent β-arrestin 2 and G protein-mediated pathways for angiotensin II activation of extracellular signal-regulated kinases 1 and 2",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2003,
+      "citationCount": 664,
+      "doi": "10.1073/pnas.1834556100",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1834556100",
+      "verified": true
+    },
+    {
+      "title": "Beta-adrenergic receptor kinase: identification of a novel protein kinase that phosphorylates the agonist-occupied form of the receptor.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1986,
+      "citationCount": 659,
+      "doi": "10.1073/pnas.83.9.2797",
+      "sourceUrl": "https://doi.org/10.1073/pnas.83.9.2797",
+      "verified": true
+    },
+    {
+      "title": "GRKs and β-arrestins: roles in receptor silencing, trafficking and signaling",
+      "journal": "Trends in Endocrinology and Metabolism",
+      "year": 2006,
+      "citationCount": 636,
+      "doi": "10.1016/j.tem.2006.03.008",
+      "sourceUrl": "https://doi.org/10.1016/j.tem.2006.03.008",
+      "verified": true
+    },
+    {
+      "title": "A family of receptors coupled to guanine nucleotide regulatory proteins",
+      "journal": "Biochemistry",
+      "year": 1987,
+      "citationCount": 635,
+      "doi": "10.1021/bi00384a001",
+      "sourceUrl": "https://doi.org/10.1021/bi00384a001",
+      "verified": true
+    },
+    {
+      "title": "Distinct Phosphorylation Sites on the β <sub>2</sub> -Adrenergic Receptor Establish a Barcode That Encodes Differential Functions of β-Arrestin",
+      "journal": "Science Signaling",
+      "year": 2011,
+      "citationCount": 617,
+      "doi": "10.1126/scisignal.2001707",
+      "sourceUrl": "https://doi.org/10.1126/scisignal.2001707",
+      "verified": true
+    },
+    {
+      "title": "Constitutive activation of the alpha 1B-adrenergic receptor by all amino acid substitutions at a single site. Evidence for a region which constrains receptor activation.",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1992,
+      "citationCount": 599,
+      "doi": "10.1016/s0021-9258(18)45962-5",
+      "sourceUrl": "https://doi.org/10.1016/s0021-9258(18)45962-5",
+      "verified": true
+    },
+    {
+      "title": "Palmitoylation of the human β2-adrenergic receptor",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1989,
+      "citationCount": 599,
+      "doi": "10.1016/s0021-9258(18)83271-9",
+      "sourceUrl": "https://doi.org/10.1016/s0021-9258(18)83271-9",
+      "verified": true
+    },
+    {
+      "title": "Validation and statistical analysis of a computer modeling method for quantitative analysis of radioligand binding data for mixtures of pharmacological receptor subtypes.",
+      "journal": "Molecular Pharmacology",
+      "year": 1982,
+      "citationCount": 594,
+      "doi": "10.1016/s0026-895x(25)14584-7",
+      "sourceUrl": "https://doi.org/10.1016/s0026-895x(25)14584-7",
+      "verified": true
+    },
+    {
+      "title": "Thyroid hormone regulation of beta-adrenergic receptor number.",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1977,
+      "citationCount": 593,
+      "doi": "10.1016/s0021-9258(17)40528-x",
+      "sourceUrl": "https://doi.org/10.1016/s0021-9258(17)40528-x",
+      "verified": true
+    },
+    {
+      "title": "The genomic clone G-21 which resembles a β-adrenergic receptor sequence encodes the 5-HT1A receptor",
+      "journal": "Nature",
+      "year": 1988,
+      "citationCount": 591,
+      "doi": "10.1038/335358a0",
+      "sourceUrl": "https://doi.org/10.1038/335358a0",
+      "verified": true
+    },
+    {
+      "title": "A unique mechanism of β-blocker action: Carvedilol stimulates β-arrestin signaling",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2007,
+      "citationCount": 589,
+      "doi": "10.1073/pnas.0707936104",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0707936104",
+      "verified": true
+    },
+    {
+      "title": "β-Arrestin-biased ligands at seven-transmembrane receptors",
+      "journal": "Trends in Pharmacological Sciences",
+      "year": 2007,
+      "citationCount": 586,
+      "doi": "10.1016/j.tips.2007.06.006",
+      "sourceUrl": "https://doi.org/10.1016/j.tips.2007.06.006",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "openalexId": "https://openalex.org/A5080672788"
 }

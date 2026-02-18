@@ -1,36 +1,492 @@
 {
   "fullName": "Hagop M. Kantarjian",
   "slug": "hagop-m-kantarjian",
-  "title": "MD, PhD",
-  "specialty": "Leukemia",
+  "title": "MD",
+  "specialty": "Leukemia Research",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">HM</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 65,
-  "hIndex": 260,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 320,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 32038,
+  "livesSaved": 0,
+  "biography": "Hagop Kantarjian is a hematologist and oncologist specializing in leukemia. He is a Professor and Chair of the Department of Leukemia at The University of Texas MD Anderson Cancer Center, where he holds the Samsung Distinguished Leukemia Chair in Cancer Medicine.",
+  "aiSummary": "Hagop M. Kantarjian is a leukemia research specialist with an H-index of 320 at MD Anderson Cancer Center (Faculty). Has been published in New England Journal of Medicine, The Lancet Oncology, Nature Medicine. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "MD Anderson Cancer Center"
-    }
-  ],
-  "bio": "Hagop M. Kantarjian is a pioneer in Leukemia at MD Anderson Cancer Center, USA. With a D-Index of 260 and over 320,383 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "MD Anderson Cancer Center",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Leukemia Research"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Efficacy and Safety of a Specific Inhibitor of the BCR-ABL Tyrosine Kinase in Chronic Myeloid Leukemia",
+      "journal": "New England Journal of Medicine",
+      "year": 2001,
+      "citationCount": 5203,
+      "doi": "10.1056/nejm200104053441401",
+      "sourceUrl": "https://doi.org/10.1056/nejm200104053441401",
+      "verified": true
+    },
+    {
+      "title": "Imatinib Compared with Interferon and Low-Dose Cytarabine for Newly Diagnosed Chronic-Phase Chronic Myeloid Leukemia",
+      "journal": "New England Journal of Medicine",
+      "year": 2003,
+      "citationCount": 3539,
+      "doi": "10.1056/nejmoa022457",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa022457",
+      "verified": true
+    },
+    {
+      "title": "The 5th edition of the World Health Organization Classification of Haematolymphoid Tumours: Myeloid and Histiocytic/Dendritic Neoplasms",
+      "journal": "Leukemia",
+      "year": 2022,
+      "citationCount": 3535,
+      "doi": "10.1038/s41375-022-01613-1",
+      "sourceUrl": "https://doi.org/10.1038/s41375-022-01613-1",
+      "verified": true
+    },
+    {
+      "title": "Five-Year Follow-up of Patients Receiving Imatinib for Chronic Myeloid Leukemia",
+      "journal": "New England Journal of Medicine",
+      "year": 2006,
+      "citationCount": 3455,
+      "doi": "10.1056/nejmoa062867",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa062867",
+      "verified": true
+    },
+    {
+      "title": "Revised International Prognostic Scoring System for Myelodysplastic Syndromes",
+      "journal": "Blood",
+      "year": 2012,
+      "citationCount": 3053,
+      "doi": "10.1182/blood-2012-03-420489",
+      "sourceUrl": "https://doi.org/10.1182/blood-2012-03-420489",
+      "verified": true
+    },
+    {
+      "title": "Activity of a Specific Inhibitor of the BCR-ABL Tyrosine Kinase in the Blast Crisis of Chronic Myeloid Leukemia and Acute Lymphoblastic Leukemia with the Philadelphia Chromosome",
+      "journal": "New England Journal of Medicine",
+      "year": 2001,
+      "citationCount": 2715,
+      "doi": "10.1056/nejm200104053441402",
+      "sourceUrl": "https://doi.org/10.1056/nejm200104053441402",
+      "verified": true
+    },
+    {
+      "title": "A Double-Blind, Placebo-Controlled Trial of Ruxolitinib for Myelofibrosis",
+      "journal": "New England Journal of Medicine",
+      "year": 2012,
+      "citationCount": 2001,
+      "doi": "10.1056/nejmoa1110557",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1110557",
+      "verified": true
+    },
+    {
+      "title": "Venetoclax combined with decitabine or azacitidine in treatment-naive, elderly patients with acute myeloid leukemia",
+      "journal": "Blood",
+      "year": 2018,
+      "citationCount": 1793,
+      "doi": "10.1182/blood-2018-08-868752",
+      "sourceUrl": "https://doi.org/10.1182/blood-2018-08-868752",
+      "verified": true
+    },
+    {
+      "title": "Dasatinib in Imatinib-Resistant Philadelphia Chromosome–Positive Leukemias",
+      "journal": "New England Journal of Medicine",
+      "year": 2006,
+      "citationCount": 1757,
+      "doi": "10.1056/nejmoa055229",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa055229",
+      "verified": true
+    },
+    {
+      "title": "A Tyrosine Kinase Created by Fusion of the <i>PDGFRA</i> and <i>FIP1L1</i> Genes as a Therapeutic Target of Imatinib in Idiopathic Hypereosinophilic Syndrome",
+      "journal": "New England Journal of Medicine",
+      "year": 2003,
+      "citationCount": 1682,
+      "doi": "10.1056/nejmoa025217",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa025217",
+      "verified": true
+    },
+    {
+      "title": "Nilotinib versus Imatinib for Newly Diagnosed Chronic Myeloid Leukemia",
+      "journal": "New England Journal of Medicine",
+      "year": 2010,
+      "citationCount": 1663,
+      "doi": "10.1056/nejmoa0912614",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa0912614",
+      "verified": true
+    },
+    {
+      "title": "Clinical Effect of Point Mutations in Myelodysplastic Syndromes",
+      "journal": "New England Journal of Medicine",
+      "year": 2011,
+      "citationCount": 1608,
+      "doi": "10.1056/nejmoa1013343",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1013343",
+      "verified": true
+    },
+    {
+      "title": "Dasatinib versus Imatinib in Newly Diagnosed Chronic-Phase Chronic Myeloid Leukemia",
+      "journal": "New England Journal of Medicine",
+      "year": 2010,
+      "citationCount": 1565,
+      "doi": "10.1056/nejmoa1002315",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1002315",
+      "verified": true
+    },
+    {
+      "title": "Decitabine improves patient outcomes in myelodysplastic syndromes",
+      "journal": "Cancer",
+      "year": 2006,
+      "citationCount": 1493,
+      "doi": "10.1002/cncr.21792",
+      "sourceUrl": "https://doi.org/10.1002/cncr.21792",
+      "verified": true
+    },
+    {
+      "title": "European LeukemiaNet 2020 recommendations for treating chronic myeloid leukemia",
+      "journal": "Leukemia",
+      "year": 2020,
+      "citationCount": 1447,
+      "doi": "10.1038/s41375-020-0776-2",
+      "sourceUrl": "https://doi.org/10.1038/s41375-020-0776-2",
+      "verified": true
+    },
+    {
+      "title": "Enasidenib in mutant IDH2 relapsed or refractory acute myeloid leukemia",
+      "journal": "Blood",
+      "year": 2017,
+      "citationCount": 1418,
+      "doi": "10.1182/blood-2017-04-779405",
+      "sourceUrl": "https://doi.org/10.1182/blood-2017-04-779405",
+      "verified": true
+    },
+    {
+      "title": "Durable Remissions with Ivosidenib in <i>IDH1</i> -Mutated Relapsed or Refractory AML",
+      "journal": "New England Journal of Medicine",
+      "year": 2018,
+      "citationCount": 1355,
+      "doi": "10.1056/nejmoa1716984",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1716984",
+      "verified": true
+    },
+    {
+      "title": "Nilotinib in Imatinib-Resistant CML and Philadelphia Chromosome–Positive ALL",
+      "journal": "New England Journal of Medicine",
+      "year": 2006,
+      "citationCount": 1339,
+      "doi": "10.1056/nejmoa055104",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa055104",
+      "verified": true
+    },
+    {
+      "title": "Inotuzumab Ozogamicin versus Standard Therapy for Acute Lymphoblastic Leukemia",
+      "journal": "New England Journal of Medicine",
+      "year": 2016,
+      "citationCount": 1325,
+      "doi": "10.1056/nejmoa1509277",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1509277",
+      "verified": true
+    },
+    {
+      "title": "The Biology of Chronic Myeloid Leukemia",
+      "journal": "New England Journal of Medicine",
+      "year": 1999,
+      "citationCount": 1306,
+      "doi": "10.1056/nejm199907153410306",
+      "sourceUrl": "https://doi.org/10.1056/nejm199907153410306",
+      "verified": true
+    },
+    {
+      "title": "Chronic Myeloid Leukemia: An Update of Concepts and Management Recommendations of European LeukemiaNet",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2009,
+      "citationCount": 1294,
+      "doi": "10.1200/jco.2009.25.0779",
+      "sourceUrl": "https://doi.org/10.1200/jco.2009.25.0779",
+      "verified": true
+    },
+    {
+      "title": "Safety and activity of blinatumomab for adult patients with relapsed or refractory B-precursor acute lymphoblastic leukaemia: a multicentre, single-arm, phase 2 study",
+      "journal": "The Lancet Oncology",
+      "year": 2014,
+      "citationCount": 1232,
+      "doi": "10.1016/s1470-2045(14)71170-2",
+      "sourceUrl": "https://doi.org/10.1016/s1470-2045(14)71170-2",
+      "verified": true
+    },
+    {
+      "title": "Multicenter, Randomized, Open-Label, Phase III Trial of Decitabine Versus Patient Choice, With Physician Advice, of Either Supportive Care or Low-Dose Cytarabine for the Treatment of Older Patients With Newly Diagnosed Acute Myeloid Leukemia",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2012,
+      "citationCount": 1160,
+      "doi": "10.1200/jco.2011.38.9429",
+      "sourceUrl": "https://doi.org/10.1200/jco.2011.38.9429",
+      "verified": true
+    },
+    {
+      "title": "Safety and Efficacy of INCB018424, a JAK1 and JAK2 Inhibitor, in Myelofibrosis",
+      "journal": "New England Journal of Medicine",
+      "year": 2010,
+      "citationCount": 1153,
+      "doi": "10.1056/nejmoa1002028",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1002028",
+      "verified": true
+    },
+    {
+      "title": "Engraftment of Allogeneic Hematopoietic Progenitor Cells With Purine Analog-Containing Chemotherapy: Harnessing Graft-Versus-Leukemia Without Myeloablative Therapy",
+      "journal": "Blood",
+      "year": 1997,
+      "citationCount": 1153,
+      "doi": "10.1182/blood.v89.12.4531",
+      "sourceUrl": "https://doi.org/10.1182/blood.v89.12.4531",
+      "verified": true
+    },
+    {
+      "title": "A Phase 2 Trial of Ponatinib in Philadelphia Chromosome–Positive Leukemias",
+      "journal": "New England Journal of Medicine",
+      "year": 2013,
+      "citationCount": 1108,
+      "doi": "10.1056/nejmoa1306494",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1306494",
+      "verified": true
+    },
+    {
+      "title": "Efficacy and Biological Correlates of Response in a Phase II Study of Venetoclax Monotherapy in Patients with Acute Myelogenous Leukemia",
+      "journal": "Cancer Discovery",
+      "year": 2016,
+      "citationCount": 1029,
+      "doi": "10.1158/2159-8290.cd-16-0313",
+      "sourceUrl": "https://doi.org/10.1158/2159-8290.cd-16-0313",
+      "verified": true
+    },
+    {
+      "title": "Early Results of a Chemoimmunotherapy Regimen of Fludarabine, Cyclophosphamide, and Rituximab As Initial Therapy for Chronic Lymphocytic Leukemia",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2005,
+      "citationCount": 947,
+      "doi": "10.1200/jco.2005.12.051",
+      "sourceUrl": "https://doi.org/10.1200/jco.2005.12.051",
+      "verified": true
+    },
+    {
+      "title": "Final 5-Year Study Results of DASISION: The Dasatinib Versus Imatinib Study in Treatment-Naïve Chronic Myeloid Leukemia Patients Trial",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2016,
+      "citationCount": 916,
+      "doi": "10.1200/jco.2015.64.8899",
+      "sourceUrl": "https://doi.org/10.1200/jco.2015.64.8899",
+      "verified": true
+    },
+    {
+      "title": "Long-term benefits and risks of frontline nilotinib vs imatinib for chronic myeloid leukemia in chronic phase: 5-year update of the randomized ENESTnd trial",
+      "journal": "Leukemia",
+      "year": 2016,
+      "citationCount": 841,
+      "doi": "10.1038/leu.2016.5",
+      "sourceUrl": "https://doi.org/10.1038/leu.2016.5",
+      "verified": true
+    },
+    {
+      "title": "The financial burden and distress of patients with cancer: Understanding and stepping‐up action on the financial toxicity of cancer treatment",
+      "journal": "CA A Cancer Journal for Clinicians",
+      "year": 2018,
+      "citationCount": 836,
+      "doi": "10.3322/caac.21443",
+      "sourceUrl": "https://doi.org/10.3322/caac.21443",
+      "verified": true
+    },
+    {
+      "title": "United States Multicenter Study of Arsenic Trioxide in Relapsed Acute Promyelocytic Leukemia",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2001,
+      "citationCount": 822,
+      "doi": "10.1200/jco.2001.19.18.3852",
+      "sourceUrl": "https://doi.org/10.1200/jco.2001.19.18.3852",
+      "verified": true
+    },
+    {
+      "title": "Preclinical characterization of the selective JAK1/2 inhibitor INCB018424: therapeutic implications for the treatment of myeloproliferative neoplasms",
+      "journal": "Blood",
+      "year": 2010,
+      "citationCount": 813,
+      "doi": "10.1182/blood-2009-04-214957",
+      "sourceUrl": "https://doi.org/10.1182/blood-2009-04-214957",
+      "verified": true
+    },
+    {
+      "title": "Phase 1 study of low-dose prolonged exposure schedules of the hypomethylating agent 5-aza-2′-deoxycytidine (decitabine) in hematopoietic malignancies",
+      "journal": "Blood",
+      "year": 2003,
+      "citationCount": 810,
+      "doi": "10.1182/blood-2003-03-0687",
+      "sourceUrl": "https://doi.org/10.1182/blood-2003-03-0687",
+      "verified": true
+    },
+    {
+      "title": "Results of Treatment With Hyper-CVAD, a Dose-Intensive Regimen, in Adult Acute Lymphocytic Leukemia",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2000,
+      "citationCount": 787,
+      "doi": "10.1200/jco.2000.18.3.547",
+      "sourceUrl": "https://doi.org/10.1200/jco.2000.18.3.547",
+      "verified": true
+    },
+    {
+      "title": "Ponatinib in Refractory Philadelphia Chromosome–Positive Leukemias",
+      "journal": "New England Journal of Medicine",
+      "year": 2012,
+      "citationCount": 759,
+      "doi": "10.1056/nejmoa1205127",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1205127",
+      "verified": true
+    },
+    {
+      "title": "Nilotinib (formerly AMN107), a highly selective BCR-ABL tyrosine kinase inhibitor, is effective in patients with Philadelphia chromosome–positive chronic myelogenous leukemia in chronic phase following imatinib resistance and intolerance",
+      "journal": "Blood",
+      "year": 2007,
+      "citationCount": 742,
+      "doi": "10.1182/blood-2007-03-080689",
+      "sourceUrl": "https://doi.org/10.1182/blood-2007-03-080689",
+      "verified": true
+    },
+    {
+      "title": "Acute myeloid leukemia: current progress and future directions",
+      "journal": "Blood Cancer Journal",
+      "year": 2021,
+      "citationCount": 717,
+      "doi": "10.1038/s41408-021-00425-3",
+      "sourceUrl": "https://doi.org/10.1038/s41408-021-00425-3",
+      "verified": true
+    },
+    {
+      "title": "Selective BCL-2 Inhibition by ABT-199 Causes On-Target Cell Death in Acute Myeloid Leukemia",
+      "journal": "Cancer Discovery",
+      "year": 2013,
+      "citationCount": 713,
+      "doi": "10.1158/2159-8290.cd-13-0609",
+      "sourceUrl": "https://doi.org/10.1158/2159-8290.cd-13-0609",
+      "verified": true
+    },
+    {
+      "title": "Genetic characterization of TET1, TET2, and TET3 alterations in myeloid malignancies",
+      "journal": "Blood",
+      "year": 2009,
+      "citationCount": 713,
+      "doi": "10.1182/blood-2009-03-210039",
+      "sourceUrl": "https://doi.org/10.1182/blood-2009-03-210039",
+      "verified": true
+    },
+    {
+      "title": "Safety and preliminary efficacy of venetoclax with decitabine or azacitidine in elderly patients with previously untreated acute myeloid leukaemia: a non-randomised, open-label, phase 1b study",
+      "journal": "The Lancet Oncology",
+      "year": 2018,
+      "citationCount": 691,
+      "doi": "10.1016/s1470-2045(18)30010-x",
+      "sourceUrl": "https://doi.org/10.1016/s1470-2045(18)30010-x",
+      "verified": true
+    },
+    {
+      "title": "Pharmacologic inhibition of fatty acid oxidation sensitizes human leukemia cells to apoptosis induction",
+      "journal": "Journal of Clinical Investigation",
+      "year": 2009,
+      "citationCount": 688,
+      "doi": "10.1172/jci38942",
+      "sourceUrl": "https://doi.org/10.1172/jci38942",
+      "verified": true
+    },
+    {
+      "title": "Long-term results of the fludarabine, cyclophosphamide, and rituximab regimen as initial therapy of chronic lymphocytic leukemia",
+      "journal": "Blood",
+      "year": 2008,
+      "citationCount": 687,
+      "doi": "10.1182/blood-2008-02-140582",
+      "sourceUrl": "https://doi.org/10.1182/blood-2008-02-140582",
+      "verified": true
+    },
+    {
+      "title": "Results of a randomized study of 3 schedules of low-dose decitabine in higher-risk myelodysplastic syndrome and chronic myelomonocytic leukemia",
+      "journal": "Blood",
+      "year": 2006,
+      "citationCount": 687,
+      "doi": "10.1182/blood-2006-05-021162",
+      "sourceUrl": "https://doi.org/10.1182/blood-2006-05-021162",
+      "verified": true
+    },
+    {
+      "title": "Zygomycosis in a Tertiary‐Care Cancer Center in the Era of <i>Aspergillus‐</i> Active Antifungal Therapy: A Case‐Control Observational Study of 27 Recent Cases",
+      "journal": "The Journal of Infectious Diseases",
+      "year": 2005,
+      "citationCount": 673,
+      "doi": "10.1086/428780",
+      "sourceUrl": "https://doi.org/10.1086/428780",
+      "verified": true
+    },
+    {
+      "title": "Report of an international working group to standardize response criteria for myelodysplastic syndromes.",
+      "journal": "PubMed",
+      "year": 2000,
+      "citationCount": 665,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2121710010",
+      "verified": true
+    },
+    {
+      "title": "Evidence that specific T lymphocytes may participate in the elimination of chronic myelogenous leukemia",
+      "journal": "Nature Medicine",
+      "year": 2000,
+      "citationCount": 665,
+      "doi": "10.1038/79526",
+      "sourceUrl": "https://doi.org/10.1038/79526",
+      "verified": true
+    },
+    {
+      "title": "Angiogenesis in acute and chronic leukemias and myelodysplastic syndromes",
+      "journal": "Blood",
+      "year": 2000,
+      "citationCount": 657,
+      "doi": "10.1182/blood.v96.6.2240",
+      "sourceUrl": "https://doi.org/10.1182/blood.v96.6.2240",
+      "verified": true
+    },
+    {
+      "title": "Hematologic Remission and Cytogenetic Improvement Induced by Recombinant Human Interferon Alpha<sub>A</sub>in Chronic Myelogenous Leukemia",
+      "journal": "New England Journal of Medicine",
+      "year": 1986,
+      "citationCount": 657,
+      "doi": "10.1056/nejm198604243141701",
+      "sourceUrl": "https://doi.org/10.1056/nejm198604243141701",
+      "verified": true
+    },
+    {
+      "title": " -D-Glucan as a Diagnostic Adjunct for Invasive Fungal Infections: Validation, Cutoff Development, and Performance in Patients with Acute Myelogenous Leukemia and Myelodysplastic Syndrome",
+      "journal": "Clinical Infectious Diseases",
+      "year": 2004,
+      "citationCount": 640,
+      "doi": "10.1086/421944",
+      "sourceUrl": "https://doi.org/10.1086/421944",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:13.000Z",
+  "openalexId": "https://openalex.org/A5090435894"
 }

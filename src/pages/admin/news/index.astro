@@ -1,0 +1,393 @@
+---
+/**
+ * MDRPedia — News Admin Dashboard
+ * Manage news articles with CRUD operations
+ */
+import Layout from "../../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { requireSuperAdmin } from "../../../lib/rbac";
+
+export const prerender = false;
+
+if (!requireSuperAdmin(Astro.request)) {
+    return Astro.redirect("/login");
+}
+
+const adminKey = new URL(Astro.request.url).searchParams.get("key");
+const news = await getCollection("news");
+
+// Sort by date descending
+const sortedNews = news.sort((a, b) =>
+    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+// Group by category
+const categories = [...new Set(news.map(n => n.data.category))].sort();
+---
+
+<Layout title="Manage News — MDRPedia Admin">
+    <div class="container admin-dashboard">
+        <header class="admin-header">
+            <div class="admin-header__top">
+                <span class="badge badge--admin">SUPER ADMIN</span>
+                <h1>News Management</h1>
+            </div>
+            <div class="admin-actions">
+                <a href={`/admin/news/create?key=${adminKey}`} class="btn btn--primary">
+                    + New Article
+                </a>
+                <a href={`/admin?key=${adminKey}`} class="btn btn--outline">
+                    &larr; Dashboard
+                </a>
+            </div>
+        </header>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-value">{news.length}</span>
+                <span class="stat-label">Total Articles</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">{categories.length}</span>
+                <span class="stat-label">Categories</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">{news.filter(n => new Date(n.data.date) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)).length}</span>
+                <span class="stat-label">Last 30 Days</span>
+            </div>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="filter-bar">
+            <span class="filter-label">Filter by Category:</span>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-category="all">All</button>
+                {categories.map(cat => (
+                    <button class="filter-btn" data-category={cat}>{cat}</button>
+                ))}
+            </div>
+        </div>
+
+        <!-- News Table -->
+        <div class="table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Source</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {sortedNews.length > 0 ? (
+                        sortedNews.map((article) => (
+                            <tr data-category={article.data.category}>
+                                <td>
+                                    <a href={`/news/${article.id}`} target="_blank" class="article-title">
+                                        {article.data.title}
+                                    </a>
+                                    <p class="article-summary">{article.data.summary.slice(0, 80)}...</p>
+                                </td>
+                                <td>
+                                    <span class="category-badge">{article.data.category}</span>
+                                </td>
+                                <td>{article.data.source}</td>
+                                <td>{new Date(article.data.date).toLocaleDateString()}</td>
+                                <td class="actions-cell">
+                                    <a href={`/admin/news/${article.id}?key=${adminKey}`} class="btn btn--sm btn--outline">
+                                        Edit
+                                    </a>
+                                    <button class="btn btn--sm btn--danger" data-delete={article.id}>
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colspan="5" class="empty-state">
+                                No news articles found. Create one above.
+                            </td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</Layout>
+
+<script>
+    // Category filter
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const category = btn.dataset.category;
+
+            // Update active state
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Filter rows
+            document.querySelectorAll('tbody tr').forEach(row => {
+                if (category === 'all' || row.dataset.category === category) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Delete handlers
+    document.querySelectorAll('[data-delete]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const slug = btn.dataset.delete;
+            if (!confirm(`Delete article "${slug}"? This cannot be undone.`)) return;
+
+            const key = new URLSearchParams(window.location.search).get('key');
+            const res = await fetch(`/api/admin/news?key=${key}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ slug })
+            });
+
+            if (res.ok) {
+                window.location.reload();
+            } else {
+                alert('Failed to delete article');
+            }
+        });
+    });
+</script>
+
+<style>
+    .admin-dashboard {
+        padding: 40px 20px;
+        max-width: 1400px;
+        color: var(--text-primary);
+    }
+
+    .admin-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+    }
+
+    .admin-header__top {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .badge--admin {
+        background: #ffd700;
+        color: #000;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        align-self: flex-start;
+    }
+
+    h1 {
+        font-family: var(--font-serif);
+        font-size: 2rem;
+        margin: 0;
+    }
+
+    .admin-actions {
+        display: flex;
+        gap: 12px;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 16px;
+        margin-bottom: 32px;
+    }
+
+    .stat-card {
+        background: var(--bg-card, #14142a);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .stat-value {
+        display: block;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--accent-purple, #8b5cf6);
+    }
+
+    .stat-label {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+    }
+
+    .filter-label {
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+
+    .filter-buttons {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .filter-btn {
+        padding: 6px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: transparent;
+        color: var(--text-secondary);
+        border-radius: 20px;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+        border-color: var(--accent-purple);
+        color: var(--accent-purple);
+    }
+
+    .filter-btn.active {
+        background: var(--accent-purple);
+        border-color: var(--accent-purple);
+        color: white;
+    }
+
+    /* Table */
+    .table-container {
+        background: var(--bg-card, #14142a);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .admin-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        padding: 16px;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .admin-table th {
+        background: rgba(255, 255, 255, 0.03);
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+
+    .article-title {
+        color: var(--accent-purple);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .article-title:hover {
+        text-decoration: underline;
+    }
+
+    .article-summary {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin: 4px 0 0;
+    }
+
+    .category-badge {
+        display: inline-block;
+        padding: 4px 10px;
+        background: rgba(139, 92, 246, 0.15);
+        color: var(--accent-purple);
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .actions-cell {
+        display: flex;
+        gap: 8px;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: var(--text-muted);
+    }
+
+    /* Buttons */
+    .btn {
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+    }
+
+    .btn--primary {
+        background: #8b5cf6;
+        color: white;
+    }
+
+    .btn--outline {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--text-primary);
+    }
+
+    .btn--danger {
+        background: rgba(239, 68, 68, 0.15);
+        color: #ef4444;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .btn--sm {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+
+    @media (max-width: 768px) {
+        .admin-header {
+            flex-direction: column;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .admin-table {
+            font-size: 0.85rem;
+        }
+
+        .actions-cell {
+            flex-direction: column;
+        }
+    }
+</style>

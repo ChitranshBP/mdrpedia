@@ -1,0 +1,378 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import { prisma } from "../../../lib/prisma";
+import { requireSuperAdmin } from "../../../lib/rbac";
+
+export const prerender = false;
+
+if (!requireSuperAdmin(Astro.request)) {
+    return Astro.redirect("/login");
+}
+const url = new URL(Astro.request.url);
+const adminKey = url.searchParams.get("key");
+const slugParam = url.searchParams.get("slug");
+
+let page = null;
+let error = "";
+let success = "";
+
+// Handle POST (Save)
+if (Astro.request.method === "POST") {
+    try {
+        const formData = await Astro.request.formData();
+        const newSlug = formData.get("slug")?.toString();
+        const title = formData.get("title")?.toString();
+        const content = formData.get("content")?.toString();
+        const published = formData.get("published") === "on";
+        const seo_title = formData.get("seo_title")?.toString();
+        const seo_desc = formData.get("seo_desc")?.toString();
+
+        if (!newSlug || !title || !content) {
+            throw new Error("Slug, Title, and Content are required.");
+        }
+
+        // Check if slug exists (if creating or changing slug)
+        const existing = await prisma.contentPage.findUnique({
+            where: { slug: newSlug },
+        });
+        if (existing && (!slugParam || slugParam !== newSlug)) {
+            throw new Error("Slug already exists.");
+        }
+
+        if (slugParam) {
+            // Update
+            await prisma.contentPage.update({
+                where: { slug: slugParam },
+                data: {
+                    slug: newSlug,
+                    title,
+                    content,
+                    published,
+                    seo_title,
+                    seo_desc,
+                },
+            });
+            // Also log revision
+            await prisma.pageRevision.create({
+                data: {
+                    page_slug: newSlug,
+                    content_snapshot: content,
+                    title_snapshot: title,
+                    changed_by: "Super Admin", // Could come from session
+                    change_note: "Manual edit via CMS",
+                },
+            });
+            success = "Page updated successfully.";
+        } else {
+            // Create
+            await prisma.contentPage.create({
+                data: {
+                    slug: newSlug,
+                    title,
+                    content,
+                    published,
+                    seo_title,
+                    seo_desc,
+                },
+            });
+            await prisma.pageRevision.create({
+                data: {
+                    page_slug: newSlug, // Relational connection might need manual order or just string
+                    content_snapshot: content,
+                    title_snapshot: title,
+                    changed_by: "Super Admin",
+                    change_note: "Initial creation",
+                },
+            });
+            return Astro.redirect(`/admin/pages?key=${adminKey}`);
+        }
+    } catch (err: any) {
+        error = err.message || "Failed to save page.";
+    }
+}
+
+// Fetch for edit view (get fresh data even after potential POST update)
+// If we just updated slug, we might not find it by old slugParam if renamed. But simplified logic here.
+const targetSlug = slugParam;
+if (targetSlug) {
+    page = await prisma.contentPage.findUnique({ where: { slug: targetSlug } });
+}
+
+const initialSlug = page?.slug || "";
+const initialTitle = page?.title || "";
+const initialContent = page?.content || "";
+const initialPub = page?.published || false;
+const initialSeoTitle = page?.seo_title || "";
+const initialSeoDesc = page?.seo_desc || "";
+---
+
+<Layout title={`${page ? "Edit" : "New"} Page — MDRPedia Admin`}>
+    <div class="container admin-dashboard">
+        <header class="admin-header">
+            <div class="admin-header__top">
+                <span class="badge badge--admin">SUPER ADMIN</span>
+                <h1>{page ? `Edit: ${page.title}` : "Create New Page"}</h1>
+            </div>
+            <div class="admin-actions">
+                <a
+                    href={`/admin/pages?key=${adminKey}`}
+                    class="btn btn--outline"
+                >
+                    Cancel
+                </a>
+            </div>
+        </header>
+
+        {error && <div class="alert alert-error">{error}</div>}
+        {success && <div class="alert alert-success">{success}</div>}
+
+        <form method="POST" class="edit-form">
+            <div class="form-grid">
+                <div class="main-column">
+                    <div class="form-group">
+                        <label for="title">Page Title</label>
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            value={initialTitle}
+                            required
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="slug">URL Slug (e.g. 'about-us')</label>
+                        <div class="slug-input-wrapper">
+                            <span>/</span>
+                            <input
+                                type="text"
+                                id="slug"
+                                name="slug"
+                                value={initialSlug}
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="content">Content (Markdown)</label>
+                        <textarea
+                            id="content"
+                            name="content"
+                            class="content-editor"
+                            required>{initialContent}</textarea
+                        >
+                        <small>Supports Markdown (headers, lists, links)</small>
+                    </div>
+                </div>
+
+                <div class="sidebar-column">
+                    <div class="sidebar-card">
+                        <h3>Publishing</h3>
+                        <div class="form-group checkbox-group">
+                            <input
+                                type="checkbox"
+                                id="published"
+                                name="published"
+                                checked={initialPub}
+                            />
+                            <label for="published">Published Payload</label>
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn btn--primary full-width"
+                        >
+                            {page ? "Update Page" : "Create Page"}
+                        </button>
+
+                        {
+                            page && (
+                                <div style="margin-top: 12px; font-size: 0.8rem; color: var(--text-muted);">
+                                    Last updated:{" "}
+                                    {page.updatedAt.toLocaleDateString()}
+                                </div>
+                            )
+                        }
+                    </div>
+
+                    <div class="sidebar-card">
+                        <h3>SEO Metadata</h3>
+                        <div class="form-group">
+                            <label for="seo_title">Meta Title</label>
+                            <input
+                                type="text"
+                                id="seo_title"
+                                name="seo_title"
+                                value={initialSeoTitle}
+                                placeholder="Same as title if empty"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="seo_desc">Meta Description</label>
+                            <textarea
+                                id="seo_desc"
+                                name="seo_desc"
+                                rows="3"
+                                placeholder="Brief summary for Google..."
+                                >{initialSeoDesc}</textarea
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</Layout>
+
+<style>
+    .admin-dashboard {
+        padding: 40px 20px;
+        max-width: 1200px;
+        color: var(--text-primary);
+    }
+
+    .admin-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 32px;
+    }
+
+    h1 {
+        margin: 0;
+        font-family: var(--font-serif);
+        font-size: 2rem;
+    }
+
+    .badge--admin {
+        background: #ffd700;
+        color: #000;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+    }
+
+    .alert {
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 24px;
+    }
+    .alert-error {
+        background: rgba(239, 68, 68, 0.2);
+        color: #ef4444;
+        border: 1px solid #ef4444;
+    }
+    .alert-success {
+        background: rgba(16, 185, 129, 0.2);
+        color: #10b981;
+        border: 1px solid #10b981;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 32px;
+    }
+
+    @media (max-width: 900px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: var(--text-secondary);
+    }
+
+    input[type="text"],
+    textarea {
+        width: 100%;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 6px;
+        color: var(--text-primary);
+        font-family: inherit;
+        font-size: 0.95rem;
+    }
+
+    .slug-input-wrapper {
+        display: flex;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 6px;
+        padding-left: 12px;
+    }
+    .slug-input-wrapper span {
+        color: var(--text-muted);
+        margin-right: 4px;
+    }
+    .slug-input-wrapper input {
+        border: none;
+        background: transparent;
+        padding-left: 0;
+    }
+
+    .content-editor {
+        min-height: 500px;
+        font-family: monospace;
+        line-height: 1.5;
+    }
+
+    .sidebar-card {
+        background: var(--bg-card, #14142a);
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        margin-bottom: 24px;
+    }
+
+    .sidebar-card h3 {
+        margin: 0 0 16px 0;
+        font-size: 1.1rem;
+        color: var(--text-primary);
+    }
+
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .checkbox-group input {
+        margin: 0;
+    }
+    .checkbox-group label {
+        margin: 0;
+    }
+
+    .btn {
+        text-decoration: none;
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        justify-content: center;
+    }
+    .btn--primary {
+        background: #8b5cf6;
+        color: white;
+        border: none;
+    }
+    .btn--outline {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--text-primary);
+    }
+    .full-width {
+        width: 100%;
+    }
+</style>

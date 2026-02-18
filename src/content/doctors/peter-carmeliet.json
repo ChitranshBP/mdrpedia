@@ -1,36 +1,492 @@
 {
   "fullName": "Peter Carmeliet",
   "slug": "peter-carmeliet",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Vascular Biology",
   "geography": {
-    "city": "Unknown",
-    "country": "Belgium"
+    "country": "Belgium",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">PC</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 51,
-  "hIndex": 203,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 192,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 18121,
+  "livesSaved": 0,
+  "biography": "Peter, Baron Carmeliet is a Belgian physician and professor at the Katholieke Universiteit Leuven. He is also Adjunct Director of the VIB Vesalius Research Center, KU Leuven. Among his research interests are vasculogenesis, angiogenesis, and vascular endothelial growth factor (VEGF). In 2016, Carmeliet identified neuron-producing stem cells in the brain.",
+  "aiSummary": "Peter Carmeliet is a vascular biology specialist with an H-index of 192 at KU Leuven (Faculty). Has been published in Nature, Nature Medicine, Cell. Based in Belgium.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "KU Leuven"
-    }
-  ],
-  "bio": "Peter Carmeliet is a pioneer in Vascular Biology at KU Leuven, Belgium. With a D-Index of 203 and over 181,214 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "KU Leuven",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Vascular Biology"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Angiogenesis in cancer and other diseases",
+      "journal": "Nature",
+      "year": 2000,
+      "citationCount": 8932,
+      "doi": "10.1038/35025220",
+      "sourceUrl": "https://doi.org/10.1038/35025220",
+      "verified": true
+    },
+    {
+      "title": "Molecular mechanisms and clinical applications of angiogenesis",
+      "journal": "Nature",
+      "year": 2011,
+      "citationCount": 5277,
+      "doi": "10.1038/nature10144",
+      "sourceUrl": "https://doi.org/10.1038/nature10144",
+      "verified": true
+    },
+    {
+      "title": "Angiogenesis in health and disease",
+      "journal": "Nature Medicine",
+      "year": 2003,
+      "citationCount": 4223,
+      "doi": "10.1038/nm0603-653",
+      "sourceUrl": "https://doi.org/10.1038/nm0603-653",
+      "verified": true
+    },
+    {
+      "title": "Abnormal blood vessel development and lethality in embryos lacking a single VEGF allele",
+      "journal": "Nature",
+      "year": 1996,
+      "citationCount": 4126,
+      "doi": "10.1038/380435a0",
+      "sourceUrl": "https://doi.org/10.1038/380435a0",
+      "verified": true
+    },
+    {
+      "title": "Mechanisms of angiogenesis and arteriogenesis",
+      "journal": "Nature Medicine",
+      "year": 2000,
+      "citationCount": 4121,
+      "doi": "10.1038/74651",
+      "sourceUrl": "https://doi.org/10.1038/74651",
+      "verified": true
+    },
+    {
+      "title": "Angiogenesis in life, disease and medicine",
+      "journal": "Nature",
+      "year": 2005,
+      "citationCount": 3409,
+      "doi": "10.1038/nature04478",
+      "sourceUrl": "https://doi.org/10.1038/nature04478",
+      "verified": true
+    },
+    {
+      "title": "Basic and Therapeutic Aspects of Angiogenesis",
+      "journal": "Cell",
+      "year": 2011,
+      "citationCount": 2728,
+      "doi": "10.1016/j.cell.2011.08.039",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2011.08.039",
+      "verified": true
+    },
+    {
+      "title": "Role of HIF-1α in hypoxia-mediated apoptosis, cell proliferation and tumour angiogenesis",
+      "journal": "Nature",
+      "year": 1998,
+      "citationCount": 2475,
+      "doi": "10.1038/28867",
+      "sourceUrl": "https://doi.org/10.1038/28867",
+      "verified": true
+    },
+    {
+      "title": "PHD1 controls muscle mTORC1 in a hydroxylation-independent manner by stabilizing leucyl tRNA synthetase",
+      "journal": "Nature Communications",
+      "year": 2020,
+      "citationCount": 2279,
+      "doi": "10.1038/s41467-019-13889-6",
+      "sourceUrl": "https://doi.org/10.1038/s41467-019-13889-6",
+      "verified": true
+    },
+    {
+      "title": "Hypoxia and Inflammation",
+      "journal": "New England Journal of Medicine",
+      "year": 2011,
+      "citationCount": 1973,
+      "doi": "10.1056/nejmra0910283",
+      "sourceUrl": "https://doi.org/10.1056/nejmra0910283",
+      "verified": true
+    },
+    {
+      "title": "VEGF as a Key Mediator of Angiogenesis in Cancer",
+      "journal": "Oncology",
+      "year": 2005,
+      "citationCount": 1742,
+      "doi": "10.1159/000088478",
+      "sourceUrl": "https://doi.org/10.1159/000088478",
+      "verified": true
+    },
+    {
+      "title": "Phenotype molding of stromal cells in the lung tumor microenvironment",
+      "journal": "Nature Medicine",
+      "year": 2018,
+      "citationCount": 1690,
+      "doi": "10.1038/s41591-018-0096-5",
+      "sourceUrl": "https://doi.org/10.1038/s41591-018-0096-5",
+      "verified": true
+    },
+    {
+      "title": "Synergism between vascular endothelial growth factor and placental growth factor contributes to angiogenesis and plasma extravasation in pathological conditions",
+      "journal": "Nature Medicine",
+      "year": 2001,
+      "citationCount": 1660,
+      "doi": "10.1038/87904",
+      "sourceUrl": "https://doi.org/10.1038/87904",
+      "verified": true
+    },
+    {
+      "title": "Principles and mechanisms of vessel normalization for cancer and other angiogenic diseases",
+      "journal": "Nature Reviews Drug Discovery",
+      "year": 2011,
+      "citationCount": 1627,
+      "doi": "10.1038/nrd3455",
+      "sourceUrl": "https://doi.org/10.1038/nrd3455",
+      "verified": true
+    },
+    {
+      "title": "Role of PFKFB3-Driven Glycolysis in Vessel Sprouting",
+      "journal": "Cell",
+      "year": 2013,
+      "citationCount": 1516,
+      "doi": "10.1016/j.cell.2013.06.037",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2013.06.037",
+      "verified": true
+    },
+    {
+      "title": "Single-Cell Transcriptome Atlas of Murine Endothelial Cells",
+      "journal": "Cell",
+      "year": 2020,
+      "citationCount": 1282,
+      "doi": "10.1016/j.cell.2020.01.015",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2020.01.015",
+      "verified": true
+    },
+    {
+      "title": "Targeted Deficiency or Cytosolic Truncation of the VE-cadherin Gene in Mice Impairs VEGF-Mediated Endothelial Survival and Angiogenesis",
+      "journal": "Cell",
+      "year": 1999,
+      "citationCount": 1277,
+      "doi": "10.1016/s0092-8674(00)81010-7",
+      "sourceUrl": "https://doi.org/10.1016/s0092-8674(00)81010-7",
+      "verified": true
+    },
+    {
+      "title": "uPAR: a versatile signalling orchestrator",
+      "journal": "Nature Reviews Molecular Cell Biology",
+      "year": 2002,
+      "citationCount": 1200,
+      "doi": "10.1038/nrm977",
+      "sourceUrl": "https://doi.org/10.1038/nrm977",
+      "verified": true
+    },
+    {
+      "title": "Common mechanisms of nerve and blood vessel wiring",
+      "journal": "Nature",
+      "year": 2005,
+      "citationCount": 1069,
+      "doi": "10.1038/nature03875",
+      "sourceUrl": "https://doi.org/10.1038/nature03875",
+      "verified": true
+    },
+    {
+      "title": "Revascularization of ischemic tissues by PlGF treatment, and inhibition of tumor angiogenesis, arthritis and atherosclerosis by anti-Flt1",
+      "journal": "Nature Medicine",
+      "year": 2002,
+      "citationCount": 1055,
+      "doi": "10.1038/nm731",
+      "sourceUrl": "https://doi.org/10.1038/nm731",
+      "verified": true
+    },
+    {
+      "title": "Physiological consequences of loss of plasminogen activator gene function in mice",
+      "journal": "Nature",
+      "year": 1994,
+      "citationCount": 1052,
+      "doi": "10.1038/368419a0",
+      "sourceUrl": "https://doi.org/10.1038/368419a0",
+      "verified": true
+    },
+    {
+      "title": "COVID-19: the vasculature unleashed",
+      "journal": "Nature reviews. Immunology",
+      "year": 2020,
+      "citationCount": 1049,
+      "doi": "10.1038/s41577-020-0343-0",
+      "sourceUrl": "https://doi.org/10.1038/s41577-020-0343-0",
+      "verified": true
+    },
+    {
+      "title": "Deletion of the hypoxia-response element in the vascular endothelial growth factor promoter causes motor neuron degeneration",
+      "journal": "Nature Genetics",
+      "year": 2001,
+      "citationCount": 1008,
+      "doi": "10.1038/88842",
+      "sourceUrl": "https://doi.org/10.1038/88842",
+      "verified": true
+    },
+    {
+      "title": "Gene prioritization through genomic data fusion",
+      "journal": "Nature Biotechnology",
+      "year": 2006,
+      "citationCount": 894,
+      "doi": "10.1038/nbt1203",
+      "sourceUrl": "https://doi.org/10.1038/nbt1203",
+      "verified": true
+    },
+    {
+      "title": "VEGF is a modifier of amyotrophic lateral sclerosis in mice and humans and protects motoneurons against ischemic death",
+      "journal": "Nature Genetics",
+      "year": 2003,
+      "citationCount": 858,
+      "doi": "10.1038/ng1211",
+      "sourceUrl": "https://doi.org/10.1038/ng1211",
+      "verified": true
+    },
+    {
+      "title": "Heterozygous Deficiency of PHD2 Restores Tumor Oxygenation and Inhibits Metastasis via Endothelial Normalization",
+      "journal": "Cell",
+      "year": 2009,
+      "citationCount": 802,
+      "doi": "10.1016/j.cell.2009.01.020",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2009.01.020",
+      "verified": true
+    },
+    {
+      "title": "Inhibition of plasminogen activators or matrix metalloproteinases prevents cardiac rupture but impairs therapeutic angiogenesis and causes cardiac failure",
+      "journal": "Nature Medicine",
+      "year": 1999,
+      "citationCount": 788,
+      "doi": "10.1038/13459",
+      "sourceUrl": "https://doi.org/10.1038/13459",
+      "verified": true
+    },
+    {
+      "title": "Anti-PlGF Inhibits Growth of VEGF(R)-Inhibitor-Resistant Tumors without Affecting Healthy Vessels",
+      "journal": "Cell",
+      "year": 2007,
+      "citationCount": 786,
+      "doi": "10.1016/j.cell.2007.08.038",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2007.08.038",
+      "verified": true
+    },
+    {
+      "title": "A Sertoli cell-selective knockout of the androgen receptor causes spermatogenic arrest in meiosis",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2004,
+      "citationCount": 784,
+      "doi": "10.1073/pnas.0308114100",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0308114100",
+      "verified": true
+    },
+    {
+      "title": "Role of PlGF in the intra- and intermolecular cross talk between the VEGF receptors Flt1 and Flk1",
+      "journal": "Nature Medicine",
+      "year": 2003,
+      "citationCount": 763,
+      "doi": "10.1038/nm884",
+      "sourceUrl": "https://doi.org/10.1038/nm884",
+      "verified": true
+    },
+    {
+      "title": "Loss of HIF-2α and inhibition of VEGF impair fetal lung maturation, whereas treatment with VEGF prevents fatal respiratory distress in premature mice",
+      "journal": "Nature Medicine",
+      "year": 2002,
+      "citationCount": 727,
+      "doi": "10.1038/nm721",
+      "sourceUrl": "https://doi.org/10.1038/nm721",
+      "verified": true
+    },
+    {
+      "title": "Molecular mechanisms of lymphangiogenesis in health and disease",
+      "journal": "Cancer Cell",
+      "year": 2002,
+      "citationCount": 721,
+      "doi": "10.1016/s1535-6108(02)00051-x",
+      "sourceUrl": "https://doi.org/10.1016/s1535-6108(02)00051-x",
+      "verified": true
+    },
+    {
+      "title": "The proteolytic activity of tissue-plasminogen activator enhances NMDA receptor-mediated signaling",
+      "journal": "Nature Medicine",
+      "year": 2001,
+      "citationCount": 716,
+      "doi": "10.1038/83358",
+      "sourceUrl": "https://doi.org/10.1038/83358",
+      "verified": true
+    },
+    {
+      "title": "HRG Inhibits Tumor Growth and Metastasis by Inducing Macrophage Polarization and Vessel Normalization through Downregulation of PlGF",
+      "journal": "Cancer Cell",
+      "year": 2011,
+      "citationCount": 692,
+      "doi": "10.1016/j.ccr.2010.11.009",
+      "sourceUrl": "https://doi.org/10.1016/j.ccr.2010.11.009",
+      "verified": true
+    },
+    {
+      "title": "Absence of host plasminogen activator inhibitor 1 prevents cancer invasion and vascularization",
+      "journal": "Nature Medicine",
+      "year": 1998,
+      "citationCount": 682,
+      "doi": "10.1038/nm0898-923",
+      "sourceUrl": "https://doi.org/10.1038/nm0898-923",
+      "verified": true
+    },
+    {
+      "title": "Impaired myocardial angiogenesis and ischemic cardiomyopathy in mice lacking the vascular endothelial growth factor isoforms VEGF164 and VEGF188",
+      "journal": "Nature Medicine",
+      "year": 1999,
+      "citationCount": 681,
+      "doi": "10.1038/8379",
+      "sourceUrl": "https://doi.org/10.1038/8379",
+      "verified": true
+    },
+    {
+      "title": "Role of tissue factor in embryonic blood vessel development",
+      "journal": "Nature",
+      "year": 1996,
+      "citationCount": 675,
+      "doi": "10.1038/383073a0",
+      "sourceUrl": "https://doi.org/10.1038/383073a0",
+      "verified": true
+    },
+    {
+      "title": "Urokinase-generated plasmin activates matrix metalloproteinases during aneurysm formation",
+      "journal": "Nature Genetics",
+      "year": 1997,
+      "citationCount": 660,
+      "doi": "10.1038/ng1297-439",
+      "sourceUrl": "https://doi.org/10.1038/ng1297-439",
+      "verified": true
+    },
+    {
+      "title": "Tumour hypoxia causes DNA hypermethylation by reducing TET activity",
+      "journal": "Nature",
+      "year": 2016,
+      "citationCount": 649,
+      "doi": "10.1038/nature19081",
+      "sourceUrl": "https://doi.org/10.1038/nature19081",
+      "verified": true
+    },
+    {
+      "title": "Inhibition of the Glycolytic Activator PFKFB3 in Endothelium Induces Tumor Vessel Normalization, Impairs Metastasis, and Improves Chemotherapy",
+      "journal": "Cancer Cell",
+      "year": 2016,
+      "citationCount": 635,
+      "doi": "10.1016/j.ccell.2016.10.006",
+      "sourceUrl": "https://doi.org/10.1016/j.ccell.2016.10.006",
+      "verified": true
+    },
+    {
+      "title": "Fatty acid carbon is essential for dNTP synthesis in endothelial cells",
+      "journal": "Nature",
+      "year": 2015,
+      "citationCount": 624,
+      "doi": "10.1038/nature14362",
+      "sourceUrl": "https://doi.org/10.1038/nature14362",
+      "verified": true
+    },
+    {
+      "title": "Endothelial Cell Metabolism in Normal and Diseased Vasculature",
+      "journal": "Circulation Research",
+      "year": 2015,
+      "citationCount": 615,
+      "doi": "10.1161/circresaha.116.302855",
+      "sourceUrl": "https://doi.org/10.1161/circresaha.116.302855",
+      "verified": true
+    },
+    {
+      "title": "In vivo measurement of gene expression, angiogenesis and physiological function in tumors using multiphoton laser scanning microscopy",
+      "journal": "Nature Medicine",
+      "year": 2001,
+      "citationCount": 610,
+      "doi": "10.1038/89997",
+      "sourceUrl": "https://doi.org/10.1038/89997",
+      "verified": true
+    },
+    {
+      "title": "VEGF delivery with retrogradely transported lentivector prolongs survival in a mouse ALS model",
+      "journal": "Nature",
+      "year": 2004,
+      "citationCount": 591,
+      "doi": "10.1038/nature02544",
+      "sourceUrl": "https://doi.org/10.1038/nature02544",
+      "verified": true
+    },
+    {
+      "title": "Duodenal calcium absorption in vitamin D receptor–knockout mice: Functional and molecular aspects",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2001,
+      "citationCount": 585,
+      "doi": "10.1073/pnas.231474698",
+      "sourceUrl": "https://doi.org/10.1073/pnas.231474698",
+      "verified": true
+    },
+    {
+      "title": "Recent molecular discoveries in angiogenesis and antiangiogenic therapies in cancer",
+      "journal": "Journal of Clinical Investigation",
+      "year": 2013,
+      "citationCount": 583,
+      "doi": "10.1172/jci70212",
+      "sourceUrl": "https://doi.org/10.1172/jci70212",
+      "verified": true
+    },
+    {
+      "title": "Consensus guidelines for the use and interpretation of angiogenesis assays",
+      "journal": "Angiogenesis",
+      "year": 2018,
+      "citationCount": 582,
+      "doi": "10.1007/s10456-018-9613-x",
+      "sourceUrl": "https://doi.org/10.1007/s10456-018-9613-x",
+      "verified": true
+    },
+    {
+      "title": "FOXO1 couples metabolic activity and growth state in the vascular endothelium",
+      "journal": "Nature",
+      "year": 2016,
+      "citationCount": 574,
+      "doi": "10.1038/nature16498",
+      "sourceUrl": "https://doi.org/10.1038/nature16498",
+      "verified": true
+    },
+    {
+      "title": "Renal Cyst Formation in Fh1-Deficient Mice Is Independent of the Hif/Phd Pathway: Roles for Fumarate in KEAP1 Succination and Nrf2 Signaling",
+      "journal": "Cancer Cell",
+      "year": 2011,
+      "citationCount": 566,
+      "doi": "10.1016/j.ccr.2011.09.006",
+      "sourceUrl": "https://doi.org/10.1016/j.ccr.2011.09.006",
+      "verified": true
+    },
+    {
+      "title": "FLT1 and its ligands VEGFB and PlGF: drug targets for anti-angiogenic therapy?",
+      "journal": "Nature reviews. Cancer",
+      "year": 2008,
+      "citationCount": 565,
+      "doi": "10.1038/nrc2524",
+      "sourceUrl": "https://doi.org/10.1038/nrc2524",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:15.000Z",
+  "openalexId": "https://openalex.org/A5047152113"
 }

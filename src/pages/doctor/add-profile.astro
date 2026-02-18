@@ -1,0 +1,392 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Add a Doctor Profile — MDRPedia">
+    <div class="add-profile-page">
+        <div class="container">
+            <header class="page-header">
+                <h1>Add a Doctor Profile</h1>
+                <p>
+                    Contribute to the world's largest free medical encyclopedia.
+                </p>
+            </header>
+
+            <div class="form-wrapper">
+                <form id="add-profile-form" class="add-form">
+                    <div class="form-section">
+                        <h2>Basic Information</h2>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="full_name">Full Name *</label>
+                                <input
+                                    type="text"
+                                    id="full_name"
+                                    name="full_name"
+                                    required
+                                    placeholder="e.g. Dr. Atul Gawande"
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="specialty">Specialty *</label>
+                                <input
+                                    type="text"
+                                    id="specialty"
+                                    name="specialty"
+                                    required
+                                    placeholder="e.g. Surgery"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="country">Country *</label>
+                                <input
+                                    type="text"
+                                    id="country"
+                                    name="country"
+                                    required
+                                    placeholder="e.g. United States"
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input
+                                    type="text"
+                                    id="city"
+                                    name="city"
+                                    placeholder="e.g. Boston"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hospital"
+                                >Primary Affiliation / Hospital *</label
+                            >
+                            <input
+                                type="text"
+                                id="hospital"
+                                name="hospital"
+                                required
+                                placeholder="e.g. Brigham and Women's Hospital"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2>Professional Details</h2>
+
+                        <div class="form-group">
+                            <label for="biography">Biography</label>
+                            <textarea
+                                id="biography"
+                                name="biography"
+                                rows="4"
+                                placeholder="Brief professional biography..."
+                            ></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="orcid_id">ORCID ID</label>
+                                <input
+                                    type="text"
+                                    id="orcid_id"
+                                    name="orcid_id"
+                                    placeholder="0000-0000-0000-0000"
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="npi_number"
+                                    >NPI Number (US Only)</label
+                                >
+                                <input
+                                    type="text"
+                                    id="npi_number"
+                                    name="npi_number"
+                                    placeholder="10-digit NPI"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2>Contributor Identity</h2>
+                        <p class="section-desc">
+                            We require this to prevent spam. Your name will be
+                            listed as a contributor.
+                        </p>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contributor_name">Your Name *</label
+                                >
+                                <input
+                                    type="text"
+                                    id="contributor_name"
+                                    name="contributor_name"
+                                    required
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contributor_email"
+                                    >Your Email *</label
+                                >
+                                <input
+                                    type="email"
+                                    id="contributor_email"
+                                    name="contributor_email"
+                                    required
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Honeypot -->
+                    <div style="display:none" aria-hidden="true">
+                        <input
+                            type="checkbox"
+                            name="honeypot_filled"
+                            tabindex="-1"
+                        />
+                    </div>
+
+                    <div class="form-actions">
+                        <button
+                            type="submit"
+                            id="btn-submit"
+                            class="btn btn--primary btn--lg"
+                            >Submit Profile</button
+                        >
+                    </div>
+
+                    <div id="form-message" class="form-message" hidden></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<script>
+    const form = document.getElementById("add-profile-form") as HTMLFormElement;
+    const msgEl = document.getElementById("form-message");
+    const btn = document.getElementById("btn-submit") as HTMLButtonElement;
+
+    if (form) {
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            btn.textContent = "Submitting...";
+            btn.disabled = true;
+            msgEl!.hidden = true;
+            msgEl!.textContent = "";
+            msgEl!.className = "form-message";
+
+            const formData = new FormData(form);
+            const data: Record<string, any> = {};
+
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+            // Handle checkbox manually if needed, but for honeypot usually fine
+
+            try {
+                const res = await fetch("/api/submit-profile", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data),
+                });
+
+                const result = await res.json();
+
+                if (res.ok) {
+                    msgEl!.textContent =
+                        "Profile submitted successfully! It will be reviewed by our team.";
+                    msgEl!.classList.add("success");
+                    msgEl!.hidden = false;
+                    form.reset();
+                } else {
+                    msgEl!.textContent = result.error || "Submission failed.";
+                    msgEl!.classList.add("error");
+                    msgEl!.hidden = false;
+                }
+            } catch (err) {
+                msgEl!.textContent = "Network error. Please try again.";
+                msgEl!.classList.add("error");
+                msgEl!.hidden = false;
+            } finally {
+                btn.textContent = "Submit Profile";
+                btn.disabled = false;
+            }
+        });
+    }
+</script>
+
+<style>
+    .add-profile-page {
+        padding: 60px 20px 100px;
+        background: var(--bg-main);
+        min-height: 80vh;
+    }
+
+    .container {
+        max-width: 720px;
+        margin: 0 auto;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 48px;
+    }
+
+    .page-header h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 12px;
+        font-family: var(--font-serif);
+    }
+
+    .page-header p {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+    }
+
+    .form-wrapper {
+        background: var(--bg-card, #16162a);
+        padding: 40px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .form-section {
+        margin-bottom: 32px;
+        padding-bottom: 32px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .form-section:last-of-type {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+        font-family: var(--font-serif);
+        margin-bottom: 20px;
+        color: var(--text-primary);
+    }
+
+    .section-desc {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 20px;
+        margin-top: -12px;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    @media (max-width: 600px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+        .form-wrapper {
+            padding: 24px;
+        }
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: var(--text-primary);
+        font-family: inherit;
+        font-size: 1rem;
+        transition: all 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #8b5cf6;
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        transition: all 0.2s;
+        cursor: pointer;
+        border: none;
+    }
+
+    .btn--primary {
+        background: #8b5cf6;
+        color: white;
+    }
+
+    .btn--primary:hover {
+        background: #7c3aed;
+    }
+
+    .btn--lg {
+        width: 100%;
+        padding: 14px;
+        font-size: 1.05rem;
+        border-radius: 8px;
+        margin-top: 10px;
+    }
+
+    .btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+
+    .form-message {
+        margin-top: 20px;
+        padding: 12px;
+        border-radius: 8px;
+        text-align: center;
+        font-size: 0.95rem;
+    }
+
+    .form-message.success {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+        border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .form-message.error {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+</style>

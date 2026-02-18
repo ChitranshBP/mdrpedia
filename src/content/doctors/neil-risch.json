@@ -1,31 +1,493 @@
 {
   "fullName": "Neil Risch",
   "slug": "neil-risch",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Genetic Epidemiology",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23001a4d\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%2300aaff\" text-anchor=\"middle\" dy=\".3em\">NR</text></svg>",
-  "tier": "ELITE",
-  "rankingScore": 35,
-  "hIndex": 138,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 123,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 9920,
+  "livesSaved": 0,
+  "biography": "Neil Risch is an American human geneticist and professor at the University of California, San Francisco (UCSF). Risch is the Lamond Family Foundation Distinguished Professor in Human Genetics, Founding Director of the Institute for Human Genetics, and Professor of Epidemiology and Biostatistics at UCSF. He specializes in statistical genetics, genetic epidemiology and population genetics.",
+  "aiSummary": "Neil Risch is a genetic epidemiology specialist with an H-index of 123 at University of California, San Francisco (Faculty). Has been published in Science, Nature Genetics, Nature. Based in United States.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/0/05/Neil_Risch.jpg",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "University of California, San Francisco"
-    }
-  ],
-  "bio": "Neil Risch is a pioneer in Genetic Epidemiology at University of California, San Francisco, USA. With a D-Index of 138 and over 99,202 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "University of California, San Francisco",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Genetic Epidemiology"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "The Future of Genetic Studies of Complex Human Diseases",
+      "journal": "Science",
+      "year": 1996,
+      "citationCount": 5361,
+      "doi": "10.1126/science.273.5281.1516",
+      "sourceUrl": "https://doi.org/10.1126/science.273.5281.1516",
+      "verified": true
+    },
+    {
+      "title": "A novel MHC class I–like gene is mutated in patients with hereditary haemochromatosis",
+      "journal": "Nature Genetics",
+      "year": 1996,
+      "citationCount": 3700,
+      "doi": "10.1038/ng0896-399",
+      "sourceUrl": "https://doi.org/10.1038/ng0896-399",
+      "verified": true
+    },
+    {
+      "title": "Protective effect of apolipoprotein E type 2 allele for late onset Alzheimer disease",
+      "journal": "Nature Genetics",
+      "year": 1994,
+      "citationCount": 1899,
+      "doi": "10.1038/ng0694-180",
+      "sourceUrl": "https://doi.org/10.1038/ng0694-180",
+      "verified": true
+    },
+    {
+      "title": "Searching for genetic determinants in the new millennium",
+      "journal": "Nature",
+      "year": 2000,
+      "citationCount": 1838,
+      "doi": "10.1038/35015718",
+      "sourceUrl": "https://doi.org/10.1038/35015718",
+      "verified": true
+    },
+    {
+      "title": "Interaction Between the Serotonin Transporter Gene (5-HTTLPR), Stressful Life Events, and Risk of Depression",
+      "journal": "JAMA",
+      "year": 2009,
+      "citationCount": 1647,
+      "doi": "10.1001/jama.2009.878",
+      "sourceUrl": "https://doi.org/10.1001/jama.2009.878",
+      "verified": true
+    },
+    {
+      "title": "Discovering genotypes underlying human phenotypes: past successes for mendelian disease, future approaches for complex disease",
+      "journal": "Nature Genetics",
+      "year": 2003,
+      "citationCount": 1508,
+      "doi": "10.1038/ng1090",
+      "sourceUrl": "https://doi.org/10.1038/ng1090",
+      "verified": true
+    },
+    {
+      "title": "Linkage strategies for genetically complex traits. I. Multilocus models.",
+      "journal": "PubMed",
+      "year": 1990,
+      "citationCount": 1321,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W48750798",
+      "verified": true
+    },
+    {
+      "title": "Genetic Susceptibility to Death from Coronary Heart Disease in a Study of Twins",
+      "journal": "New England Journal of Medicine",
+      "year": 1994,
+      "citationCount": 1267,
+      "doi": "10.1056/nejm199404143301503",
+      "sourceUrl": "https://doi.org/10.1056/nejm199404143301503",
+      "verified": true
+    },
+    {
+      "title": "The Importance of Race and Ethnic Background in Biomedical Research and Clinical Practice",
+      "journal": "New England Journal of Medicine",
+      "year": 2003,
+      "citationCount": 1114,
+      "doi": "10.1056/nejmsb025007",
+      "sourceUrl": "https://doi.org/10.1056/nejmsb025007",
+      "verified": true
+    },
+    {
+      "title": "Candidate-gene approaches for studying complex genetic traits: practical considerations",
+      "journal": "Nature Reviews Genetics",
+      "year": 2002,
+      "citationCount": 1082,
+      "doi": "10.1038/nrg796",
+      "sourceUrl": "https://doi.org/10.1038/nrg796",
+      "verified": true
+    },
+    {
+      "title": "A Comparison of Linkage Disequilibrium Measures for Fine-Scale Mapping",
+      "journal": "Genomics",
+      "year": 1995,
+      "citationCount": 1048,
+      "doi": "10.1006/geno.1995.9003",
+      "sourceUrl": "https://doi.org/10.1006/geno.1995.9003",
+      "verified": true
+    },
+    {
+      "title": "The early-onset torsion dystonia gene (DYT1) encodes an ATP-binding protein",
+      "journal": "Nature Genetics",
+      "year": 1997,
+      "citationCount": 1016,
+      "doi": "10.1038/ng0997-40",
+      "sourceUrl": "https://doi.org/10.1038/ng0997-40",
+      "verified": true
+    },
+    {
+      "title": "Autosomal dominant inheritance of early-onset breast cancer. Implications for risk prediction",
+      "journal": "Cancer",
+      "year": 1994,
+      "citationCount": 944,
+      "doi": "10.1002/1097-0142(19940201)73:3<643::aid-cncr2820730323>3.0.co;2-5",
+      "sourceUrl": "https://doi.org/10.1002/1097-0142(19940201)73:3<643::aid-cncr2820730323>3.0.co;2-5",
+      "verified": true
+    },
+    {
+      "title": "Genetic analysis of breast cancer in the cancer and steroid hormone study.",
+      "journal": "PubMed",
+      "year": 1991,
+      "citationCount": 916,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2102311474",
+      "verified": true
+    },
+    {
+      "title": "Positional Cloning of the Human Quantitative Trait Locus Underlying Taste Sensitivity to Phenylthiocarbamide",
+      "journal": "Science",
+      "year": 2003,
+      "citationCount": 883,
+      "doi": "10.1126/science.1080190",
+      "sourceUrl": "https://doi.org/10.1126/science.1080190",
+      "verified": true
+    },
+    {
+      "title": "Linkage strategies for genetically complex traits. II. The power of affected relative pairs.",
+      "journal": "PubMed",
+      "year": 1990,
+      "citationCount": 871,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1641197739",
+      "verified": true
+    },
+    {
+      "title": "Categorization of humans in biomedical research: genes, race and disease.",
+      "journal": "Genome Biology",
+      "year": 2002,
+      "citationCount": 757,
+      "doi": "10.1186/gb-2002-3-7-comment2007",
+      "sourceUrl": "https://doi.org/10.1186/gb-2002-3-7-comment2007",
+      "verified": true
+    },
+    {
+      "title": "The genetic attributable risk of breast and ovarian cancer",
+      "journal": "Cancer",
+      "year": 1996,
+      "citationCount": 747,
+      "doi": "10.1002/(sici)1097-0142(19960601)77:11<2318::aid-cncr21>3.0.co;2-z",
+      "sourceUrl": "https://doi.org/10.1002/(sici)1097-0142(19960601)77:11<2318::aid-cncr21>3.0.co;2-z",
+      "verified": true
+    },
+    {
+      "title": "Estimation of individual admixture: Analytical and study design considerations",
+      "journal": "Genetic Epidemiology",
+      "year": 2005,
+      "citationCount": 703,
+      "doi": "10.1002/gepi.20064",
+      "sourceUrl": "https://doi.org/10.1002/gepi.20064",
+      "verified": true
+    },
+    {
+      "title": "A brief history of human disease genetics",
+      "journal": "Nature",
+      "year": 2020,
+      "citationCount": 702,
+      "doi": "10.1038/s41586-019-1879-7",
+      "sourceUrl": "https://doi.org/10.1038/s41586-019-1879-7",
+      "verified": true
+    },
+    {
+      "title": "A Highly Significant Association between a COMT Haplotype and Schizophrenia",
+      "journal": "The American Journal of Human Genetics",
+      "year": 2002,
+      "citationCount": 696,
+      "doi": "10.1086/344514",
+      "sourceUrl": "https://doi.org/10.1086/344514",
+      "verified": true
+    },
+    {
+      "title": "A Genomic Screen of Autism: Evidence for a Multilocus Etiology",
+      "journal": "The American Journal of Human Genetics",
+      "year": 1999,
+      "citationCount": 687,
+      "doi": "10.1086/302497",
+      "sourceUrl": "https://doi.org/10.1086/302497",
+      "verified": true
+    },
+    {
+      "title": "The continuous performance test, identical pairs version (CPT-IP): I. new findings about sustained attention in normal families",
+      "journal": "Psychiatry Research",
+      "year": 1988,
+      "citationCount": 678,
+      "doi": "10.1016/0165-1781(88)90076-5",
+      "sourceUrl": "https://doi.org/10.1016/0165-1781(88)90076-5",
+      "verified": true
+    },
+    {
+      "title": "<i>LRRK2</i> G2019S as a Cause of Parkinson's Disease in Ashkenazi Jews",
+      "journal": "New England Journal of Medicine",
+      "year": 2006,
+      "citationCount": 665,
+      "doi": "10.1056/nejmc055509",
+      "sourceUrl": "https://doi.org/10.1056/nejmc055509",
+      "verified": true
+    },
+    {
+      "title": "A full genome search in multiple sclerosis",
+      "journal": "Nature Genetics",
+      "year": 1996,
+      "citationCount": 662,
+      "doi": "10.1038/ng0896-472",
+      "sourceUrl": "https://doi.org/10.1038/ng0896-472",
+      "verified": true
+    },
+    {
+      "title": "A genetic basis for familial aggregation in multiple sclerosis",
+      "journal": "Nature",
+      "year": 1995,
+      "citationCount": 622,
+      "doi": "10.1038/377150a0",
+      "sourceUrl": "https://doi.org/10.1038/377150a0",
+      "verified": true
+    },
+    {
+      "title": "Complex HLA-DR and -DQ Interactions Confer Risk of Narcolepsy-Cataplexy in Three Ethnic Groups",
+      "journal": "The American Journal of Human Genetics",
+      "year": 2001,
+      "citationCount": 597,
+      "doi": "10.1086/318799",
+      "sourceUrl": "https://doi.org/10.1086/318799",
+      "verified": true
+    },
+    {
+      "title": "Global Patterns of Linkage Disequilibrium at the CD4 Locus and Modern Human Origins",
+      "journal": "Science",
+      "year": 1996,
+      "citationCount": 592,
+      "doi": "10.1126/science.271.5254.1380",
+      "sourceUrl": "https://doi.org/10.1126/science.271.5254.1380",
+      "verified": true
+    },
+    {
+      "title": "A genome–wide search for human non–insulin–dependent (type 2) diabetes genes reveals a major susceptibility locus on chromosome 2",
+      "journal": "Nature Genetics",
+      "year": 1996,
+      "citationCount": 592,
+      "doi": "10.1038/ng0696-161",
+      "sourceUrl": "https://doi.org/10.1038/ng0696-161",
+      "verified": true
+    },
+    {
+      "title": "Genetic Structure, Self-Identified Race/Ethnicity, and Confounding in Case-Control Association Studies",
+      "journal": "The American Journal of Human Genetics",
+      "year": 2005,
+      "citationCount": 585,
+      "doi": "10.1086/427888",
+      "sourceUrl": "https://doi.org/10.1086/427888",
+      "verified": true
+    },
+    {
+      "title": "Assessing the role of HLA-linked and unlinked determinants of disease.",
+      "journal": "PubMed",
+      "year": 1987,
+      "citationCount": 542,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W136910319",
+      "verified": true
+    },
+    {
+      "title": "Extreme Discordant Sib Pairs for Mapping Quantitative Trait Loci in Humans",
+      "journal": "Science",
+      "year": 1995,
+      "citationCount": 530,
+      "doi": "10.1126/science.7777857",
+      "sourceUrl": "https://doi.org/10.1126/science.7777857",
+      "verified": true
+    },
+    {
+      "title": "Twin concordance and sibling recurrence rates in multiple sclerosis",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2003,
+      "citationCount": 522,
+      "doi": "10.1073/pnas.1932604100",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1932604100",
+      "verified": true
+    },
+    {
+      "title": "Narcolepsy is strongly associated with the T-cell receptor alpha locus",
+      "journal": "Nature Genetics",
+      "year": 2009,
+      "citationCount": 479,
+      "doi": "10.1038/ng.372",
+      "sourceUrl": "https://doi.org/10.1038/ng.372",
+      "verified": true
+    },
+    {
+      "title": "Genetic analysis of idiopathic torsion dystonia in Ashkenazi Jews and their recent descent from a small founder population",
+      "journal": "Nature Genetics",
+      "year": 1995,
+      "citationCount": 430,
+      "doi": "10.1038/ng0295-152",
+      "sourceUrl": "https://doi.org/10.1038/ng0295-152",
+      "verified": true
+    },
+    {
+      "title": "Genetic linkage between X-chromosome markers and bipolar affective illness",
+      "journal": "Nature",
+      "year": 1987,
+      "citationCount": 416,
+      "doi": "10.1038/326289a0",
+      "sourceUrl": "https://doi.org/10.1038/326289a0",
+      "verified": true
+    },
+    {
+      "title": "High-Throughput Genotyping with Single Nucleotide Polymorphisms",
+      "journal": "Genome Research",
+      "year": 2001,
+      "citationCount": 391,
+      "doi": "10.1101/gr.157801",
+      "sourceUrl": "https://doi.org/10.1101/gr.157801",
+      "verified": true
+    },
+    {
+      "title": "Linkage strategies for genetically complex traits. III. The effect of marker polymorphism on analysis of affected relative pairs.",
+      "journal": "PubMed",
+      "year": 1990,
+      "citationCount": 389,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2160498502",
+      "verified": true
+    },
+    {
+      "title": "Latino Populations: A Unique Opportunity for the Study of Race, Genetics, and Social Environment in Epidemiological Research",
+      "journal": "American Journal of Public Health",
+      "year": 2005,
+      "citationCount": 376,
+      "doi": "10.2105/ajph.2005.068668",
+      "sourceUrl": "https://doi.org/10.2105/ajph.2005.068668",
+      "verified": true
+    },
+    {
+      "title": "AGE AT ONSET AS AN INDICATOR OF FAMILIAL RISK OF BREAST CANCER",
+      "journal": "American Journal of Epidemiology",
+      "year": 1990,
+      "citationCount": 370,
+      "doi": "10.1093/oxfordjournals.aje.a115616",
+      "sourceUrl": "https://doi.org/10.1093/oxfordjournals.aje.a115616",
+      "verified": true
+    },
+    {
+      "title": "The Relative Power of Family-Based and Case-Control Designs for Linkage Disequilibrium Studies of Complex Human Diseases I. DNA Pooling",
+      "journal": "Genome Research",
+      "year": 1998,
+      "citationCount": 368,
+      "doi": "10.1101/gr.8.12.1273",
+      "sourceUrl": "https://doi.org/10.1101/gr.8.12.1273",
+      "verified": true
+    },
+    {
+      "title": "The <i>DYT1</i> phenotype and guidelines for diagnostic testing",
+      "journal": "Neurology",
+      "year": 2000,
+      "citationCount": 360,
+      "doi": "10.1212/wnl.54.9.1746",
+      "sourceUrl": "https://doi.org/10.1212/wnl.54.9.1746",
+      "verified": true
+    },
+    {
+      "title": "Evidence for genetic basis of multiple sclerosis",
+      "journal": "The Lancet",
+      "year": 1996,
+      "citationCount": 353,
+      "doi": "10.1016/s0140-6736(96)90807-7",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(96)90807-7",
+      "verified": true
+    },
+    {
+      "title": "Localization of a gene for partial epilepsy to chromosome 10q",
+      "journal": "Nature Genetics",
+      "year": 1995,
+      "citationCount": 352,
+      "doi": "10.1038/ng0595-56",
+      "sourceUrl": "https://doi.org/10.1038/ng0595-56",
+      "verified": true
+    },
+    {
+      "title": "Characterizing Race/Ethnicity and Genetic Ancestry for 100,000 Subjects in the Genetic Epidemiology Research on Adult Health and Aging (GERA) Cohort",
+      "journal": "Genetics",
+      "year": 2015,
+      "citationCount": 348,
+      "doi": "10.1534/genetics.115.178616",
+      "sourceUrl": "https://doi.org/10.1534/genetics.115.178616",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide association analyses using electronic health records identify new loci influencing blood pressure variation",
+      "journal": "Nature Genetics",
+      "year": 2016,
+      "citationCount": 342,
+      "doi": "10.1038/ng.3715",
+      "sourceUrl": "https://doi.org/10.1038/ng.3715",
+      "verified": true
+    },
+    {
+      "title": "A large electronic-health-record-based genome-wide study of serum lipids",
+      "journal": "Nature Genetics",
+      "year": 2018,
+      "citationCount": 340,
+      "doi": "10.1038/s41588-018-0064-5",
+      "sourceUrl": "https://doi.org/10.1038/s41588-018-0064-5",
+      "verified": true
+    },
+    {
+      "title": "A second-generation screen of the human genome for susceptibility to insulin-dependent diabetes mellitus",
+      "journal": "Nature Genetics",
+      "year": 1998,
+      "citationCount": 338,
+      "doi": "10.1038/985",
+      "sourceUrl": "https://doi.org/10.1038/985",
+      "verified": true
+    },
+    {
+      "title": "The genetic epidemiology of cancer: interpreting family and twin studies and their implications for molecular genetic approaches.",
+      "journal": "PubMed",
+      "year": 2001,
+      "citationCount": 319,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2112556479",
+      "verified": true
+    },
+    {
+      "title": "Co-morbidity and familial aggregation of alcoholism and anxiety disorders",
+      "journal": "Psychological Medicine",
+      "year": 1998,
+      "citationCount": 303,
+      "doi": "10.1017/s0033291798006941",
+      "sourceUrl": "https://doi.org/10.1017/s0033291798006941",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:23.000Z",
+  "openalexId": "https://openalex.org/A5085936676"
 }

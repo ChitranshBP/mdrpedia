@@ -1,36 +1,492 @@
 {
   "fullName": "Karl J. Friston",
   "slug": "karl-j-friston",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Computational Neuroscience",
   "geography": {
-    "city": "Unknown",
-    "country": "UK"
+    "country": "United Kingdom",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">KJ</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 69,
-  "hIndex": 276,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 342,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 34267,
+  "livesSaved": 0,
+  "biography": "Karl John Friston FRS FMedSci FRSB is a British neuroscientist and theoretician at University College London. He is an authority on brain imaging and theoretical neuroscience, especially the use of physics-inspired statistical methods to model neuroimaging data and other random dynamical systems.\nFriston is a key architect of the free energy principle and active inference. In imaging neuroscience he is best known for statistical parametric mapping and dynamic causal modelling. Friston also acts as a scientific advisor to numerous groups in industry.",
+  "aiSummary": "Karl J. Friston is a computational neuroscience specialist with an H-index of 342 at University College London (Faculty). Has been published in Nature reviews. Neuroscience, Philosophical Transactions of the Royal Society B Biological Sciences, Science. Based in United Kingdom.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "University College London"
-    }
-  ],
-  "bio": "Karl J. Friston is a pioneer in Computational Neuroscience at University College London, UK. With a D-Index of 276 and over 342,668 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "University College London",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Computational Neuroscience"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Statistical parametric maps in functional imaging: A general linear approach",
+      "journal": "Human Brain Mapping",
+      "year": 1994,
+      "citationCount": 9729,
+      "doi": "10.1002/hbm.460020402",
+      "sourceUrl": "https://doi.org/10.1002/hbm.460020402",
+      "verified": true
+    },
+    {
+      "title": "Voxel-Based Morphometry—The Methods",
+      "journal": "NeuroImage",
+      "year": 2000,
+      "citationCount": 8569,
+      "doi": "10.1006/nimg.2000.0582",
+      "sourceUrl": "https://doi.org/10.1006/nimg.2000.0582",
+      "verified": true
+    },
+    {
+      "title": "Unified segmentation",
+      "journal": "NeuroImage",
+      "year": 2005,
+      "citationCount": 7383,
+      "doi": "10.1016/j.neuroimage.2005.02.018",
+      "sourceUrl": "https://doi.org/10.1016/j.neuroimage.2005.02.018",
+      "verified": true
+    },
+    {
+      "title": "The free-energy principle: a unified brain theory?",
+      "journal": "Nature reviews. Neuroscience",
+      "year": 2010,
+      "citationCount": 7278,
+      "doi": "10.1038/nrn2787",
+      "sourceUrl": "https://doi.org/10.1038/nrn2787",
+      "verified": true
+    },
+    {
+      "title": "Dynamic causal modelling",
+      "journal": "NeuroImage",
+      "year": 2003,
+      "citationCount": 4655,
+      "doi": "10.1016/s1053-8119(03)00202-7",
+      "sourceUrl": "https://doi.org/10.1016/s1053-8119(03)00202-7",
+      "verified": true
+    },
+    {
+      "title": "A theory of cortical responses",
+      "journal": "Philosophical Transactions of the Royal Society B Biological Sciences",
+      "year": 2005,
+      "citationCount": 4625,
+      "doi": "10.1098/rstb.2005.1622",
+      "sourceUrl": "https://doi.org/10.1098/rstb.2005.1622",
+      "verified": true
+    },
+    {
+      "title": "A Voxel-Based Morphometric Study of Ageing in 465 Normal Adult Human Brains",
+      "journal": "NeuroImage",
+      "year": 2001,
+      "citationCount": 4562,
+      "doi": "10.1006/nimg.2001.0786",
+      "sourceUrl": "https://doi.org/10.1006/nimg.2001.0786",
+      "verified": true
+    },
+    {
+      "title": "Movement‐Related effects in fMRI time‐series",
+      "journal": "Magnetic Resonance in Medicine",
+      "year": 1996,
+      "citationCount": 3829,
+      "doi": "10.1002/mrm.1910350312",
+      "sourceUrl": "https://doi.org/10.1002/mrm.1910350312",
+      "verified": true
+    },
+    {
+      "title": "Spatial registration and normalization of images",
+      "journal": "Human Brain Mapping",
+      "year": 1995,
+      "citationCount": 3743,
+      "doi": "10.1002/hbm.460030303",
+      "sourceUrl": "https://doi.org/10.1002/hbm.460030303",
+      "verified": true
+    },
+    {
+      "title": "Statistical Parametric Mapping: The Analysis of Functional Brain Images",
+      "journal": "UCL Discovery (University College London)",
+      "year": 2007,
+      "citationCount": 3508,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1528119265",
+      "verified": true
+    },
+    {
+      "title": "Functional and Effective Connectivity: A Review",
+      "journal": "Brain Connectivity",
+      "year": 2011,
+      "citationCount": 3408,
+      "doi": "10.1089/brain.2011.0008",
+      "sourceUrl": "https://doi.org/10.1089/brain.2011.0008",
+      "verified": true
+    },
+    {
+      "title": "Psychophysiological and Modulatory Interactions in Neuroimaging",
+      "journal": "NeuroImage",
+      "year": 1997,
+      "citationCount": 3146,
+      "doi": "10.1006/nimg.1997.0291",
+      "sourceUrl": "https://doi.org/10.1006/nimg.1997.0291",
+      "verified": true
+    },
+    {
+      "title": "A unified statistical approach for determining significant signals in images of cerebral activation",
+      "journal": "Human Brain Mapping",
+      "year": 1996,
+      "citationCount": 2838,
+      "doi": "10.1002/(sici)1097-0193(1996)4:1<58::aid-hbm4>3.0.co;2-o",
+      "sourceUrl": "https://doi.org/10.1002/(sici)1097-0193(1996)4:1<58::aid-hbm4>3.0.co;2-o",
+      "verified": true
+    },
+    {
+      "title": "Analysis of fMRI Time-Series Revisited",
+      "journal": "NeuroImage",
+      "year": 1995,
+      "citationCount": 2516,
+      "doi": "10.1006/nimg.1995.1007",
+      "sourceUrl": "https://doi.org/10.1006/nimg.1995.1007",
+      "verified": true
+    },
+    {
+      "title": "Canonical Microcircuits for Predictive Coding",
+      "journal": "Neuron",
+      "year": 2012,
+      "citationCount": 2507,
+      "doi": "10.1016/j.neuron.2012.10.038",
+      "sourceUrl": "https://doi.org/10.1016/j.neuron.2012.10.038",
+      "verified": true
+    },
+    {
+      "title": "Functional and effective connectivity in neuroimaging: A synthesis",
+      "journal": "Human Brain Mapping",
+      "year": 1994,
+      "citationCount": 2459,
+      "doi": "10.1002/hbm.460020107",
+      "sourceUrl": "https://doi.org/10.1002/hbm.460020107",
+      "verified": true
+    },
+    {
+      "title": "Analysis of fMRI Time-Series Revisited—Again",
+      "journal": "NeuroImage",
+      "year": 1995,
+      "citationCount": 2206,
+      "doi": "10.1006/nimg.1995.1023",
+      "sourceUrl": "https://doi.org/10.1006/nimg.1995.1023",
+      "verified": true
+    },
+    {
+      "title": "Dissociable Roles of Ventral and Dorsal Striatum in Instrumental Conditioning",
+      "journal": "Science",
+      "year": 2004,
+      "citationCount": 2137,
+      "doi": "10.1126/science.1094285",
+      "sourceUrl": "https://doi.org/10.1126/science.1094285",
+      "verified": true
+    },
+    {
+      "title": "Structural and Functional Brain Networks: From Connections to Cognition",
+      "journal": "Science",
+      "year": 2013,
+      "citationCount": 2098,
+      "doi": "10.1126/science.1238411",
+      "sourceUrl": "https://doi.org/10.1126/science.1238411",
+      "verified": true
+    },
+    {
+      "title": "Event-Related fMRI: Characterizing Differential Responses",
+      "journal": "NeuroImage",
+      "year": 1998,
+      "citationCount": 2061,
+      "doi": "10.1006/nimg.1997.0306",
+      "sourceUrl": "https://doi.org/10.1006/nimg.1997.0306",
+      "verified": true
+    },
+    {
+      "title": "Functional Connectivity: The Principal-Component Analysis of Large (PET) Data Sets",
+      "journal": "Journal of Cerebral Blood Flow & Metabolism",
+      "year": 1993,
+      "citationCount": 1988,
+      "doi": "10.1038/jcbfm.1993.4",
+      "sourceUrl": "https://doi.org/10.1038/jcbfm.1993.4",
+      "verified": true
+    },
+    {
+      "title": "Assessing the significance of focal activations using their spatial extent",
+      "journal": "Human Brain Mapping",
+      "year": 1994,
+      "citationCount": 1940,
+      "doi": "10.1002/hbm.460010306",
+      "sourceUrl": "https://doi.org/10.1002/hbm.460010306",
+      "verified": true
+    },
+    {
+      "title": "Nonlinear spatial normalization using basis functions",
+      "journal": "Human Brain Mapping",
+      "year": 1999,
+      "citationCount": 1879,
+      "doi": "10.1002/(sici)1097-0193(1999)7:4<254::aid-hbm4>3.0.co;2-g",
+      "sourceUrl": "https://doi.org/10.1002/(sici)1097-0193(1999)7:4<254::aid-hbm4>3.0.co;2-g",
+      "verified": true
+    },
+    {
+      "title": "The free-energy principle: a rough guide to the brain?",
+      "journal": "Trends in Cognitive Sciences",
+      "year": 2009,
+      "citationCount": 1824,
+      "doi": "10.1016/j.tics.2009.04.005",
+      "sourceUrl": "https://doi.org/10.1016/j.tics.2009.04.005",
+      "verified": true
+    },
+    {
+      "title": "A direct demonstration of functional specialization in human visual cortex",
+      "journal": "Journal of Neuroscience",
+      "year": 1991,
+      "citationCount": 1730,
+      "doi": "10.1523/jneurosci.11-03-00641.1991",
+      "sourceUrl": "https://doi.org/10.1523/jneurosci.11-03-00641.1991",
+      "verified": true
+    },
+    {
+      "title": "Analysis of functional MRI time‐series",
+      "journal": "Human Brain Mapping",
+      "year": 1994,
+      "citationCount": 1709,
+      "doi": "10.1002/hbm.460010207",
+      "sourceUrl": "https://doi.org/10.1002/hbm.460010207",
+      "verified": true
+    },
+    {
+      "title": "Comparing Functional (PET) Images: The Assessment of Significant Change",
+      "journal": "Journal of Cerebral Blood Flow & Metabolism",
+      "year": 1991,
+      "citationCount": 1635,
+      "doi": "10.1038/jcbfm.1991.122",
+      "sourceUrl": "https://doi.org/10.1038/jcbfm.1991.122",
+      "verified": true
+    },
+    {
+      "title": "Predictive coding under the free-energy principle",
+      "journal": "Philosophical Transactions of the Royal Society B Biological Sciences",
+      "year": 2009,
+      "citationCount": 1569,
+      "doi": "10.1098/rstb.2008.0300",
+      "sourceUrl": "https://doi.org/10.1098/rstb.2008.0300",
+      "verified": true
+    },
+    {
+      "title": "Temporal Difference Models and Reward-Related Learning in the Human Brain",
+      "journal": "Neuron",
+      "year": 2003,
+      "citationCount": 1520,
+      "doi": "10.1016/s0896-6273(03)00169-7",
+      "sourceUrl": "https://doi.org/10.1016/s0896-6273(03)00169-7",
+      "verified": true
+    },
+    {
+      "title": "Bayesian model selection for group studies",
+      "journal": "NeuroImage",
+      "year": 2009,
+      "citationCount": 1496,
+      "doi": "10.1016/j.neuroimage.2009.03.025",
+      "sourceUrl": "https://doi.org/10.1016/j.neuroimage.2009.03.025",
+      "verified": true
+    },
+    {
+      "title": "The mismatch negativity: A review of underlying mechanisms",
+      "journal": "Clinical Neurophysiology",
+      "year": 2009,
+      "citationCount": 1429,
+      "doi": "10.1016/j.clinph.2008.11.029",
+      "sourceUrl": "https://doi.org/10.1016/j.clinph.2008.11.029",
+      "verified": true
+    },
+    {
+      "title": "A free energy principle for the brain",
+      "journal": "Journal of Physiology-Paris",
+      "year": 2006,
+      "citationCount": 1378,
+      "doi": "10.1016/j.jphysparis.2006.10.001",
+      "sourceUrl": "https://doi.org/10.1016/j.jphysparis.2006.10.001",
+      "verified": true
+    },
+    {
+      "title": "Attention, Uncertainty, and Free-Energy",
+      "journal": "Frontiers in Human Neuroscience",
+      "year": 2010,
+      "citationCount": 1374,
+      "doi": "10.3389/fnhum.2010.00215",
+      "sourceUrl": "https://doi.org/10.3389/fnhum.2010.00215",
+      "verified": true
+    },
+    {
+      "title": "Schizophrenia: a disconnection syndrome?",
+      "journal": "PubMed",
+      "year": 1995,
+      "citationCount": 1336,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1509285273",
+      "verified": true
+    },
+    {
+      "title": "Cerebral Asymmetry and the Effects of Sex and Handedness on Brain Structure: A Voxel-Based Morphometric Analysis of 465 Normal Adult Human Brains",
+      "journal": "NeuroImage",
+      "year": 2001,
+      "citationCount": 1223,
+      "doi": "10.1006/nimg.2001.0857",
+      "sourceUrl": "https://doi.org/10.1006/nimg.2001.0857",
+      "verified": true
+    },
+    {
+      "title": "Nonlinear Responses in fMRI: The Balloon Model, Volterra Kernels, and Other Hemodynamics",
+      "journal": "NeuroImage",
+      "year": 2000,
+      "citationCount": 1159,
+      "doi": "10.1006/nimg.2000.0630",
+      "sourceUrl": "https://doi.org/10.1006/nimg.2000.0630",
+      "verified": true
+    },
+    {
+      "title": "Detecting Activations in PET and fMRI: Levels of Inference and Power",
+      "journal": "NeuroImage",
+      "year": 1996,
+      "citationCount": 1148,
+      "doi": "10.1006/nimg.1996.0074",
+      "sourceUrl": "https://doi.org/10.1006/nimg.1996.0074",
+      "verified": true
+    },
+    {
+      "title": "Predictive coding: an account of the mirror neuron system",
+      "journal": "Cognitive Processing",
+      "year": 2007,
+      "citationCount": 1132,
+      "doi": "10.1007/s10339-007-0170-2",
+      "sourceUrl": "https://doi.org/10.1007/s10339-007-0170-2",
+      "verified": true
+    },
+    {
+      "title": "Dysconnection in Schizophrenia: From Abnormal Synaptic Plasticity to Failures of Self-monitoring",
+      "journal": "Schizophrenia Bulletin",
+      "year": 2009,
+      "citationCount": 1132,
+      "doi": "10.1093/schbul/sbn176",
+      "sourceUrl": "https://doi.org/10.1093/schbul/sbn176",
+      "verified": true
+    },
+    {
+      "title": "Active Inference: A Process Theory",
+      "journal": "Neural Computation",
+      "year": 2016,
+      "citationCount": 1115,
+      "doi": "10.1162/neco_a_00912",
+      "sourceUrl": "https://doi.org/10.1162/neco_a_00912",
+      "verified": true
+    },
+    {
+      "title": "The Dynamic Brain: From Spiking Neurons to Neural Masses and Cortical Fields",
+      "journal": "PLoS Computational Biology",
+      "year": 2008,
+      "citationCount": 1107,
+      "doi": "10.1371/journal.pcbi.1000092",
+      "sourceUrl": "https://doi.org/10.1371/journal.pcbi.1000092",
+      "verified": true
+    },
+    {
+      "title": "Multisubject fMRI Studies and Conjunction Analyses",
+      "journal": "NeuroImage",
+      "year": 1999,
+      "citationCount": 1103,
+      "doi": "10.1006/nimg.1999.0484",
+      "sourceUrl": "https://doi.org/10.1006/nimg.1999.0484",
+      "verified": true
+    },
+    {
+      "title": "REBUS and the Anarchic Brain: Toward a Unified Model of the Brain Action of Psychedelics",
+      "journal": "Pharmacological Reviews",
+      "year": 2019,
+      "citationCount": 1041,
+      "doi": "10.1124/pr.118.017160",
+      "sourceUrl": "https://doi.org/10.1124/pr.118.017160",
+      "verified": true
+    },
+    {
+      "title": "Modeling Geometric Deformations in EPI Time Series",
+      "journal": "NeuroImage",
+      "year": 2001,
+      "citationCount": 1019,
+      "doi": "10.1006/nimg.2001.0746",
+      "sourceUrl": "https://doi.org/10.1006/nimg.2001.0746",
+      "verified": true
+    },
+    {
+      "title": "Hierarchical Models in the Brain",
+      "journal": "PLoS Computational Biology",
+      "year": 2008,
+      "citationCount": 963,
+      "doi": "10.1371/journal.pcbi.1000211",
+      "sourceUrl": "https://doi.org/10.1371/journal.pcbi.1000211",
+      "verified": true
+    },
+    {
+      "title": "Brain Systems Mediating Aversive Conditioning: an Event-Related fMRI Study",
+      "journal": "Neuron",
+      "year": 1998,
+      "citationCount": 950,
+      "doi": "10.1016/s0896-6273(00)80476-6",
+      "sourceUrl": "https://doi.org/10.1016/s0896-6273(00)80476-6",
+      "verified": true
+    },
+    {
+      "title": "Variational free energy and the Laplace approximation",
+      "journal": "NeuroImage",
+      "year": 2006,
+      "citationCount": 933,
+      "doi": "10.1016/j.neuroimage.2006.08.035",
+      "sourceUrl": "https://doi.org/10.1016/j.neuroimage.2006.08.035",
+      "verified": true
+    },
+    {
+      "title": "Multimodal Image Coregistration and Partitioning—A Unified Framework",
+      "journal": "NeuroImage",
+      "year": 1997,
+      "citationCount": 933,
+      "doi": "10.1006/nimg.1997.0290",
+      "sourceUrl": "https://doi.org/10.1006/nimg.1997.0290",
+      "verified": true
+    },
+    {
+      "title": "Willed action and the prefrontal cortex in man: a study with PET",
+      "journal": "Proceedings of the Royal Society B Biological Sciences",
+      "year": 1991,
+      "citationCount": 906,
+      "doi": "10.1098/rspb.1991.0077",
+      "sourceUrl": "https://doi.org/10.1098/rspb.1991.0077",
+      "verified": true
+    },
+    {
+      "title": "Generalisability, Random Effects &amp; Population Inference",
+      "journal": "NeuroImage",
+      "year": 1998,
+      "citationCount": 901,
+      "doi": "10.1016/s1053-8119(18)31587-8",
+      "sourceUrl": "https://doi.org/10.1016/s1053-8119(18)31587-8",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:13.000Z",
+  "openalexId": "https://openalex.org/A5086852785"
 }

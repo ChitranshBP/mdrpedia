@@ -1,48 +1,531 @@
 {
-    "fullName": "Devi Shetty",
-    "slug": "devi-shetty",
-    "title": "MD, FRCS",
-    "specialty": "Cardiac Surgery",
-    "geography": {
-        "city": "Bangalore",
-        "country": "India"
+  "fullName": "Devi Shetty",
+  "slug": "devi-shetty",
+  "title": "MD",
+  "specialty": "Cardiac Surgery",
+  "subSpecialty": "Pediatric Cardiac Surgery",
+  "consultationPrice": "₹3000",
+  "teleConsultationPrice": "₹1500",
+  "geography": {
+    "country": "India",
+    "region": null,
+    "city": null
+  },
+  "status": "LIVING",
+  "tier": "TITAN",
+  "rankingScore": 30.75,
+  "hIndex": 110,
+  "yearsActive": 0,
+  "verifiedSurgeries": 0,
+  "livesSaved": 0,
+  "biography": "Devi Prasad Shetty is an Indian cardiac surgeon who is the chairman and founder of Narayana Health, a chain of 24 medical centers in India. He has performed more than 100,000 heart operations. In 2004 he was awarded the Padma Shri, the fourth highest civilian award, followed by the Padma Bhushan in 2012, the third highest civilian award by the Government of India for his contribution to the field of affordable healthcare.",
+  "aiSummary": "Devi Shetty is a Elite-tier (top 1%) cardiac surgery - affordable cardiac model specialist with an H-index of 110 at Narayana Health (Chairman and Founder). Has been published in The Lancet Global Health, The Lancet, The Indian Journal of Chest Diseases and Allied Sciences and recipient of the Padma Shri (2004). Based in India.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/7/75/Dr._Devi_Prasad_Shetty.jpg",
+  "techniquesInvented": [],
+  "hasInvention": false,
+  "education": [
+    "MBBS, Kasturba Medical College",
+    "MS (General Surgery), Kasturba Medical College",
+    "Fellowship, Royal College of Surgeons"
+  ],
+  "socialMedia": {},
+  "affiliations": [
+    {
+      "hospitalName": "Narayana Health",
+      "role": "Chairman and Founder",
+      "hospitalUrl": "https://www.narayanahealth.org/"
     },
-    "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Devi_Shetty_at_Health_City.jpg/800px-Devi_Shetty_at_Health_City.jpg",
-    "tier": "TITAN",
-    "rankingScore": 95,
-    "hIndex": 55,
-    "citations": [],
-    "yearsActive": 40,
-    "verifiedSurgeries": 15000,
-    "livesSaved": 100000,
-    "techniquesInvented": [
-        "Affordable Cardiac Surgery Models"
-    ],
-    "isPioneer": true,
-    "isLeader": true,
-    "affiliations": [
-        {
-            "hospitalName": "Narayana Health"
-        }
-    ],
-    "bio": "Devi Prasad Shetty is an Indian cardiac surgeon and philanthropist. He is the chairman and founder of Narayana Health. He has performed over 15,000 heart operations and is known for democratizing healthcare by making cardiac surgery affordable for the masses.",
-    "awards": [
-        {
-            "name": "Padma Bhushan",
-            "year": 2012
-        },
-        {
-            "name": "Padma Shri",
-            "year": 2004
-        },
-        {
-            "name": "The Economist Innovation Award",
-            "year": 2011
-        }
-    ],
-    "education": [
-        "Kasturba Medical College (MBBS)"
-    ],
-    "socialMedia": {},
-    "status": "LIVING"
+    {
+      "hospitalName": "St Thomas' Hospital, London",
+      "role": "Former Surgeon",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Cardiac Surgery - Affordable cardiac model"
+  ],
+  "knowsAbout": [
+    "Affordable cardiac model"
+  ],
+  "rareConditions": [
+    "Complex Neonatal Heart Defects",
+    "Tetralogy of Fallot",
+    "Pulmonary Atresia",
+    "Transposition of Great Arteries"
+  ],
+  "citations": [
+    {
+      "title": "Global Unmet Needs in Cardiac Surgery",
+      "journal": "Global Heart",
+      "year": 2018,
+      "citationCount": 198,
+      "doi": "10.1016/j.gheart.2018.08.002",
+      "sourceUrl": "https://doi.org/10.1016/j.gheart.2018.08.002",
+      "verified": true
+    },
+    {
+      "title": "Can reverse innovation catalyse better value health care?",
+      "journal": "The Lancet Global Health",
+      "year": 2017,
+      "citationCount": 28,
+      "doi": "10.1016/s2214-109x(17)30324-8",
+      "sourceUrl": "https://doi.org/10.1016/s2214-109x(17)30324-8",
+      "verified": true
+    },
+    {
+      "title": "India's resurgence of COVID-19: urgent actions needed",
+      "journal": "The Lancet",
+      "year": 2021,
+      "citationCount": 26,
+      "doi": "10.1016/s0140-6736(21)01202-2",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(21)01202-2",
+      "verified": true
+    },
+    {
+      "title": "Ventricular Restoration by Linear Endoventricular Patchplasty and Linear Repair",
+      "journal": "Asian Cardiovascular and Thoracic Annals",
+      "year": 2008,
+      "citationCount": 25,
+      "doi": "10.1177/021849230801600512",
+      "sourceUrl": "https://doi.org/10.1177/021849230801600512",
+      "verified": true
+    },
+    {
+      "title": "Mast Cell Disease",
+      "journal": "Journal of Pediatric Hematology/Oncology",
+      "year": 2006,
+      "citationCount": 19,
+      "doi": "10.1097/01.mph.0000212950.12856.d4",
+      "sourceUrl": "https://doi.org/10.1097/01.mph.0000212950.12856.d4",
+      "verified": true
+    },
+    {
+      "title": "Correspondence",
+      "journal": "The Annals of Thoracic Surgery",
+      "year": 1996,
+      "citationCount": 18,
+      "doi": "10.1016/s0003-4975(96)00400-2",
+      "sourceUrl": "https://doi.org/10.1016/s0003-4975(96)00400-2",
+      "verified": true
+    },
+    {
+      "title": "Tele-Education Service Using Telemedicine Network in Healthcare Industry",
+      "journal": "Telemedicine Journal and e-Health",
+      "year": 2012,
+      "citationCount": 18,
+      "doi": "10.1089/tmj.2011.0278",
+      "sourceUrl": "https://doi.org/10.1089/tmj.2011.0278",
+      "verified": true
+    },
+    {
+      "title": "Are cost advantages from a modern Indian hospital transferable to the United States?",
+      "journal": "American Heart Journal",
+      "year": 2020,
+      "citationCount": 16,
+      "doi": "10.1016/j.ahj.2020.04.009",
+      "sourceUrl": "https://doi.org/10.1016/j.ahj.2020.04.009",
+      "verified": true
+    },
+    {
+      "title": "Marsupialization of Intramyocardial Left Anterior Descending Artery: A Novel Approach for Easy Access During Revascularization",
+      "journal": "The Annals of Thoracic Surgery",
+      "year": 2005,
+      "citationCount": 15,
+      "doi": "10.1016/j.athoracsur.2004.06.106",
+      "sourceUrl": "https://doi.org/10.1016/j.athoracsur.2004.06.106",
+      "verified": true
+    },
+    {
+      "title": "Uptake and impact of vaccination against COVID-19 among healthcare workers-evidence from a multicentre study",
+      "journal": "American Journal of Infection Control",
+      "year": 2021,
+      "citationCount": 12,
+      "doi": "10.1016/j.ajic.2021.10.036",
+      "sourceUrl": "https://doi.org/10.1016/j.ajic.2021.10.036",
+      "verified": true
+    },
+    {
+      "title": "A Novel Treatment for Pulmonary Hemorrhage During Thromboendarterectomy Surgery",
+      "journal": "The Annals of Thoracic Surgery",
+      "year": 2015,
+      "citationCount": 11,
+      "doi": "10.1016/j.athoracsur.2014.11.060",
+      "sourceUrl": "https://doi.org/10.1016/j.athoracsur.2014.11.060",
+      "verified": true
+    },
+    {
+      "title": "Implementation of The Lancet Commission on Global Surgery in India",
+      "journal": "Healthcare",
+      "year": 2018,
+      "citationCount": 11,
+      "doi": "10.1016/j.hjdsi.2018.11.001",
+      "sourceUrl": "https://doi.org/10.1016/j.hjdsi.2018.11.001",
+      "verified": true
+    },
+    {
+      "title": "Characterization of dysfunctional remote myocardium in left ventricular anterior aneurysms and improvements following surgical ventricular restoration using cardiac magnetic resonance imaging: preliminary results",
+      "journal": "Interactive Cardiovascular and Thoracic Surgery",
+      "year": 2014,
+      "citationCount": 10,
+      "doi": "10.1093/icvts/ivu162",
+      "sourceUrl": "https://doi.org/10.1093/icvts/ivu162",
+      "verified": true
+    },
+    {
+      "title": "Bidirectional Glenn Shunt: 170 Cases",
+      "journal": "Asian Cardiovascular and Thoracic Annals",
+      "year": 2001,
+      "citationCount": 9,
+      "doi": "10.1177/021849230100900308",
+      "sourceUrl": "https://doi.org/10.1177/021849230100900308",
+      "verified": true
+    },
+    {
+      "title": "Oversized donor heart transplantation—clinical experience with an underestimated problem",
+      "journal": "Indian Journal of Thoracic and Cardiovascular Surgery",
+      "year": 2021,
+      "citationCount": 9,
+      "doi": "10.1007/s12055-021-01200-6",
+      "sourceUrl": "https://doi.org/10.1007/s12055-021-01200-6",
+      "verified": true
+    },
+    {
+      "title": "Restoration of optimal left ventricular apical geometry and rotation following surgical ventricular restoration using rectangular patch plasty technique: a pilot study using cardiac magnetic resonance",
+      "journal": "Interactive Cardiovascular and Thoracic Surgery",
+      "year": 2014,
+      "citationCount": 9,
+      "doi": "10.1093/icvts/ivu173",
+      "sourceUrl": "https://doi.org/10.1093/icvts/ivu173",
+      "verified": true
+    },
+    {
+      "title": "Myocardial infarction and biventricular free-wall rupture with shunting through a false aneurysm",
+      "journal": "International Journal of Cardiology",
+      "year": 1990,
+      "citationCount": 8,
+      "doi": "10.1016/0167-5273(90)90173-3",
+      "sourceUrl": "https://doi.org/10.1016/0167-5273(90)90173-3",
+      "verified": true
+    },
+    {
+      "title": "Determinant of outcome in late presenting type A aortic dissection",
+      "journal": "Journal of Cardiac Surgery",
+      "year": 2022,
+      "citationCount": 8,
+      "doi": "10.1111/jocs.16401",
+      "sourceUrl": "https://doi.org/10.1111/jocs.16401",
+      "verified": true
+    },
+    {
+      "title": "Incidence of Chronic Thrombo-embolic Pulmonary Hypertension Following Acute Pulmonary Thrombo-embolism: An Indian Perspective",
+      "journal": "The Indian Journal of Chest Diseases and Allied Sciences",
+      "year": 2022,
+      "citationCount": 8,
+      "doi": "10.5005/ijcdas-55-4-205",
+      "sourceUrl": "https://doi.org/10.5005/ijcdas-55-4-205",
+      "verified": true
+    },
+    {
+      "title": "Chronic pulmonary thromboembolism due to intracardiac and pulmonary hydatidosis",
+      "journal": "Asian Cardiovascular and Thoracic Annals",
+      "year": 2020,
+      "citationCount": 5,
+      "doi": "10.1177/0218492320957918",
+      "sourceUrl": "https://doi.org/10.1177/0218492320957918",
+      "verified": true
+    },
+    {
+      "title": "Tetralogy of Fallot and Hemophilia A: Successful Management of Intracardiac Repair",
+      "journal": "Asian Cardiovascular and Thoracic Annals",
+      "year": 1999,
+      "citationCount": 5,
+      "doi": "10.1177/021849239900700214",
+      "sourceUrl": "https://doi.org/10.1177/021849239900700214",
+      "verified": true
+    },
+    {
+      "title": "Aortic valve repair in patients with ventricular septal defect",
+      "journal": "Journal of Cardiac Surgery",
+      "year": 2021,
+      "citationCount": 5,
+      "doi": "10.1111/jocs.15939",
+      "sourceUrl": "https://doi.org/10.1111/jocs.15939",
+      "verified": true
+    },
+    {
+      "title": "Are large compensation payouts for negligence good for medicine in India?",
+      "journal": "BMJ",
+      "year": 2014,
+      "citationCount": 5,
+      "doi": "10.1136/bmj.g5229",
+      "sourceUrl": "https://doi.org/10.1136/bmj.g5229",
+      "verified": true
+    },
+    {
+      "title": "A new technique for one-lung ventilation during video-assisted thoracoscopic surgical interruption of patent ductus arteriosus in children",
+      "journal": "Journal of Thoracic and Cardiovascular Surgery",
+      "year": 1995,
+      "citationCount": 5,
+      "doi": "10.1016/s0022-5223(05)80038-8",
+      "sourceUrl": "https://doi.org/10.1016/s0022-5223(05)80038-8",
+      "verified": true
+    },
+    {
+      "title": "EFFECT OF RE‐STERILIZATION OF SURGICAL SUTURES BY ETHYLENE OXIDE",
+      "journal": "ANZ Journal of Surgery",
+      "year": 2007,
+      "citationCount": 4,
+      "doi": "10.1111/j.1445-2197.2006.03560.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1445-2197.2006.03560.x",
+      "verified": true
+    },
+    {
+      "title": "Video-assisted thoracoscopic surgery for closure of patent ductus arteriosus in children.",
+      "journal": "PubMed",
+      "year": 1997,
+      "citationCount": 4,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W103796450",
+      "verified": true
+    },
+    {
+      "title": "A Novel Surgical Technique to Address Post-Septal Myectomy Ventricular Septal Defect",
+      "journal": "The Annals of Thoracic Surgery",
+      "year": 2021,
+      "citationCount": 3,
+      "doi": "10.1016/j.athoracsur.2021.03.105",
+      "sourceUrl": "https://doi.org/10.1016/j.athoracsur.2021.03.105",
+      "verified": true
+    },
+    {
+      "title": "A Safe Technique to Monitor Pulmonary Artery Pressure during and after Paediatric Cardiac Surgery",
+      "journal": "Anaesthesia and Intensive Care",
+      "year": 1997,
+      "citationCount": 3,
+      "doi": "10.1177/0310057x9702500606",
+      "sourceUrl": "https://doi.org/10.1177/0310057x9702500606",
+      "verified": true
+    },
+    {
+      "title": "The Ross Procedure in Young and Middle-Aged Patients: Long-Term Outcomes",
+      "journal": "The Annals of Thoracic Surgery",
+      "year": 2025,
+      "citationCount": 2,
+      "doi": "10.1016/j.athoracsur.2025.08.045",
+      "sourceUrl": "https://doi.org/10.1016/j.athoracsur.2025.08.045",
+      "verified": true
+    },
+    {
+      "title": "Correlation between Platelet-to-Lymphocyte Ratio and Neutrophil-to-Lymphocyte Ratio with Hematological Parameters in Multiple Myeloma Patients",
+      "journal": "Biomedical and Biotechnology Research Journal (BBRJ)",
+      "year": 2022,
+      "citationCount": 2,
+      "doi": "10.4103/bbrj.bbrj_275_21",
+      "sourceUrl": "https://doi.org/10.4103/bbrj.bbrj_275_21",
+      "verified": true
+    },
+    {
+      "title": "Surgical Series of 370 Cases of Pulmonary Thromboendarterectomy: Experience from the Indian Subcontinent",
+      "journal": "The Journal of Heart and Lung Transplantation",
+      "year": 2017,
+      "citationCount": 2,
+      "doi": "10.1016/j.healun.2017.01.187",
+      "sourceUrl": "https://doi.org/10.1016/j.healun.2017.01.187",
+      "verified": true
+    },
+    {
+      "title": "Developing a Sustainable High-End Cardiovascular Surgery Program in Emerging Economies: The Narayana Health (NH) Model Structured on Affordable, Accessible, Tertiary Level Care",
+      "journal": "Sustainable development goals series",
+      "year": 2021,
+      "citationCount": 2,
+      "doi": "10.1007/978-3-030-83864-5_37",
+      "sourceUrl": "https://doi.org/10.1007/978-3-030-83864-5_37",
+      "verified": true
+    },
+    {
+      "title": "Primary or secondary Bentall-De Bono procedure: are the outcomes worse?",
+      "journal": "Asian Cardiovascular and Thoracic Annals",
+      "year": 2019,
+      "citationCount": 2,
+      "doi": "10.1177/0218492319832775",
+      "sourceUrl": "https://doi.org/10.1177/0218492319832775",
+      "verified": true
+    },
+    {
+      "title": "Technique to repair multiple muscular ventricular septal defects",
+      "journal": "Journal of Thoracic and Cardiovascular Surgery",
+      "year": 1999,
+      "citationCount": 1,
+      "doi": "10.1016/s0022-5223(99)70446-0",
+      "sourceUrl": "https://doi.org/10.1016/s0022-5223(99)70446-0",
+      "verified": true
+    },
+    {
+      "title": "Technique to Monitor Pulmonary Artery Pressure after Pediatric Cardiac Surgery",
+      "journal": "Asian Cardiovascular and Thoracic Annals",
+      "year": 1998,
+      "citationCount": 1,
+      "doi": "10.1177/021849239800600413",
+      "sourceUrl": "https://doi.org/10.1177/021849239800600413",
+      "verified": true
+    },
+    {
+      "title": "Anterior mediastinal teratoma presenting with pseudo-aneurysms of aorta",
+      "journal": "European Heart Journal - Cardiovascular Imaging",
+      "year": 2013,
+      "citationCount": 1,
+      "doi": "10.1093/ehjci/jet164",
+      "sourceUrl": "https://doi.org/10.1093/ehjci/jet164",
+      "verified": true
+    },
+    {
+      "title": "Methemoglobinemia Unmasked by Use of Sodium Nitroprusside and Hypothermia in a Case of Chronic Thromboembolic Pulmonary Hypertension During Pulmonary Endarterectomy: A Case Report",
+      "journal": "A&A Practice",
+      "year": 2020,
+      "citationCount": 1,
+      "doi": "10.1213/xaa.0000000000001311",
+      "sourceUrl": "https://doi.org/10.1213/xaa.0000000000001311",
+      "verified": true
+    },
+    {
+      "title": "Hypothermic thoracoabdominal aneurysm operation",
+      "journal": "The Annals of Thoracic Surgery",
+      "year": 1993,
+      "citationCount": 1,
+      "doi": "10.1016/0003-4975(93)91200-7",
+      "sourceUrl": "https://doi.org/10.1016/0003-4975(93)91200-7",
+      "verified": true
+    },
+    {
+      "title": "Percutaneous transcatheter left ventricular mass extraction—A case report",
+      "journal": "IHJ Cardiovascular Case Reports (CVCR)",
+      "year": 2018,
+      "citationCount": 1,
+      "doi": "10.1016/j.ihjccr.2018.01.007",
+      "sourceUrl": "https://doi.org/10.1016/j.ihjccr.2018.01.007",
+      "verified": true
+    },
+    {
+      "title": "P1463Cardiology, cardiovascular clinical and economical beneficiary outcomes of tele-cardiology, e-audio-visual cardiology and m-cardiology: TEAM study at multi cardiac centre in India",
+      "journal": "European Heart Journal",
+      "year": 2019,
+      "citationCount": 0,
+      "doi": "10.1093/eurheartj/ehz748.0228",
+      "sourceUrl": "https://doi.org/10.1093/eurheartj/ehz748.0228",
+      "verified": true
+    },
+    {
+      "title": "Correlation Between Serum Sodium and Worsening of Hepatic Encephalopathy",
+      "journal": "AJ Journal of Medical Sciences",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.71325/ajjms.v2i1.24.13",
+      "sourceUrl": "https://doi.org/10.71325/ajjms.v2i1.24.13",
+      "verified": true
+    },
+    {
+      "title": "Transcatheter para mitral annular ring leak device closure – A case report",
+      "journal": "Journal of Cardiology Cases",
+      "year": 2023,
+      "citationCount": 0,
+      "doi": "10.1016/j.jccase.2023.03.007",
+      "sourceUrl": "https://doi.org/10.1016/j.jccase.2023.03.007",
+      "verified": true
+    },
+    {
+      "title": "Textbook of Cardiac Critical Care",
+      "journal": "Thieme Medical and Scientific Publishers Private Limited eBooks",
+      "year": 2023,
+      "citationCount": 0,
+      "doi": "10.1055/b000000567",
+      "sourceUrl": "https://doi.org/10.1055/b000000567",
+      "verified": true
+    },
+    {
+      "title": "The Clinical Effects of Leukocyte Depletion Arterial Filter in Long duration Cardiopulmonary Bypass",
+      "journal": "Journal of ExtraCorporeal Technology",
+      "year": 2012,
+      "citationCount": 0,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2216543614",
+      "verified": true
+    },
+    {
+      "title": "Unusual Short-Axis Aortic Valve View",
+      "journal": "Journal of Cardiothoracic and Vascular Anesthesia",
+      "year": 2010,
+      "citationCount": 0,
+      "doi": "10.1053/j.jvca.2009.12.004",
+      "sourceUrl": "https://doi.org/10.1053/j.jvca.2009.12.004",
+      "verified": true
+    },
+    {
+      "title": "Leveraging ECG images for predicting ejection fraction using machine learning algorithms",
+      "journal": "Indian Heart Journal",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.1016/j.ihj.2025.03.009",
+      "sourceUrl": "https://doi.org/10.1016/j.ihj.2025.03.009",
+      "verified": true
+    },
+    {
+      "title": "Acquired and Inherited Thrombophilia Testing in Patients with Chronic Thromboembolic Pulmonary Hypertension: Value of Testing in an Academic Health Center",
+      "journal": "Blood",
+      "year": 2021,
+      "citationCount": 0,
+      "doi": "10.1182/blood-2021-148655",
+      "sourceUrl": "https://doi.org/10.1182/blood-2021-148655",
+      "verified": true
+    },
+    {
+      "title": "Ectopic intracardiac liver tissue masquerading as a right atrial myxoma",
+      "journal": "Indian Journal of Thoracic and Cardiovascular Surgery",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.1007/s12055-024-01884-6",
+      "sourceUrl": "https://doi.org/10.1007/s12055-024-01884-6",
+      "verified": true
+    },
+    {
+      "title": "P444Comparison of hemodynamic adenosine response and splenic switch off in Indian subcontinent patients undergoing stress cardiac MRI",
+      "journal": "European Heart Journal - Cardiovascular Imaging",
+      "year": 2019,
+      "citationCount": 0,
+      "doi": "10.1093/ehjci/jez118.031",
+      "sourceUrl": "https://doi.org/10.1093/ehjci/jez118.031",
+      "verified": true
+    },
+    {
+      "title": "Percutaneous device closure for Paravalvular leak- A single centre experience",
+      "journal": "Indian Heart Journal",
+      "year": 2025,
+      "citationCount": 0,
+      "doi": "10.1016/j.ihj.2025.02.008",
+      "sourceUrl": "https://doi.org/10.1016/j.ihj.2025.02.008",
+      "verified": true
+    }
+  ],
+  "awards": [
+    {
+      "name": "Padma Shri",
+      "year": 2004,
+      "issuingBody": "Government of India"
+    },
+    {
+      "name": "The Economist Innovation Award",
+      "year": 2011,
+      "issuingBody": "The Economist"
+    },
+    {
+      "name": "Padma Bhushan",
+      "year": 2012,
+      "issuingBody": "Government of India"
+    },
+    {
+      "name": "Nikkei Asia Prize",
+      "year": 2014,
+      "issuingBody": "Nikkei Inc."
+    }
+  ],
+  "timeline": []
 }

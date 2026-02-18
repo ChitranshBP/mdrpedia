@@ -8,115 +8,12 @@ import { getCollection } from "astro:content";
 import TierBadge from "../components/TierBadge.astro";
 
 const allDoctors = await getCollection("doctors");
+const communityEntries = await getCollection("communities");
 
-// Medical Organizations
-const organizations = [
-    {
-        name: "World Health Organization",
-        abbr: "WHO",
-        icon: "🌍",
-        desc: "The United Nations agency directing and coordinating international health policy, disease response, and global public health standards.",
-        url: "https://www.who.int",
-        relatedSpecialties: [
-            "Public Health",
-            "Epidemiology",
-            "Infectious Disease",
-            "Global Health",
-        ],
-    },
-    {
-        name: "American Heart Association",
-        abbr: "AHA",
-        icon: "❤️",
-        desc: "Leading nonprofit funding cardiovascular and cerebrovascular disease research. Publisher of Circulation and the ACLS/BLS guidelines.",
-        url: "https://www.heart.org",
-        relatedSpecialties: [
-            "Cardiology",
-            "Cardiovascular Surgery",
-            "Clinical Cardiology",
-            "Vascular Medicine",
-        ],
-    },
-    {
-        name: "American Medical Association",
-        abbr: "AMA",
-        icon: "⚕️",
-        desc: "The largest association of physicians and medical students in the United States, advocating for the medical profession and public health.",
-        url: "https://www.ama-assn.org",
-        relatedSpecialties: [
-            "Internal Medicine",
-            "Family Medicine",
-            "General Practice",
-        ],
-    },
-    {
-        name: "National Institutes of Health",
-        abbr: "NIH",
-        icon: "🔬",
-        desc: "The primary U.S. federal agency for biomedical and public health research, comprising 27 institutes and centers.",
-        url: "https://www.nih.gov",
-        relatedSpecialties: [
-            "Genomics",
-            "Immunology",
-            "Biomedical Research",
-            "Molecular Biology",
-        ],
-    },
-    {
-        name: "American College of Surgeons",
-        abbr: "ACS",
-        icon: "🏥",
-        desc: "Scientific and educational organization of surgeons dedicated to improving surgical care through standards, education, and trauma verification.",
-        url: "https://www.facs.org",
-        relatedSpecialties: [
-            "Surgery",
-            "Neurosurgery",
-            "Transplant Surgery",
-            "Cardiac Surgery",
-        ],
-    },
-    {
-        name: "Royal College of Physicians",
-        abbr: "RCP",
-        icon: "👑",
-        desc: "The oldest medical college in England, setting standards in clinical practice, education, and quality improvement since 1518.",
-        url: "https://www.rcplondon.ac.uk",
-        relatedSpecialties: [
-            "Internal Medicine",
-            "Geriatrics",
-            "Respiratory Medicine",
-        ],
-    },
-    {
-        name: "Médecins Sans Frontières",
-        abbr: "MSF",
-        icon: "🆘",
-        desc: "Nobel Prize-winning international humanitarian medical organization providing aid in armed conflicts, epidemics, and natural disasters.",
-        url: "https://www.msf.org",
-        relatedSpecialties: [
-            "Emergency Medicine",
-            "Infectious Disease",
-            "Trauma Surgery",
-            "Humanitarian Medicine",
-        ],
-    },
-    {
-        name: "American Cancer Society",
-        abbr: "ACS",
-        icon: "🎗️",
-        desc: "Nationwide health organization funding cancer research, providing patient services, and leading evidence-based prevention programs.",
-        url: "https://www.cancer.org",
-        relatedSpecialties: [
-            "Oncology",
-            "Surgical Oncology",
-            "Radiation Oncology",
-            "Hematology",
-        ],
-    },
-];
+const staticCommunities = communityEntries.map((c) => c.data);
 
-// Count related doctors for each org
-const orgsWithCounts = organizations.map((org) => {
+// Enrich organizations with doctor counts
+const orgsWithCounts = staticCommunities.map((org) => {
     const count = allDoctors.filter((d) => {
         const spec = (d.data.specialty || "").toLowerCase();
         return org.relatedSpecialties.some((rs) =>
@@ -125,6 +22,9 @@ const orgsWithCounts = organizations.map((org) => {
     }).length;
     return { ...org, doctorCount: count };
 });
+
+// Group by region for filter
+const regions = Array.from(new Set(staticCommunities.map((c) => c.region)));
 
 // Specialty groupings (existing feature)
 const specMap = new Map<string, typeof allDoctors>();
@@ -136,8 +36,17 @@ allDoctors.forEach((d) => {
     }
 });
 
-const communities = [...specMap.entries()]
-    .filter(([, members]) => members.length >= 3)
+const specialtyCommunities = [...specMap.entries()]
+    .filter(([name, members]) => {
+        // Skip numeric specialty names (bulk import artifacts)
+        if (/^\d+$/.test(name.trim())) return false;
+        // Skip names that are just numbers with spaces
+        if (/^[\d\s.]+$/.test(name.trim())) return false;
+        // Skip single-character or extremely short names
+        if (name.trim().length < 3) return false;
+        // Require minimum community size
+        return members.length >= 3;
+    })
     .sort((a, b) => b[1].length - a[1].length)
     .slice(0, 20)
     .map(([name, members]) => ({
@@ -165,11 +74,28 @@ const communities = [...specMap.entries()]
 
         <!-- Organizations -->
         <section class="orgs-section">
-            <h2 class="section-heading">Medical Organizations</h2>
-            <div class="orgs-grid">
+            <div class="section-header-flex">
+                <h2 class="section-heading">Medical Organizations</h2>
+
+                <!-- Simple Filter Tabs -->
+                <div class="region-filter">
+                    <button class="filter-btn active" data-region="All"
+                        >All</button
+                    >
+                    {
+                        regions.map((region) => (
+                            <button class="filter-btn" data-region={region}>
+                                {region}
+                            </button>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <div class="orgs-grid" id="orgsGrid">
                 {
                     orgsWithCounts.map((org) => (
-                        <div class="org-card">
+                        <div class="org-card" data-region={org.region}>
                             <div class="org-card__header">
                                 <span class="org-card__icon">{org.icon}</span>
                                 <div>
@@ -202,6 +128,13 @@ const communities = [...specMap.entries()]
                     ))
                 }
             </div>
+
+            <div
+                id="noResults"
+                style="display:none; text-align:center; padding: 40px; color: var(--text-muted);"
+            >
+                No organizations found for this region.
+            </div>
         </section>
 
         <!-- Specialty Communities -->
@@ -214,7 +147,7 @@ const communities = [...specMap.entries()]
             </p>
             <div class="spec-grid">
                 {
-                    communities.map((community) => (
+                    specialtyCommunities.map((community) => (
                         <div class="spec-card">
                             <div class="spec-card__header">
                                 <h3 class="spec-card__name">
@@ -289,6 +222,44 @@ const communities = [...specMap.entries()]
     </div>
 </Layout>
 
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const buttons = document.querySelectorAll(".filter-btn");
+        const cards = document.querySelectorAll(".org-card");
+        const noResults = document.getElementById("noResults");
+        const grid = document.getElementById("orgsGrid");
+
+        buttons.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                // Update active state
+                buttons.forEach((b) => b.classList.remove("active"));
+                btn.classList.add("active");
+
+                const region = btn.getAttribute("data-region");
+                let visibleCount = 0;
+
+                cards.forEach((card) => {
+                    const cardRegion = card.getAttribute("data-region");
+                    if (region === "All" || cardRegion === region) {
+                        (card as HTMLElement).style.display = "flex";
+                        visibleCount++;
+                    } else {
+                        (card as HTMLElement).style.display = "none";
+                    }
+                });
+
+                if (visibleCount === 0) {
+                    if (noResults) noResults.style.display = "block";
+                    if (grid) grid.style.display = "none";
+                } else {
+                    if (noResults) noResults.style.display = "none";
+                    if (grid) grid.style.display = "grid";
+                }
+            });
+        });
+    });
+</script>
+
 <style>
     .communities-page {
         max-width: 1000px;
@@ -309,14 +280,55 @@ const communities = [...specMap.entries()]
         color: var(--text-secondary);
         font-size: 0.95rem;
     }
+
+    .section-header-flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-bottom: var(--space-md);
+        border-bottom: 1px solid var(--border-subtle);
+        padding-bottom: var(--space-xs);
+    }
+
     .section-heading {
         font-size: 1.25rem;
         font-weight: 700;
         color: var(--text-primary);
-        margin-bottom: var(--space-md);
-        padding-bottom: var(--space-xs);
-        border-bottom: 1px solid var(--border-subtle);
+        margin-bottom: 0;
+        border-bottom: none;
+        padding-bottom: 0;
     }
+
+    .region-filter {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .filter-btn {
+        background: transparent;
+        border: 1px solid var(--border-subtle);
+        color: var(--text-secondary);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-primary);
+    }
+
+    .filter-btn.active {
+        background: var(--accent-purple);
+        border-color: var(--accent-purple);
+        color: white;
+    }
+
     .section-desc {
         color: var(--text-muted);
         font-size: 0.88rem;

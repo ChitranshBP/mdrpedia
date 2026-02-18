@@ -1,31 +1,493 @@
 {
   "fullName": "Giuseppe Mancia",
   "slug": "giuseppe-mancia",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Hypertension",
   "geography": {
-    "city": "Unknown",
-    "country": "Italy"
+    "country": "Italy",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">GM</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 46,
-  "hIndex": 185,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 240,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 24074,
+  "livesSaved": 0,
+  "biography": "Journal of Hypertension is a peer-reviewed medical journal published by Lippincott Williams & Wilkins that was established in 1982. It is the official journal of the International Society of Hypertension and the European Society of Hypertension. The journal is published monthly and includes primary papers, reviews, special reports, and letters.",
+  "aiSummary": "Giuseppe Mancia is a hypertension specialist with an H-index of 240 at University of Milano-Bicocca (Faculty). Has been published in JAMA, The Lancet, New England Journal of Medicine. Based in Italy.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "University of Milano-Bicocca"
-    }
-  ],
-  "bio": "Giuseppe Mancia is a pioneer in Hypertension at University of Milano-Bicocca, Italy. With a D-Index of 185 and over 240,740 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "University of Milano-Bicocca",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Hypertension"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "2018 ESC/ESH Guidelines for the management of arterial hypertension",
+      "journal": "European Heart Journal",
+      "year": 2018,
+      "citationCount": 10095,
+      "doi": "10.1093/eurheartj/ehy339",
+      "sourceUrl": "https://doi.org/10.1093/eurheartj/ehy339",
+      "verified": true
+    },
+    {
+      "title": "European Guidelines on cardiovascular disease prevention in clinical practice (version 2012): The Fifth Joint Task Force of the European Society of Cardiology and Other Societies on Cardiovascular Disease Prevention in Clinical Practice (constituted by representatives of nine societies and by invited experts) * Developed with the special contribution of the European Association for Cardiovascular Prevention &amp; Rehabilitation (EACPR)",
+      "journal": "European Heart Journal",
+      "year": 2012,
+      "citationCount": 8495,
+      "doi": "10.1093/eurheartj/ehs092",
+      "sourceUrl": "https://doi.org/10.1093/eurheartj/ehs092",
+      "verified": true
+    },
+    {
+      "title": "2007 Guidelines for the Management of Arterial Hypertension",
+      "journal": "Journal of Hypertension",
+      "year": 2007,
+      "citationCount": 5821,
+      "doi": "10.1097/hjh.0b013e3281fc975a",
+      "sourceUrl": "https://doi.org/10.1097/hjh.0b013e3281fc975a",
+      "verified": true
+    },
+    {
+      "title": "2021 ESC Guidelines on cardiovascular disease prevention in clinical practice",
+      "journal": "European Heart Journal",
+      "year": 2021,
+      "citationCount": 5751,
+      "doi": "10.1093/eurheartj/ehab484",
+      "sourceUrl": "https://doi.org/10.1093/eurheartj/ehab484",
+      "verified": true
+    },
+    {
+      "title": "2013 ESH/ESC Guidelines for the management of arterial hypertension",
+      "journal": "Journal of Hypertension",
+      "year": 2013,
+      "citationCount": 5635,
+      "doi": "10.1097/01.hjh.0000431740.32696.cc",
+      "sourceUrl": "https://doi.org/10.1097/01.hjh.0000431740.32696.cc",
+      "verified": true
+    },
+    {
+      "title": "2018 ESC/ESH Guidelines for the management of arterial hypertension",
+      "journal": "Journal of Hypertension",
+      "year": 2018,
+      "citationCount": 2760,
+      "doi": "10.1097/hjh.0000000000001940",
+      "sourceUrl": "https://doi.org/10.1097/hjh.0000000000001940",
+      "verified": true
+    },
+    {
+      "title": "2023 ESH Guidelines for the management of arterial hypertension The Task Force for the management of arterial hypertension of the European Society of Hypertension",
+      "journal": "Journal of Hypertension",
+      "year": 2023,
+      "citationCount": 2679,
+      "doi": "10.1097/hjh.0000000000003480",
+      "sourceUrl": "https://doi.org/10.1097/hjh.0000000000003480",
+      "verified": true
+    },
+    {
+      "title": "2003 European society of hypertension - European Society of Cardiology guidelines for the management of arterial hypertension",
+      "journal": "Lirias (KU Leuven)",
+      "year": 2003,
+      "citationCount": 2605,
+      "doi": "10.1097/01.hjh.0000059051.65882.32",
+      "sourceUrl": "https://doi.org/10.1097/01.hjh.0000059051.65882.32",
+      "verified": true
+    },
+    {
+      "title": "2007 ESH-ESC Practice Guidelines for the Management of Arterial Hypertension",
+      "journal": "Journal of Hypertension",
+      "year": 2007,
+      "citationCount": 1836,
+      "doi": "10.1097/hjh.0b013e3282f0580f",
+      "sourceUrl": "https://doi.org/10.1097/hjh.0b013e3282f0580f",
+      "verified": true
+    },
+    {
+      "title": "Reappraisal of European guidelines on hypertension management: a European Society of Hypertension Task Force document",
+      "journal": "Journal of Hypertension",
+      "year": 2009,
+      "citationCount": 1655,
+      "doi": "10.1097/hjh.0b013e328333146d",
+      "sourceUrl": "https://doi.org/10.1097/hjh.0b013e328333146d",
+      "verified": true
+    },
+    {
+      "title": "European Society of Hypertension recommendations for conventional, ambulatory and home blood pressure measurement",
+      "journal": "Journal of Hypertension",
+      "year": 2003,
+      "citationCount": 1644,
+      "doi": "10.1097/00004872-200305000-00001",
+      "sourceUrl": "https://doi.org/10.1097/00004872-200305000-00001",
+      "verified": true
+    },
+    {
+      "title": "European Society of Hypertension Position Paper on Ambulatory Blood Pressure Monitoring",
+      "journal": "Journal of Hypertension",
+      "year": 2013,
+      "citationCount": 1375,
+      "doi": "10.1097/hjh.0b013e328363e964",
+      "sourceUrl": "https://doi.org/10.1097/hjh.0b013e328363e964",
+      "verified": true
+    },
+    {
+      "title": "2016 European Guidelines on cardiovascular disease prevention in clinical practice",
+      "journal": "European Journal of Preventive Cardiology",
+      "year": 2016,
+      "citationCount": 1339,
+      "doi": "10.1177/2047487316653709",
+      "sourceUrl": "https://doi.org/10.1177/2047487316653709",
+      "verified": true
+    },
+    {
+      "title": "2016 European Society of Hypertension guidelines for the management of high blood pressure in children and adolescents",
+      "journal": "Journal of Hypertension",
+      "year": 2016,
+      "citationCount": 1316,
+      "doi": "10.1097/hjh.0000000000001039",
+      "sourceUrl": "https://doi.org/10.1097/hjh.0000000000001039",
+      "verified": true
+    },
+    {
+      "title": "A Calcium Antagonist vs a Non–Calcium Antagonist Hypertension Treatment Strategy for Patients With Coronary Artery Disease",
+      "journal": "JAMA",
+      "year": 2003,
+      "citationCount": 1282,
+      "doi": "10.1001/jama.290.21.2805",
+      "sourceUrl": "https://doi.org/10.1001/jama.290.21.2805",
+      "verified": true
+    },
+    {
+      "title": "Prevention of coronary heart disease in clinical practice: Recommendations of the Second Joint Task Force of European and other Societies on Coronary Prevention1European Society of Cardiology, European Atherosclerosis Society, European Society of Hypertension, International Society of Behavioural Medicine, European Society of General Practice/Family Medicine, European Heart Network.1,2Published simultaneously in the European Heart Journal 1998;19:1434–1503 and the Journal of Hypertension (Summary only) 1998;16(10).2",
+      "journal": "Atherosclerosis",
+      "year": 1998,
+      "citationCount": 1262,
+      "doi": "10.1016/s0021-9150(98)90209-x",
+      "sourceUrl": "https://doi.org/10.1016/s0021-9150(98)90209-x",
+      "verified": true
+    },
+    {
+      "title": "Morbidity and mortality in patients randomised to double-blind treatment with a long-acting calcium-channel blocker or diuretic in the International Nifedipine GITS study: Intervention as a Goal in Hypertension Treatment (INSIGHT)",
+      "journal": "The Lancet",
+      "year": 2000,
+      "citationCount": 1203,
+      "doi": "10.1016/s0140-6736(00)02527-7",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(00)02527-7",
+      "verified": true
+    },
+    {
+      "title": "2013 Practice guidelines for the management of arterial hypertension of the European Society of Hypertension (ESH) and the European Society of Cardiology (ESC)",
+      "journal": "Journal of Hypertension",
+      "year": 2013,
+      "citationCount": 1188,
+      "doi": "10.1097/hjh.0b013e328364ca4c",
+      "sourceUrl": "https://doi.org/10.1097/hjh.0b013e328364ca4c",
+      "verified": true
+    },
+    {
+      "title": "Renin–Angiotensin–Aldosterone System Blockers and the Risk of Covid-19",
+      "journal": "New England Journal of Medicine",
+      "year": 2020,
+      "citationCount": 1103,
+      "doi": "10.1056/nejmoa2006923",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa2006923",
+      "verified": true
+    },
+    {
+      "title": "Prognostic Value of Ambulatory and Home Blood Pressures Compared With Office Blood Pressure in the General Population",
+      "journal": "Circulation",
+      "year": 2005,
+      "citationCount": 998,
+      "doi": "10.1161/01.cir.0000160923.04524.5b",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000160923.04524.5b",
+      "verified": true
+    },
+    {
+      "title": "European Society of Hypertension practice guidelines for ambulatory blood pressure monitoring",
+      "journal": "Journal of Hypertension",
+      "year": 2014,
+      "citationCount": 987,
+      "doi": "10.1097/hjh.0000000000000221",
+      "sourceUrl": "https://doi.org/10.1097/hjh.0000000000000221",
+      "verified": true
+    },
+    {
+      "title": "Albuminuria and Kidney Function Independently Predict Cardiovascular and Renal Outcomes in Diabetes",
+      "journal": "Journal of the American Society of Nephrology",
+      "year": 2009,
+      "citationCount": 959,
+      "doi": "10.1681/asn.2008121270",
+      "sourceUrl": "https://doi.org/10.1681/asn.2008121270",
+      "verified": true
+    },
+    {
+      "title": "Pharmacological blood pressure lowering for primary and secondary prevention of cardiovascular disease across different levels of blood pressure: an individual participant-level data meta-analysis",
+      "journal": "The Lancet",
+      "year": 2021,
+      "citationCount": 915,
+      "doi": "10.1016/s0140-6736(21)00590-0",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(21)00590-0",
+      "verified": true
+    },
+    {
+      "title": "Reappraisal of European guidelines on hypertension management: a European Society of Hypertension Task Force document",
+      "journal": "Blood Pressure",
+      "year": 2009,
+      "citationCount": 896,
+      "doi": "10.3109/08037050903450468",
+      "sourceUrl": "https://doi.org/10.3109/08037050903450468",
+      "verified": true
+    },
+    {
+      "title": "2018 Practice Guidelines for the management of arterial hypertension of the European Society of Cardiology and the European Society of Hypertension",
+      "journal": "Journal of Hypertension",
+      "year": 2018,
+      "citationCount": 854,
+      "doi": "10.1097/hjh.0000000000001961",
+      "sourceUrl": "https://doi.org/10.1097/hjh.0000000000001961",
+      "verified": true
+    },
+    {
+      "title": "Spectral Analysis of Blood Pressure and Heart Rate Variability in Evaluating Cardiovascular Regulation",
+      "journal": "Hypertension",
+      "year": 1995,
+      "citationCount": 843,
+      "doi": "10.1161/01.hyp.25.6.1276",
+      "sourceUrl": "https://doi.org/10.1161/01.hyp.25.6.1276",
+      "verified": true
+    },
+    {
+      "title": "European Society of Hypertension guidelines for blood pressure monitoring at home: a summary report of the Second International Consensus Conference on Home Blood Pressure Monitoring",
+      "journal": "Journal of Hypertension",
+      "year": 2008,
+      "citationCount": 836,
+      "doi": "10.1097/hjh.0b013e328308da66",
+      "sourceUrl": "https://doi.org/10.1097/hjh.0b013e328308da66",
+      "verified": true
+    },
+    {
+      "title": "Dogma Disputed: Can Aggressively Lowering Blood Pressure in Hypertensive Patients with Coronary Artery Disease Be Dangerous?",
+      "journal": "Annals of Internal Medicine",
+      "year": 2006,
+      "citationCount": 773,
+      "doi": "10.7326/0003-4819-144-12-200606200-00005",
+      "sourceUrl": "https://doi.org/10.7326/0003-4819-144-12-200606200-00005",
+      "verified": true
+    },
+    {
+      "title": "Blood pressure and heart rate variabilities in normotensive and hypertensive human beings.",
+      "journal": "Circulation Research",
+      "year": 1983,
+      "citationCount": 773,
+      "doi": "10.1161/01.res.53.1.96",
+      "sourceUrl": "https://doi.org/10.1161/01.res.53.1.96",
+      "verified": true
+    },
+    {
+      "title": "Management of high blood pressure in children and adolescents: recommendations of the European Society of Hypertension",
+      "journal": "Journal of Hypertension",
+      "year": 2009,
+      "citationCount": 769,
+      "doi": "10.1097/hjh.0b013e32832f4f6b",
+      "sourceUrl": "https://doi.org/10.1097/hjh.0b013e32832f4f6b",
+      "verified": true
+    },
+    {
+      "title": "EFFECTS OF BLOOD-PRESSURE MEASUREMENT BY THE DOCTOR ON PATIENT'S BLOOD PRESSURE AND HEART RATE",
+      "journal": "The Lancet",
+      "year": 1983,
+      "citationCount": 746,
+      "doi": "10.1016/s0140-6736(83)92244-4",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(83)92244-4",
+      "verified": true
+    },
+    {
+      "title": "Endothelial function and dysfunction. Part II: Association with cardiovascular risk factors and diseases. A statement by the Working Group on Endothelins and Endothelial Factors of the European Society of Hypertension*",
+      "journal": "Journal of Hypertension",
+      "year": 2005,
+      "citationCount": 743,
+      "doi": "10.1097/00004872-200502000-00001",
+      "sourceUrl": "https://doi.org/10.1097/00004872-200502000-00001",
+      "verified": true
+    },
+    {
+      "title": "2021 European Society of Hypertension practice guidelines for office and out-of-office blood pressure measurement",
+      "journal": "Journal of Hypertension",
+      "year": 2021,
+      "citationCount": 728,
+      "doi": "10.1097/hjh.0000000000002843",
+      "sourceUrl": "https://doi.org/10.1097/hjh.0000000000002843",
+      "verified": true
+    },
+    {
+      "title": "Practice guidelines of the European Society of Hypertension for clinic, ambulatory and self blood pressure measurement",
+      "journal": "Journal of Hypertension",
+      "year": 2005,
+      "citationCount": 726,
+      "doi": "10.1097/01.hjh.0000163132.84890.c4",
+      "sourceUrl": "https://doi.org/10.1097/01.hjh.0000163132.84890.c4",
+      "verified": true
+    },
+    {
+      "title": "2013 ESH/ESC Practice Guidelines for the Management of Arterial Hypertension",
+      "journal": "Blood Pressure",
+      "year": 2013,
+      "citationCount": 711,
+      "doi": "10.3109/08037051.2014.868629",
+      "sourceUrl": "https://doi.org/10.3109/08037051.2014.868629",
+      "verified": true
+    },
+    {
+      "title": "2018 Practice guidelines for the management of arterial hypertension of the European Society of Cardiology and the European Society of Hypertension",
+      "journal": "Blood Pressure",
+      "year": 2018,
+      "citationCount": 698,
+      "doi": "10.1080/08037051.2018.1527177",
+      "sourceUrl": "https://doi.org/10.1080/08037051.2018.1527177",
+      "verified": true
+    },
+    {
+      "title": "Long-Term Risk of Mortality Associated With Selective and Combined Elevation in Office, Home, and Ambulatory Blood Pressure",
+      "journal": "Hypertension",
+      "year": 2006,
+      "citationCount": 683,
+      "doi": "10.1161/01.hyp.0000215363.69793.bb",
+      "sourceUrl": "https://doi.org/10.1161/01.hyp.0000215363.69793.bb",
+      "verified": true
+    },
+    {
+      "title": "Endothelial function and dysfunction. Part I",
+      "journal": "Journal of Hypertension",
+      "year": 2005,
+      "citationCount": 630,
+      "doi": "10.1097/00004872-200501000-00004",
+      "sourceUrl": "https://doi.org/10.1097/00004872-200501000-00004",
+      "verified": true
+    },
+    {
+      "title": "Central Blood Pressure Measurements and Antihypertensive Therapy",
+      "journal": "Hypertension",
+      "year": 2007,
+      "citationCount": 611,
+      "doi": "10.1161/hypertensionaha.107.090068",
+      "sourceUrl": "https://doi.org/10.1161/hypertensionaha.107.090068",
+      "verified": true
+    },
+    {
+      "title": "Follow-up of Blood-Pressure Lowering and Glucose Control in Type 2 Diabetes",
+      "journal": "New England Journal of Medicine",
+      "year": 2014,
+      "citationCount": 610,
+      "doi": "10.1056/nejmoa1407963",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1407963",
+      "verified": true
+    },
+    {
+      "title": "Sympathetic Activation in Obese Normotensive Subjects",
+      "journal": "Hypertension",
+      "year": 1995,
+      "citationCount": 605,
+      "doi": "10.1161/01.hyp.25.4.560",
+      "sourceUrl": "https://doi.org/10.1161/01.hyp.25.4.560",
+      "verified": true
+    },
+    {
+      "title": "The Autonomic Nervous System and Hypertension",
+      "journal": "Circulation Research",
+      "year": 2014,
+      "citationCount": 597,
+      "doi": "10.1161/circresaha.114.302524",
+      "sourceUrl": "https://doi.org/10.1161/circresaha.114.302524",
+      "verified": true
+    },
+    {
+      "title": "Ambulatory blood pressure normality",
+      "journal": "Journal of Hypertension",
+      "year": 1995,
+      "citationCount": 546,
+      "doi": "10.1097/00004872-199512000-00003",
+      "sourceUrl": "https://doi.org/10.1097/00004872-199512000-00003",
+      "verified": true
+    },
+    {
+      "title": "[2018 ESC/ESH Guidelines for the management of arterial hypertension. The Task Force for the management of arterial hypertension of the European Society of Cardiology (ESC) and the European Society of Hypertension (ESH)].",
+      "journal": "PubMed",
+      "year": 2018,
+      "citationCount": 532,
+      "doi": "10.1714/3026.30245",
+      "sourceUrl": "https://doi.org/10.1714/3026.30245",
+      "verified": true
+    },
+    {
+      "title": "Baroreflex Control of Sympathetic Nerve Activity in Essential and Secondary Hypertension",
+      "journal": "Hypertension",
+      "year": 1998,
+      "citationCount": 518,
+      "doi": "10.1161/01.hyp.31.1.68",
+      "sourceUrl": "https://doi.org/10.1161/01.hyp.31.1.68",
+      "verified": true
+    },
+    {
+      "title": "Calcium Antagonist Lacidipine Slows Down Progression of Asymptomatic Carotid Atherosclerosis",
+      "journal": "Circulation",
+      "year": 2002,
+      "citationCount": 513,
+      "doi": "10.1161/01.cir.0000039288.86470.dd",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000039288.86470.dd",
+      "verified": true
+    },
+    {
+      "title": "Alterations of Cardiac Structure in Patients With Isolated Office, Ambulatory, or Home Hypertension",
+      "journal": "Circulation",
+      "year": 2001,
+      "citationCount": 509,
+      "doi": "10.1161/hc3701.096100",
+      "sourceUrl": "https://doi.org/10.1161/hc3701.096100",
+      "verified": true
+    },
+    {
+      "title": "European guidelines on cardiovascular disease prevention in clinical practice&lt;SBT&gt;Third Joint Task Force of European and other Societies on Cardiovascular Disease Prevention in Clinical Practice (constituted by representatives of eight societies and by invited experts)",
+      "journal": "Atherosclerosis",
+      "year": 2004,
+      "citationCount": 505,
+      "doi": "10.1016/j.atherosclerosis.2004.02.013",
+      "sourceUrl": "https://doi.org/10.1016/j.atherosclerosis.2004.02.013",
+      "verified": true
+    },
+    {
+      "title": "How to measure baroreflex sensitivity",
+      "journal": "Journal of Hypertension",
+      "year": 2000,
+      "citationCount": 503,
+      "doi": "10.1097/00004872-200018010-00003",
+      "sourceUrl": "https://doi.org/10.1097/00004872-200018010-00003",
+      "verified": true
+    },
+    {
+      "title": "European guidelines on cardiovascular disease prevention in clinical practice",
+      "journal": "Atherosclerosis",
+      "year": 2003,
+      "citationCount": 495,
+      "doi": "10.1016/j.atherosclerosis.2003.10.001",
+      "sourceUrl": "https://doi.org/10.1016/j.atherosclerosis.2003.10.001",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:13.000Z",
+  "openalexId": "https://openalex.org/A5084756058",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/en/a/a6/CoverIssueJournalofHypertension.jpg"
 }

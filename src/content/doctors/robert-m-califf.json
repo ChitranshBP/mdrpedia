@@ -1,36 +1,493 @@
 {
   "fullName": "Robert M. Califf",
   "slug": "robert-m-califf",
-  "title": "MD, PhD",
-  "specialty": "Clinical Trials",
+  "title": "MD",
+  "specialty": "Cardiovascular Trials",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">RM</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 61,
-  "hIndex": 243,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 260,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 26030,
+  "livesSaved": 0,
+  "biography": "Robert McKinnon Califf is an American cardiologist who served as the 25th commissioner of food and drugs from 2016 to 2017 and again from 2022 to 2025.",
+  "aiSummary": "Robert M. Califf is a cardiovascular trials specialist with an H-index of 260 at Duke University (Faculty). Has been published in New England Journal of Medicine, JAMA, Proceedings of the National Academy of Sciences. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Duke University"
-    }
-  ],
-  "bio": "Robert M. Califf is a pioneer in Clinical Trials at Duke University, USA. With a D-Index of 243 and over 260,297 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Duke University",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Cardiovascular Trials"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Real-World Evidence — What Is It and What Can It Tell Us?",
+      "journal": "New England Journal of Medicine",
+      "year": 2016,
+      "citationCount": 1940,
+      "doi": "10.1056/nejmsb1609216",
+      "sourceUrl": "https://doi.org/10.1056/nejmsb1609216",
+      "verified": true
+    },
+    {
+      "title": "A Comparison of Low-Molecular-Weight Heparin with Unfractionated Heparin for Unstable Coronary Artery Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 1997,
+      "citationCount": 1431,
+      "doi": "10.1056/nejm199708143370702",
+      "sourceUrl": "https://doi.org/10.1056/nejm199708143370702",
+      "verified": true
+    },
+    {
+      "title": "Biomarker definitions and their applications",
+      "journal": "Experimental Biology and Medicine",
+      "year": 2018,
+      "citationCount": 1368,
+      "doi": "10.1177/1535370217750088",
+      "sourceUrl": "https://doi.org/10.1177/1535370217750088",
+      "verified": true
+    },
+    {
+      "title": "Predictors of Outcome in Patients With Acute Coronary Syndromes Without Persistent ST-Segment Elevation",
+      "journal": "Circulation",
+      "year": 2000,
+      "citationCount": 960,
+      "doi": "10.1161/01.cir.101.22.2557",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.101.22.2557",
+      "verified": true
+    },
+    {
+      "title": "Sex, Clinical Presentation, and Outcome in Patients with Acute Coronary Syndromes",
+      "journal": "New England Journal of Medicine",
+      "year": 1999,
+      "citationCount": 894,
+      "doi": "10.1056/nejm199907223410402",
+      "sourceUrl": "https://doi.org/10.1056/nejm199907223410402",
+      "verified": true
+    },
+    {
+      "title": "Clopidogrel Use and Long-term Clinical Outcomes After Drug-Eluting Stent Implantation",
+      "journal": "JAMA",
+      "year": 2006,
+      "citationCount": 870,
+      "doi": "10.1001/jama.297.2.joc60179",
+      "sourceUrl": "https://doi.org/10.1001/jama.297.2.joc60179",
+      "verified": true
+    },
+    {
+      "title": "The ClinicalTrials.gov Results Database — Update and Key Issues",
+      "journal": "New England Journal of Medicine",
+      "year": 2011,
+      "citationCount": 793,
+      "doi": "10.1056/nejmsa1012065",
+      "sourceUrl": "https://doi.org/10.1056/nejmsa1012065",
+      "verified": true
+    },
+    {
+      "title": "Sudden Death in Patients with Myocardial Infarction and Left Ventricular Dysfunction, Heart Failure, or Both",
+      "journal": "New England Journal of Medicine",
+      "year": 2005,
+      "citationCount": 782,
+      "doi": "10.1056/nejmoa043938",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa043938",
+      "verified": true
+    },
+    {
+      "title": "Risk Factors, Angiographic Patterns, and Outcomes in Patients With Ventricular Septal Defect Complicating Acute Myocardial Infarction",
+      "journal": "Circulation",
+      "year": 2000,
+      "citationCount": 746,
+      "doi": "10.1161/01.cir.101.1.27",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.101.1.27",
+      "verified": true
+    },
+    {
+      "title": "A Pharmacogenetic versus a Clinical Algorithm for Warfarin Dosing",
+      "journal": "New England Journal of Medicine",
+      "year": 2013,
+      "citationCount": 739,
+      "doi": "10.1056/nejmoa1310669",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1310669",
+      "verified": true
+    },
+    {
+      "title": "A Comparison of Directional Atherectomy with Coronary Angioplasty in Patients with Coronary Artery Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 1993,
+      "citationCount": 697,
+      "doi": "10.1056/nejm199307223290401",
+      "sourceUrl": "https://doi.org/10.1056/nejm199307223290401",
+      "verified": true
+    },
+    {
+      "title": "Ethical and Scientific Implications of the Globalization of Clinical Research",
+      "journal": "New England Journal of Medicine",
+      "year": 2009,
+      "citationCount": 696,
+      "doi": "10.1056/nejmsb0803929",
+      "sourceUrl": "https://doi.org/10.1056/nejmsb0803929",
+      "verified": true
+    },
+    {
+      "title": "Launching PCORnet, a national patient-centered clinical research network",
+      "journal": "Journal of the American Medical Informatics Association",
+      "year": 2014,
+      "citationCount": 642,
+      "doi": "10.1136/amiajnl-2014-002747",
+      "sourceUrl": "https://doi.org/10.1136/amiajnl-2014-002747",
+      "verified": true
+    },
+    {
+      "title": "Impact of Bleeding Severity on Clinical Outcomes Among Patients With Acute Coronary Syndromes",
+      "journal": "The American Journal of Cardiology",
+      "year": 2005,
+      "citationCount": 631,
+      "doi": "10.1016/j.amjcard.2005.06.056",
+      "sourceUrl": "https://doi.org/10.1016/j.amjcard.2005.06.056",
+      "verified": true
+    },
+    {
+      "title": "Evolution of adverse changes in stored RBCs",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2007,
+      "citationCount": 619,
+      "doi": "10.1073/pnas.0708160104",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0708160104",
+      "verified": true
+    },
+    {
+      "title": "Relationship Between Delay in Performing Direct Coronary Angioplasty and Early Clinical Outcome in Patients With Acute Myocardial Infarction",
+      "journal": "Circulation",
+      "year": 1999,
+      "citationCount": 574,
+      "doi": "10.1161/01.cir.100.1.14",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.100.1.14",
+      "verified": true
+    },
+    {
+      "title": "Adenosine as an adjunct to thrombolytic therapy for acute myocardial infarction",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 1999,
+      "citationCount": 539,
+      "doi": "10.1016/s0735-1097(99)00418-0",
+      "sourceUrl": "https://doi.org/10.1016/s0735-1097(99)00418-0",
+      "verified": true
+    },
+    {
+      "title": "Secondary analysis of the CHOIR trial epoetin-α dose and achieved hemoglobin outcomes",
+      "journal": "Kidney International",
+      "year": 2008,
+      "citationCount": 514,
+      "doi": "10.1038/ki.2008.295",
+      "sourceUrl": "https://doi.org/10.1038/ki.2008.295",
+      "verified": true
+    },
+    {
+      "title": "Characteristics of Clinical Trials Registered in ClinicalTrials.gov, 2007-2010",
+      "journal": "JAMA",
+      "year": 2012,
+      "citationCount": 510,
+      "doi": "10.1001/jama.2012.3424",
+      "sourceUrl": "https://doi.org/10.1001/jama.2012.3424",
+      "verified": true
+    },
+    {
+      "title": "Depression and Long-Term Mortality Risk in Patients With Coronary Artery Disease * *This study was supported in part by grants P01 HL36587, R01 HL43028, R01 HL44998, R01 HL45702, and R01 HL49572 from the National Heart, Lung and Blood Institute; and AG-09276, AG09663, 5P60 AG-11268, and P02 AG-12058 from the National Institute on Aging.",
+      "journal": "The American Journal of Cardiology",
+      "year": 1996,
+      "citationCount": 493,
+      "doi": "10.1016/s0002-9149(96)00380-3",
+      "sourceUrl": "https://doi.org/10.1016/s0002-9149(96)00380-3",
+      "verified": true
+    },
+    {
+      "title": "Metabolic syndrome: Definition, pathophysiology, and mechanisms",
+      "journal": "American Heart Journal",
+      "year": 2005,
+      "citationCount": 481,
+      "doi": "10.1016/j.ahj.2004.07.013",
+      "sourceUrl": "https://doi.org/10.1016/j.ahj.2004.07.013",
+      "verified": true
+    },
+    {
+      "title": "Platelet Glycoprotein IIb/IIIa Inhibitors Reduce Mortality in Diabetic Patients With Non–ST-Segment-Elevation Acute Coronary Syndromes",
+      "journal": "Circulation",
+      "year": 2001,
+      "citationCount": 433,
+      "doi": "10.1161/hc4801.100029",
+      "sourceUrl": "https://doi.org/10.1161/hc4801.100029",
+      "verified": true
+    },
+    {
+      "title": "Continuing evolution of therapy for coronary artery disease. Initial results from the era of coronary angioplasty.",
+      "journal": "Circulation",
+      "year": 1994,
+      "citationCount": 422,
+      "doi": "10.1161/01.cir.89.5.2015",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.89.5.2015",
+      "verified": true
+    },
+    {
+      "title": "Contemporary reperfusion therapy for cardiogenic shock: The GUSTO-I trial experience",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 1995,
+      "citationCount": 394,
+      "doi": "10.1016/0735-1097(95)00215-p",
+      "sourceUrl": "https://doi.org/10.1016/0735-1097(95)00215-p",
+      "verified": true
+    },
+    {
+      "title": "Complementary Clinical Benefits of Coronary-Artery Stenting and Blockade of Platelet Glycoprotein IIb/IIIa Receptors",
+      "journal": "New England Journal of Medicine",
+      "year": 1999,
+      "citationCount": 379,
+      "doi": "10.1056/nejm199907293410503",
+      "sourceUrl": "https://doi.org/10.1056/nejm199907293410503",
+      "verified": true
+    },
+    {
+      "title": "Compliance with Results Reporting at ClinicalTrials.gov",
+      "journal": "New England Journal of Medicine",
+      "year": 2015,
+      "citationCount": 369,
+      "doi": "10.1056/nejmsa1409364",
+      "sourceUrl": "https://doi.org/10.1056/nejmsa1409364",
+      "verified": true
+    },
+    {
+      "title": "Prognostic Value of Growth-Differentiation Factor-15 in Patients With Non–ST-Elevation Acute Coronary Syndrome",
+      "journal": "Circulation",
+      "year": 2007,
+      "citationCount": 369,
+      "doi": "10.1161/circulationaha.106.650846",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.106.650846",
+      "verified": true
+    },
+    {
+      "title": "Outcome of Acute Myocardial Infarction According to the Specialty of the Admitting Physician",
+      "journal": "New England Journal of Medicine",
+      "year": 1996,
+      "citationCount": 363,
+      "doi": "10.1056/nejm199612193352505",
+      "sourceUrl": "https://doi.org/10.1056/nejm199612193352505",
+      "verified": true
+    },
+    {
+      "title": "Clinical Outcomes of Therapeutic Agents That Block the Platelet Glycoprotein IIb/IIIa Integrin in Ischemic Heart Disease",
+      "journal": "Circulation",
+      "year": 1998,
+      "citationCount": 351,
+      "doi": "10.1161/01.cir.98.25.2829",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.98.25.2829",
+      "verified": true
+    },
+    {
+      "title": "Call to Action: Rural Health: A Presidential Advisory From the American Heart Association and American Stroke Association",
+      "journal": "Circulation",
+      "year": 2020,
+      "citationCount": 343,
+      "doi": "10.1161/cir.0000000000000753",
+      "sourceUrl": "https://doi.org/10.1161/cir.0000000000000753",
+      "verified": true
+    },
+    {
+      "title": "Digitizing clinical trials",
+      "journal": "npj Digital Medicine",
+      "year": 2020,
+      "citationCount": 323,
+      "doi": "10.1038/s41746-020-0302-y",
+      "sourceUrl": "https://doi.org/10.1038/s41746-020-0302-y",
+      "verified": true
+    },
+    {
+      "title": "A Comparison of the Clinical Impact of Bleeding Measured by Two Different Classifications Among Patients With Acute Coronary Syndromes",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2006,
+      "citationCount": 306,
+      "doi": "10.1016/j.jacc.2005.09.060",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2005.09.060",
+      "verified": true
+    },
+    {
+      "title": "Platelet Glycoprotein IIb/IIIa Receptor Inhibition in Non–ST-Elevation Acute Coronary Syndromes",
+      "journal": "Circulation",
+      "year": 1999,
+      "citationCount": 303,
+      "doi": "10.1161/01.cir.100.20.2045",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.100.20.2045",
+      "verified": true
+    },
+    {
+      "title": "Angiographic Findings and Outcome in Diabetic Patients Treated With Thrombolytic Therapy for Acute Myocardial Infarction: The GUSTO-I Experience",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 1996,
+      "citationCount": 281,
+      "doi": "10.1016/s0735-1097(96)00397-x",
+      "sourceUrl": "https://doi.org/10.1016/s0735-1097(96)00397-x",
+      "verified": true
+    },
+    {
+      "title": "Clarifying Stem-Cell Therapy’s Benefits and Risks",
+      "journal": "New England Journal of Medicine",
+      "year": 2016,
+      "citationCount": 276,
+      "doi": "10.1056/nejmp1613723",
+      "sourceUrl": "https://doi.org/10.1056/nejmp1613723",
+      "verified": true
+    },
+    {
+      "title": "Value of Serial Troponin T Measures for Early and Late Risk Stratification in Patients With Acute Coronary Syndromes",
+      "journal": "Circulation",
+      "year": 1998,
+      "citationCount": 276,
+      "doi": "10.1161/01.cir.98.18.1853",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.98.18.1853",
+      "verified": true
+    },
+    {
+      "title": "Age and Outcome With Contemporary Thrombolytic Therapy",
+      "journal": "Circulation",
+      "year": 1996,
+      "citationCount": 274,
+      "doi": "10.1161/01.cir.94.8.1826",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.94.8.1826",
+      "verified": true
+    },
+    {
+      "title": "Coronary Revascularization in Diabetic Patients",
+      "journal": "Circulation",
+      "year": 1999,
+      "citationCount": 265,
+      "doi": "10.1161/01.cir.99.5.633",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.99.5.633",
+      "verified": true
+    },
+    {
+      "title": "Task force 5. Stratification of patients into high, medium and low risk subgroups for purposes of risk factor management",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 1996,
+      "citationCount": 257,
+      "doi": "10.1016/0735-1097(96)87733-3",
+      "sourceUrl": "https://doi.org/10.1016/0735-1097(96)87733-3",
+      "verified": true
+    },
+    {
+      "title": "Outcome of Patients Sustaining Acute Ischemic Mitral Regurgitation during Myocardial Infarction",
+      "journal": "Annals of Internal Medicine",
+      "year": 1992,
+      "citationCount": 257,
+      "doi": "10.7326/0003-4819-117-1-18",
+      "sourceUrl": "https://doi.org/10.7326/0003-4819-117-1-18",
+      "verified": true
+    },
+    {
+      "title": "Shifting the open-artery hypothesis downstream: the quest for optimal reperfusion",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2001,
+      "citationCount": 256,
+      "doi": "10.1016/s0735-1097(00)01101-3",
+      "sourceUrl": "https://doi.org/10.1016/s0735-1097(00)01101-3",
+      "verified": true
+    },
+    {
+      "title": "Incidence and Predictors of Bleeding After Contemporary Thrombolytic Therapy for Myocardial Infarction",
+      "journal": "Circulation",
+      "year": 1997,
+      "citationCount": 252,
+      "doi": "10.1161/01.cir.95.11.2508",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.95.11.2508",
+      "verified": true
+    },
+    {
+      "title": "Long-Term Mortality of Patients Undergoing Cardiac Catheterization for ST-Elevation and Non-ST-Elevation Myocardial Infarction",
+      "journal": "Circulation",
+      "year": 2009,
+      "citationCount": 249,
+      "doi": "10.1161/circulationaha.108.799981",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.108.799981",
+      "verified": true
+    },
+    {
+      "title": "Cardiogenic Shock in Patients With Acute Ischemic Syndromes With and Without ST-Segment Elevation",
+      "journal": "Circulation",
+      "year": 1999,
+      "citationCount": 248,
+      "doi": "10.1161/01.cir.100.20.2067",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.100.20.2067",
+      "verified": true
+    },
+    {
+      "title": "The Case for Practical Clinical Trials in Psychiatry",
+      "journal": "American Journal of Psychiatry",
+      "year": 2005,
+      "citationCount": 243,
+      "doi": "10.1176/appi.ajp.162.5.836",
+      "sourceUrl": "https://doi.org/10.1176/appi.ajp.162.5.836",
+      "verified": true
+    },
+    {
+      "title": "Chronic Kidney Disease, Mortality, and Treatment Strategies among Patients with Clinically Significant Coronary Artery Disease",
+      "journal": "Journal of the American Society of Nephrology",
+      "year": 2003,
+      "citationCount": 242,
+      "doi": "10.1097/01.asn.0000083900.92829.f5",
+      "sourceUrl": "https://doi.org/10.1097/01.asn.0000083900.92829.f5",
+      "verified": true
+    },
+    {
+      "title": "Health Insurance Portability and Accountability Act (HIPAA)",
+      "journal": "Circulation",
+      "year": 2003,
+      "citationCount": 241,
+      "doi": "10.1161/01.cir.0000085720.65685.90",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000085720.65685.90",
+      "verified": true
+    },
+    {
+      "title": "Cardiovascular outcome trials of glucose-lowering drugs or strategies in type 2 diabetes",
+      "journal": "The Lancet",
+      "year": 2014,
+      "citationCount": 229,
+      "doi": "10.1016/s0140-6736(14)60794-7",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(14)60794-7",
+      "verified": true
+    },
+    {
+      "title": "Impact of an Aggressive Invasive Catheterization and Revascularization Strategy on Mortality in Patients With Cardiogenic Shock in the Global Utilization of Streptokinase and Tissue Plasminogen Activator for Occluded Coronary Arteries (GUSTO-I) Trial",
+      "journal": "Circulation",
+      "year": 1997,
+      "citationCount": 225,
+      "doi": "10.1161/01.cir.96.1.122",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.96.1.122",
+      "verified": true
+    },
+    {
+      "title": "A Proactive Response to Prescription Opioid Abuse",
+      "journal": "New England Journal of Medicine",
+      "year": 2016,
+      "citationCount": 225,
+      "doi": "10.1056/nejmsr1601307",
+      "sourceUrl": "https://doi.org/10.1056/nejmsr1601307",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:13.000Z",
+  "openalexId": "https://openalex.org/A5060829829",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Robert_M._Califf%2C_FDA_Commissioner.jpg/330px-Robert_M._Califf%2C_FDA_Commissioner.jpg"
 }

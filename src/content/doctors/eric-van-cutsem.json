@@ -1,31 +1,493 @@
 {
   "fullName": "Eric Van Cutsem",
   "slug": "eric-van-cutsem",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Digestive Oncology",
   "geography": {
-    "city": "Unknown",
-    "country": "Belgium"
+    "country": "Belgium",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">EV</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 47,
-  "hIndex": 186,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 190,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 19033,
+  "livesSaved": 0,
+  "biography": "Blueberry is a 2004 French acid Western directed by Jan Kounen. It is an adaptation of the Franco-Belgian comic book series Blueberry, illustrated by Jean Giraud and scripted by Jean-Michel Charlier, but the film has little in common with the source material. The film stars Vincent Cassel as the title character along with Michael Madsen, Juliette Lewis, Djimon Hounsou, Eddie Izzard, Temuera Morrison, Tchéky Karyo, Kestenbetsa, and Ernest Borgnine. Although the film is a French production, the film is in English to match the story's setting in America's Wild West in the 1870s. Since the character of Blueberry remains obscure in the States, the film was released on DVD in America in November 2004 under the title Renegade and marketed very much as a conventional Western.",
+  "aiSummary": "Eric Van Cutsem is a digestive oncology specialist with an H-index of 190 at KU Leuven (Faculty). Has been published in The Lancet, New England Journal of Medicine, The Lancet Oncology. Based in Belgium.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "KU Leuven"
-    }
-  ],
-  "bio": "Eric Van Cutsem is a pioneer in Digestive Oncology at KU Leuven, Belgium. With a D-Index of 186 and over 190,330 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "KU Leuven",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Digestive Oncology"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Trastuzumab in combination with chemotherapy versus chemotherapy alone for treatment of HER2-positive advanced gastric or gastro-oesophageal junction cancer (ToGA): a phase 3, open-label, randomised controlled trial",
+      "journal": "The Lancet",
+      "year": 2010,
+      "citationCount": 7146,
+      "doi": "10.1016/s0140-6736(10)61121-x",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(10)61121-x",
+      "verified": true
+    },
+    {
+      "title": "Increased Survival in Pancreatic Cancer with nab-Paclitaxel plus Gemcitabine",
+      "journal": "New England Journal of Medicine",
+      "year": 2013,
+      "citationCount": 6471,
+      "doi": "10.1056/nejmoa1304369",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1304369",
+      "verified": true
+    },
+    {
+      "title": "Cetuximab Monotherapy and Cetuximab plus Irinotecan in Irinotecan-Refractory Metastatic Colorectal Cancer",
+      "journal": "New England Journal of Medicine",
+      "year": 2004,
+      "citationCount": 5030,
+      "doi": "10.1056/nejmoa033025",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa033025",
+      "verified": true
+    },
+    {
+      "title": "Cetuximab and Chemotherapy as Initial Treatment for Metastatic Colorectal Cancer",
+      "journal": "New England Journal of Medicine",
+      "year": 2009,
+      "citationCount": 3819,
+      "doi": "10.1056/nejmoa0805019",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa0805019",
+      "verified": true
+    },
+    {
+      "title": "ESMO consensus guidelines for the management of patients with metastatic colorectal cancer",
+      "journal": "Annals of Oncology",
+      "year": 2016,
+      "citationCount": 3326,
+      "doi": "10.1093/annonc/mdw235",
+      "sourceUrl": "https://doi.org/10.1093/annonc/mdw235",
+      "verified": true
+    },
+    {
+      "title": "Wild-Type <i>KRAS</i> Is Required for Panitumumab Efficacy in Patients With Metastatic Colorectal Cancer",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2008,
+      "citationCount": 3139,
+      "doi": "10.1200/jco.2007.14.7116",
+      "sourceUrl": "https://doi.org/10.1200/jco.2007.14.7116",
+      "verified": true
+    },
+    {
+      "title": "Phase 3 Trial of <sup>177</sup> Lu-Dotatate for Midgut Neuroendocrine Tumors",
+      "journal": "New England Journal of Medicine",
+      "year": 2017,
+      "citationCount": 2989,
+      "doi": "10.1056/nejmoa1607427",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1607427",
+      "verified": true
+    },
+    {
+      "title": "Regorafenib monotherapy for previously treated metastatic colorectal cancer (CORRECT): an international, multicentre, randomised, placebo-controlled, phase 3 trial",
+      "journal": "The Lancet",
+      "year": 2012,
+      "citationCount": 2822,
+      "doi": "10.1016/s0140-6736(12)61900-x",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(12)61900-x",
+      "verified": true
+    },
+    {
+      "title": "Everolimus for Advanced Pancreatic Neuroendocrine Tumors",
+      "journal": "New England Journal of Medicine",
+      "year": 2011,
+      "citationCount": 2820,
+      "doi": "10.1056/nejmoa1009290",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1009290",
+      "verified": true
+    },
+    {
+      "title": "Pembrolizumab in Microsatellite-Instability–High Advanced Colorectal Cancer",
+      "journal": "New England Journal of Medicine",
+      "year": 2020,
+      "citationCount": 2739,
+      "doi": "10.1056/nejmoa2017699",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa2017699",
+      "verified": true
+    },
+    {
+      "title": "Sunitinib Malate for the Treatment of Pancreatic Neuroendocrine Tumors",
+      "journal": "New England Journal of Medicine",
+      "year": 2011,
+      "citationCount": 2512,
+      "doi": "10.1056/nejmoa1003825",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1003825",
+      "verified": true
+    },
+    {
+      "title": "Ramucirumab plus paclitaxel versus placebo plus paclitaxel in patients with previously treated advanced gastric or gastro-oesophageal junction adenocarcinoma (RAINBOW): a double-blind, randomised phase 3 trial",
+      "journal": "The Lancet Oncology",
+      "year": 2014,
+      "citationCount": 2408,
+      "doi": "10.1016/s1470-2045(14)70420-6",
+      "sourceUrl": "https://doi.org/10.1016/s1470-2045(14)70420-6",
+      "verified": true
+    },
+    {
+      "title": "Effects of KRAS, BRAF, NRAS, and PIK3CA mutations on the efficacy of cetuximab plus chemotherapy in chemotherapy-refractory metastatic colorectal cancer: a retrospective consortium analysis",
+      "journal": "The Lancet Oncology",
+      "year": 2010,
+      "citationCount": 2127,
+      "doi": "10.1016/s1470-2045(10)70130-3",
+      "sourceUrl": "https://doi.org/10.1016/s1470-2045(10)70130-3",
+      "verified": true
+    },
+    {
+      "title": "Maintenance Olaparib for Germline <i>BRCA</i> -Mutated Metastatic Pancreatic Cancer",
+      "journal": "New England Journal of Medicine",
+      "year": 2019,
+      "citationCount": 2115,
+      "doi": "10.1056/nejmoa1903387",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1903387",
+      "verified": true
+    },
+    {
+      "title": "Durable Clinical Benefit With Nivolumab Plus Ipilimumab in DNA Mismatch Repair–Deficient/Microsatellite Instability–High Metastatic Colorectal Cancer",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2018,
+      "citationCount": 2000,
+      "doi": "10.1200/jco.2017.76.9901",
+      "sourceUrl": "https://doi.org/10.1200/jco.2017.76.9901",
+      "verified": true
+    },
+    {
+      "title": "Open-Label Phase III Trial of Panitumumab Plus Best Supportive Care Compared With Best Supportive Care Alone in Patients With Chemotherapy-Refractory Metastatic Colorectal Cancer",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2007,
+      "citationCount": 1993,
+      "doi": "10.1200/jco.2006.08.1620",
+      "sourceUrl": "https://doi.org/10.1200/jco.2006.08.1620",
+      "verified": true
+    },
+    {
+      "title": "Perioperative chemotherapy with FOLFOX4 and surgery versus surgery alone for resectable liver metastases from colorectal cancer (EORTC Intergroup trial 40983): a randomised controlled trial",
+      "journal": "The Lancet",
+      "year": 2008,
+      "citationCount": 1929,
+      "doi": "10.1016/s0140-6736(08)60455-9",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(08)60455-9",
+      "verified": true
+    },
+    {
+      "title": "Phase III Study of Docetaxel and Cisplatin Plus Fluorouracil Compared With Cisplatin and Fluorouracil As First-Line Therapy for Advanced Gastric Cancer: A Report of the V325 Study Group",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2006,
+      "citationCount": 1921,
+      "doi": "10.1200/jco.2006.06.8429",
+      "sourceUrl": "https://doi.org/10.1200/jco.2006.06.8429",
+      "verified": true
+    },
+    {
+      "title": "Cetuximab Plus Irinotecan, Fluorouracil, and Leucovorin As First-Line Treatment for Metastatic Colorectal Cancer: Updated Analysis of Overall Survival According to Tumor <i>KRAS</i> and <i>BRAF</i> Mutation Status",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2011,
+      "citationCount": 1877,
+      "doi": "10.1200/jco.2010.33.5091",
+      "sourceUrl": "https://doi.org/10.1200/jco.2010.33.5091",
+      "verified": true
+    },
+    {
+      "title": "Gastric cancer",
+      "journal": "The Lancet",
+      "year": 2016,
+      "citationCount": 1779,
+      "doi": "10.1016/s0140-6736(16)30354-3",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(16)30354-3",
+      "verified": true
+    },
+    {
+      "title": "Adjuvant Nivolumab in Resected Esophageal or Gastroesophageal Junction Cancer",
+      "journal": "New England Journal of Medicine",
+      "year": 2021,
+      "citationCount": 1634,
+      "doi": "10.1056/nejmoa2032125",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa2032125",
+      "verified": true
+    },
+    {
+      "title": "ESMO Consensus Guidelines for management of patients with colon and rectal cancer. A personalized approach to clinical decision making",
+      "journal": "Annals of Oncology",
+      "year": 2012,
+      "citationCount": 1503,
+      "doi": "10.1093/annonc/mds236",
+      "sourceUrl": "https://doi.org/10.1093/annonc/mds236",
+      "verified": true
+    },
+    {
+      "title": "Pemigatinib for previously treated, locally advanced or metastatic cholangiocarcinoma: a multicentre, open-label, phase 2 study",
+      "journal": "The Lancet Oncology",
+      "year": 2020,
+      "citationCount": 1500,
+      "doi": "10.1016/s1470-2045(20)30109-1",
+      "sourceUrl": "https://doi.org/10.1016/s1470-2045(20)30109-1",
+      "verified": true
+    },
+    {
+      "title": "American Society of Clinical Oncology Recommendations on Adjuvant Chemotherapy for Stage II Colon Cancer",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2004,
+      "citationCount": 1441,
+      "doi": "10.1200/jco.2004.05.063",
+      "sourceUrl": "https://doi.org/10.1200/jco.2004.05.063",
+      "verified": true
+    },
+    {
+      "title": "Encorafenib, Binimetinib, and Cetuximab in <i>BRAF</i> V600E–Mutated Colorectal Cancer",
+      "journal": "New England Journal of Medicine",
+      "year": 2019,
+      "citationCount": 1389,
+      "doi": "10.1056/nejmoa1908075",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1908075",
+      "verified": true
+    },
+    {
+      "title": "Randomized Trial of TAS-102 for Refractory Metastatic Colorectal Cancer",
+      "journal": "New England Journal of Medicine",
+      "year": 2015,
+      "citationCount": 1373,
+      "doi": "10.1056/nejmoa1414325",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1414325",
+      "verified": true
+    },
+    {
+      "title": "Addition of Aflibercept to Fluorouracil, Leucovorin, and Irinotecan Improves Survival in a Phase III Randomized Trial in Patients With Metastatic Colorectal Cancer Previously Treated With an Oxaliplatin-Based Regimen",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2012,
+      "citationCount": 1368,
+      "doi": "10.1200/jco.2012.42.8201",
+      "sourceUrl": "https://doi.org/10.1200/jco.2012.42.8201",
+      "verified": true
+    },
+    {
+      "title": "Perioperative FOLFOX4 chemotherapy and surgery versus surgery alone for resectable liver metastases from colorectal cancer (EORTC 40983): long-term results of a randomised, controlled, phase 3 trial",
+      "journal": "The Lancet Oncology",
+      "year": 2013,
+      "citationCount": 1294,
+      "doi": "10.1016/s1470-2045(13)70447-9",
+      "sourceUrl": "https://doi.org/10.1016/s1470-2045(13)70447-9",
+      "verified": true
+    },
+    {
+      "title": "Pembrolizumab versus paclitaxel for previously treated, advanced gastric or gastro-oesophageal junction cancer (KEYNOTE-061): a randomised, open-label, controlled, phase 3 trial",
+      "journal": "The Lancet",
+      "year": 2018,
+      "citationCount": 1286,
+      "doi": "10.1016/s0140-6736(18)31257-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(18)31257-1",
+      "verified": true
+    },
+    {
+      "title": "Everolimus for the treatment of advanced, non-functional neuroendocrine tumours of the lung or gastrointestinal tract (RADIANT-4): a randomised, placebo-controlled, phase 3 study",
+      "journal": "The Lancet",
+      "year": 2015,
+      "citationCount": 1232,
+      "doi": "10.1016/s0140-6736(15)00817-x",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(15)00817-x",
+      "verified": true
+    },
+    {
+      "title": "Metastatic colorectal cancer: ESMO Clinical Practice Guidelines for diagnosis, treatment and follow-up",
+      "journal": "Annals of Oncology",
+      "year": 2014,
+      "citationCount": 1176,
+      "doi": "10.1093/annonc/mdu260",
+      "sourceUrl": "https://doi.org/10.1093/annonc/mdu260",
+      "verified": true
+    },
+    {
+      "title": "Continuation of bevacizumab after first progression in metastatic colorectal cancer (ML18147): a randomised phase 3 trial",
+      "journal": "The Lancet Oncology",
+      "year": 2012,
+      "citationCount": 1155,
+      "doi": "10.1016/s1470-2045(12)70477-1",
+      "sourceUrl": "https://doi.org/10.1016/s1470-2045(12)70477-1",
+      "verified": true
+    },
+    {
+      "title": "Prognostic Role of <i>KRAS</i> and <i>BRAF</i> in Stage II and III Resected Colon Cancer: Results of the Translational Study on the PETACC-3, EORTC 40993, SAKK 60-00 Trial",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2009,
+      "citationCount": 1146,
+      "doi": "10.1200/jco.2009.23.3452",
+      "sourceUrl": "https://doi.org/10.1200/jco.2009.23.3452",
+      "verified": true
+    },
+    {
+      "title": "Bevacizumab in Combination With Chemotherapy As First-Line Therapy in Advanced Gastric Cancer: A Randomized, Double-Blind, Placebo-Controlled Phase III Study",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2011,
+      "citationCount": 1099,
+      "doi": "10.1200/jco.2011.36.2236",
+      "sourceUrl": "https://doi.org/10.1200/jco.2011.36.2236",
+      "verified": true
+    },
+    {
+      "title": "Efficacy and Safety of Pembrolizumab or Pembrolizumab Plus Chemotherapy vs Chemotherapy Alone for Patients With First-line, Advanced Gastric Cancer",
+      "journal": "JAMA Oncology",
+      "year": 2020,
+      "citationCount": 1072,
+      "doi": "10.1001/jamaoncol.2020.3370",
+      "sourceUrl": "https://doi.org/10.1001/jamaoncol.2020.3370",
+      "verified": true
+    },
+    {
+      "title": "Everolimus plus octreotide long-acting repeatable for the treatment of advanced neuroendocrine tumours associated with carcinoid syndrome (RADIANT-2): a randomised, placebo-controlled, phase 3 study",
+      "journal": "The Lancet",
+      "year": 2011,
+      "citationCount": 1043,
+      "doi": "10.1016/s0140-6736(11)61742-x",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(11)61742-x",
+      "verified": true
+    },
+    {
+      "title": "Oral Capecitabine Compared With Intravenous Fluorouracil Plus Leucovorin in Patients With Metastatic Colorectal Cancer: Results of a Large Phase III Study",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2001,
+      "citationCount": 1030,
+      "doi": "10.1200/jco.2001.19.21.4097",
+      "sourceUrl": "https://doi.org/10.1200/jco.2001.19.21.4097",
+      "verified": true
+    },
+    {
+      "title": "Randomised trial of irinotecan versus fluorouracil by continuous infusion after fluorouracil failure in patients with metastatic colorectal cancer",
+      "journal": "The Lancet",
+      "year": 1998,
+      "citationCount": 992,
+      "doi": "10.1016/s0140-6736(98)03085-2",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(98)03085-2",
+      "verified": true
+    },
+    {
+      "title": "Randomized Phase III Study of Panitumumab With Fluorouracil, Leucovorin, and Irinotecan (FOLFIRI) Compared With FOLFIRI Alone As Second-Line Treatment in Patients With Metastatic Colorectal Cancer",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2010,
+      "citationCount": 991,
+      "doi": "10.1200/jco.2009.27.6055",
+      "sourceUrl": "https://doi.org/10.1200/jco.2009.27.6055",
+      "verified": true
+    },
+    {
+      "title": "Phase II Open-Label Study of Pembrolizumab in Treatment-Refractory, Microsatellite Instability–High/Mismatch Repair–Deficient Metastatic Colorectal Cancer: KEYNOTE-164",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2019,
+      "citationCount": 971,
+      "doi": "10.1200/jco.19.02107",
+      "sourceUrl": "https://doi.org/10.1200/jco.19.02107",
+      "verified": true
+    },
+    {
+      "title": "Ramucirumab versus placebo in combination with second-line FOLFIRI in patients with metastatic colorectal carcinoma that progressed during or after first-line therapy with bevacizumab, oxaliplatin, and a fluoropyrimidine (RAISE): a randomised, double-blind, multicentre, phase 3 study",
+      "journal": "The Lancet Oncology",
+      "year": 2015,
+      "citationCount": 937,
+      "doi": "10.1016/s1470-2045(15)70127-0",
+      "sourceUrl": "https://doi.org/10.1016/s1470-2045(15)70127-0",
+      "verified": true
+    },
+    {
+      "title": "KRAS wild-type state predicts survival and is associated to early radiological response in metastatic colorectal cancer treated with cetuximab",
+      "journal": "Annals of Oncology",
+      "year": 2007,
+      "citationCount": 823,
+      "doi": "10.1093/annonc/mdm496",
+      "sourceUrl": "https://doi.org/10.1093/annonc/mdm496",
+      "verified": true
+    },
+    {
+      "title": "Prognostic and predictive value of primary tumour side in patients with RAS wild-type metastatic colorectal cancer treated with chemotherapy and EGFR directed antibodies in six randomized trials",
+      "journal": "Annals of Oncology",
+      "year": 2017,
+      "citationCount": 799,
+      "doi": "10.1093/annonc/mdx175",
+      "sourceUrl": "https://doi.org/10.1093/annonc/mdx175",
+      "verified": true
+    },
+    {
+      "title": "Fluorouracil, Leucovorin, and Irinotecan Plus Cetuximab Treatment and <i>RAS</i> Mutations in Colorectal Cancer",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2015,
+      "citationCount": 782,
+      "doi": "10.1200/jco.2014.59.4812",
+      "sourceUrl": "https://doi.org/10.1200/jco.2014.59.4812",
+      "verified": true
+    },
+    {
+      "title": "Capecitabine Plus Oxaliplatin Compared With Fluorouracil and Folinic Acid As Adjuvant Therapy for Stage III Colon Cancer",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2011,
+      "citationCount": 774,
+      "doi": "10.1200/jco.2010.33.6297",
+      "sourceUrl": "https://doi.org/10.1200/jco.2010.33.6297",
+      "verified": true
+    },
+    {
+      "title": "Phase III Trial of Gemcitabine Plus Tipifarnib Compared With Gemcitabine Plus Placebo in Advanced Pancreatic Cancer",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2004,
+      "citationCount": 772,
+      "doi": "10.1200/jco.2004.10.112",
+      "sourceUrl": "https://doi.org/10.1200/jco.2004.10.112",
+      "verified": true
+    },
+    {
+      "title": "Association of KRAS p.G13D Mutation With Outcome in Patients With Chemotherapy-Refractory Metastatic Colorectal Cancer Treated With Cetuximab",
+      "journal": "JAMA",
+      "year": 2010,
+      "citationCount": 742,
+      "doi": "10.1001/jama.2010.1535",
+      "sourceUrl": "https://doi.org/10.1001/jama.2010.1535",
+      "verified": true
+    },
+    {
+      "title": "Prognostic and Predictive Relevance of Primary Tumor Location in Patients With <i>RAS </i>Wild-Type Metastatic Colorectal Cancer",
+      "journal": "JAMA Oncology",
+      "year": 2016,
+      "citationCount": 707,
+      "doi": "10.1001/jamaoncol.2016.3797",
+      "sourceUrl": "https://doi.org/10.1001/jamaoncol.2016.3797",
+      "verified": true
+    },
+    {
+      "title": "Neoadjuvant Chemotherapy Compared With Surgery Alone for Locally Advanced Cancer of the Stomach and Cardia: European Organisation for Research and Treatment of Cancer Randomized Trial 40954",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2010,
+      "citationCount": 702,
+      "doi": "10.1200/jco.2009.26.6114",
+      "sourceUrl": "https://doi.org/10.1200/jco.2009.26.6114",
+      "verified": true
+    },
+    {
+      "title": "Phase II Study of BGJ398 in Patients With FGFR-Altered Advanced Cholangiocarcinoma",
+      "journal": "Journal of Clinical Oncology",
+      "year": 2017,
+      "citationCount": 698,
+      "doi": "10.1200/jco.2017.75.5009",
+      "sourceUrl": "https://doi.org/10.1200/jco.2017.75.5009",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:14.000Z",
+  "openalexId": "https://openalex.org/A5090645179",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/en/a/a4/Blueberryposter.jpg"
 }

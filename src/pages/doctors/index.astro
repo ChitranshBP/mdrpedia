@@ -1,7 +1,7 @@
 ---
 /**
  * MDRPedia — Browse All Doctors
- * Displays a searchable grid of all verified doctor profiles
+ * Searchable grid of all verified doctor profiles
  */
 import Layout from "../../layouts/Layout.astro";
 import TierBadge from "../../components/TierBadge.astro";
@@ -10,29 +10,81 @@ import { getCollection } from "astro:content";
 const allDoctors = await getCollection("doctors");
 
 // Sort: Titans first, then Elite, then Master, then Unranked
+// Sort: Titans first -> Rank Score -> H-Index -> Lives Saved
 const tierOrder: Record<string, number> = {
     TITAN: 0,
     ELITE: 1,
     MASTER: 2,
     UNRANKED: 3,
 };
-const sortedDoctors = allDoctors.sort(
-    (a, b) => (tierOrder[a.data.tier] ?? 3) - (tierOrder[b.data.tier] ?? 3),
-);
+
+const sortedDoctors = allDoctors.sort((a, b) => {
+    // 1. Tier Priority
+    const tierDiff =
+        (tierOrder[a.data.tier] ?? 3) - (tierOrder[b.data.tier] ?? 3);
+    if (tierDiff !== 0) return tierDiff;
+
+    // 2. Ranking Score (Highest First)
+    const rankA = a.data.rankingScore ?? 0;
+    const rankB = b.data.rankingScore ?? 0;
+    if (rankB !== rankA) return rankB - rankA;
+
+    // 3. H-Index (Highest First)
+    const hIndexA = a.data.hIndex ?? 0;
+    const hIndexB = b.data.hIndex ?? 0;
+    if (hIndexB !== hIndexA) return hIndexB - hIndexA;
+
+    // 4. Lives Saved (Highest First)
+    const livesA = a.data.livesSaved ?? 0;
+    const livesB = b.data.livesSaved ?? 0;
+    return livesB - livesA;
+});
+
+// Get unique countries
+const countries = Array.from(
+    new Set(allDoctors.map((d) => d.data.geography.country).filter(Boolean)),
+).sort();
+
+// Get unique specialties
+const specialties = Array.from(
+    new Set(allDoctors.map((d) => d.data.specialty).filter(Boolean)),
+).sort();
+
+// Stats
+const titanCount = sortedDoctors.filter((d) => d.data.tier === "TITAN").length;
+const eliteCount = sortedDoctors.filter((d) => d.data.tier === "ELITE").length;
+const masterCount = sortedDoctors.filter(
+    (d) => d.data.tier === "MASTER",
+).length;
 ---
 
 <Layout title="Browse All Doctors — MDRPedia">
     <section class="browse">
         <div class="container">
-            <div class="browse__header">
-                <h1 class="browse__title">Browse Verified Profiles</h1>
-                <p class="browse__subtitle">
-                    {sortedDoctors.length} verified medical professionals in the MDRPedia
-                    registry
-                </p>
-                <div class="browse__search">
+            <!-- Header -->
+            <div class="browse-header">
+                <div class="browse-header__text">
+                    <h1>Browse Profiles</h1>
+                    <p>{sortedDoctors.length} verified medical professionals</p>
+                </div>
+                <div class="browse-header__stats">
+                    <span class="mini-stat mini-stat--titan"
+                        >{titanCount} Titans</span
+                    >
+                    <span class="mini-stat mini-stat--elite"
+                        >{eliteCount} Elite</span
+                    >
+                    <span class="mini-stat mini-stat--master"
+                        >{masterCount} Master</span
+                    >
+                </div>
+            </div>
+
+            <!-- Search & Filters -->
+            <div class="browse-controls">
+                <div class="search-wrap">
                     <svg
-                        class="browse__search-icon"
+                        class="search-icon"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
@@ -44,50 +96,94 @@ const sortedDoctors = allDoctors.sort(
                     <input
                         type="text"
                         id="browse-search"
-                        class="browse__search-input"
-                        placeholder="Filter by name, specialty, or location..."
+                        class="search-input"
+                        placeholder="Search by name, specialty, or location..."
                         autocomplete="off"
                     />
                 </div>
+
+                <!-- Role Filter -->
+                <div class="filter-group">
+                    <span class="filter-label">Role</span>
+                    <div class="filter-buttons">
+                        <button
+                            class="filter-btn filter-btn--active"
+                            data-group="role"
+                            data-filter="all">All</button
+                        >
+                        <button
+                            class="filter-btn"
+                            data-group="role"
+                            data-filter="surgeon">Surgeon</button
+                        >
+                        <button
+                            class="filter-btn"
+                            data-group="role"
+                            data-filter="physician">Physician</button
+                        >
+                        <button
+                            class="filter-btn"
+                            data-group="role"
+                            data-filter="researcher">Researcher</button
+                        >
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <span class="filter-label">Tier</span>
+                    <div class="filter-buttons">
+                        <button
+                            class="filter-btn filter-btn--active"
+                            data-group="tier"
+                            data-filter="all">All</button
+                        >
+                        <button
+                            class="filter-btn filter-btn--titan"
+                            data-group="tier"
+                            data-filter="TITAN">Titan</button
+                        >
+                        <button
+                            class="filter-btn filter-btn--elite"
+                            data-group="tier"
+                            data-filter="ELITE">Elite</button
+                        >
+                    </div>
+                </div>
+
+                <!-- Country Filter -->
+                <div class="filter-group">
+                    <span class="filter-label">Country</span>
+                    <select id="country-filter" class="filter-select">
+                        <option value="all">All Countries</option>
+                        {
+                            countries.map((country) => (
+                                <option value={country}>{country}</option>
+                            ))
+                        }
+                    </select>
+                </div>
+
+                <!-- Specialty Filter -->
+                <div class="filter-group">
+                    <span class="filter-label">Specialty</span>
+                    <select id="specialty-filter" class="filter-select">
+                        <option value="all">All Specialties</option>
+                        {
+                            specialties.map((specialty) => (
+                                <option value={specialty}>{specialty}</option>
+                            ))
+                        }
+                    </select>
+                </div>
             </div>
 
-            <!-- Filter bar -->
-            <div class="browse__filters">
-                <span class="filter-label">Tier:</span>
-                <button
-                    class="filter-btn filter-btn--active"
-                    data-group="tier"
-                    data-filter="all">All</button
-                >
-                <button class="filter-btn" data-group="tier" data-filter="TITAN"
-                    >🏆 Titan</button
-                >
-                <button class="filter-btn" data-group="tier" data-filter="ELITE"
-                    >🥈 Elite</button
-                >
-                <button
-                    class="filter-btn"
-                    data-group="tier"
-                    data-filter="MASTER">🥉 Master</button
-                >
-
-                <span class="filter-divider">|</span>
-
-                <span class="filter-label">Status:</span>
-                <button
-                    class="filter-btn"
-                    data-group="status"
-                    data-filter="LIVING">🟢 Living</button
-                >
-                <button
-                    class="filter-btn"
-                    data-group="status"
-                    data-filter="HISTORICAL">🏛 Legacy</button
-                >
+            <!-- Results Count -->
+            <div class="results-info" id="results-info">
+                Showing all {sortedDoctors.length} profiles
             </div>
 
             <!-- Doctor Grid -->
-            <div class="browse__grid" id="doctor-grid">
+            <div class="browse-grid" id="doctor-grid">
                 {
                     sortedDoctors.map((doctor) => {
                         const d = doctor.data;
@@ -98,71 +194,95 @@ const sortedDoctors = allDoctors.sort(
                         ]
                             .filter(Boolean)
                             .join(", ");
+                        const initials = d.fullName
+                            .split(" ")
+                            .map((w: string) => w[0])
+                            .filter((_: string, i: number) => i < 2)
+                            .join("")
+                            .toUpperCase();
+                        const hasImage =
+                            d.portraitUrl && !d.portraitUrl.startsWith("data:");
+
+                        // Derive Role
+                        const isSurgeon =
+                            d.specialty.toLowerCase().includes("surgery") ||
+                            d.specialty.toLowerCase().includes("surgeon") ||
+                            d.specialty.toLowerCase().includes("transplant");
+                        const isResearcher =
+                            d.hIndex > 50 || d.title?.includes("PhD") || false; // Simple heuristic for now
+                        const role = isSurgeon
+                            ? "surgeon"
+                            : isResearcher
+                              ? "researcher"
+                              : "physician";
 
                         return (
                             <a
                                 href={`/doctors/${doctor.id}`}
-                                class={`browse-card card card--${d.tier.toLowerCase()}`}
+                                class={`doctor-card doctor-card--${d.tier.toLowerCase()}`}
                                 data-tier={d.tier}
                                 data-status={d.status}
+                                data-role={role}
+                                data-country={d.geography.country}
+                                data-name={d.fullName.toLowerCase()}
+                                data-specialty={(
+                                    d.specialty || ""
+                                ).toLowerCase()}
+                                data-location={location.toLowerCase()}
                             >
-                                <div class="browse-card__top">
+                                <div class="doctor-card__header">
                                     <div
-                                        class={`browse-card__avatar avatar--${d.tier.toLowerCase()}`}
+                                        class={`doctor-card__avatar avatar--${d.tier.toLowerCase()}`}
                                     >
-                                        {d.portraitUrl &&
-                                        !d.portraitUrl.startsWith("data:") ? (
+                                        {hasImage ? (
                                             <img
                                                 src={d.portraitUrl}
                                                 alt={d.fullName}
-                                                class="browse-card__avatar-img"
                                                 loading="lazy"
+                                                referrerpolicy="no-referrer"
                                             />
                                         ) : (
-                                            <span class="browse-card__initials">
-                                                {d.fullName
-                                                    .split(" ")
-                                                    .map((w: string) => w[0])
-                                                    .filter(
-                                                        (
-                                                            _: string,
-                                                            i: number,
-                                                        ) => i < 2,
-                                                    )
-                                                    .join("")
-                                                    .toUpperCase()}
+                                            <span class="avatar-initials">
+                                                {initials}
                                             </span>
                                         )}
                                     </div>
-                                    <TierBadge
-                                        tier={
-                                            d.tier as
-                                                | "TITAN"
-                                                | "ELITE"
-                                                | "MASTER"
-                                                | "UNRANKED"
-                                        }
-                                        size="sm"
-                                    />
-                                    {d.status === "HISTORICAL" && (
-                                        <span class="browse-card__legacy">
-                                            Legacy
-                                        </span>
-                                    )}
+                                    <div class="doctor-card__badges">
+                                        <TierBadge
+                                            tier={
+                                                d.tier as
+                                                    | "TITAN"
+                                                    | "ELITE"
+                                                    | "MASTER"
+                                                    | "UNRANKED"
+                                            }
+                                            size="sm"
+                                        />
+                                        {d.status === "HISTORICAL" && (
+                                            <span class="legacy-badge">
+                                                Legacy
+                                            </span>
+                                        )}
+                                    </div>
                                 </div>
-                                <h3 class="browse-card__name">{d.fullName}</h3>
-                                <p class="browse-card__specialty">
+                                <h3 class="doctor-card__name">{d.fullName}</h3>
+                                <p class="doctor-card__specialty">
                                     {d.specialty}
                                 </p>
-                                <p class="browse-card__location">
-                                    📍 {location}
-                                </p>
-                                <div class="browse-card__meta">
-                                    <span class="browse-card__stat">
-                                        H-index: {d.hIndex}
+                                {location && (
+                                    <p class="doctor-card__location">
+                                        {location}
+                                    </p>
+                                )}
+                                <div class="doctor-card__stats">
+                                    <span class="stat">
+                                        <strong>{d.hIndex || "-"}</strong>{" "}
+                                        H-index
                                     </span>
-                                    <span class="browse-card__stat">
-                                        {d.citations ? d.citations.length : 0}{" "}
+                                    <span class="stat">
+                                        <strong>
+                                            {d.citations?.length || 0}
+                                        </strong>{" "}
                                         citations
                                     </span>
                                 </div>
@@ -171,158 +291,373 @@ const sortedDoctors = allDoctors.sort(
                     })
                 }
             </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="empty-state" hidden>
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    width="48"
+                    height="48"
+                >
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.3-4.3"></path>
+                </svg>
+                <h3>No results found</h3>
+                <p>Try adjusting your search or filters</p>
+            </div>
         </div>
     </section>
 </Layout>
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const buttons =
-            document.querySelectorAll<HTMLButtonElement>(".filter-btn");
-        const cards = document.querySelectorAll<HTMLElement>(".browse-card");
-        const browseSearch = document.getElementById(
-            "browse-search",
-        ) as HTMLInputElement;
+    const buttons = document.querySelectorAll<HTMLButtonElement>(".filter-btn");
+    const countrySelect = document.getElementById(
+        "country-filter",
+    ) as HTMLSelectElement;
+    const cards = document.querySelectorAll<HTMLElement>(".doctor-card");
+    const searchInput = document.getElementById(
+        "browse-search",
+    ) as HTMLInputElement;
+    const resultsInfo = document.getElementById("results-info");
+    const emptyState = document.getElementById("empty-state");
 
-        let currentTier = "all";
-        let currentStatus = "all";
-        let searchQuery = "";
+    let currentTier = "all";
+    let currentStatus = "all";
+    let currentRole = "all";
+    let currentCountry = "all";
+    let searchQuery = "";
 
-        function filterCards() {
-            cards.forEach((card) => {
-                const tierMatch =
-                    currentTier === "all" || card.dataset.tier === currentTier;
-                const statusMatch =
-                    currentStatus === "all" ||
-                    card.dataset.status === currentStatus;
-                const textMatch =
-                    !searchQuery ||
-                    (card.textContent || "")
-                        .toLowerCase()
-                        .includes(searchQuery);
+    function filterCards() {
+        let visibleCount = 0;
 
-                if (tierMatch && statusMatch && textMatch) {
-                    card.style.display = "";
-                } else {
-                    card.style.display = "none";
-                }
-            });
+        cards.forEach((card) => {
+            const tierMatch =
+                currentTier === "all" || card.dataset.tier === currentTier;
+            const statusMatch =
+                currentStatus === "all" ||
+                card.dataset.status === currentStatus;
+            const roleMatch =
+                currentRole === "all" || card.dataset.role === currentRole;
+            const countryMatch =
+                currentCountry === "all" ||
+                card.dataset.country === currentCountry;
+
+            let textMatch = true;
+            if (searchQuery) {
+                const searchText = `${card.dataset.name} ${card.dataset.specialty} ${card.dataset.location}`;
+                textMatch = searchText.includes(searchQuery);
+            }
+
+            if (
+                tierMatch &&
+                statusMatch &&
+                roleMatch &&
+                countryMatch &&
+                textMatch
+            ) {
+                card.style.display = "";
+                visibleCount++;
+            } else {
+                card.style.display = "none";
+            }
+        });
+
+        // Update results info
+        if (resultsInfo) {
+            if (visibleCount === cards.length) {
+                resultsInfo.textContent = `Showing all ${cards.length} profiles`;
+            } else {
+                resultsInfo.textContent = `Showing ${visibleCount} of ${cards.length} profiles`;
+            }
         }
 
-        // Text search
-        let searchTimer: ReturnType<typeof setTimeout>;
-        browseSearch?.addEventListener("input", () => {
-            clearTimeout(searchTimer);
-            searchTimer = setTimeout(() => {
-                searchQuery = browseSearch.value.trim().toLowerCase();
-                filterCards();
-            }, 200);
-        });
+        // Show/hide empty state
+        if (emptyState) {
+            emptyState.hidden = visibleCount > 0;
+        }
+    }
 
-        buttons.forEach((btn) => {
-            btn.addEventListener("click", () => {
-                const group = btn.dataset.group;
-                const filter = btn.dataset.filter || "all";
+    // Text search with debounce
+    let searchTimer: ReturnType<typeof setTimeout>;
+    searchInput?.addEventListener("input", () => {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(() => {
+            searchQuery = searchInput.value.trim().toLowerCase();
+            filterCards();
+        }, 150);
+    });
 
-                if (group === "tier") {
-                    document
-                        .querySelectorAll(`.filter-btn[data-group="tier"]`)
-                        .forEach((b) =>
-                            b.classList.remove("filter-btn--active"),
-                        );
+    // Country Filter
+    countrySelect?.addEventListener("change", (e) => {
+        currentCountry = (e.target as HTMLSelectElement).value;
+        filterCards();
+    });
+
+    // Filter buttons
+    buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const group = btn.dataset.group;
+            const filter = btn.dataset.filter || "all";
+
+            if (group === "tier") {
+                document
+                    .querySelectorAll(`.filter-btn[data-group="tier"]`)
+                    .forEach((b) => b.classList.remove("filter-btn--active"));
+                btn.classList.add("filter-btn--active");
+                currentTier = filter;
+            } else if (group === "status") {
+                const isActive = btn.classList.contains("filter-btn--active");
+                document
+                    .querySelectorAll(`.filter-btn[data-group="status"]`)
+                    .forEach((b) => b.classList.remove("filter-btn--active"));
+
+                if (isActive) {
+                    currentStatus = "all";
+                } else {
                     btn.classList.add("filter-btn--active");
-                    currentTier = filter;
-                } else if (group === "status") {
-                    const isActive =
-                        btn.classList.contains("filter-btn--active");
-
-                    document
-                        .querySelectorAll(`.filter-btn[data-group="status"]`)
-                        .forEach((b) =>
-                            b.classList.remove("filter-btn--active"),
-                        );
-
-                    if (isActive) {
-                        currentStatus = "all";
-                    } else {
-                        btn.classList.add("filter-btn--active");
-                        currentStatus = filter;
-                    }
+                    currentStatus = filter;
                 }
-                filterCards();
-            });
+            } else if (group === "role") {
+                document
+                    .querySelectorAll(`.filter-btn[data-group="role"]`)
+                    .forEach((b) => b.classList.remove("filter-btn--active"));
+                btn.classList.add("filter-btn--active");
+                currentRole = filter;
+            }
+            filterCards();
         });
     });
+
+    // Specialty Filter
+    const specialtySelect = document.getElementById(
+        "specialty-filter",
+    ) as HTMLSelectElement;
+    let currentSpecialty = "all";
+
+    specialtySelect?.addEventListener("change", (e) => {
+        currentSpecialty = (e.target as HTMLSelectElement).value;
+        filterCards();
+    });
+
+    // Update filter logic to include specialty
+    const originalFilterCards = filterCards;
+    filterCards = function () {
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+            const tierMatch =
+                currentTier === "all" || card.dataset.tier === currentTier;
+            const statusMatch =
+                currentStatus === "all" ||
+                card.dataset.status === currentStatus;
+            const roleMatch =
+                currentRole === "all" || card.dataset.role === currentRole;
+            const countryMatch =
+                currentCountry === "all" ||
+                card.dataset.country === currentCountry;
+
+            // Specialty Match
+            const specialtyMatch =
+                currentSpecialty === "all" ||
+                (card.dataset.specialty &&
+                    card.dataset.specialty.toLowerCase() ===
+                        currentSpecialty.toLowerCase());
+
+            let textMatch = true;
+            if (searchQuery) {
+                const searchText = `${card.dataset.name} ${card.dataset.specialty} ${card.dataset.location}`;
+                textMatch = searchText.includes(searchQuery);
+            }
+
+            if (
+                tierMatch &&
+                statusMatch &&
+                roleMatch &&
+                countryMatch &&
+                specialtyMatch &&
+                textMatch
+            ) {
+                card.style.display = "";
+                visibleCount++;
+            } else {
+                card.style.display = "none";
+            }
+        });
+
+        // Update results info
+        if (resultsInfo) {
+            if (visibleCount === cards.length) {
+                resultsInfo.textContent = `Showing all ${cards.length} profiles`;
+            } else {
+                resultsInfo.textContent = `Showing ${visibleCount} of ${cards.length} profiles`;
+            }
+        }
+
+        // Show/hide empty state
+        if (emptyState) {
+            emptyState.hidden = visibleCount > 0;
+        }
+    };
 </script>
 
 <style>
     .browse {
-        padding: var(--space-3xl) 0;
+        padding: 48px 0 80px;
     }
 
-    .browse__header {
-        text-align: center;
-        margin-bottom: var(--space-2xl);
-    }
-
-    .browse__title {
-        font-size: clamp(2rem, 4vw, 3rem);
-        font-weight: 800;
-        background: linear-gradient(
-            135deg,
-            var(--accent-purple),
-            var(--accent-blue)
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: var(--space-sm);
-    }
-
-    .browse__subtitle {
-        color: var(--text-secondary);
-        font-size: 1.1rem;
-    }
-
-    .browse__filters {
+    /* Header */
+    .browse-header {
         display: flex;
-        justify-content: center;
-        gap: var(--space-sm);
-        margin-bottom: var(--space-xl);
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 32px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .browse-header__text h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 4px;
+    }
+
+    .browse-header__text p {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+    }
+
+    .browse-header__stats {
+        display: flex;
+        gap: 12px;
+    }
+
+    .mini-stat {
+        font-size: 0.8rem;
+        font-weight: 600;
+        padding: 4px 12px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-muted);
+    }
+
+    .mini-stat--titan {
+        color: #ffd700;
+        background: rgba(255, 215, 0, 0.1);
+    }
+    .mini-stat--elite {
+        color: #00aaff;
+        background: rgba(0, 170, 255, 0.1);
+    }
+    .mini-stat--master {
+        color: #00cc66;
+        background: rgba(0, 204, 102, 0.1);
+    }
+
+    /* Controls */
+    .browse-controls {
+        display: flex;
         flex-wrap: wrap;
+        gap: 24px;
         align-items: center;
+        margin-bottom: 24px;
+    }
+
+    .search-wrap {
+        position: relative;
+        flex: 1;
+        min-width: 280px;
+        max-width: 400px;
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 18px;
+        height: 18px;
+        color: var(--text-muted);
+        pointer-events: none;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 12px 16px 12px 44px;
+        font-size: 0.9rem;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        color: white;
+        outline: none;
+        transition: all 0.15s;
+    }
+
+    .filter-select {
+        padding: 8px 14px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 8px;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.15s;
+        outline: none;
+    }
+
+    .filter-select:hover,
+    .filter-select:focus {
+        background: rgba(255, 255, 255, 0.08);
+        color: white;
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .search-input::placeholder {
+        color: var(--text-muted);
+    }
+
+    .search-input:focus {
+        border-color: var(--accent-purple);
+        background: rgba(255, 255, 255, 0.06);
+    }
+
+    .filter-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
     }
 
     .filter-label {
+        font-size: 0.75rem;
+        font-weight: 600;
         color: var(--text-muted);
-        font-size: 0.8rem;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        font-weight: 700;
-        margin-right: 0.2rem;
     }
 
-    .filter-divider {
-        color: rgba(255, 255, 255, 0.1);
-        margin: 0 0.5rem;
-        font-size: 1.2rem;
-        font-weight: 300;
+    .filter-buttons {
+        display: flex;
+        gap: 6px;
     }
 
     .filter-btn {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: var(--text-secondary);
-        padding: 0.6rem 1.2rem;
-        border-radius: var(--radius-full);
-        cursor: pointer;
-        font-size: 0.9rem;
+        padding: 8px 14px;
+        font-size: 0.8rem;
         font-weight: 500;
-        transition: all var(--transition-base);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 8px;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.15s;
     }
 
     .filter-btn:hover {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.08);
         color: white;
     }
 
@@ -332,166 +667,274 @@ const sortedDoctors = allDoctors.sort(
         color: white;
     }
 
-    .browse__grid {
+    .filter-btn--titan.filter-btn--active {
+        background: rgba(255, 215, 0, 0.2);
+        border-color: rgba(255, 215, 0, 0.4);
+        color: #ffd700;
+    }
+
+    .filter-btn--elite.filter-btn--active {
+        background: rgba(0, 170, 255, 0.2);
+        border-color: rgba(0, 170, 255, 0.4);
+        color: #00aaff;
+    }
+
+    .filter-btn--master.filter-btn--active {
+        background: rgba(0, 204, 102, 0.2);
+        border-color: rgba(0, 204, 102, 0.4);
+        color: #00cc66;
+    }
+
+    /* Results Info */
+    .results-info {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-bottom: 20px;
+    }
+
+    /* Grid and Cards */
+    .browse-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: var(--space-lg);
+        gap: 24px;
     }
 
-    .browse-card {
+    /* Doctor Card - Premium Glassmorphism */
+    .doctor-card {
         display: flex;
         flex-direction: column;
-        gap: var(--space-xs);
-        padding: var(--space-lg);
+        padding: 24px;
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
         text-decoration: none;
         color: inherit;
-        transition:
-            transform var(--transition-base),
-            box-shadow var(--transition-base);
-    }
-
-    .browse-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-    }
-
-    /* Browse Search */
-    .browse__search {
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         position: relative;
-        max-width: 500px;
-        margin: var(--space-lg) auto 0;
+        overflow: hidden;
     }
-    .browse__search-icon {
+
+    .doctor-card::before {
+        content: "";
         position: absolute;
-        left: 16px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 20px;
-        height: 20px;
-        color: var(--text-muted);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+            circle at top right,
+            rgba(255, 255, 255, 0.03),
+            transparent 70%
+        );
         pointer-events: none;
     }
-    .browse__search-input {
-        width: 100%;
-        padding: 12px 16px 12px 46px;
-        font-size: 1rem;
-        font-family: var(--font-sans);
+
+    .doctor-card:hover {
+        transform: translateY(-5px);
         background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: var(--radius-full);
-        color: white;
-        outline: none;
-        transition: all 0.2s ease;
-    }
-    .browse__search-input::placeholder {
-        color: var(--text-muted);
-    }
-    .browse__search-input:focus {
-        border-color: var(--accent-purple);
-        background: rgba(255, 255, 255, 0.08);
-        box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.12);
+        border-color: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     }
 
-    /* Card Avatars */
-    .browse-card__avatar {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
+    /* Tier Styling */
+    .doctor-card--titan {
+        background: linear-gradient(
+            145deg,
+            rgba(255, 215, 0, 0.03) 0%,
+            rgba(255, 255, 255, 0.02) 100%
+        );
+        border-color: rgba(255, 215, 0, 0.15);
+    }
+    .doctor-card--titan:hover {
+        border-color: rgba(255, 215, 0, 0.4);
+        box-shadow: 0 20px 50px rgba(255, 215, 0, 0.1);
+    }
+
+    .doctor-card--elite {
+        background: linear-gradient(
+            145deg,
+            rgba(0, 170, 255, 0.03) 0%,
+            rgba(255, 255, 255, 0.02) 100%
+        );
+        border-color: rgba(0, 170, 255, 0.15);
+    }
+    .doctor-card--elite:hover {
+        border-color: rgba(0, 170, 255, 0.4);
+        box-shadow: 0 20px 50px rgba(0, 170, 255, 0.1);
+    }
+
+    .doctor-card__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 18px;
+    }
+
+    .doctor-card__avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 18px;
+        overflow: hidden;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: 700;
-        font-size: 0.9rem;
-        flex-shrink: 0;
-        overflow: hidden;
+        background: rgba(255, 255, 255, 0.05);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
+
     .avatar--titan {
-        background: linear-gradient(135deg, #300066, #1a0033);
-        color: #ffd700;
-        border: 2px solid rgba(255, 215, 0, 0.4);
+        border-color: rgba(255, 215, 0, 0.3);
+        background: rgba(255, 215, 0, 0.08);
     }
+
     .avatar--elite {
-        background: linear-gradient(135deg, #001a4d, #001133);
-        color: #00aaff;
-        border: 2px solid rgba(0, 170, 255, 0.3);
+        border-color: rgba(0, 170, 255, 0.3);
+        background: rgba(0, 170, 255, 0.08);
     }
+
     .avatar--master {
-        background: linear-gradient(135deg, #003322, #002211);
-        color: #00cc66;
-        border: 2px solid rgba(0, 204, 102, 0.3);
+        border-color: rgba(0, 204, 102, 0.3);
+        background: rgba(0, 204, 102, 0.08);
     }
-    .avatar--unranked {
-        background: linear-gradient(135deg, #1a1a2e, #16162a);
-        color: #8888aa;
-        border: 2px solid rgba(136, 136, 170, 0.3);
-    }
-    .browse-card__avatar-img {
+
+    .doctor-card__avatar img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 50%;
     }
-    .browse-card__initials {
+
+    .avatar-initials {
         font-weight: 700;
-    }
-
-    .browse-card__top {
-        display: flex;
-        align-items: center;
-        gap: var(--space-sm);
-        margin-bottom: var(--space-xs);
-    }
-
-    .browse-card__legacy {
-        font-size: 0.75rem;
+        font-size: 0.9rem;
         color: var(--text-muted);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 0.2rem 0.6rem;
-        border-radius: var(--radius-full);
-        margin-left: auto;
     }
 
-    .browse-card__name {
-        font-size: 1.2rem;
+    .avatar--titan .avatar-initials {
+        color: #ffd700;
+    }
+    .avatar--elite .avatar-initials {
+        color: #00aaff;
+    }
+    .avatar--master .avatar-initials {
+        color: #00cc66;
+    }
+
+    .doctor-card__badges {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+    }
+
+    .legacy-badge {
+        font-size: 0.7rem;
+        font-weight: 500;
+        padding: 3px 8px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-muted);
+    }
+
+    .doctor-card__name {
+        font-size: 1.25rem;
         font-weight: 700;
         color: white;
+        margin-bottom: 6px;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
     }
 
-    .browse-card__specialty {
+    .doctor-card--titan .doctor-card__name {
+        color: #ffd700;
+        text-shadow: 0 2px 10px rgba(255, 215, 0, 0.2);
+    }
+
+    .doctor-card__specialty {
+        font-size: 0.9rem;
         color: var(--text-secondary);
+        font-weight: 500;
+        margin-bottom: 4px;
+    }
+
+    .doctor-card__location {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .doctor-card__stats {
+        display: flex;
+        gap: 16px;
+        padding-top: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        margin-top: auto;
+    }
+
+    .doctor-card__stats .stat {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
+    }
+
+    .doctor-card__stats .stat strong {
+        color: white;
+        font-weight: 700;
+        font-size: 1.1rem;
+        font-family: var(--font-mono, monospace);
+    }
+
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--text-muted);
+    }
+
+    .empty-state svg {
+        opacity: 0.4;
+        margin-bottom: 16px;
+    }
+
+    .empty-state h3 {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        margin-bottom: 8px;
+    }
+
+    .empty-state p {
         font-size: 0.9rem;
     }
 
-    .browse-card__location {
-        color: var(--text-muted);
-        font-size: 0.85rem;
-    }
-
-    .browse-card__meta {
-        display: flex;
-        gap: var(--space-md);
-        margin-top: var(--space-sm);
-        padding-top: var(--space-sm);
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .browse-card__stat {
-        font-size: 0.8rem;
-        color: var(--text-muted);
-    }
-
+    /* Responsive */
     @media (max-width: 768px) {
-        .browse__grid {
+        .browse-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .browse-controls {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .search-wrap {
+            max-width: none;
+        }
+
+        .filter-group {
+            flex-wrap: wrap;
+        }
+
+        .browse-grid {
             grid-template-columns: 1fr;
-        }
-
-        .browse__filters {
-            gap: var(--space-xs);
-        }
-
-        .filter-btn {
-            padding: 0.5rem 0.8rem;
-            font-size: 0.8rem;
         }
     }
 </style>

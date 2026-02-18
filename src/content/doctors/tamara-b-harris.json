@@ -1,36 +1,493 @@
 {
   "fullName": "Tamara B. Harris",
   "slug": "tamara-b-harris",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Gerontology",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">TB</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 60,
-  "hIndex": 241,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 236,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 23635,
+  "livesSaved": 0,
+  "biography": "Kamala Devi Harris is an American politician and attorney who served as the 49th vice president of the United States from 2021 to 2025 under President Joe Biden. She is the first female, first African American, and first Asian American vice president, and the highest-ranking female and Asian American official in U.S. history. Harris represented California in the U.S. Senate from 2017 to 2021 and was the attorney general of California from 2011 to 2017. A member of the Democratic Party, she was the party's nominee in the 2024 presidential election.",
+  "aiSummary": "Tamara B. Harris is a gerontology specialist with an H-index of 236 at National Institutes of Health (Faculty). Has been published in The Lancet, Nature Genetics, New England Journal of Medicine. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "NIH"
-    }
-  ],
-  "bio": "Tamara B. Harris is a pioneer in Gerontology at NIH, USA. With a D-Index of 241 and over 236,348 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "National Institutes of Health",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Gerontology"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Hearing Loss and Cognitive Decline in Older Adults",
+      "journal": "eScholarship (California Digital Library)",
+      "year": 2013,
+      "citationCount": 1599,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2123719421",
+      "verified": true
+    },
+    {
+      "title": "Common genetic determinants of vitamin D insufficiency: a genome-wide association study",
+      "journal": "The Lancet",
+      "year": 2010,
+      "citationCount": 1525,
+      "doi": "10.1016/s0140-6736(10)60588-0",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(10)60588-0",
+      "verified": true
+    },
+    {
+      "title": "Prevalence of low femoral bone density in older U.S. women from NHANES III",
+      "journal": "Journal of Bone and Mineral Research",
+      "year": 1995,
+      "citationCount": 1387,
+      "doi": "10.1002/jbmr.5650100517",
+      "sourceUrl": "https://doi.org/10.1002/jbmr.5650100517",
+      "verified": true
+    },
+    {
+      "title": "Longitudinal study of muscle strength, quality, and adipose tissue infiltration",
+      "journal": "American Journal of Clinical Nutrition",
+      "year": 2009,
+      "citationCount": 1384,
+      "doi": "10.3945/ajcn.2009.28047",
+      "sourceUrl": "https://doi.org/10.3945/ajcn.2009.28047",
+      "verified": true
+    },
+    {
+      "title": "Relationship of Interleukin-6 and Tumor Necrosis Factor-  With Muscle Mass and Muscle Strength in Elderly Men and Women: The Health ABC Study",
+      "journal": "The Journals of Gerontology Series A",
+      "year": 2002,
+      "citationCount": 1244,
+      "doi": "10.1093/gerona/57.5.m326",
+      "sourceUrl": "https://doi.org/10.1093/gerona/57.5.m326",
+      "verified": true
+    },
+    {
+      "title": "Attenuation of skeletal muscle and strength in the elderly: The Health ABC Study",
+      "journal": "Journal of Applied Physiology",
+      "year": 2001,
+      "citationCount": 1200,
+      "doi": "10.1152/jappl.2001.90.6.2157",
+      "sourceUrl": "https://doi.org/10.1152/jappl.2001.90.6.2157",
+      "verified": true
+    },
+    {
+      "title": "Prognostic Value of Usual Gait Speed in Well‐Functioning Older People—Results from the Health, Aging and Body Composition Study",
+      "journal": "Journal of the American Geriatrics Society",
+      "year": 2005,
+      "citationCount": 1176,
+      "doi": "10.1111/j.1532-5415.2005.53501.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1532-5415.2005.53501.x",
+      "verified": true
+    },
+    {
+      "title": "Dietary protein intake is associated with lean mass change in older, community-dwelling adults: the Health, Aging, and Body Composition (Health ABC) Study",
+      "journal": "American Journal of Clinical Nutrition",
+      "year": 2008,
+      "citationCount": 1168,
+      "doi": "10.1093/ajcn/87.1.150",
+      "sourceUrl": "https://doi.org/10.1093/ajcn/87.1.150",
+      "verified": true
+    },
+    {
+      "title": "Sarcopenia With Limited Mobility: An International Consensus",
+      "journal": "Journal of the American Medical Directors Association",
+      "year": 2011,
+      "citationCount": 1114,
+      "doi": "10.1016/j.jamda.2011.04.014",
+      "sourceUrl": "https://doi.org/10.1016/j.jamda.2011.04.014",
+      "verified": true
+    },
+    {
+      "title": "Prevalence of Low Femoral Bone Density in Older U.S. Adults from NHANES III",
+      "journal": "Journal of Bone and Mineral Research",
+      "year": 1997,
+      "citationCount": 1049,
+      "doi": "10.1359/jbmr.1997.12.11.1761",
+      "sourceUrl": "https://doi.org/10.1359/jbmr.1997.12.11.1761",
+      "verified": true
+    },
+    {
+      "title": "Genome-Wide Association Analysis Identifies Variants Associated with Nonalcoholic Fatty Liver Disease That Have Distinct Effects on Metabolic Traits",
+      "journal": "PLoS Genetics",
+      "year": 2011,
+      "citationCount": 985,
+      "doi": "10.1371/journal.pgen.1001324",
+      "sourceUrl": "https://doi.org/10.1371/journal.pgen.1001324",
+      "verified": true
+    },
+    {
+      "title": "Inflammatory Markers and Onset of Cardiovascular Events",
+      "journal": "Circulation",
+      "year": 2003,
+      "citationCount": 972,
+      "doi": "10.1161/01.cir.0000097109.90783.fc",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000097109.90783.fc",
+      "verified": true
+    },
+    {
+      "title": "Sarcopenia: Alternative Definitions and Associations with Lower Extremity Function",
+      "journal": "Journal of the American Geriatrics Society",
+      "year": 2003,
+      "citationCount": 966,
+      "doi": "10.1046/j.1532-5415.2003.51534.x",
+      "sourceUrl": "https://doi.org/10.1046/j.1532-5415.2003.51534.x",
+      "verified": true
+    },
+    {
+      "title": "Meta-analysis identifies 13 new loci associated with waist-hip ratio and reveals sexual dimorphism in the genetic basis of fat distribution",
+      "journal": "Nature Genetics",
+      "year": 2010,
+      "citationCount": 955,
+      "doi": "10.1038/ng.685",
+      "sourceUrl": "https://doi.org/10.1038/ng.685",
+      "verified": true
+    },
+    {
+      "title": "Genetic Associations with Valvular Calcification and Aortic Stenosis",
+      "journal": "New England Journal of Medicine",
+      "year": 2013,
+      "citationCount": 946,
+      "doi": "10.1056/nejmoa1109034",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1109034",
+      "verified": true
+    },
+    {
+      "title": "Association of Long-Distance Corridor Walk Performance With Mortality, Cardiovascular Disease, Mobility Limitation, and Disability",
+      "journal": "JAMA",
+      "year": 2006,
+      "citationCount": 937,
+      "doi": "10.1001/jama.295.17.2018",
+      "sourceUrl": "https://doi.org/10.1001/jama.295.17.2018",
+      "verified": true
+    },
+    {
+      "title": "A genome-wide approach accounting for body mass index identifies genetic variants influencing fasting glycemic traits and insulin resistance",
+      "journal": "Nature Genetics",
+      "year": 2012,
+      "citationCount": 880,
+      "doi": "10.1038/ng.2274",
+      "sourceUrl": "https://doi.org/10.1038/ng.2274",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide association analyses identify 18 new loci associated with serum urate concentrations",
+      "journal": "Nature Genetics",
+      "year": 2012,
+      "citationCount": 850,
+      "doi": "10.1038/ng.2500",
+      "sourceUrl": "https://doi.org/10.1038/ng.2500",
+      "verified": true
+    },
+    {
+      "title": "Leg Muscle Mass and Composition in Relation to Lower Extremity Performance in Men and Women Aged 70 to 79: The Health, Aging and Body Composition Study",
+      "journal": "Journal of the American Geriatrics Society",
+      "year": 2002,
+      "citationCount": 839,
+      "doi": "10.1046/j.1532-5415.2002.50217.x",
+      "sourceUrl": "https://doi.org/10.1046/j.1532-5415.2002.50217.x",
+      "verified": true
+    },
+    {
+      "title": "Alternative Definitions of Sarcopenia, Lower Extremity Performance, and Functional Impairment with Aging in Older Men and Women",
+      "journal": "Journal of the American Geriatrics Society",
+      "year": 2007,
+      "citationCount": 808,
+      "doi": "10.1111/j.1532-5415.2007.01140.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1532-5415.2007.01140.x",
+      "verified": true
+    },
+    {
+      "title": "Comparisons of percentage body fat, body mass index, waist circumference, and waist-stature ratio in adults",
+      "journal": "American Journal of Clinical Nutrition",
+      "year": 2008,
+      "citationCount": 807,
+      "doi": "10.3945/ajcn.2008.26847",
+      "sourceUrl": "https://doi.org/10.3945/ajcn.2008.26847",
+      "verified": true
+    },
+    {
+      "title": "Interleukin-6 receptor pathways in coronary heart disease: a collaborative meta-analysis of 82 studies",
+      "journal": "The Lancet",
+      "year": 2012,
+      "citationCount": 805,
+      "doi": "10.1016/s0140-6736(11)61931-4",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(11)61931-4",
+      "verified": true
+    },
+    {
+      "title": "Subsystems Contributing to the Decline in Ability to Walk: Bridging the Gap Between Epidemiology and Geriatric Practice in the InCHIANTI Study",
+      "journal": "Journal of the American Geriatrics Society",
+      "year": 2000,
+      "citationCount": 802,
+      "doi": "10.1111/j.1532-5415.2000.tb03873.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1532-5415.2000.tb03873.x",
+      "verified": true
+    },
+    {
+      "title": "New loci associated with kidney function and chronic kidney disease",
+      "journal": "Nature Genetics",
+      "year": 2010,
+      "citationCount": 797,
+      "doi": "10.1038/ng.568",
+      "sourceUrl": "https://doi.org/10.1038/ng.568",
+      "verified": true
+    },
+    {
+      "title": "Excessive Loss of Skeletal Muscle Mass in Older Adults With Type 2 Diabetes",
+      "journal": "Diabetes Care",
+      "year": 2009,
+      "citationCount": 761,
+      "doi": "10.2337/dc09-0264",
+      "sourceUrl": "https://doi.org/10.2337/dc09-0264",
+      "verified": true
+    },
+    {
+      "title": "Genome-Wide Association Study of Retinopathy in Individuals without Diabetes",
+      "journal": "PLoS ONE",
+      "year": 2013,
+      "citationCount": 760,
+      "doi": "10.1371/journal.pone.0054232",
+      "sourceUrl": "https://doi.org/10.1371/journal.pone.0054232",
+      "verified": true
+    },
+    {
+      "title": "Accelerated Loss of Skeletal Muscle Strength in Older Adults With Type 2 Diabetes",
+      "journal": "Diabetes Care",
+      "year": 2007,
+      "citationCount": 743,
+      "doi": "10.2337/dc06-2537",
+      "sourceUrl": "https://doi.org/10.2337/dc06-2537",
+      "verified": true
+    },
+    {
+      "title": "Decreased Muscle Strength and Quality in Older Adults With Type 2 Diabetes",
+      "journal": "Diabetes",
+      "year": 2006,
+      "citationCount": 730,
+      "doi": "10.2337/db05-1183",
+      "sourceUrl": "https://doi.org/10.2337/db05-1183",
+      "verified": true
+    },
+    {
+      "title": "Added Value of Physical Performance Measures in Predicting Adverse Health‐Related Events: Results from the Health, Aging and Body Composition Study",
+      "journal": "Journal of the American Geriatrics Society",
+      "year": 2009,
+      "citationCount": 682,
+      "doi": "10.1111/j.1532-5415.2008.02126.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1532-5415.2008.02126.x",
+      "verified": true
+    },
+    {
+      "title": "Multiple loci associated with indices of renal function and chronic kidney disease",
+      "journal": "Nature Genetics",
+      "year": 2009,
+      "citationCount": 651,
+      "doi": "10.1038/ng.377",
+      "sourceUrl": "https://doi.org/10.1038/ng.377",
+      "verified": true
+    },
+    {
+      "title": "Obesity, Regional Body Fat Distribution, and the Metabolic Syndrome in Older Men and Women",
+      "journal": "Archives of Internal Medicine",
+      "year": 2005,
+      "citationCount": 636,
+      "doi": "10.1001/archinte.165.7.777",
+      "sourceUrl": "https://doi.org/10.1001/archinte.165.7.777",
+      "verified": true
+    },
+    {
+      "title": "Association Between Regional Adipose Tissue Distribution and Both Type 2 Diabetes and Impaired Glucose Tolerance in Elderly Men and Women",
+      "journal": "Diabetes Care",
+      "year": 2003,
+      "citationCount": 613,
+      "doi": "10.2337/diacare.26.2.372",
+      "sourceUrl": "https://doi.org/10.2337/diacare.26.2.372",
+      "verified": true
+    },
+    {
+      "title": "Cohorts for Heart and Aging Research in Genomic Epidemiology (CHARGE) Consortium",
+      "journal": "Circulation Cardiovascular Genetics",
+      "year": 2009,
+      "citationCount": 605,
+      "doi": "10.1161/circgenetics.108.829747",
+      "sourceUrl": "https://doi.org/10.1161/circgenetics.108.829747",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide association study identifies loci influencing concentrations of liver enzymes in plasma",
+      "journal": "Nature Genetics",
+      "year": 2011,
+      "citationCount": 586,
+      "doi": "10.1038/ng.970",
+      "sourceUrl": "https://doi.org/10.1038/ng.970",
+      "verified": true
+    },
+    {
+      "title": "Exome-wide association study of plasma lipids in &gt;300,000 individuals",
+      "journal": "Nature Genetics",
+      "year": 2017,
+      "citationCount": 586,
+      "doi": "10.1038/ng.3977",
+      "sourceUrl": "https://doi.org/10.1038/ng.3977",
+      "verified": true
+    },
+    {
+      "title": "Physical Activity Attenuates the Influence of FTO Variants on Obesity Risk: A Meta-Analysis of 218,166 Adults and 19,268 Children",
+      "journal": "PLoS Medicine",
+      "year": 2011,
+      "citationCount": 551,
+      "doi": "10.1371/journal.pmed.1001116",
+      "sourceUrl": "https://doi.org/10.1371/journal.pmed.1001116",
+      "verified": true
+    },
+    {
+      "title": "Subclinical Hypothyroidism and the Risk of Heart Failure, Other Cardiovascular Events, and Death",
+      "journal": "Archives of Internal Medicine",
+      "year": 2005,
+      "citationCount": 495,
+      "doi": "10.1001/archinte.165.21.2460",
+      "sourceUrl": "https://doi.org/10.1001/archinte.165.21.2460",
+      "verified": true
+    },
+    {
+      "title": "Red Cell Distribution Width and Mortality in Older Adults: A Meta-analysis",
+      "journal": "The Journals of Gerontology Series A",
+      "year": 2009,
+      "citationCount": 483,
+      "doi": "10.1093/gerona/glp163",
+      "sourceUrl": "https://doi.org/10.1093/gerona/glp163",
+      "verified": true
+    },
+    {
+      "title": "Circulating Levels of Inflammatory Markers and Cancer Risk in the Health Aging and Body Composition Cohort",
+      "journal": "Cancer Epidemiology Biomarkers & Prevention",
+      "year": 2005,
+      "citationCount": 471,
+      "doi": "10.1158/1055-9965.epi-05-0316",
+      "sourceUrl": "https://doi.org/10.1158/1055-9965.epi-05-0316",
+      "verified": true
+    },
+    {
+      "title": "Limited literacy and mortality in the elderly",
+      "journal": "Journal of General Internal Medicine",
+      "year": 2006,
+      "citationCount": 468,
+      "doi": "10.1111/j.1525-1497.2006.00539.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1525-1497.2006.00539.x",
+      "verified": true
+    },
+    {
+      "title": "Inflammatory Markers and Incident Heart Failure Risk in Older Adults",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2010,
+      "citationCount": 462,
+      "doi": "10.1016/j.jacc.2009.12.045",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2009.12.045",
+      "verified": true
+    },
+    {
+      "title": "Physical Activity, Exercise, and Inflammatory Markers in Older Adults: Findings from The Health, Aging and Body Composition Study",
+      "journal": "Journal of the American Geriatrics Society",
+      "year": 2004,
+      "citationCount": 461,
+      "doi": "10.1111/j.1532-5415.2004.52307.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1532-5415.2004.52307.x",
+      "verified": true
+    },
+    {
+      "title": "Sex-stratified Genome-wide Association Studies Including 270,000 Individuals Show Sexual Dimorphism in Genetic Loci for Anthropometric Traits",
+      "journal": "PLoS Genetics",
+      "year": 2013,
+      "citationCount": 451,
+      "doi": "10.1371/journal.pgen.1003500",
+      "sourceUrl": "https://doi.org/10.1371/journal.pgen.1003500",
+      "verified": true
+    },
+    {
+      "title": "Weight change and the conservation of lean mass in old age: the Health, Aging and Body Composition Study",
+      "journal": "American Journal of Clinical Nutrition",
+      "year": 2005,
+      "citationCount": 442,
+      "doi": "10.1093/ajcn/82.4.872",
+      "sourceUrl": "https://doi.org/10.1093/ajcn/82.4.872",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide association study identifies six new loci influencing pulse pressure and mean arterial pressure",
+      "journal": "Nature Genetics",
+      "year": 2011,
+      "citationCount": 438,
+      "doi": "10.1038/ng.922",
+      "sourceUrl": "https://doi.org/10.1038/ng.922",
+      "verified": true
+    },
+    {
+      "title": "Limited Literacy in Older People and Disparities in Health and Healthcare Access",
+      "journal": "Journal of the American Geriatrics Society",
+      "year": 2006,
+      "citationCount": 435,
+      "doi": "10.1111/j.1532-5415.2006.00691.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1532-5415.2006.00691.x",
+      "verified": true
+    },
+    {
+      "title": "Reduced Neutrophil Count in People of African Descent Is Due To a Regulatory Variant in the Duffy Antigen Receptor for Chemokines Gene",
+      "journal": "PLoS Genetics",
+      "year": 2009,
+      "citationCount": 428,
+      "doi": "10.1371/journal.pgen.1000360",
+      "sourceUrl": "https://doi.org/10.1371/journal.pgen.1000360",
+      "verified": true
+    },
+    {
+      "title": "Validity of fan-beam dual-energy X-ray absorptiometry for measuring fat-free mass and leg muscle mass",
+      "journal": "Journal of Applied Physiology",
+      "year": 1999,
+      "citationCount": 417,
+      "doi": "10.1152/jappl.1999.87.4.1513",
+      "sourceUrl": "https://doi.org/10.1152/jappl.1999.87.4.1513",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide association and large-scale follow up identifies 16 new loci influencing lung function",
+      "journal": "Nature Genetics",
+      "year": 2011,
+      "citationCount": 411,
+      "doi": "10.1038/ng.941",
+      "sourceUrl": "https://doi.org/10.1038/ng.941",
+      "verified": true
+    },
+    {
+      "title": "Low subcutaneous thigh fat is a risk factor for unfavourable glucose and lipid levels, independently of high abdominal fat. The Health ABC Study",
+      "journal": "Diabetologia",
+      "year": 2005,
+      "citationCount": 408,
+      "doi": "10.1007/s00125-004-1637-7",
+      "sourceUrl": "https://doi.org/10.1007/s00125-004-1637-7",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:14.000Z",
+  "openalexId": "https://openalex.org/A5109159994",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Kamala_Harris_Vice_Presidential_Portrait.jpg/330px-Kamala_Harris_Vice_Presidential_Portrait.jpg"
 }

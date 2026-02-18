@@ -1,0 +1,64 @@
+# MDRPedia Robots.txt
+# The Single Source of Truth for Medical Authority
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://mdrpedia.com/sitemap.xml
+Sitemap: https://mdrpedia.com/sitemap-index.xml
+
+# AI Crawlers - Explicitly Allowed
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Anthropic-AI
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Cohere-ai
+Allow: /
+
+# Search Engine Crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Yandex
+Allow: /
+
+# Social Media Crawlers
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+# Disallow admin paths
+User-agent: *
+Disallow: /admin/
+Disallow: /api/admin/
+Disallow: /_astro/
+
+# Crawl-delay for rate limiting (optional)
+# User-agent: *
+# Crawl-delay: 1

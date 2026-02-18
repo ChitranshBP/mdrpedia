@@ -1,0 +1,891 @@
+---
+/**
+ * MDRPedia — Bulk Import Doctors
+ * Upload CSV to import multiple doctors at once
+ */
+import Layout from "../../layouts/Layout.astro";
+import { prisma } from "../../lib/prisma";
+import { requireSuperAdmin } from "../../lib/rbac";
+
+export const prerender = false;
+
+if (!requireSuperAdmin(Astro.request)) {
+    return Astro.redirect("/login");
+}
+
+const url = new URL(Astro.request.url);
+const adminKey = url.searchParams.get("key") || "";
+
+// Fetch recent import jobs
+let recentJobs: any[] = [];
+try {
+    recentJobs = await prisma.bulkImportJob.findMany({
+        orderBy: { createdAt: 'desc' },
+        take: 10
+    });
+} catch {
+    // Table might not exist yet - silent fallback
+}
+---
+
+<Layout title="Bulk Import — Admin">
+    <div class="admin-page">
+        <aside class="sidebar">
+            <div class="sidebar__brand">
+                <a href={`/admin?key=${adminKey}`} class="brand-link">
+                    <div class="brand-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/>
+                        </svg>
+                    </div>
+                    <span>MDRPedia</span>
+                </a>
+            </div>
+            <nav class="sidebar__nav">
+                <a href={`/admin?key=${adminKey}`} class="nav-item">Dashboard</a>
+                <a href={`/admin/doctors?key=${adminKey}`} class="nav-item">All Doctors</a>
+                <a href={`/admin/news?key=${adminKey}`} class="nav-item">News</a>
+                <a href={`/admin/claims?key=${adminKey}`} class="nav-item">Claims</a>
+                <a href={`/admin/audit-log?key=${adminKey}`} class="nav-item">Activity Log</a>
+                <a href={`/admin/data-quality?key=${adminKey}`} class="nav-item">Data Quality</a>
+                <a href={`/admin/bulk-import?key=${adminKey}`} class="nav-item active">Bulk Import</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <div>
+                    <h1>Bulk Import Doctors</h1>
+                    <p>Upload a CSV file to import multiple doctor profiles</p>
+                </div>
+            </header>
+
+            <div class="content-grid">
+                <!-- Upload Section -->
+                <div class="card">
+                    <h2>Upload CSV File</h2>
+
+                    <div class="upload-zone" id="uploadZone">
+                        <input type="file" id="csvFile" accept=".csv,.tsv" hidden />
+                        <div class="upload-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="17 8 12 3 7 8"/>
+                                <line x1="12" y1="3" x2="12" y2="15"/>
+                            </svg>
+                        </div>
+                        <p>Drag & drop your CSV file here</p>
+                        <span>or</span>
+                        <button class="btn btn--primary" onclick="document.getElementById('csvFile').click()">
+                            Choose File
+                        </button>
+                    </div>
+
+                    <div id="fileInfo" class="file-info" hidden>
+                        <div class="file-info__name"></div>
+                        <div class="file-info__size"></div>
+                        <button class="btn btn--outline btn--sm" onclick="clearFile()">Remove</button>
+                    </div>
+
+                    <!-- Preview Section -->
+                    <div id="previewSection" hidden>
+                        <h3>Preview (First 5 Rows)</h3>
+                        <div class="preview-table-container">
+                            <table class="preview-table" id="previewTable">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+
+                        <div class="import-options">
+                            <div class="option-group">
+                                <label>
+                                    <input type="checkbox" id="skipDuplicates" checked />
+                                    Skip duplicate entries (same name)
+                                </label>
+                            </div>
+                            <div class="option-group">
+                                <label>
+                                    <input type="checkbox" id="validateData" checked />
+                                    Validate data before import
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="import-actions">
+                            <button class="btn btn--primary btn--lg" id="importBtn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                                Import All Rows
+                            </button>
+                            <span class="import-count" id="importCount"></span>
+                        </div>
+                    </div>
+
+                    <!-- Progress Section -->
+                    <div id="progressSection" hidden>
+                        <h3>Import Progress</h3>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-stats">
+                            <span id="progressText">Importing...</span>
+                            <span id="progressPercent">0%</span>
+                        </div>
+                        <div class="import-log" id="importLog"></div>
+                    </div>
+                </div>
+
+                <!-- Instructions Section -->
+                <div class="card">
+                    <h2>CSV Format</h2>
+                    <p class="help-text">Your CSV should include the following columns:</p>
+
+                    <div class="column-list">
+                        <div class="column-item column-item--required">
+                            <span class="column-name">fullName</span>
+                            <span class="column-badge">Required</span>
+                        </div>
+                        <div class="column-item column-item--required">
+                            <span class="column-name">specialty</span>
+                            <span class="column-badge">Required</span>
+                        </div>
+                        <div class="column-item">
+                            <span class="column-name">title</span>
+                            <span class="column-desc">MD, PhD, etc.</span>
+                        </div>
+                        <div class="column-item">
+                            <span class="column-name">country</span>
+                            <span class="column-desc">Full country name</span>
+                        </div>
+                        <div class="column-item">
+                            <span class="column-name">city</span>
+                        </div>
+                        <div class="column-item">
+                            <span class="column-name">biography</span>
+                        </div>
+                        <div class="column-item">
+                            <span class="column-name">hIndex</span>
+                            <span class="column-desc">Numeric value</span>
+                        </div>
+                        <div class="column-item">
+                            <span class="column-name">tier</span>
+                            <span class="column-desc">TITAN, ELITE, MASTER, or UNRANKED</span>
+                        </div>
+                        <div class="column-item">
+                            <span class="column-name">status</span>
+                            <span class="column-desc">LIVING or HISTORICAL</span>
+                        </div>
+                        <div class="column-item">
+                            <span class="column-name">npiNumber</span>
+                        </div>
+                        <div class="column-item">
+                            <span class="column-name">orcidId</span>
+                        </div>
+                    </div>
+
+                    <div class="download-template">
+                        <button id="downloadTemplateBtn" class="btn btn--outline">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            Download Template CSV
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Jobs -->
+            {recentJobs.length > 0 && (
+                <div class="card" style="margin-top: 24px;">
+                    <h2>Recent Import Jobs</h2>
+                    <table class="jobs-table">
+                        <thead>
+                            <tr>
+                                <th>File</th>
+                                <th>Status</th>
+                                <th>Success</th>
+                                <th>Errors</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {recentJobs.map(job => (
+                                <tr>
+                                    <td>{job.fileName}</td>
+                                    <td>
+                                        <span class={`status-badge status-badge--${job.status.toLowerCase()}`}>
+                                            {job.status}
+                                        </span>
+                                    </td>
+                                    <td class="text-green">{job.successCount}</td>
+                                    <td class="text-red">{job.errorCount}</td>
+                                    <td class="text-muted">{new Date(job.createdAt).toLocaleDateString()}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
+        </main>
+    </div>
+</Layout>
+
+<script define:vars={{ adminKey }}>
+    let csvData = [];
+    let headers = [];
+
+    const uploadZone = document.getElementById('uploadZone');
+    const csvFileInput = document.getElementById('csvFile');
+    const fileInfo = document.getElementById('fileInfo');
+    const previewSection = document.getElementById('previewSection');
+    const progressSection = document.getElementById('progressSection');
+
+    // Drag and drop handlers
+    uploadZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadZone.classList.add('dragover');
+    });
+
+    uploadZone.addEventListener('dragleave', () => {
+        uploadZone.classList.remove('dragover');
+    });
+
+    uploadZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadZone.classList.remove('dragover');
+        const file = e.dataTransfer.files[0];
+        if (file) handleFile(file);
+    });
+
+    csvFileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) handleFile(file);
+    });
+
+    function handleFile(file) {
+        if (!file.name.match(/\.(csv|tsv)$/i)) {
+            alert('Please upload a CSV or TSV file');
+            return;
+        }
+
+        // Show file info
+        fileInfo.hidden = false;
+        fileInfo.querySelector('.file-info__name').textContent = file.name;
+        fileInfo.querySelector('.file-info__size').textContent = formatFileSize(file.size);
+        uploadZone.hidden = true;
+
+        // Parse CSV
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const text = e.target.result;
+            const delimiter = file.name.endsWith('.tsv') ? '\t' : ',';
+            parseCSV(text, delimiter);
+        };
+        reader.readAsText(file);
+    }
+
+    function parseCSV(text, delimiter) {
+        const lines = text.trim().split('\n');
+        headers = lines[0].split(delimiter).map(h => h.trim().replace(/^"|"$/g, ''));
+
+        csvData = [];
+        for (let i = 1; i < lines.length; i++) {
+            const values = parseCSVLine(lines[i], delimiter);
+            if (values.length === headers.length) {
+                const row = {};
+                headers.forEach((header, j) => {
+                    row[header] = values[j];
+                });
+                csvData.push(row);
+            }
+        }
+
+        showPreview();
+    }
+
+    function parseCSVLine(line, delimiter) {
+        const result = [];
+        let current = '';
+        let inQuotes = false;
+
+        for (let i = 0; i < line.length; i++) {
+            const char = line[i];
+            if (char === '"') {
+                inQuotes = !inQuotes;
+            } else if (char === delimiter && !inQuotes) {
+                result.push(current.trim());
+                current = '';
+            } else {
+                current += char;
+            }
+        }
+        result.push(current.trim());
+        return result;
+    }
+
+    function showPreview() {
+        previewSection.hidden = false;
+
+        const thead = document.querySelector('#previewTable thead');
+        const tbody = document.querySelector('#previewTable tbody');
+
+        // Headers
+        thead.innerHTML = '<tr>' + headers.map(h => `<th>${h}</th>`).join('') + '</tr>';
+
+        // First 5 rows
+        tbody.innerHTML = csvData.slice(0, 5).map(row =>
+            '<tr>' + headers.map(h => `<td>${row[h] || '-'}</td>`).join('') + '</tr>'
+        ).join('');
+
+        document.getElementById('importCount').textContent = `${csvData.length} rows to import`;
+    }
+
+    window.clearFile = function() {
+        csvData = [];
+        headers = [];
+        csvFileInput.value = '';
+        fileInfo.hidden = true;
+        previewSection.hidden = true;
+        uploadZone.hidden = false;
+    };
+
+    // Import handler
+    document.getElementById('importBtn')?.addEventListener('click', async () => {
+        if (csvData.length === 0) return;
+
+        previewSection.hidden = true;
+        progressSection.hidden = false;
+
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const progressPercent = document.getElementById('progressPercent');
+        const importLog = document.getElementById('importLog');
+
+        let success = 0;
+        let errors = 0;
+        const skipDuplicates = document.getElementById('skipDuplicates').checked;
+
+        for (let i = 0; i < csvData.length; i++) {
+            const row = csvData[i];
+            const percent = Math.round(((i + 1) / csvData.length) * 100);
+            progressFill.style.width = percent + '%';
+            progressPercent.textContent = percent + '%';
+            progressText.textContent = `Importing ${row.fullName || 'Row ' + (i + 1)}...`;
+
+            try {
+                const res = await fetch('/api/admin/bulk-import', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-admin-key': adminKey
+                    },
+                    body: JSON.stringify({
+                        profile: row,
+                        skipDuplicates
+                    })
+                });
+
+                const data = await res.json();
+                if (data.success) {
+                    success++;
+                    importLog.innerHTML += `<div class="log-line log-line--success">✓ ${row.fullName}</div>`;
+                } else {
+                    errors++;
+                    importLog.innerHTML += `<div class="log-line log-line--error">✗ ${row.fullName}: ${data.error}</div>`;
+                }
+            } catch (e) {
+                errors++;
+                importLog.innerHTML += `<div class="log-line log-line--error">✗ ${row.fullName}: ${e.message}</div>`;
+            }
+
+            importLog.scrollTop = importLog.scrollHeight;
+        }
+
+        progressText.textContent = `Complete! ${success} imported, ${errors} errors`;
+    });
+
+    function formatFileSize(bytes) {
+        if (bytes < 1024) return bytes + ' B';
+        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+        return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+
+    // Download template handler
+    document.getElementById('downloadTemplateBtn')?.addEventListener('click', async () => {
+        try {
+            const res = await fetch('/api/admin/bulk-template', {
+                method: 'GET',
+                headers: {
+                    'x-admin-key': adminKey
+                }
+            });
+
+            if (!res.ok) {
+                alert('Failed to download template');
+                return;
+            }
+
+            const blob = await res.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'mdrpedia-bulk-import-template.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        } catch (e) {
+            alert('Error downloading template: ' + e.message);
+        }
+    });
+</script>
+
+<style>
+    .admin-page {
+        display: flex;
+        min-height: 100vh;
+        background: #0a0a12;
+    }
+
+    .sidebar {
+        width: 220px;
+        background: rgba(15, 15, 25, 0.95);
+        border-right: 1px solid rgba(255, 255, 255, 0.06);
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        padding: 20px 0;
+    }
+
+    .sidebar__brand {
+        padding: 0 20px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        margin-bottom: 16px;
+    }
+
+    .brand-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: white;
+        font-weight: 700;
+    }
+
+    .brand-icon {
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, #8b5cf6, #6366f1);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .brand-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .sidebar__nav {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 0 12px;
+    }
+
+    .nav-item {
+        padding: 10px 12px;
+        border-radius: 8px;
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: all 0.15s;
+    }
+
+    .nav-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+    }
+
+    .nav-item.active {
+        background: rgba(139, 92, 246, 0.15);
+        color: #8b5cf6;
+    }
+
+    .main-content {
+        flex: 1;
+        margin-left: 220px;
+        padding: 32px;
+    }
+
+    .page-header {
+        margin-bottom: 32px;
+    }
+
+    .page-header h1 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 4px;
+    }
+
+    .page-header p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+
+    .content-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 24px;
+    }
+
+    .card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        padding: 24px;
+    }
+
+    .card h2 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: white;
+        margin-bottom: 16px;
+    }
+
+    .card h3 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        margin: 24px 0 12px;
+    }
+
+    /* Upload Zone */
+    .upload-zone {
+        border: 2px dashed rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+        padding: 48px;
+        text-align: center;
+        transition: all 0.2s;
+        cursor: pointer;
+    }
+
+    .upload-zone:hover,
+    .upload-zone.dragover {
+        border-color: #8b5cf6;
+        background: rgba(139, 92, 246, 0.05);
+    }
+
+    .upload-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 16px;
+        background: rgba(139, 92, 246, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #8b5cf6;
+    }
+
+    .upload-icon svg {
+        width: 32px;
+        height: 32px;
+    }
+
+    .upload-zone p {
+        color: var(--text-secondary);
+        margin-bottom: 8px;
+    }
+
+    .upload-zone span {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        display: block;
+        margin-bottom: 16px;
+    }
+
+    /* File Info */
+    .file-info {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px;
+        background: rgba(139, 92, 246, 0.1);
+        border-radius: 8px;
+        margin-bottom: 16px;
+    }
+
+    .file-info__name {
+        flex: 1;
+        font-weight: 600;
+        color: white;
+    }
+
+    .file-info__size {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+    }
+
+    /* Preview Table */
+    .preview-table-container {
+        overflow-x: auto;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 8px;
+    }
+
+    .preview-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.85rem;
+    }
+
+    .preview-table th {
+        text-align: left;
+        padding: 10px 12px;
+        background: rgba(0, 0, 0, 0.2);
+        color: var(--text-muted);
+        font-weight: 600;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .preview-table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        color: var(--text-secondary);
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* Import Options */
+    .import-options {
+        display: flex;
+        gap: 24px;
+        margin: 16px 0;
+    }
+
+    .option-group label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        cursor: pointer;
+    }
+
+    .import-actions {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 20px;
+    }
+
+    .import-count {
+        color: var(--text-muted);
+    }
+
+    /* Progress */
+    .progress-bar {
+        height: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #8b5cf6, #22c55e);
+        border-radius: 4px;
+        transition: width 0.3s ease;
+        width: 0%;
+    }
+
+    .progress-stats {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 8px;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+
+    .import-log {
+        margin-top: 16px;
+        max-height: 200px;
+        overflow-y: auto;
+        font-family: monospace;
+        font-size: 0.8rem;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 12px;
+        border-radius: 8px;
+    }
+
+    .log-line {
+        padding: 4px 0;
+    }
+
+    .log-line--success {
+        color: #22c55e;
+    }
+
+    .log-line--error {
+        color: #ef4444;
+    }
+
+    /* Column List */
+    .help-text {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        margin-bottom: 16px;
+    }
+
+    .column-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .column-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 6px;
+    }
+
+    .column-item--required {
+        background: rgba(139, 92, 246, 0.1);
+    }
+
+    .column-name {
+        font-family: monospace;
+        color: white;
+        font-weight: 600;
+    }
+
+    .column-badge {
+        font-size: 0.65rem;
+        padding: 2px 6px;
+        background: #8b5cf6;
+        color: white;
+        border-radius: 4px;
+        font-weight: 600;
+    }
+
+    .column-desc {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-left: auto;
+    }
+
+    .download-template {
+        margin-top: 24px;
+        padding-top: 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* Jobs Table */
+    .jobs-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .jobs-table th {
+        text-align: left;
+        padding: 10px 12px;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .jobs-table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+
+    .status-badge--completed { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+    .status-badge--processing { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+    .status-badge--failed { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+    .status-badge--pending { background: rgba(156, 163, 175, 0.15); color: #9ca3af; }
+
+    .text-green { color: #22c55e; }
+    .text-red { color: #ef4444; }
+    .text-muted { color: var(--text-muted); }
+
+    /* Buttons */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.15s;
+    }
+
+    .btn--primary {
+        background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        color: white;
+    }
+
+    .btn--primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    }
+
+    .btn--outline {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--text-secondary);
+    }
+
+    .btn--sm {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+
+    .btn--lg {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+
+    @media (max-width: 1024px) {
+        .sidebar {
+            display: none;
+        }
+        .main-content {
+            margin-left: 0;
+        }
+        .content-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

@@ -2,7 +2,7 @@ import { getCollection } from "astro:content";
 
 export const prerender = false;
 
-export async function GET({ request }) {
+export async function GET({ request }: { request: Request }) {
     const url = new URL(request.url);
     const slug = url.searchParams.get("slug");
 

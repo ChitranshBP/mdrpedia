@@ -1,36 +1,492 @@
 {
   "fullName": "Gordon B. Mills",
   "slug": "gordon-b-mills",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Systems Oncology",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">GB</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 58,
-  "hIndex": 233,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 307,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 30727,
+  "livesSaved": 0,
+  "biography": "Gordon B. Mills is the Wayne and Julie Drinkward Endowed Chair in Precision Oncology, Director of Precision Oncology, Director of SMMART Trials and Professor in Cell, Development and Cancer Biology in the Knight Cancer Institute at Oregon Health & Science University.",
+  "aiSummary": "Gordon B. Mills is a systems oncology specialist with an H-index of 307 at Oregon Health & Science University (Faculty). Has been published in Nature Communications, Nature Genetics, Cell. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Oregon Health & Science"
-    }
-  ],
-  "bio": "Gordon B. Mills is a pioneer in Systems Oncology at Oregon Health & Science, USA. With a D-Index of 233 and over 307,266 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Oregon Health & Science University",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Systems Oncology"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Inferring tumour purity and stromal and immune cell admixture from expression data",
+      "journal": "Nature Communications",
+      "year": 2013,
+      "citationCount": 10378,
+      "doi": "10.1038/ncomms3612",
+      "sourceUrl": "https://doi.org/10.1038/ncomms3612",
+      "verified": true
+    },
+    {
+      "title": "The Cancer Genome Atlas Pan-Cancer analysis project",
+      "journal": "Nature Genetics",
+      "year": 2013,
+      "citationCount": 9029,
+      "doi": "10.1038/ng.2764",
+      "sourceUrl": "https://doi.org/10.1038/ng.2764",
+      "verified": true
+    },
+    {
+      "title": "The Somatic Genomic Landscape of Glioblastoma",
+      "journal": "Cell",
+      "year": 2013,
+      "citationCount": 5010,
+      "doi": "10.1016/j.cell.2013.09.034",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2013.09.034",
+      "verified": true
+    },
+    {
+      "title": "An Integrated TCGA Pan-Cancer Clinical Data Resource to Drive High-Quality Survival Outcome Analytics",
+      "journal": "Cell",
+      "year": 2018,
+      "citationCount": 3751,
+      "doi": "10.1016/j.cell.2018.02.052",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2018.02.052",
+      "verified": true
+    },
+    {
+      "title": "Next-generation characterization of the Cancer Cell Line Encyclopedia",
+      "journal": "Nature",
+      "year": 2019,
+      "citationCount": 3518,
+      "doi": "10.1038/s41586-019-1186-3",
+      "sourceUrl": "https://doi.org/10.1038/s41586-019-1186-3",
+      "verified": true
+    },
+    {
+      "title": "Use of proteomic patterns in serum to identify ovarian cancer",
+      "journal": "The Lancet",
+      "year": 2002,
+      "citationCount": 3247,
+      "doi": "10.1016/s0140-6736(02)07746-2",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(02)07746-2",
+      "verified": true
+    },
+    {
+      "title": "Exosomal PD-L1 contributes to immunosuppression and is associated with anti-PD-1 response",
+      "journal": "Nature",
+      "year": 2018,
+      "citationCount": 2680,
+      "doi": "10.1038/s41586-018-0392-8",
+      "sourceUrl": "https://doi.org/10.1038/s41586-018-0392-8",
+      "verified": true
+    },
+    {
+      "title": "Cell-of-Origin Patterns Dominate the Molecular Classification of 10,000 Tumors from 33 Types of Cancer",
+      "journal": "Cell",
+      "year": 2018,
+      "citationCount": 2550,
+      "doi": "10.1016/j.cell.2018.03.022",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2018.03.022",
+      "verified": true
+    },
+    {
+      "title": "mTOR Inhibition Induces Upstream Receptor Tyrosine Kinase Signaling and Activates Akt",
+      "journal": "Cancer Research",
+      "year": 2006,
+      "citationCount": 2532,
+      "doi": "10.1158/0008-5472.can-05-2925",
+      "sourceUrl": "https://doi.org/10.1158/0008-5472.can-05-2925",
+      "verified": true
+    },
+    {
+      "title": "Comprehensive Characterization of Cancer Driver Genes and Mutations",
+      "journal": "Cell",
+      "year": 2018,
+      "citationCount": 2410,
+      "doi": "10.1016/j.cell.2018.02.060",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2018.02.060",
+      "verified": true
+    },
+    {
+      "title": "Comprehensive Molecular Characterization of Muscle-Invasive Bladder Cancer",
+      "journal": "Cell",
+      "year": 2017,
+      "citationCount": 2404,
+      "doi": "10.1016/j.cell.2017.09.007",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2017.09.007",
+      "verified": true
+    },
+    {
+      "title": "Machine Learning Identifies Stemness Features Associated with Oncogenic Dedifferentiation",
+      "journal": "Cell",
+      "year": 2018,
+      "citationCount": 2271,
+      "doi": "10.1016/j.cell.2018.03.034",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2018.03.034",
+      "verified": true
+    },
+    {
+      "title": "Adipocytes promote ovarian cancer metastasis and provide energy for rapid tumor growth",
+      "journal": "Nature Medicine",
+      "year": 2011,
+      "citationCount": 2194,
+      "doi": "10.1038/nm.2492",
+      "sourceUrl": "https://doi.org/10.1038/nm.2492",
+      "verified": true
+    },
+    {
+      "title": "Exploiting the PI3K/AKT Pathway for Cancer Drug Discovery",
+      "journal": "Nature Reviews Drug Discovery",
+      "year": 2005,
+      "citationCount": 2153,
+      "doi": "10.1038/nrd1902",
+      "sourceUrl": "https://doi.org/10.1038/nrd1902",
+      "verified": true
+    },
+    {
+      "title": "Integrated Genomic Characterization of Pancreatic Ductal Adenocarcinoma",
+      "journal": "Cancer Cell",
+      "year": 2017,
+      "citationCount": 1979,
+      "doi": "10.1016/j.ccell.2017.07.007",
+      "sourceUrl": "https://doi.org/10.1016/j.ccell.2017.07.007",
+      "verified": true
+    },
+    {
+      "title": "AACR Project GENIE: Powering Precision Medicine through an International Consortium",
+      "journal": "Cancer Discovery",
+      "year": 2017,
+      "citationCount": 1923,
+      "doi": "10.1158/2159-8290.cd-17-0151",
+      "sourceUrl": "https://doi.org/10.1158/2159-8290.cd-17-0151",
+      "verified": true
+    },
+    {
+      "title": "Comprehensive Molecular Portraits of Invasive Lobular Breast Cancer",
+      "journal": "Cell",
+      "year": 2015,
+      "citationCount": 1881,
+      "doi": "10.1016/j.cell.2015.09.033",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2015.09.033",
+      "verified": true
+    },
+    {
+      "title": "A Functional Genetic Approach Identifies the PI3K Pathway as a Major Determinant of Trastuzumab Resistance in Breast Cancer",
+      "journal": "Cancer Cell",
+      "year": 2007,
+      "citationCount": 1597,
+      "doi": "10.1016/j.ccr.2007.08.030",
+      "sourceUrl": "https://doi.org/10.1016/j.ccr.2007.08.030",
+      "verified": true
+    },
+    {
+      "title": "Multiplatform Analysis of 12 Cancer Types Reveals Molecular Classification within and across Tissues of Origin",
+      "journal": "Cell",
+      "year": 2014,
+      "citationCount": 1536,
+      "doi": "10.1016/j.cell.2014.06.049",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2014.06.049",
+      "verified": true
+    },
+    {
+      "title": "Rethinking ovarian cancer: recommendations for improving outcomes",
+      "journal": "Nature reviews. Cancer",
+      "year": 2011,
+      "citationCount": 1475,
+      "doi": "10.1038/nrc3144",
+      "sourceUrl": "https://doi.org/10.1038/nrc3144",
+      "verified": true
+    },
+    {
+      "title": "The biology of ovarian cancer: new opportunities for translation",
+      "journal": "Nature reviews. Cancer",
+      "year": 2009,
+      "citationCount": 1349,
+      "doi": "10.1038/nrc2644",
+      "sourceUrl": "https://doi.org/10.1038/nrc2644",
+      "verified": true
+    },
+    {
+      "title": "Comprehensive Genomic Analysis Identifies Novel Subtypes and Targets of Triple-Negative Breast Cancer",
+      "journal": "Clinical Cancer Research",
+      "year": 2014,
+      "citationCount": 1334,
+      "doi": "10.1158/1078-0432.ccr-14-0432",
+      "sourceUrl": "https://doi.org/10.1158/1078-0432.ccr-14-0432",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide association scan of tag SNPs identifies a susceptibility locus for lung cancer at 15q25.1",
+      "journal": "Nature Genetics",
+      "year": 2008,
+      "citationCount": 1306,
+      "doi": "10.1038/ng.109",
+      "sourceUrl": "https://doi.org/10.1038/ng.109",
+      "verified": true
+    },
+    {
+      "title": "The chromatin accessibility landscape of primary human cancers",
+      "journal": "Science",
+      "year": 2018,
+      "citationCount": 1267,
+      "doi": "10.1126/science.aav1898",
+      "sourceUrl": "https://doi.org/10.1126/science.aav1898",
+      "verified": true
+    },
+    {
+      "title": "Genomic and Molecular Landscape of DNA Damage Repair Deficiency across The Cancer Genome Atlas",
+      "journal": "Cell Reports",
+      "year": 2018,
+      "citationCount": 1181,
+      "doi": "10.1016/j.celrep.2018.03.076",
+      "sourceUrl": "https://doi.org/10.1016/j.celrep.2018.03.076",
+      "verified": true
+    },
+    {
+      "title": "State-of-the-art strategies for targeting the DNA damage response in cancer",
+      "journal": "Nature Reviews Clinical Oncology",
+      "year": 2018,
+      "citationCount": 1164,
+      "doi": "10.1038/s41571-018-0114-z",
+      "sourceUrl": "https://doi.org/10.1038/s41571-018-0114-z",
+      "verified": true
+    },
+    {
+      "title": "PIK3CA is implicated as an oncogene in ovarian cancer",
+      "journal": "Nature Genetics",
+      "year": 1999,
+      "citationCount": 1162,
+      "doi": "10.1038/5042",
+      "sourceUrl": "https://doi.org/10.1038/5042",
+      "verified": true
+    },
+    {
+      "title": "Genomic and Functional Approaches to Understanding Cancer Aneuploidy",
+      "journal": "Cancer Cell",
+      "year": 2018,
+      "citationCount": 1124,
+      "doi": "10.1016/j.ccell.2018.03.007",
+      "sourceUrl": "https://doi.org/10.1016/j.ccell.2018.03.007",
+      "verified": true
+    },
+    {
+      "title": "Homologous Recombination Deficiency (HRD) Score Predicts Response to Platinum-Containing Neoadjuvant Chemotherapy in Patients with Triple-Negative Breast Cancer",
+      "journal": "Clinical Cancer Research",
+      "year": 2016,
+      "citationCount": 1097,
+      "doi": "10.1158/1078-0432.ccr-15-2477",
+      "sourceUrl": "https://doi.org/10.1158/1078-0432.ccr-15-2477",
+      "verified": true
+    },
+    {
+      "title": "An Epithelial–Mesenchymal Transition Gene Signature Predicts Resistance to EGFR and PI3K Inhibitors and Identifies Axl as a Therapeutic Target for Overcoming EGFR Inhibitor Resistance",
+      "journal": "Clinical Cancer Research",
+      "year": 2012,
+      "citationCount": 1095,
+      "doi": "10.1158/1078-0432.ccr-12-1558",
+      "sourceUrl": "https://doi.org/10.1158/1078-0432.ccr-12-1558",
+      "verified": true
+    },
+    {
+      "title": "The emerging role of lysophosphatidic acid in cancer",
+      "journal": "Nature reviews. Cancer",
+      "year": 2003,
+      "citationCount": 1085,
+      "doi": "10.1038/nrc1143",
+      "sourceUrl": "https://doi.org/10.1038/nrc1143",
+      "verified": true
+    },
+    {
+      "title": "An Integrative Genomic and Proteomic Analysis of PIK3CA, PTEN, and AKT Mutations in Breast Cancer",
+      "journal": "Cancer Research",
+      "year": 2008,
+      "citationCount": 1033,
+      "doi": "10.1158/0008-5472.can-07-6854",
+      "sourceUrl": "https://doi.org/10.1158/0008-5472.can-07-6854",
+      "verified": true
+    },
+    {
+      "title": "Multiplex digital spatial profiling of proteins and RNA in fixed tissue",
+      "journal": "Nature Biotechnology",
+      "year": 2020,
+      "citationCount": 1005,
+      "doi": "10.1038/s41587-020-0472-9",
+      "sourceUrl": "https://doi.org/10.1038/s41587-020-0472-9",
+      "verified": true
+    },
+    {
+      "title": "Spatial Organization and Molecular Correlation of Tumor-Infiltrating Lymphocytes Using Deep Learning on Pathology Images",
+      "journal": "Cell Reports",
+      "year": 2018,
+      "citationCount": 997,
+      "doi": "10.1016/j.celrep.2018.03.086",
+      "sourceUrl": "https://doi.org/10.1016/j.celrep.2018.03.086",
+      "verified": true
+    },
+    {
+      "title": "Comprehensive Analysis of Alternative Splicing Across Tumors from 8,705 Patients",
+      "journal": "Cancer Cell",
+      "year": 2018,
+      "citationCount": 929,
+      "doi": "10.1016/j.ccell.2018.07.001",
+      "sourceUrl": "https://doi.org/10.1016/j.ccell.2018.07.001",
+      "verified": true
+    },
+    {
+      "title": "Autotaxin has lysophospholipase D activity leading to tumor cell growth and motility by lysophosphatidic acid production",
+      "journal": "The Journal of Cell Biology",
+      "year": 2002,
+      "citationCount": 918,
+      "doi": "10.1083/jcb.200204026",
+      "sourceUrl": "https://doi.org/10.1083/jcb.200204026",
+      "verified": true
+    },
+    {
+      "title": "Scalable Open Science Approach for Mutation Calling of Tumor Exomes Using Multiple Genomic Pipelines",
+      "journal": "Cell Systems",
+      "year": 2018,
+      "citationCount": 888,
+      "doi": "10.1016/j.cels.2018.03.002",
+      "sourceUrl": "https://doi.org/10.1016/j.cels.2018.03.002",
+      "verified": true
+    },
+    {
+      "title": "Integrative Analysis Identifies Four Molecular and Clinical Subsets in Uveal Melanoma",
+      "journal": "Cancer Cell",
+      "year": 2017,
+      "citationCount": 887,
+      "doi": "10.1016/j.ccell.2017.07.003",
+      "sourceUrl": "https://doi.org/10.1016/j.ccell.2017.07.003",
+      "verified": true
+    },
+    {
+      "title": "Co-occurring Genomic Alterations Define Major Subsets of <i>KRAS</i> -Mutant Lung Adenocarcinoma with Distinct Biology, Immune Profiles, and Therapeutic Vulnerabilities",
+      "journal": "Cancer Discovery",
+      "year": 2015,
+      "citationCount": 878,
+      "doi": "10.1158/2159-8290.cd-14-1236",
+      "sourceUrl": "https://doi.org/10.1158/2159-8290.cd-14-1236",
+      "verified": true
+    },
+    {
+      "title": "Phosphorylation of β-Catenin by AKT Promotes β-Catenin Transcriptional Activity",
+      "journal": "Journal of Biological Chemistry",
+      "year": 2007,
+      "citationCount": 865,
+      "doi": "10.1074/jbc.m611871200",
+      "sourceUrl": "https://doi.org/10.1074/jbc.m611871200",
+      "verified": true
+    },
+    {
+      "title": "Characterization of a Naturally Occurring Breast Cancer Subset Enriched in Epithelial-to-Mesenchymal Transition and Stem Cell Characteristics",
+      "journal": "Cancer Research",
+      "year": 2009,
+      "citationCount": 853,
+      "doi": "10.1158/0008-5472.can-08-3441",
+      "sourceUrl": "https://doi.org/10.1158/0008-5472.can-08-3441",
+      "verified": true
+    },
+    {
+      "title": "The energy sensing LKB1–AMPK pathway regulates p27kip1 phosphorylation mediating the decision to enter autophagy or apoptosis",
+      "journal": "Nature Cell Biology",
+      "year": 2007,
+      "citationCount": 846,
+      "doi": "10.1038/ncb1537",
+      "sourceUrl": "https://doi.org/10.1038/ncb1537",
+      "verified": true
+    },
+    {
+      "title": "Phosphorylation and inactivation of glycogen synthase kinase 3 by protein kinase A",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2000,
+      "citationCount": 833,
+      "doi": "10.1073/pnas.220413597",
+      "sourceUrl": "https://doi.org/10.1073/pnas.220413597",
+      "verified": true
+    },
+    {
+      "title": "Patterns of genomic loss of heterozygosity predict homologous recombination repair defects in epithelial ovarian cancer",
+      "journal": "British Journal of Cancer",
+      "year": 2012,
+      "citationCount": 830,
+      "doi": "10.1038/bjc.2012.451",
+      "sourceUrl": "https://doi.org/10.1038/bjc.2012.451",
+      "verified": true
+    },
+    {
+      "title": "The Cancer Genome Atlas Comprehensive Molecular Characterization of Renal Cell Carcinoma",
+      "journal": "Cell Reports",
+      "year": 2018,
+      "citationCount": 776,
+      "doi": "10.1016/j.celrep.2018.03.075",
+      "sourceUrl": "https://doi.org/10.1016/j.celrep.2018.03.075",
+      "verified": true
+    },
+    {
+      "title": "The Cancer Genome Atlas Comprehensive Molecular Characterization of Renal Cell Carcinoma",
+      "journal": "Cell Reports",
+      "year": 2018,
+      "citationCount": 771,
+      "doi": "10.1016/j.celrep.2018.06.032",
+      "sourceUrl": "https://doi.org/10.1016/j.celrep.2018.06.032",
+      "verified": true
+    },
+    {
+      "title": "Reverse phase protein array: validation of a novel proteomic technology and utility for analysis of primary leukemia specimens and hematopoietic stem cells",
+      "journal": "Molecular Cancer Therapeutics",
+      "year": 2006,
+      "citationCount": 738,
+      "doi": "10.1158/1535-7163.mct-06-0334",
+      "sourceUrl": "https://doi.org/10.1158/1535-7163.mct-06-0334",
+      "verified": true
+    },
+    {
+      "title": "Derailed endocytosis: an emerging feature of cancer",
+      "journal": "Nature reviews. Cancer",
+      "year": 2008,
+      "citationCount": 721,
+      "doi": "10.1038/nrc2521",
+      "sourceUrl": "https://doi.org/10.1038/nrc2521",
+      "verified": true
+    },
+    {
+      "title": "ATM signals to TSC2 in the cytoplasm to regulate mTORC1 in response to ROS",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2010,
+      "citationCount": 706,
+      "doi": "10.1073/pnas.0913860107",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0913860107",
+      "verified": true
+    },
+    {
+      "title": "Comparative Molecular Analysis of Gastrointestinal Adenocarcinomas",
+      "journal": "Cancer Cell",
+      "year": 2018,
+      "citationCount": 698,
+      "doi": "10.1016/j.ccell.2018.03.010",
+      "sourceUrl": "https://doi.org/10.1016/j.ccell.2018.03.010",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:13.000Z",
+  "openalexId": "https://openalex.org/A5005221518"
 }

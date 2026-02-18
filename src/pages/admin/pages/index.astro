@@ -1,0 +1,225 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import { prisma } from "../../../lib/prisma";
+import { requireSuperAdmin } from "../../../lib/rbac";
+
+export const prerender = false;
+
+// Check if admin key is configured
+if (!import.meta.env.ADMIN_ACCESS_KEY) {
+    return new Response("ADMIN_ACCESS_KEY not configured", { status: 500 });
+}
+
+if (!requireSuperAdmin(Astro.request)) {
+    return Astro.redirect("/login");
+}
+const pages = await prisma.contentPage.findMany({
+    orderBy: { updatedAt: "desc" },
+});
+
+const adminKey = new URL(Astro.request.url).searchParams.get("key");
+const editUrl = (slug?: string) =>
+    `/admin/pages/edit?key=${adminKey}${slug ? `&slug=${slug}` : ""}`;
+---
+
+<Layout title="Manage Pages — MDRPedia Admin">
+    <div class="container admin-dashboard">
+        <header class="admin-header">
+            <div class="admin-header__top">
+                <span class="badge badge--admin">SUPER ADMIN</span>
+                <h1>Content Pages</h1>
+            </div>
+            <div class="admin-actions">
+                <a href={editUrl()} class="btn btn--primary"> + New Page </a>
+                <a href={`/admin?key=${adminKey}`} class="btn btn--outline">
+                    &larr; Dashboard
+                </a>
+            </div>
+        </header>
+
+        <div class="table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Slug</th>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Last Updated</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        pages.length > 0 ? (
+                            pages.map((page) => (
+                                <tr>
+                                    <td>
+                                        <a
+                                            href={`/${page.slug}`}
+                                            target="_blank"
+                                            class="page-slug"
+                                        >
+                                            /{page.slug}
+                                        </a>
+                                    </td>
+                                    <td>{page.title}</td>
+                                    <td>
+                                        <span
+                                            class={`status-badge ${page.published ? "success" : "warning"}`}
+                                        >
+                                            {page.published
+                                                ? "Published"
+                                                : "Draft"}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {page.updatedAt.toLocaleDateString()}
+                                    </td>
+                                    <td>
+                                        <a
+                                            href={editUrl(page.slug)}
+                                            class="btn btn--sm btn--outline"
+                                        >
+                                            Edit
+                                        </a>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colspan="5" class="empty-state">
+                                    No pages found. Create one above.
+                                </td>
+                            </tr>
+                        )
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .admin-dashboard {
+        padding: 40px 20px;
+        max-width: 1200px;
+        color: var(--text-primary);
+    }
+
+    .admin-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+    }
+
+    .admin-header__top {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .badge--admin {
+        background: #ffd700;
+        color: #000;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        align-self: flex-start;
+    }
+
+    h1 {
+        font-family: var(--font-serif);
+        font-size: 2rem;
+        margin: 0;
+    }
+
+    .admin-actions {
+        display: flex;
+        gap: 12px;
+    }
+
+    .table-container {
+        background: var(--bg-card, #14142a);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .admin-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        padding: 16px;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .admin-table th {
+        background: rgba(255, 255, 255, 0.03);
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+
+    .page-slug {
+        font-family: monospace;
+        color: var(--accent-purple);
+    }
+
+    .status-badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .status-badge.success {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+    }
+
+    .status-badge.warning {
+        background: rgba(245, 158, 11, 0.1);
+        color: #f59e0b;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: var(--text-muted);
+    }
+
+    .btn {
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .btn--primary {
+        background: #8b5cf6;
+        color: white;
+        border: none;
+    }
+
+    .btn--outline {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--text-primary);
+    }
+
+    .btn--sm {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+</style>

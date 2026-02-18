@@ -1,0 +1,421 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import { ProfileStatus, Tier } from "@prisma/client";
+import { prisma } from "../../../lib/prisma";
+import { getCollection } from "astro:content";
+import { requireSuperAdmin } from "../../../lib/rbac";
+
+export const prerender = false;
+
+// Check if admin key is configured
+if (!import.meta.env.ADMIN_ACCESS_KEY) {
+    return new Response("ADMIN_ACCESS_KEY not configured", { status: 500 });
+}
+
+if (!requireSuperAdmin(Astro.request)) {
+    return Astro.redirect("/login");
+}
+const url = new URL(Astro.request.url);
+const adminKey = url.searchParams.get("key");
+
+// Handle Import Action
+let successMsg = "";
+let errorMsg = "";
+
+if (Astro.request.method === "POST") {
+    try {
+        const formData = await Astro.request.formData();
+        const slugToImport = formData.get("slug")?.toString();
+
+        if (slugToImport) {
+            // Check if already in DB
+            const exists = await prisma.profile.findUnique({
+                where: { slug: slugToImport },
+            });
+            if (exists) {
+                errorMsg = `Profile ${slugToImport} is already in the database.`;
+            } else {
+                // Import
+                const staticProfiles = await getCollection("doctors");
+                const doc = staticProfiles.find(
+                    (d) => d.id === slugToImport,
+                );
+
+                if (!doc) throw new Error("Static profile not found");
+                const d = doc.data;
+
+                // Create Geography if needed
+                let geoId = null;
+                // Currently Geography model is simple. We might duplicate or reuse?
+                // Let's create a new Geography record for this profile to be safe/simple for now,
+                // or try to find existing. Geography has @unique on country/region/city.
+
+                const geoData = {
+                    country: d.geography.country,
+                    region: d.geography.region || null,
+                    city: d.geography.city || null,
+                };
+
+                // Upsert Geography
+                const geo = await prisma.geography.upsert({
+                    where: {
+                        country_region_city: {
+                            country: geoData.country,
+                            region: geoData.region || "",
+                            city: geoData.city || "",
+                        },
+                    },
+                    update: {},
+                    create: {
+                        country: geoData.country,
+                        region: geoData.region,
+                        city: geoData.city,
+                    },
+                });
+
+                // Map status and tier to Prisma enums
+                const mappedStatus = d.status === 'LIVING' ? ProfileStatus.LIVING : ProfileStatus.HISTORICAL;
+                const mappedTier = d.tier === 'TITAN' ? Tier.TITAN
+                    : d.tier === 'ELITE' ? Tier.ELITE
+                    : d.tier === 'MASTER' ? Tier.MASTER
+                    : Tier.UNRANKED;
+
+                // Create Profile with related data
+                const newProfile = await prisma.profile.create({
+                    data: {
+                        slug: doc.id,
+                        full_name: d.fullName,
+                        title: d.title,
+                        specialty: d.specialty,
+                        sub_specialty: d.subSpecialty,
+                        portrait_url: d.portraitUrl,
+                        biography: d.biography,
+                        status: mappedStatus,
+                        tier: mappedTier,
+                        ranking_score: d.rankingScore,
+                        h_index: d.hIndex || 0,
+                        years_active: d.yearsActive || 0,
+                        verified_surgeries: d.verifiedSurgeries || 0,
+                        npi_number: d.npiNumber,
+                        orcid_id: d.orcidId,
+                        medical_specialty: d.medicalSpecialty || [],
+                        knows_about: d.knowsAbout || [],
+                        ai_summary: d.aiSummary,
+                        geography_id: geo.id,
+                    },
+                });
+
+                // Import Awards if present
+                if (d.awards && d.awards.length > 0) {
+                    await prisma.award.createMany({
+                        data: d.awards.map((a: any) => ({
+                            name: a.name,
+                            issuing_body: a.issuingBody || 'Unknown',
+                            year_awarded: a.year || 2000,
+                            description: a.description,
+                            profile_id: newProfile.id,
+                        }))
+                    });
+                }
+
+                // Import Citations if present
+                if (d.citations && d.citations.length > 0) {
+                    await prisma.citation.createMany({
+                        data: d.citations.map((c: any) => ({
+                            title: c.title,
+                            journal: c.journal,
+                            doi: c.doi,
+                            pubmed_id: c.pubmedId,
+                            publication_date: c.year ? new Date(`${c.year}-01-01`) : null,
+                            citation_count: c.totalCitationCount || 0,
+                            profile_id: newProfile.id,
+                        }))
+                    });
+                }
+
+                // Import Timeline if present
+                if (d.timeline && d.timeline.length > 0) {
+                    await prisma.legacyTimeline.createMany({
+                        data: d.timeline.map((t: any) => ({
+                            year: t.year,
+                            title: t.title,
+                            description: t.description,
+                            profile_id: newProfile.id,
+                        }))
+                    });
+                }
+
+                // Import Techniques if present
+                if (d.techniquesInvented && d.techniquesInvented.length > 0) {
+                    await prisma.technique.createMany({
+                        data: d.techniquesInvented.map((name: string) => ({
+                            name: name,
+                            profile_id: newProfile.id,
+                        }))
+                    });
+                }
+
+                successMsg = `Imported ${d.fullName} to database with ${d.awards?.length || 0} awards, ${d.citations?.length || 0} citations!`;
+            }
+        }
+    } catch (e: unknown) {
+        errorMsg = e instanceof Error ? e.message : "Import failed";
+    }
+}
+
+// Fetch Data
+const dbProfiles = await prisma.profile.findMany({
+    orderBy: { updatedAt: "desc" },
+    select: {
+        id: true,
+        slug: true,
+        full_name: true,
+        tier: true,
+        updatedAt: true,
+    },
+});
+
+const staticProfiles = await getCollection("doctors");
+
+// Identify unimported profiles
+const dbSlugs = new Set(dbProfiles.map((p) => p.slug));
+const unimported = staticProfiles.filter((p) => !dbSlugs.has(p.id));
+---
+
+<Layout title="Manage Doctors — MDRPedia">
+    <div class="container admin-dashboard">
+        <header class="admin-header">
+            <div>
+                <span class="badge badge--admin">SUPER ADMIN</span>
+                <h1>Doctor Database</h1>
+            </div>
+            <div class="actions">
+                <a href={`/admin?key=${adminKey}`} class="btn btn--outline"
+                    >&larr; Dashboard</a
+                >
+            </div>
+        </header>
+
+        {successMsg && <div class="alert success">{successMsg}</div>}
+        {errorMsg && <div class="alert error">{errorMsg}</div>}
+
+        <div class="grid-layout">
+            <!-- Database Profiles -->
+            <div class="col">
+                <h2>Editable Profiles (In DB)</h2>
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Tier</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                dbProfiles.map((p) => (
+                                    <tr>
+                                        <td>
+                                            <div class="name">
+                                                {p.full_name}
+                                            </div>
+                                            <small class="slug">
+                                                /{p.slug}
+                                            </small>
+                                        </td>
+                                        <td>{p.tier}</td>
+                                        <td>
+                                            <a
+                                                href={`/admin/doctors/${p.slug}?key=${adminKey}`}
+                                                class="btn btn--sm btn--primary"
+                                            >
+                                                Edit
+                                            </a>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                            {
+                                dbProfiles.length === 0 && (
+                                    <tr>
+                                        <td colspan="3" class="empty">
+                                            No profiles in database. Import one
+                                            below.
+                                        </td>
+                                    </tr>
+                                )
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Static Import -->
+            <div class="col">
+                <h2>Static Files (Available to Import)</h2>
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Import</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                unimported.map((p) => (
+                                    <tr>
+                                        <td>
+                                            <div class="name">
+                                                {p.data.fullName}
+                                            </div>
+                                            <small class="slug">/{p.id}</small>
+                                        </td>
+                                        <td>
+                                            <form method="POST">
+                                                <input
+                                                    type="hidden"
+                                                    name="slug"
+                                                    value={p.id}
+                                                />
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn--sm btn--outline"
+                                                >
+                                                    Import
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                            {
+                                unimported.length === 0 && (
+                                    <tr>
+                                        <td colspan="2" class="empty">
+                                            All static profiles imported!
+                                        </td>
+                                    </tr>
+                                )
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .admin-dashboard {
+        padding: 40px 20px;
+        max-width: 1400px;
+        color: var(--text-primary);
+    }
+    .admin-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+    }
+    h1 {
+        margin: 0;
+        font-family: var(--font-serif);
+    }
+    .badge--admin {
+        background: #ffd700;
+        color: #000;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: bold;
+        font-size: 0.7rem;
+    }
+
+    .grid-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+    @media (max-width: 900px) {
+        .grid-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .table-container {
+        background: var(--bg-card, #14142a);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        overflow: hidden;
+        max-height: 800px;
+        overflow-y: auto;
+    }
+    .admin-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .admin-table th,
+    .admin-table td {
+        padding: 12px 16px;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .admin-table th {
+        background: rgba(255, 255, 255, 0.02);
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .slug {
+        font-family: monospace;
+        opacity: 0.5;
+        font-size: 0.8em;
+    }
+
+    .btn {
+        text-decoration: none;
+        display: inline-flex;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        border: none;
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+    .btn--primary {
+        background: #8b5cf6;
+        color: white;
+    }
+    .btn--outline {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--text-primary);
+    }
+    .btn--sm {
+        font-size: 0.8rem;
+        padding: 4px 10px;
+    }
+
+    .alert {
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+    }
+    .success {
+        background: rgba(16, 185, 129, 0.15);
+        color: #10b981;
+        border: 1px solid #10b981;
+    }
+    .error {
+        background: rgba(239, 68, 68, 0.15);
+        color: #ef4444;
+        border: 1px solid #ef4444;
+    }
+    .empty {
+        text-align: center;
+        color: var(--text-muted);
+        padding: 20px;
+    }
+</style>

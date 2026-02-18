@@ -1,31 +1,493 @@
 {
   "fullName": "Gary Ruvkun",
   "slug": "gary-ruvkun",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "microRNA Biology",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23001a4d\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%2300aaff\" text-anchor=\"middle\" dy=\".3em\">GR</text></svg>",
-  "tier": "ELITE",
-  "rankingScore": 34,
-  "hIndex": 137,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 175,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 17500,
+  "livesSaved": 0,
+  "biography": "Gary Bruce Ruvkun is an American molecular biologist at Massachusetts General Hospital and professor of genetics at Harvard Medical School in Boston.",
+  "aiSummary": "Gary Ruvkun is a microrna biology specialist with an H-index of 175 at Harvard Medical School (Faculty). Has been published in Nature, Cell, Science. Based in United States.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/2/24/Gary_Ruvkun%2C_2024_Nobel_Prize_Laureate_in_Medicine_3_%28cropped%29.jpg",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Harvard Medical School"
-    }
-  ],
-  "bio": "Gary Ruvkun is a pioneer in microRNA Biology at Harvard Medical School, USA. With a D-Index of 137 and over 175,000 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Harvard Medical School",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "microRNA Biology"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "The 21-nucleotide let-7 RNA regulates developmental timing in Caenorhabditis elegans",
+      "journal": "Nature",
+      "year": 2000,
+      "citationCount": 4923,
+      "doi": "10.1038/35002607",
+      "sourceUrl": "https://doi.org/10.1038/35002607",
+      "verified": true
+    },
+    {
+      "title": "Posttranscriptional regulation of the heterochronic gene lin-14 by lin-4 mediates temporal pattern formation in C. elegans",
+      "journal": "Cell",
+      "year": 1993,
+      "citationCount": 4204,
+      "doi": "10.1016/0092-8674(93)90530-4",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(93)90530-4",
+      "verified": true
+    },
+    {
+      "title": "Conservation of the sequence and temporal expression of let-7 heterochronic regulatory RNA",
+      "journal": "Nature",
+      "year": 2000,
+      "citationCount": 2531,
+      "doi": "10.1038/35040556",
+      "sourceUrl": "https://doi.org/10.1038/35040556",
+      "verified": true
+    },
+    {
+      "title": "<i>daf-2</i> , an Insulin Receptor-Like Gene That Regulates Longevity and Diapause in <i>Caenorhabditis elegans</i>",
+      "journal": "Science",
+      "year": 1997,
+      "citationCount": 2247,
+      "doi": "10.1126/science.277.5328.942",
+      "sourceUrl": "https://doi.org/10.1126/science.277.5328.942",
+      "verified": true
+    },
+    {
+      "title": "The Fork head transcription factor DAF-16 transduces insulin-like metabolic and longevity signals in C. elegans",
+      "journal": "Nature",
+      "year": 1997,
+      "citationCount": 1934,
+      "doi": "10.1038/40194",
+      "sourceUrl": "https://doi.org/10.1038/40194",
+      "verified": true
+    },
+    {
+      "title": "A uniform system for microRNA annotation",
+      "journal": "RNA",
+      "year": 2003,
+      "citationCount": 1883,
+      "doi": "10.1261/rna.2183803",
+      "sourceUrl": "https://doi.org/10.1261/rna.2183803",
+      "verified": true
+    },
+    {
+      "title": "Genes and Mechanisms Related to RNA Interference Regulate Expression of the Small Temporal RNAs that Control C. elegans Developmental Timing",
+      "journal": "Cell",
+      "year": 2001,
+      "citationCount": 1858,
+      "doi": "10.1016/s0092-8674(01)00431-7",
+      "sourceUrl": "https://doi.org/10.1016/s0092-8674(01)00431-7",
+      "verified": true
+    },
+    {
+      "title": "Genome-wide RNAi analysis of Caenorhabditis elegans fat regulatory genes",
+      "journal": "Nature",
+      "year": 2003,
+      "citationCount": 982,
+      "doi": "10.1038/nature01279",
+      "sourceUrl": "https://doi.org/10.1038/nature01279",
+      "verified": true
+    },
+    {
+      "title": "Physical and genetic characterization of symbiotic and auxotrophic mutants of Rhizobium meliloti induced by transposon Tn5 mutagenesis",
+      "journal": "Journal of Bacteriology",
+      "year": 1982,
+      "citationCount": 969,
+      "doi": "10.1128/jb.149.1.114-122.1982",
+      "sourceUrl": "https://doi.org/10.1128/jb.149.1.114-122.1982",
+      "verified": true
+    },
+    {
+      "title": "A systematic RNAi screen identifies a critical role for mitochondria in C. elegans longevity",
+      "journal": "Nature Genetics",
+      "year": 2002,
+      "citationCount": 959,
+      "doi": "10.1038/ng1056",
+      "sourceUrl": "https://doi.org/10.1038/ng1056",
+      "verified": true
+    },
+    {
+      "title": "A phosphatidylinositol-3-OH kinase family member regulating longevity and diapause in Caenorhabditis elegans",
+      "journal": "Nature",
+      "year": 1996,
+      "citationCount": 889,
+      "doi": "10.1038/382536a0",
+      "sourceUrl": "https://doi.org/10.1038/382536a0",
+      "verified": true
+    },
+    {
+      "title": "The POU domain: a large conserved region in the mammalian pit-1, oct-1, oct-2, and Caenorhabditis elegans unc-86 gene products.",
+      "journal": "Genes & Development",
+      "year": 1988,
+      "citationCount": 756,
+      "doi": "10.1101/gad.2.12a.1513",
+      "sourceUrl": "https://doi.org/10.1101/gad.2.12a.1513",
+      "verified": true
+    },
+    {
+      "title": "The lin-41 RBCC Gene Acts in the C. elegans Heterochronic Pathway between the let-7 Regulatory RNA and the LIN-29 Transcription Factor",
+      "journal": "Molecular Cell",
+      "year": 2000,
+      "citationCount": 752,
+      "doi": "10.1016/s1097-2765(00)80245-2",
+      "sourceUrl": "https://doi.org/10.1016/s1097-2765(00)80245-2",
+      "verified": true
+    },
+    {
+      "title": "<i>Caenorhabditis elegans</i> Akt/PKB transduces insulin receptor-like signals from AGE-1 PI3 kinase to the DAF-16 transcription factor",
+      "journal": "Genes & Development",
+      "year": 1998,
+      "citationCount": 709,
+      "doi": "10.1101/gad.12.16.2488",
+      "sourceUrl": "https://doi.org/10.1101/gad.12.16.2488",
+      "verified": true
+    },
+    {
+      "title": "A general method for site-directed mutagenesis in prokaryotes",
+      "journal": "Nature",
+      "year": 1981,
+      "citationCount": 696,
+      "doi": "10.1038/289085a0",
+      "sourceUrl": "https://doi.org/10.1038/289085a0",
+      "verified": true
+    },
+    {
+      "title": "Regulation of DAF-2 receptor signaling by human insulin and <i>ins-1</i>, a member of the unusually large and diverse <i>C. elegans</i> insulin gene family",
+      "journal": "Genes & Development",
+      "year": 2001,
+      "citationCount": 674,
+      "doi": "10.1101/gad.867301",
+      "sourceUrl": "https://doi.org/10.1101/gad.867301",
+      "verified": true
+    },
+    {
+      "title": "DAF-16 Target Genes That Control <i>C. elegans</i> Life-Span and Metabolism",
+      "journal": "Science",
+      "year": 2003,
+      "citationCount": 673,
+      "doi": "10.1126/science.1083614",
+      "sourceUrl": "https://doi.org/10.1126/science.1083614",
+      "verified": true
+    },
+    {
+      "title": "Regulation of <i>C. elegans</i> Life-Span by Insulinlike Signaling in the Nervous System",
+      "journal": "Science",
+      "year": 2000,
+      "citationCount": 673,
+      "doi": "10.1126/science.290.5489.147",
+      "sourceUrl": "https://doi.org/10.1126/science.290.5489.147",
+      "verified": true
+    },
+    {
+      "title": "High-Resolution Mapping Reveals a Conserved, Widespread, Dynamic mRNA Methylation Program in Yeast Meiosis",
+      "journal": "Cell",
+      "year": 2013,
+      "citationCount": 642,
+      "doi": "10.1016/j.cell.2013.10.047",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2013.10.047",
+      "verified": true
+    },
+    {
+      "title": "Food and metabolic signalling defects in a Caenorhabditis elegans serotonin-synthesis mutant",
+      "journal": "Nature",
+      "year": 2000,
+      "citationCount": 634,
+      "doi": "10.1038/35000609",
+      "sourceUrl": "https://doi.org/10.1038/35000609",
+      "verified": true
+    },
+    {
+      "title": "Long-Lived <i>C. elegans daf-2</i> Mutants Are Resistant to Bacterial Pathogens",
+      "journal": "Science",
+      "year": 2003,
+      "citationCount": 615,
+      "doi": "10.1126/science.1080147",
+      "sourceUrl": "https://doi.org/10.1126/science.1080147",
+      "verified": true
+    },
+    {
+      "title": "The unc-86 gene product couples cell lineage and cell identity in C. elegans",
+      "journal": "Cell",
+      "year": 1990,
+      "citationCount": 603,
+      "doi": "10.1016/0092-8674(90)90493-x",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(90)90493-x",
+      "verified": true
+    },
+    {
+      "title": "A conserved siRNA-degrading RNase negatively regulates RNA interference in C. elegans",
+      "journal": "Nature",
+      "year": 2004,
+      "citationCount": 594,
+      "doi": "10.1038/nature02302",
+      "sourceUrl": "https://doi.org/10.1038/nature02302",
+      "verified": true
+    },
+    {
+      "title": "Identification of many microRNAs that copurify with polyribosomes in mammalian neurons",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2003,
+      "citationCount": 564,
+      "doi": "10.1073/pnas.2333854100",
+      "sourceUrl": "https://doi.org/10.1073/pnas.2333854100",
+      "verified": true
+    },
+    {
+      "title": "A systematic RNAi screen for longevity genes in <i>C. elegans</i>",
+      "journal": "Genes & Development",
+      "year": 2005,
+      "citationCount": 510,
+      "doi": "10.1101/gad.1308205",
+      "sourceUrl": "https://doi.org/10.1101/gad.1308205",
+      "verified": true
+    },
+    {
+      "title": "Regulation of C. elegans DAF-16 and its human ortholog FKHRL1 by the daf-2 insulin-like signaling pathway",
+      "journal": "Current Biology",
+      "year": 2001,
+      "citationCount": 505,
+      "doi": "10.1016/s0960-9822(01)00595-4",
+      "sourceUrl": "https://doi.org/10.1016/s0960-9822(01)00595-4",
+      "verified": true
+    },
+    {
+      "title": "Lifespan Regulation by Evolutionarily Conserved Genes Essential for Viability",
+      "journal": "PLoS Genetics",
+      "year": 2007,
+      "citationCount": 474,
+      "doi": "10.1371/journal.pgen.0030056",
+      "sourceUrl": "https://doi.org/10.1371/journal.pgen.0030056",
+      "verified": true
+    },
+    {
+      "title": "C. elegans Major Fats Are Stored in Vesicles Distinct from Lysosome-Related Organelles",
+      "journal": "Cell Metabolism",
+      "year": 2009,
+      "citationCount": 469,
+      "doi": "10.1016/j.cmet.2009.10.002",
+      "sourceUrl": "https://doi.org/10.1016/j.cmet.2009.10.002",
+      "verified": true
+    },
+    {
+      "title": "The C. elegans PTEN Homolog, DAF-18, Acts in the Insulin Receptor-like Metabolic Signaling Pathway",
+      "journal": "Molecular Cell",
+      "year": 1998,
+      "citationCount": 460,
+      "doi": "10.1016/s1097-2765(00)80303-2",
+      "sourceUrl": "https://doi.org/10.1016/s1097-2765(00)80303-2",
+      "verified": true
+    },
+    {
+      "title": "The Genetics of Aging",
+      "journal": "Annual Review of Genomics and Human Genetics",
+      "year": 2001,
+      "citationCount": 446,
+      "doi": "10.1146/annurev.genom.2.1.435",
+      "sourceUrl": "https://doi.org/10.1146/annurev.genom.2.1.435",
+      "verified": true
+    },
+    {
+      "title": "Rictor/TORC2 regulates fat metabolism, feeding, growth, and life span in <i>Caenorhabditis elegans</i>",
+      "journal": "Genes & Development",
+      "year": 2009,
+      "citationCount": 432,
+      "doi": "10.1101/gad.1775409",
+      "sourceUrl": "https://doi.org/10.1101/gad.1775409",
+      "verified": true
+    },
+    {
+      "title": "MicroRNA-responsive 'sensor' transgenes uncover Hox-like and other developmentally regulated patterns of vertebrate microRNA expression",
+      "journal": "Nature Genetics",
+      "year": 2004,
+      "citationCount": 430,
+      "doi": "10.1038/ng1421",
+      "sourceUrl": "https://doi.org/10.1038/ng1421",
+      "verified": true
+    },
+    {
+      "title": "A PDK1 homolog is necessary and sufficient to transduce AGE-1 PI3 kinase signals that regulate diapause in Caenorhabditis elegans",
+      "journal": "Genes & Development",
+      "year": 1999,
+      "citationCount": 426,
+      "doi": "10.1101/gad.13.11.1438",
+      "sourceUrl": "https://doi.org/10.1101/gad.13.11.1438",
+      "verified": true
+    },
+    {
+      "title": "<i>Caenorhabditis elegans</i> responses to bacteria from its natural habitats",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2016,
+      "citationCount": 416,
+      "doi": "10.1073/pnas.1607183113",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1607183113",
+      "verified": true
+    },
+    {
+      "title": "Functional Proteomics Reveals the Biochemical Niche of C. elegans DCR-1 in Multiple Small-RNA-Mediated Pathways",
+      "journal": "Cell",
+      "year": 2006,
+      "citationCount": 405,
+      "doi": "10.1016/j.cell.2005.11.036",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2005.11.036",
+      "verified": true
+    },
+    {
+      "title": "Fat Metabolism Links Germline Stem Cells and Longevity in <i>C. elegans</i>",
+      "journal": "Science",
+      "year": 2008,
+      "citationCount": 404,
+      "doi": "10.1126/science.1162011",
+      "sourceUrl": "https://doi.org/10.1126/science.1162011",
+      "verified": true
+    },
+    {
+      "title": "Inactivation of Conserved C. elegans Genes Engages Pathogen- and Xenobiotic-Associated Defenses",
+      "journal": "Cell",
+      "year": 2012,
+      "citationCount": 404,
+      "doi": "10.1016/j.cell.2012.02.050",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2012.02.050",
+      "verified": true
+    },
+    {
+      "title": "Systematic analysis of genes required for synapse structure and function",
+      "journal": "Nature",
+      "year": 2005,
+      "citationCount": 403,
+      "doi": "10.1038/nature03809",
+      "sourceUrl": "https://doi.org/10.1038/nature03809",
+      "verified": true
+    },
+    {
+      "title": "daf-2, daf-16 and daf-23: genetically interacting genes controlling Dauer formation in Caenorhabditis elegans.",
+      "journal": "Genetics",
+      "year": 1994,
+      "citationCount": 385,
+      "doi": "10.1093/genetics/137.1.107",
+      "sourceUrl": "https://doi.org/10.1093/genetics/137.1.107",
+      "verified": true
+    },
+    {
+      "title": "<i>daf-28</i> encodes a <i>C. elegans</i> insulin superfamily member that is regulated by environmental cues and acts in the DAF-2 signaling pathway",
+      "journal": "Genes & Development",
+      "year": 2003,
+      "citationCount": 378,
+      "doi": "10.1101/gad.1066503",
+      "sourceUrl": "https://doi.org/10.1101/gad.1066503",
+      "verified": true
+    },
+    {
+      "title": "Interspecies homology of nitrogenase genes.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1980,
+      "citationCount": 369,
+      "doi": "10.1073/pnas.77.1.191",
+      "sourceUrl": "https://doi.org/10.1073/pnas.77.1.191",
+      "verified": true
+    },
+    {
+      "title": "Glimpses of a Tiny RNA World",
+      "journal": "Science",
+      "year": 2001,
+      "citationCount": 357,
+      "doi": "10.1126/science.1066315",
+      "sourceUrl": "https://doi.org/10.1126/science.1066315",
+      "verified": true
+    },
+    {
+      "title": "An Insulin-like Signaling Pathway Affects Both Longevity and Reproduction in Caenorhabditis elegans",
+      "journal": "Genetics",
+      "year": 1998,
+      "citationCount": 356,
+      "doi": "10.1093/genetics/148.2.703",
+      "sourceUrl": "https://doi.org/10.1093/genetics/148.2.703",
+      "verified": true
+    },
+    {
+      "title": "Control of Developmental Timing by MicroRNAs and Their Targets",
+      "journal": "Annual Review of Cell and Developmental Biology",
+      "year": 2002,
+      "citationCount": 337,
+      "doi": "10.1146/annurev.cellbio.18.012502.105832",
+      "sourceUrl": "https://doi.org/10.1146/annurev.cellbio.18.012502.105832",
+      "verified": true
+    },
+    {
+      "title": "The C. elegans cell lineage and differentiation gene unc-86 encodes a protein with a homeodomain and extended similarity to transcription factors",
+      "journal": "Cell",
+      "year": 1988,
+      "citationCount": 333,
+      "doi": "10.1016/0092-8674(88)90132-8",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(88)90132-8",
+      "verified": true
+    },
+    {
+      "title": "MXL-3 and HLH-30 transcriptionally link lipolysis and autophagy to nutrient availability",
+      "journal": "Nature Cell Biology",
+      "year": 2013,
+      "citationCount": 326,
+      "doi": "10.1038/ncb2741",
+      "sourceUrl": "https://doi.org/10.1038/ncb2741",
+      "verified": true
+    },
+    {
+      "title": "Functional Genomic Analysis of C. elegans Molting",
+      "journal": "PLoS Biology",
+      "year": 2005,
+      "citationCount": 316,
+      "doi": "10.1371/journal.pbio.0030312",
+      "sourceUrl": "https://doi.org/10.1371/journal.pbio.0030312",
+      "verified": true
+    },
+    {
+      "title": "Caenorhabditis elegans pathways that surveil and defend mitochondria",
+      "journal": "Nature",
+      "year": 2014,
+      "citationCount": 311,
+      "doi": "10.1038/nature13204",
+      "sourceUrl": "https://doi.org/10.1038/nature13204",
+      "verified": true
+    },
+    {
+      "title": "The Taxonomy of Developmental Control in <i>Caenorhabditis elegans</i>",
+      "journal": "Science",
+      "year": 1998,
+      "citationCount": 304,
+      "doi": "10.1126/science.282.5396.2033",
+      "sourceUrl": "https://doi.org/10.1126/science.282.5396.2033",
+      "verified": true
+    },
+    {
+      "title": "Computational and Experimental Identification of C. elegans microRNAs",
+      "journal": "Molecular Cell",
+      "year": 2003,
+      "citationCount": 284,
+      "doi": "10.1016/s1097-2765(03)00153-9",
+      "sourceUrl": "https://doi.org/10.1016/s1097-2765(03)00153-9",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:15.000Z",
+  "openalexId": "https://openalex.org/A5066998461"
 }

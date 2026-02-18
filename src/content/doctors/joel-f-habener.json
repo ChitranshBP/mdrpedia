@@ -1,31 +1,492 @@
 {
   "fullName": "Joel F. Habener",
   "slug": "joel-f-habener",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Glucagon Gene Discovery",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23001a4d\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%2300aaff\" text-anchor=\"middle\" dy=\".3em\">JF</text></svg>",
-  "tier": "ELITE",
-  "rankingScore": 33,
-  "hIndex": 133,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 125,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 12500,
+  "livesSaved": 0,
+  "biography": "Joel Francis Habener was an American endocrinologist who was professor of medicine at Harvard Medical School and an associate physician at the Massachusetts General Hospital.",
+  "aiSummary": "Joel F. Habener is a glucagon gene discovery specialist with an H-index of 125 at Harvard Medical School (Faculty). Has been published in Nature Genetics, Proceedings of the National Academy of Sciences, Science. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Harvard Medical School"
-    }
-  ],
-  "bio": "Joel F. Habener is a pioneer in Glucagon Gene Discovery at Harvard Medical School, USA. With a D-Index of 133 and over 125,000 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Harvard Medical School",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Glucagon Gene Discovery"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Glucagon-like peptide 1 (GLP-1)",
+      "journal": "Molecular Metabolism",
+      "year": 2019,
+      "citationCount": 1604,
+      "doi": "10.1016/j.molmet.2019.09.010",
+      "sourceUrl": "https://doi.org/10.1016/j.molmet.2019.09.010",
+      "verified": true
+    },
+    {
+      "title": "Exendin-4 stimulates both beta-cell replication and neogenesis, resulting in increased beta-cell mass and improved glucose tolerance in diabetic rats.",
+      "journal": "Diabetes",
+      "year": 1999,
+      "citationCount": 1207,
+      "doi": "10.2337/diabetes.48.12.2270",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.48.12.2270",
+      "verified": true
+    },
+    {
+      "title": "Pancreatic agenesis attributable to a single nucleotide deletion in the human IPF1 gene coding sequence",
+      "journal": "Nature Genetics",
+      "year": 1997,
+      "citationCount": 1112,
+      "doi": "10.1038/ng0197-106",
+      "sourceUrl": "https://doi.org/10.1038/ng0197-106",
+      "verified": true
+    },
+    {
+      "title": "The Glucagon-Like Peptides",
+      "journal": "Endocrine Reviews",
+      "year": 1999,
+      "citationCount": 1016,
+      "doi": "10.1210/edrv.20.6.0385",
+      "sourceUrl": "https://doi.org/10.1210/edrv.20.6.0385",
+      "verified": true
+    },
+    {
+      "title": "Early-onset type-ll diabetes mellitus (MODY4) linked to IPF1",
+      "journal": "Nature Genetics",
+      "year": 1997,
+      "citationCount": 884,
+      "doi": "10.1038/ng1097-138",
+      "sourceUrl": "https://doi.org/10.1038/ng1097-138",
+      "verified": true
+    },
+    {
+      "title": "Glucagon-like peptide I stimulates insulin gene expression and increases cyclic AMP levels in a rat islet cell line.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1987,
+      "citationCount": 871,
+      "doi": "10.1073/pnas.84.10.3434",
+      "sourceUrl": "https://doi.org/10.1073/pnas.84.10.3434",
+      "verified": true
+    },
+    {
+      "title": "Insulinotropin: glucagon-like peptide I (7-37) co-encoded in the glucagon gene is a potent stimulator of insulin release in the perfused rat pancreas.",
+      "journal": "Journal of Clinical Investigation",
+      "year": 1987,
+      "citationCount": 857,
+      "doi": "10.1172/jci112855",
+      "sourceUrl": "https://doi.org/10.1172/jci112855",
+      "verified": true
+    },
+    {
+      "title": "Multipotential Nestin-Positive Stem Cells Isolated From Adult Pancreatic Islets Differentiate Ex Vivo Into Pancreatic Endocrine, Exocrine, and Hepatic Phenotypes",
+      "journal": "Diabetes",
+      "year": 2001,
+      "citationCount": 787,
+      "doi": "10.2337/diabetes.50.3.521",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.50.3.521",
+      "verified": true
+    },
+    {
+      "title": "Cyclic AMP-Responsive DNA-Binding Protein: Structure Based on a Cloned Placental cDNA",
+      "journal": "Science",
+      "year": 1988,
+      "citationCount": 756,
+      "doi": "10.1126/science.2974179",
+      "sourceUrl": "https://doi.org/10.1126/science.2974179",
+      "verified": true
+    },
+    {
+      "title": "Preproglucagon gene expression in pancreas and intestine diversifies at the level of post-translational processing.",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1986,
+      "citationCount": 708,
+      "doi": "10.1016/s0021-9258(18)67324-7",
+      "sourceUrl": "https://doi.org/10.1016/s0021-9258(18)67324-7",
+      "verified": true
+    },
+    {
+      "title": "Pancreatic beta-cells are rendered glucose-competent by the insulinotropic hormone glucagon-like peptide-1(7-37)",
+      "journal": "Nature",
+      "year": 1993,
+      "citationCount": 586,
+      "doi": "10.1038/361362a0",
+      "sourceUrl": "https://doi.org/10.1038/361362a0",
+      "verified": true
+    },
+    {
+      "title": "Tissue distribution of messenger ribonucleic acid encoding the rat glucagon-like peptide-1 receptor.",
+      "journal": "Endocrinology",
+      "year": 1996,
+      "citationCount": 585,
+      "doi": "10.1210/endo.137.7.8770921",
+      "sourceUrl": "https://doi.org/10.1210/endo.137.7.8770921",
+      "verified": true
+    },
+    {
+      "title": "Insulinotropic glucagon-like peptide 1 agonists stimulate expression of homeodomain protein IDX-1 and increase islet size in mouse pancreas.",
+      "journal": "Diabetes",
+      "year": 2000,
+      "citationCount": 578,
+      "doi": "10.2337/diabetes.49.5.741",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.49.5.741",
+      "verified": true
+    },
+    {
+      "title": "Angiotensinogen gene is expressed and differentially regulated in multiple tissues of the rat.",
+      "journal": "Journal of Clinical Investigation",
+      "year": 1986,
+      "citationCount": 479,
+      "doi": "10.1172/jci112566",
+      "sourceUrl": "https://doi.org/10.1172/jci112566",
+      "verified": true
+    },
+    {
+      "title": "Cyclic Adenosine 3′,5′-Monophosphate Response Element Binding Protein (CREB) and Related Transcription-Activating Deoxyribonucleic Acid-Binding Proteins*",
+      "journal": "Endocrine Reviews",
+      "year": 1993,
+      "citationCount": 465,
+      "doi": "10.1210/edrv-14-3-269",
+      "sourceUrl": "https://doi.org/10.1210/edrv-14-3-269",
+      "verified": true
+    },
+    {
+      "title": "Ubiquitous Expression of the Calcitonin-I Gene in Multiple Tissues in Response to Sepsis<sup>1</sup>",
+      "journal": "The Journal of Clinical Endocrinology & Metabolism",
+      "year": 2001,
+      "citationCount": 438,
+      "doi": "10.1210/jcem.86.1.7089",
+      "sourceUrl": "https://doi.org/10.1210/jcem.86.1.7089",
+      "verified": true
+    },
+    {
+      "title": "IDX-1: a new homeodomain transcription factor expressed in rat pancreatic islets and duodenum that transactivates the somatostatin gene.",
+      "journal": "The EMBO Journal",
+      "year": 1994,
+      "citationCount": 430,
+      "doi": "10.1002/j.1460-2075.1994.tb06363.x",
+      "sourceUrl": "https://doi.org/10.1002/j.1460-2075.1994.tb06363.x",
+      "verified": true
+    },
+    {
+      "title": "The adipoinsular axis: effects of leptin on pancreatic β-cells",
+      "journal": "American Journal of Physiology-Endocrinology and Metabolism",
+      "year": 2000,
+      "citationCount": 412,
+      "doi": "10.1152/ajpendo.2000.278.1.e1",
+      "sourceUrl": "https://doi.org/10.1152/ajpendo.2000.278.1.e1",
+      "verified": true
+    },
+    {
+      "title": "Minireview: Transcriptional Regulation in Pancreatic Development",
+      "journal": "Endocrinology",
+      "year": 2004,
+      "citationCount": 397,
+      "doi": "10.1210/en.2004-1576",
+      "sourceUrl": "https://doi.org/10.1210/en.2004-1576",
+      "verified": true
+    },
+    {
+      "title": "Discovery, characterization, and clinical development of the glucagon-like peptides",
+      "journal": "Journal of Clinical Investigation",
+      "year": 2017,
+      "citationCount": 382,
+      "doi": "10.1172/jci97233",
+      "sourceUrl": "https://doi.org/10.1172/jci97233",
+      "verified": true
+    },
+    {
+      "title": "Leptin Suppression of Insulin Secretion by the Activation of ATP-Sensitive K+ Channels in Pancreatic β-Cells",
+      "journal": "Diabetes",
+      "year": 1997,
+      "citationCount": 378,
+      "doi": "10.2337/diab.46.6.1087",
+      "sourceUrl": "https://doi.org/10.2337/diab.46.6.1087",
+      "verified": true
+    },
+    {
+      "title": "The homeodomain protein IDX-1 increases after an early burst of proliferation during pancreatic regeneration.",
+      "journal": "Diabetes",
+      "year": 1999,
+      "citationCount": 332,
+      "doi": "10.2337/diabetes.48.3.507",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.48.3.507",
+      "verified": true
+    },
+    {
+      "title": "Insulinotropic hormone glucagon-like peptide-I(7-37) stimulation of proinsulin gene expression and proinsulin biosynthesis in insulinoma beta TC-1 cells.",
+      "journal": "Endocrinology",
+      "year": 1992,
+      "citationCount": 327,
+      "doi": "10.1210/endo.130.1.1309325",
+      "sourceUrl": "https://doi.org/10.1210/endo.130.1.1309325",
+      "verified": true
+    },
+    {
+      "title": "Leptin Receptors Expressed on Pancreatic β-Cells",
+      "journal": "Biochemical and Biophysical Research Communications",
+      "year": 1996,
+      "citationCount": 327,
+      "doi": "10.1006/bbrc.1996.1059",
+      "sourceUrl": "https://doi.org/10.1006/bbrc.1996.1059",
+      "verified": true
+    },
+    {
+      "title": "Glucagon-like Peptide-1 Activation of TCF7L2-dependent Wnt Signaling Enhances Pancreatic Beta Cell Proliferation",
+      "journal": "Journal of Biological Chemistry",
+      "year": 2008,
+      "citationCount": 319,
+      "doi": "10.1074/jbc.m706105200",
+      "sourceUrl": "https://doi.org/10.1074/jbc.m706105200",
+      "verified": true
+    },
+    {
+      "title": "Parathyroid hormone: biochemical aspects of biosynthesis, secretion, action, and metabolism.",
+      "journal": "Physiological Reviews",
+      "year": 1984,
+      "citationCount": 314,
+      "doi": "10.1152/physrev.1984.64.3.985",
+      "sourceUrl": "https://doi.org/10.1152/physrev.1984.64.3.985",
+      "verified": true
+    },
+    {
+      "title": "The insulinotropic actions of glucose-dependent insulinotropic polypeptide (GIP) and glucagon-like peptide-1 (7–37) in normal and diabetic subjects",
+      "journal": "Regulatory Peptides",
+      "year": 1994,
+      "citationCount": 310,
+      "doi": "10.1016/0167-0115(94)90136-8",
+      "sourceUrl": "https://doi.org/10.1016/0167-0115(94)90136-8",
+      "verified": true
+    },
+    {
+      "title": "Stress-Induced Binding of the Transcription Factor CHOP to a Novel DNA Control Element",
+      "journal": "Molecular and Cellular Biology",
+      "year": 1996,
+      "citationCount": 308,
+      "doi": "10.1128/mcb.16.4.1479",
+      "sourceUrl": "https://doi.org/10.1128/mcb.16.4.1479",
+      "verified": true
+    },
+    {
+      "title": "Insulinotropic Hormone Glucagon-Like Peptide-1 Differentiation of Human Pancreatic Islet-Derived Progenitor Cells into Insulin-Producing Cells",
+      "journal": "Endocrinology",
+      "year": 2002,
+      "citationCount": 300,
+      "doi": "10.1210/endo.143.8.8973",
+      "sourceUrl": "https://doi.org/10.1210/endo.143.8.8973",
+      "verified": true
+    },
+    {
+      "title": "Insulinotropic Action of Glucagonlike Peptide-I-(7–37) in Diabetic and Nondiabetic Subjects",
+      "journal": "Diabetes Care",
+      "year": 1992,
+      "citationCount": 287,
+      "doi": "10.2337/diacare.15.2.270",
+      "sourceUrl": "https://doi.org/10.2337/diacare.15.2.270",
+      "verified": true
+    },
+    {
+      "title": "Defective mutations in the insulin promoter factor-1 (IPF-1) gene in late-onset type 2 diabetes mellitus",
+      "journal": "Journal of Clinical Investigation",
+      "year": 1999,
+      "citationCount": 284,
+      "doi": "10.1172/jci7469",
+      "sourceUrl": "https://doi.org/10.1172/jci7469",
+      "verified": true
+    },
+    {
+      "title": "Leptin Suppression of Insulin Secretion and Gene Expression in Human Pancreatic Islets: Implications for the Development of Adipogenic Diabetes Mellitus1",
+      "journal": "The Journal of Clinical Endocrinology & Metabolism",
+      "year": 1999,
+      "citationCount": 277,
+      "doi": "10.1210/jcem.84.2.5460",
+      "sourceUrl": "https://doi.org/10.1210/jcem.84.2.5460",
+      "verified": true
+    },
+    {
+      "title": "Glucagonlike Peptide I (7–37) Actions on Endocrine Pancreas",
+      "journal": "Diabetes",
+      "year": 1989,
+      "citationCount": 277,
+      "doi": "10.2337/diab.38.3.338",
+      "sourceUrl": "https://doi.org/10.2337/diab.38.3.338",
+      "verified": true
+    },
+    {
+      "title": "Pancreatic preproglucagon cDNA contains two glucagon-related coding sequences arranged in tandem.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1982,
+      "citationCount": 271,
+      "doi": "10.1073/pnas.79.2.345",
+      "sourceUrl": "https://doi.org/10.1073/pnas.79.2.345",
+      "verified": true
+    },
+    {
+      "title": "Structural determinants for transcriptional activation by cAMP-responsive DNA elements.",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1988,
+      "citationCount": 264,
+      "doi": "10.1016/s0021-9258(19)81381-9",
+      "sourceUrl": "https://doi.org/10.1016/s0021-9258(19)81381-9",
+      "verified": true
+    },
+    {
+      "title": "C/ATF, a member of the activating transcription factor family of DNA-binding proteins, dimerizes with CAAT/enhancer-binding proteins and directs their binding to cAMP response elements.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1993,
+      "citationCount": 263,
+      "doi": "10.1073/pnas.90.10.4679",
+      "sourceUrl": "https://doi.org/10.1073/pnas.90.10.4679",
+      "verified": true
+    },
+    {
+      "title": "CYCLIC AMP SIGNALING AND GENE REGULATION",
+      "journal": "Annual Review of Nutrition",
+      "year": 1998,
+      "citationCount": 259,
+      "doi": "10.1146/annurev.nutr.18.1.353",
+      "sourceUrl": "https://doi.org/10.1146/annurev.nutr.18.1.353",
+      "verified": true
+    },
+    {
+      "title": "No Evidence for Significant Transdifferentiation of Bone Marrow Into Pancreatic β-Cells In Vivo",
+      "journal": "Diabetes",
+      "year": 2004,
+      "citationCount": 249,
+      "doi": "10.2337/diabetes.53.3.616",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.53.3.616",
+      "verified": true
+    },
+    {
+      "title": "Transcriptional regulation of the thyrotropin subunit genes by thyroid hormone.",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1985,
+      "citationCount": 244,
+      "doi": "10.1016/s0021-9258(18)89450-9",
+      "sourceUrl": "https://doi.org/10.1016/s0021-9258(18)89450-9",
+      "verified": true
+    },
+    {
+      "title": "Cloning and characterization of cDNAs encoding human gastrin-releasing peptide.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1984,
+      "citationCount": 241,
+      "doi": "10.1073/pnas.81.18.5699",
+      "sourceUrl": "https://doi.org/10.1073/pnas.81.18.5699",
+      "verified": true
+    },
+    {
+      "title": "Stress-Inducible Transcription Factor CHOP/gadd153 Induces Apoptosis in Mammalian Cells via p38 Kinase-Dependent and -Independent Mechanisms",
+      "journal": "Experimental Cell Research",
+      "year": 2001,
+      "citationCount": 238,
+      "doi": "10.1006/excr.2001.5248",
+      "sourceUrl": "https://doi.org/10.1006/excr.2001.5248",
+      "verified": true
+    },
+    {
+      "title": "Cyclic-AMP-responsive transcriptional activation of CREB-327 involves interdependent phosphorylated subdomains.",
+      "journal": "The EMBO Journal",
+      "year": 1990,
+      "citationCount": 233,
+      "doi": "10.1002/j.1460-2075.1990.tb07896.x",
+      "sourceUrl": "https://doi.org/10.1002/j.1460-2075.1990.tb07896.x",
+      "verified": true
+    },
+    {
+      "title": "Parathyroid Hormone in Human Plasma",
+      "journal": "Journal of Clinical Investigation",
+      "year": 1972,
+      "citationCount": 218,
+      "doi": "10.1172/jci107143",
+      "sourceUrl": "https://doi.org/10.1172/jci107143",
+      "verified": true
+    },
+    {
+      "title": "Cyclic AMP responsiveness of human gonadotropin-alpha gene transcription is directed by a repeated 18-base pair enhancer. Alpha-promoter receptivity to the enhancer confers cell-preferential expression.",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1987,
+      "citationCount": 214,
+      "doi": "10.1016/s0021-9258(18)45332-x",
+      "sourceUrl": "https://doi.org/10.1016/s0021-9258(18)45332-x",
+      "verified": true
+    },
+    {
+      "title": "Nestin-positive progenitor cells derived from adult human pancreatic islets of Langerhans contain side population (SP) cells defined by expression of the ABCG2 (BCRP1) ATP-binding cassette transporter",
+      "journal": "Biochemical and Biophysical Research Communications",
+      "year": 2002,
+      "citationCount": 212,
+      "doi": "10.1016/s0006-291x(02)00275-9",
+      "sourceUrl": "https://doi.org/10.1016/s0006-291x(02)00275-9",
+      "verified": true
+    },
+    {
+      "title": "Glucagon gene sequence. Four of six exons encode separate functional domains of rat pre-proglucagon.",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1984,
+      "citationCount": 209,
+      "doi": "10.1016/s0021-9258(18)89859-3",
+      "sourceUrl": "https://doi.org/10.1016/s0021-9258(18)89859-3",
+      "verified": true
+    },
+    {
+      "title": "Effects of Plasma Calcium Concentration on the Relative Proportion of Hormone and Carboxyl Fragments in Parathyroid Venous Blood*",
+      "journal": "Endocrinology",
+      "year": 1979,
+      "citationCount": 205,
+      "doi": "10.1210/endo-104-6-1778",
+      "sourceUrl": "https://doi.org/10.1210/endo-104-6-1778",
+      "verified": true
+    },
+    {
+      "title": "Leptin inhibits insulin gene transcription and reverses hyperinsulinemia in leptin-deficient <i>ob/ob</i> mice",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1999,
+      "citationCount": 194,
+      "doi": "10.1073/pnas.96.2.674",
+      "sourceUrl": "https://doi.org/10.1073/pnas.96.2.674",
+      "verified": true
+    },
+    {
+      "title": "Cyclic AMP and phorbol ester-stimulated transcription mediated by similar DNA elements that bind distinct proteins.",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1988,
+      "citationCount": 193,
+      "doi": "10.1073/pnas.85.21.7922",
+      "sourceUrl": "https://doi.org/10.1073/pnas.85.21.7922",
+      "verified": true
+    },
+    {
+      "title": "Pre-proparathyroid Hormone: A Direct Translation Product of Parathyroid Messenger RNA",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 1974,
+      "citationCount": 193,
+      "doi": "10.1073/pnas.71.9.3731",
+      "sourceUrl": "https://doi.org/10.1073/pnas.71.9.3731",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:16.000Z",
+  "openalexId": "https://openalex.org/A5034913449"
 }

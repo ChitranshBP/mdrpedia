@@ -1,31 +1,493 @@
 {
   "fullName": "Michel Sadelain",
   "slug": "michel-sadelain",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "CAR-T Engineering",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23001a4d\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%2300aaff\" text-anchor=\"middle\" dy=\".3em\">MS</text></svg>",
-  "tier": "ELITE",
-  "rankingScore": 34,
-  "hIndex": 134,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 142,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 14200,
+  "livesSaved": 0,
+  "biography": "Michel W. Sadelain is a genetic engineer and cell therapist at Columbia University New York, New York. He is the Director of the Columbia Initiative in Cell Engineering and Therapy (CICET). Sadelain also serves as the Director of Columbia University Irving Medical Center's Cancer Cell Therapy Initiative in the Herbert Irving Comprehensive Cancer Center. Sadelain was previously the Steve and Barbara Friedman Chair, founding director of the Center for Cell Engineering, and the head of the Gene Transfer and Gene Expression Laboratory at Memorial Sloan Kettering Cancer Center. He is best known for his major contributions to T cell engineering and chimeric antigen receptor (CAR) therapy, an immunotherapy based on the genetic engineering of a patient's own T cells to treat cancer. Sadelain also pioneered the use of lentiviral vectors to treat severe hemoglobinopathies such as β-thalassemia and sickle cell disease. Sadelain is an elected member of the National Academy of Medicine of France and the American Academy of Arts & Sciences.",
+  "aiSummary": "Michel Sadelain is a car-t engineering specialist with an H-index of 142 at Memorial Sloan Kettering (Faculty). Has been published in Nature Biotechnology, New England Journal of Medicine, Science Translational Medicine. Based in United States.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1e/Michel_Sadelain.jpg",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Memorial Sloan Kettering Cancer Center"
-    }
-  ],
-  "bio": "Michel Sadelain is a pioneer in CAR-T Engineering at Memorial Sloan Kettering Cancer Center, USA. With a D-Index of 134 and over 142,000 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Memorial Sloan Kettering",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "CAR-T Engineering"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Highly efficient neural conversion of human ES and iPS cells by dual inhibition of SMAD signaling",
+      "journal": "Nature Biotechnology",
+      "year": 2009,
+      "citationCount": 3603,
+      "doi": "10.1038/nbt.1529",
+      "sourceUrl": "https://doi.org/10.1038/nbt.1529",
+      "verified": true
+    },
+    {
+      "title": "Long-Term Follow-up of CD19 CAR Therapy in Acute Lymphoblastic Leukemia",
+      "journal": "New England Journal of Medicine",
+      "year": 2018,
+      "citationCount": 2595,
+      "doi": "10.1056/nejmoa1709919",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1709919",
+      "verified": true
+    },
+    {
+      "title": "Efficacy and Toxicity Management of 19-28z CAR T Cell Therapy in B Cell Acute Lymphoblastic Leukemia",
+      "journal": "Science Translational Medicine",
+      "year": 2014,
+      "citationCount": 2459,
+      "doi": "10.1126/scitranslmed.3008226",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.3008226",
+      "verified": true
+    },
+    {
+      "title": "Chimeric Antigen Receptor Therapy",
+      "journal": "New England Journal of Medicine",
+      "year": 2018,
+      "citationCount": 2144,
+      "doi": "10.1056/nejmra1706169",
+      "sourceUrl": "https://doi.org/10.1056/nejmra1706169",
+      "verified": true
+    },
+    {
+      "title": "CD19-Targeted T Cells Rapidly Induce Molecular Remissions in Adults with Chemotherapy-Refractory Acute Lymphoblastic Leukemia",
+      "journal": "Science Translational Medicine",
+      "year": 2013,
+      "citationCount": 2055,
+      "doi": "10.1126/scitranslmed.3005930",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.3005930",
+      "verified": true
+    },
+    {
+      "title": "Targeting a CAR to the TRAC locus with CRISPR/Cas9 enhances tumour rejection",
+      "journal": "Nature",
+      "year": 2017,
+      "citationCount": 1722,
+      "doi": "10.1038/nature21405",
+      "sourceUrl": "https://doi.org/10.1038/nature21405",
+      "verified": true
+    },
+    {
+      "title": "The Basic Principles of Chimeric Antigen Receptor Design",
+      "journal": "Cancer Discovery",
+      "year": 2013,
+      "citationCount": 1444,
+      "doi": "10.1158/2159-8290.cd-12-0548",
+      "sourceUrl": "https://doi.org/10.1158/2159-8290.cd-12-0548",
+      "verified": true
+    },
+    {
+      "title": "Gene therapy comes of age",
+      "journal": "Science",
+      "year": 2018,
+      "citationCount": 1299,
+      "doi": "10.1126/science.aan4672",
+      "sourceUrl": "https://doi.org/10.1126/science.aan4672",
+      "verified": true
+    },
+    {
+      "title": "Safety and persistence of adoptively transferred autologous CD19-targeted T cells in patients with relapsed or chemotherapy refractory B-cell leukemias",
+      "journal": "Blood",
+      "year": 2011,
+      "citationCount": 1270,
+      "doi": "10.1182/blood-2011-04-348540",
+      "sourceUrl": "https://doi.org/10.1182/blood-2011-04-348540",
+      "verified": true
+    },
+    {
+      "title": "CAR T cell–induced cytokine release syndrome is mediated by macrophages and abated by IL-1 blockade",
+      "journal": "Nature Medicine",
+      "year": 2018,
+      "citationCount": 1205,
+      "doi": "10.1038/s41591-018-0041-7",
+      "sourceUrl": "https://doi.org/10.1038/s41591-018-0041-7",
+      "verified": true
+    },
+    {
+      "title": "Personalized RNA neoantigen vaccines stimulate T cells in pancreatic cancer",
+      "journal": "Nature",
+      "year": 2023,
+      "citationCount": 1102,
+      "doi": "10.1038/s41586-023-06063-y",
+      "sourceUrl": "https://doi.org/10.1038/s41586-023-06063-y",
+      "verified": true
+    },
+    {
+      "title": "Human CAR T cells with cell-intrinsic PD-1 checkpoint blockade resist tumor-mediated inhibition",
+      "journal": "Journal of Clinical Investigation",
+      "year": 2016,
+      "citationCount": 1014,
+      "doi": "10.1172/jci83092",
+      "sourceUrl": "https://doi.org/10.1172/jci83092",
+      "verified": true
+    },
+    {
+      "title": "Human T-lymphocyte cytotoxicity and proliferation directed by a single chimeric TCRζ /CD28 receptor",
+      "journal": "Nature Biotechnology",
+      "year": 2002,
+      "citationCount": 996,
+      "doi": "10.1038/nbt0102-70",
+      "sourceUrl": "https://doi.org/10.1038/nbt0102-70",
+      "verified": true
+    },
+    {
+      "title": "Senolytic CAR T cells reverse senescence-associated pathologies",
+      "journal": "Nature",
+      "year": 2020,
+      "citationCount": 965,
+      "doi": "10.1038/s41586-020-2403-9",
+      "sourceUrl": "https://doi.org/10.1038/s41586-020-2403-9",
+      "verified": true
+    },
+    {
+      "title": "Cytokine release syndrome and associated neurotoxicity in cancer immunotherapy",
+      "journal": "Nature reviews. Immunology",
+      "year": 2021,
+      "citationCount": 924,
+      "doi": "10.1038/s41577-021-00547-6",
+      "sourceUrl": "https://doi.org/10.1038/s41577-021-00547-6",
+      "verified": true
+    },
+    {
+      "title": "Involvement of Granulocyte-Macrophage Colony-Stimulating Factor in Pulmonary Homeostasis",
+      "journal": "Science",
+      "year": 1994,
+      "citationCount": 887,
+      "doi": "10.1126/science.8171324",
+      "sourceUrl": "https://doi.org/10.1126/science.8171324",
+      "verified": true
+    },
+    {
+      "title": "Clinical and Biological Correlates of Neurotoxicity Associated with CAR T-cell Therapy in Patients with B-cell Acute Lymphoblastic Leukemia",
+      "journal": "Cancer Discovery",
+      "year": 2018,
+      "citationCount": 886,
+      "doi": "10.1158/2159-8290.cd-17-1319",
+      "sourceUrl": "https://doi.org/10.1158/2159-8290.cd-17-1319",
+      "verified": true
+    },
+    {
+      "title": "Modelling pathogenesis and treatment of familial dysautonomia using patient-specific iPSCs",
+      "journal": "Nature",
+      "year": 2009,
+      "citationCount": 870,
+      "doi": "10.1038/nature08320",
+      "sourceUrl": "https://doi.org/10.1038/nature08320",
+      "verified": true
+    },
+    {
+      "title": "Therapeutic T cell engineering",
+      "journal": "Nature",
+      "year": 2017,
+      "citationCount": 846,
+      "doi": "10.1038/nature22395",
+      "sourceUrl": "https://doi.org/10.1038/nature22395",
+      "verified": true
+    },
+    {
+      "title": "Combinatorial antigen recognition with balanced signaling promotes selective tumor eradication by engineered T cells",
+      "journal": "Nature Biotechnology",
+      "year": 2012,
+      "citationCount": 843,
+      "doi": "10.1038/nbt.2459",
+      "sourceUrl": "https://doi.org/10.1038/nbt.2459",
+      "verified": true
+    },
+    {
+      "title": "Structural Design of Engineered Costimulation Determines Tumor Rejection Kinetics and Persistence of CAR T Cells",
+      "journal": "Cancer Cell",
+      "year": 2015,
+      "citationCount": 817,
+      "doi": "10.1016/j.ccell.2015.09.004",
+      "sourceUrl": "https://doi.org/10.1016/j.ccell.2015.09.004",
+      "verified": true
+    },
+    {
+      "title": "PD-1– and CTLA-4–Based Inhibitory Chimeric Antigen Receptors (iCARs) Divert Off-Target Immunotherapy Responses",
+      "journal": "Science Translational Medicine",
+      "year": 2013,
+      "citationCount": 706,
+      "doi": "10.1126/scitranslmed.3006597",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.3006597",
+      "verified": true
+    },
+    {
+      "title": "Tumor-targeted T cells modified to secrete IL-12 eradicate systemic tumors without need for prior conditioning",
+      "journal": "Blood",
+      "year": 2012,
+      "citationCount": 666,
+      "doi": "10.1182/blood-2011-12-400044",
+      "sourceUrl": "https://doi.org/10.1182/blood-2011-12-400044",
+      "verified": true
+    },
+    {
+      "title": "Eradication of systemic B-cell tumors by genetically targeted human T lymphocytes co-stimulated by CD80 and interleukin-15",
+      "journal": "Nature Medicine",
+      "year": 2003,
+      "citationCount": 655,
+      "doi": "10.1038/nm827",
+      "sourceUrl": "https://doi.org/10.1038/nm827",
+      "verified": true
+    },
+    {
+      "title": "CAR T cell trogocytosis and cooperative killing regulate tumour antigen escape",
+      "journal": "Nature",
+      "year": 2019,
+      "citationCount": 620,
+      "doi": "10.1038/s41586-019-1054-1",
+      "sourceUrl": "https://doi.org/10.1038/s41586-019-1054-1",
+      "verified": true
+    },
+    {
+      "title": "Therapeutic haemoglobin synthesis in β-thalassaemic mice expressing lentivirus-encoded human β-globin",
+      "journal": "Nature",
+      "year": 2000,
+      "citationCount": 566,
+      "doi": "10.1038/35017565",
+      "sourceUrl": "https://doi.org/10.1038/35017565",
+      "verified": true
+    },
+    {
+      "title": "Regional delivery of mesothelin-targeted CAR T cell therapy generates potent and long-lasting CD4-dependent tumor immunity",
+      "journal": "Science Translational Medicine",
+      "year": 2014,
+      "citationCount": 548,
+      "doi": "10.1126/scitranslmed.3010162",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.3010162",
+      "verified": true
+    },
+    {
+      "title": "Targeting tumours with genetically enhanced T lymphocytes",
+      "journal": "Nature reviews. Cancer",
+      "year": 2003,
+      "citationCount": 540,
+      "doi": "10.1038/nrc971",
+      "sourceUrl": "https://doi.org/10.1038/nrc971",
+      "verified": true
+    },
+    {
+      "title": "Chimeric Antigen Receptors Combining 4-1BB and CD28 Signaling Domains Augment PI3kinase/AKT/Bcl-XL Activation and CD8+ T Cell–mediated Tumor Eradication",
+      "journal": "Molecular Therapy",
+      "year": 2009,
+      "citationCount": 535,
+      "doi": "10.1038/mt.2009.210",
+      "sourceUrl": "https://doi.org/10.1038/mt.2009.210",
+      "verified": true
+    },
+    {
+      "title": "The pharmacology of second-generation chimeric antigen receptors",
+      "journal": "Nature Reviews Drug Discovery",
+      "year": 2015,
+      "citationCount": 534,
+      "doi": "10.1038/nrd4597",
+      "sourceUrl": "https://doi.org/10.1038/nrd4597",
+      "verified": true
+    },
+    {
+      "title": "A Phase I Trial of Regional Mesothelin-Targeted CAR T-cell Therapy in Patients with Malignant Pleural Disease, in Combination with the Anti–PD-1 Agent Pembrolizumab",
+      "journal": "Cancer Discovery",
+      "year": 2021,
+      "citationCount": 509,
+      "doi": "10.1158/2159-8290.cd-21-0407",
+      "sourceUrl": "https://doi.org/10.1158/2159-8290.cd-21-0407",
+      "verified": true
+    },
+    {
+      "title": "Calibration of CAR activation potential directs alternative T cell fates and therapeutic potency",
+      "journal": "Nature Medicine",
+      "year": 2018,
+      "citationCount": 509,
+      "doi": "10.1038/s41591-018-0290-5",
+      "sourceUrl": "https://doi.org/10.1038/s41591-018-0290-5",
+      "verified": true
+    },
+    {
+      "title": "Safe harbours for the integration of new DNA in the human genome",
+      "journal": "Nature reviews. Cancer",
+      "year": 2011,
+      "citationCount": 490,
+      "doi": "10.1038/nrc3179",
+      "sourceUrl": "https://doi.org/10.1038/nrc3179",
+      "verified": true
+    },
+    {
+      "title": "Mesothelin-Targeted CARs: Driving T Cells to Solid Tumors",
+      "journal": "Cancer Discovery",
+      "year": 2015,
+      "citationCount": 481,
+      "doi": "10.1158/2159-8290.cd-15-0583",
+      "sourceUrl": "https://doi.org/10.1158/2159-8290.cd-15-0583",
+      "verified": true
+    },
+    {
+      "title": "The tyrosine kinase inhibitor dasatinib acts as a pharmacologic on/off switch for CAR T cells",
+      "journal": "Science Translational Medicine",
+      "year": 2019,
+      "citationCount": 481,
+      "doi": "10.1126/scitranslmed.aau5907",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.aau5907",
+      "verified": true
+    },
+    {
+      "title": "Conserved vertebrate <i>mir-451</i> provides a platform for Dicer-independent, Ago2-mediated microRNA biogenesis",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2010,
+      "citationCount": 470,
+      "doi": "10.1073/pnas.1006432107",
+      "sourceUrl": "https://doi.org/10.1073/pnas.1006432107",
+      "verified": true
+    },
+    {
+      "title": "Genetically Targeted T Cells Eradicate Systemic Acute Lymphoblastic Leukemia Xenografts",
+      "journal": "Clinical Cancer Research",
+      "year": 2007,
+      "citationCount": 463,
+      "doi": "10.1158/1078-0432.ccr-07-0674",
+      "sourceUrl": "https://doi.org/10.1158/1078-0432.ccr-07-0674",
+      "verified": true
+    },
+    {
+      "title": "The promise and potential pitfalls of chimeric antigen receptors",
+      "journal": "Current Opinion in Immunology",
+      "year": 2009,
+      "citationCount": 457,
+      "doi": "10.1016/j.coi.2009.02.009",
+      "sourceUrl": "https://doi.org/10.1016/j.coi.2009.02.009",
+      "verified": true
+    },
+    {
+      "title": "Generation of tumor-targeted human T lymphocytes from induced pluripotent stem cells for cancer therapy",
+      "journal": "Nature Biotechnology",
+      "year": 2013,
+      "citationCount": 449,
+      "doi": "10.1038/nbt.2678",
+      "sourceUrl": "https://doi.org/10.1038/nbt.2678",
+      "verified": true
+    },
+    {
+      "title": "Treatment of Chronic Lymphocytic Leukemia With Genetically Targeted Autologous T Cells: Case Report of an Unforeseen Adverse Event in a Phase I Clinical Trial",
+      "journal": "Molecular Therapy",
+      "year": 2010,
+      "citationCount": 381,
+      "doi": "10.1038/mt.2010.31",
+      "sourceUrl": "https://doi.org/10.1038/mt.2010.31",
+      "verified": true
+    },
+    {
+      "title": "Imaging Transgene Expression with Radionuclide Imaging Technologies",
+      "journal": "Neoplasia",
+      "year": 2000,
+      "citationCount": 362,
+      "doi": "10.1038/sj.neo.7900083",
+      "sourceUrl": "https://doi.org/10.1038/sj.neo.7900083",
+      "verified": true
+    },
+    {
+      "title": "Antigen-dependent CD28 Signaling Selectively Enhances Survival and Proliferation in Genetically Modified Activated Human Primary T Lymphocytes",
+      "journal": "The Journal of Experimental Medicine",
+      "year": 1998,
+      "citationCount": 344,
+      "doi": "10.1084/jem.188.4.619",
+      "sourceUrl": "https://doi.org/10.1084/jem.188.4.619",
+      "verified": true
+    },
+    {
+      "title": "Occurrence of leukaemia following gene therapy of X-linked SCID",
+      "journal": "Nature reviews. Cancer",
+      "year": 2003,
+      "citationCount": 343,
+      "doi": "10.1038/nrc1122",
+      "sourceUrl": "https://doi.org/10.1038/nrc1122",
+      "verified": true
+    },
+    {
+      "title": "Integrating Proteomics and Transcriptomics for Systematic Combinatorial Chimeric Antigen Receptor Therapy of AML",
+      "journal": "Cancer Cell",
+      "year": 2017,
+      "citationCount": 332,
+      "doi": "10.1016/j.ccell.2017.09.004",
+      "sourceUrl": "https://doi.org/10.1016/j.ccell.2017.09.004",
+      "verified": true
+    },
+    {
+      "title": "Long-term survival of dogs with advanced malignant melanoma after DNA vaccination with xenogeneic human tyrosinase: a phase I trial.",
+      "journal": "PubMed",
+      "year": 2003,
+      "citationCount": 331,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W1920268203",
+      "verified": true
+    },
+    {
+      "title": "Manufacturing Validation of Biologically Functional T Cells Targeted to CD19 Antigen for Autologous Adoptive Cell Therapy",
+      "journal": "Journal of Immunotherapy",
+      "year": 2009,
+      "citationCount": 316,
+      "doi": "10.1097/cji.0b013e318194a6e8",
+      "sourceUrl": "https://doi.org/10.1097/cji.0b013e318194a6e8",
+      "verified": true
+    },
+    {
+      "title": "Coexpression profile of leukemic stem cell markers for combinatorial targeted therapy in AML",
+      "journal": "Leukemia",
+      "year": 2018,
+      "citationCount": 309,
+      "doi": "10.1038/s41375-018-0180-3",
+      "sourceUrl": "https://doi.org/10.1038/s41375-018-0180-3",
+      "verified": true
+    },
+    {
+      "title": "Genomic safe harbors permit high β-globin transgene expression in thalassemia induced pluripotent stem cells",
+      "journal": "Nature Biotechnology",
+      "year": 2010,
+      "citationCount": 304,
+      "doi": "10.1038/nbt.1717",
+      "sourceUrl": "https://doi.org/10.1038/nbt.1717",
+      "verified": true
+    },
+    {
+      "title": "A Herceptin-Based Chimeric Antigen Receptor with Modified Signaling Domains Leads to Enhanced Survival of Transduced T Lymphocytes and Antitumor Activity",
+      "journal": "The Journal of Immunology",
+      "year": 2009,
+      "citationCount": 293,
+      "doi": "10.4049/jimmunol.0900447",
+      "sourceUrl": "https://doi.org/10.4049/jimmunol.0900447",
+      "verified": true
+    },
+    {
+      "title": "T cell–encoded CD80 and 4-1BBL induce auto- and transcostimulation, resulting in potent tumor rejection",
+      "journal": "Nature Medicine",
+      "year": 2007,
+      "citationCount": 289,
+      "doi": "10.1038/nm1676",
+      "sourceUrl": "https://doi.org/10.1038/nm1676",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:16.000Z",
+  "openalexId": "https://openalex.org/A5059625599"
 }

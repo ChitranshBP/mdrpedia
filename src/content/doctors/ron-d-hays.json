@@ -1,31 +1,492 @@
 {
   "fullName": "Ron D. Hays",
   "slug": "ron-d-hays",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Patient-Reported Outcomes",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">RD</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 41,
-  "hIndex": 165,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 149,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 12220,
+  "livesSaved": 0,
+  "biography": "Ron D. Hays is a leading specialist in Patient-Reported Outcomes at UCLA.",
+  "aiSummary": "Ron D. Hays is a patient-reported outcomes specialist with an H-index of 149 at University of California, Los Angeles (Faculty). Has been published in JAMA, New England Journal of Medicine. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "University of California, Los Angeles"
-    }
-  ],
-  "bio": "Ron D. Hays is a pioneer in Patient-Reported Outcomes at University of California, Los Angeles, USA. With a D-Index of 165 and over 122,202 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "University of California, Los Angeles",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Patient-Reported Outcomes"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "The Patient-Reported Outcomes Measurement Information System (PROMIS) developed and tested its first wave of adult self-reported health outcome item banks: 2005–2008",
+      "journal": "Journal of Clinical Epidemiology",
+      "year": 2010,
+      "citationCount": 4849,
+      "doi": "10.1016/j.jclinepi.2010.04.011",
+      "sourceUrl": "https://doi.org/10.1016/j.jclinepi.2010.04.011",
+      "verified": true
+    },
+    {
+      "title": "The MOS Short-form General Health Survey",
+      "journal": "Medical Care",
+      "year": 1988,
+      "citationCount": 3330,
+      "doi": "10.1097/00005650-198807000-00007",
+      "sourceUrl": "https://doi.org/10.1097/00005650-198807000-00007",
+      "verified": true
+    },
+    {
+      "title": "The rand 36‐item health survey 1.0",
+      "journal": "Health Economics",
+      "year": 1993,
+      "citationCount": 2815,
+      "doi": "10.1002/hec.4730020305",
+      "sourceUrl": "https://doi.org/10.1002/hec.4730020305",
+      "verified": true
+    },
+    {
+      "title": "Recommended methods for determining responsiveness and minimally important differences for patient-reported outcomes",
+      "journal": "Journal of Clinical Epidemiology",
+      "year": 2007,
+      "citationCount": 2257,
+      "doi": "10.1016/j.jclinepi.2007.03.012",
+      "sourceUrl": "https://doi.org/10.1016/j.jclinepi.2007.03.012",
+      "verified": true
+    },
+    {
+      "title": "Development of physical and mental health summary scores from the patient-reported outcomes measurement information system (PROMIS) global items",
+      "journal": "Quality of Life Research",
+      "year": 2009,
+      "citationCount": 1898,
+      "doi": "10.1007/s11136-009-9496-9",
+      "sourceUrl": "https://doi.org/10.1007/s11136-009-9496-9",
+      "verified": true
+    },
+    {
+      "title": "Psychometric Evaluation and Calibration of Health-Related Quality of Life Item Banks",
+      "journal": "Medical Care",
+      "year": 2007,
+      "citationCount": 1454,
+      "doi": "10.1097/01.mlr.0000250483.85507.04",
+      "sourceUrl": "https://doi.org/10.1097/01.mlr.0000250483.85507.04",
+      "verified": true
+    },
+    {
+      "title": "The RAND-36 measure of health-related quality of life",
+      "journal": "Annals of Medicine",
+      "year": 2001,
+      "citationCount": 1425,
+      "doi": "10.3109/07853890109002089",
+      "sourceUrl": "https://doi.org/10.3109/07853890109002089",
+      "verified": true
+    },
+    {
+      "title": "Vision assessment using the NIH Toolbox",
+      "journal": "Neurology",
+      "year": 2013,
+      "citationCount": 1213,
+      "doi": "10.1212/wnl.0b013e3182876e0a",
+      "sourceUrl": "https://doi.org/10.1212/wnl.0b013e3182876e0a",
+      "verified": true
+    },
+    {
+      "title": "Development of the Kidney Disease Quality of Life (KDQOLTM) Instrument",
+      "journal": "Quality of Life Research",
+      "year": 1994,
+      "citationCount": 1155,
+      "doi": "10.1007/bf00451725",
+      "sourceUrl": "https://doi.org/10.1007/bf00451725",
+      "verified": true
+    },
+    {
+      "title": "A health-related quality of life measure for multiple sclerosis",
+      "journal": "Quality of Life Research",
+      "year": 1995,
+      "citationCount": 1093,
+      "doi": "10.1007/bf02260859",
+      "sourceUrl": "https://doi.org/10.1007/bf02260859",
+      "verified": true
+    },
+    {
+      "title": "A Short-Form Measure of Loneliness",
+      "journal": "Journal of Personality Assessment",
+      "year": 1987,
+      "citationCount": 1090,
+      "doi": "10.1207/s15327752jpa5101_6",
+      "sourceUrl": "https://doi.org/10.1207/s15327752jpa5101_6",
+      "verified": true
+    },
+    {
+      "title": "Quality-of-Life Outcomes in Men Treated for Localized Prostate Cancer",
+      "journal": "JAMA",
+      "year": 1995,
+      "citationCount": 1028,
+      "doi": "10.1001/jama.1995.03520260051032",
+      "sourceUrl": "https://doi.org/10.1001/jama.1995.03520260051032",
+      "verified": true
+    },
+    {
+      "title": "Item Response Theory and Health Outcomes Measurement in the 21st Century",
+      "journal": "Medical Care",
+      "year": 2000,
+      "citationCount": 858,
+      "doi": "10.1097/00005650-200009002-00007",
+      "sourceUrl": "https://doi.org/10.1097/00005650-200009002-00007",
+      "verified": true
+    },
+    {
+      "title": "Functioning and Well-being Outcomes of Patients With Depression Compared With Chronic General Medical Illnesses",
+      "journal": "Archives of General Psychiatry",
+      "year": 1995,
+      "citationCount": 848,
+      "doi": "10.1001/archpsyc.1995.03950130011002",
+      "sourceUrl": "https://doi.org/10.1001/archpsyc.1995.03950130011002",
+      "verified": true
+    },
+    {
+      "title": "The functioning and well-being of depressed patients. Results from the Medical Outcomes Study.",
+      "journal": "PubMed",
+      "year": 1989,
+      "citationCount": 845,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2038130137",
+      "verified": true
+    },
+    {
+      "title": "Examining the Role of Patient Experience Surveys in Measuring Health Care Quality",
+      "journal": "Medical Care Research and Review",
+      "year": 2014,
+      "citationCount": 833,
+      "doi": "10.1177/1077558714541480",
+      "sourceUrl": "https://doi.org/10.1177/1077558714541480",
+      "verified": true
+    },
+    {
+      "title": "The UCLA Prostate Cancer Index",
+      "journal": "Medical Care",
+      "year": 1998,
+      "citationCount": 830,
+      "doi": "10.1097/00005650-199807000-00007",
+      "sourceUrl": "https://doi.org/10.1097/00005650-199807000-00007",
+      "verified": true
+    },
+    {
+      "title": "A Comparative Review of Generic Quality-of-Life Instruments",
+      "journal": "PharmacoEconomics",
+      "year": 2000,
+      "citationCount": 829,
+      "doi": "10.2165/00019053-200017010-00002",
+      "sourceUrl": "https://doi.org/10.2165/00019053-200017010-00002",
+      "verified": true
+    },
+    {
+      "title": "ISOQOL recommends minimum standards for patient-reported outcome measures used in patient-centered outcomes and comparative effectiveness research",
+      "journal": "Quality of Life Research",
+      "year": 2013,
+      "citationCount": 829,
+      "doi": "10.1007/s11136-012-0344-y",
+      "sourceUrl": "https://doi.org/10.1007/s11136-012-0344-y",
+      "verified": true
+    },
+    {
+      "title": "Physicians' characteristics influence patients' adherence to medical treatment: Results from the Medical Outcomes Study.",
+      "journal": "Health Psychology",
+      "year": 1993,
+      "citationCount": 786,
+      "doi": "10.1037/0278-6133.12.2.93",
+      "sourceUrl": "https://doi.org/10.1037/0278-6133.12.2.93",
+      "verified": true
+    },
+    {
+      "title": "A Comparison Study of Multiple Measures of Adherence to HIV Protease Inhibitors",
+      "journal": "Annals of Internal Medicine",
+      "year": 2001,
+      "citationCount": 761,
+      "doi": "10.7326/0003-4819-134-10-200105150-00011",
+      "sourceUrl": "https://doi.org/10.7326/0003-4819-134-10-200105150-00011",
+      "verified": true
+    },
+    {
+      "title": "The impact of irritable bowel syndrome on health-related quality of life",
+      "journal": "Gastroenterology",
+      "year": 2000,
+      "citationCount": 751,
+      "doi": "10.1053/gast.2000.16484",
+      "sourceUrl": "https://doi.org/10.1053/gast.2000.16484",
+      "verified": true
+    },
+    {
+      "title": "The role of the bifactor model in resolving dimensionality issues in health outcomes measures",
+      "journal": "Quality of Life Research",
+      "year": 2007,
+      "citationCount": 725,
+      "doi": "10.1007/s11136-007-9183-7",
+      "sourceUrl": "https://doi.org/10.1007/s11136-007-9183-7",
+      "verified": true
+    },
+    {
+      "title": "Functional status and well-being of patients with chronic conditions. Results from the Medical Outcomes Study.",
+      "journal": "PubMed",
+      "year": 1989,
+      "citationCount": 678,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2084100378",
+      "verified": true
+    },
+    {
+      "title": "PROMIS® Adult Health Profiles: Efficient Short-Form Measures of Seven Health Domains",
+      "journal": "Value in Health",
+      "year": 2019,
+      "citationCount": 639,
+      "doi": "10.1016/j.jval.2019.02.004",
+      "sourceUrl": "https://doi.org/10.1016/j.jval.2019.02.004",
+      "verified": true
+    },
+    {
+      "title": "PROMIS®-29 v2.0 profile physical and mental health summary scores",
+      "journal": "Quality of Life Research",
+      "year": 2018,
+      "citationCount": 629,
+      "doi": "10.1007/s11136-018-1842-3",
+      "sourceUrl": "https://doi.org/10.1007/s11136-018-1842-3",
+      "verified": true
+    },
+    {
+      "title": "Development of the Quality of Life in Epilepsy Inventory",
+      "journal": "Epilepsia",
+      "year": 1995,
+      "citationCount": 618,
+      "doi": "10.1111/j.1528-1157.1995.tb00467.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1528-1157.1995.tb00467.x",
+      "verified": true
+    },
+    {
+      "title": "Methods For Measuring Patient Satisfaction With Specific Medical Encounters",
+      "journal": "Medical Care",
+      "year": 1988,
+      "citationCount": 586,
+      "doi": "10.1097/00005650-198804000-00008",
+      "sourceUrl": "https://doi.org/10.1097/00005650-198804000-00008",
+      "verified": true
+    },
+    {
+      "title": "Kidney Transplantation as Primary Therapy for End-Stage Renal Disease",
+      "journal": "Clinical Journal of the American Society of Nephrology",
+      "year": 2008,
+      "citationCount": 585,
+      "doi": "10.2215/cjn.05021107",
+      "sourceUrl": "https://doi.org/10.2215/cjn.05021107",
+      "verified": true
+    },
+    {
+      "title": "Overview of Classical Test Theory and Item Response Theory for the Quantitative Assessment of Items in Developing Patient-Reported Outcomes Measures",
+      "journal": "Clinical Therapeutics",
+      "year": 2014,
+      "citationCount": 570,
+      "doi": "10.1016/j.clinthera.2014.04.006",
+      "sourceUrl": "https://doi.org/10.1016/j.clinthera.2014.04.006",
+      "verified": true
+    },
+    {
+      "title": "Psychometric properties of the Medical Outcomes Study Sleep measure",
+      "journal": "Sleep Medicine",
+      "year": 2004,
+      "citationCount": 551,
+      "doi": "10.1016/j.sleep.2004.07.006",
+      "sourceUrl": "https://doi.org/10.1016/j.sleep.2004.07.006",
+      "verified": true
+    },
+    {
+      "title": "What Is Sufficient Evidence for the Reliability and Validity of Patient-Reported Outcome Measures?",
+      "journal": "Value in Health",
+      "year": 2007,
+      "citationCount": 548,
+      "doi": "10.1111/j.1524-4733.2007.00272.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1524-4733.2007.00272.x",
+      "verified": true
+    },
+    {
+      "title": "Recommendations on Evidence Needed to Support Measurement Equivalence between Electronic and Paper-Based Patient-Reported Outcome (PRO) Measures: ISPOR ePRO Good Research Practices Task Force Report",
+      "journal": "Value in Health",
+      "year": 2008,
+      "citationCount": 537,
+      "doi": "10.1111/j.1524-4733.2008.00470.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1524-4733.2008.00470.x",
+      "verified": true
+    },
+    {
+      "title": "Antecedents of adherence to medical recommendations: Results from the medical outcomes study",
+      "journal": "Journal of Behavioral Medicine",
+      "year": 1992,
+      "citationCount": 531,
+      "doi": "10.1007/bf00844941",
+      "sourceUrl": "https://doi.org/10.1007/bf00844941",
+      "verified": true
+    },
+    {
+      "title": "The Care of HIV-Infected Adults in the United States",
+      "journal": "New England Journal of Medicine",
+      "year": 1998,
+      "citationCount": 525,
+      "doi": "10.1056/nejm199812243392606",
+      "sourceUrl": "https://doi.org/10.1056/nejm199812243392606",
+      "verified": true
+    },
+    {
+      "title": "A Five-Item Measure of Socially Desirable Response Set",
+      "journal": "Educational and Psychological Measurement",
+      "year": 1989,
+      "citationCount": 520,
+      "doi": "10.1177/001316448904900315",
+      "sourceUrl": "https://doi.org/10.1177/001316448904900315",
+      "verified": true
+    },
+    {
+      "title": "Psychometric considerations in evaluating health-related quality of life measures",
+      "journal": "Quality of Life Research",
+      "year": 1993,
+      "citationCount": 518,
+      "doi": "10.1007/bf00422218",
+      "sourceUrl": "https://doi.org/10.1007/bf00422218",
+      "verified": true
+    },
+    {
+      "title": "A prospective study of predictors of adherence to combination antiretroviral medication",
+      "journal": "Journal of General Internal Medicine",
+      "year": 2002,
+      "citationCount": 513,
+      "doi": "10.1046/j.1525-1497.2002.11214.x",
+      "sourceUrl": "https://doi.org/10.1046/j.1525-1497.2002.11214.x",
+      "verified": true
+    },
+    {
+      "title": "The Concept of Clinically Meaningful Difference in Health-Related Quality of Life Research",
+      "journal": "PharmacoEconomics",
+      "year": 2000,
+      "citationCount": 481,
+      "doi": "10.2165/00019053-200018050-00001",
+      "sourceUrl": "https://doi.org/10.2165/00019053-200018050-00001",
+      "verified": true
+    },
+    {
+      "title": "Responsiveness and minimal important differences for patient reported outcomes",
+      "journal": "Health and Quality of Life Outcomes",
+      "year": 2006,
+      "citationCount": 461,
+      "doi": "10.1186/1477-7525-4-70",
+      "sourceUrl": "https://doi.org/10.1186/1477-7525-4-70",
+      "verified": true
+    },
+    {
+      "title": "Estimating clinically significant differences in quality of life outcomes",
+      "journal": "Quality of Life Research",
+      "year": 2005,
+      "citationCount": 456,
+      "doi": "10.1007/s11136-004-0705-2",
+      "sourceUrl": "https://doi.org/10.1007/s11136-004-0705-2",
+      "verified": true
+    },
+    {
+      "title": "US Norms for Six Generic Health-Related Quality-of-Life Indexes From the National Health Measurement Study",
+      "journal": "Medical Care",
+      "year": 2007,
+      "citationCount": 453,
+      "doi": "10.1097/mlr.0b013e31814848f1",
+      "sourceUrl": "https://doi.org/10.1097/mlr.0b013e31814848f1",
+      "verified": true
+    },
+    {
+      "title": "Representativeness of the Patient-Reported Outcomes Measurement Information System Internet panel",
+      "journal": "Journal of Clinical Epidemiology",
+      "year": 2010,
+      "citationCount": 446,
+      "doi": "10.1016/j.jclinepi.2009.11.021",
+      "sourceUrl": "https://doi.org/10.1016/j.jclinepi.2009.11.021",
+      "verified": true
+    },
+    {
+      "title": "The Patient Satisfaction Questionnaire Short Form (PSQ-18)",
+      "journal": "Unknown Journal",
+      "year": 1994,
+      "citationCount": 441,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W160571159",
+      "verified": true
+    },
+    {
+      "title": "Are latinos less satisfied with communication by health care providers?",
+      "journal": "Journal of General Internal Medicine",
+      "year": 1999,
+      "citationCount": 418,
+      "doi": "10.1046/j.1525-1497.1999.06198.x",
+      "sourceUrl": "https://doi.org/10.1046/j.1525-1497.1999.06198.x",
+      "verified": true
+    },
+    {
+      "title": "Pediatric Palliative Care Patients: A Prospective Multicenter Cohort Study",
+      "journal": "PEDIATRICS",
+      "year": 2011,
+      "citationCount": 417,
+      "doi": "10.1542/peds.2010-3225",
+      "sourceUrl": "https://doi.org/10.1542/peds.2010-3225",
+      "verified": true
+    },
+    {
+      "title": "Correlated physical and mental health summary scores for the SF-36 and SF-12 Health Survey, V.1",
+      "journal": "Health and Quality of Life Outcomes",
+      "year": 2007,
+      "citationCount": 398,
+      "doi": "10.1186/1477-7525-5-54",
+      "sourceUrl": "https://doi.org/10.1186/1477-7525-5-54",
+      "verified": true
+    },
+    {
+      "title": "Physician Communication When Prescribing New Medications",
+      "journal": "Archives of Internal Medicine",
+      "year": 2006,
+      "citationCount": 397,
+      "doi": "10.1001/archinte.166.17.1855",
+      "sourceUrl": "https://doi.org/10.1001/archinte.166.17.1855",
+      "verified": true
+    },
+    {
+      "title": "Value of functional status as a predictor of mortality: Results of a prospective study",
+      "journal": "The American Journal of Medicine",
+      "year": 1992,
+      "citationCount": 391,
+      "doi": "10.1016/0002-9343(92)90200-u",
+      "sourceUrl": "https://doi.org/10.1016/0002-9343(92)90200-u",
+      "verified": true
+    },
+    {
+      "title": "Seizure Reduction and Quality of Life Improvements in People with Epilepsy",
+      "journal": "Epilepsia",
+      "year": 2002,
+      "citationCount": 386,
+      "doi": "10.1046/j.1528-1157.2002.32201.x",
+      "sourceUrl": "https://doi.org/10.1046/j.1528-1157.2002.32201.x",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:17.000Z",
+  "openalexId": "https://openalex.org/A5049288442"
 }

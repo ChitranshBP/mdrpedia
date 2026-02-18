@@ -1,31 +1,492 @@
 {
   "fullName": "Gerald I. Shulman",
   "slug": "gerald-i-shulman",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Metabolic Physiology",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">GI</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 50,
-  "hIndex": 198,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 182,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 16242,
+  "livesSaved": 0,
+  "biography": "Gerald I. Shulman, MD, PhD, MACP, MACE, FRCP, is an American physician-scientist specializing in endocrinology and metabolism. He is the George R. Cowgill Professor of Medicine (Endocrinology) and Professor of Cellular and Molecular Physiology at the Yale School of Medicine. Shulman also serves as Co-Director of the Yale Diabetes Research Center.",
+  "aiSummary": "Gerald I. Shulman is a metabolic physiology specialist with an H-index of 182 at Yale University (Faculty). Has been published in Nature Reviews Disease Primers, Nature, New England Journal of Medicine. Based in United States.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Yale University"
-    }
-  ],
-  "bio": "Gerald I. Shulman is a pioneer in Metabolic Physiology at Yale University, USA. With a D-Index of 198 and over 162,420 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Yale University",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Metabolic Physiology"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Mechanisms of Insulin Action and Insulin Resistance",
+      "journal": "Physiological Reviews",
+      "year": 2018,
+      "citationCount": 2720,
+      "doi": "10.1152/physrev.00063.2017",
+      "sourceUrl": "https://doi.org/10.1152/physrev.00063.2017",
+      "verified": true
+    },
+    {
+      "title": "Cellular mechanisms of insulin resistance",
+      "journal": "Journal of Clinical Investigation",
+      "year": 2000,
+      "citationCount": 2682,
+      "doi": "10.1172/jci10583",
+      "sourceUrl": "https://doi.org/10.1172/jci10583",
+      "verified": true
+    },
+    {
+      "title": "Type 2 diabetes mellitus",
+      "journal": "Nature Reviews Disease Primers",
+      "year": 2015,
+      "citationCount": 2419,
+      "doi": "10.1038/nrdp.2015.19",
+      "sourceUrl": "https://doi.org/10.1038/nrdp.2015.19",
+      "verified": true
+    },
+    {
+      "title": "Inflammasome-mediated dysbiosis regulates progression of NAFLD and obesity",
+      "journal": "Nature",
+      "year": 2012,
+      "citationCount": 2359,
+      "doi": "10.1038/nature10809",
+      "sourceUrl": "https://doi.org/10.1038/nature10809",
+      "verified": true
+    },
+    {
+      "title": "Impaired Mitochondrial Activity in the Insulin-Resistant Offspring of Patients with Type 2 Diabetes",
+      "journal": "New England Journal of Medicine",
+      "year": 2004,
+      "citationCount": 2164,
+      "doi": "10.1056/nejmoa031314",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa031314",
+      "verified": true
+    },
+    {
+      "title": "Mechanisms for Insulin Resistance: Common Threads and Missing Links",
+      "journal": "Cell",
+      "year": 2012,
+      "citationCount": 2098,
+      "doi": "10.1016/j.cell.2012.02.017",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2012.02.017",
+      "verified": true
+    },
+    {
+      "title": "Mitochondrial Dysfunction in the Elderly: Possible Role in Insulin Resistance",
+      "journal": "Science",
+      "year": 2003,
+      "citationCount": 2091,
+      "doi": "10.1126/science.1082889",
+      "sourceUrl": "https://doi.org/10.1126/science.1082889",
+      "verified": true
+    },
+    {
+      "title": "Mitochondrial Dysfunction and Type 2 Diabetes",
+      "journal": "Science",
+      "year": 2005,
+      "citationCount": 2016,
+      "doi": "10.1126/science.1104343",
+      "sourceUrl": "https://doi.org/10.1126/science.1104343",
+      "verified": true
+    },
+    {
+      "title": "Insulin Resistance and a Diabetes Mellitus-Like Syndrome in Mice Lacking the Protein Kinase Akt2 (PKBβ)",
+      "journal": "Science",
+      "year": 2001,
+      "citationCount": 1823,
+      "doi": "10.1126/science.292.5522.1728",
+      "sourceUrl": "https://doi.org/10.1126/science.292.5522.1728",
+      "verified": true
+    },
+    {
+      "title": "Disruption of IRS-2 causes type 2 diabetes in mice",
+      "journal": "Nature",
+      "year": 1998,
+      "citationCount": 1771,
+      "doi": "10.1038/36116",
+      "sourceUrl": "https://doi.org/10.1038/36116",
+      "verified": true
+    },
+    {
+      "title": "Mechanisms and disease consequences of nonalcoholic fatty liver disease",
+      "journal": "Cell",
+      "year": 2021,
+      "citationCount": 1703,
+      "doi": "10.1016/j.cell.2021.04.015",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2021.04.015",
+      "verified": true
+    },
+    {
+      "title": "Mechanism by Which Fatty Acids Inhibit Insulin Activation of Insulin Receptor Substrate-1 (IRS-1)-associated Phosphatidylinositol 3-Kinase Activity in Muscle",
+      "journal": "Journal of Biological Chemistry",
+      "year": 2002,
+      "citationCount": 1540,
+      "doi": "10.1074/jbc.m200958200",
+      "sourceUrl": "https://doi.org/10.1074/jbc.m200958200",
+      "verified": true
+    },
+    {
+      "title": "Mechanism of free fatty acid-induced insulin resistance in humans.",
+      "journal": "Journal of Clinical Investigation",
+      "year": 1996,
+      "citationCount": 1523,
+      "doi": "10.1172/jci118742",
+      "sourceUrl": "https://doi.org/10.1172/jci118742",
+      "verified": true
+    },
+    {
+      "title": "The pathogenesis of insulin resistance: integrating signaling pathways and substrate flux",
+      "journal": "Journal of Clinical Investigation",
+      "year": 2016,
+      "citationCount": 1330,
+      "doi": "10.1172/jci77812",
+      "sourceUrl": "https://doi.org/10.1172/jci77812",
+      "verified": true
+    },
+    {
+      "title": "Effects of free fatty acids on glucose transport and IRS-1–associated phosphatidylinositol 3-kinase activity",
+      "journal": "Journal of Clinical Investigation",
+      "year": 1999,
+      "citationCount": 1303,
+      "doi": "10.1172/jci5001",
+      "sourceUrl": "https://doi.org/10.1172/jci5001",
+      "verified": true
+    },
+    {
+      "title": "Mechanism of Hepatic Insulin Resistance in Non-alcoholic Fatty Liver Disease",
+      "journal": "Journal of Biological Chemistry",
+      "year": 2004,
+      "citationCount": 1297,
+      "doi": "10.1074/jbc.m313478200",
+      "sourceUrl": "https://doi.org/10.1074/jbc.m313478200",
+      "verified": true
+    },
+    {
+      "title": "Free fatty acids in obesity and type 2 diabetes: defining their role in the development of insulin resistance and β‐cell dysfunction",
+      "journal": "European Journal of Clinical Investigation",
+      "year": 2002,
+      "citationCount": 1286,
+      "doi": "10.1046/j.1365-2362.32.s3.3.x",
+      "sourceUrl": "https://doi.org/10.1046/j.1365-2362.32.s3.3.x",
+      "verified": true
+    },
+    {
+      "title": "Obesity-associated improvements in metabolic profile through expansion of adipose tissue",
+      "journal": "Journal of Clinical Investigation",
+      "year": 2007,
+      "citationCount": 1284,
+      "doi": "10.1172/jci31021",
+      "sourceUrl": "https://doi.org/10.1172/jci31021",
+      "verified": true
+    },
+    {
+      "title": "Adipose-selective targeting of the GLUT4 gene impairs insulin action in muscle and liver",
+      "journal": "Nature",
+      "year": 2001,
+      "citationCount": 1262,
+      "doi": "10.1038/35055575",
+      "sourceUrl": "https://doi.org/10.1038/35055575",
+      "verified": true
+    },
+    {
+      "title": "Acetate mediates a microbiome–brain–β-cell axis to promote metabolic syndrome",
+      "journal": "Nature",
+      "year": 2016,
+      "citationCount": 1259,
+      "doi": "10.1038/nature18309",
+      "sourceUrl": "https://doi.org/10.1038/nature18309",
+      "verified": true
+    },
+    {
+      "title": "Intramyocellular lipid concentrations are correlated with insulin sensitivity in humans: a 1 H NMR spectroscopy study",
+      "journal": "Diabetologia",
+      "year": 1999,
+      "citationCount": 1257,
+      "doi": "10.1007/s001250051123",
+      "sourceUrl": "https://doi.org/10.1007/s001250051123",
+      "verified": true
+    },
+    {
+      "title": "Metformin suppresses gluconeogenesis by inhibiting mitochondrial glycerophosphate dehydrogenase",
+      "journal": "Nature",
+      "year": 2014,
+      "citationCount": 1252,
+      "doi": "10.1038/nature13270",
+      "sourceUrl": "https://doi.org/10.1038/nature13270",
+      "verified": true
+    },
+    {
+      "title": "Free fatty acid-induced insulin resistance is associated with activation of protein kinase C theta and alterations in the insulin signaling cascade.",
+      "journal": "Diabetes",
+      "year": 1999,
+      "citationCount": 1251,
+      "doi": "10.2337/diabetes.48.6.1270",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.48.6.1270",
+      "verified": true
+    },
+    {
+      "title": "Loss of Insulin Signaling in Hepatocytes Leads to Severe Insulin Resistance and Progressive Hepatic Dysfunction",
+      "journal": "Molecular Cell",
+      "year": 2000,
+      "citationCount": 1245,
+      "doi": "10.1016/s1097-2765(05)00015-8",
+      "sourceUrl": "https://doi.org/10.1016/s1097-2765(05)00015-8",
+      "verified": true
+    },
+    {
+      "title": "Quantitation of Muscle Glycogen Synthesis in Normal Subjects and Subjects with Non-Insulin-Dependent Diabetes by<sup>13</sup>C Nuclear Magnetic Resonance Spectroscopy",
+      "journal": "New England Journal of Medicine",
+      "year": 1990,
+      "citationCount": 1240,
+      "doi": "10.1056/nejm199001253220403",
+      "sourceUrl": "https://doi.org/10.1056/nejm199001253220403",
+      "verified": true
+    },
+    {
+      "title": "Increased Energy Expenditure, Decreased Adiposity, and Tissue-Specific Insulin Sensitivity in Protein-Tyrosine Phosphatase 1B-Deficient Mice",
+      "journal": "Molecular and Cellular Biology",
+      "year": 2000,
+      "citationCount": 1219,
+      "doi": "10.1128/mcb.20.15.5479-5489.2000",
+      "sourceUrl": "https://doi.org/10.1128/mcb.20.15.5479-5489.2000",
+      "verified": true
+    },
+    {
+      "title": "Defects in Adaptive Energy Metabolism with CNS-Linked Hyperactivity in PGC-1α Null Mice",
+      "journal": "Cell",
+      "year": 2004,
+      "citationCount": 1149,
+      "doi": "10.1016/j.cell.2004.09.013",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2004.09.013",
+      "verified": true
+    },
+    {
+      "title": "Lipid-induced insulin resistance: unravelling the mechanism",
+      "journal": "The Lancet",
+      "year": 2010,
+      "citationCount": 1148,
+      "doi": "10.1016/s0140-6736(10)60408-4",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(10)60408-4",
+      "verified": true
+    },
+    {
+      "title": "Disordered Lipid Metabolism and the Pathogenesis of Insulin Resistance",
+      "journal": "Physiological Reviews",
+      "year": 2007,
+      "citationCount": 1093,
+      "doi": "10.1152/physrev.00024.2006",
+      "sourceUrl": "https://doi.org/10.1152/physrev.00024.2006",
+      "verified": true
+    },
+    {
+      "title": "Regulation of mitochondrial biogenesis",
+      "journal": "Essays in Biochemistry",
+      "year": 2010,
+      "citationCount": 1092,
+      "doi": "10.1042/bse0470069",
+      "sourceUrl": "https://doi.org/10.1042/bse0470069",
+      "verified": true
+    },
+    {
+      "title": "The role of hepatic lipids in hepatic insulin resistance and type 2 diabetes",
+      "journal": "Nature",
+      "year": 2014,
+      "citationCount": 1091,
+      "doi": "10.1038/nature13478",
+      "sourceUrl": "https://doi.org/10.1038/nature13478",
+      "verified": true
+    },
+    {
+      "title": "The integrative biology of type 2 diabetes",
+      "journal": "Nature",
+      "year": 2019,
+      "citationCount": 1067,
+      "doi": "10.1038/s41586-019-1797-8",
+      "sourceUrl": "https://doi.org/10.1038/s41586-019-1797-8",
+      "verified": true
+    },
+    {
+      "title": "Regulation of hepatic glucose metabolism in health and disease",
+      "journal": "Nature Reviews Endocrinology",
+      "year": 2017,
+      "citationCount": 1063,
+      "doi": "10.1038/nrendo.2017.80",
+      "sourceUrl": "https://doi.org/10.1038/nrendo.2017.80",
+      "verified": true
+    },
+    {
+      "title": "Ectopic Fat in Insulin Resistance, Dyslipidemia, and Cardiometabolic Disease",
+      "journal": "New England Journal of Medicine",
+      "year": 2014,
+      "citationCount": 1049,
+      "doi": "10.1056/nejmra1011035",
+      "sourceUrl": "https://doi.org/10.1056/nejmra1011035",
+      "verified": true
+    },
+    {
+      "title": "Mechanism by which metformin reduces glucose production in type 2 diabetes.",
+      "journal": "Diabetes",
+      "year": 2000,
+      "citationCount": 1042,
+      "doi": "10.2337/diabetes.49.12.2063",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.49.12.2063",
+      "verified": true
+    },
+    {
+      "title": "AMP kinase is required for mitochondrial biogenesis in skeletal muscle in response to chronic energy deprivation",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2002,
+      "citationCount": 1025,
+      "doi": "10.1073/pnas.252625599",
+      "sourceUrl": "https://doi.org/10.1073/pnas.252625599",
+      "verified": true
+    },
+    {
+      "title": "Uncoupling Protein-2 Negatively Regulates Insulin Secretion and Is a Major Link between Obesity, β Cell Dysfunction, and Type 2 Diabetes",
+      "journal": "Cell",
+      "year": 2001,
+      "citationCount": 912,
+      "doi": "10.1016/s0092-8674(01)00378-6",
+      "sourceUrl": "https://doi.org/10.1016/s0092-8674(01)00378-6",
+      "verified": true
+    },
+    {
+      "title": "Reversal of Nonalcoholic Hepatic Steatosis, Hepatic Insulin Resistance, and Hyperglycemia by Moderate Weight Reduction in Patients With Type 2 Diabetes",
+      "journal": "Diabetes",
+      "year": 2005,
+      "citationCount": 889,
+      "doi": "10.2337/diabetes.54.3.603",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.54.3.603",
+      "verified": true
+    },
+    {
+      "title": "Ablation of PRDM16 and Beige Adipose Causes Metabolic Dysfunction and a Subcutaneous to Visceral Fat Switch",
+      "journal": "Cell",
+      "year": 2014,
+      "citationCount": 871,
+      "doi": "10.1016/j.cell.2013.12.021",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2013.12.021",
+      "verified": true
+    },
+    {
+      "title": "Molecular Mechanisms of Insulin Resistance in Humans and Their Potential Links With Mitochondrial Dysfunction",
+      "journal": "Diabetes",
+      "year": 2006,
+      "citationCount": 854,
+      "doi": "10.2337/db06-s002",
+      "sourceUrl": "https://doi.org/10.2337/db06-s002",
+      "verified": true
+    },
+    {
+      "title": "Etiology of Insulin Resistance",
+      "journal": "The American Journal of Medicine",
+      "year": 2006,
+      "citationCount": 807,
+      "doi": "10.1016/j.amjmed.2006.01.009",
+      "sourceUrl": "https://doi.org/10.1016/j.amjmed.2006.01.009",
+      "verified": true
+    },
+    {
+      "title": "Correction of hyperglycemia with phlorizin normalizes tissue sensitivity to insulin in diabetic rats.",
+      "journal": "Journal of Clinical Investigation",
+      "year": 1987,
+      "citationCount": 803,
+      "doi": "10.1172/jci112981",
+      "sourceUrl": "https://doi.org/10.1172/jci112981",
+      "verified": true
+    },
+    {
+      "title": "A guide to analysis of mouse energy metabolism",
+      "journal": "Nature Methods",
+      "year": 2011,
+      "citationCount": 797,
+      "doi": "10.1038/nmeth.1806",
+      "sourceUrl": "https://doi.org/10.1038/nmeth.1806",
+      "verified": true
+    },
+    {
+      "title": "Efficacy and Metabolic Effects of Metformin and Troglitazone in Type II Diabetes Mellitus",
+      "journal": "New England Journal of Medicine",
+      "year": 1998,
+      "citationCount": 795,
+      "doi": "10.1056/nejm199803263381303",
+      "sourceUrl": "https://doi.org/10.1056/nejm199803263381303",
+      "verified": true
+    },
+    {
+      "title": "Tissue-specific overexpression of lipoprotein lipase causes tissue-specific insulin resistance",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2001,
+      "citationCount": 771,
+      "doi": "10.1073/pnas.121164498",
+      "sourceUrl": "https://doi.org/10.1073/pnas.121164498",
+      "verified": true
+    },
+    {
+      "title": "Increased rate of gluconeogenesis in type II diabetes mellitus. A 13C nuclear magnetic resonance study.",
+      "journal": "Journal of Clinical Investigation",
+      "year": 1992,
+      "citationCount": 753,
+      "doi": "10.1172/jci115997",
+      "sourceUrl": "https://doi.org/10.1172/jci115997",
+      "verified": true
+    },
+    {
+      "title": "The role of skeletal muscle insulin resistance in the pathogenesis of the metabolic syndrome",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2007,
+      "citationCount": 749,
+      "doi": "10.1073/pnas.0705408104",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0705408104",
+      "verified": true
+    },
+    {
+      "title": "Nonalcoholic Fatty Liver Disease, Hepatic Insulin Resistance, and Type 2 Diabetes",
+      "journal": "Hepatology",
+      "year": 2013,
+      "citationCount": 716,
+      "doi": "10.1002/hep.26672",
+      "sourceUrl": "https://doi.org/10.1002/hep.26672",
+      "verified": true
+    },
+    {
+      "title": "Prevention of fat-induced insulin resistance by salicylate",
+      "journal": "Journal of Clinical Investigation",
+      "year": 2001,
+      "citationCount": 715,
+      "doi": "10.1172/jci11559",
+      "sourceUrl": "https://doi.org/10.1172/jci11559",
+      "verified": true
+    },
+    {
+      "title": "Standard operating procedures for describing and performing metabolic tests of glucose homeostasis in mice",
+      "journal": "Disease Models & Mechanisms",
+      "year": 2010,
+      "citationCount": 705,
+      "doi": "10.1242/dmm.006239",
+      "sourceUrl": "https://doi.org/10.1242/dmm.006239",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:15.000Z",
+  "openalexId": "https://openalex.org/A5027916227"
 }

@@ -1,0 +1,365 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import TierBadge from "../components/TierBadge.astro";
+
+const allDoctors = await getCollection("doctors");
+
+const nobelLaureates = allDoctors
+    .filter((d) => {
+        const hasNobelAward = d.data.awards?.some((a) =>
+            a.name?.toLowerCase().includes("nobel"),
+        );
+        const hasNobelBio = d.data.biography
+            ?.toLowerCase()
+            .includes("nobel prize");
+        const hasNobelKeyword = d.data.knowsAbout?.some((k) =>
+            k.toLowerCase().includes("nobel"),
+        );
+        return hasNobelAward || hasNobelBio || hasNobelKeyword;
+    })
+    .map((d) => {
+        const nobelAward = d.data.awards?.find((a) =>
+            a.name?.toLowerCase().includes("nobel"),
+        );
+
+        let year = "Unknown";
+        let title = "Nobel Prize";
+
+        if (nobelAward) {
+            year = String(nobelAward.year);
+            title = nobelAward.name;
+        } else if (d.data.biography) {
+            // Try to extract year from bio
+            const yearMatch =
+                d.data.biography.match(/Nobel Prize.*?(\d{4})/i) ||
+                d.data.biography.match(/(\d{4}).*?Nobel Prize/i);
+            if (yearMatch) {
+                year = yearMatch[1];
+            }
+            title = "Nobel Prize in Physiology or Medicine";
+        }
+
+        return {
+            ...d,
+            nobelYear: year,
+            nobelTitle: title,
+        };
+    })
+    .sort((a, b) => {
+        if (a.nobelYear === "Unknown") return 1;
+        if (b.nobelYear === "Unknown") return -1;
+        return parseInt(b.nobelYear) - parseInt(a.nobelYear);
+    });
+
+// Group by decades or just list them? Timeline is better.
+---
+
+<Layout
+    title="Nobel Prize Hall of Fame — MDRPedia"
+    description="Honoring the medical pioneers who have been awarded the Nobel Prize in Physiology or Medicine."
+>
+    <div class="nobel-page">
+        <header class="page-header">
+            <div class="medal-icon">🥇</div>
+            <h1>Nobel Prize Hall of Fame</h1>
+            <p class="subtitle">
+                Honoring the visionaries who have redefined the boundaries of
+                verified medicine.
+            </p>
+        </header>
+
+        <section class="timeline-container">
+            {
+                nobelLaureates.map((doctor, index) => (
+                    <div class="timeline-item">
+                        <div class="timeline-marker">
+                            <div class="year-badge">{doctor.nobelYear}</div>
+                            <div class="timeline-line" />
+                        </div>
+                        <div class="timeline-content">
+                            <a
+                                href={`/doctors/${doctor.id}`}
+                                class="nobel-card"
+                            >
+                                <div class="card-image-wrapper">
+                                    {doctor.data.portraitUrl ? (
+                                        <img
+                                            src={doctor.data.portraitUrl}
+                                            alt={doctor.data.fullName}
+                                            class={`card-image ${
+                                                doctor.data.status ===
+                                                "HISTORICAL"
+                                                    ? "greyscale"
+                                                    : ""
+                                            }`}
+                                        />
+                                    ) : (
+                                        <div class="card-initials">
+                                            {doctor.data.fullName.charAt(0)}
+                                        </div>
+                                    )}
+                                </div>
+                                <div class="card-details">
+                                    <div class="card-header">
+                                        <h2 class="doctor-name">
+                                            {doctor.data.fullName}
+                                            <span
+                                                class="nobel-verified-icon"
+                                                title="Nobel Laureate"
+                                            >
+                                                🎖
+                                            </span>
+                                        </h2>
+                                        <TierBadge
+                                            tier={doctor.data.tier as any}
+                                            size="sm"
+                                        />
+                                    </div>
+                                    <p class="nobel-citation">
+                                        {doctor.nobelTitle}
+                                    </p>
+                                    <p class="doctor-specialty">
+                                        {doctor.data.specialty}
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                ))
+            }
+        </section>
+
+        {
+            nobelLaureates.length === 0 && (
+                <div class="empty-state">
+                    <p>No Nobel laureates found in the current registry.</p>
+                </div>
+            )
+        }
+    </div>
+</Layout>
+
+<style>
+    .nobel-page {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 4rem 1.5rem;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+    .medal-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        animation: float 3s ease-in-out infinite;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 0.5rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .subtitle {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* Timeline */
+    .timeline-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        position: relative;
+    }
+
+    .timeline-item {
+        display: flex;
+        gap: 2rem;
+        position: relative;
+        padding-bottom: 3rem;
+    }
+
+    .timeline-item:last-child {
+        padding-bottom: 0;
+    }
+
+    .timeline-item:last-child .timeline-line {
+        display: none;
+    }
+
+    .timeline-marker {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 60px;
+        flex-shrink: 0;
+    }
+
+    .year-badge {
+        font-family: var(--font-mono);
+        font-weight: 700;
+        background: rgba(255, 215, 0, 0.1);
+        color: #ffd700;
+        padding: 4px 8px;
+        border-radius: 4px;
+        border: 1px solid rgba(255, 215, 0, 0.3);
+        font-size: 0.9rem;
+        z-index: 2;
+        background-color: var(--bg-body); /* cover line */
+    }
+
+    .timeline-line {
+        width: 2px;
+        flex: 1;
+        background: linear-gradient(
+            to bottom,
+            rgba(255, 215, 0, 0.3),
+            rgba(255, 255, 255, 0.05)
+        );
+        margin-top: 8px;
+    }
+
+    .timeline-content {
+        flex: 1;
+    }
+
+    /* Card */
+    .nobel-card {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 215, 0, 0.15); /* Gold tint border */
+        border-radius: 12px;
+        padding: 1.25rem;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .nobel-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(to bottom, #ffd700, transparent);
+        opacity: 0.5;
+    }
+
+    .nobel-card:hover {
+        transform: translateX(5px);
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 215, 0, 0.4);
+        box-shadow: 0 10px 30px -10px rgba(255, 215, 0, 0.1);
+    }
+
+    .card-image-wrapper {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid #ffd700; /* Gold border */
+        flex-shrink: 0;
+    }
+
+    .card-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .card-image.greyscale {
+        filter: grayscale(100%);
+        opacity: 0.9;
+    }
+
+    .card-initials {
+        width: 100%;
+        height: 100%;
+        background: var(--bg-surface);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        color: var(--text-muted);
+    }
+
+    .card-details {
+        flex: 1;
+    }
+
+    .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 4px;
+    }
+
+    .doctor-name {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: white;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .nobel-verified-icon {
+        font-size: 0.8em;
+    }
+
+    .nobel-citation {
+        color: #ffd700; /* Gold text */
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+        font-style: italic;
+        line-height: 1.3;
+    }
+
+    .doctor-specialty {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+    }
+
+    @keyframes float {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .nobel-card {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        .card-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        .timeline-item {
+            gap: 1rem;
+        }
+    }
+</style>

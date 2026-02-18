@@ -1,31 +1,484 @@
 {
   "fullName": "Lotte Bjerre Knudsen",
   "slug": "lotte-bjerre-knudsen",
-  "title": "MD, PhD",
-  "specialty": "GLP-1 Drug Development",
+  "title": "MD",
+  "specialty": "Medicine",
   "geography": {
+    "country": "Unknown",
     "city": "Unknown",
-    "country": "Denmark"
+    "region": "Unknown"
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23001a4d\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%2300aaff\" text-anchor=\"middle\" dy=\".3em\">LB</text></svg>",
-  "tier": "ELITE",
-  "rankingScore": 34,
-  "hIndex": 134,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 25.54,
+  "hIndex": 59,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 13800,
+  "livesSaved": 0,
+  "biography": "Lotte Bjerre Knudsen is a Danish scientist and university professor. She led the development of liraglutide and oversaw the development of semaglutide, two notable drugs approved for indications in the treatment of diabetes and obesity.",
+  "aiSummary": "Lotte Bjerre Knudsen is a medicine specialist with an H-index of 59. Has been published in Science Translational Medicine, JACC Basic to Translational Science, Proceedings of the National Academy of Sciences. Based in Unknown, Unknown, Unknown.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Novo Nordisk"
-    }
-  ],
-  "bio": "Lotte Bjerre Knudsen is a pioneer in GLP-1 Drug Development at Novo Nordisk, Denmark. With a D-Index of 134 and over 138,000 citations, they are among the world's most influential researchers.",
-  "awards": [],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [],
+  "medicalSpecialty": [
+    "Medicine"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Discovery of the Once-Weekly Glucagon-Like Peptide-1 (GLP-1) Analogue Semaglutide",
+      "journal": "Journal of Medicinal Chemistry",
+      "year": 2015,
+      "citationCount": 958,
+      "doi": "10.1021/acs.jmedchem.5b00726",
+      "sourceUrl": "https://doi.org/10.1021/acs.jmedchem.5b00726",
+      "verified": true
+    },
+    {
+      "title": "The arcuate nucleus mediates GLP-1 receptor agonist liraglutide-dependent weight loss",
+      "journal": "Journal of Clinical Investigation",
+      "year": 2014,
+      "citationCount": 881,
+      "doi": "10.1172/jci75276",
+      "sourceUrl": "https://doi.org/10.1172/jci75276",
+      "verified": true
+    },
+    {
+      "title": "The Discovery and Development of Liraglutide and Semaglutide",
+      "journal": "Frontiers in Endocrinology",
+      "year": 2019,
+      "citationCount": 838,
+      "doi": "10.3389/fendo.2019.00155",
+      "sourceUrl": "https://doi.org/10.3389/fendo.2019.00155",
+      "verified": true
+    },
+    {
+      "title": "GLP-1 Receptor Localization in Monkey and Human Tissue: Novel Distribution Revealed With Extensively Validated Monoclonal Antibody",
+      "journal": "Endocrinology",
+      "year": 2014,
+      "citationCount": 801,
+      "doi": "10.1210/en.2013-1934",
+      "sourceUrl": "https://doi.org/10.1210/en.2013-1934",
+      "verified": true
+    },
+    {
+      "title": "Potent Derivatives of Glucagon-like Peptide-1 with Pharmacokinetic Properties Suitable for Once Daily Administration",
+      "journal": "Journal of Medicinal Chemistry",
+      "year": 2000,
+      "citationCount": 681,
+      "doi": "10.1021/jm9909645",
+      "sourceUrl": "https://doi.org/10.1021/jm9909645",
+      "verified": true
+    },
+    {
+      "title": "Glucagon-Like Peptide-1 Receptor Agonists Activate Rodent Thyroid C-Cells Causing Calcitonin Release and C-Cell Proliferation",
+      "journal": "Endocrinology",
+      "year": 2010,
+      "citationCount": 623,
+      "doi": "10.1210/en.2009-1272",
+      "sourceUrl": "https://doi.org/10.1210/en.2009-1272",
+      "verified": true
+    },
+    {
+      "title": "Semaglutide lowers body weight in rodents via distributed neural pathways",
+      "journal": "JCI Insight",
+      "year": 2020,
+      "citationCount": 614,
+      "doi": "10.1172/jci.insight.133429",
+      "sourceUrl": "https://doi.org/10.1172/jci.insight.133429",
+      "verified": true
+    },
+    {
+      "title": "Transcellular stomach absorption of a derivatized glucagon-like peptide-1 receptor agonist",
+      "journal": "Science Translational Medicine",
+      "year": 2018,
+      "citationCount": 471,
+      "doi": "10.1126/scitranslmed.aar7047",
+      "sourceUrl": "https://doi.org/10.1126/scitranslmed.aar7047",
+      "verified": true
+    },
+    {
+      "title": "The GLP-1 Analogs Liraglutide and Semaglutide Reduce Atherosclerosis in ApoE−/− and LDLr−/− Mice by a Mechanism That Includes Inflammatory Pathways",
+      "journal": "JACC Basic to Translational Science",
+      "year": 2018,
+      "citationCount": 432,
+      "doi": "10.1016/j.jacbts.2018.09.004",
+      "sourceUrl": "https://doi.org/10.1016/j.jacbts.2018.09.004",
+      "verified": true
+    },
+    {
+      "title": "Dipeptidyl peptidase IV resistant analogues of glucagon-like peptide-1 which have extended metabolic stability and improved biological activity",
+      "journal": "Diabetologia",
+      "year": 1998,
+      "citationCount": 297,
+      "doi": "10.1007/s001250050903",
+      "sourceUrl": "https://doi.org/10.1007/s001250050903",
+      "verified": true
+    },
+    {
+      "title": "Crystal Structure of Glucagon-like Peptide-1 in Complex with the Extracellular Domain of the Glucagon-like Peptide-1 Receptor",
+      "journal": "Journal of Biological Chemistry",
+      "year": 2009,
+      "citationCount": 283,
+      "doi": "10.1074/jbc.m109.033829",
+      "sourceUrl": "https://doi.org/10.1074/jbc.m109.033829",
+      "verified": true
+    },
+    {
+      "title": "Structure-activity studies of glucagon-like peptide-1.",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1994,
+      "citationCount": 280,
+      "doi": "10.1016/s0021-9258(17)37366-0",
+      "sourceUrl": "https://doi.org/10.1016/s0021-9258(17)37366-0",
+      "verified": true
+    },
+    {
+      "title": "The long-acting GLP-1 derivative NN2211 ameliorates glycemia and increases β-cell mass in diabetic mice",
+      "journal": "American Journal of Physiology-Endocrinology and Metabolism",
+      "year": 2002,
+      "citationCount": 280,
+      "doi": "10.1152/ajpendo.00030.2002",
+      "sourceUrl": "https://doi.org/10.1152/ajpendo.00030.2002",
+      "verified": true
+    },
+    {
+      "title": "Systemic Administration of the Long-Acting GLP-1 Derivative NN2211 Induces Lasting and Reversible Weight Loss in Both Normal and Obese Rats",
+      "journal": "Diabetes",
+      "year": 2001,
+      "citationCount": 258,
+      "doi": "10.2337/diabetes.50.11.2530",
+      "sourceUrl": "https://doi.org/10.2337/diabetes.50.11.2530",
+      "verified": true
+    },
+    {
+      "title": "Expression of the GLP-1 Receptor in Mouse, Rat, and Human Pancreas",
+      "journal": "Journal of Histochemistry & Cytochemistry",
+      "year": 2008,
+      "citationCount": 247,
+      "doi": "10.1369/jhc.2008.951319",
+      "sourceUrl": "https://doi.org/10.1369/jhc.2008.951319",
+      "verified": true
+    },
+    {
+      "title": "Glucagon-like peptide-1-(9-36) amide is a major metabolite of glucagon-like peptide-1-(7-36) amide after in vivo administration to dogs, and it acts as an antagonist on the pancreatic receptor",
+      "journal": "European Journal of Pharmacology",
+      "year": 1996,
+      "citationCount": 246,
+      "doi": "10.1016/s0014-2999(96)00795-9",
+      "sourceUrl": "https://doi.org/10.1016/s0014-2999(96)00795-9",
+      "verified": true
+    },
+    {
+      "title": "Structure−Activity and Protraction Relationship of Long-Acting Glucagon-like Peptide-1 Derivatives:  Importance of Fatty Acid Length, Polarity, and Bulkiness",
+      "journal": "Journal of Medicinal Chemistry",
+      "year": 2007,
+      "citationCount": 239,
+      "doi": "10.1021/jm070861j",
+      "sourceUrl": "https://doi.org/10.1021/jm070861j",
+      "verified": true
+    },
+    {
+      "title": "Small-molecule agonists for the glucagon-like peptide 1 receptor",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "year": 2007,
+      "citationCount": 223,
+      "doi": "10.1073/pnas.0605701104",
+      "sourceUrl": "https://doi.org/10.1073/pnas.0605701104",
+      "verified": true
+    },
+    {
+      "title": "Liraglutide, a Long-Acting Glucagon-Like Peptide-1 Analog, Reduces Body Weight and Food Intake in Obese Candy-Fed Rats, Whereas a Dipeptidyl Peptidase-IV Inhibitor, Vildagliptin, Does Not",
+      "journal": "Diabetes",
+      "year": 2006,
+      "citationCount": 204,
+      "doi": "10.2337/db06-0565",
+      "sourceUrl": "https://doi.org/10.2337/db06-0565",
+      "verified": true
+    },
+    {
+      "title": "GLP‐1 derivative liraglutide in rats with <i>β</i>‐cell deficiencies: influence of metabolic state on <i>β</i>‐cell mass dynamics",
+      "journal": "British Journal of Pharmacology",
+      "year": 2003,
+      "citationCount": 198,
+      "doi": "10.1038/sj.bjp.0705397",
+      "sourceUrl": "https://doi.org/10.1038/sj.bjp.0705397",
+      "verified": true
+    },
+    {
+      "title": "A GLP-1 receptor agonist liraglutide inhibits endothelial cell dysfunction and vascular adhesion molecule expression in an ApoE<sup>-/-</sup> mouse model",
+      "journal": "Diabetes and Vascular Disease Research",
+      "year": 2011,
+      "citationCount": 192,
+      "doi": "10.1177/1479164111404257",
+      "sourceUrl": "https://doi.org/10.1177/1479164111404257",
+      "verified": true
+    },
+    {
+      "title": "Expression and Distribution of Glucagon-Like Peptide-1 Receptor mRNA, Protein and Binding in the Male Nonhuman Primate (<i>Macaca mulatta</i>) Brain",
+      "journal": "Endocrinology",
+      "year": 2014,
+      "citationCount": 183,
+      "doi": "10.1210/en.2014-1675",
+      "sourceUrl": "https://doi.org/10.1210/en.2014-1675",
+      "verified": true
+    },
+    {
+      "title": "A long-acting glucagon-like peptide-1 analogue attenuates induction of plasminogen activator inhibitor type-1 and vascular adhesion molecules",
+      "journal": "Journal of Endocrinology",
+      "year": 2009,
+      "citationCount": 183,
+      "doi": "10.1677/joe-08-0468",
+      "sourceUrl": "https://doi.org/10.1677/joe-08-0468",
+      "verified": true
+    },
+    {
+      "title": "Treatment with glucagon‐like peptide‐1 receptor agonists and incidence of dementia: Data from pooled double‐blind randomized controlled trials and nationwide disease and prescription registers",
+      "journal": "Alzheimer s & Dementia Translational Research & Clinical Interventions",
+      "year": 2022,
+      "citationCount": 180,
+      "doi": "10.1002/trc2.12268",
+      "sourceUrl": "https://doi.org/10.1002/trc2.12268",
+      "verified": true
+    },
+    {
+      "title": "The GLP-1 Receptor Agonist Liraglutide Improves Memory Function and Increases Hippocampal CA1 Neuronal Numbers in a Senescence-Accelerated Mouse Model of Alzheimer’s Disease",
+      "journal": "Journal of Alzheimer s Disease",
+      "year": 2015,
+      "citationCount": 176,
+      "doi": "10.3233/jad-143090",
+      "sourceUrl": "https://doi.org/10.3233/jad-143090",
+      "verified": true
+    },
+    {
+      "title": "Liraglutide: short‐lived effect on gastric emptying—long lasting effects on body weight",
+      "journal": "Diabetes Obesity and Metabolism",
+      "year": 2012,
+      "citationCount": 174,
+      "doi": "10.1111/j.1463-1326.2012.01557.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1463-1326.2012.01557.x",
+      "verified": true
+    },
+    {
+      "title": "The long-acting glucagon-like peptide-1 analogue, liraglutide, inhibits β-cell apoptosis in vitro",
+      "journal": "Biochemical and Biophysical Research Communications",
+      "year": 2005,
+      "citationCount": 168,
+      "doi": "10.1016/j.bbrc.2005.03.013",
+      "sourceUrl": "https://doi.org/10.1016/j.bbrc.2005.03.013",
+      "verified": true
+    },
+    {
+      "title": "A genetic map of the mouse dorsal vagal complex and its role in obesity",
+      "journal": "Nature Metabolism",
+      "year": 2021,
+      "citationCount": 159,
+      "doi": "10.1038/s42255-021-00363-1",
+      "sourceUrl": "https://doi.org/10.1038/s42255-021-00363-1",
+      "verified": true
+    },
+    {
+      "title": "Glucagon-like Peptide-1:  The Basis of a New Class of Treatment for Type 2 Diabetes",
+      "journal": "Journal of Medicinal Chemistry",
+      "year": 2004,
+      "citationCount": 155,
+      "doi": "10.1021/jm030630m",
+      "sourceUrl": "https://doi.org/10.1021/jm030630m",
+      "verified": true
+    },
+    {
+      "title": "The Glucagon-Like Peptide-1 Receptor—or Not?",
+      "journal": "Endocrinology",
+      "year": 2012,
+      "citationCount": 151,
+      "doi": "10.1210/en.2012-2124",
+      "sourceUrl": "https://doi.org/10.1210/en.2012-2124",
+      "verified": true
+    },
+    {
+      "title": "Long-term characterization of the diet-induced obese and diet-resistant rat model: a polygenetic rat model mimicking the human obesity syndrome",
+      "journal": "Journal of Endocrinology",
+      "year": 2010,
+      "citationCount": 151,
+      "doi": "10.1677/joe-10-0004",
+      "sourceUrl": "https://doi.org/10.1677/joe-10-0004",
+      "verified": true
+    },
+    {
+      "title": "Using genetic association data to guide drug discovery and development: Review of methods and applications",
+      "journal": "The American Journal of Human Genetics",
+      "year": 2023,
+      "citationCount": 141,
+      "doi": "10.1016/j.ajhg.2022.12.017",
+      "sourceUrl": "https://doi.org/10.1016/j.ajhg.2022.12.017",
+      "verified": true
+    },
+    {
+      "title": "GLP-1 Receptor Agonists and the Thyroid: C-Cell Effects in Mice Are Mediated via the GLP-1 Receptor and not Associated with RET Activation",
+      "journal": "Endocrinology",
+      "year": 2012,
+      "citationCount": 138,
+      "doi": "10.1210/en.2011-1864",
+      "sourceUrl": "https://doi.org/10.1210/en.2011-1864",
+      "verified": true
+    },
+    {
+      "title": "Different domains of the glucagon and glucagon‐like peptide‐1 receptors provide the critical determinants of ligand selectivity",
+      "journal": "British Journal of Pharmacology",
+      "year": 2003,
+      "citationCount": 131,
+      "doi": "10.1038/sj.bjp.0705120",
+      "sourceUrl": "https://doi.org/10.1038/sj.bjp.0705120",
+      "verified": true
+    },
+    {
+      "title": "Characterization of the Glucagonlike Peptide-1 Receptor in Male Mouse Brain Using a Novel Antibody and In Situ Hybridization",
+      "journal": "Endocrinology",
+      "year": 2017,
+      "citationCount": 131,
+      "doi": "10.1210/en.2017-00812",
+      "sourceUrl": "https://doi.org/10.1210/en.2017-00812",
+      "verified": true
+    },
+    {
+      "title": "The Human GLP-1 Analog Liraglutide and the Pancreas",
+      "journal": "Diabetes",
+      "year": 2012,
+      "citationCount": 122,
+      "doi": "10.2337/db11-0936",
+      "sourceUrl": "https://doi.org/10.2337/db11-0936",
+      "verified": true
+    },
+    {
+      "title": "Glucagon-like peptide-1 receptor signaling modifies the extent of diabetic kidney disease through dampening the receptor for advanced glycation end products–induced inflammation",
+      "journal": "Kidney International",
+      "year": 2023,
+      "citationCount": 104,
+      "doi": "10.1016/j.kint.2023.09.029",
+      "sourceUrl": "https://doi.org/10.1016/j.kint.2023.09.029",
+      "verified": true
+    },
+    {
+      "title": "GLP-1 Induces Barrier Protective Expression in Brunnerʼs Glands and Regulates Colonic Inflammation",
+      "journal": "Inflammatory Bowel Diseases",
+      "year": 2016,
+      "citationCount": 97,
+      "doi": "10.1097/mib.0000000000000847",
+      "sourceUrl": "https://doi.org/10.1097/mib.0000000000000847",
+      "verified": true
+    },
+    {
+      "title": "Liraglutide: the therapeutic promise from animal models",
+      "journal": "International Journal of Clinical Practice",
+      "year": 2010,
+      "citationCount": 95,
+      "doi": "10.1111/j.1742-1241.2010.02499.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1742-1241.2010.02499.x",
+      "verified": true
+    },
+    {
+      "title": "The GLP-1 receptor agonist liraglutide reduces pathology-specific tau phosphorylation and improves motor function in a transgenic hTauP301L mouse model of tauopathy",
+      "journal": "Brain Research",
+      "year": 2015,
+      "citationCount": 92,
+      "doi": "10.1016/j.brainres.2015.12.052",
+      "sourceUrl": "https://doi.org/10.1016/j.brainres.2015.12.052",
+      "verified": true
+    },
+    {
+      "title": "Discovery and Structure−Activity Relationship of the First Non-Peptide Competitive Human Glucagon Receptor Antagonists",
+      "journal": "Journal of Medicinal Chemistry",
+      "year": 1998,
+      "citationCount": 92,
+      "doi": "10.1021/jm9810304",
+      "sourceUrl": "https://doi.org/10.1021/jm9810304",
+      "verified": true
+    },
+    {
+      "title": "Integrated Brain Atlas for Unbiased Mapping of Nervous System Effects Following Liraglutide Treatment",
+      "journal": "Scientific Reports",
+      "year": 2018,
+      "citationCount": 92,
+      "doi": "10.1038/s41598-018-28496-6",
+      "sourceUrl": "https://doi.org/10.1038/s41598-018-28496-6",
+      "verified": true
+    },
+    {
+      "title": "Liraglutide, a Once‐daily Human Glucagon‐like Peptide‐1 Analog, Minimizes Food Intake in Severely Obese Minipigs",
+      "journal": "Obesity",
+      "year": 2007,
+      "citationCount": 91,
+      "doi": "10.1038/oby.2007.204",
+      "sourceUrl": "https://doi.org/10.1038/oby.2007.204",
+      "verified": true
+    },
+    {
+      "title": "The effects of 13 wk of liraglutide treatment on endocrine and exocrine pancreas in male and female ZDF rats: a quantitative and qualitative analysis revealing no evidence of drug-induced pancreatitis",
+      "journal": "American Journal of Physiology-Endocrinology and Metabolism",
+      "year": 2012,
+      "citationCount": 91,
+      "doi": "10.1152/ajpendo.00182.2012",
+      "sourceUrl": "https://doi.org/10.1152/ajpendo.00182.2012",
+      "verified": true
+    },
+    {
+      "title": "A survey of the mouse hindbrain in the fed and fasted states using single-nucleus RNA sequencing",
+      "journal": "Molecular Metabolism",
+      "year": 2021,
+      "citationCount": 90,
+      "doi": "10.1016/j.molmet.2021.101240",
+      "sourceUrl": "https://doi.org/10.1016/j.molmet.2021.101240",
+      "verified": true
+    },
+    {
+      "title": "Multivariate near-infrared and Raman spectroscopic quantifications of the crystallinity of lactose in whey permeate powder",
+      "journal": "International Dairy Journal",
+      "year": 2005,
+      "citationCount": 90,
+      "doi": "10.1016/j.idairyj.2004.12.009",
+      "sourceUrl": "https://doi.org/10.1016/j.idairyj.2004.12.009",
+      "verified": true
+    },
+    {
+      "title": "The truncated metabolite GLP-2 (3–33) interacts with the GLP-2 receptor as a partial agonist",
+      "journal": "Regulatory Peptides",
+      "year": 2002,
+      "citationCount": 88,
+      "doi": "10.1016/s0167-0115(01)00316-0",
+      "sourceUrl": "https://doi.org/10.1016/s0167-0115(01)00316-0",
+      "verified": true
+    },
+    {
+      "title": "Optimization of Alkylidene Hydrazide Based Human Glucagon Receptor Antagonists. Discovery of the Highly Potent and Orally Available 3-Cyano-4-hydroxybenzoic Acid [1-(2,3,5,6-Tetramethylbenzyl)-1<i>H</i>-indol-4-ylmethylene]hydrazide",
+      "journal": "Journal of Medicinal Chemistry",
+      "year": 2002,
+      "citationCount": 86,
+      "doi": "10.1021/jm0208572",
+      "sourceUrl": "https://doi.org/10.1021/jm0208572",
+      "verified": true
+    },
+    {
+      "title": "GLP-1 analogue, Liraglutide protects human umbilical vein endothelial cells against high glucose induced endoplasmic reticulum stress",
+      "journal": "Regulatory Peptides",
+      "year": 2011,
+      "citationCount": 79,
+      "doi": "10.1016/j.regpep.2011.11.008",
+      "sourceUrl": "https://doi.org/10.1016/j.regpep.2011.11.008",
+      "verified": true
+    },
+    {
+      "title": "Liraglutide, a long-acting human glucagon-like peptide 1 analogue, improves human islet survival in culture",
+      "journal": "Transplant International",
+      "year": 2009,
+      "citationCount": 78,
+      "doi": "10.1111/j.1432-2277.2009.00984.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1432-2277.2009.00984.x",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "openalexId": "https://openalex.org/A5088627727"
 }

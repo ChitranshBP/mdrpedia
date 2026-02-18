@@ -12,6 +12,10 @@ async function main() {
     console.log('🌱 Starting seed...');
 
     const doctorsDir = path.join(__dirname, '../src/content/doctors');
+    if (!fs.existsSync(doctorsDir)) {
+        console.log('No doctors directory found.');
+        return;
+    }
     const files = fs.readdirSync(doctorsDir).filter((f) => f.endsWith('.json'));
 
     for (const file of files) {
@@ -71,11 +75,6 @@ async function main() {
         // 3. Citations
         if (data.citations) {
             for (const cit of data.citations) {
-                // Upsert citations to match on DOI/Reference to avoid duplicates if re-running
-                // Using DOI as unique key
-                // Wait, citation schema has `doi` @unique? Yes.
-                // But some citations might not have DOI? `doi String?`.
-                // If DOI exists, try to reuse.
                 if (cit.doi) {
                     await prisma.citation.upsert({
                         where: { doi: cit.doi },
@@ -94,7 +93,7 @@ async function main() {
             }
         }
 
-        // 4. Impact Metrics (Upsert logic to avoid duplicates)
+        // 4. Impact Metrics
         if (data.livesSaved) {
             await prisma.impactMetric.upsert({
                 where: { profile_id: profile.id },
@@ -109,11 +108,6 @@ async function main() {
 
         // 5. Techniques
         if (data.techniquesInvented) {
-            // Deleting old ones before re-adding is simple for seed, but risky for prod.
-            // For seed, just create if not exists?
-            // No unique constraint on name+profile.
-            // I'll skip complexity and just create, manual cleanup if needed.
-            // Or checking first.
             const existing = await prisma.technique.findFirst({
                 where: { profile_id: profile.id, name: data.techniquesInvented[0] }
             });
@@ -135,7 +129,6 @@ async function main() {
 
         // 6. Awards
         if (data.awards) {
-            // Check existing
             const existingAward = await prisma.award.findFirst({
                 where: { profile_id: profile.id }
             });
@@ -171,7 +164,54 @@ async function main() {
                 }
             }
         }
-    }
+
+        // 8. New Fields (AI Summary, Affiliations, etc.)
+        if (data.aiSummary || data.medicalSpecialty || data.knowsAbout) {
+            await prisma.profile.update({
+                where: { id: profile.id },
+                data: {
+                    ai_summary: data.aiSummary,
+                    medical_specialty: data.medicalSpecialty || [],
+                    knows_about: data.knowsAbout || [],
+                }
+            });
+        }
+
+        // 9. Affiliations
+        if (data.affiliations) {
+            for (const aff of data.affiliations) {
+                const hospitalSlug = aff.hospitalName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+                const hospital = await prisma.hospital.upsert({
+                    where: { slug: hospitalSlug },
+                    update: {},
+                    create: {
+                        name: aff.hospitalName,
+                        slug: hospitalSlug,
+                        sector: 'PRIVATE', // Default
+                        website: aff.hospitalUrl,
+                    }
+                });
+
+                await prisma.doctorHospitalAffiliation.upsert({
+                    where: {
+                        profile_id_hospital_id: {
+                            profile_id: profile.id,
+                            hospital_id: hospital.id
+                        }
+                    },
+                    update: {},
+                    create: {
+                        profile_id: profile.id,
+                        hospital_id: hospital.id,
+                        role: aff.role,
+                        is_primary: true
+                    }
+                });
+            }
+        }
+
+    } // End of for loop
 
     console.log('✅ Seed complete.');
 }

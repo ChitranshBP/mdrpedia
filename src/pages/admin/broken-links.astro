@@ -1,0 +1,636 @@
+---
+/**
+ * MDRPedia — Broken Links Report
+ * View and manage 404 errors
+ */
+import Layout from "../../layouts/Layout.astro";
+import { prisma } from "../../lib/prisma";
+import { requireSuperAdmin } from "../../lib/rbac";
+
+export const prerender = false;
+
+if (!requireSuperAdmin(Astro.request)) {
+    return Astro.redirect("/login");
+}
+
+const url = new URL(Astro.request.url);
+const adminKey = url.searchParams.get("key") || "";
+const showResolved = url.searchParams.get("resolved") === "true";
+const page = parseInt(url.searchParams.get("page") || "1");
+const pageSize = 50;
+
+// Build where clause
+const whereClause: any = {
+    resolved: showResolved
+};
+
+// Fetch 404 logs grouped by URL
+let logs: any[] = [];
+let totalLogs = 0;
+let urlStats: any[] = [];
+
+try {
+    [logs, totalLogs] = await Promise.all([
+        prisma.notFoundLog.findMany({
+            where: whereClause,
+            orderBy: { createdAt: 'desc' },
+            skip: (page - 1) * pageSize,
+            take: pageSize,
+        }),
+        prisma.notFoundLog.count({ where: whereClause })
+    ]);
+
+    // Get top URLs by frequency (last 30 days)
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    urlStats = await prisma.notFoundLog.groupBy({
+        by: ['url'],
+        where: {
+            resolved: false,
+            is_bot: false,
+            createdAt: { gte: thirtyDaysAgo }
+        },
+        _count: { url: true },
+        orderBy: { _count: { url: 'desc' } },
+        take: 20
+    });
+} catch (e) {
+    console.error("Broken links error:", e);
+}
+
+const totalPages = Math.ceil(totalLogs / pageSize);
+
+// Handle POST for marking resolved
+if (Astro.request.method === 'POST') {
+    const formData = await Astro.request.formData();
+    const action = formData.get('action');
+    const targetUrl = formData.get('url');
+
+    if (action === 'resolve' && targetUrl) {
+        await prisma.notFoundLog.updateMany({
+            where: { url: targetUrl as string },
+            data: { resolved: true }
+        });
+        return Astro.redirect(`/admin/broken-links?key=${adminKey}`);
+    }
+}
+---
+
+<Layout title="Broken Links — Admin">
+    <div class="admin-page">
+        <aside class="sidebar">
+            <div class="sidebar__brand">
+                <a href={`/admin?key=${adminKey}`} class="brand-link">
+                    <div class="brand-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/>
+                        </svg>
+                    </div>
+                    <span>MDRPedia</span>
+                </a>
+            </div>
+            <nav class="sidebar__nav">
+                <a href={`/admin?key=${adminKey}`} class="nav-item">Dashboard</a>
+                <a href={`/admin/doctors?key=${adminKey}`} class="nav-item">All Doctors</a>
+                <a href={`/admin/analytics?key=${adminKey}`} class="nav-item">Analytics</a>
+                <a href={`/admin/audit-log?key=${adminKey}`} class="nav-item">Activity Log</a>
+                <a href={`/admin/data-quality?key=${adminKey}`} class="nav-item">Data Quality</a>
+                <a href={`/admin/bulk-import?key=${adminKey}`} class="nav-item">Bulk Import</a>
+                <a href={`/admin/broken-links?key=${adminKey}`} class="nav-item active">Broken Links</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <div>
+                    <h1>Broken Links Report</h1>
+                    <p>Track and resolve 404 errors</p>
+                </div>
+                <div class="header-stats">
+                    <div class="stat">
+                        <span class="stat-value">{totalLogs.toLocaleString()}</span>
+                        <span class="stat-label">{showResolved ? 'Resolved' : 'Active'} 404s</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Filters -->
+            <div class="filters-bar">
+                <div class="filter-tabs">
+                    <a href={`/admin/broken-links?key=${adminKey}`}
+                       class={`filter-tab ${!showResolved ? 'active' : ''}`}>
+                        Active Issues
+                    </a>
+                    <a href={`/admin/broken-links?key=${adminKey}&resolved=true`}
+                       class={`filter-tab ${showResolved ? 'active' : ''}`}>
+                        Resolved
+                    </a>
+                </div>
+            </div>
+
+            <!-- Top Broken URLs -->
+            {!showResolved && urlStats.length > 0 && (
+                <div class="card">
+                    <h2>Most Frequent 404s (Last 30 Days)</h2>
+                    <p class="help-text">Human traffic only, bots excluded</p>
+                    <div class="url-list">
+                        {urlStats.map((stat, i) => (
+                            <div class="url-item">
+                                <span class="url-rank">{i + 1}</span>
+                                <span class="url-path" title={stat.url}>
+                                    {stat.url.length > 60 ? stat.url.slice(0, 60) + '...' : stat.url}
+                                </span>
+                                <span class="url-count">{stat._count.url} hits</span>
+                                <form method="POST" style="display: inline;">
+                                    <input type="hidden" name="action" value="resolve" />
+                                    <input type="hidden" name="url" value={stat.url} />
+                                    <button type="submit" class="btn btn--sm btn--outline">
+                                        Mark Resolved
+                                    </button>
+                                </form>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            <!-- Logs Table -->
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>URL</th>
+                            <th>Referrer</th>
+                            <th>Type</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {logs.length > 0 ? (
+                            logs.map((log) => (
+                                <tr class={log.is_bot ? 'row-bot' : ''}>
+                                    <td class="cell-time">
+                                        <span class="time-date">{new Date(log.createdAt).toLocaleDateString()}</span>
+                                        <span class="time-hour">{new Date(log.createdAt).toLocaleTimeString()}</span>
+                                    </td>
+                                    <td class="cell-url">
+                                        <code title={log.url}>
+                                            {log.url.length > 50 ? log.url.slice(0, 50) + '...' : log.url}
+                                        </code>
+                                    </td>
+                                    <td class="cell-referrer">
+                                        {log.referrer ? (
+                                            <a href={log.referrer} target="_blank" rel="noopener">
+                                                {new URL(log.referrer).hostname}
+                                            </a>
+                                        ) : (
+                                            <span class="text-muted">Direct</span>
+                                        )}
+                                    </td>
+                                    <td>
+                                        <span class={`type-badge ${log.is_bot ? 'type-badge--bot' : 'type-badge--human'}`}>
+                                            {log.is_bot ? 'Bot' : 'Human'}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {!log.resolved && (
+                                            <form method="POST" style="display: inline;">
+                                                <input type="hidden" name="action" value="resolve" />
+                                                <input type="hidden" name="url" value={log.url} />
+                                                <button type="submit" class="btn-icon" title="Mark Resolved">
+                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                                                        <polyline points="20 6 9 17 4 12"/>
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colspan="5" class="empty-state">
+                                    <p>No {showResolved ? 'resolved' : 'active'} 404 errors found</p>
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            {totalPages > 1 && (
+                <div class="pagination">
+                    {page > 1 && (
+                        <a href={`/admin/broken-links?key=${adminKey}&page=${page - 1}${showResolved ? '&resolved=true' : ''}`}
+                           class="btn btn--outline btn--sm">
+                            &larr; Previous
+                        </a>
+                    )}
+                    <span class="pagination-info">
+                        Page {page} of {totalPages}
+                    </span>
+                    {page < totalPages && (
+                        <a href={`/admin/broken-links?key=${adminKey}&page=${page + 1}${showResolved ? '&resolved=true' : ''}`}
+                           class="btn btn--outline btn--sm">
+                            Next &rarr;
+                        </a>
+                    )}
+                </div>
+            )}
+        </main>
+    </div>
+</Layout>
+
+<style>
+    .admin-page {
+        display: flex;
+        min-height: 100vh;
+        background: #0a0a12;
+    }
+
+    .sidebar {
+        width: 220px;
+        background: rgba(15, 15, 25, 0.95);
+        border-right: 1px solid rgba(255, 255, 255, 0.06);
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        padding: 20px 0;
+    }
+
+    .sidebar__brand {
+        padding: 0 20px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        margin-bottom: 16px;
+    }
+
+    .brand-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: white;
+        font-weight: 700;
+    }
+
+    .brand-icon {
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, #8b5cf6, #6366f1);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .brand-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .sidebar__nav {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 0 12px;
+    }
+
+    .nav-item {
+        padding: 10px 12px;
+        border-radius: 8px;
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: all 0.15s;
+    }
+
+    .nav-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+    }
+
+    .nav-item.active {
+        background: rgba(139, 92, 246, 0.15);
+        color: #8b5cf6;
+    }
+
+    .main-content {
+        flex: 1;
+        margin-left: 220px;
+        padding: 32px;
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 32px;
+    }
+
+    .page-header h1 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 4px;
+    }
+
+    .page-header p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+
+    .header-stats {
+        display: flex;
+        gap: 24px;
+    }
+
+    .stat {
+        text-align: right;
+    }
+
+    .stat-value {
+        display: block;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+    }
+
+    /* Filters */
+    .filters-bar {
+        margin-bottom: 24px;
+    }
+
+    .filter-tabs {
+        display: flex;
+        gap: 8px;
+    }
+
+    .filter-tab {
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        transition: all 0.15s;
+    }
+
+    .filter-tab:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+    }
+
+    .filter-tab.active {
+        background: rgba(139, 92, 246, 0.15);
+        border-color: rgba(139, 92, 246, 0.3);
+        color: #8b5cf6;
+    }
+
+    /* Card */
+    .card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        padding: 24px;
+        margin-bottom: 24px;
+    }
+
+    .card h2 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: white;
+        margin-bottom: 8px;
+    }
+
+    .help-text {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        margin-bottom: 16px;
+    }
+
+    /* URL List */
+    .url-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .url-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+    }
+
+    .url-rank {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text-muted);
+    }
+
+    .url-path {
+        flex: 1;
+        font-family: monospace;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+    }
+
+    .url-count {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #ef4444;
+        background: rgba(239, 68, 68, 0.1);
+        padding: 4px 10px;
+        border-radius: 20px;
+    }
+
+    /* Table */
+    .table-container {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .data-table th {
+        text-align: left;
+        padding: 12px 16px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .data-table td {
+        padding: 12px 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        vertical-align: top;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+
+    .row-bot {
+        opacity: 0.6;
+    }
+
+    .cell-time {
+        white-space: nowrap;
+    }
+
+    .time-date {
+        display: block;
+        color: white;
+        font-weight: 500;
+    }
+
+    .time-hour {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+
+    .cell-url code {
+        font-size: 0.8rem;
+        color: #f59e0b;
+        background: rgba(245, 158, 11, 0.1);
+        padding: 2px 6px;
+        border-radius: 4px;
+    }
+
+    .cell-referrer a {
+        color: #8b5cf6;
+        text-decoration: none;
+    }
+
+    .cell-referrer a:hover {
+        text-decoration: underline;
+    }
+
+    .type-badge {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+
+    .type-badge--human {
+        background: rgba(34, 197, 94, 0.15);
+        color: #22c55e;
+    }
+
+    .type-badge--bot {
+        background: rgba(156, 163, 175, 0.15);
+        color: #9ca3af;
+    }
+
+    .text-muted {
+        color: var(--text-muted);
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 48px;
+        color: var(--text-muted);
+    }
+
+    /* Buttons */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.15s;
+    }
+
+    .btn--primary {
+        background: #8b5cf6;
+        color: white;
+    }
+
+    .btn--outline {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--text-secondary);
+    }
+
+    .btn--sm {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+
+    .btn-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        background: rgba(34, 197, 94, 0.15);
+        border: none;
+        color: #22c55e;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.15s;
+    }
+
+    .btn-icon:hover {
+        background: rgba(34, 197, 94, 0.25);
+    }
+
+    /* Pagination */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+        margin-top: 24px;
+    }
+
+    .pagination-info {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+
+    @media (max-width: 1024px) {
+        .sidebar {
+            display: none;
+        }
+        .main-content {
+            margin-left: 0;
+        }
+    }
+</style>

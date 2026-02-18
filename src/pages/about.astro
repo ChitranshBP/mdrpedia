@@ -1,0 +1,295 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+    title="About MDRPedia — The Impact Quotient"
+    description="Cataloging humanity's greatest healers. The Forbes for Doctors, ranked by impact."
+>
+    <div class="about-container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Quantifying the Unquantifiable</h1>
+                <p class="hero-subtitle">
+                    For decades, society has obsessed over the Forbes Rich List.
+                    We believe the true measure of a contribution isn't net
+                    worth—it's <span class="highlight">Human Impact</span>.
+                </p>
+            </div>
+        </section>
+
+        <!-- Manifesto Section -->
+        <section class="mission">
+            <div class="grid-2">
+                <div class="text">
+                    <h2>The Anti-Rich List</h2>
+                    <p>
+                        We are building the <strong>Forbes for Doctors</strong>,
+                        but instead of dollars, we count lives saved, minds
+                        taught, and breakthroughs made.
+                    </p>
+                    <p>
+                        <strong>MDRPedia</strong> is the world's first definitive
+                        registry ranking medical professionals purely by their contribution
+                        to humanity. From the surgeon who pioneered a life-saving
+                        technique to the physician serving in a crisis zone, we honor
+                        those who enrich the world, not just themselves.
+                    </p>
+                    <p class="branding-note">
+                        *Sometimes referred to as <strong>MDpedia</strong> or <strong
+                            >DrPedia</strong
+                        > in medical journals and press.
+                    </p>
+                </div>
+                <div class="stat-box">
+                    <div class="stat">
+                        <span class="number">950+</span>
+                        <span class="label">Titans of Medicine</span>
+                    </div>
+                    <div class="stat">
+                        <span class="number">100M+</span>
+                        <span class="label">Lives Impacted</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Methodology -->
+        <section class="methodology">
+            <h2>The Impact Quotient (MDR Score)</h2>
+            <p class="intro">
+                How do you rank a doctor? We use a proprietary 4-Pillar System:
+            </p>
+
+            <div class="pillars">
+                <div class="pillar">
+                    <div class="icon">🔬</div>
+                    <h3>Intellectual Legacy</h3>
+                    <p>
+                        Research, citations, and inventions that changed medical
+                        practice.
+                    </p>
+                </div>
+                <div class="pillar">
+                    <div class="icon">🩺</div>
+                    <h3>Clinical Mastery</h3>
+                    <p>
+                        Verified surgeries, years of service, and patient
+                        outcomes.
+                    </p>
+                </div>
+                <div class="pillar">
+                    <div class="icon">🌍</div>
+                    <h3>Humanitarian Impact</h3>
+                    <p>
+                        Lives saved, crisis response, and service to the
+                        underserved.
+                    </p>
+                </div>
+                <div class="pillar">
+                    <div class="icon">🎓</div>
+                    <h3>Global Mentorship</h3>
+                    <p>
+                        The lineage of students trained and institutions built.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rankings Explanation -->
+        <section class="rankings-explainer">
+            <div class="badge-preview">
+                <div class="dummy-badge">
+                    <span>#1</span> in Cardiology
+                </div>
+            </div>
+            <div class="text">
+                <h2>Specialist Rankings</h2>
+                <p>
+                    Every doctor on MDRPedia is ranked within their specific
+                    field. This ensures fair comparison—neurosurgeons are ranked
+                    against neurosurgeons, oncologists against oncologists.
+                </p>
+                <p>
+                    Achieving a <strong>Top 10</strong> rank in any specialty signifies
+                    a level of excellence that defines a generation.
+                </p>
+            </div>
+        </section>
+    </div>
+</Layout>
+
+<style>
+    .about-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px 100px;
+        color: var(--text-primary);
+    }
+
+    /* Hero */
+    .hero {
+        padding: 100px 0;
+        text-align: center;
+        background: radial-gradient(
+            circle at center,
+            rgba(124, 58, 237, 0.1) 0%,
+            transparent 70%
+        );
+    }
+
+    h1 {
+        font-size: 4rem;
+        font-family: var(--font-serif);
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+        font-size: 1.5rem;
+        color: var(--text-secondary);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .highlight {
+        color: var(--accent-purple);
+        font-weight: 700;
+        text-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+        margin: 80px 0;
+    }
+
+    @media (max-width: 768px) {
+        .grid-2 {
+            grid-template-columns: 1fr;
+        }
+        h1 {
+            font-size: 2.5rem;
+        }
+    }
+
+    /* Sections */
+    section {
+        margin-bottom: 80px;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+        font-family: var(--font-serif);
+        margin-bottom: 1.5rem;
+        color: #fff;
+    }
+
+    p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--text-secondary);
+        margin-bottom: 1.5rem;
+    }
+
+    /* Stat Box */
+    .stat-box {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 40px;
+        display: flex;
+        justify-content: space-around;
+        text-align: center;
+    }
+
+    .stat .number {
+        display: block;
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--accent-purple);
+    }
+
+    .stat .label {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+    }
+
+    /* Pillars */
+    .pillars {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    .pillar {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 30px;
+        border-radius: 12px;
+        text-align: center;
+        transition: transform 0.2s;
+    }
+
+    .pillar:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.04);
+    }
+
+    .pillar .icon {
+        font-size: 3rem;
+        margin-bottom: 20px;
+    }
+
+    .pillar h3 {
+        color: #fff;
+        margin-bottom: 10px;
+    }
+
+    /* Ranking Explainer */
+    .rankings-explainer {
+        display: flex;
+        align-items: center;
+        gap: 60px;
+        background: linear-gradient(
+            90deg,
+            rgba(253, 185, 49, 0.05) 0%,
+            transparent 100%
+        );
+        padding: 60px;
+        border-radius: 20px;
+        border-left: 4px solid #fdb931;
+    }
+
+    .dummy-badge {
+        background: linear-gradient(135deg, #ffd700 0%, #fdb931 100%);
+        color: #1a1a1a;
+        padding: 20px 40px;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 1.5rem;
+        font-family: var(--font-serif);
+        box-shadow: 0 10px 30px rgba(253, 185, 49, 0.2);
+    }
+
+    .dummy-badge span {
+        font-size: 2.5rem;
+        font-weight: 900;
+    }
+
+    .branding-note {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        font-style: italic;
+        margin-top: 1rem;
+    }
+</style>

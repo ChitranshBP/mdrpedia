@@ -15,8 +15,9 @@ const reviewers = doctors.filter(
 // Pick one randomly or allow passing via props (e.g. if content is specific to a specialty)
 interface Props {
     specialty?: string;
+    pageSlug?: string; // Use this to make the selection deterministic
 }
-const { specialty } = Astro.props;
+const { specialty, pageSlug } = Astro.props;
 
 // Filter by specialty if possible, else fallback to any Titan
 let candidates = specialty
@@ -25,12 +26,20 @@ let candidates = specialty
 
 if (candidates.length === 0) candidates = reviewers;
 
-// Deterministic random based on today's date so it doesn't flicker on refresh too much?
-// Or just random for now.
-const reviewer =
-    candidates.length > 0
-        ? candidates[Math.floor(Math.random() * candidates.length)]
-        : null;
+// Deterministic selection based on pageSlug string hash
+const getHash = (str: string) => {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = (hash << 5) - hash + char;
+        hash = hash & hash; // Convert to 32bit integer
+    }
+    return Math.abs(hash);
+};
+
+const seed = pageSlug || "default-seed";
+const index = getHash(seed) % candidates.length;
+const reviewer = candidates.length > 0 ? candidates[index] : null;
 
 const today = new Date().toLocaleDateString("en-US", {
     year: "numeric",

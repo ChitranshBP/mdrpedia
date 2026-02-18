@@ -1,0 +1,304 @@
+---
+/**
+ * MDRPedia — Booking CTA Component
+ * Prominent booking button with availability indicator and consultation fee
+ */
+
+interface Props {
+    doctorName: string;
+    slug: string;
+    specialty: string;
+    tier: string;
+    bookingUrl?: string | null;
+    consultationFee?: string | null;
+    availability?: 'PRIVATE_CONSULTANT' | 'PUBLIC_FACULTY' | 'BOTH' | null;
+    acceptedInsurance?: string[];
+    languages?: string[];
+}
+
+const {
+    doctorName,
+    slug,
+    specialty,
+    tier,
+    bookingUrl,
+    consultationFee,
+    availability = 'PUBLIC_FACULTY',
+    acceptedInsurance = [],
+    languages = []
+} = Astro.props;
+
+const availabilityLabels: Record<string, { label: string; color: string; icon: string }> = {
+    PRIVATE_CONSULTANT: {
+        label: 'Private Practice',
+        color: 'var(--accent-purple)',
+        icon: 'building'
+    },
+    PUBLIC_FACULTY: {
+        label: 'Hospital/University',
+        color: '#3b82f6',
+        icon: 'hospital'
+    },
+    BOTH: {
+        label: 'Private & Hospital',
+        color: '#22c55e',
+        icon: 'check'
+    }
+};
+
+const availabilityInfo = availabilityLabels[availability || 'PUBLIC_FACULTY'];
+---
+
+<div class="booking-cta" data-tier={tier}>
+    <div class="booking-cta__content">
+        <div class="booking-cta__header">
+            <h3>Schedule a Consultation</h3>
+            <span class="availability-badge" style={`--badge-color: ${availabilityInfo.color}`}>
+                {availabilityInfo.icon === 'building' && (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
+                        <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/>
+                        <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/>
+                        <path d="M10 6h4"/>
+                        <path d="M10 10h4"/>
+                        <path d="M10 14h4"/>
+                        <path d="M10 18h4"/>
+                    </svg>
+                )}
+                {availabilityInfo.icon === 'hospital' && (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 6v4"/>
+                        <path d="M14 14h-4"/>
+                        <path d="M14 18h-4"/>
+                        <path d="M14 8h-4"/>
+                        <path d="M18 12h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2"/>
+                        <path d="M18 22V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v18"/>
+                    </svg>
+                )}
+                {availabilityInfo.icon === 'check' && (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                )}
+                {availabilityInfo.label}
+            </span>
+        </div>
+
+        <p class="booking-cta__description">
+            Connect with <strong>{doctorName}</strong> for expert consultation in {specialty}.
+        </p>
+
+        {consultationFee && (
+            <div class="booking-cta__fee">
+                <span class="fee-label">Consultation Fee</span>
+                <span class="fee-value">{consultationFee}</span>
+            </div>
+        )}
+
+        <div class="booking-cta__actions">
+            {bookingUrl ? (
+                <a href={bookingUrl} class="btn btn--primary btn--lg booking-btn" target="_blank" rel="noopener">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    Book Appointment
+                </a>
+            ) : (
+                <a href={`/contact?doctor=${slug}&subject=appointment`} class="btn btn--primary btn--lg booking-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    Request Appointment
+                </a>
+            )}
+            <a href={`/contact?doctor=${slug}&subject=inquiry`} class="btn btn--secondary btn--lg">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+                Ask a Question
+            </a>
+        </div>
+
+        {(languages.length > 0 || acceptedInsurance.length > 0) && (
+            <div class="booking-cta__meta">
+                {languages.length > 0 && (
+                    <div class="meta-item">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="2" y1="12" x2="22" y2="12"/>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                        </svg>
+                        <span>Languages: {languages.slice(0, 3).join(', ')}{languages.length > 3 ? ` +${languages.length - 3}` : ''}</span>
+                    </div>
+                )}
+                {acceptedInsurance.length > 0 && (
+                    <div class="meta-item">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                        <span>Accepts: {acceptedInsurance.slice(0, 2).join(', ')}{acceptedInsurance.length > 2 ? ` +${acceptedInsurance.length - 2}` : ''}</span>
+                    </div>
+                )}
+            </div>
+        )}
+    </div>
+
+    <div class="booking-cta__decoration">
+        <svg viewBox="0 0 200 200" fill="none">
+            <circle cx="100" cy="100" r="80" stroke="currentColor" stroke-width="0.5" opacity="0.1"/>
+            <circle cx="100" cy="100" r="60" stroke="currentColor" stroke-width="0.5" opacity="0.15"/>
+            <circle cx="100" cy="100" r="40" stroke="currentColor" stroke-width="0.5" opacity="0.2"/>
+            <path d="M100 40 L100 60 M100 140 L100 160 M40 100 L60 100 M140 100 L160 100" stroke="currentColor" stroke-width="1" opacity="0.2"/>
+        </svg>
+    </div>
+</div>
+
+<style>
+    .booking-cta {
+        position: relative;
+        padding: var(--space-xl);
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(99, 102, 241, 0.04));
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        margin: var(--space-xl) 0;
+    }
+
+    .booking-cta__content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .booking-cta__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+        margin-bottom: var(--space-md);
+    }
+
+    .booking-cta__header h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 0;
+        color: var(--text-primary);
+    }
+
+    .availability-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 12px;
+        background: rgba(var(--badge-color), 0.1);
+        border: 1px solid var(--badge-color);
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--badge-color);
+    }
+
+    .booking-cta__description {
+        font-size: 0.95rem;
+        color: var(--text-secondary);
+        margin: 0 0 var(--space-lg);
+        line-height: 1.6;
+    }
+
+    .booking-cta__fee {
+        display: flex;
+        align-items: center;
+        gap: var(--space-md);
+        padding: var(--space-md);
+        background: var(--bg-card);
+        border-radius: var(--radius-md);
+        margin-bottom: var(--space-lg);
+    }
+
+    .fee-label {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+
+    .fee-value {
+        font-family: var(--font-mono);
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--accent-purple);
+    }
+
+    .booking-cta__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-md);
+        margin-bottom: var(--space-lg);
+    }
+
+    .booking-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn--lg {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+
+    .booking-cta__meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-lg);
+        padding-top: var(--space-md);
+        border-top: 1px solid var(--border-subtle);
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+
+    .meta-item svg {
+        color: var(--accent-purple);
+    }
+
+    .booking-cta__decoration {
+        position: absolute;
+        top: -50px;
+        right: -50px;
+        width: 250px;
+        height: 250px;
+        color: var(--accent-purple);
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    @media (max-width: 640px) {
+        .booking-cta__header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .booking-cta__actions {
+            flex-direction: column;
+        }
+
+        .booking-cta__actions .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .booking-cta__meta {
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+    }
+</style>

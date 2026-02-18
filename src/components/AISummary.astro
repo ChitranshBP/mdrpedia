@@ -23,10 +23,10 @@ const {
     verifiedBadge = true,
 } = Astro.props;
 
-const tierEmojis: Record<string, string> = {
-    TITAN: "🏆",
-    ELITE: "🥈",
-    MASTER: "🥉",
+const tierLabels: Record<string, string> = {
+    TITAN: "Titan",
+    ELITE: "Elite",
+    MASTER: "Master",
     UNRANKED: "",
 };
 ---
@@ -60,8 +60,7 @@ const tierEmojis: Record<string, string> = {
         {
             verifiedBadge && (
                 <div class="ai-summary__verified">
-                    {tierEmojis[tier]} Verified{" "}
-                    {tier.charAt(0) + tier.slice(1).toLowerCase()}
+                    Verified {tier.charAt(0) + tier.slice(1).toLowerCase()}
                 </div>
             )
         }

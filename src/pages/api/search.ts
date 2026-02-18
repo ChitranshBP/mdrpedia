@@ -1,76 +1,186 @@
 
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../../lib/prisma';
+import { searchCache, searchCacheKey } from '../../lib/cache';
+import { API_CONFIG } from '../../lib/config';
 
 export const prerender = false; // Server-side only
 
-const prisma = new PrismaClient();
+// ─── Pre-computed Search Index ───────────────────────────────────────────────
+// Cache the processed doctor data to avoid repeated computation
+
+interface SearchableDoctor {
+    id: string;
+    fullName: string;
+    specialty: string;
+    subSpecialty?: string;
+    tier: string;
+    hIndex: number;
+    portraitUrl?: string;
+    city?: string;
+    country: string;
+    countryLower: string;
+    title?: string;
+    // Pre-computed search fields
+    searchText: string;
+    specialtyLower: string;
+    isSurgeon: boolean;
+    isResearcher: boolean;
+}
+
+let searchIndex: SearchableDoctor[] | null = null;
+let searchIndexTimestamp = 0;
+const SEARCH_INDEX_TTL = 300_000; // 5 minutes
+
+async function getSearchIndex(): Promise<SearchableDoctor[]> {
+    const now = Date.now();
+
+    // Return cached index if valid
+    if (searchIndex && (now - searchIndexTimestamp) < SEARCH_INDEX_TTL) {
+        return searchIndex;
+    }
+
+    // Build new index
+    const doctors = await getCollection('doctors');
+
+    searchIndex = doctors.map(doc => {
+        const d = doc.data;
+        const specialtyLower = d.specialty.toLowerCase();
+        const isSurgeon = specialtyLower.includes('surgery') ||
+            specialtyLower.includes('surgeon') ||
+            specialtyLower.includes('transplant');
+        const isResearcher = d.title?.includes('PhD') ||
+            d.affiliations?.some(a =>
+                a.role?.toLowerCase().includes('research') ||
+                a.role?.toLowerCase().includes('scientist')
+            );
+
+        return {
+            id: doc.id,
+            fullName: d.fullName,
+            specialty: d.specialty,
+            subSpecialty: d.subSpecialty,
+            tier: d.tier,
+            hIndex: d.hIndex || 0,
+            portraitUrl: d.portraitUrl,
+            city: d.geography.city,
+            country: d.geography.country,
+            countryLower: d.geography.country.toLowerCase(),
+            title: d.title,
+            // Pre-computed for faster search
+            searchText: `${d.fullName} ${d.specialty} ${d.subSpecialty || ''} ${d.geography.city || ''} ${d.geography.country}`.toLowerCase(),
+            specialtyLower,
+            isSurgeon,
+            isResearcher,
+        };
+    });
+
+    // Pre-sort by tier and h-index for faster slicing
+    searchIndex.sort((a, b) => {
+        if (a.tier === 'TITAN' && b.tier !== 'TITAN') return -1;
+        if (b.tier === 'TITAN' && a.tier !== 'TITAN') return 1;
+        return b.hIndex - a.hIndex;
+    });
+
+    searchIndexTimestamp = now;
+    return searchIndex;
+}
 
 export const GET: APIRoute = async ({ request, clientAddress }) => {
     const url = new URL(request.url);
     const query = url.searchParams.get('q')?.toLowerCase() || '';
-
-    if (!query || query.length < 2) {
-        return new Response(JSON.stringify([]), {
-            status: 200,
-            headers: { 'Content-Type': 'application/json' }
-        });
-    }
+    const country = url.searchParams.get('country')?.toLowerCase();
+    const role = url.searchParams.get('role')?.toLowerCase();
+    const specialty = url.searchParams.get('specialty')?.toLowerCase();
 
     try {
-        // 1. Search Content Collection (Source of Truth for Profiles)
-        // In a production app with 10k+ doctors, we'd use Postgres FTS or Algolia.
-        // For now, in-memory filtering of the collection is fast enough for <1000 profiles.
-        const doctors = await getCollection('doctors');
+        // Check cache first
+        const cacheKey = searchCacheKey(query, { country: country || '', role: role || '', specialty: specialty || '' });
+        const cached = searchCache.get(cacheKey);
+        if (cached) {
+            return new Response(JSON.stringify(cached), {
+                status: 200,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Cache': 'HIT'
+                }
+            });
+        }
 
-        const results = doctors.filter(doc => {
-            const d = doc.data;
-            const text = `${d.fullName} ${d.specialty} ${d.subSpecialty || ''} ${d.geography.city || ''} ${d.geography.country}`.toLowerCase();
-            return text.includes(query);
+        // Get pre-computed search index
+        const doctors = await getSearchIndex();
+
+        // Filter using pre-computed fields (much faster)
+        const results = doctors.filter(d => {
+            // Text Search - use pre-computed searchText
+            if (query && query.length >= 2) {
+                if (!d.searchText.includes(query)) return false;
+            }
+
+            // Country Filter - use pre-computed lowercase
+            if (country && d.countryLower !== country) {
+                return false;
+            }
+
+            // Specialty Filter - use pre-computed lowercase
+            if (specialty && !d.specialtyLower.includes(specialty)) {
+                return false;
+            }
+
+            // Role Filter - use pre-computed flags
+            if (role) {
+                if (role === 'surgeon' && !d.isSurgeon) return false;
+                if (role === 'researcher' && !d.isResearcher) return false;
+                if (role === 'physician' && (d.isSurgeon || d.isResearcher)) return false;
+            }
+
+            return true;
         });
 
-        // 2. Sort results: Titans first, then H-Index
-        const sortedResults = results.sort((a, b) => {
-            // Priority 1: Tier match
-            if (a.data.tier === 'TITAN' && b.data.tier !== 'TITAN') return -1;
-            if (b.data.tier === 'TITAN' && a.data.tier !== 'TITAN') return 1;
+        // Already sorted in index, just slice
+        const sortedResults = results.slice(0, API_CONFIG.search.maxResults);
 
-            // Priority 2: H-Index
-            return (b.data.hIndex || 0) - (a.data.hIndex || 0);
-        }).slice(0, 5); // Limit to top 5
-
-        // 3. Log to Database (Fire & Forget)
-        // We don't await this to keep search fast, but in serverless we might need to.
-        // Astro locals/Netlify functions usually handle background work ok, but safest to await if critical.
+        // 3. Log to Database (Fire & Forget - non-blocking)
         if (query.length > 2) {
-            await prisma.searchLog.create({
+            // Don't await - true fire-and-forget to avoid blocking response
+            prisma.searchLog.create({
                 data: {
                     queryText: query,
                     resultsCount: sortedResults.length,
                     ipAddress: clientAddress || 'unknown',
                 }
-            }).catch(err => console.error('Search Log Error:', err));
+            }).catch(() => { /* Silent fail for analytics */ });
         }
 
-        // 4. Return simplified results
-        const responseData = sortedResults.map(doc => ({
-            slug: doc.slug,
-            fullName: doc.data.fullName,
-            specialty: doc.data.specialty,
-            tier: doc.data.tier,
-            portraitUrl: doc.data.portraitUrl,
-            city: doc.data.geography.city,
-            country: doc.data.geography.country
+        // 4. Return simplified results (use pre-computed role)
+        const responseData = sortedResults.map(d => ({
+            slug: d.id,
+            fullName: d.fullName,
+            specialty: d.specialty,
+            tier: d.tier,
+            portraitUrl: d.portraitUrl,
+            city: d.city,
+            country: d.country,
+            role: d.isSurgeon ? 'Surgeon' : (d.isResearcher ? 'Researcher' : 'Physician')
         }));
+
+        // Cache the results
+        searchCache.set(cacheKey, responseData);
 
         return new Response(JSON.stringify(responseData), {
             status: 200,
-            headers: { 'Content-Type': 'application/json' }
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Cache': 'MISS'
+            }
         });
 
     } catch (error) {
-        console.error('Search API Error:', error);
+        // Log error in production monitoring, not console
+        if (import.meta.env.DEV) {
+            console.error('Search API Error:', error);
+        }
         return new Response(JSON.stringify({ error: 'Internal Server Error' }), { status: 500 });
     }
 };

@@ -1,31 +1,531 @@
 {
   "fullName": "Atul Gawande",
   "slug": "atul-gawande",
-  "title": "MD, PhD",
+  "title": "MD",
   "specialty": "Surgical Safety & Health Systems",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23001a4d\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%2300aaff\" text-anchor=\"middle\" dy=\".3em\">AG</text></svg>",
-  "tier": "ELITE",
-  "rankingScore": 31,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 30.67,
   "hIndex": 124,
-  "citations": [],
-  "yearsActive": 30,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 11000,
+  "livesSaved": 0,
+  "biography": "Atul Atmaram Gawande is an American surgeon, writer, and public health researcher. He practices general and endocrine surgery at Brigham and Women's Hospital in Boston, Massachusetts. He is a professor in the Department of Health Policy and Management at the Harvard T.H. Chan School of Public Health and the Samuel O. Thier Professor of Surgery at Harvard Medical School.",
+  "aiSummary": "Atul Gawande is a surgical safety & health systems specialist with an H-index of 124 at USAID (Assistant Administrator for Global Health). Has been published in New England Journal of Medicine, The Lancet, JAMA and recipient of the Rhodes Scholarship (1987). Based in United States.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e9/Atul_Gawande_2015.jpg",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
+  "hasInvention": false,
+  "education": [
+    "BA, Stanford University",
+    "MA (Rhodes Scholar), Balliol College, Oxford",
+    "MD, Harvard Medical School",
+    "MPH, Harvard T.H. Chan School of Public Health"
+  ],
+  "socialMedia": {},
   "affiliations": [
     {
-      "hospitalName": "Harvard T.H. Chan School of Public Health"
+      "hospitalName": "USAID",
+      "role": "Assistant Administrator for Global Health",
+      "hospitalUrl": "https://www.usaid.gov/"
+    },
+    {
+      "hospitalName": "Brigham and Women's Hospital",
+      "role": "General and Endocrine Surgeon",
+      "hospitalUrl": "https://www.brighamandwomens.org/"
+    },
+    {
+      "hospitalName": "Harvard Medical School",
+      "role": "Samuel O. Thier Professor of Surgery",
+      "hospitalUrl": "https://hms.harvard.edu/"
     }
   ],
-  "bio": "Atul Gawande is a pioneer in Surgical Safety & Health Systems at Harvard T.H. Chan School of Public Health, USA. With a D-Index of 124 and over 110,000 citations, they are among the world's most influential researchers.",
-  "awards": [],
-  "education": [],
-  "socialMedia": {},
-  "status": "LIVING"
+  "medicalSpecialty": [
+    "Surgical Safety & Health Systems"
+  ],
+  "knowsAbout": [
+    "Mac"
+  ],
+  "citations": [
+    {
+      "title": "A Surgical Safety Checklist to Reduce Morbidity and Mortality in a Global Population",
+      "journal": "New England Journal of Medicine",
+      "year": 2009,
+      "citationCount": 5484,
+      "doi": "10.1056/nejmsa0810119",
+      "sourceUrl": "https://doi.org/10.1056/nejmsa0810119",
+      "verified": true
+    },
+    {
+      "title": "Global Surgery 2030: evidence and solutions for achieving health, welfare, and economic development",
+      "journal": "The Lancet",
+      "year": 2015,
+      "citationCount": 3528,
+      "doi": "10.1016/s0140-6736(15)60160-x",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(15)60160-x",
+      "verified": true
+    },
+    {
+      "title": "An estimation of the global volume of surgery: a modelling strategy based on available data",
+      "journal": "The Lancet",
+      "year": 2008,
+      "citationCount": 2490,
+      "doi": "10.1016/s0140-6736(08)60878-8",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(08)60878-8",
+      "verified": true
+    },
+    {
+      "title": "Improving Safety with Information Technology",
+      "journal": "New England Journal of Medicine",
+      "year": 2003,
+      "citationCount": 1532,
+      "doi": "10.1056/nejmsa020847",
+      "sourceUrl": "https://doi.org/10.1056/nejmsa020847",
+      "verified": true
+    },
+    {
+      "title": "The Checklist Manifesto: How to Get Things Right",
+      "journal": "Journal of Nursing Regulation",
+      "year": 2011,
+      "citationCount": 1147,
+      "doi": "10.1016/s2155-8256(15)30310-0",
+      "sourceUrl": "https://doi.org/10.1016/s2155-8256(15)30310-0",
+      "verified": true
+    },
+    {
+      "title": "Risk Factors for Retained Instruments and Sponges after Surgery",
+      "journal": "New England Journal of Medicine",
+      "year": 2003,
+      "citationCount": 1070,
+      "doi": "10.1056/nejmsa021721",
+      "sourceUrl": "https://doi.org/10.1056/nejmsa021721",
+      "verified": true
+    },
+    {
+      "title": "Analysis of errors reported by surgeons at three teaching hospitals",
+      "journal": "Surgery",
+      "year": 2003,
+      "citationCount": 1068,
+      "doi": "10.1067/msy.2003.169",
+      "sourceUrl": "https://doi.org/10.1067/msy.2003.169",
+      "verified": true
+    },
+    {
+      "title": "The incidence and nature of surgical adverse events in Colorado and Utah in 1992",
+      "journal": "Surgery",
+      "year": 1999,
+      "citationCount": 962,
+      "doi": "10.1067/msy.1999.98664",
+      "sourceUrl": "https://doi.org/10.1067/msy.1999.98664",
+      "verified": true
+    },
+    {
+      "title": "Estimate of the global volume of surgery in 2012: an assessment supporting improved health outcomes",
+      "journal": "The Lancet",
+      "year": 2015,
+      "citationCount": 919,
+      "doi": "10.1016/s0140-6736(15)60806-6",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(15)60806-6",
+      "verified": true
+    },
+    {
+      "title": "Patterns of Communication Breakdowns Resulting in Injury to Surgical Patients",
+      "journal": "Journal of the American College of Surgeons",
+      "year": 2007,
+      "citationCount": 835,
+      "doi": "10.1016/j.jamcollsurg.2007.01.010",
+      "sourceUrl": "https://doi.org/10.1016/j.jamcollsurg.2007.01.010",
+      "verified": true
+    },
+    {
+      "title": "Claims, Errors, and Compensation Payments in Medical Malpractice Litigation",
+      "journal": "New England Journal of Medicine",
+      "year": 2006,
+      "citationCount": 832,
+      "doi": "10.1056/nejmsa054479",
+      "sourceUrl": "https://doi.org/10.1056/nejmsa054479",
+      "verified": true
+    },
+    {
+      "title": "Long-term assessment of a multidisciplinary approach to thyroid nodule diagnostic evaluation",
+      "journal": "Cancer",
+      "year": 2007,
+      "citationCount": 713,
+      "doi": "10.1002/cncr.23116",
+      "sourceUrl": "https://doi.org/10.1002/cncr.23116",
+      "verified": true
+    },
+    {
+      "title": "Variation in Surgical-Readmission Rates and Quality of Hospital Care",
+      "journal": "New England Journal of Medicine",
+      "year": 2013,
+      "citationCount": 656,
+      "doi": "10.1056/nejmsa1303118",
+      "sourceUrl": "https://doi.org/10.1056/nejmsa1303118",
+      "verified": true
+    },
+    {
+      "title": "Size and distribution of the global volume of surgery in 2012",
+      "journal": "Bulletin of the World Health Organization",
+      "year": 2016,
+      "citationCount": 610,
+      "doi": "10.2471/blt.15.159293",
+      "sourceUrl": "https://doi.org/10.2471/blt.15.159293",
+      "verified": true
+    },
+    {
+      "title": "Relationship Between Cesarean Delivery Rate and Maternal and Neonatal Mortality",
+      "journal": "JAMA",
+      "year": 2015,
+      "citationCount": 603,
+      "doi": "10.1001/jama.2015.15553",
+      "sourceUrl": "https://doi.org/10.1001/jama.2015.15553",
+      "verified": true
+    },
+    {
+      "title": "Simulation-Based Trial of Surgical-Crisis Checklists",
+      "journal": "New England Journal of Medicine",
+      "year": 2013,
+      "citationCount": 553,
+      "doi": "10.1056/nejmsa1204720",
+      "sourceUrl": "https://doi.org/10.1056/nejmsa1204720",
+      "verified": true
+    },
+    {
+      "title": "Casualties of War — Military Care for the Wounded from Iraq and Afghanistan",
+      "journal": "New England Journal of Medicine",
+      "year": 2004,
+      "citationCount": 550,
+      "doi": "10.1056/nejmp048317",
+      "sourceUrl": "https://doi.org/10.1056/nejmp048317",
+      "verified": true
+    },
+    {
+      "title": "Changes in safety attitude and relationship to decreased postoperative morbidity and mortality following implementation of a checklist-based surgical safety intervention",
+      "journal": "BMJ Quality & Safety",
+      "year": 2011,
+      "citationCount": 519,
+      "doi": "10.1136/bmjqs.2009.040022",
+      "sourceUrl": "https://doi.org/10.1136/bmjqs.2009.040022",
+      "verified": true
+    },
+    {
+      "title": "Global Surgery 2030: evidence and solutions for achieving health, welfare, and economic development",
+      "journal": "American Journal of Obstetrics and Gynecology",
+      "year": 2015,
+      "citationCount": 495,
+      "doi": "10.1016/j.ajog.2015.04.010",
+      "sourceUrl": "https://doi.org/10.1016/j.ajog.2015.04.010",
+      "verified": true
+    },
+    {
+      "title": "National Costs Of The Medical Liability System",
+      "journal": "Health Affairs",
+      "year": 2010,
+      "citationCount": 487,
+      "doi": "10.1377/hlthaff.2009.0807",
+      "sourceUrl": "https://doi.org/10.1377/hlthaff.2009.0807",
+      "verified": true
+    },
+    {
+      "title": "An Apgar Score for Surgery",
+      "journal": "Journal of the American College of Surgeons",
+      "year": 2006,
+      "citationCount": 475,
+      "doi": "10.1016/j.jamcollsurg.2006.11.011",
+      "sourceUrl": "https://doi.org/10.1016/j.jamcollsurg.2006.11.011",
+      "verified": true
+    },
+    {
+      "title": "Effect of A 19-Item Surgical Safety Checklist During Urgent Operations in A Global Patient Population",
+      "journal": "Annals of Surgery",
+      "year": 2010,
+      "citationCount": 462,
+      "doi": "10.1097/sla.0b013e3181d970e3",
+      "sourceUrl": "https://doi.org/10.1097/sla.0b013e3181d970e3",
+      "verified": true
+    },
+    {
+      "title": "Development of the Serious Illness Care Program: a randomised controlled trial of a palliative care communication intervention",
+      "journal": "BMJ Open",
+      "year": 2015,
+      "citationCount": 436,
+      "doi": "10.1136/bmjopen-2015-009032",
+      "sourceUrl": "https://doi.org/10.1136/bmjopen-2015-009032",
+      "verified": true
+    },
+    {
+      "title": "Health Insurance Coverage and Health — What the Recent Evidence Tells Us",
+      "journal": "New England Journal of Medicine",
+      "year": 2017,
+      "citationCount": 432,
+      "doi": "10.1056/nejmsb1706645",
+      "sourceUrl": "https://doi.org/10.1056/nejmsb1706645",
+      "verified": true
+    },
+    {
+      "title": "Analysis of surgical errors in closed malpractice claims at 4 liability insurers",
+      "journal": "Surgery",
+      "year": 2006,
+      "citationCount": 408,
+      "doi": "10.1016/j.surg.2006.01.008",
+      "sourceUrl": "https://doi.org/10.1016/j.surg.2006.01.008",
+      "verified": true
+    },
+    {
+      "title": "Global Surgery 2030: evidence and solutions for achieving health, welfare, and economic development",
+      "journal": "International Journal of Obstetric Anesthesia",
+      "year": 2015,
+      "citationCount": 403,
+      "doi": "10.1016/j.ijoa.2015.09.006",
+      "sourceUrl": "https://doi.org/10.1016/j.ijoa.2015.09.006",
+      "verified": true
+    },
+    {
+      "title": "Global operating theatre distribution and pulse oximetry supply: an estimation from reported data",
+      "journal": "The Lancet",
+      "year": 2010,
+      "citationCount": 400,
+      "doi": "10.1016/s0140-6736(10)60392-3",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(10)60392-3",
+      "verified": true
+    },
+    {
+      "title": "Effective Surgical Safety Checklist Implementation",
+      "journal": "Journal of the American College of Surgeons",
+      "year": 2011,
+      "citationCount": 372,
+      "doi": "10.1016/j.jamcollsurg.2011.01.052",
+      "sourceUrl": "https://doi.org/10.1016/j.jamcollsurg.2011.01.052",
+      "verified": true
+    },
+    {
+      "title": "Effect of the Serious Illness Care Program in Outpatient Oncology",
+      "journal": "JAMA Internal Medicine",
+      "year": 2019,
+      "citationCount": 366,
+      "doi": "10.1001/jamainternmed.2019.0077",
+      "sourceUrl": "https://doi.org/10.1001/jamainternmed.2019.0077",
+      "verified": true
+    },
+    {
+      "title": "The intensity and variation of surgical care at the end of life: a retrospective cohort study",
+      "journal": "The Lancet",
+      "year": 2011,
+      "citationCount": 335,
+      "doi": "10.1016/s0140-6736(11)61268-3",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(11)61268-3",
+      "verified": true
+    },
+    {
+      "title": "Complications: A Surgeon's Notes on an Imperfect Science",
+      "journal": "DigitalGeorgetown (Georgetown University Library)",
+      "year": 2002,
+      "citationCount": 328,
+      "doi": "10.1136/jramc-153-03-20",
+      "sourceUrl": "https://doi.org/10.1136/jramc-153-03-20",
+      "verified": true
+    },
+    {
+      "title": "Managing COVID-19 in Surgical Systems",
+      "journal": "Annals of Surgery",
+      "year": 2020,
+      "citationCount": 318,
+      "doi": "10.1097/sla.0000000000003923",
+      "sourceUrl": "https://doi.org/10.1097/sla.0000000000003923",
+      "verified": true
+    },
+    {
+      "title": "Essential surgery: key messages from Disease Control Priorities, 3rd edition",
+      "journal": "The Lancet",
+      "year": 2015,
+      "citationCount": 315,
+      "doi": "10.1016/s0140-6736(15)60091-5",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(15)60091-5",
+      "verified": true
+    },
+    {
+      "title": "Evaluating an Intervention to Improve Communication Between Oncology Clinicians and Patients With Life-Limiting Cancer",
+      "journal": "JAMA Oncology",
+      "year": 2019,
+      "citationCount": 304,
+      "doi": "10.1001/jamaoncol.2019.0292",
+      "sourceUrl": "https://doi.org/10.1001/jamaoncol.2019.0292",
+      "verified": true
+    },
+    {
+      "title": "Thyroid Nodule Size and Prediction of Cancer",
+      "journal": "The Journal of Clinical Endocrinology & Metabolism",
+      "year": 2012,
+      "citationCount": 291,
+      "doi": "10.1210/jc.2012-2968",
+      "sourceUrl": "https://doi.org/10.1210/jc.2012-2968",
+      "verified": true
+    },
+    {
+      "title": "Perspectives in quality: designing the WHO Surgical Safety Checklist",
+      "journal": "International Journal for Quality in Health Care",
+      "year": 2010,
+      "citationCount": 277,
+      "doi": "10.1093/intqhc/mzq039",
+      "sourceUrl": "https://doi.org/10.1093/intqhc/mzq039",
+      "verified": true
+    },
+    {
+      "title": "Disease Control Priorities",
+      "journal": "The International Bank for Reconstruction and Development / The World Bank eBooks",
+      "year": 2015,
+      "citationCount": 265,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W578350626",
+      "verified": true
+    },
+    {
+      "title": "The Checklist Manifesto",
+      "journal": "Unknown Journal",
+      "year": 2009,
+      "citationCount": 249,
+      "doi": null,
+      "sourceUrl": "https://openalex.org/W2799215994",
+      "verified": true
+    },
+    {
+      "title": "Outcomes of a Coaching-Based WHO Safe Childbirth Checklist Program in India",
+      "journal": "New England Journal of Medicine",
+      "year": 2017,
+      "citationCount": 243,
+      "doi": "10.1056/nejmoa1701075",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1701075",
+      "verified": true
+    },
+    {
+      "title": "Crisis Checklists for the Operating Room: Development and Pilot Testing",
+      "journal": "Journal of the American College of Surgeons",
+      "year": 2011,
+      "citationCount": 237,
+      "doi": "10.1016/j.jamcollsurg.2011.04.031",
+      "sourceUrl": "https://doi.org/10.1016/j.jamcollsurg.2011.04.031",
+      "verified": true
+    },
+    {
+      "title": "Relationship Between Occurrence of Surgical Complications and Hospital Finances",
+      "journal": "JAMA",
+      "year": 2013,
+      "citationCount": 222,
+      "doi": "10.1001/jama.2013.2773",
+      "sourceUrl": "https://doi.org/10.1001/jama.2013.2773",
+      "verified": true
+    },
+    {
+      "title": "Universal health coverage and intersectoral action for health: key messages from Disease Control Priorities, 3rd edition",
+      "journal": "The Lancet",
+      "year": 2017,
+      "citationCount": 220,
+      "doi": "10.1016/s0140-6736(17)32906-9",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(17)32906-9",
+      "verified": true
+    },
+    {
+      "title": "Disease Control Priorities, Third Edition (Volume 1): Essential Surgery",
+      "journal": "The World Bank eBooks",
+      "year": 2015,
+      "citationCount": 216,
+      "doi": "10.1596/978-1-4648-0346-8",
+      "sourceUrl": "https://doi.org/10.1596/978-1-4648-0346-8",
+      "verified": true
+    },
+    {
+      "title": "Postgame Analysis: Using Video-Based Coaching for Continuous Professional Development",
+      "journal": "Journal of the American College of Surgeons",
+      "year": 2011,
+      "citationCount": 214,
+      "doi": "10.1016/j.jamcollsurg.2011.10.009",
+      "sourceUrl": "https://doi.org/10.1016/j.jamcollsurg.2011.10.009",
+      "verified": true
+    },
+    {
+      "title": "Patterns of Technical Error Among Surgical Malpractice Claims",
+      "journal": "Annals of Surgery",
+      "year": 2007,
+      "citationCount": 211,
+      "doi": "10.1097/sla.0b013e31815865f8",
+      "sourceUrl": "https://doi.org/10.1097/sla.0b013e31815865f8",
+      "verified": true
+    },
+    {
+      "title": "Hospital Board And Management Practices Are Strongly Related To Hospital Performance On Clinical Quality Metrics",
+      "journal": "Health Affairs",
+      "year": 2015,
+      "citationCount": 210,
+      "doi": "10.1377/hlthaff.2014.1282",
+      "sourceUrl": "https://doi.org/10.1377/hlthaff.2014.1282",
+      "verified": true
+    },
+    {
+      "title": "Improving Quality of Care for Maternal and Newborn Health: Prospective Pilot Study of the WHO Safe Childbirth Checklist Program",
+      "journal": "PLoS ONE",
+      "year": 2012,
+      "citationCount": 206,
+      "doi": "10.1371/journal.pone.0035151",
+      "sourceUrl": "https://doi.org/10.1371/journal.pone.0035151",
+      "verified": true
+    },
+    {
+      "title": "Contribution of Preventable Acute Care Spending to Total Spending for High-Cost Medicare Patients",
+      "journal": "JAMA",
+      "year": 2013,
+      "citationCount": 199,
+      "doi": "10.1001/jama.2013.7103",
+      "sourceUrl": "https://doi.org/10.1001/jama.2013.7103",
+      "verified": true
+    },
+    {
+      "title": "Two Hundred Years of Surgery",
+      "journal": "New England Journal of Medicine",
+      "year": 2012,
+      "citationCount": 198,
+      "doi": "10.1056/nejmra1202392",
+      "sourceUrl": "https://doi.org/10.1056/nejmra1202392",
+      "verified": true
+    },
+    {
+      "title": "Accidental Deaths, Saved Lives, and Improved Quality",
+      "journal": "New England Journal of Medicine",
+      "year": 2005,
+      "citationCount": 198,
+      "doi": "10.1056/nejmsb051157",
+      "sourceUrl": "https://doi.org/10.1056/nejmsb051157",
+      "verified": true
+    }
+  ],
+  "awards": [
+    {
+      "name": "Rhodes Scholarship",
+      "year": 1987,
+      "issuingBody": "Rhodes Trust"
+    },
+    {
+      "name": "National Book Award Finalist",
+      "year": 2002,
+      "issuingBody": "National Book Foundation"
+    },
+    {
+      "name": "MacArthur Fellowship",
+      "year": 2006,
+      "issuingBody": "MacArthur Foundation"
+    },
+    {
+      "name": "Lewis Thomas Prize",
+      "year": 2014,
+      "issuingBody": "Rockefeller University"
+    }
+  ],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:16.000Z",
+  "openalexId": "https://openalex.org/A5039378572"
 }

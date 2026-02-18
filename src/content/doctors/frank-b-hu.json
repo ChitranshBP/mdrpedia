@@ -1,87 +1,493 @@
 {
   "fullName": "Frank B. Hu",
   "slug": "frank-b-hu",
-  "title": "MD, PhD",
-  "specialty": "Nutrition & Diabetes",
+  "title": "MD",
+  "specialty": "Nutrition & Metabolic Disease",
   "geography": {
-    "city": "Unknown",
-    "country": "USA"
+    "country": "United States",
+    "region": null,
+    "city": null
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">FB</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 77,
-  "hIndex": 309,
-  "citations": [
-    {
-      "title": "Optimal dietary patterns for healthy aging.",
-      "journal": "Nat Med",
-      "year": 2025,
-      "citationCount": 0,
-      "doi": "10.1038/s41591-025-03570-5",
-      "pubmedId": "40128348",
-      "verified": true,
-      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/40128348/"
-    },
-    {
-      "title": "Diet strategies for promoting healthy aging and longevity: An epidemiological perspective.",
-      "journal": "J Intern Med",
-      "year": 2024,
-      "citationCount": 0,
-      "doi": "10.1111/joim.13728",
-      "pubmedId": "37867396",
-      "verified": true,
-      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/37867396/"
-    },
-    {
-      "title": "Visceral and ectopic fat, atherosclerosis, and cardiometabolic disease: a position statement.",
-      "journal": "Lancet Diabetes Endocrinol",
-      "year": 2019,
-      "citationCount": 0,
-      "doi": "10.1016/S2213-8587(19)30084-1",
-      "pubmedId": "31301983",
-      "verified": true,
-      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/31301983/"
-    },
-    {
-      "title": "Coffee, Caffeine, and Health.",
-      "journal": "N Engl J Med",
-      "year": 2020,
-      "citationCount": 0,
-      "doi": "10.1056/NEJMra1816604",
-      "pubmedId": "32706535",
-      "verified": true,
-      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/32706535/"
-    },
-    {
-      "title": "Coffee drinking timing and mortality in US adults.",
-      "journal": "Eur Heart J",
-      "year": 2025,
-      "citationCount": 0,
-      "doi": "10.1093/eurheartj/ehae871",
-      "pubmedId": "39776171",
-      "verified": true,
-      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/39776171/"
-    }
-  ],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 405,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 40507,
+  "livesSaved": 0,
+  "biography": "Frank B. Hu is a Chinese American nutrition and diabetes researcher. He is Chair of the Department of Nutrition and the Fredrick J. Stare Professor of Nutrition and Epidemiology at the Harvard T.H. Chan School of Public Health, and Professor of Medicine at the Harvard Medical School.",
+  "aiSummary": "Frank B. Hu is a nutrition & metabolic disease specialist with an H-index of 405 at Harvard University (Faculty). Has been published in Nature Reviews Endocrinology, New England Journal of Medicine, The Lancet. Based in United States.",
+  "portraitUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Frank_Hu_2014-09-16.png",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "Harvard University"
-    }
-  ],
-  "bio": "Frank B. Hu is a pioneer in Nutrition & Diabetes at Harvard University, USA. With a D-Index of 309 and over 405,071 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [
+    {
+      "hospitalName": "Harvard University",
+      "role": "Faculty",
+      "hospitalUrl": "#"
+    }
+  ],
+  "medicalSpecialty": [
+    "Nutrition & Metabolic Disease"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Global Burden of Cardiovascular Diseases and Risk Factors, 1990–2019",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2020,
+      "citationCount": 10190,
+      "doi": "10.1016/j.jacc.2020.11.010",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2020.11.010",
+      "verified": true
+    },
+    {
+      "title": "Global aetiology and epidemiology of type 2 diabetes mellitus and its complications",
+      "journal": "Nature Reviews Endocrinology",
+      "year": 2017,
+      "citationCount": 5475,
+      "doi": "10.1038/nrendo.2017.151",
+      "sourceUrl": "https://doi.org/10.1038/nrendo.2017.151",
+      "verified": true
+    },
+    {
+      "title": "2013 AHA/ACC/TOS Guideline for the Management of Overweight and Obesity in Adults",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2013,
+      "citationCount": 3981,
+      "doi": "10.1016/j.jacc.2013.11.004",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2013.11.004",
+      "verified": true
+    },
+    {
+      "title": "Dietary pattern analysis: a new direction in nutritional epidemiology",
+      "journal": "Current Opinion in Lipidology",
+      "year": 2002,
+      "citationCount": 3935,
+      "doi": "10.1097/00041433-200202000-00002",
+      "sourceUrl": "https://doi.org/10.1097/00041433-200202000-00002",
+      "verified": true
+    },
+    {
+      "title": "Diet, Lifestyle, and the Risk of Type 2 Diabetes Mellitus in Women",
+      "journal": "New England Journal of Medicine",
+      "year": 2001,
+      "citationCount": 2875,
+      "doi": "10.1056/nejmoa010492",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa010492",
+      "verified": true
+    },
+    {
+      "title": "The Epidemiology of Obesity: A Big Picture",
+      "journal": "PharmacoEconomics",
+      "year": 2014,
+      "citationCount": 2831,
+      "doi": "10.1007/s40273-014-0243-x",
+      "sourceUrl": "https://doi.org/10.1007/s40273-014-0243-x",
+      "verified": true
+    },
+    {
+      "title": "Body-mass index and all-cause mortality: individual-participant-data meta-analysis of 239 prospective studies in four continents",
+      "journal": "The Lancet",
+      "year": 2016,
+      "citationCount": 2693,
+      "doi": "10.1016/s0140-6736(16)30175-1",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(16)30175-1",
+      "verified": true
+    },
+    {
+      "title": "Diabetes Mellitus, Fasting Glucose, and Risk of Cause-Specific Death",
+      "journal": "New England Journal of Medicine",
+      "year": 2011,
+      "citationCount": 2660,
+      "doi": "10.1056/nejmoa1008862",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1008862",
+      "verified": true
+    },
+    {
+      "title": "2013 AHA/ACC/TOS Guideline for the Management of Overweight and Obesity in Adults",
+      "journal": "Circulation",
+      "year": 2013,
+      "citationCount": 2595,
+      "doi": "10.1161/01.cir.0000437739.71477.ee",
+      "sourceUrl": "https://doi.org/10.1161/01.cir.0000437739.71477.ee",
+      "verified": true
+    },
+    {
+      "title": "Changes in Diet and Lifestyle and Long-Term Weight Gain in Women and Men",
+      "journal": "New England Journal of Medicine",
+      "year": 2011,
+      "citationCount": 2477,
+      "doi": "10.1056/nejmoa1014296",
+      "sourceUrl": "https://doi.org/10.1056/nejmoa1014296",
+      "verified": true
+    },
+    {
+      "title": "Type 2 diabetes mellitus",
+      "journal": "Nature Reviews Disease Primers",
+      "year": 2015,
+      "citationCount": 2419,
+      "doi": "10.1038/nrdp.2015.19",
+      "sourceUrl": "https://doi.org/10.1038/nrdp.2015.19",
+      "verified": true
+    },
+    {
+      "title": "Intake of sugar-sweetened beverages and weight gain: a systematic review1–3",
+      "journal": "American Journal of Clinical Nutrition",
+      "year": 2006,
+      "citationCount": 2293,
+      "doi": "10.1093/ajcn/84.1.274",
+      "sourceUrl": "https://doi.org/10.1093/ajcn/84.1.274",
+      "verified": true
+    },
+    {
+      "title": "Intake of sugar-sweetened beverages and weight gain: a systematic review",
+      "journal": "American Journal of Clinical Nutrition",
+      "year": 2006,
+      "citationCount": 2079,
+      "doi": "10.1093/ajcn/84.2.274",
+      "sourceUrl": "https://doi.org/10.1093/ajcn/84.2.274",
+      "verified": true
+    },
+    {
+      "title": "Sugar-Sweetened Beverages and Risk of Metabolic Syndrome and Type 2 Diabetes",
+      "journal": "Diabetes Care",
+      "year": 2010,
+      "citationCount": 2032,
+      "doi": "10.2337/dc10-1079",
+      "sourceUrl": "https://doi.org/10.2337/dc10-1079",
+      "verified": true
+    },
+    {
+      "title": "Diabetes in Asia",
+      "journal": "JAMA",
+      "year": 2009,
+      "citationCount": 1986,
+      "doi": "10.1001/jama.2009.726",
+      "sourceUrl": "https://doi.org/10.1001/jama.2009.726",
+      "verified": true
+    },
+    {
+      "title": "The Role of Vitamin D and Calcium in Type 2 Diabetes. A Systematic Review and Meta-Analysis",
+      "journal": "The Journal of Clinical Endocrinology & Metabolism",
+      "year": 2007,
+      "citationCount": 1976,
+      "doi": "10.1210/jc.2007-0298",
+      "sourceUrl": "https://doi.org/10.1210/jc.2007-0298",
+      "verified": true
+    },
+    {
+      "title": "Globalization of Diabetes",
+      "journal": "Diabetes Care",
+      "year": 2011,
+      "citationCount": 1902,
+      "doi": "10.2337/dc11-0442",
+      "sourceUrl": "https://doi.org/10.2337/dc11-0442",
+      "verified": true
+    },
+    {
+      "title": "Television Watching and Other Sedentary Behaviors in Relation to Risk of Obesity and Type 2 Diabetes Mellitus in Women",
+      "journal": "JAMA",
+      "year": 2003,
+      "citationCount": 1890,
+      "doi": "10.1001/jama.289.14.1785",
+      "sourceUrl": "https://doi.org/10.1001/jama.289.14.1785",
+      "verified": true
+    },
+    {
+      "title": "Alternative Dietary Indices Both Strongly Predict Risk of Chronic Disease",
+      "journal": "Journal of Nutrition",
+      "year": 2012,
+      "citationCount": 1867,
+      "doi": "10.3945/jn.111.157222",
+      "sourceUrl": "https://doi.org/10.3945/jn.111.157222",
+      "verified": true
+    },
+    {
+      "title": "Primary Prevention of Coronary Heart Disease in Women through Diet and Lifestyle",
+      "journal": "New England Journal of Medicine",
+      "year": 2000,
+      "citationCount": 1794,
+      "doi": "10.1056/nejm200007063430103",
+      "sourceUrl": "https://doi.org/10.1056/nejm200007063430103",
+      "verified": true
+    },
+    {
+      "title": "Dietary Fat Intake and the Risk of Coronary Heart Disease in Women",
+      "journal": "New England Journal of Medicine",
+      "year": 1997,
+      "citationCount": 1771,
+      "doi": "10.1056/nejm199711203372102",
+      "sourceUrl": "https://doi.org/10.1056/nejm199711203372102",
+      "verified": true
+    },
+    {
+      "title": "Waist circumference as a vital sign in clinical practice: a Consensus Statement from the IAS and ICCR Working Group on Visceral Obesity",
+      "journal": "Nature Reviews Endocrinology",
+      "year": 2020,
+      "citationCount": 1742,
+      "doi": "10.1038/s41574-019-0310-7",
+      "sourceUrl": "https://doi.org/10.1038/s41574-019-0310-7",
+      "verified": true
+    },
+    {
+      "title": "Sugar-Sweetened Beverages, Obesity, Type 2 Diabetes Mellitus, and Cardiovascular Disease Risk",
+      "journal": "Circulation",
+      "year": 2010,
+      "citationCount": 1620,
+      "doi": "10.1161/circulationaha.109.876185",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.109.876185",
+      "verified": true
+    },
+    {
+      "title": "Optimal Diets for Prevention of Coronary Heart Disease",
+      "journal": "JAMA",
+      "year": 2002,
+      "citationCount": 1503,
+      "doi": "10.1001/jama.288.20.2569",
+      "sourceUrl": "https://doi.org/10.1001/jama.288.20.2569",
+      "verified": true
+    },
+    {
+      "title": "Short Sleep Duration and Weight Gain: A Systematic Review",
+      "journal": "Obesity",
+      "year": 2008,
+      "citationCount": 1496,
+      "doi": "10.1038/oby.2007.118",
+      "sourceUrl": "https://doi.org/10.1038/oby.2007.118",
+      "verified": true
+    },
+    {
+      "title": "Global obesity: trends, risk factors and policy implications",
+      "journal": "Nature Reviews Endocrinology",
+      "year": 2012,
+      "citationCount": 1398,
+      "doi": "10.1038/nrendo.2012.199",
+      "sourceUrl": "https://doi.org/10.1038/nrendo.2012.199",
+      "verified": true
+    },
+    {
+      "title": "The Effect of Fruit and Vegetable Intake on Risk for Coronary Heart Disease",
+      "journal": "Annals of Internal Medicine",
+      "year": 2001,
+      "citationCount": 1393,
+      "doi": "10.7326/0003-4819-134-12-200106190-00010",
+      "sourceUrl": "https://doi.org/10.7326/0003-4819-134-12-200106190-00010",
+      "verified": true
+    },
+    {
+      "title": "Visceral and ectopic fat, atherosclerosis, and cardiometabolic disease: a position statement",
+      "journal": "The Lancet Diabetes & Endocrinology",
+      "year": 2019,
+      "citationCount": 1371,
+      "doi": "10.1016/s2213-8587(19)30084-1",
+      "sourceUrl": "https://doi.org/10.1016/s2213-8587(19)30084-1",
+      "verified": true
+    },
+    {
+      "title": "Fruit and Vegetable Intake and Risk of Major Chronic Disease",
+      "journal": "JNCI Journal of the National Cancer Institute",
+      "year": 2004,
+      "citationCount": 1319,
+      "doi": "10.1093/jnci/djh296",
+      "sourceUrl": "https://doi.org/10.1093/jnci/djh296",
+      "verified": true
+    },
+    {
+      "title": "Prevention and management of type 2 diabetes: dietary components and nutritional strategies",
+      "journal": "The Lancet",
+      "year": 2014,
+      "citationCount": 1273,
+      "doi": "10.1016/s0140-6736(14)60613-9",
+      "sourceUrl": "https://doi.org/10.1016/s0140-6736(14)60613-9",
+      "verified": true
+    },
+    {
+      "title": "Meta-analysis of prospective cohort studies evaluating the association of saturated fat with cardiovascular disease",
+      "journal": "American Journal of Clinical Nutrition",
+      "year": 2010,
+      "citationCount": 1236,
+      "doi": "10.3945/ajcn.2009.27725",
+      "sourceUrl": "https://doi.org/10.3945/ajcn.2009.27725",
+      "verified": true
+    },
+    {
+      "title": "Diet quality and major chronic disease risk in men and women: moving toward improved dietary guidance",
+      "journal": "American Journal of Clinical Nutrition",
+      "year": 2002,
+      "citationCount": 1181,
+      "doi": "10.1093/ajcn/76.6.1261",
+      "sourceUrl": "https://doi.org/10.1093/ajcn/76.6.1261",
+      "verified": true
+    },
+    {
+      "title": "Reproducibility and validity of dietary patterns assessed with a food-frequency questionnaire",
+      "journal": "American Journal of Clinical Nutrition",
+      "year": 1999,
+      "citationCount": 1150,
+      "doi": "10.1093/ajcn/69.2.243",
+      "sourceUrl": "https://doi.org/10.1093/ajcn/69.2.243",
+      "verified": true
+    },
+    {
+      "title": "A Prospective Study of Sleep Duration and Coronary Heart Disease in Women",
+      "journal": "Archives of Internal Medicine",
+      "year": 2003,
+      "citationCount": 1149,
+      "doi": "10.1001/archinte.163.2.205",
+      "sourceUrl": "https://doi.org/10.1001/archinte.163.2.205",
+      "verified": true
+    },
+    {
+      "title": "Comparison of abdominal adiposity and overall obesity in predicting risk of type 2 diabetes among men",
+      "journal": "American Journal of Clinical Nutrition",
+      "year": 2005,
+      "citationCount": 1122,
+      "doi": "10.1093/ajcn/81.3.555",
+      "sourceUrl": "https://doi.org/10.1093/ajcn/81.3.555",
+      "verified": true
+    },
+    {
+      "title": "Obesity",
+      "journal": "Nature Reviews Disease Primers",
+      "year": 2017,
+      "citationCount": 1071,
+      "doi": "10.1038/nrdp.2017.34",
+      "sourceUrl": "https://doi.org/10.1038/nrdp.2017.34",
+      "verified": true
+    },
+    {
+      "title": "Prospective study of major dietary patterns and risk of coronary heart disease in men",
+      "journal": "American Journal of Clinical Nutrition",
+      "year": 2000,
+      "citationCount": 1070,
+      "doi": "10.1093/ajcn/72.4.912",
+      "sourceUrl": "https://doi.org/10.1093/ajcn/72.4.912",
+      "verified": true
+    },
+    {
+      "title": "Association of Cardiometabolic Multimorbidity With Mortality",
+      "journal": "JAMA",
+      "year": 2015,
+      "citationCount": 1044,
+      "doi": "10.1001/jama.2015.7008",
+      "sourceUrl": "https://doi.org/10.1001/jama.2015.7008",
+      "verified": true
+    },
+    {
+      "title": "Fish and Omega-3 Fatty Acid Intake and Risk of Coronary Heart Disease in Women",
+      "journal": "JAMA",
+      "year": 2002,
+      "citationCount": 1022,
+      "doi": "10.1001/jama.287.14.1815",
+      "sourceUrl": "https://doi.org/10.1001/jama.287.14.1815",
+      "verified": true
+    },
+    {
+      "title": "A Prospective Study of Walking as Compared with Vigorous Exercise in the Prevention of Coronary Heart Disease in Women",
+      "journal": "New England Journal of Medicine",
+      "year": 1999,
+      "citationCount": 1012,
+      "doi": "10.1056/nejm199908263410904",
+      "sourceUrl": "https://doi.org/10.1056/nejm199908263410904",
+      "verified": true
+    },
+    {
+      "title": "Added Sugar Intake and Cardiovascular Diseases Mortality Among US Adults",
+      "journal": "JAMA Internal Medicine",
+      "year": 2014,
+      "citationCount": 936,
+      "doi": "10.1001/jamainternmed.2013.13563",
+      "sourceUrl": "https://doi.org/10.1001/jamainternmed.2013.13563",
+      "verified": true
+    },
+    {
+      "title": "Epidemiology of Obesity and Diabetes and Their Cardiovascular Complications",
+      "journal": "Circulation Research",
+      "year": 2016,
+      "citationCount": 923,
+      "doi": "10.1161/circresaha.115.306825",
+      "sourceUrl": "https://doi.org/10.1161/circresaha.115.306825",
+      "verified": true
+    },
+    {
+      "title": "Higher 25-hydroxyvitamin D concentrations are associated with better lower-extremity function in both active and inactive persons aged ≥60 y",
+      "journal": "American Journal of Clinical Nutrition",
+      "year": 2004,
+      "citationCount": 921,
+      "doi": "10.1093/ajcn/80.3.752",
+      "sourceUrl": "https://doi.org/10.1093/ajcn/80.3.752",
+      "verified": true
+    },
+    {
+      "title": "Healthful and Unhealthful Plant-Based Diets and the Risk of Coronary Heart Disease in U.S. Adults",
+      "journal": "Journal of the American College of Cardiology",
+      "year": 2017,
+      "citationCount": 914,
+      "doi": "10.1016/j.jacc.2017.05.047",
+      "sourceUrl": "https://doi.org/10.1016/j.jacc.2017.05.047",
+      "verified": true
+    },
+    {
+      "title": "2021 Dietary Guidance to Improve Cardiovascular Health: A Scientific Statement From the American Heart Association",
+      "journal": "Circulation",
+      "year": 2021,
+      "citationCount": 906,
+      "doi": "10.1161/cir.0000000000001031",
+      "sourceUrl": "https://doi.org/10.1161/cir.0000000000001031",
+      "verified": true
+    },
+    {
+      "title": "Sugar-sweetened beverages and risk of obesity and type 2 diabetes: Epidemiologic evidence",
+      "journal": "Physiology & Behavior",
+      "year": 2010,
+      "citationCount": 898,
+      "doi": "10.1016/j.physbeh.2010.01.036",
+      "sourceUrl": "https://doi.org/10.1016/j.physbeh.2010.01.036",
+      "verified": true
+    },
+    {
+      "title": "Metabolomics in Prediabetes and Diabetes: A Systematic Review and Meta-analysis",
+      "journal": "Diabetes Care",
+      "year": 2016,
+      "citationCount": 898,
+      "doi": "10.2337/dc15-2251",
+      "sourceUrl": "https://doi.org/10.2337/dc15-2251",
+      "verified": true
+    },
+    {
+      "title": "Types of Dietary Fat and Risk of Coronary Heart Disease: A Critical Review",
+      "journal": "Journal of the American College of Nutrition",
+      "year": 2001,
+      "citationCount": 894,
+      "doi": "10.1080/07315724.2001.10719008",
+      "sourceUrl": "https://doi.org/10.1080/07315724.2001.10719008",
+      "verified": true
+    },
+    {
+      "title": "A Prospective Study of Self-Reported Sleep Duration and Incident Diabetes in Women",
+      "journal": "Diabetes Care",
+      "year": 2003,
+      "citationCount": 888,
+      "doi": "10.2337/diacare.26.2.380",
+      "sourceUrl": "https://doi.org/10.2337/diacare.26.2.380",
+      "verified": true
+    },
+    {
+      "title": "Mediterranean Diet and Incidence of and Mortality From Coronary Heart Disease and Stroke in Women",
+      "journal": "Circulation",
+      "year": 2009,
+      "citationCount": 881,
+      "doi": "10.1161/circulationaha.108.816736",
+      "sourceUrl": "https://doi.org/10.1161/circulationaha.108.816736",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "subSpecialty": null,
+  "lastFixedAt": "2026-02-16T05:45:12.000Z",
+  "openalexId": "https://openalex.org/A5056459536"
 }

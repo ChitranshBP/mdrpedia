@@ -1,36 +1,484 @@
 {
   "fullName": "Michael Karin",
   "slug": "michael-karin",
-  "title": "MD, PhD",
-  "specialty": "Inflammation",
+  "title": "MD",
+  "specialty": "Medicine",
   "geography": {
+    "country": "Unknown",
     "city": "Unknown",
-    "country": "USA"
+    "region": "Unknown"
   },
-  "portraitUrl": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23300066\"/><text x=\"50\" y=\"50\" font-family=\"serif\" font-size=\"40\" fill=\"%23FFD700\" text-anchor=\"middle\" dy=\".3em\">MK</text></svg>",
-  "tier": "TITAN",
-  "rankingScore": 70,
-  "hIndex": 279,
-  "citations": [],
-  "yearsActive": 30,
+  "status": "LIVING",
+  "tier": "UNRANKED",
+  "rankingScore": 28,
+  "hIndex": 253,
+  "yearsActive": 0,
   "verifiedSurgeries": 0,
-  "livesSaved": 34812,
+  "livesSaved": 0,
+  "biography": "Michael Karin is an Israeli-American Distinguished Professor of Pharmacology, Ben and Wanda Hildyard Chair for Mitochondrial and Metabolic Diseases, and American Cancer Society Research Professor at the University of California, San Diego.",
+  "aiSummary": "Michael Karin is a medicine specialist with an H-index of 253. Has been published in Cell, Cell Death and Differentiation, Nature. Based in Unknown, Unknown, Unknown.",
   "techniquesInvented": [],
-  "isPioneer": true,
-  "isLeader": true,
-  "affiliations": [
-    {
-      "hospitalName": "UC San Diego"
-    }
-  ],
-  "bio": "Michael Karin is a pioneer in Inflammation at UC San Diego, USA. With a D-Index of 279 and over 348,118 citations, they are among the world's most influential researchers.",
-  "awards": [
-    {
-      "name": "High Impact Researcher",
-      "year": 2024
-    }
-  ],
+  "hasInvention": false,
   "education": [],
   "socialMedia": {},
-  "status": "LIVING"
+  "affiliations": [],
+  "medicalSpecialty": [
+    "Medicine"
+  ],
+  "knowsAbout": [],
+  "citations": [
+    {
+      "title": "Immunity, Inflammation, and Cancer",
+      "journal": "Cell",
+      "year": 2010,
+      "citationCount": 10464,
+      "doi": "10.1016/j.cell.2010.01.025",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2010.01.025",
+      "verified": true
+    },
+    {
+      "title": "Molecular mechanisms of cell death: recommendations of the Nomenclature Committee on Cell Death 2018",
+      "journal": "Cell Death and Differentiation",
+      "year": 2018,
+      "citationCount": 6182,
+      "doi": "10.1038/s41418-017-0012-4",
+      "sourceUrl": "https://doi.org/10.1038/s41418-017-0012-4",
+      "verified": true
+    },
+    {
+      "title": "Mammalian MAP kinase signalling cascades",
+      "journal": "Nature",
+      "year": 2001,
+      "citationCount": 5079,
+      "doi": "10.1038/35065000",
+      "sourceUrl": "https://doi.org/10.1038/35065000",
+      "verified": true
+    },
+    {
+      "title": "Phosphorylation Meets Ubiquitination: The Control of NF-κB Activity",
+      "journal": "Annual Review of Immunology",
+      "year": 2000,
+      "citationCount": 4714,
+      "doi": "10.1146/annurev.immunol.18.1.621",
+      "sourceUrl": "https://doi.org/10.1146/annurev.immunol.18.1.621",
+      "verified": true
+    },
+    {
+      "title": "Nuclear Factor-κB — A Pivotal Transcription Factor in Chronic Inflammatory Diseases",
+      "journal": "New England Journal of Medicine",
+      "year": 1997,
+      "citationCount": 4674,
+      "doi": "10.1056/nejm199704103361506",
+      "sourceUrl": "https://doi.org/10.1056/nejm199704103361506",
+      "verified": true
+    },
+    {
+      "title": "Missing Pieces in the NF-κB Puzzle",
+      "journal": "Cell",
+      "year": 2002,
+      "citationCount": 3612,
+      "doi": "10.1016/s0092-8674(02)00703-1",
+      "sourceUrl": "https://doi.org/10.1016/s0092-8674(02)00703-1",
+      "verified": true
+    },
+    {
+      "title": "Nuclear factor-κB in cancer development and progression",
+      "journal": "Nature",
+      "year": 2006,
+      "citationCount": 3500,
+      "doi": "10.1038/nature04870",
+      "sourceUrl": "https://doi.org/10.1038/nature04870",
+      "verified": true
+    },
+    {
+      "title": "The role of Jun, Fos and the AP-1 complex in cell-proliferation and transformation",
+      "journal": "Biochimica et Biophysica Acta (BBA) - Reviews on Cancer",
+      "year": 1991,
+      "citationCount": 3406,
+      "doi": "10.1016/0304-419x(91)90011-9",
+      "sourceUrl": "https://doi.org/10.1016/0304-419x(91)90011-9",
+      "verified": true
+    },
+    {
+      "title": "A central role for JNK in obesity and insulin resistance",
+      "journal": "Nature",
+      "year": 2002,
+      "citationCount": 3302,
+      "doi": "10.1038/nature01137",
+      "sourceUrl": "https://doi.org/10.1038/nature01137",
+      "verified": true
+    },
+    {
+      "title": "JNK1: A protein kinase stimulated by UV light and Ha-Ras that binds and phosphorylates the c-Jun activation domain",
+      "journal": "Cell",
+      "year": 1994,
+      "citationCount": 3201,
+      "doi": "10.1016/0092-8674(94)90380-8",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(94)90380-8",
+      "verified": true
+    },
+    {
+      "title": "Phorbol ester-inducible genes contain a common cis element recognized by a TPA-modulated trans-acting factor",
+      "journal": "Cell",
+      "year": 1987,
+      "citationCount": 3017,
+      "doi": "10.1016/0092-8674(87)90611-8",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(87)90611-8",
+      "verified": true
+    },
+    {
+      "title": "NF-κB: linking inflammation and immunity to cancer development and progression",
+      "journal": "Nature reviews. Immunology",
+      "year": 2005,
+      "citationCount": 3000,
+      "doi": "10.1038/nri1703",
+      "sourceUrl": "https://doi.org/10.1038/nri1703",
+      "verified": true
+    },
+    {
+      "title": "AP-1 as a regulator of cell life and death",
+      "journal": "Nature Cell Biology",
+      "year": 2002,
+      "citationCount": 2907,
+      "doi": "10.1038/ncb0502-e131",
+      "sourceUrl": "https://doi.org/10.1038/ncb0502-e131",
+      "verified": true
+    },
+    {
+      "title": "AP-1 function and regulation",
+      "journal": "Current Opinion in Cell Biology",
+      "year": 1997,
+      "citationCount": 2899,
+      "doi": "10.1016/s0955-0674(97)80068-3",
+      "sourceUrl": "https://doi.org/10.1016/s0955-0674(97)80068-3",
+      "verified": true
+    },
+    {
+      "title": "NF-κB at the crossroads of life and death",
+      "journal": "Nature Immunology",
+      "year": 2002,
+      "citationCount": 2687,
+      "doi": "10.1038/ni0302-221",
+      "sourceUrl": "https://doi.org/10.1038/ni0302-221",
+      "verified": true
+    },
+    {
+      "title": "NF-κB, inflammation, immunity and cancer: coming of age",
+      "journal": "Nature reviews. Immunology",
+      "year": 2018,
+      "citationCount": 2598,
+      "doi": "10.1038/nri.2017.142",
+      "sourceUrl": "https://doi.org/10.1038/nri.2017.142",
+      "verified": true
+    },
+    {
+      "title": "The two NF-κB activation pathways and their role in innate and adaptive immunity",
+      "journal": "Trends in Immunology",
+      "year": 2004,
+      "citationCount": 2537,
+      "doi": "10.1016/j.it.2004.03.008",
+      "sourceUrl": "https://doi.org/10.1016/j.it.2004.03.008",
+      "verified": true
+    },
+    {
+      "title": "Regulation and Function of NF-κB Transcription Factors in the Immune System",
+      "journal": "Annual Review of Immunology",
+      "year": 2009,
+      "citationCount": 2523,
+      "doi": "10.1146/annurev.immunol.021908.132641",
+      "sourceUrl": "https://doi.org/10.1146/annurev.immunol.021908.132641",
+      "verified": true
+    },
+    {
+      "title": "NF-κB in cancer: from innocent bystander to major culprit",
+      "journal": "Nature reviews. Cancer",
+      "year": 2002,
+      "citationCount": 2474,
+      "doi": "10.1038/nrc780",
+      "sourceUrl": "https://doi.org/10.1038/nrc780",
+      "verified": true
+    },
+    {
+      "title": "The Regulation of AP-1 Activity by Mitogen-activated Protein Kinases",
+      "journal": "Journal of Biological Chemistry",
+      "year": 1995,
+      "citationCount": 2436,
+      "doi": "10.1074/jbc.270.28.16483",
+      "sourceUrl": "https://doi.org/10.1074/jbc.270.28.16483",
+      "verified": true
+    },
+    {
+      "title": "IKKβ Links Inflammation and Tumorigenesis in a Mouse Model of Colitis-Associated Cancer",
+      "journal": "Cell",
+      "year": 2004,
+      "citationCount": 2398,
+      "doi": "10.1016/j.cell.2004.07.013",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2004.07.013",
+      "verified": true
+    },
+    {
+      "title": "Immunosuppression by Glucocorticoids: Inhibition of NF-κB Activity Through Induction of IκB Synthesis",
+      "journal": "Science",
+      "year": 1995,
+      "citationCount": 2397,
+      "doi": "10.1126/science.270.5234.286",
+      "sourceUrl": "https://doi.org/10.1126/science.270.5234.286",
+      "verified": true
+    },
+    {
+      "title": "A cytokine-responsive IκB kinase that activates the transcription factor NF-κB",
+      "journal": "Nature",
+      "year": 1997,
+      "citationCount": 2128,
+      "doi": "10.1038/41493",
+      "sourceUrl": "https://doi.org/10.1038/41493",
+      "verified": true
+    },
+    {
+      "title": "IL-6 and Stat3 Are Required for Survival of Intestinal Epithelial Cells and Development of Colitis-Associated Cancer",
+      "journal": "Cancer Cell",
+      "year": 2009,
+      "citationCount": 2072,
+      "doi": "10.1016/j.ccr.2009.01.001",
+      "sourceUrl": "https://doi.org/10.1016/j.ccr.2009.01.001",
+      "verified": true
+    },
+    {
+      "title": "Inflammation and Colon Cancer",
+      "journal": "Gastroenterology",
+      "year": 2010,
+      "citationCount": 1965,
+      "doi": "10.1053/j.gastro.2010.01.058",
+      "sourceUrl": "https://doi.org/10.1053/j.gastro.2010.01.058",
+      "verified": true
+    },
+    {
+      "title": "Dissection of TNF Receptor 1 Effector Functions: JNK Activation Is Not Linked to Apoptosis While NF-κB Activation Prevents Cell Death",
+      "journal": "Cell",
+      "year": 1996,
+      "citationCount": 1948,
+      "doi": "10.1016/s0092-8674(00)81375-6",
+      "sourceUrl": "https://doi.org/10.1016/s0092-8674(00)81375-6",
+      "verified": true
+    },
+    {
+      "title": "Gender Disparity in Liver Cancer Due to Sex Differences in MyD88-Dependent IL-6 Production",
+      "journal": "Science",
+      "year": 2007,
+      "citationCount": 1942,
+      "doi": "10.1126/science.1140485",
+      "sourceUrl": "https://doi.org/10.1126/science.1140485",
+      "verified": true
+    },
+    {
+      "title": "A cytokine-mediated link between innate immunity, inflammation, and cancer",
+      "journal": "Journal of Clinical Investigation",
+      "year": 2007,
+      "citationCount": 1901,
+      "doi": "10.1172/jci31537",
+      "sourceUrl": "https://doi.org/10.1172/jci31537",
+      "verified": true
+    },
+    {
+      "title": "Identification of an oncoprotein- and UV-responsive protein kinase that binds and potentiates the c-Jun activation domain.",
+      "journal": "Genes & Development",
+      "year": 1993,
+      "citationCount": 1894,
+      "doi": "10.1101/gad.7.11.2135",
+      "sourceUrl": "https://doi.org/10.1101/gad.7.11.2135",
+      "verified": true
+    },
+    {
+      "title": "Reversal of Obesity- and Diet-Induced Insulin Resistance with Salicylates or Targeted Disruption of <i>Ikkβ</i>",
+      "journal": "Science",
+      "year": 2001,
+      "citationCount": 1857,
+      "doi": "10.1126/science.1061620",
+      "sourceUrl": "https://doi.org/10.1126/science.1061620",
+      "verified": true
+    },
+    {
+      "title": "The IκB Kinase Complex (IKK) Contains Two Kinase Subunits, IKKα and IKKβ, Necessary for IκB Phosphorylation and NF-κB Activation",
+      "journal": "Cell",
+      "year": 1997,
+      "citationCount": 1812,
+      "doi": "10.1016/s0092-8674(00)80406-7",
+      "sourceUrl": "https://doi.org/10.1016/s0092-8674(00)80406-7",
+      "verified": true
+    },
+    {
+      "title": "Reactive Oxygen Species Promote TNFα-Induced Death and Sustained JNK Activation by Inhibiting MAP Kinase Phosphatases",
+      "journal": "Cell",
+      "year": 2005,
+      "citationCount": 1769,
+      "doi": "10.1016/j.cell.2004.12.041",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2004.12.041",
+      "verified": true
+    },
+    {
+      "title": "AP-1 in cell proliferation and survival",
+      "journal": "Oncogene",
+      "year": 2001,
+      "citationCount": 1761,
+      "doi": "10.1038/sj.onc.1204383",
+      "sourceUrl": "https://doi.org/10.1038/sj.onc.1204383",
+      "verified": true
+    },
+    {
+      "title": "IKK-β links inflammation to obesity-induced insulin resistance",
+      "journal": "Nature Medicine",
+      "year": 2005,
+      "citationCount": 1745,
+      "doi": "10.1038/nm1185",
+      "sourceUrl": "https://doi.org/10.1038/nm1185",
+      "verified": true
+    },
+    {
+      "title": "Dietary and Genetic Obesity Promote Liver Inflammation and Tumorigenesis by Enhancing IL-6 and TNF Expression",
+      "journal": "Cell",
+      "year": 2010,
+      "citationCount": 1734,
+      "doi": "10.1016/j.cell.2009.12.052",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2009.12.052",
+      "verified": true
+    },
+    {
+      "title": "Signal transduction by tumor necrosis factor and its relatives",
+      "journal": "Trends in Cell Biology",
+      "year": 2001,
+      "citationCount": 1646,
+      "doi": "10.1016/s0962-8924(01)02064-5",
+      "sourceUrl": "https://doi.org/10.1016/s0962-8924(01)02064-5",
+      "verified": true
+    },
+    {
+      "title": "NF-κB links innate immunity to the hypoxic response through transcriptional regulation of HIF-1α",
+      "journal": "Nature",
+      "year": 2008,
+      "citationCount": 1540,
+      "doi": "10.1038/nature06905",
+      "sourceUrl": "https://doi.org/10.1038/nature06905",
+      "verified": true
+    },
+    {
+      "title": "NF‐κB and the link between inflammation and cancer",
+      "journal": "Immunological Reviews",
+      "year": 2012,
+      "citationCount": 1471,
+      "doi": "10.1111/j.1600-065x.2012.01099.x",
+      "sourceUrl": "https://doi.org/10.1111/j.1600-065x.2012.01099.x",
+      "verified": true
+    },
+    {
+      "title": "A Method for Isolation of Intact, Translationally Active Ribonucleic Acid",
+      "journal": "DNA",
+      "year": 1983,
+      "citationCount": 1467,
+      "doi": "10.1089/dna.1983.2.329",
+      "sourceUrl": "https://doi.org/10.1089/dna.1983.2.329",
+      "verified": true
+    },
+    {
+      "title": "Inflammation meets cancer, with NF-κB as the matchmaker",
+      "journal": "Nature Immunology",
+      "year": 2011,
+      "citationCount": 1358,
+      "doi": "10.1038/ni.2060",
+      "sourceUrl": "https://doi.org/10.1038/ni.2060",
+      "verified": true
+    },
+    {
+      "title": "The c-fos protein interacts with c-JunAP-1 to stimulate transcription of AP-1 responsive genes",
+      "journal": "Cell",
+      "year": 1988,
+      "citationCount": 1356,
+      "doi": "10.1016/0092-8674(88)90076-1",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(88)90076-1",
+      "verified": true
+    },
+    {
+      "title": "The IKK NF-κB system: a treasure trove for drug development",
+      "journal": "Nature Reviews Drug Discovery",
+      "year": 2004,
+      "citationCount": 1355,
+      "doi": "10.1038/nrd1279",
+      "sourceUrl": "https://doi.org/10.1038/nrd1279",
+      "verified": true
+    },
+    {
+      "title": "Activation by IKKα of a Second, Evolutionary Conserved, NF-κB Signaling Pathway",
+      "journal": "Science",
+      "year": 2001,
+      "citationCount": 1349,
+      "doi": "10.1126/science.1062677",
+      "sourceUrl": "https://doi.org/10.1126/science.1062677",
+      "verified": true
+    },
+    {
+      "title": "The gut–liver axis and the intersection with the microbiome",
+      "journal": "Nature Reviews Gastroenterology & Hepatology",
+      "year": 2018,
+      "citationCount": 1343,
+      "doi": "10.1038/s41575-018-0011-z",
+      "sourceUrl": "https://doi.org/10.1038/s41575-018-0011-z",
+      "verified": true
+    },
+    {
+      "title": "The regulation of transcription by phosphorylation",
+      "journal": "Cell",
+      "year": 1992,
+      "citationCount": 1320,
+      "doi": "10.1016/0092-8674(92)90162-6",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(92)90162-6",
+      "verified": true
+    },
+    {
+      "title": "Hypothalamic IKKβ/NF-κB and ER Stress Link Overnutrition to Energy Imbalance and Obesity",
+      "journal": "Cell",
+      "year": 2008,
+      "citationCount": 1309,
+      "doi": "10.1016/j.cell.2008.07.043",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2008.07.043",
+      "verified": true
+    },
+    {
+      "title": "p53 Target Genes Sestrin1 and Sestrin2 Connect Genotoxic Stress and mTOR Signaling",
+      "journal": "Cell",
+      "year": 2008,
+      "citationCount": 1294,
+      "doi": "10.1016/j.cell.2008.06.028",
+      "sourceUrl": "https://doi.org/10.1016/j.cell.2008.06.028",
+      "verified": true
+    },
+    {
+      "title": "Adenoma-linked barrier defects and microbial products drive IL-23/IL-17-mediated tumour growth",
+      "journal": "Nature",
+      "year": 2012,
+      "citationCount": 1276,
+      "doi": "10.1038/nature11465",
+      "sourceUrl": "https://doi.org/10.1038/nature11465",
+      "verified": true
+    },
+    {
+      "title": "The jun proto-oncogene is positively autoregulated by its product, Jun/AP-1",
+      "journal": "Cell",
+      "year": 1988,
+      "citationCount": 1273,
+      "doi": "10.1016/0092-8674(88)90143-2",
+      "sourceUrl": "https://doi.org/10.1016/0092-8674(88)90143-2",
+      "verified": true
+    },
+    {
+      "title": "Regulation and Function of IKK and IKK-Related Kinases",
+      "journal": "Science s STKE",
+      "year": 2006,
+      "citationCount": 1257,
+      "doi": "10.1126/stke.3572006re13",
+      "sourceUrl": "https://doi.org/10.1126/stke.3572006re13",
+      "verified": true
+    }
+  ],
+  "awards": [],
+  "timeline": [],
+  "openalexId": "https://openalex.org/A5056315342"
 }

@@ -1,0 +1,565 @@
+---
+/**
+ * MDRPedia — Admin Activity Audit Log
+ * View all admin actions with filtering
+ */
+import Layout from "../../layouts/Layout.astro";
+import { prisma } from "../../lib/prisma";
+import { requireSuperAdmin } from "../../lib/rbac";
+
+export const prerender = false;
+
+if (!requireSuperAdmin(Astro.request)) {
+    return Astro.redirect("/login");
+}
+
+const url = new URL(Astro.request.url);
+const adminKey = url.searchParams.get("key") || "";
+const filterAction = url.searchParams.get("action") || "";
+const filterTarget = url.searchParams.get("target") || "";
+const page = parseInt(url.searchParams.get("page") || "1");
+const pageSize = 50;
+
+// Build where clause
+const whereClause: any = {};
+if (filterAction) whereClause.action = { contains: filterAction, mode: 'insensitive' };
+if (filterTarget) whereClause.target = { contains: filterTarget, mode: 'insensitive' };
+
+// Fetch logs with pagination
+let logs: any[] = [];
+let totalLogs = 0;
+let actionTypes: string[] = [];
+
+try {
+    [logs, totalLogs] = await Promise.all([
+        prisma.adminLog.findMany({
+            where: whereClause,
+            orderBy: { createdAt: 'desc' },
+            skip: (page - 1) * pageSize,
+            take: pageSize,
+        }),
+        prisma.adminLog.count({ where: whereClause })
+    ]);
+
+    // Get distinct action types for filter
+    const distinctActions = await prisma.adminLog.groupBy({
+        by: ['action'],
+        orderBy: { action: 'asc' }
+    });
+    actionTypes = distinctActions.map(a => a.action);
+} catch (e) {
+    console.error("Audit log error:", e);
+}
+
+const totalPages = Math.ceil(totalLogs / pageSize);
+
+// Format action for display
+function formatAction(action: string): string {
+    return action.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+}
+
+// Get action badge color
+function getActionColor(action: string): string {
+    if (action.includes('DELETE')) return 'red';
+    if (action.includes('CREATE') || action.includes('ADD')) return 'green';
+    if (action.includes('UPDATE') || action.includes('EDIT')) return 'blue';
+    if (action.includes('APPROVE')) return 'green';
+    if (action.includes('REJECT')) return 'red';
+    return 'gray';
+}
+---
+
+<Layout title="Activity Log — Admin">
+    <div class="admin-page">
+        <aside class="sidebar">
+            <div class="sidebar__brand">
+                <a href={`/admin?key=${adminKey}`} class="brand-link">
+                    <div class="brand-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/>
+                        </svg>
+                    </div>
+                    <span>MDRPedia</span>
+                </a>
+            </div>
+            <nav class="sidebar__nav">
+                <a href={`/admin?key=${adminKey}`} class="nav-item">Dashboard</a>
+                <a href={`/admin/doctors?key=${adminKey}`} class="nav-item">All Doctors</a>
+                <a href={`/admin/news?key=${adminKey}`} class="nav-item">News</a>
+                <a href={`/admin/claims?key=${adminKey}`} class="nav-item">Claims</a>
+                <a href={`/admin/audit-log?key=${adminKey}`} class="nav-item active">Activity Log</a>
+                <a href={`/admin/data-quality?key=${adminKey}`} class="nav-item">Data Quality</a>
+                <a href={`/admin/bulk-import?key=${adminKey}`} class="nav-item">Bulk Import</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <div>
+                    <h1>Activity Log</h1>
+                    <p>Track all administrative actions</p>
+                </div>
+                <div class="header-stats">
+                    <div class="stat">
+                        <span class="stat-value">{totalLogs.toLocaleString()}</span>
+                        <span class="stat-label">Total Actions</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Filters -->
+            <div class="filters-bar">
+                <form method="get" class="filters-form">
+                    <input type="hidden" name="key" value={adminKey} />
+
+                    <div class="filter-group">
+                        <label>Action Type</label>
+                        <select name="action" onchange="this.form.submit()">
+                            <option value="">All Actions</option>
+                            {actionTypes.map(action => (
+                                <option value={action} selected={action === filterAction}>
+                                    {formatAction(action)}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label>Target</label>
+                        <input
+                            type="text"
+                            name="target"
+                            placeholder="Search target..."
+                            value={filterTarget}
+                        />
+                    </div>
+
+                    <button type="submit" class="btn btn--primary">Filter</button>
+                    {(filterAction || filterTarget) && (
+                        <a href={`/admin/audit-log?key=${adminKey}`} class="btn btn--outline">Clear</a>
+                    )}
+                </form>
+            </div>
+
+            <!-- Logs Table -->
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Action</th>
+                            <th>Target</th>
+                            <th>Details</th>
+                            <th>IP Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {logs.length > 0 ? (
+                            logs.map((log) => {
+                                let details = {};
+                                try { details = JSON.parse(log.details || '{}'); } catch {}
+                                return (
+                                    <tr>
+                                        <td class="cell-time">
+                                            <span class="time-date">{new Date(log.createdAt).toLocaleDateString()}</span>
+                                            <span class="time-hour">{new Date(log.createdAt).toLocaleTimeString()}</span>
+                                        </td>
+                                        <td>
+                                            <span class={`action-badge action-badge--${getActionColor(log.action)}`}>
+                                                {formatAction(log.action)}
+                                            </span>
+                                        </td>
+                                        <td class="cell-target">
+                                            {log.target !== 'system' ? (
+                                                <a href={`/doctors/${log.target}`} target="_blank">{log.target}</a>
+                                            ) : (
+                                                <span class="text-muted">System</span>
+                                            )}
+                                        </td>
+                                        <td class="cell-details">
+                                            {Object.keys(details).length > 0 ? (
+                                                <details>
+                                                    <summary>View Details</summary>
+                                                    <pre>{JSON.stringify(details, null, 2)}</pre>
+                                                </details>
+                                            ) : (
+                                                <span class="text-muted">—</span>
+                                            )}
+                                        </td>
+                                        <td class="cell-ip">{log.ipAddress || '—'}</td>
+                                    </tr>
+                                );
+                            })
+                        ) : (
+                            <tr>
+                                <td colspan="5" class="empty-state">
+                                    <p>No activity logs found</p>
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            {totalPages > 1 && (
+                <div class="pagination">
+                    {page > 1 && (
+                        <a href={`/admin/audit-log?key=${adminKey}&page=${page - 1}${filterAction ? `&action=${filterAction}` : ''}${filterTarget ? `&target=${filterTarget}` : ''}`} class="btn btn--outline btn--sm">
+                            &larr; Previous
+                        </a>
+                    )}
+                    <span class="pagination-info">
+                        Page {page} of {totalPages}
+                    </span>
+                    {page < totalPages && (
+                        <a href={`/admin/audit-log?key=${adminKey}&page=${page + 1}${filterAction ? `&action=${filterAction}` : ''}${filterTarget ? `&target=${filterTarget}` : ''}`} class="btn btn--outline btn--sm">
+                            Next &rarr;
+                        </a>
+                    )}
+                </div>
+            )}
+        </main>
+    </div>
+</Layout>
+
+<style>
+    .admin-page {
+        display: flex;
+        min-height: 100vh;
+        background: #0a0a12;
+    }
+
+    .sidebar {
+        width: 220px;
+        background: rgba(15, 15, 25, 0.95);
+        border-right: 1px solid rgba(255, 255, 255, 0.06);
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        padding: 20px 0;
+    }
+
+    .sidebar__brand {
+        padding: 0 20px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        margin-bottom: 16px;
+    }
+
+    .brand-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: white;
+        font-weight: 700;
+    }
+
+    .brand-icon {
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, #8b5cf6, #6366f1);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .brand-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .sidebar__nav {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 0 12px;
+    }
+
+    .nav-item {
+        padding: 10px 12px;
+        border-radius: 8px;
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: all 0.15s;
+    }
+
+    .nav-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+    }
+
+    .nav-item.active {
+        background: rgba(139, 92, 246, 0.15);
+        color: #8b5cf6;
+    }
+
+    .main-content {
+        flex: 1;
+        margin-left: 220px;
+        padding: 32px;
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 32px;
+    }
+
+    .page-header h1 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 4px;
+    }
+
+    .page-header p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+
+    .header-stats {
+        display: flex;
+        gap: 24px;
+    }
+
+    .stat {
+        text-align: right;
+    }
+
+    .stat-value {
+        display: block;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+    }
+
+    /* Filters */
+    .filters-bar {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 24px;
+    }
+
+    .filters-form {
+        display: flex;
+        gap: 16px;
+        align-items: flex-end;
+        flex-wrap: wrap;
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .filter-group label {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+
+    .filter-group select,
+    .filter-group input {
+        padding: 8px 12px;
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 6px;
+        color: white;
+        font-size: 0.9rem;
+        min-width: 180px;
+    }
+
+    .filter-group select:focus,
+    .filter-group input:focus {
+        outline: none;
+        border-color: #8b5cf6;
+    }
+
+    /* Table */
+    .table-container {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .data-table th {
+        text-align: left;
+        padding: 12px 16px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .data-table td {
+        padding: 12px 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        vertical-align: top;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+
+    .cell-time {
+        white-space: nowrap;
+    }
+
+    .time-date {
+        display: block;
+        color: white;
+        font-weight: 500;
+    }
+
+    .time-hour {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+
+    .cell-target a {
+        color: #8b5cf6;
+        text-decoration: none;
+    }
+
+    .cell-target a:hover {
+        text-decoration: underline;
+    }
+
+    .cell-details details {
+        cursor: pointer;
+    }
+
+    .cell-details summary {
+        color: #8b5cf6;
+        font-size: 0.85rem;
+    }
+
+    .cell-details pre {
+        margin-top: 8px;
+        padding: 8px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 4px;
+        font-size: 0.75rem;
+        overflow-x: auto;
+        max-width: 300px;
+    }
+
+    .cell-ip {
+        font-family: monospace;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+
+    .action-badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .action-badge--green {
+        background: rgba(34, 197, 94, 0.15);
+        color: #22c55e;
+    }
+
+    .action-badge--red {
+        background: rgba(239, 68, 68, 0.15);
+        color: #ef4444;
+    }
+
+    .action-badge--blue {
+        background: rgba(59, 130, 246, 0.15);
+        color: #3b82f6;
+    }
+
+    .action-badge--gray {
+        background: rgba(156, 163, 175, 0.15);
+        color: #9ca3af;
+    }
+
+    .text-muted {
+        color: var(--text-muted);
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 48px;
+        color: var(--text-muted);
+    }
+
+    /* Pagination */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+        margin-top: 24px;
+    }
+
+    .pagination-info {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+
+    /* Buttons */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.15s;
+    }
+
+    .btn--primary {
+        background: #8b5cf6;
+        color: white;
+    }
+
+    .btn--outline {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--text-secondary);
+    }
+
+    .btn--sm {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+
+    @media (max-width: 1024px) {
+        .sidebar {
+            display: none;
+        }
+        .main-content {
+            margin-left: 0;
+        }
+    }
+</style>
