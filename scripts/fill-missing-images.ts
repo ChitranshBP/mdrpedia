@@ -2,7 +2,6 @@
 import fs from 'fs';
 import path from 'path';
 import { glob } from 'glob';
-import fetch from 'node-fetch';
 
 const DOCTORS_DIR = path.join(process.cwd(), 'src/content/doctors');
 
