@@ -2,9 +2,10 @@
 import fs from 'fs';
 import path from 'path';
 import { glob } from 'glob';
+import dotenv from 'dotenv';
 
 // Load environment variables
-// dotenv.config();
+dotenv.config();
 
 const DOCTORS_DIR = path.join(process.cwd(), 'src/content/doctors');
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
