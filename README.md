@@ -1,4 +1,6 @@
-# Astro Starter Kit: Basics
+# MDRPedia
+
+[![Deploy to VPS](https://github.com/Brandingpioneersgit/mdrpedia/actions/workflows/deploy.yml/badge.svg)](https://github.com/Brandingpioneersgit/mdrpedia/actions/workflows/deploy.yml)
 
 ```sh
 npm create astro@latest -- --template basics
