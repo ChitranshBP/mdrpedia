@@ -6,7 +6,7 @@
 
 const OPENALEX_BASE = 'https://api.openalex.org';
 const USER_AGENT = 'MDRPedia/1.0 (mailto:admin@mdrpedia.com)';
-const OPENALEX_API_KEY = process.env.OPENALEX_API_KEY || import.meta.env.OPENALEX_API_KEY || '';
+const OPENALEX_API_KEY = process.env.OPENALEX_API_KEY || (typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.OPENALEX_API_KEY : '') || '';
 
 // ─── Usage Tracking ────────────────────────────────────────────────────────
 export const usageStats = {
