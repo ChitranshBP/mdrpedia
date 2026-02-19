@@ -31,7 +31,7 @@ async function generateBio(doctor: any): Promise<string | null> {
     }
 
     // Using a powerful free model from OpenRouter
-    const MODEL = "google/gemini-2.0-flash-lite-preview-02-05:free";
+    const MODEL = "google/gemini-2.0-flash-001";
 
     const prompt = `
     You are an expert medical biographer. Write a comprehensive, 1500-word biography for Dr. ${doctor.fullName}.
