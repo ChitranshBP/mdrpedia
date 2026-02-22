@@ -1,5 +1,6 @@
 /**
- * EnhancedSearch - Real-time search with autocomplete, keyboard navigation, and filters
+ * EnhancedSearch - Premium autocomplete search with rich results
+ * Matches the GlobalSearchModal design language
  */
 import { useState, useEffect, useRef, useCallback } from 'react';
 
@@ -12,46 +13,35 @@ interface SearchResult {
     city?: string;
     country?: string;
     hIndex?: number;
-    relevanceScore?: number;
+    rankingScore?: number;
 }
 
 interface EnhancedSearchProps {
     initialQuery?: string;
     placeholder?: string;
     autoFocus?: boolean;
-    showFilters?: boolean;
     onResultClick?: (result: SearchResult) => void;
     maxResults?: number;
 }
 
-const RECENT_SEARCHES_KEY = 'mdrpedia_recent_searches';
+const RECENT_SEARCHES_KEY = 'mdrpedia_browse_recent';
 const MAX_RECENT_SEARCHES = 5;
-const DEBOUNCE_MS = 250;
+const DEBOUNCE_MS = 200;
 
-// Tier colors and styles
-const tierStyles: Record<string, { border: string; bg: string; text: string }> = {
-    TITAN: { border: 'border-yellow-500/40', bg: 'bg-yellow-500/10', text: 'text-yellow-400' },
-    ELITE: { border: 'border-blue-500/40', bg: 'bg-blue-500/10', text: 'text-blue-400' },
-    MASTER: { border: 'border-green-500/40', bg: 'bg-green-500/10', text: 'text-green-400' },
-    UNRANKED: { border: 'border-white/10', bg: 'bg-white/5', text: 'text-gray-400' },
+// Tier configurations
+const tierConfig: Record<string, { color: string; bg: string; icon: string }> = {
+    TITAN: { color: '#fbbf24', bg: 'rgba(251, 191, 36, 0.15)', icon: '👑' },
+    ELITE: { color: '#3b82f6', bg: 'rgba(59, 130, 246, 0.15)', icon: '⭐' },
+    MASTER: { color: '#10b981', bg: 'rgba(16, 185, 129, 0.15)', icon: '✦' },
+    UNRANKED: { color: '#94a3b8', bg: 'rgba(148, 163, 184, 0.1)', icon: '○' },
 };
-
-// Popular specialties for quick filters
-const QUICK_FILTERS = [
-    { label: 'Cardiology', value: 'cardiology', icon: '❤️' },
-    { label: 'Neurology', value: 'neurology', icon: '🧠' },
-    { label: 'Oncology', value: 'oncology', icon: '🎗️' },
-    { label: 'Surgery', value: 'surgery', icon: '🔪' },
-    { label: 'Pediatrics', value: 'pediatrics', icon: '👶' },
-];
 
 export default function EnhancedSearch({
     initialQuery = '',
-    placeholder = 'Search doctors by name, specialty, or location...',
+    placeholder = 'Search by name, specialty, or location...',
     autoFocus = false,
-    showFilters = true,
     onResultClick,
-    maxResults = 8,
+    maxResults = 6,
 }: EnhancedSearchProps) {
     const [query, setQuery] = useState(initialQuery);
     const [results, setResults] = useState<SearchResult[]>([]);
@@ -59,66 +49,44 @@ export default function EnhancedSearch({
     const [isOpen, setIsOpen] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(-1);
     const [recentSearches, setRecentSearches] = useState<string[]>([]);
-    const [activeFilter, setActiveFilter] = useState<string | null>(null);
-    const [error, setError] = useState<string | null>(null);
 
     const inputRef = useRef<HTMLInputElement>(null);
-    const dropdownRef = useRef<HTMLDivElement>(null);
-    const debounceRef = useRef<NodeJS.Timeout>();
+    const containerRef = useRef<HTMLDivElement>(null);
+    const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
-    // Load recent searches from localStorage
+    // Load recent searches
     useEffect(() => {
         try {
             const stored = localStorage.getItem(RECENT_SEARCHES_KEY);
-            if (stored) {
-                setRecentSearches(JSON.parse(stored));
-            }
-        } catch (e) {
-            // Ignore localStorage errors
-        }
+            if (stored) setRecentSearches(JSON.parse(stored));
+        } catch (e) { /* ignore */ }
     }, []);
 
     // Save recent search
-    const saveRecentSearch = useCallback((searchQuery: string) => {
-        if (searchQuery.length < 2) return;
-
+    const saveRecentSearch = useCallback((term: string) => {
+        if (term.length < 2) return;
         setRecentSearches(prev => {
-            const updated = [searchQuery, ...prev.filter(s => s !== searchQuery)].slice(0, MAX_RECENT_SEARCHES);
-            try {
-                localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updated));
-            } catch (e) {
-                // Ignore localStorage errors
-            }
+            const updated = [term, ...prev.filter(s => s !== term)].slice(0, MAX_RECENT_SEARCHES);
+            try { localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updated)); } catch (e) { /* ignore */ }
             return updated;
         });
     }, []);
 
-    // Fetch search results
-    const fetchResults = useCallback(async (searchQuery: string, filter?: string) => {
+    // Fetch results from API
+    const fetchResults = useCallback(async (searchQuery: string) => {
         if (searchQuery.length < 2) {
             setResults([]);
             return;
         }
 
         setIsLoading(true);
-        setError(null);
-
         try {
-            const params = new URLSearchParams({ q: searchQuery });
-            if (filter) {
-                params.append('specialty', filter);
+            const response = await fetch(`/api/search?q=${encodeURIComponent(searchQuery)}`);
+            if (response.ok) {
+                const data = await response.json();
+                setResults(data.slice(0, maxResults));
             }
-
-            const response = await fetch(`/api/search?${params.toString()}`);
-
-            if (!response.ok) {
-                throw new Error('Search failed');
-            }
-
-            const data = await response.json();
-            setResults(data.slice(0, maxResults));
         } catch (e) {
-            setError('Search failed. Please try again.');
             setResults([]);
         } finally {
             setIsLoading(false);
@@ -127,35 +95,37 @@ export default function EnhancedSearch({
 
     // Debounced search
     useEffect(() => {
-        if (debounceRef.current) {
-            clearTimeout(debounceRef.current);
-        }
+        if (debounceRef.current) clearTimeout(debounceRef.current);
 
         if (query.length >= 2) {
-            debounceRef.current = setTimeout(() => {
-                fetchResults(query, activeFilter || undefined);
-            }, DEBOUNCE_MS);
+            debounceRef.current = setTimeout(() => fetchResults(query), DEBOUNCE_MS);
         } else {
             setResults([]);
         }
 
-        return () => {
-            if (debounceRef.current) {
-                clearTimeout(debounceRef.current);
+        return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
+    }, [query, fetchResults]);
+
+    // Click outside to close
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+                setIsOpen(false);
             }
         };
-    }, [query, activeFilter, fetchResults]);
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
-    // Handle keyboard navigation
+    // Keyboard navigation
     const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (!isOpen) {
-            if (e.key === 'ArrowDown' || e.key === 'Enter') {
-                setIsOpen(true);
-            }
+        if (!isOpen && (e.key === 'ArrowDown' || e.key === 'Enter')) {
+            setIsOpen(true);
             return;
         }
 
-        const itemCount = results.length > 0 ? results.length : recentSearches.length;
+        const items = results.length > 0 ? results : recentSearches.map(s => ({ slug: s }));
+        const itemCount = items.length;
 
         switch (e.key) {
             case 'ArrowDown':
@@ -172,9 +142,8 @@ export default function EnhancedSearch({
                     handleResultClick(results[selectedIndex]);
                 } else if (results.length === 0 && selectedIndex >= 0 && recentSearches[selectedIndex]) {
                     setQuery(recentSearches[selectedIndex]);
-                    fetchResults(recentSearches[selectedIndex], activeFilter || undefined);
+                    fetchResults(recentSearches[selectedIndex]);
                 } else if (query.length >= 2) {
-                    // Submit the form
                     saveRecentSearch(query);
                     window.location.href = `/search?q=${encodeURIComponent(query)}`;
                 }
@@ -189,344 +158,333 @@ export default function EnhancedSearch({
 
     // Handle result click
     const handleResultClick = (result: SearchResult) => {
-        saveRecentSearch(query);
+        saveRecentSearch(result.fullName || query);
         if (onResultClick) {
             onResultClick(result);
         } else {
-            window.location.href = `/doctor/${result.slug}`;
+            window.location.href = `/doctors/${result.slug}`;
         }
+        setIsOpen(false);
     };
 
-    // Handle filter click
-    const handleFilterClick = (filter: string) => {
-        if (activeFilter === filter) {
-            setActiveFilter(null);
-        } else {
-            setActiveFilter(filter);
-        }
-    };
-
-    // Clear recent search
-    const clearRecentSearch = (searchToRemove: string, e: React.MouseEvent) => {
-        e.stopPropagation();
-        setRecentSearches(prev => {
-            const updated = prev.filter(s => s !== searchToRemove);
-            try {
-                localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updated));
-            } catch (e) {
-                // Ignore localStorage errors
-            }
-            return updated;
-        });
-    };
-
-    // Click outside to close
-    useEffect(() => {
-        const handleClickOutside = (e: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-                setIsOpen(false);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
+    // Get initials
+    const getInitials = (name: string) => name.split(' ').map(w => w[0]).filter((_, i) => i < 2).join('').toUpperCase();
 
     // Highlight matching text
-    const highlightMatch = (text: string, searchQuery: string) => {
-        if (!searchQuery || searchQuery.length < 2) return text;
-
-        const regex = new RegExp(`(${searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    const highlight = (text: string) => {
+        if (!query || query.length < 2) return text;
+        const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
         const parts = text.split(regex);
-
         return parts.map((part, i) =>
-            regex.test(part) ? (
-                <mark key={i} className="bg-purple-500/30 text-white rounded px-0.5">{part}</mark>
-            ) : part
+            regex.test(part) ? <mark key={i} style={{ background: 'rgba(139, 92, 246, 0.3)', color: 'white', borderRadius: '2px', padding: '0 2px' }}>{part}</mark> : part
         );
     };
 
-    // Get initials from name
-    const getInitials = (name: string) => {
-        return name
-            .split(' ')
-            .map(w => w[0])
-            .filter((_, i) => i < 2)
-            .join('')
-            .toUpperCase();
-    };
-
     return (
-        <div className="enhanced-search w-full max-w-3xl mx-auto" ref={dropdownRef}>
+        <div ref={containerRef} style={{ position: 'relative', width: '100%' }}>
             {/* Search Input */}
-            <div className="relative">
-                <div className={`
-                    flex items-center gap-3 px-4 py-3
-                    bg-white/[0.04] border rounded-xl
-                    transition-all duration-200
-                    ${isOpen ? 'border-purple-500/50 ring-2 ring-purple-500/20' : 'border-white/10 hover:border-white/20'}
-                `}>
-                    {/* Search Icon or Loading Spinner */}
-                    {isLoading ? (
-                        <svg className="w-5 h-5 text-purple-400 animate-spin" viewBox="0 0 24 24" fill="none">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                        </svg>
-                    ) : (
-                        <svg className="w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <circle cx="11" cy="11" r="8" />
-                            <path d="m21 21-4.3-4.3" />
-                        </svg>
-                    )}
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                padding: '14px 18px',
+                background: isOpen ? 'rgba(255, 255, 255, 0.08)' : 'rgba(255, 255, 255, 0.04)',
+                border: `1px solid ${isOpen ? 'rgba(139, 92, 246, 0.5)' : 'rgba(255, 255, 255, 0.1)'}`,
+                borderRadius: '14px',
+                transition: 'all 0.2s ease',
+                boxShadow: isOpen ? '0 0 0 3px rgba(139, 92, 246, 0.1)' : 'none',
+            }}>
+                {/* Search Icon / Loading */}
+                {isLoading ? (
+                    <svg style={{ width: 20, height: 20, color: '#8b5cf6', animation: 'spin 1s linear infinite' }} viewBox="0 0 24 24" fill="none">
+                        <circle style={{ opacity: 0.25 }} cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path style={{ opacity: 0.75 }} fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    </svg>
+                ) : (
+                    <svg style={{ width: 20, height: 20, color: '#94a3b8', flexShrink: 0 }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.3-4.3" />
+                    </svg>
+                )}
 
-                    <input
-                        ref={inputRef}
-                        type="text"
-                        value={query}
-                        onChange={(e) => {
-                            setQuery(e.target.value);
-                            setSelectedIndex(-1);
-                            setIsOpen(true);
-                        }}
-                        onFocus={() => setIsOpen(true)}
-                        onKeyDown={handleKeyDown}
-                        placeholder={placeholder}
-                        autoFocus={autoFocus}
-                        autoComplete="off"
-                        className="flex-1 bg-transparent text-white placeholder-gray-500 outline-none text-base"
-                    />
+                <input
+                    ref={inputRef}
+                    type="text"
+                    value={query}
+                    onChange={(e) => { setQuery(e.target.value); setSelectedIndex(-1); setIsOpen(true); }}
+                    onFocus={() => setIsOpen(true)}
+                    onKeyDown={handleKeyDown}
+                    placeholder={placeholder}
+                    autoFocus={autoFocus}
+                    autoComplete="off"
+                    style={{
+                        flex: 1,
+                        background: 'transparent',
+                        border: 'none',
+                        outline: 'none',
+                        color: 'white',
+                        fontSize: '0.95rem',
+                        fontFamily: 'inherit',
+                    }}
+                />
 
-                    {/* Clear button */}
-                    {query && (
-                        <button
-                            onClick={() => {
-                                setQuery('');
-                                setResults([]);
-                                inputRef.current?.focus();
-                            }}
-                            className="p-1 text-gray-500 hover:text-white transition-colors"
-                        >
-                            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <path d="M18 6L6 18M6 6l12 12" />
-                            </svg>
-                        </button>
-                    )}
-
-                    {/* Search button */}
+                {/* Clear button */}
+                {query && (
                     <button
-                        onClick={() => {
-                            if (query.length >= 2) {
-                                saveRecentSearch(query);
-                                window.location.href = `/search?q=${encodeURIComponent(query)}`;
-                            }
+                        onClick={() => { setQuery(''); setResults([]); inputRef.current?.focus(); }}
+                        style={{
+                            padding: '4px',
+                            background: 'transparent',
+                            border: 'none',
+                            color: '#64748b',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            transition: 'color 0.15s',
                         }}
-                        className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white text-sm font-semibold rounded-lg transition-colors"
+                        onMouseEnter={(e) => e.currentTarget.style.color = 'white'}
+                        onMouseLeave={(e) => e.currentTarget.style.color = '#64748b'}
                     >
-                        Search
+                        <svg style={{ width: 16, height: 16 }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M18 6L6 18M6 6l12 12" />
+                        </svg>
                     </button>
-                </div>
+                )}
 
-                {/* Dropdown */}
-                {isOpen && (
-                    <div className="absolute top-full left-0 right-0 mt-2 bg-[#1a1a2e] border border-white/10 rounded-xl shadow-2xl overflow-hidden z-50">
-                        {/* Quick Filters */}
-                        {showFilters && (
-                            <div className="px-4 py-3 border-b border-white/5">
-                                <div className="flex items-center gap-2 overflow-x-auto pb-1">
-                                    <span className="text-xs text-gray-500 flex-shrink-0">Quick filters:</span>
-                                    {QUICK_FILTERS.map(filter => (
-                                        <button
-                                            key={filter.value}
-                                            onClick={() => handleFilterClick(filter.value)}
-                                            className={`
-                                                flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium
-                                                transition-all whitespace-nowrap
-                                                ${activeFilter === filter.value
-                                                    ? 'bg-purple-600 text-white'
-                                                    : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
-                                                }
-                                            `}
-                                        >
-                                            <span>{filter.icon}</span>
-                                            <span>{filter.label}</span>
-                                        </button>
-                                    ))}
-                                </div>
+                {/* Keyboard hint */}
+                <kbd style={{
+                    padding: '4px 8px',
+                    fontSize: '0.7rem',
+                    fontFamily: 'monospace',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '6px',
+                    color: '#64748b',
+                }}>↵</kbd>
+            </div>
+
+            {/* Dropdown */}
+            {isOpen && (
+                <div style={{
+                    position: 'absolute',
+                    top: 'calc(100% + 8px)',
+                    left: 0,
+                    right: 0,
+                    background: 'rgba(17, 17, 27, 0.98)',
+                    backdropFilter: 'blur(20px)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '16px',
+                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+                    overflow: 'hidden',
+                    zIndex: 100,
+                    maxHeight: '400px',
+                    overflowY: 'auto',
+                }}>
+                    {/* Results */}
+                    {results.length > 0 && (
+                        <div style={{ padding: '8px 0' }}>
+                            <div style={{ padding: '8px 16px', fontSize: '0.7rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                                Results
                             </div>
-                        )}
+                            {results.map((result, index) => {
+                                const tier = tierConfig[result.tier] || tierConfig.UNRANKED;
+                                const location = [result.city, result.country].filter(Boolean).join(', ');
+                                const isSelected = selectedIndex === index;
 
-                        {/* Error State */}
-                        {error && (
-                            <div className="px-4 py-3 text-red-400 text-sm">
-                                {error}
-                            </div>
-                        )}
+                                return (
+                                    <button
+                                        key={result.slug}
+                                        onClick={() => handleResultClick(result)}
+                                        style={{
+                                            width: '100%',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '12px',
+                                            padding: '12px 16px',
+                                            background: isSelected ? 'rgba(255, 255, 255, 0.08)' : 'transparent',
+                                            border: 'none',
+                                            cursor: 'pointer',
+                                            textAlign: 'left',
+                                            transition: 'background 0.15s',
+                                        }}
+                                        onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'; setSelectedIndex(index); }}
+                                        onMouseLeave={(e) => { e.currentTarget.style.background = isSelected ? 'rgba(255, 255, 255, 0.08)' : 'transparent'; }}
+                                    >
+                                        {/* Avatar */}
+                                        <div style={{
+                                            width: 44,
+                                            height: 44,
+                                            borderRadius: '12px',
+                                            border: `2px solid ${tier.color}40`,
+                                            background: tier.bg,
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            overflow: 'hidden',
+                                            flexShrink: 0,
+                                        }}>
+                                            {result.portraitUrl && !result.portraitUrl.startsWith('data:') ? (
+                                                <img src={result.portraitUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                            ) : (
+                                                <span style={{ fontSize: '0.9rem', fontWeight: 700, color: tier.color }}>{getInitials(result.fullName)}</span>
+                                            )}
+                                        </div>
 
-                        {/* Results */}
-                        {results.length > 0 && (
-                            <div className="py-2">
-                                <div className="px-4 py-1.5 text-xs text-gray-500 uppercase tracking-wide">
-                                    Results
-                                </div>
-                                {results.map((result, index) => {
-                                    const styles = tierStyles[result.tier] || tierStyles.UNRANKED;
-                                    const location = [result.city, result.country].filter(Boolean).join(', ');
-
-                                    return (
-                                        <button
-                                            key={result.slug}
-                                            onClick={() => handleResultClick(result)}
-                                            className={`
-                                                w-full flex items-center gap-3 px-4 py-3 text-left
-                                                transition-colors
-                                                ${selectedIndex === index ? 'bg-white/10' : 'hover:bg-white/5'}
-                                            `}
-                                        >
-                                            {/* Avatar */}
-                                            <div className={`
-                                                w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0
-                                                border ${styles.border} ${styles.bg}
-                                            `}>
-                                                {result.portraitUrl && !result.portraitUrl.startsWith('data:') ? (
-                                                    <img
-                                                        src={result.portraitUrl}
-                                                        alt={result.fullName}
-                                                        className="w-full h-full object-cover rounded-lg"
-                                                    />
-                                                ) : (
-                                                    <span className={`text-sm font-bold ${styles.text}`}>
-                                                        {getInitials(result.fullName)}
-                                                    </span>
+                                        {/* Info */}
+                                        <div style={{ flex: 1, minWidth: 0 }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '2px' }}>
+                                                <span style={{ fontWeight: 600, color: result.tier === 'TITAN' ? '#fbbf24' : 'white', fontSize: '0.95rem' }}>
+                                                    {highlight(result.fullName)}
+                                                </span>
+                                                <span style={{
+                                                    fontSize: '0.65rem',
+                                                    fontWeight: 700,
+                                                    padding: '2px 6px',
+                                                    borderRadius: '4px',
+                                                    background: tier.bg,
+                                                    color: tier.color,
+                                                }}>
+                                                    {tier.icon} {result.tier}
+                                                </span>
+                                            </div>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', color: '#94a3b8' }}>
+                                                <span>{highlight(result.specialty)}</span>
+                                                {location && (
+                                                    <>
+                                                        <span style={{ color: '#475569' }}>•</span>
+                                                        <span style={{ color: '#64748b' }}>{location}</span>
+                                                    </>
                                                 )}
                                             </div>
+                                        </div>
 
-                                            {/* Info */}
-                                            <div className="flex-1 min-w-0">
-                                                <div className="flex items-center gap-2">
-                                                    <span className={`font-medium ${result.tier === 'TITAN' ? 'text-yellow-400' : 'text-white'}`}>
-                                                        {highlightMatch(result.fullName, query)}
-                                                    </span>
-                                                    <span className={`
-                                                        text-[10px] font-bold px-1.5 py-0.5 rounded
-                                                        ${styles.bg} ${styles.text}
-                                                    `}>
-                                                        {result.tier}
-                                                    </span>
-                                                </div>
-                                                <div className="flex items-center gap-2 text-sm text-gray-400">
-                                                    <span>{highlightMatch(result.specialty, query)}</span>
-                                                    {location && (
-                                                        <>
-                                                            <span className="text-gray-600">•</span>
-                                                            <span className="text-gray-500">{location}</span>
-                                                        </>
-                                                    )}
-                                                </div>
+                                        {/* H-Index */}
+                                        {result.hIndex && result.hIndex > 0 && (
+                                            <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                                                <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'white', fontFamily: 'monospace' }}>{result.hIndex}</div>
+                                                <div style={{ fontSize: '0.7rem', color: '#64748b' }}>H-Index</div>
                                             </div>
+                                        )}
 
-                                            {/* H-Index badge */}
-                                            {result.hIndex && result.hIndex > 0 && (
-                                                <div className="text-xs text-gray-500 flex-shrink-0">
-                                                    H-Index: <span className="text-gray-300">{result.hIndex}</span>
-                                                </div>
-                                            )}
-
-                                            {/* Arrow */}
-                                            <svg className="w-4 h-4 text-gray-600 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                <path d="M9 18l6-6-6-6" />
-                                            </svg>
-                                        </button>
-                                    );
-                                })}
-
-                                {/* View all results link */}
-                                {results.length >= maxResults && (
-                                    <a
-                                        href={`/search?q=${encodeURIComponent(query)}`}
-                                        className="block px-4 py-3 text-center text-sm text-purple-400 hover:text-purple-300 hover:bg-white/5 transition-colors"
-                                    >
-                                        View all results →
-                                    </a>
-                                )}
-                            </div>
-                        )}
-
-                        {/* Recent Searches (when no query or no results) */}
-                        {query.length < 2 && recentSearches.length > 0 && (
-                            <div className="py-2">
-                                <div className="px-4 py-1.5 text-xs text-gray-500 uppercase tracking-wide flex items-center justify-between">
-                                    <span>Recent Searches</span>
-                                    <button
-                                        onClick={() => {
-                                            setRecentSearches([]);
-                                            localStorage.removeItem(RECENT_SEARCHES_KEY);
-                                        }}
-                                        className="text-gray-600 hover:text-gray-400 transition-colors"
-                                    >
-                                        Clear all
-                                    </button>
-                                </div>
-                                {recentSearches.map((search, index) => (
-                                    <button
-                                        key={search}
-                                        onClick={() => {
-                                            setQuery(search);
-                                            fetchResults(search, activeFilter || undefined);
-                                        }}
-                                        className={`
-                                            w-full flex items-center gap-3 px-4 py-2.5 text-left
-                                            transition-colors group
-                                            ${selectedIndex === index ? 'bg-white/10' : 'hover:bg-white/5'}
-                                        `}
-                                    >
-                                        <svg className="w-4 h-4 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        {/* Arrow */}
+                                        <svg style={{ width: 16, height: 16, color: '#475569', flexShrink: 0 }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <path d="M9 18l6-6-6-6" />
                                         </svg>
-                                        <span className="flex-1 text-gray-300">{search}</span>
-                                        <button
-                                            onClick={(e) => clearRecentSearch(search, e)}
-                                            className="p-1 text-gray-600 hover:text-gray-400 opacity-0 group-hover:opacity-100 transition-all"
-                                        >
-                                            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                <path d="M18 6L6 18M6 6l12 12" />
-                                            </svg>
-                                        </button>
                                     </button>
-                                ))}
-                            </div>
-                        )}
+                                );
+                            })}
 
-                        {/* No Results */}
-                        {query.length >= 2 && results.length === 0 && !isLoading && !error && (
-                            <div className="px-4 py-8 text-center">
-                                <svg className="w-12 h-12 mx-auto text-gray-600 mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                    <circle cx="11" cy="11" r="8" />
-                                    <path d="m21 21-4.3-4.3" />
-                                </svg>
-                                <p className="text-gray-400 mb-1">No results found for "{query}"</p>
-                                <p className="text-sm text-gray-500">Try a different search term or browse by specialty</p>
-                            </div>
-                        )}
-
-                        {/* Keyboard hints */}
-                        <div className="px-4 py-2 border-t border-white/5 flex items-center gap-4 text-xs text-gray-600">
-                            <span className="flex items-center gap-1">
-                                <kbd className="px-1.5 py-0.5 bg-white/5 rounded">↑</kbd>
-                                <kbd className="px-1.5 py-0.5 bg-white/5 rounded">↓</kbd>
-                                <span>Navigate</span>
-                            </span>
-                            <span className="flex items-center gap-1">
-                                <kbd className="px-1.5 py-0.5 bg-white/5 rounded">Enter</kbd>
-                                <span>Select</span>
-                            </span>
-                            <span className="flex items-center gap-1">
-                                <kbd className="px-1.5 py-0.5 bg-white/5 rounded">Esc</kbd>
-                                <span>Close</span>
-                            </span>
+                            {/* View all link */}
+                            {results.length >= maxResults && (
+                                <a
+                                    href={`/search?q=${encodeURIComponent(query)}`}
+                                    style={{
+                                        display: 'block',
+                                        padding: '12px 16px',
+                                        textAlign: 'center',
+                                        fontSize: '0.85rem',
+                                        color: '#8b5cf6',
+                                        textDecoration: 'none',
+                                        borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+                                        transition: 'background 0.15s',
+                                    }}
+                                    onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)'}
+                                    onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                                >
+                                    View all results →
+                                </a>
+                            )}
                         </div>
+                    )}
+
+                    {/* Recent Searches */}
+                    {query.length < 2 && recentSearches.length > 0 && (
+                        <div style={{ padding: '8px 0' }}>
+                            <div style={{
+                                padding: '8px 16px',
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                            }}>
+                                <span style={{ fontSize: '0.7rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Recent Searches</span>
+                                <button
+                                    onClick={() => { setRecentSearches([]); localStorage.removeItem(RECENT_SEARCHES_KEY); }}
+                                    style={{ fontSize: '0.7rem', color: '#475569', background: 'none', border: 'none', cursor: 'pointer' }}
+                                >
+                                    Clear
+                                </button>
+                            </div>
+                            {recentSearches.map((search, index) => (
+                                <button
+                                    key={search}
+                                    onClick={() => { setQuery(search); fetchResults(search); }}
+                                    style={{
+                                        width: '100%',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '12px',
+                                        padding: '10px 16px',
+                                        background: selectedIndex === index ? 'rgba(255, 255, 255, 0.05)' : 'transparent',
+                                        border: 'none',
+                                        cursor: 'pointer',
+                                        textAlign: 'left',
+                                        transition: 'background 0.15s',
+                                    }}
+                                    onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'}
+                                    onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                                >
+                                    <svg style={{ width: 16, height: 16, color: '#64748b' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span style={{ flex: 1, color: '#cbd5e1' }}>{search}</span>
+                                </button>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* No Results */}
+                    {query.length >= 2 && results.length === 0 && !isLoading && (
+                        <div style={{ padding: '32px 16px', textAlign: 'center' }}>
+                            <svg style={{ width: 48, height: 48, margin: '0 auto 12px', color: '#475569' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.3-4.3" />
+                            </svg>
+                            <p style={{ color: '#94a3b8', marginBottom: '4px' }}>No results for "{query}"</p>
+                            <p style={{ fontSize: '0.85rem', color: '#64748b' }}>Try a different search term</p>
+                        </div>
+                    )}
+
+                    {/* Keyboard hints */}
+                    <div style={{
+                        padding: '10px 16px',
+                        borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+                        display: 'flex',
+                        gap: '16px',
+                        fontSize: '0.7rem',
+                        color: '#475569',
+                    }}>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <kbd style={{ padding: '2px 6px', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '4px' }}>↑↓</kbd>
+                            Navigate
+                        </span>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <kbd style={{ padding: '2px 6px', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '4px' }}>↵</kbd>
+                            Select
+                        </span>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <kbd style={{ padding: '2px 6px', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '4px' }}>Esc</kbd>
+                            Close
+                        </span>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
+
+            {/* Spinner animation */}
+            <style>{`
+                @keyframes spin {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                }
+            `}</style>
         </div>
     );
 }

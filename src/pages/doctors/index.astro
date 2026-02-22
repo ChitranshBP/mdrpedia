@@ -7,6 +7,7 @@
 import Layout from "../../layouts/Layout.astro";
 import TierBadge from "../../components/TierBadge.astro";
 import OptimizedImage from "../../components/OptimizedImage.astro";
+import EnhancedSearch from "../../components/EnhancedSearch";
 import { getCollection } from "astro:content";
 import { prisma } from "../../lib/prisma";
 
@@ -171,22 +172,30 @@ const masterCount = sortedDoctors.filter(d => d.tier === "MASTER").length;
 
             <!-- Search & Filters -->
             <div class="browse-controls">
-                <div class="search-wrap">
+                <div class="search-wrap search-wrap--enhanced">
+                    <EnhancedSearch
+                        client:load
+                        placeholder="Quick search across all profiles..."
+                        maxResults={6}
+                    />
+                </div>
+
+                <!-- Grid Filter Input -->
+                <div class="filter-input-wrap">
                     <svg
-                        class="search-icon"
+                        class="filter-icon"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
                         stroke-width="2"
                     >
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="m21 21-4.3-4.3"></path>
+                        <path d="M3 4h18M6 8h12M9 12h6M12 16h0"></path>
                     </svg>
                     <input
                         type="text"
                         id="browse-search"
-                        class="search-input"
-                        placeholder="Search by name, specialty, or location..."
+                        class="filter-input"
+                        placeholder="Filter visible results..."
                         autocomplete="off"
                     />
                 </div>
@@ -640,6 +649,51 @@ const masterCount = sortedDoctors.filter(d => d.tier === "MASTER").length;
         flex: 1;
         min-width: 280px;
         max-width: 400px;
+    }
+
+    .search-wrap--enhanced {
+        flex: 1;
+        min-width: 320px;
+        max-width: 500px;
+    }
+
+    .filter-input-wrap {
+        position: relative;
+        min-width: 200px;
+        max-width: 280px;
+    }
+
+    .filter-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 16px;
+        height: 16px;
+        color: var(--text-muted);
+        pointer-events: none;
+    }
+
+    .filter-input {
+        width: 100%;
+        padding: 10px 14px 10px 38px;
+        font-size: 0.85rem;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        color: white;
+        outline: none;
+        transition: all 0.15s;
+    }
+
+    .filter-input::placeholder {
+        color: var(--text-muted);
+        font-size: 0.8rem;
+    }
+
+    .filter-input:focus {
+        border-color: rgba(139, 92, 246, 0.5);
+        background: rgba(255, 255, 255, 0.06);
     }
 
     .search-icon {
