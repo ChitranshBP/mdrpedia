@@ -68,6 +68,27 @@ if (dbProfile) {
     profileData = mapDbProfileToProps(dbProfile);
     doctorSource = dbProfile;
     resolvedProfileId = dbProfile.id;
+
+    // If DB profile has no citations, try to merge from static content
+    if (!profileData.citations || profileData.citations.length === 0) {
+        const staticDoctor = await getEntry("doctors", slug);
+        if (staticDoctor?.data?.citations && staticDoctor.data.citations.length > 0) {
+            const staticData = staticDoctor.data as any;
+            profileData.citations = staticData.citations.map((c: any) => ({
+                doi: c.doi,
+                pubmedId: c.pubmedId || c.pubmed_id,
+                title: c.title,
+                journal: c.journal,
+                year: c.year,
+                verified: c.verified,
+                abstract: c.abstract,
+                totalCitationCount: c.totalCitationCount || c.citationCount || 0,
+                evidenceClassification: c.evidenceClassification,
+                isOpenAccess: c.isOpenAccess || c.is_open_access,
+                openAccessUrl: c.openAccessUrl || c.open_access_url,
+            }));
+        }
+    }
 } else {
     // 2. Fallback to Static Content (for profiles not yet imported to DB)
     const staticDoctor = await getEntry("doctors", slug);
