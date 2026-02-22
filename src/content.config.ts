@@ -42,10 +42,17 @@ const doctors = defineCollection({
                     doi: z.string().nullable().optional(),
                     pubmedId: z.string().nullable().optional(),
                     title: z.string().nullable().default('Untitled Citation'),
-
                     journal: z.string().nullable().optional(),
                     year: z.number().nullable().optional(),
                     verified: z.boolean().default(false),
+                    // Citation counts - support both field names
+                    citationCount: z.number().nullable().optional(),
+                    totalCitationCount: z.number().nullable().optional(),
+                    // Additional citation metadata
+                    abstract: z.string().nullable().optional(),
+                    isOpenAccess: z.boolean().nullable().optional(),
+                    openAccessUrl: z.string().nullable().optional(),
+                    sourceUrl: z.string().nullable().optional(),
                 })
             )
             .nullable()
