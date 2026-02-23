@@ -75,7 +75,7 @@ const masterCount = allDoctors.filter((d) => d.tier === "MASTER").length;
 const countrySet = new Set(allDoctors.map((d) => d.country));
 const countriesCount = countrySet.size;
 
-// Build search index
+// Build search index with additional data
 const searchIndex = allDoctors
 	.filter(
 		(d) =>
@@ -94,6 +94,7 @@ const searchIndex = allDoctors
 			d.portraitUrl && !d.portraitUrl.startsWith("data:")
 				? d.portraitUrl
 				: "",
+		h: (d as any).hIndex || 0,
 	}))
 	.slice(0, 800);
 
@@ -131,7 +132,7 @@ const featuredDoctors = allDoctors
 		</header>
 
 		<!-- Search -->
-		<form class="search" id="mdr-search-root" action="/search" method="get">
+		<div class="search" id="mdr-search-root">
 			<div class="search__bar">
 				<svg
 					class="search__icon"
@@ -139,6 +140,7 @@ const featuredDoctors = allDoctors
 					fill="none"
 					stroke="currentColor"
 					stroke-width="2"
+					id="search-icon"
 				>
 					<circle cx="11" cy="11" r="8"></circle>
 					<path d="m21 21-4.3-4.3"></path>
@@ -152,10 +154,23 @@ const featuredDoctors = allDoctors
 					autocomplete="off"
 					aria-label="Search MDRPedia"
 				/>
+				<button type="button" id="clear-search" class="search__clear" hidden>
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M18 6L6 18M6 6l12 12"></path>
+					</svg>
+				</button>
 				<div class="search__kbd"><kbd>⌘K</kbd></div>
 			</div>
-			<div class="search-results" id="mdr-search-results" hidden></div>
-		</form>
+			<div class="search-dropdown" id="mdr-search-dropdown" hidden>
+				<div class="search-results" id="mdr-search-results"></div>
+				<div class="recent-searches" id="recent-searches"></div>
+				<div class="search-footer">
+					<span><kbd>↑</kbd><kbd>↓</kbd> Navigate</span>
+					<span><kbd>↵</kbd> Select</span>
+					<span><kbd>Esc</kbd> Close</span>
+				</div>
+			</div>
+		</div>
 
 		<!-- Stats Bar -->
 		<div class="stats-bar">
@@ -399,20 +414,161 @@ const featuredDoctors = allDoctors
 
 <script define:vars={{ searchIndex }}>
 	const DATA = searchIndex;
+	const RECENT_KEY = 'mdrpedia_home_recent';
+	const MAX_RECENT = 5;
+
 	const input = document.getElementById("mdr-hero-search");
+	const dropdown = document.getElementById("mdr-search-dropdown");
 	const resultsEl = document.getElementById("mdr-search-results");
+	const recentEl = document.getElementById("recent-searches");
+	const clearBtn = document.getElementById("clear-search");
+	const searchIcon = document.getElementById("search-icon");
+
 	let activeIdx = -1;
+	let recentSearches = [];
+
+	// Tier config
+	const tierConfig = {
+		TITAN: { icon: '👑', color: '#fbbf24', bg: 'rgba(251, 191, 36, 0.12)' },
+		ELITE: { icon: '⭐', color: '#3b82f6', bg: 'rgba(59, 130, 246, 0.12)' },
+		MASTER: { icon: '✦', color: '#10b981', bg: 'rgba(16, 185, 129, 0.12)' },
+		UNRANKED: { icon: '○', color: '#94a3b8', bg: 'rgba(148, 163, 184, 0.08)' },
+	};
+
+	// Load recent searches
+	try {
+		const stored = localStorage.getItem(RECENT_KEY);
+		if (stored) recentSearches = JSON.parse(stored);
+	} catch(e) {}
+
+	function saveRecent(term) {
+		if (term.length < 2) return;
+		recentSearches = [term, ...recentSearches.filter(s => s !== term)].slice(0, MAX_RECENT);
+		try { localStorage.setItem(RECENT_KEY, JSON.stringify(recentSearches)); } catch(e) {}
+	}
 
 	function toFlag(cc) {
 		if (!cc || cc.length !== 2) return "";
 		return String.fromCodePoint(
-			...cc
-				.toUpperCase()
-				.split("")
-				.map((c) => 0x1f1e6 + c.charCodeAt(0) - 65),
+			...cc.toUpperCase().split("").map((c) => 0x1f1e6 + c.charCodeAt(0) - 65)
 		);
 	}
 
+	function getInitials(name) {
+		return name.split(" ").map((w) => w[0]).filter((_, j) => j < 2).join("").toUpperCase();
+	}
+
+	function highlightMatch(text, query) {
+		if (!query || query.length < 2) return text;
+		const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+		return text.replace(regex, '<mark class="highlight">$1</mark>');
+	}
+
+	function showDropdown() {
+		dropdown && (dropdown.hidden = false);
+	}
+
+	function hideDropdown() {
+		dropdown && (dropdown.hidden = true);
+		activeIdx = -1;
+	}
+
+	function updateClearBtn() {
+		if (clearBtn) clearBtn.hidden = !input?.value;
+	}
+
+	function renderRecent() {
+		if (!recentEl || recentSearches.length === 0) {
+			recentEl && (recentEl.innerHTML = '');
+			return;
+		}
+		recentEl.innerHTML = `
+			<div class="recent-header">
+				<span>Recent Searches</span>
+				<button class="clear-recent" onclick="clearAllRecent()">Clear</button>
+			</div>
+			${recentSearches.map((s, i) => `
+				<button class="recent-item" data-search="${s}" data-idx="recent-${i}">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+					</svg>
+					<span>${s}</span>
+				</button>
+			`).join('')}
+		`;
+	}
+
+	window.clearAllRecent = function() {
+		recentSearches = [];
+		localStorage.removeItem(RECENT_KEY);
+		renderRecent();
+	};
+
+	function renderResults(matches, query) {
+		if (!resultsEl) return;
+
+		if (matches.length === 0) {
+			resultsEl.innerHTML = `
+				<div class="no-results">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+						<circle cx="11" cy="11" r="8"/>
+						<path d="m21 21-4.3-4.3"/>
+					</svg>
+					<p>No results for "${query}"</p>
+					<span>Try a different search term</span>
+				</div>
+			`;
+			return;
+		}
+
+		activeIdx = -1;
+		resultsEl.innerHTML = `
+			<div class="results-header">Results</div>
+			${matches.map((m, i) => {
+				const tier = tierConfig[m.t] || tierConfig.UNRANKED;
+				const initials = getInitials(m.n);
+				const flag = toFlag(m.cc);
+				const location = m.c ? `${flag} ${m.c}` : '';
+
+				return `
+					<a href="/doctors/${m.id}" class="result-item tier-${m.t.toLowerCase()}" data-idx="${i}">
+						<div class="result-avatar" style="border-color: ${tier.color}40; background: ${tier.bg}">
+							${m.img
+								? `<img src="${m.img}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><span class="result-initials" style="display:none;color:${tier.color}">${initials}</span>`
+								: `<span class="result-initials" style="color:${tier.color}">${initials}</span>`
+							}
+						</div>
+						<div class="result-info">
+							<div class="result-name-row">
+								<span class="result-name" style="${m.t === 'TITAN' ? 'color:#fbbf24' : ''}">${highlightMatch(m.n, query)}</span>
+								<span class="result-tier-badge" style="background:${tier.bg};color:${tier.color}">${tier.icon} ${m.t}</span>
+							</div>
+							<div class="result-meta">
+								<span>${highlightMatch(m.s, query)}</span>
+								${location ? `<span class="meta-divider">•</span><span class="meta-location">${location}</span>` : ''}
+							</div>
+						</div>
+						${m.h > 0 ? `
+							<div class="result-hindex">
+								<span class="hindex-value">${m.h}</span>
+								<span class="hindex-label">H-Index</span>
+							</div>
+						` : ''}
+						<svg class="result-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M9 18l6-6-6-6"/>
+						</svg>
+					</a>
+				`;
+			}).join('')}
+			${matches.length >= 8 ? `
+				<a href="/search?q=${encodeURIComponent(query)}" class="view-all-link">
+					View all results →
+				</a>
+			` : ''}
+		`;
+	}
+
+	// Keyboard shortcut
 	document.addEventListener("keydown", (e) => {
 		if ((e.metaKey || e.ctrlKey) && e.key === "k") {
 			e.preventDefault();
@@ -420,95 +576,120 @@ const featuredDoctors = allDoctors
 		}
 	});
 
-	function renderResults(matches) {
-		if (!resultsEl) return;
-		if (matches.length === 0) {
-			resultsEl.innerHTML =
-				'<div class="no-results">No matching profiles found</div>';
-			resultsEl.hidden = false;
-			return;
-		}
-		activeIdx = -1;
-		resultsEl.innerHTML = matches
-			.map((m, i) => {
-				const tierClass =
-					m.t === "TITAN"
-						? "tier-titan"
-						: m.t === "ELITE"
-							? "tier-elite"
-							: "tier-master";
-				const initials = m.n
-					.split(" ")
-					.map((w) => w[0])
-					.filter((_, j) => j < 2)
-					.join("")
-					.toUpperCase();
-				const flag = toFlag(m.cc);
-				return `<a href="/doctors/${m.id}" class="result-item ${tierClass}" data-idx="${i}">
-					<div class="result-avatar">
-						${m.img ? `<img src="${m.img}" alt="Portrait of ${m.n}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><span class="result-initials" style="display:none">${initials}</span>` : `<span class="result-initials">${initials}</span>`}
-					</div>
-					<div class="result-info">
-						<span class="result-name">${m.n}</span>
-						<span class="result-meta">${m.s}${m.c ? ` · ${flag} ${m.c}` : ""}</span>
-					</div>
-					<span class="result-tier">${m.t}</span>
-				</a>`;
-			})
-			.join("");
-		resultsEl.hidden = false;
-	}
-
+	// Input handler
 	let timer;
 	input?.addEventListener("input", () => {
 		clearTimeout(timer);
+		updateClearBtn();
+
 		timer = setTimeout(() => {
 			const q = input.value.trim().toLowerCase();
+
 			if (q.length < 2) {
-				resultsEl && (resultsEl.hidden = true);
+				resultsEl && (resultsEl.innerHTML = '');
+				renderRecent();
+				showDropdown();
 				return;
 			}
+
 			const matches = DATA.filter((d) =>
-				`${d.n} ${d.s} ${d.c}`.toLowerCase().includes(q),
+				`${d.n} ${d.s} ${d.c}`.toLowerCase().includes(q)
 			).slice(0, 8);
-			renderResults(matches);
-		}, 120);
+
+			renderResults(matches, q);
+			recentEl && (recentEl.innerHTML = '');
+			showDropdown();
+		}, 100);
 	});
 
+	// Focus handler
+	input?.addEventListener("focus", () => {
+		const q = input.value.trim();
+		if (q.length >= 2) {
+			showDropdown();
+		} else {
+			renderRecent();
+			if (recentSearches.length > 0) showDropdown();
+		}
+	});
+
+	// Clear button
+	clearBtn?.addEventListener("click", () => {
+		if (input) {
+			input.value = '';
+			input.focus();
+			updateClearBtn();
+			resultsEl && (resultsEl.innerHTML = '');
+			renderRecent();
+		}
+	});
+
+	// Keyboard navigation
 	input?.addEventListener("keydown", (e) => {
-		if (!resultsEl || resultsEl.hidden) return;
-		const items = resultsEl.querySelectorAll(".result-item");
+		if (!dropdown || dropdown.hidden) return;
+
+		const items = dropdown.querySelectorAll(".result-item, .recent-item");
+		const itemCount = items.length;
+
 		if (e.key === "ArrowDown") {
 			e.preventDefault();
-			activeIdx = Math.min(activeIdx + 1, items.length - 1);
-			items.forEach((el, i) =>
-				el.classList.toggle("active", i === activeIdx),
-			);
+			activeIdx = Math.min(activeIdx + 1, itemCount - 1);
+			items.forEach((el, i) => el.classList.toggle("active", i === activeIdx));
+			items[activeIdx]?.scrollIntoView({ block: 'nearest' });
 		} else if (e.key === "ArrowUp") {
 			e.preventDefault();
 			activeIdx = Math.max(activeIdx - 1, 0);
-			items.forEach((el, i) =>
-				el.classList.toggle("active", i === activeIdx),
-			);
-		} else if (e.key === "Enter" && activeIdx >= 0) {
+			items.forEach((el, i) => el.classList.toggle("active", i === activeIdx));
+			items[activeIdx]?.scrollIntoView({ block: 'nearest' });
+		} else if (e.key === "Enter") {
 			e.preventDefault();
-			items[activeIdx]?.click();
+			if (activeIdx >= 0 && items[activeIdx]) {
+				const item = items[activeIdx];
+				if (item.classList.contains('recent-item')) {
+					const search = item.dataset.search;
+					input.value = search;
+					const matches = DATA.filter((d) =>
+						`${d.n} ${d.s} ${d.c}`.toLowerCase().includes(search.toLowerCase())
+					).slice(0, 8);
+					renderResults(matches, search);
+					recentEl && (recentEl.innerHTML = '');
+				} else {
+					saveRecent(input.value.trim());
+					item.click();
+				}
+			} else if (input.value.length >= 2) {
+				saveRecent(input.value.trim());
+				window.location.href = `/search?q=${encodeURIComponent(input.value)}`;
+			}
 		} else if (e.key === "Escape") {
-			resultsEl.hidden = true;
+			hideDropdown();
+			input.blur();
 		}
 	});
 
+	// Click outside
 	document.addEventListener("click", (e) => {
 		if (!document.getElementById("mdr-search-root")?.contains(e.target)) {
-			resultsEl && (resultsEl.hidden = true);
+			hideDropdown();
 		}
 	});
 
-	input?.addEventListener("focus", () => {
-		if (input.value.length >= 2) {
-			resultsEl && (resultsEl.hidden = false);
+	// Recent item click
+	recentEl?.addEventListener("click", (e) => {
+		const item = e.target.closest(".recent-item");
+		if (item && input) {
+			const search = item.dataset.search;
+			input.value = search;
+			const matches = DATA.filter((d) =>
+				`${d.n} ${d.s} ${d.c}`.toLowerCase().includes(search.toLowerCase())
+			).slice(0, 8);
+			renderResults(matches, search);
+			recentEl.innerHTML = '';
 		}
 	});
+
+	// Init
+	updateClearBtn();
 </script>
 
 <style>
@@ -631,7 +812,7 @@ const featuredDoctors = allDoctors
 	}
 	.search__input {
 		width: 100%;
-		padding: 20px 100px 20px 56px;
+		padding: 20px 120px 20px 56px;
 		font-size: 1.05rem;
 		font-family: var(--font-sans);
 		background: rgba(20, 20, 35, 0.8);
@@ -653,6 +834,28 @@ const featuredDoctors = allDoctors
 			0 8px 32px rgba(139, 92, 246, 0.15),
 			0 4px 24px rgba(0, 0, 0, 0.3);
 	}
+	.search__clear {
+		position: absolute;
+		right: 70px;
+		padding: 6px;
+		background: transparent;
+		border: none;
+		color: var(--text-muted);
+		cursor: pointer;
+		border-radius: 6px;
+		transition: all 0.15s;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.search__clear:hover {
+		background: rgba(255, 255, 255, 0.1);
+		color: white;
+	}
+	.search__clear svg {
+		width: 16px;
+		height: 16px;
+	}
 	.search__kbd {
 		position: absolute;
 		right: 18px;
@@ -670,24 +873,36 @@ const featuredDoctors = allDoctors
 		backdrop-filter: blur(4px);
 	}
 
-	/* Search Results */
-	.search-results {
+	/* Search Dropdown */
+	.search-dropdown {
 		position: absolute;
 		z-index: 100;
-		top: calc(100% + 8px);
+		top: calc(100% + 10px);
 		left: 0;
 		width: 100%;
-		background: rgba(22, 22, 42, 0.98);
+		background: rgba(17, 17, 27, 0.98);
 		border: 1px solid rgba(255, 255, 255, 0.1);
-		border-radius: 16px;
+		border-radius: 20px;
 		box-shadow:
-			0 20px 60px rgba(0, 0, 0, 0.5),
+			0 25px 60px rgba(0, 0, 0, 0.6),
 			0 0 0 1px rgba(255, 255, 255, 0.05);
 		overflow: hidden;
-		max-height: 440px;
+		max-height: 500px;
 		overflow-y: auto;
-		backdrop-filter: blur(20px);
+		backdrop-filter: blur(24px);
 	}
+
+	/* Results header */
+	.results-header {
+		padding: 12px 18px 8px;
+		font-size: 0.7rem;
+		font-weight: 600;
+		color: var(--text-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+	}
+
+	/* Result items */
 	.result-item {
 		display: flex;
 		align-items: center;
@@ -698,32 +913,36 @@ const featuredDoctors = allDoctors
 		transition: all 0.15s ease;
 		border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 	}
-	.result-item:last-child {
+	.result-item:last-of-type {
 		border-bottom: none;
 	}
 	.result-item:hover,
 	.result-item.active {
-		background: rgba(139, 92, 246, 0.1);
+		background: rgba(139, 92, 246, 0.08);
 	}
 	.tier-titan.result-item:hover,
 	.tier-titan.result-item.active {
-		background: rgba(255, 215, 0, 0.08);
+		background: rgba(251, 191, 36, 0.08);
 	}
 	.tier-elite.result-item:hover,
 	.tier-elite.result-item.active {
-		background: rgba(0, 170, 255, 0.08);
+		background: rgba(59, 130, 246, 0.08);
+	}
+	.tier-master.result-item:hover,
+	.tier-master.result-item.active {
+		background: rgba(16, 185, 129, 0.08);
 	}
 
 	.result-avatar {
-		width: 44px;
-		height: 44px;
-		border-radius: 12px;
+		width: 48px;
+		height: 48px;
+		border-radius: 14px;
 		overflow: hidden;
 		flex-shrink: 0;
-		background: rgba(255, 255, 255, 0.05);
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		border: 2px solid;
 	}
 	.result-avatar img {
 		width: 100%;
@@ -732,20 +951,10 @@ const featuredDoctors = allDoctors
 	}
 	.result-initials {
 		font-weight: 700;
-		font-size: 0.85rem;
-		color: var(--text-muted);
-	}
-	.tier-titan .result-avatar {
-		border: 2px solid rgba(255, 215, 0, 0.3);
-	}
-	.tier-titan .result-initials {
-		color: #ffd700;
-	}
-	.tier-elite .result-avatar {
-		border: 2px solid rgba(0, 170, 255, 0.3);
-	}
-	.tier-elite .result-initials {
-		color: #00aaff;
+		font-size: 0.9rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.result-info {
@@ -753,50 +962,179 @@ const featuredDoctors = allDoctors
 		min-width: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 2px;
+		gap: 4px;
+	}
+	.result-name-row {
+		display: flex;
+		align-items: center;
+		gap: 10px;
 	}
 	.result-name {
 		font-weight: 600;
 		font-size: 0.95rem;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
+		color: white;
 	}
-	.tier-titan .result-name {
-		color: #ffd700;
-	}
-	.result-meta {
-		font-size: 0.8rem;
-		color: var(--text-muted);
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-	.result-tier {
+	.result-tier-badge {
 		font-size: 0.65rem;
 		font-weight: 700;
-		padding: 4px 10px;
+		padding: 3px 8px;
 		border-radius: 6px;
-		letter-spacing: 0.05em;
+		letter-spacing: 0.02em;
 		flex-shrink: 0;
 	}
-	.tier-titan .result-tier {
-		background: rgba(255, 215, 0, 0.12);
-		color: #ffd700;
+	.result-meta {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 0.85rem;
+		color: #94a3b8;
 	}
-	.tier-elite .result-tier {
-		background: rgba(0, 170, 255, 0.1);
-		color: #00aaff;
+	.meta-divider {
+		color: #475569;
 	}
-	.tier-master .result-tier {
-		background: rgba(0, 204, 102, 0.1);
-		color: #00cc66;
+	.meta-location {
+		color: #64748b;
 	}
-	.no-results {
-		padding: 24px;
+	.result-hindex {
+		text-align: right;
+		flex-shrink: 0;
+		padding-right: 8px;
+	}
+	.hindex-value {
+		display: block;
+		font-size: 1rem;
+		font-weight: 700;
+		color: white;
+		font-family: var(--font-mono, monospace);
+	}
+	.hindex-label {
+		font-size: 0.65rem;
+		color: #64748b;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+	.result-arrow {
+		width: 16px;
+		height: 16px;
+		color: #475569;
+		flex-shrink: 0;
+	}
+
+	/* Highlight */
+	.result-item :global(.highlight),
+	.highlight {
+		background: rgba(139, 92, 246, 0.3);
+		color: white;
+		border-radius: 2px;
+		padding: 0 2px;
+	}
+
+	/* View all link */
+	.view-all-link {
+		display: block;
+		padding: 14px 18px;
 		text-align: center;
-		color: var(--text-muted);
 		font-size: 0.9rem;
+		color: #8b5cf6;
+		text-decoration: none;
+		border-top: 1px solid rgba(255, 255, 255, 0.06);
+		transition: all 0.15s;
+	}
+	.view-all-link:hover {
+		background: rgba(139, 92, 246, 0.08);
+		color: #a78bfa;
+	}
+
+	/* No results */
+	.no-results {
+		padding: 40px 24px;
+		text-align: center;
+	}
+	.no-results svg {
+		width: 48px;
+		height: 48px;
+		color: #475569;
+		margin-bottom: 12px;
+	}
+	.no-results p {
+		color: #94a3b8;
+		font-size: 0.95rem;
+		margin-bottom: 4px;
+	}
+	.no-results span {
+		color: #64748b;
+		font-size: 0.85rem;
+	}
+
+	/* Recent searches */
+	.recent-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 12px 18px 8px;
+		font-size: 0.7rem;
+		font-weight: 600;
+		color: var(--text-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+	}
+	.clear-recent {
+		font-size: 0.7rem;
+		color: #475569;
+		background: none;
+		border: none;
+		cursor: pointer;
+		text-transform: none;
+		letter-spacing: 0;
+		transition: color 0.15s;
+	}
+	.clear-recent:hover {
+		color: #94a3b8;
+	}
+	.recent-item {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		width: 100%;
+		padding: 12px 18px;
+		background: transparent;
+		border: none;
+		color: #cbd5e1;
+		font-size: 0.9rem;
+		cursor: pointer;
+		text-align: left;
+		transition: background 0.15s;
+	}
+	.recent-item:hover,
+	.recent-item.active {
+		background: rgba(255, 255, 255, 0.05);
+	}
+	.recent-item svg {
+		width: 16px;
+		height: 16px;
+		color: #64748b;
+		flex-shrink: 0;
+	}
+
+	/* Search footer */
+	.search-footer {
+		display: flex;
+		gap: 20px;
+		padding: 12px 18px;
+		border-top: 1px solid rgba(255, 255, 255, 0.06);
+		font-size: 0.7rem;
+		color: #475569;
+	}
+	.search-footer span {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+	}
+	.search-footer kbd {
+		padding: 2px 6px;
+		background: rgba(255, 255, 255, 0.06);
+		border-radius: 4px;
+		font-family: inherit;
 	}
 
 	/* Stats Bar */
