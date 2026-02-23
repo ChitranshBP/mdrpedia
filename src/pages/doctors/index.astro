@@ -55,8 +55,6 @@ try {
             ranking_score: true,
             h_index: true,
             portrait_url: true,
-            total_citation_count: true,
-            citation_count: true,
             geography: {
                 select: {
                     country: true,
@@ -66,6 +64,11 @@ try {
             impact_metrics: {
                 select: {
                     lives_saved: true
+                }
+            },
+            _count: {
+                select: {
+                    citations: true
                 }
             }
         },
@@ -89,7 +92,7 @@ try {
             portraitUrl: d.portrait_url,
             geography: d.geography || { country: 'Unknown' },
             livesSaved: d.impact_metrics?.lives_saved || 0,
-            citations: d.total_citation_count ?? d.citation_count ?? 0
+            citations: d._count?.citations || 0
         }));
 
         // Sort properly by tier order
