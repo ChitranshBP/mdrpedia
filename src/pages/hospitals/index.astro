@@ -101,9 +101,6 @@ const institutions = Array.from(institutionMap.values())
 // Get unique countries for filtering
 const allCountries = [...new Set(institutions.flatMap(i => [...i.countries]))].sort();
 
-// Get unique specialties
-const allSpecialties = [...new Set(institutions.flatMap(i => [...i.specialties]))].sort();
-
 // Stats summary
 const totalInstitutions = institutions.length;
 const totalDoctors = institutions.reduce((sum, i) => sum + i.count, 0);
@@ -188,15 +185,6 @@ function getTierBadge(tier: string) {
                     </div>
 
                     <div class="filter-group">
-                        <select id="specialty-filter">
-                            <option value="">All Specialties</option>
-                            {allSpecialties.slice(0, 50).map((specialty) => (
-                                <option value={specialty}>{specialty}</option>
-                            ))}
-                        </select>
-                    </div>
-
-                    <div class="filter-group">
                         <select id="sort-filter">
                             <option value="impact">Sort by Impact</option>
                             <option value="titans">Sort by TITAN Count</option>
@@ -221,7 +209,6 @@ function getTierBadge(tier: string) {
                             class="institution-card"
                             data-name={institution.name.toLowerCase()}
                             data-countries={[...institution.countries].join(',').toLowerCase()}
-                            data-specialties={[...institution.specialties].join(',').toLowerCase()}
                             data-impact={institution.impactScore}
                             data-titans={institution.titanCount}
                             data-doctors={institution.count}
@@ -320,15 +307,6 @@ function getTierBadge(tier: string) {
                                 </div>
                             )}
 
-                            {/* Specialties */}
-                            <div class="specialties-preview">
-                                {[...institution.specialties].slice(0, 3).map((specialty) => (
-                                    <span class="specialty-tag">{specialty}</span>
-                                ))}
-                                {institution.specialties.size > 3 && (
-                                    <span class="specialty-tag more">+{institution.specialties.size - 3}</span>
-                                )}
-                            </div>
                         </article>
                     ))}
                 </div>
@@ -352,7 +330,6 @@ function getTierBadge(tier: string) {
     document.addEventListener('DOMContentLoaded', () => {
         const searchInput = document.getElementById('institution-search') as HTMLInputElement;
         const countryFilter = document.getElementById('country-filter') as HTMLSelectElement;
-        const specialtyFilter = document.getElementById('specialty-filter') as HTMLSelectElement;
         const sortFilter = document.getElementById('sort-filter') as HTMLSelectElement;
         const resultsCount = document.getElementById('results-count');
         const grid = document.getElementById('institutions-grid');
@@ -362,7 +339,6 @@ function getTierBadge(tier: string) {
         function filterAndSort() {
             const searchTerm = searchInput?.value.toLowerCase() || '';
             const country = countryFilter?.value.toLowerCase() || '';
-            const specialty = specialtyFilter?.value.toLowerCase() || '';
             const sortBy = sortFilter?.value || 'impact';
 
             const cards = Array.from(grid!.querySelectorAll('.institution-card')) as HTMLElement[];
@@ -372,13 +348,11 @@ function getTierBadge(tier: string) {
             cards.forEach(card => {
                 const name = card.dataset.name || '';
                 const countries = card.dataset.countries || '';
-                const specialties = card.dataset.specialties || '';
 
                 const matchesSearch = !searchTerm || name.includes(searchTerm);
                 const matchesCountry = !country || countries.includes(country);
-                const matchesSpecialty = !specialty || specialties.includes(specialty);
 
-                if (matchesSearch && matchesCountry && matchesSpecialty) {
+                if (matchesSearch && matchesCountry) {
                     card.style.display = '';
                     visibleCount++;
                 } else {
@@ -418,7 +392,6 @@ function getTierBadge(tier: string) {
 
         searchInput?.addEventListener('input', filterAndSort);
         countryFilter?.addEventListener('change', filterAndSort);
-        specialtyFilter?.addEventListener('change', filterAndSort);
         sortFilter?.addEventListener('change', filterAndSort);
     });
 </script>
@@ -854,28 +827,6 @@ function getTierBadge(tier: string) {
         font-size: 0.8rem;
         color: var(--text-muted);
         padding-left: 4px;
-    }
-
-    /* Specialties */
-    .specialties-preview {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-    }
-
-    .specialty-tag {
-        padding: 4px 10px;
-        background: rgba(139, 92, 246, 0.08);
-        border: 1px solid rgba(139, 92, 246, 0.15);
-        border-radius: 6px;
-        font-size: 0.7rem;
-        color: var(--accent-purple-light);
-    }
-
-    .specialty-tag.more {
-        background: rgba(255, 255, 255, 0.03);
-        border-color: rgba(255, 255, 255, 0.1);
-        color: var(--text-muted);
     }
 
     /* Empty State */
