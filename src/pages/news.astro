@@ -21,25 +21,39 @@ const articles = newsEntries
         id: entry.id,
     }));
 
-// Category definitions with icons and colors
+// Category definitions with SVG icon names and colors (no emojis)
 const CATEGORIES: Record<string, { icon: string; color: string; label: string }> = {
-    'breakthrough': { icon: '🔬', color: '#ffd700', label: 'Research Breakthrough' },
-    'clinical-trial': { icon: '💊', color: '#00aaff', label: 'Clinical Trial' },
-    'award': { icon: '🏆', color: '#a78bfa', label: 'Award & Recognition' },
-    'achievement': { icon: '🏆', color: '#a78bfa', label: 'Achievement' },
-    'impact': { icon: '💡', color: '#10b981', label: 'Impact Story' },
-    'registry': { icon: '📋', color: '#f59e0b', label: 'Registry Update' },
-    'technique': { icon: '🔧', color: '#ec4899', label: 'New Technique' },
-    'global-health': { icon: '🌍', color: '#06b6d4', label: 'Global Health' },
-    'research': { icon: '🧬', color: '#8b5cf6', label: 'Research' },
-    'innovation': { icon: '💡', color: '#22d3ee', label: 'Innovation' },
-    'default': { icon: '📰', color: '#888', label: 'News' }
+    'breakthrough': { icon: 'flask', color: '#ffd700', label: 'Research Breakthrough' },
+    'clinical-trial': { icon: 'pill', color: '#00aaff', label: 'Clinical Trial' },
+    'award': { icon: 'trophy', color: '#a78bfa', label: 'Award & Recognition' },
+    'achievement': { icon: 'trophy', color: '#a78bfa', label: 'Achievement' },
+    'impact': { icon: 'lightbulb', color: '#10b981', label: 'Impact Story' },
+    'registry': { icon: 'clipboard', color: '#f59e0b', label: 'Registry Update' },
+    'technique': { icon: 'tool', color: '#ec4899', label: 'New Technique' },
+    'global-health': { icon: 'globe', color: '#06b6d4', label: 'Global Health' },
+    'research': { icon: 'dna', color: '#8b5cf6', label: 'Research' },
+    'innovation': { icon: 'zap', color: '#22d3ee', label: 'Innovation' },
+    'default': { icon: 'file', color: '#888', label: 'News' }
 };
 
 function getCategoryInfo(category: string) {
     const normalized = category.toLowerCase().replace(/\s+/g, '-');
     return CATEGORIES[normalized] || CATEGORIES['default'];
 }
+
+// SVG icon paths for categories
+const ICON_PATHS: Record<string, string> = {
+    'flask': 'M9 3h6v2H9V3zm0 4v6l-3 6h12l-3-6V7H9z',
+    'pill': 'M10.5 1.5a4.5 4.5 0 0 0-4.5 4.5v12a4.5 4.5 0 0 0 9 0V6a4.5 4.5 0 0 0-4.5-4.5zM8 12h5',
+    'trophy': 'M6 9H4.5a2.5 2.5 0 0 1 0-5H6m12 5h1.5a2.5 2.5 0 0 0 0-5H18M6 9a6 6 0 0 0 12 0V4H6v5zm3 12h6m-3-3v3',
+    'lightbulb': 'M9 21h6m-3-3v3M12 3a6 6 0 0 0-4 10.5V17h8v-3.5A6 6 0 0 0 12 3z',
+    'clipboard': 'M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5h6',
+    'tool': 'M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z',
+    'globe': 'M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zM2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z',
+    'dna': 'M2 15c6.667-6 13.333 0 20-6M2 9c6.667 6 13.333 0 20 6M9 3v18m6-18v18',
+    'zap': 'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
+    'file': 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8',
+};
 
 function formatDate(dateStr: string) {
     return new Date(dateStr).toLocaleDateString("en-US", {
@@ -54,6 +68,11 @@ function getRelativeTime(dateStr: string) {
     const now = new Date();
     const diffMs = now.getTime() - date.getTime();
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+    // Handle future dates
+    if (diffDays < 0) {
+        return formatDate(dateStr);
+    }
 
     if (diffDays === 0) return 'Today';
     if (diffDays === 1) return 'Yesterday';
@@ -130,9 +149,12 @@ const uniqueCategories = [...new Set(articles.map(a => a.category))];
                     </button>
                     {uniqueCategories.map(cat => {
                         const info = getCategoryInfo(cat);
+                        const iconPath = ICON_PATHS[info.icon] || ICON_PATHS['file'];
                         return (
                             <button class="filter-btn" data-category={cat.toLowerCase()} style={`--cat-color: ${info.color}`}>
-                                <span class="filter-icon">{info.icon}</span>
+                                <svg class="filter-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d={iconPath} />
+                                </svg>
                                 {info.label}
                             </button>
                         );
@@ -157,7 +179,9 @@ const uniqueCategories = [...new Set(articles.map(a => a.category))];
                         <div class="featured-glow"></div>
                         <div class="featured-content">
                             <div class="featured-badge" style={`--cat-color: ${getCategoryInfo(articles[0].category).color}`}>
-                                <span class="badge-icon">{getCategoryInfo(articles[0].category).icon}</span>
+                                <svg class="badge-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d={ICON_PATHS[getCategoryInfo(articles[0].category).icon] || ICON_PATHS['file']} />
+                                </svg>
                                 {getCategoryInfo(articles[0].category).label}
                             </div>
                             <h3 class="featured-title">
@@ -190,7 +214,9 @@ const uniqueCategories = [...new Set(articles.map(a => a.category))];
                         <div class="featured-visual">
                             <div class="visual-placeholder">
                                 <div class="visual-icon">
-                                    <span>{getCategoryInfo(articles[0].category).icon}</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d={ICON_PATHS[getCategoryInfo(articles[0].category).icon] || ICON_PATHS['file']} />
+                                    </svg>
                                 </div>
                                 <div class="visual-pattern"></div>
                             </div>
@@ -216,6 +242,7 @@ const uniqueCategories = [...new Set(articles.map(a => a.category))];
                 <div class="articles-grid" id="articles-grid">
                     {articles.slice(1).map((article, index) => {
                         const catInfo = getCategoryInfo(article.category);
+                        const iconPath = ICON_PATHS[catInfo.icon] || ICON_PATHS['file'];
                         return (
                             <article
                                 class="article-card"
@@ -224,7 +251,9 @@ const uniqueCategories = [...new Set(articles.map(a => a.category))];
                             >
                                 <div class="card-highlight"></div>
                                 <div class="article-category">
-                                    <span class="cat-icon">{catInfo.icon}</span>
+                                    <svg class="cat-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d={iconPath} />
+                                    </svg>
                                     {catInfo.label}
                                 </div>
                                 <h3 class="article-title">
@@ -576,8 +605,21 @@ const uniqueCategories = [...new Set(articles.map(a => a.category))];
         box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
     }
 
-    .filter-icon {
-        font-size: 0.9rem;
+    .filter-icon-svg {
+        width: 14px;
+        height: 14px;
+        color: var(--cat-color, currentColor);
+    }
+
+    .badge-icon-svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .cat-icon-svg {
+        width: 14px;
+        height: 14px;
+        color: var(--cat-color, currentColor);
     }
 
     /* Section Header */
@@ -766,9 +808,13 @@ const uniqueCategories = [...new Set(articles.map(a => a.category))];
     }
 
     .visual-icon {
-        font-size: 5rem;
-        opacity: 0.3;
         z-index: 1;
+    }
+
+    .visual-icon svg {
+        width: 80px;
+        height: 80px;
+        color: rgba(139, 92, 246, 0.4);
     }
 
     .visual-pattern {

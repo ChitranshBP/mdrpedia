@@ -1,28 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { useToast } from './Toast';
-import { isValidNPI } from '../lib/utils';
 
 interface DoctorVerificationData {
     fullName: string;
     specialty: string;
-    npi?: string;
+    registrationNumber?: string;
     credential?: string;
+    country?: string;
 }
 
 interface NPIClaimWizardProps {
     onSuccess?: (doctor: DoctorVerificationData) => void;
 }
 
+// Verification methods by region
+const VERIFICATION_METHODS = [
+    { code: 'NPI', label: 'NPI (United States)', country: 'United States', placeholder: '10-digit NPI', pattern: /^\d{10}$/, maxLength: 10 },
+    { code: 'GMC', label: 'GMC Number (United Kingdom)', country: 'United Kingdom', placeholder: '7-digit GMC', pattern: /^\d{7}$/, maxLength: 7 },
+    { code: 'AHPRA', label: 'AHPRA (Australia)', country: 'Australia', placeholder: 'MED followed by 10 digits', pattern: /^MED\d{10}$/i, maxLength: 13 },
+    { code: 'MCI', label: 'MCI Registration (India)', country: 'India', placeholder: 'State code + number', pattern: /^[A-Z]{2,3}\d+$/i, maxLength: 15 },
+    { code: 'ORCID', label: 'ORCID iD (International)', country: 'International', placeholder: '0000-0000-0000-0000', pattern: /^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/i, maxLength: 19 },
+    { code: 'EMAIL', label: 'Institutional Email', country: 'International', placeholder: 'name@institution.edu', pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, maxLength: 100 },
+];
+
 // Step labels for progress indicator
 const STEPS = [
-    { number: 1, label: 'Verify', icon: 'shield' },
-    { number: 2, label: 'Confirm', icon: 'user' },
-    { number: 3, label: 'Complete', icon: 'check' },
+    { number: 1, label: 'Method', icon: 'globe' },
+    { number: 2, label: 'Verify', icon: 'shield' },
+    { number: 3, label: 'Confirm', icon: 'user' },
+    { number: 4, label: 'Complete', icon: 'check' },
 ];
 
 export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
     const [step, setStep] = useState(1);
-    const [npi, setNpi] = useState('');
+    const [selectedMethod, setSelectedMethod] = useState<typeof VERIFICATION_METHODS[0] | null>(null);
+    const [registrationNumber, setRegistrationNumber] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [doctorData, setDoctorData] = useState<DoctorVerificationData | null>(null);
@@ -36,16 +48,24 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
         // Not wrapped in ToastProvider, will use inline messages
     }
 
-    // Validate NPI format as user types
-    const isNpiValid = isValidNPI(npi);
-    const showNpiFormatError = npi.length > 0 && npi.length < 10 && !/^\d*$/.test(npi);
-    const progressPercentage = (npi.length / 10) * 100;
+    // Validate input based on selected method
+    const isInputValid = selectedMethod ? selectedMethod.pattern.test(registrationNumber) : false;
+    const progressPercentage = selectedMethod
+        ? Math.min((registrationNumber.length / selectedMethod.maxLength) * 100, 100)
+        : 0;
 
-    const handleNpiSubmit = async (e: React.FormEvent) => {
+    const handleMethodSelect = (method: typeof VERIFICATION_METHODS[0]) => {
+        setSelectedMethod(method);
+        setRegistrationNumber('');
+        setError('');
+        setStep(2);
+    };
+
+    const handleVerifySubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!isNpiValid) {
-            setError('Please enter a valid 10-digit NPI number');
+        if (!selectedMethod || !isInputValid) {
+            setError(`Please enter a valid ${selectedMethod?.label || 'registration number'}`);
             return;
         }
 
@@ -53,16 +73,25 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
         setError('');
 
         try {
-            const res = await fetch(`/api/npi-validate?npi=${npi}`);
+            // API call based on verification method
+            const endpoint = selectedMethod.code === 'NPI'
+                ? `/api/npi-validate?npi=${registrationNumber}`
+                : `/api/verify-registration?type=${selectedMethod.code}&number=${encodeURIComponent(registrationNumber)}`;
+
+            const res = await fetch(endpoint);
             const data = await res.json();
 
             if (data.valid) {
-                setDoctorData(data.doctor);
-                setStep(2);
+                setDoctorData({
+                    ...data.doctor,
+                    country: selectedMethod.country,
+                    registrationNumber: registrationNumber
+                });
+                setStep(3);
                 toast?.success('Identity verified successfully!');
             } else {
-                setError(data.message || 'Invalid NPI Number');
-                toast?.error(data.message || 'Invalid NPI Number');
+                setError(data.message || 'Invalid registration number');
+                toast?.error(data.message || 'Invalid registration number');
             }
         } catch {
             const errorMsg = 'System Error. Please try again.';
@@ -78,11 +107,9 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
 
         setLoading(true);
         try {
-            // Here we would create the user account via API
             toast?.success(`Profile for ${doctorData.fullName} claimed! Redirecting...`);
             onSuccess?.(doctorData);
 
-            // Short delay for user to see the success message
             setTimeout(() => {
                 window.location.href = '/doctor/portal';
             }, 1500);
@@ -92,23 +119,35 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
         }
     };
 
-    const handleNpiChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // Only allow numeric input
-        const value = e.target.value.replace(/\D/g, '').slice(0, 10);
-        setNpi(value);
-        if (error) setError('');
-    };
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let value = e.target.value;
 
-    // Format NPI for display (XXX-XXX-XXXX)
-    const formatNpiDisplay = (value: string) => {
-        if (value.length <= 3) return value;
-        if (value.length <= 6) return `${value.slice(0, 3)}-${value.slice(3)}`;
-        return `${value.slice(0, 3)}-${value.slice(3, 6)}-${value.slice(6)}`;
+        // Format ORCID with dashes
+        if (selectedMethod?.code === 'ORCID') {
+            value = value.replace(/[^\dX]/gi, '').slice(0, 16);
+            if (value.length > 4) value = value.slice(0, 4) + '-' + value.slice(4);
+            if (value.length > 9) value = value.slice(0, 9) + '-' + value.slice(9);
+            if (value.length > 14) value = value.slice(0, 14) + '-' + value.slice(14);
+        } else if (selectedMethod?.code === 'NPI' || selectedMethod?.code === 'GMC') {
+            value = value.replace(/\D/g, '').slice(0, selectedMethod.maxLength);
+        } else if (selectedMethod?.code === 'AHPRA') {
+            value = value.toUpperCase().slice(0, selectedMethod.maxLength);
+        }
+
+        setRegistrationNumber(value);
+        if (error) setError('');
     };
 
     const renderStepIcon = (iconName: string, isActive: boolean, isCompleted: boolean) => {
         const color = isCompleted ? '#10b981' : isActive ? '#a855f7' : '#4b5563';
         switch (iconName) {
+            case 'globe':
+                return (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                    </svg>
+                );
             case 'shield':
                 return (
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2">
@@ -133,11 +172,18 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
         }
     };
 
+    const getStepWidth = () => {
+        if (step === 1) return '0%';
+        if (step === 2) return '33%';
+        if (step === 3) return '66%';
+        return '100%';
+    };
+
     return (
         <div className="npi-wizard">
             <style>{`
                 .npi-wizard {
-                    max-width: 440px;
+                    max-width: 480px;
                     margin: 0 auto;
                     position: relative;
                 }
@@ -166,32 +212,21 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.5), transparent);
                 }
 
-                .wizard-card::after {
-                    content: '';
-                    position: absolute;
-                    top: -50%;
-                    left: -50%;
-                    width: 200%;
-                    height: 200%;
-                    background: radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.08) 0%, transparent 50%);
-                    pointer-events: none;
-                }
-
                 /* Progress Steps */
                 .progress-container {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    margin-bottom: 2.5rem;
+                    margin-bottom: 2rem;
                     position: relative;
-                    padding: 0 0.5rem;
+                    padding: 0 0.25rem;
                 }
 
                 .progress-line {
                     position: absolute;
                     top: 50%;
-                    left: 2.5rem;
-                    right: 2.5rem;
+                    left: 2rem;
+                    right: 2rem;
                     height: 2px;
                     background: rgba(75, 85, 99, 0.5);
                     transform: translateY(-50%);
@@ -201,7 +236,7 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                 .progress-line-fill {
                     position: absolute;
                     top: 50%;
-                    left: 2.5rem;
+                    left: 2rem;
                     height: 2px;
                     background: linear-gradient(90deg, #a855f7, #8b5cf6);
                     transform: translateY(-50%);
@@ -214,79 +249,60 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    gap: 0.5rem;
+                    gap: 0.375rem;
                     position: relative;
                     z-index: 2;
                 }
 
                 .step-circle {
-                    width: 44px;
-                    height: 44px;
+                    width: 36px;
+                    height: 36px;
                     border-radius: 50%;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    font-weight: 700;
-                    font-size: 0.875rem;
                     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                    position: relative;
                 }
 
                 .step-circle.inactive {
                     background: rgba(30, 30, 45, 0.9);
                     border: 2px solid rgba(75, 85, 99, 0.5);
-                    color: #6b7280;
                 }
 
                 .step-circle.active {
                     background: linear-gradient(135deg, #a855f7, #8b5cf6);
                     border: 2px solid transparent;
-                    color: white;
-                    box-shadow: 0 0 20px rgba(168, 85, 247, 0.5), 0 0 40px rgba(168, 85, 247, 0.2);
-                    animation: pulse-glow 2s infinite;
+                    box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
                 }
 
                 .step-circle.completed {
                     background: linear-gradient(135deg, #10b981, #059669);
                     border: 2px solid transparent;
-                    color: white;
-                    box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
-                }
-
-                @keyframes pulse-glow {
-                    0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.5), 0 0 40px rgba(168, 85, 247, 0.2); }
-                    50% { box-shadow: 0 0 25px rgba(168, 85, 247, 0.7), 0 0 50px rgba(168, 85, 247, 0.3); }
                 }
 
                 .step-label {
-                    font-size: 0.7rem;
+                    font-size: 0.6rem;
                     font-weight: 600;
                     text-transform: uppercase;
                     letter-spacing: 0.05em;
                     color: #6b7280;
-                    transition: color 0.3s;
                 }
 
-                .step-label.active {
-                    color: #a855f7;
-                }
-
-                .step-label.completed {
-                    color: #10b981;
-                }
+                .step-label.active { color: #a855f7; }
+                .step-label.completed { color: #10b981; }
 
                 /* Header */
                 .wizard-header {
                     text-align: center;
-                    margin-bottom: 2rem;
+                    margin-bottom: 1.75rem;
                 }
 
                 .wizard-icon {
-                    width: 64px;
-                    height: 64px;
+                    width: 56px;
+                    height: 56px;
                     margin: 0 auto 1rem;
                     background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.05));
-                    border-radius: 20px;
+                    border-radius: 16px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -294,95 +310,158 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                 }
 
                 .wizard-title {
-                    font-size: 1.75rem;
+                    font-size: 1.5rem;
                     font-weight: 800;
                     color: white;
                     margin: 0 0 0.5rem;
-                    letter-spacing: -0.02em;
                 }
 
                 .wizard-subtitle {
-                    font-size: 0.9rem;
+                    font-size: 0.875rem;
                     color: #9ca3af;
                     margin: 0;
                     line-height: 1.5;
                 }
 
+                /* Method Selection */
+                .method-grid {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.75rem;
+                    margin-bottom: 1.5rem;
+                }
+
+                .method-btn {
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                    padding: 1rem 1.25rem;
+                    background: rgba(255, 255, 255, 0.02);
+                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    border-radius: 14px;
+                    cursor: pointer;
+                    transition: all 0.2s;
+                    text-align: left;
+                }
+
+                .method-btn:hover {
+                    background: rgba(139, 92, 246, 0.1);
+                    border-color: rgba(139, 92, 246, 0.3);
+                }
+
+                .method-icon {
+                    width: 40px;
+                    height: 40px;
+                    background: rgba(139, 92, 246, 0.15);
+                    border-radius: 10px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-shrink: 0;
+                }
+
+                .method-icon svg {
+                    width: 20px;
+                    height: 20px;
+                    color: #a855f7;
+                }
+
+                .method-info {
+                    flex: 1;
+                }
+
+                .method-label {
+                    font-size: 0.95rem;
+                    font-weight: 600;
+                    color: white;
+                    display: block;
+                    margin-bottom: 2px;
+                }
+
+                .method-country {
+                    font-size: 0.75rem;
+                    color: #6b7280;
+                }
+
+                .method-arrow {
+                    color: #4b5563;
+                    transition: transform 0.2s, color 0.2s;
+                }
+
+                .method-btn:hover .method-arrow {
+                    color: #a855f7;
+                    transform: translateX(4px);
+                }
+
                 /* Input Section */
                 .input-section {
-                    margin-bottom: 1.5rem;
+                    margin-bottom: 1.25rem;
                 }
 
                 .input-label {
                     display: flex;
                     align-items: center;
                     gap: 0.5rem;
-                    font-size: 0.75rem;
+                    font-size: 0.7rem;
                     font-weight: 600;
                     color: #9ca3af;
                     text-transform: uppercase;
                     letter-spacing: 0.1em;
-                    margin-bottom: 0.75rem;
+                    margin-bottom: 0.625rem;
                 }
 
                 .input-wrapper {
                     position: relative;
-                    margin-bottom: 0.75rem;
+                    margin-bottom: 0.625rem;
                 }
 
-                .npi-input {
+                .reg-input {
                     width: 100%;
                     background: rgba(0, 0, 0, 0.3);
                     border: 2px solid rgba(75, 85, 99, 0.3);
-                    border-radius: 16px;
-                    padding: 1.25rem 1.5rem 1.25rem 3.5rem;
-                    font-size: 1.5rem;
+                    border-radius: 14px;
+                    padding: 1rem 1.25rem 1rem 3.25rem;
+                    font-size: 1.25rem;
                     font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
                     font-weight: 600;
-                    letter-spacing: 0.15em;
+                    letter-spacing: 0.1em;
                     color: white;
                     text-align: center;
-                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    transition: all 0.3s;
                     outline: none;
                 }
 
-                .npi-input::placeholder {
+                .reg-input::placeholder {
                     color: #4b5563;
                     font-weight: 400;
-                    letter-spacing: 0.05em;
+                    letter-spacing: 0.02em;
+                    font-size: 1rem;
                 }
 
-                .npi-input:focus {
+                .reg-input:focus {
                     border-color: rgba(139, 92, 246, 0.5);
-                    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1), 0 0 20px rgba(139, 92, 246, 0.2);
+                    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
                 }
 
-                .npi-input.valid {
+                .reg-input.valid {
                     border-color: rgba(16, 185, 129, 0.5);
-                    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1), 0 0 20px rgba(16, 185, 129, 0.2);
+                    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
                 }
 
-                .npi-input.error {
+                .reg-input.error {
                     border-color: rgba(239, 68, 68, 0.5);
-                    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
                 }
 
                 .input-icon {
                     position: absolute;
-                    left: 1.25rem;
+                    left: 1rem;
                     top: 50%;
                     transform: translateY(-50%);
                     color: #6b7280;
-                    transition: color 0.3s;
                 }
 
-                .input-icon.focused {
-                    color: #a855f7;
-                }
-
-                .input-icon.valid {
-                    color: #10b981;
-                }
+                .input-icon.focused { color: #a855f7; }
+                .input-icon.valid { color: #10b981; }
 
                 /* Progress Bar */
                 .progress-bar-container {
@@ -390,7 +469,7 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     background: rgba(75, 85, 99, 0.3);
                     border-radius: 2px;
                     overflow: hidden;
-                    margin-bottom: 0.75rem;
+                    margin-bottom: 0.625rem;
                 }
 
                 .progress-bar-fill {
@@ -409,16 +488,7 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    font-size: 0.75rem;
-                }
-
-                .digit-counter {
-                    color: #6b7280;
-                    font-family: 'SF Mono', monospace;
-                }
-
-                .digit-counter.complete {
-                    color: #10b981;
+                    font-size: 0.7rem;
                 }
 
                 .valid-badge {
@@ -435,27 +505,25 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     gap: 0.375rem;
                     color: #ef4444;
                     font-size: 0.8rem;
-                    margin-top: 0.75rem;
-                    padding: 0.75rem 1rem;
+                    margin-top: 0.625rem;
+                    padding: 0.625rem 0.875rem;
                     background: rgba(239, 68, 68, 0.1);
                     border: 1px solid rgba(239, 68, 68, 0.2);
                     border-radius: 10px;
                 }
 
-                /* Submit Button */
+                /* Buttons */
                 .submit-btn {
                     width: 100%;
-                    padding: 1.125rem 2rem;
+                    padding: 1rem 1.75rem;
                     border: none;
                     border-radius: 14px;
-                    font-size: 0.9rem;
+                    font-size: 0.875rem;
                     font-weight: 700;
                     text-transform: uppercase;
                     letter-spacing: 0.1em;
                     cursor: pointer;
-                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                    position: relative;
-                    overflow: hidden;
+                    transition: all 0.3s;
                 }
 
                 .submit-btn.disabled {
@@ -473,10 +541,6 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                 .submit-btn.active:hover {
                     transform: translateY(-2px);
                     box-shadow: 0 15px 40px -10px rgba(168, 85, 247, 0.6);
-                }
-
-                .submit-btn.active:active {
-                    transform: translateY(0);
                 }
 
                 .btn-content {
@@ -499,31 +563,44 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     to { transform: rotate(360deg); }
                 }
 
+                .back-btn {
+                    width: 100%;
+                    padding: 0.75rem;
+                    background: transparent;
+                    border: none;
+                    color: #6b7280;
+                    font-size: 0.8rem;
+                    cursor: pointer;
+                    margin-top: 0.625rem;
+                }
+
+                .back-btn:hover { color: white; }
+
                 /* Trust Footer */
                 .trust-footer {
-                    margin-top: 1.5rem;
-                    padding-top: 1.25rem;
+                    margin-top: 1.25rem;
+                    padding-top: 1rem;
                     border-top: 1px solid rgba(75, 85, 99, 0.2);
                 }
 
                 .trust-badges {
                     display: flex;
                     justify-content: center;
-                    gap: 1.5rem;
-                    margin-bottom: 1rem;
+                    gap: 1.25rem;
+                    margin-bottom: 0.75rem;
                 }
 
                 .trust-badge {
                     display: flex;
                     align-items: center;
                     gap: 0.375rem;
-                    font-size: 0.7rem;
+                    font-size: 0.65rem;
                     color: #6b7280;
                 }
 
                 .trust-text {
                     text-align: center;
-                    font-size: 0.7rem;
+                    font-size: 0.65rem;
                     color: #4b5563;
                     line-height: 1.5;
                 }
@@ -533,15 +610,11 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     text-decoration: none;
                 }
 
-                .trust-link:hover {
-                    text-decoration: underline;
-                }
-
-                /* Step 2 Styles */
+                /* Step 3: Confirmation */
                 .success-icon {
-                    width: 80px;
-                    height: 80px;
-                    margin: 0 auto 1.5rem;
+                    width: 72px;
+                    height: 72px;
+                    margin: 0 auto 1.25rem;
                     background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.05));
                     border-radius: 50%;
                     display: flex;
@@ -559,33 +632,33 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                 .doctor-card {
                     background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.02));
                     border: 1px solid rgba(139, 92, 246, 0.2);
-                    border-radius: 16px;
-                    padding: 1.25rem;
-                    margin: 1.5rem 0;
+                    border-radius: 14px;
+                    padding: 1rem;
+                    margin: 1.25rem 0;
                 }
 
                 .doctor-info {
                     display: flex;
                     align-items: center;
-                    gap: 1rem;
+                    gap: 0.875rem;
                 }
 
                 .doctor-avatar {
-                    width: 56px;
-                    height: 56px;
+                    width: 48px;
+                    height: 48px;
                     background: linear-gradient(135deg, #a855f7, #7c3aed);
-                    border-radius: 16px;
+                    border-radius: 12px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    font-size: 1.5rem;
+                    font-size: 1.25rem;
                     font-weight: 700;
                     color: white;
                 }
 
                 .doctor-details h3 {
                     margin: 0 0 0.25rem;
-                    font-size: 1.125rem;
+                    font-size: 1rem;
                     font-weight: 700;
                     color: white;
                 }
@@ -594,37 +667,31 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     display: flex;
                     align-items: center;
                     gap: 0.5rem;
-                    font-size: 0.8rem;
+                    font-size: 0.75rem;
                     color: #10b981;
                 }
 
                 .status-dot {
-                    width: 8px;
-                    height: 8px;
+                    width: 6px;
+                    height: 6px;
                     background: #10b981;
                     border-radius: 50%;
-                    animation: pulse 2s infinite;
-                }
-
-                @keyframes pulse {
-                    0%, 100% { opacity: 1; }
-                    50% { opacity: 0.5; }
                 }
 
                 .confirm-btn {
                     width: 100%;
-                    padding: 1.125rem 2rem;
+                    padding: 1rem 1.75rem;
                     background: linear-gradient(135deg, #10b981, #059669);
                     border: none;
                     border-radius: 14px;
                     color: white;
-                    font-size: 0.9rem;
+                    font-size: 0.875rem;
                     font-weight: 700;
                     text-transform: uppercase;
                     letter-spacing: 0.1em;
                     cursor: pointer;
-                    transition: all 0.3s;
                     box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.5);
+                    transition: all 0.3s;
                 }
 
                 .confirm-btn:hover {
@@ -632,30 +699,13 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     box-shadow: 0 15px 40px -10px rgba(16, 185, 129, 0.6);
                 }
 
-                .back-btn {
-                    width: 100%;
-                    padding: 0.75rem;
-                    background: transparent;
-                    border: none;
-                    color: #6b7280;
-                    font-size: 0.8rem;
-                    cursor: pointer;
-                    transition: color 0.2s;
-                    margin-top: 0.75rem;
+                .animate-in {
+                    animation: fade-in 0.4s ease-out;
                 }
 
-                .back-btn:hover {
-                    color: white;
-                }
-
-                /* Animations */
                 @keyframes fade-in {
                     from { opacity: 0; transform: translateY(10px); }
                     to { opacity: 1; transform: translateY(0); }
-                }
-
-                .animate-in {
-                    animation: fade-in 0.4s ease-out;
                 }
             `}</style>
 
@@ -663,10 +713,7 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                 {/* Progress Steps */}
                 <div className="progress-container">
                     <div className="progress-line"></div>
-                    <div
-                        className="progress-line-fill"
-                        style={{ width: step === 1 ? '0%' : step === 2 ? '50%' : '100%' }}
-                    ></div>
+                    <div className="progress-line-fill" style={{ width: getStepWidth() }}></div>
                     {STEPS.map((s) => (
                         <div key={s.number} className="step-item">
                             <div className={`step-circle ${
@@ -685,70 +732,114 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     ))}
                 </div>
 
+                {/* Step 1: Select Verification Method */}
                 {step === 1 && (
-                    <form onSubmit={handleNpiSubmit} className="animate-in">
-                        {/* Header */}
+                    <div className="animate-in">
                         <div className="wizard-header">
                             <div className="wizard-icon">
-                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a855f7" strokeWidth="2">
-                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                                    <path d="M9 12l2 2 4-4" />
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a855f7" strokeWidth="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                                 </svg>
                             </div>
                             <h2 className="wizard-title">Verify Your Identity</h2>
                             <p className="wizard-subtitle">
-                                Enter your NPI number to claim and manage your MDRPedia profile
+                                Select your verification method based on your region or professional registration
                             </p>
                         </div>
 
-                        {/* Input Section */}
+                        <div className="method-grid">
+                            {VERIFICATION_METHODS.map((method) => (
+                                <button
+                                    key={method.code}
+                                    className="method-btn"
+                                    onClick={() => handleMethodSelect(method)}
+                                >
+                                    <div className="method-icon">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            {method.code === 'NPI' && <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />}
+                                            {method.code === 'GMC' && <path d="M12 14l9-5-9-5-9 5 9 5zm0 7l9-5-9-5-9 5 9 5z" />}
+                                            {method.code === 'AHPRA' && <path d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />}
+                                            {method.code === 'MCI' && <path d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />}
+                                            {method.code === 'ORCID' && <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0-14v8m-4-4h8" />}
+                                            {method.code === 'EMAIL' && <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />}
+                                        </svg>
+                                    </div>
+                                    <div className="method-info">
+                                        <span className="method-label">{method.label}</span>
+                                        <span className="method-country">{method.country}</span>
+                                    </div>
+                                    <svg className="method-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M9 18l6-6-6-6" />
+                                    </svg>
+                                </button>
+                            ))}
+                        </div>
+
+                        <div className="trust-footer">
+                            <p className="trust-text">
+                                Supported in 78+ countries. Your data is encrypted and secure.
+                            </p>
+                        </div>
+                    </div>
+                )}
+
+                {/* Step 2: Enter Registration Number */}
+                {step === 2 && selectedMethod && (
+                    <form onSubmit={handleVerifySubmit} className="animate-in">
+                        <div className="wizard-header">
+                            <div className="wizard-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a855f7" strokeWidth="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                    <path d="M9 12l2 2 4-4" />
+                                </svg>
+                            </div>
+                            <h2 className="wizard-title">Enter Your {selectedMethod.code}</h2>
+                            <p className="wizard-subtitle">
+                                {selectedMethod.label} - {selectedMethod.country}
+                            </p>
+                        </div>
+
                         <div className="input-section">
                             <label className="input-label">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <rect x="3" y="4" width="18" height="16" rx="2" />
                                     <path d="M7 8h10M7 12h6" />
                                 </svg>
-                                National Provider Identifier
+                                Registration Number
                             </label>
 
                             <div className="input-wrapper">
-                                <span className={`input-icon ${focusedInput ? 'focused' : ''} ${isNpiValid ? 'valid' : ''}`}>
+                                <span className={`input-icon ${focusedInput ? 'focused' : ''} ${isInputValid ? 'valid' : ''}`}>
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
+                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                                     </svg>
                                 </span>
                                 <input
-                                    id="npi-input"
                                     type="text"
-                                    inputMode="numeric"
-                                    pattern="[0-9]*"
-                                    value={formatNpiDisplay(npi)}
-                                    onChange={handleNpiChange}
+                                    value={registrationNumber}
+                                    onChange={handleInputChange}
                                     onFocus={() => setFocusedInput(true)}
                                     onBlur={() => setFocusedInput(false)}
-                                    className={`npi-input ${error || showNpiFormatError ? 'error' : isNpiValid ? 'valid' : ''}`}
-                                    placeholder="XXX-XXX-XXXX"
-                                    aria-describedby="npi-hint npi-error"
-                                    aria-invalid={!!error || showNpiFormatError}
-                                    maxLength={12}
+                                    className={`reg-input ${error ? 'error' : isInputValid ? 'valid' : ''}`}
+                                    placeholder={selectedMethod.placeholder}
+                                    maxLength={selectedMethod.maxLength}
                                     autoComplete="off"
                                 />
                             </div>
 
-                            {/* Progress Bar */}
                             <div className="progress-bar-container">
                                 <div
-                                    className={`progress-bar-fill ${isNpiValid ? 'complete' : ''}`}
+                                    className={`progress-bar-fill ${isInputValid ? 'complete' : ''}`}
                                     style={{ width: `${progressPercentage}%` }}
                                 ></div>
                             </div>
 
-                            {/* Input Meta */}
                             <div className="input-meta">
-                                <span className={`digit-counter ${isNpiValid ? 'complete' : ''}`}>
-                                    {npi.length} / 10 digits
+                                <span style={{ color: '#6b7280' }}>
+                                    {registrationNumber.length} / {selectedMethod.maxLength}
                                 </span>
-                                {isNpiValid && (
+                                {isInputValid && (
                                     <span className="valid-badge">
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                                             <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
@@ -759,24 +850,21 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                                 )}
                             </div>
 
-                            {/* Error Message */}
-                            {(error || showNpiFormatError) && (
+                            {error && (
                                 <div className="error-message" role="alert">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                         <circle cx="12" cy="12" r="10" />
                                         <path d="M12 8v4M12 16h.01" />
                                     </svg>
-                                    {error || 'NPI must contain only numbers'}
+                                    {error}
                                 </div>
                             )}
                         </div>
 
-                        {/* Submit Button */}
                         <button
                             type="submit"
-                            disabled={loading || !isNpiValid}
-                            className={`submit-btn ${loading || !isNpiValid ? 'disabled' : 'active'}`}
-                            aria-busy={loading}
+                            disabled={loading || !isInputValid}
+                            className={`submit-btn ${loading || !isInputValid ? 'disabled' : 'active'}`}
                         >
                             <span className="btn-content">
                                 {loading ? (
@@ -786,18 +874,19 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                                     </>
                                 ) : (
                                     <>
-                                        {isNpiValid ? 'Verify Identity' : `Enter ${10 - npi.length} more digit${10 - npi.length !== 1 ? 's' : ''}`}
-                                        {isNpiValid && (
-                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                <path d="M5 12h14M12 5l7 7-7 7" />
-                                            </svg>
-                                        )}
+                                        Verify Identity
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <path d="M5 12h14M12 5l7 7-7 7" />
+                                        </svg>
                                     </>
                                 )}
                             </span>
                         </button>
 
-                        {/* Trust Footer */}
+                        <button type="button" onClick={() => setStep(1)} className="back-btn">
+                            Change verification method
+                        </button>
+
                         <div className="trust-footer">
                             <div className="trust-badges">
                                 <span className="trust-badge">
@@ -811,7 +900,7 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                                         <path d="M7 11V7a5 5 0 0110 0v4" />
                                     </svg>
-                                    HIPAA Compliant
+                                    Encrypted
                                 </span>
                                 <span className="trust-badge">
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2">
@@ -821,31 +910,25 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                                     Verified
                                 </span>
                             </div>
-                            <p className="trust-text">
-                                By continuing, you agree to MDRPedia's{' '}
-                                <a href="/terms" className="trust-link">Terms of Service</a>.
-                                <br />Protected by Cloudflare Turnstile.
-                            </p>
                         </div>
                     </form>
                 )}
 
-                {step === 2 && doctorData && (
+                {/* Step 3: Confirm Identity */}
+                {step === 3 && doctorData && (
                     <div className="animate-in">
-                        {/* Success Header */}
                         <div className="wizard-header">
                             <div className="success-icon">
-                                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5">
                                     <polyline points="20 6 9 17 4 12" />
                                 </svg>
                             </div>
                             <h2 className="wizard-title">Identity Verified</h2>
                             <p className="wizard-subtitle">
-                                We found your record in the NPI registry
+                                We found your record in the registry
                             </p>
                         </div>
 
-                        {/* Doctor Card */}
                         <div className="doctor-card">
                             <div className="doctor-info">
                                 <div className="doctor-avatar">
@@ -855,18 +938,13 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                                     <h3>{doctorData.fullName}</h3>
                                     <div className="doctor-status">
                                         <span className="status-dot"></span>
-                                        Active License • {doctorData.specialty}
+                                        Active License - {doctorData.specialty}
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Confirm Button */}
-                        <button
-                            onClick={handleClaim}
-                            disabled={loading}
-                            className="confirm-btn"
-                        >
+                        <button onClick={handleClaim} disabled={loading} className="confirm-btn">
                             <span className="btn-content">
                                 {loading ? (
                                     <>
@@ -884,7 +962,7 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                             </span>
                         </button>
 
-                        <button onClick={() => setStep(1)} className="back-btn">
+                        <button onClick={() => setStep(2)} className="back-btn">
                             Not you? Go back and try again
                         </button>
                     </div>

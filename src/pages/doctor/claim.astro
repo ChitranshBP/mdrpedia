@@ -58,16 +58,16 @@ const benefits = [
 // FAQ items
 const faqs = [
     {
-        question: "What is NPI verification?",
-        answer: "NPI (National Provider Identifier) is a unique 10-digit identification number issued by CMS. We use it to verify your identity as a licensed healthcare professional, ensuring only legitimate practitioners can claim profiles."
+        question: "What verification methods are supported?",
+        answer: "We support multiple verification methods: NPI (USA), GMC (UK), AHPRA (Australia), MCI (India), ORCID (International), and institutional email verification. Choose the method that matches your region or professional registration."
     },
     {
         question: "Is my information secure?",
-        answer: "Absolutely. We use bank-level encryption (AES-256) and are HIPAA-compliant. Your NPI is verified through the official NPPES registry and never stored in plain text."
+        answer: "Absolutely. We use bank-level encryption (AES-256) and are HIPAA-compliant. Your registration numbers are verified through official registries and never stored in plain text."
     },
     {
         question: "How long does verification take?",
-        answer: "NPI verification is instant. Once verified, your profile is immediately claimable. Additional verification (surgical lineage, fellowship confirmation) may take 24-48 hours."
+        answer: "Most verifications are instant. Once verified, your profile is immediately claimable. Additional verification (surgical lineage, fellowship confirmation) may take 24-48 hours."
     },
     {
         question: "What if my profile has incorrect information?",
@@ -78,8 +78,8 @@ const faqs = [
         answer: "Yes, claiming and verifying your profile is completely free. Premium features like advanced analytics and priority placement are available through optional subscriptions."
     },
     {
-        question: "What if I don't have a US NPI?",
-        answer: "International physicians can verify through their national medical registration number. We support verification in 78 countries including GMC (UK), AHPRA (Australia), and more."
+        question: "Which countries are supported?",
+        answer: "We support verification in 78+ countries. Major registries include NPI (USA), GMC (UK), AHPRA (Australia), MCI (India), and many more. International physicians can also verify via ORCID or institutional email."
     }
 ];
 
@@ -123,7 +123,10 @@ const testimonials = [
             <div class="container">
                 <div class="hero-content">
                     <div class="hero-badge">
-                        <span class="badge-icon">🏆</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="badge-icon-svg">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
                         <span>Trusted by Top Medical Institutions Worldwide</span>
                     </div>
 
@@ -261,12 +264,12 @@ const testimonials = [
                     <div class="process-step">
                         <div class="step-number">1</div>
                         <div class="step-content">
-                            <h3>Enter Your NPI</h3>
-                            <p>Provide your 10-digit National Provider Identifier for instant verification against the NPPES registry.</p>
+                            <h3>Select Your Region</h3>
+                            <p>Choose your verification method: NPI (USA), GMC (UK), AHPRA (Australia), MCI (India), ORCID, or email.</p>
                         </div>
                         <div class="step-visual">
                             <div class="visual-npi">
-                                <span class="npi-label">NPI</span>
+                                <span class="npi-label">ID</span>
                                 <span class="npi-number">••••••••••</span>
                             </div>
                         </div>
@@ -501,8 +504,10 @@ const testimonials = [
         margin-bottom: 24px;
     }
 
-    .badge-icon {
-        font-size: 1rem;
+    .badge-icon-svg {
+        width: 16px;
+        height: 16px;
+        color: #10b981;
     }
 
     .hero-title {

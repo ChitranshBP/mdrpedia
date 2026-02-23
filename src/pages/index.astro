@@ -196,27 +196,48 @@ const searchIndex = allDoctors
 						</div>
 						<div class="quick-grid">
 							<button class="quick-item" data-category="specialty" data-value="Cardiology">
-								<span class="quick-item__icon">🫀</span>
+								<svg class="quick-item__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+								</svg>
 								<span class="quick-item__label">Cardiology</span>
 							</button>
 							<button class="quick-item" data-category="specialty" data-value="Neurosurgery">
-								<span class="quick-item__icon">🧠</span>
+								<svg class="quick-item__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<circle cx="12" cy="12" r="10"/>
+									<path d="M12 16v-4M12 8h.01"/>
+									<path d="M8 12h8"/>
+								</svg>
 								<span class="quick-item__label">Neurosurgery</span>
 							</button>
 							<button class="quick-item" data-category="specialty" data-value="Oncology">
-								<span class="quick-item__icon">🔬</span>
+								<svg class="quick-item__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<circle cx="12" cy="12" r="3"/>
+									<path d="M12 2v4m0 12v4M2 12h4m12 0h4"/>
+									<path d="M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/>
+								</svg>
 								<span class="quick-item__label">Oncology</span>
 							</button>
 							<button class="quick-item" data-category="specialty" data-value="Orthopedics">
-								<span class="quick-item__icon">🦴</span>
+								<svg class="quick-item__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M18 4a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12z"/>
+									<path d="M6 10v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-8"/>
+									<path d="M10 14h4"/>
+								</svg>
 								<span class="quick-item__label">Orthopedics</span>
 							</button>
 							<button class="quick-item" data-category="tier" data-value="TITAN">
-								<span class="quick-item__icon">👑</span>
+								<svg class="quick-item__icon-svg quick-item__icon-svg--gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+								</svg>
 								<span class="quick-item__label">Titan Tier</span>
 							</button>
 							<button class="quick-item" data-category="browse" data-value="all">
-								<span class="quick-item__icon">📋</span>
+								<svg class="quick-item__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<rect x="3" y="3" width="7" height="7"/>
+									<rect x="14" y="3" width="7" height="7"/>
+									<rect x="14" y="14" width="7" height="7"/>
+									<rect x="3" y="14" width="7" height="7"/>
+								</svg>
 								<span class="quick-item__label">Browse All</span>
 							</button>
 						</div>
@@ -282,7 +303,9 @@ const searchIndex = allDoctors
 		{featuredTitans.length > 0 && (
 			<section class="featured-section">
 				<h2 class="section-heading">
-					<span class="section-heading__icon">👑</span>
+					<svg class="section-heading__icon-svg section-heading__icon-svg--gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+					</svg>
 					<span>Featured Titans</span>
 				</h2>
 				<div class="featured-grid">
@@ -317,47 +340,79 @@ const searchIndex = allDoctors
 		<!-- Explore by Specialty -->
 		<section class="explore-section">
 			<h2 class="section-heading">
-				<span class="section-heading__icon">🔬</span>
+				<svg class="section-heading__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<circle cx="12" cy="12" r="3"/>
+					<path d="M12 2v4m0 12v4M2 12h4m12 0h4"/>
+				</svg>
 				<span>Explore by Specialty</span>
 			</h2>
 			<div class="specialty-grid">
 				<a href="/doctors?specialty=Cardiology" class="specialty-card">
-					<span class="specialty-card__icon">🫀</span>
+					<svg class="specialty-card__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+					</svg>
 					<span class="specialty-card__name">Cardiology</span>
 					<span class="specialty-card__arrow">→</span>
 				</a>
 				<a href="/doctors?specialty=Neurosurgery" class="specialty-card">
-					<span class="specialty-card__icon">🧠</span>
+					<svg class="specialty-card__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<circle cx="12" cy="12" r="10"/>
+						<path d="M12 16v-4M12 8h.01"/>
+						<path d="M8 12h8"/>
+					</svg>
 					<span class="specialty-card__name">Neurosurgery</span>
 					<span class="specialty-card__arrow">→</span>
 				</a>
 				<a href="/doctors?specialty=Oncology" class="specialty-card">
-					<span class="specialty-card__icon">🔬</span>
+					<svg class="specialty-card__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<circle cx="12" cy="12" r="3"/>
+						<path d="M12 2v4m0 12v4M2 12h4m12 0h4"/>
+						<path d="M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/>
+					</svg>
 					<span class="specialty-card__name">Oncology</span>
 					<span class="specialty-card__arrow">→</span>
 				</a>
 				<a href="/doctors?specialty=Orthopedics" class="specialty-card">
-					<span class="specialty-card__icon">🦴</span>
+					<svg class="specialty-card__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M18 4a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12z"/>
+						<path d="M6 10v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-8"/>
+						<path d="M10 14h4"/>
+					</svg>
 					<span class="specialty-card__name">Orthopedics</span>
 					<span class="specialty-card__arrow">→</span>
 				</a>
 				<a href="/doctors?specialty=Transplant Surgery" class="specialty-card">
-					<span class="specialty-card__icon">💉</span>
+					<svg class="specialty-card__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M12 2L2 7l10 5 10-5-10-5z"/>
+						<path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+					</svg>
 					<span class="specialty-card__name">Transplant Surgery</span>
 					<span class="specialty-card__arrow">→</span>
 				</a>
 				<a href="/doctors?specialty=Plastic Surgery" class="specialty-card">
-					<span class="specialty-card__icon">✨</span>
+					<svg class="specialty-card__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M12 3l1.39 4.28h4.5l-3.64 2.64 1.39 4.28L12 11.56l-3.64 2.64 1.39-4.28-3.64-2.64h4.5L12 3z"/>
+						<circle cx="12" cy="12" r="10"/>
+					</svg>
 					<span class="specialty-card__name">Plastic Surgery</span>
 					<span class="specialty-card__arrow">→</span>
 				</a>
 				<a href="/doctors?specialty=Pediatrics" class="specialty-card">
-					<span class="specialty-card__icon">👶</span>
+					<svg class="specialty-card__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+						<circle cx="9" cy="7" r="4"/>
+						<path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+					</svg>
 					<span class="specialty-card__name">Pediatrics</span>
 					<span class="specialty-card__arrow">→</span>
 				</a>
 				<a href="/doctors" class="specialty-card specialty-card--all">
-					<span class="specialty-card__icon">📋</span>
+					<svg class="specialty-card__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<rect x="3" y="3" width="7" height="7"/>
+						<rect x="14" y="3" width="7" height="7"/>
+						<rect x="14" y="14" width="7" height="7"/>
+						<rect x="3" y="14" width="7" height="7"/>
+					</svg>
 					<span class="specialty-card__name">All Specialties</span>
 					<span class="specialty-card__arrow">→</span>
 				</a>
@@ -1055,8 +1110,14 @@ const searchIndex = allDoctors
 		transform: translateY(-2px);
 	}
 
-	.quick-item__icon {
-		font-size: 1.5rem;
+	.quick-item__icon-svg {
+		width: 24px;
+		height: 24px;
+		color: #a78bfa;
+	}
+
+	.quick-item__icon-svg--gold {
+		color: #fbbf24;
 	}
 
 	.quick-item__label {
@@ -1411,8 +1472,14 @@ const searchIndex = allDoctors
 		margin-bottom: 28px;
 	}
 
-	.section-heading__icon {
-		font-size: 1.3rem;
+	.section-heading__icon-svg {
+		width: 22px;
+		height: 22px;
+		color: #a78bfa;
+	}
+
+	.section-heading__icon-svg--gold {
+		color: #fbbf24;
 	}
 
 	.featured-grid {
@@ -1550,8 +1617,11 @@ const searchIndex = allDoctors
 		transform: translateX(4px);
 	}
 
-	.specialty-card__icon {
-		font-size: 1.3rem;
+	.specialty-card__icon-svg {
+		width: 22px;
+		height: 22px;
+		color: #a78bfa;
+		flex-shrink: 0;
 	}
 
 	.specialty-card__name {
