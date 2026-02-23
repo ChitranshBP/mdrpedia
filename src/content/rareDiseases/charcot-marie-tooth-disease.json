@@ -1,0 +1,154 @@
+{
+    "name": "Charcot-Marie-Tooth Disease",
+    "slug": "charcot-marie-tooth-disease",
+    "aliases": [
+        "CMT",
+        "Hereditary Motor and Sensory Neuropathy",
+        "Peroneal Muscular Atrophy"
+    ],
+    "description": "Charcot-Marie-Tooth disease (CMT) is a group of inherited disorders that affect the peripheral nerves. These nerves carry signals from the brain and spinal cord to the muscles and sensory receptors throughout the body. CMT primarily affects the nerves in the arms and legs, leading to muscle weakness, atrophy, and sensory loss. Symptoms typically begin in adolescence or early adulthood, but can appear at any age. CMT is a progressive disease, meaning symptoms worsen over time, but most individuals with CMT have a normal life expectancy.",
+    "category": "NEUROLOGICAL",
+    "icdCode": "G60.0",
+    "orphaCode": "ORPHA166",
+    "omimCode": "118200",
+    "prevalence": "1 in 2,500",
+    "estimatedCases": 150000,
+    "ageOfOnset": "Childhood to early adulthood, but can vary",
+    "inheritance": "AUTOSOMAL_DOMINANT, AUTOSOMAL_RECESSIVE, X_LINKED, SPORADIC",
+    "symptoms": [
+        "Muscle weakness in feet and legs",
+        "Foot deformities (high arches, hammertoes)",
+        "Decreased sensation in feet and legs",
+        "Loss of muscle bulk in lower legs (stork leg deformity)",
+        "Difficulty with balance and walking",
+        "Hand weakness and clumsiness",
+        "Fatigue",
+        "Pain (sometimes)",
+        "Scoliosis (in some cases)"
+    ],
+    "affectedSystems": [
+        "Nervous System",
+        "Musculoskeletal System"
+    ],
+    "prognosis": "Progressive but typically not life-threatening. Severity varies greatly among individuals.",
+    "lifeExpectancy": "Normal",
+    "diagnosticMethods": [
+        "Neurological examination",
+        "Nerve conduction studies",
+        "Electromyography (EMG)",
+        "Genetic testing",
+        "Nerve biopsy (rarely)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Physical Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Orthotics (ankle-foot orthoses)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Pain Management (medications, therapies)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Surgery (for foot deformities or scoliosis)",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "PXT3003 (baclofen, naltrexone, and D-sorbitol)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 100,
+    "keyResearchCenters": [
+        "National Institute of Neurological Disorders and Stroke (NINDS)",
+        "University of Iowa",
+        "Mayo Clinic",
+        "Charcot-Marie-Tooth Association (CMTA)-STAR Network"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Charcot-Marie-Tooth Association (CMTA)",
+            "url": "https://www.cmtausa.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Hereditary Neuropathy Foundation (HNF)",
+            "url": "https://www.hnf-cure.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Distal Hereditary Motor Neuropathy",
+        "Giant Axonal Neuropathy",
+        "Dejerine-Sottas disease"
+    ],
+    "specialistTypes": [
+        "Neurologist",
+        "Geneticist",
+        "Orthopedic Surgeon",
+        "Physiatrist",
+        "Physical Therapist",
+        "Occupational Therapist"
+    ],
+    "eli5Summary": "Imagine your body has wires (nerves) that help your muscles move and feel things. In CMT, some of these wires are damaged, especially in your legs and feet. This makes it hard to walk and you might not feel things as well. It's like having a weak signal on your phone, making it hard to hear the other person.",
+    "clinicalSummary": "Charcot-Marie-Tooth disease encompasses a heterogeneous group of inherited peripheral neuropathies characterized by progressive motor and sensory deficits. The underlying pathology involves demyelination or axonal degeneration of peripheral nerves, leading to muscle weakness, atrophy, and sensory loss, predominantly in the distal extremities. Genetic mutations in genes encoding myelin proteins, axonal transport proteins, and mitochondrial proteins are implicated. Clinical presentation varies widely depending on the specific genetic mutation and disease subtype. Diagnosis involves neurological examination, electrophysiological studies (nerve conduction velocity and EMG), and genetic testing to identify the causative mutation. Management focuses on supportive care, including physical and occupational therapy, orthotics, and pain management. Gene therapy and targeted pharmacological interventions are under investigation.",
+    "historicalBackground": "Charcot-Marie-Tooth disease was first described in 1886 by Jean-Martin Charcot, Pierre Marie, and Howard Henry Tooth, who independently reported the condition.",
+    "recentBreakthroughs": [
+        {
+            "year": 2023,
+            "title": "Gene Therapy Advances for CMT1A",
+            "description": "Preclinical studies have shown promising results for gene therapy approaches targeting the PMP22 gene in CMT1A, the most common form of CMT. Adeno-associated virus (AAV) vectors are being investigated to deliver functional copies of the gene or to silence the overexpressed PMP22 gene.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2022,
+            "title": "PXT3003 Phase 3 Trial Results",
+            "description": "Phase 3 clinical trial results for PXT3003, a combination of baclofen, naltrexone, and D-sorbitol, showed potential benefits in slowing disease progression in CMT1A patients. Further studies are underway to confirm these findings and assess long-term efficacy.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        },
+        {
+            "name": "Charcot-Marie-Tooth Association (CMTA)",
+            "url": "https://www.cmtausa.org/"
+        }
+    ]
+}

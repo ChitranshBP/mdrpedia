@@ -1,0 +1,192 @@
+{
+    "name": "Histiocytosis",
+    "slug": "histiocytosis",
+    "aliases": [
+        "Langerhans Cell Histiocytosis (LCH)",
+        "Non-Langerhans Cell Histiocytosis (Non-LCH)",
+        "Erdheim-Chester Disease (ECD)",
+        "Rosai-Dorfman Disease (RDD)",
+        "Hemophagocytic Lymphohistiocytosis (HLH)"
+    ],
+    "description": "Histiocytosis refers to a group of rare disorders characterized by the abnormal accumulation of histiocytes (a type of immune cell) in various tissues and organs. These disorders can range from localized, self-limiting conditions to severe, systemic diseases affecting multiple organ systems. The classification of histiocytosis includes Langerhans cell histiocytosis (LCH) and non-Langerhans cell histiocytosis (non-LCH), each with distinct clinical features and underlying mechanisms.",
+    "category": "ONCOLOGICAL",
+    "icdCode": "D76",
+    "orphaCode": "ORPHA411",
+    "omimCode": "247100",
+    "prevalence": "Estimated 1-9 / 1,000,000",
+    "estimatedCases": 7000,
+    "ageOfOnset": "Variable; can occur at any age, but more common in childhood for LCH and adulthood for non-LCH.",
+    "inheritance": "Generally sporadic, but familial cases have been reported for HLH.",
+    "symptoms": [
+        "Skin rashes or lesions",
+        "Bone pain or fractures",
+        "Enlarged lymph nodes",
+        "Hepatosplenomegaly (enlarged liver and spleen)",
+        "Lung involvement (cough, shortness of breath)",
+        "Neurological symptoms (seizures, ataxia, developmental delay)",
+        "Diabetes insipidus",
+        "Fever",
+        "Weight loss",
+        "Fatigue",
+        "Cytopenias (anemia, thrombocytopenia, leukopenia)"
+    ],
+    "affectedSystems": [
+        "Skeletal System",
+        "Skin",
+        "Lymphatic System",
+        "Liver",
+        "Spleen",
+        "Lungs",
+        "Central Nervous System",
+        "Endocrine System",
+        "Hematopoietic System"
+    ],
+    "prognosis": "Variable; depends on the type and extent of organ involvement. LCH can range from self-limiting to chronic and relapsing. Non-LCH, such as ECD and HLH, can be life-threatening.",
+    "lifeExpectancy": "Variable; depends on the type and severity of the disease. HLH, if untreated, has a poor prognosis. With treatment, survival rates vary.",
+    "diagnosticMethods": [
+        "Physical examination",
+        "Medical history",
+        "Biopsy of affected tissue (skin, bone marrow, lymph node)",
+        "Histopathological examination (CD1a and langerin staining for LCH)",
+        "Imaging studies (X-ray, CT scan, MRI, PET scan)",
+        "Blood tests (complete blood count, liver function tests, coagulation studies, ferritin levels)",
+        "Bone marrow aspiration and biopsy",
+        "Genetic testing (for HLH and certain non-LCH variants)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Chemotherapy (e.g., vinblastine, methotrexate, cladribine)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Corticosteroids (e.g., prednisone)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Targeted therapy (e.g., vemurafenib, dabrafenib for BRAF V600E mutations)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2017
+        },
+        {
+            "name": "Immunotherapy (e.g., interferon-alpha)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Hematopoietic stem cell transplantation (HSCT)",
+            "type": "THERAPY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Radiation therapy",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Supportive care (pain management, nutritional support, physical therapy)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Emapalumab (for HLH)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2018
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 50,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Memorial Sloan Kettering Cancer Center",
+        "Dana-Farber Cancer Institute",
+        "St. Jude Children's Research Hospital",
+        "Cincinnati Children's Hospital Medical Center"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Histiocytosis Association",
+            "url": "https://www.histio.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Erdheim-Chester Disease Global Alliance",
+            "url": "https://erdheim-chester.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Hemophagocytic Lymphohistiocytosis (HLH)",
+        "Erdheim-Chester Disease (ECD)",
+        "Rosai-Dorfman Disease (RDD)",
+        "Juvenile Xanthogranuloma (JXG)"
+    ],
+    "specialistTypes": [
+        "Hematologist",
+        "Oncologist",
+        "Pediatric Hematologist/Oncologist",
+        "Dermatologist",
+        "Pulmonologist",
+        "Neurologist",
+        "Endocrinologist",
+        "Rheumatologist"
+    ],
+    "eli5Summary": "Imagine your body's cleanup crew (histiocytes) starts collecting in the wrong places and causing trouble. Histiocytosis is when this happens, and it can affect different parts of your body, like your skin, bones, or lungs. Doctors use medicine and other treatments to help your body get back on track.",
+    "clinicalSummary": "Histiocytosis encompasses a heterogeneous group of disorders characterized by the abnormal proliferation and accumulation of histiocytes, dendritic cells, and macrophages in various tissues and organs. Langerhans cell histiocytosis (LCH) is defined by the presence of CD1a+ and langerin+ cells, often harboring BRAF V600E mutations. Non-LCH includes conditions like Erdheim-Chester disease (ECD), characterized by foamy histiocytes and frequent involvement of multiple organ systems, and Rosai-Dorfman disease (RDD), marked by massive lymphadenopathy and emperipolesis. Hemophagocytic lymphohistiocytosis (HLH) involves uncontrolled activation of the immune system, leading to hyperinflammation and organ damage. Diagnosis requires tissue biopsy, histopathological analysis, and molecular testing. Treatment strategies vary based on the specific type and extent of disease, ranging from local therapies to systemic chemotherapy, targeted agents, and hematopoietic stem cell transplantation.",
+    "historicalBackground": "The understanding of histiocytosis has evolved significantly over the past century. Initially described as distinct entities, these disorders were later grouped under the umbrella term 'histiocytosis' based on shared histopathological features. The discovery of CD1a and langerin as markers for LCH, and the identification of BRAF V600E mutations in LCH and ECD, have revolutionized diagnostic and therapeutic approaches. Further research continues to refine the classification and management of these complex diseases.",
+    "recentBreakthroughs": [
+        {
+            "year": 2017,
+            "title": "FDA Approval of Vemurafenib for BRAF V600E-Positive Histiocytosis",
+            "description": "Vemurafenib, a BRAF inhibitor, received FDA approval for the treatment of adult patients with BRAF V600E-positive Erdheim-Chester disease (ECD). This marked a significant advancement in targeted therapy for histiocytic disorders.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2018,
+            "title": "FDA Approval of Emapalumab for Hemophagocytic Lymphohistiocytosis (HLH)",
+            "description": "Emapalumab, an interferon gamma (IFNγ)-blocking antibody, was approved by the FDA for the treatment of primary HLH. This approval provided a new therapeutic option for patients with this life-threatening condition.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Advances in Understanding the Genetic Landscape of Non-LCH",
+            "description": "Recent studies have identified novel genetic mutations and signaling pathways involved in the pathogenesis of non-Langerhans cell histiocytosis, providing potential targets for future therapeutic interventions.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Histiocytosis Association",
+            "url": "https://www.histio.org/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        },
+        {
+            "name": "National Institutes of Health (NIH)",
+            "url": "https://www.nih.gov/"
+        }
+    ]
+}

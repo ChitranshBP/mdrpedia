@@ -732,22 +732,7 @@ const rareDiseases = defineCollection({
         description: z.string(),
 
         // Classification
-        category: z.enum([
-            'GENETIC',
-            'METABOLIC',
-            'NEUROLOGICAL',
-            'CARDIOVASCULAR',
-            'IMMUNOLOGICAL',
-            'ONCOLOGICAL',
-            'HEMATOLOGICAL',
-            'MUSCULOSKELETAL',
-            'DERMATOLOGICAL',
-            'GASTROINTESTINAL',
-            'RESPIRATORY',
-            'ENDOCRINE',
-            'OPHTHALMOLOGICAL',
-            'OTHER'
-        ]),
+        category: z.string().default('OTHER'),
         icdCode: z.string().nullable().optional(),
         orphaCode: z.string().nullable().optional(), // Orphanet code
         omimCode: z.string().nullable().optional(), // OMIM code
@@ -756,7 +741,7 @@ const rareDiseases = defineCollection({
         prevalence: z.string().nullable().optional(), // e.g. "1 in 100,000"
         estimatedCases: z.number().nullable().optional(),
         ageOfOnset: z.string().nullable().optional(),
-        inheritance: z.enum(['AUTOSOMAL_DOMINANT', 'AUTOSOMAL_RECESSIVE', 'X_LINKED', 'MITOCHONDRIAL', 'SPORADIC', 'UNKNOWN']).nullable().optional(),
+        inheritance: z.string().nullable().optional(),
 
         // Clinical Features
         symptoms: z.array(z.string()).default([]),
@@ -768,14 +753,14 @@ const rareDiseases = defineCollection({
         diagnosticMethods: z.array(z.string()).default([]),
         treatmentOptions: z.array(z.object({
             name: z.string(),
-            type: z.enum(['MEDICATION', 'SURGERY', 'THERAPY', 'GENE_THERAPY', 'TRANSPLANT', 'SUPPORTIVE', 'EXPERIMENTAL']),
-            effectiveness: z.enum(['CURATIVE', 'HIGHLY_EFFECTIVE', 'MODERATELY_EFFECTIVE', 'PALLIATIVE', 'EXPERIMENTAL']).nullable().optional(),
-            fdaApproved: z.boolean().default(false),
+            type: z.string(),
+            effectiveness: z.string().nullable().optional(),
+            fdaApproved: z.boolean().nullable().optional(),
             approvalYear: z.number().nullable().optional(),
         })).default([]),
 
         // Research & Resources
-        researchStatus: z.enum(['ACTIVE_TRIALS', 'PRECLINICAL', 'LIMITED_RESEARCH', 'NO_ACTIVE_RESEARCH']).nullable().optional(),
+        researchStatus: z.string().nullable().optional(),
         clinicalTrialsCount: z.number().default(0),
         keyResearchCenters: z.array(z.string()).default([]),
         patientOrganizations: z.array(z.object({

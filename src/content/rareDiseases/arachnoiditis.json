@@ -1,0 +1,160 @@
+{
+    "name": "Arachnoiditis",
+    "slug": "arachnoiditis",
+    "aliases": [
+        "Spinal Arachnoiditis",
+        "Adhesive Arachnoiditis",
+        "Inflammatory Arachnoiditis"
+    ],
+    "description": "Arachnoiditis is a painful and debilitating condition characterized by inflammation of the arachnoid membrane, one of the three membranes that surround and protect the brain and spinal cord. This inflammation can lead to chronic pain, neurological deficits, and a significantly reduced quality of life. The condition often results in the formation of adhesions that cause the spinal nerves to clump together, impairing their function.",
+    "category": "NEUROLOGICAL",
+    "icdCode": "G95.1",
+    "orphaCode": "98424",
+    "omimCode": "N/A (Not typically associated with a specific genetic mutation)",
+    "prevalence": "Unknown; considered rare",
+    "estimatedCases": null,
+    "ageOfOnset": "Variable; can occur at any age, but often develops in adulthood",
+    "inheritance": "Not applicable (typically acquired, not inherited)",
+    "symptoms": [
+        "Chronic pain (often severe and burning)",
+        "Numbness, tingling, or weakness in the legs or arms",
+        "Muscle cramps, spasms, or uncontrolled twitching",
+        "Bowel or bladder dysfunction",
+        "Sexual dysfunction",
+        "Headaches",
+        "Fatigue",
+        "Cognitive impairment",
+        "Sensory abnormalities (e.g., sensitivity to touch)"
+    ],
+    "affectedSystems": [
+        "Nervous System",
+        "Musculoskeletal System",
+        "Gastrointestinal System",
+        "Urogenital System"
+    ],
+    "prognosis": "Variable; often chronic and progressive, with significant impact on quality of life. Management focuses on symptom control and functional improvement.",
+    "lifeExpectancy": "Normal, but quality of life can be significantly affected.",
+    "diagnosticMethods": [
+        "MRI (Magnetic Resonance Imaging) of the spine",
+        "CT Myelogram",
+        "Spinal tap (lumbar puncture) to rule out other conditions",
+        "Neurological examination",
+        "Electromyography (EMG) and Nerve Conduction Studies (NCS)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Pain Management Medications (e.g., opioids, NSAIDs, neuropathic pain agents)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Physical Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Psychological Support (e.g., cognitive behavioral therapy)",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Spinal Cord Stimulation",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Intrathecal Drug Delivery Systems (e.g., morphine pump)",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Epidural Steroid Injections",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Lidocaine infusions",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "OBSERVATIONAL",
+    "clinicalTrialsCount": 0,
+    "keyResearchCenters": [
+        "Mayo Clinic",
+        "Cleveland Clinic",
+        "Johns Hopkins Hospital"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "The Arachnoiditis Foundation",
+            "url": "https://arachnoiditis.com/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Failed Back Surgery Syndrome",
+        "Spinal Stenosis",
+        "Chronic Pain Syndrome",
+        "Myelitis"
+    ],
+    "specialistTypes": [
+        "Neurologist",
+        "Pain Management Specialist",
+        "Neurosurgeon",
+        "Physical Therapist",
+        "Rehabilitation Specialist"
+    ],
+    "eli5Summary": "Imagine the spinal cord is like a wire covered in a protective layer. Arachnoiditis is when that protective layer gets inflamed and sticky, causing pain and making it hard for the wire to do its job properly.",
+    "clinicalSummary": "Arachnoiditis is an inflammatory condition affecting the arachnoid mater, the middle of the three meningeal layers surrounding the spinal cord and brain. The inflammation can be triggered by various factors, including spinal surgery, trauma, infections, chemical exposure (e.g., myelography with certain contrast agents), and chronic compression. Pathologically, it leads to thickening and scarring of the arachnoid membrane, often resulting in adhesions that tether the spinal nerve roots. Clinically, patients present with chronic, often intractable pain, sensory disturbances, motor weakness, and bowel/bladder dysfunction. Diagnosis relies on MRI findings demonstrating clumping of nerve roots, thickening of the arachnoid, and/or syrinx formation. Management is primarily symptomatic, focusing on pain control, physical rehabilitation, and psychological support. Surgical intervention is generally avoided due to the risk of exacerbating inflammation and adhesion formation.",
+    "historicalBackground": "Arachnoiditis has been recognized as a distinct clinical entity since the early 20th century. Early cases were often associated with the use of oil-based contrast agents in myelography. The incidence declined with the introduction of water-soluble contrast agents, but the condition continues to be observed in association with other spinal procedures and inflammatory processes.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Advancements in MRI Techniques for Arachnoiditis Diagnosis",
+            "description": "Improved MRI protocols, including higher resolution imaging and specialized sequences, are enhancing the ability to visualize arachnoiditis and differentiate it from other spinal disorders.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Novel Pain Management Strategies for Arachnoiditis",
+            "description": "Research into novel pain management strategies, including targeted drug delivery and neuromodulation techniques, is showing promise in improving pain control and quality of life for patients with arachnoiditis.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/"
+        },
+        {
+            "name": "The Arachnoiditis Foundation",
+            "url": "https://arachnoiditis.com/"
+        }
+    ]
+}

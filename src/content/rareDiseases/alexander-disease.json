@@ -1,0 +1,155 @@
+{
+    "name": "Alexander Disease",
+    "slug": "alexander-disease",
+    "aliases": [
+        "AxD",
+        "Fibrillary Astrocytopathy",
+        "Alexander's Disease"
+    ],
+    "description": "Alexander disease is a rare and often fatal neurological disorder characterized by the progressive destruction of white matter in the brain (leukodystrophy). It is caused by mutations in the GFAP gene, which encodes glial fibrillary acidic protein, a major component of astrocytes. The disease primarily affects the brain and spinal cord, leading to a range of neurological symptoms.",
+    "category": "NEUROLOGICAL",
+    "icdCode": "G37.8",
+    "orphaCode": "85",
+    "omimCode": "203450",
+    "prevalence": "Estimated at less than 1 in 1,000,000",
+    "estimatedCases": 300,
+    "ageOfOnset": "Varies; infantile, juvenile, and adult forms exist",
+    "inheritance": "SPORADIC (de novo mutations in most cases), AUTOSOMAL_DOMINANT (rare)",
+    "symptoms": [
+        "Seizures",
+        "Developmental delay (in infants and children)",
+        "Intellectual disability",
+        "Spasticity",
+        "Ataxia",
+        "Hydrocephalus",
+        "Megalencephaly (enlarged brain)",
+        "Bulbar dysfunction (difficulty swallowing, speaking)",
+        "Progressive motor and cognitive decline"
+    ],
+    "affectedSystems": [
+        "Nervous System"
+    ],
+    "prognosis": "Generally poor, especially in infantile-onset cases. Variable depending on the specific form and severity.",
+    "lifeExpectancy": "Variable; infantile form often leads to death in early childhood, while juvenile and adult forms may allow survival into adulthood.",
+    "diagnosticMethods": [
+        "MRI of the brain (shows characteristic white matter abnormalities)",
+        "Genetic testing for GFAP mutations",
+        "Brain biopsy (rarely needed, but can confirm the diagnosis)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Symptomatic Management",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Seizure Control (Antiepileptic Drugs)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Physical Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Speech Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Baclofen or other anti-spasticity medications",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Gene Therapy (Experimental)",
+            "type": "GENE_THERAPY",
+            "effectiveness": "EXPERIMENTAL",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 5,
+    "keyResearchCenters": [
+        "Mayo Clinic",
+        "National Institutes of Health (NIH)",
+        "University of Pennsylvania"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "United Leukodystrophy Foundation (ULF)",
+            "url": "https://ulf.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Global Genes",
+            "url": "https://globalgenes.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Other Leukodystrophies",
+        "Multiple Sclerosis (MS)",
+        "Cerebral Palsy"
+    ],
+    "specialistTypes": [
+        "Neurologist",
+        "Geneticist",
+        "Pediatric Neurologist",
+        "Developmental Pediatrician"
+    ],
+    "eli5Summary": "Imagine your brain has special helpers called astrocytes that keep everything tidy. In Alexander disease, the instructions for making these helpers are messed up, so they make a sticky substance that clogs up the brain and makes it hard to think, move, and grow.",
+    "clinicalSummary": "Alexander disease (AxD) is a progressive leukodystrophy resulting from heterozygous mutations in the GFAP gene, leading to the formation of Rosenthal fibers within astrocytes. These fibers disrupt normal astrocyte function, causing white matter destruction and neurological dysfunction. Clinical presentation varies with age of onset, with infantile AxD being the most severe, characterized by megalencephaly, seizures, and developmental delay. Juvenile and adult forms present with ataxia, bulbar symptoms, and spasticity. Diagnosis is confirmed by MRI findings of white matter abnormalities and genetic testing for GFAP mutations. Treatment is primarily supportive, focusing on symptom management. Gene therapy approaches are under investigation.",
+    "historicalBackground": "Alexander disease was first described by W. Stewart Alexander in 1949, who identified characteristic pathological features in the brain of an affected infant.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Advancements in Gene Therapy for Alexander Disease",
+            "description": "Preclinical studies have shown promising results using adeno-associated virus (AAV) vectors to deliver functional GFAP genes, reducing Rosenthal fiber formation and improving neurological outcomes in animal models.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Identification of Novel Therapeutic Targets",
+            "description": "Research has identified potential therapeutic targets aimed at reducing GFAP aggregation and promoting astrocyte health, offering new avenues for drug development.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institutes of Health (NIH)",
+            "url": "https://www.ninds.nih.gov/Disorders/All-Disorders/Alexander-Disease-Information-Page"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=EN&Expert=85"
+        },
+        {
+            "name": "GeneReviews",
+            "url": "https://www.ncbi.nlm.nih.gov/books/NBK1309/"
+        }
+    ]
+}

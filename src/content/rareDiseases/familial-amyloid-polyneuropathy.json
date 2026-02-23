@@ -1,0 +1,174 @@
+{
+    "name": "Familial Amyloid Polyneuropathy",
+    "slug": "familial-amyloid-polyneuropathy",
+    "aliases": [
+        "FAP",
+        "Transthyretin Amyloidosis",
+        "ATTRv Amyloidosis",
+        "Hereditary Amyloid Neuropathy"
+    ],
+    "description": "Familial Amyloid Polyneuropathy (FAP) is a rare, progressive, and inherited disorder caused by mutations in the transthyretin (TTR) gene. These mutations lead to the misfolding and aggregation of TTR protein, forming amyloid fibrils that deposit in various tissues and organs, primarily affecting the peripheral nerves, heart, and gastrointestinal tract. This deposition causes nerve damage, leading to sensory, motor, and autonomic dysfunction.",
+    "category": "GENETIC",
+    "icdCode": "G60.0",
+    "orphaCode": "78",
+    "omimCode": "105210",
+    "prevalence": "1 in 100,000",
+    "estimatedCases": 79000,
+    "ageOfOnset": "Variable, typically between 20 and 70 years",
+    "inheritance": "AUTOSOMAL_DOMINANT",
+    "symptoms": [
+        "Progressive peripheral neuropathy",
+        "Sensory loss (pain, temperature)",
+        "Motor weakness",
+        "Autonomic dysfunction (orthostatic hypotension, bowel irregularities, urinary problems)",
+        "Cardiac involvement (cardiomyopathy, arrhythmias)",
+        "Gastrointestinal issues (diarrhea, constipation, nausea, vomiting)",
+        "Carpal tunnel syndrome",
+        "Visual impairment (vitreous opacities)",
+        "Weight loss",
+        "Kidney involvement"
+    ],
+    "affectedSystems": [
+        "Nervous System",
+        "Cardiovascular System",
+        "Gastrointestinal System",
+        "Renal System",
+        "Ocular System"
+    ],
+    "prognosis": "Progressive and potentially fatal without treatment. Prognosis varies depending on the specific mutation, age of onset, and organ involvement.",
+    "lifeExpectancy": "Reduced without treatment; varies significantly with treatment and disease progression. Can range from a few years to over a decade after diagnosis.",
+    "diagnosticMethods": [
+        "Clinical evaluation",
+        "Neurological examination",
+        "Genetic testing for TTR mutations",
+        "Nerve biopsy with amyloid staining",
+        "Cardiac evaluation (ECG, echocardiogram, MRI)",
+        "Serum and urine TTR levels",
+        "SAP scan",
+        "ATTR scintigraphy"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Tafamidis",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2019
+        },
+        {
+            "name": "Patisiran",
+            "type": "GENE_THERAPY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2018
+        },
+        {
+            "name": "Inotersen",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2018
+        },
+        {
+            "name": "Liver Transplantation",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Diflunisal",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Supportive Care",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 50,
+    "keyResearchCenters": [
+        "Mayo Clinic",
+        "Boston University Amyloidosis Center",
+        "University College London",
+        "National Amyloidosis Centre (UK)"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Amyloidosis Research Consortium",
+            "url": "https://www.amyloidosis.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Amyloidosis Support Groups",
+            "url": "https://www.amyloidosissupport.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Cardiac Amyloidosis",
+        "Senile Systemic Amyloidosis",
+        "Light Chain Amyloidosis (AL)",
+        "Hereditary Amyloidosis"
+    ],
+    "specialistTypes": [
+        "Neurologist",
+        "Cardiologist",
+        "Gastroenterologist",
+        "Geneticist",
+        "Ophthalmologist"
+    ],
+    "eli5Summary": "Imagine your body makes a protein that's supposed to help, but it gets folded wrong and clumps together. These clumps stick to your nerves and heart, causing them to not work properly. It's like having sticky stuff clogging up the wires and pipes in your body. Doctors can give you medicine to stop the protein from clumping or even replace the part of your body that's making the bad protein.",
+    "clinicalSummary": "Familial Amyloid Polyneuropathy (FAP), or hereditary transthyretin amyloidosis (ATTRv), is a systemic amyloidosis caused by mutations in the TTR gene. Mutant TTR protein misfolds and aggregates into amyloid fibrils, depositing in peripheral nerves, heart, kidneys, and other organs. Clinically, patients present with a length-dependent sensorimotor neuropathy, autonomic dysfunction (e.g., orthostatic hypotension, bowel and bladder dysfunction), cardiomyopathy, and other organ involvement. Diagnosis involves clinical suspicion, genetic testing for TTR mutations, and tissue biopsy to confirm amyloid deposition. Treatment options include TTR stabilizers (tafamidis, diflunisal), RNA interference therapies (patisiran, vutrisiran), antisense oligonucleotides (inotersen), and liver transplantation (in select cases). Early diagnosis and treatment are crucial to slow disease progression and improve patient outcomes.",
+    "historicalBackground": "FAP was first described in Portugal in the 1950s by Dr. Corino de Andrade. Initially, liver transplantation was the only available treatment option. The discovery of TTR as the causative protein and subsequent development of TTR stabilizers and gene silencing therapies have revolutionized the treatment landscape.",
+    "recentBreakthroughs": [
+        {
+            "year": 2018,
+            "title": "FDA Approves Patisiran for hATTR Amyloidosis",
+            "description": "Patisiran, an RNA interference therapeutic, received FDA approval for the treatment of hereditary transthyretin-mediated amyloidosis (hATTR), marking a significant advancement in targeted gene therapy for this condition.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2018,
+            "title": "FDA Approves Inotersen for hATTR Amyloidosis",
+            "description": "Inotersen, an antisense oligonucleotide, was approved by the FDA for the treatment of hATTR amyloidosis, providing another option for reducing TTR protein production.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2019,
+            "title": "FDA Approves Tafamidis for hATTR Amyloidosis Cardiomyopathy",
+            "description": "Tafamidis received FDA approval for the treatment of transthyretin amyloid cardiomyopathy (ATTR-CM), expanding its use beyond polyneuropathy and addressing the cardiac manifestations of the disease.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2022,
+            "title": "Vutrisiran Approved for hATTR Amyloidosis",
+            "description": "Vutrisiran, a next-generation RNAi therapeutic, was approved for hATTR amyloidosis, offering subcutaneous administration and potentially improved efficacy and safety profiles compared to earlier treatments.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/index.php"
+        },
+        {
+            "name": "OMIM",
+            "url": "https://www.omim.org/"
+        },
+        {
+            "name": "PubMed",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/"
+        }
+    ]
+}

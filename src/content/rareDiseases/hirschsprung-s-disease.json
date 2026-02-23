@@ -1,0 +1,139 @@
+{
+    "name": "Hirschsprung's Disease",
+    "slug": "hirschsprung-s-disease",
+    "aliases": [
+        "Congenital Aganglionic Megacolon",
+        "HSCR"
+    ],
+    "description": "Hirschsprung's disease is a congenital disorder characterized by the absence of ganglion cells in the distal colon, leading to chronic constipation and potential bowel obstruction. This absence disrupts the normal peristaltic movement of the intestines, causing stool to accumulate and the colon to become enlarged.",
+    "category": "GENETIC",
+    "icdCode": "Q43.1",
+    "orphaCode": "418",
+    "omimCode": "142623",
+    "prevalence": "1 in 5,000 live births",
+    "estimatedCases": 1600,
+    "ageOfOnset": "Neonatal period (0-28 days)",
+    "inheritance": "Multifactorial; can be sporadic or familial with variable penetrance. Some forms are autosomal dominant or recessive.",
+    "symptoms": [
+        "Failure to pass meconium within 48 hours of birth",
+        "Abdominal distension",
+        "Bilious vomiting",
+        "Constipation from early infancy",
+        "Explosive diarrhea (enterocolitis)",
+        "Poor weight gain",
+        "Lethargy"
+    ],
+    "affectedSystems": [
+        "Gastrointestinal System"
+    ],
+    "prognosis": "With early diagnosis and surgical intervention, most individuals have a good prognosis and can lead normal lives. Complications like enterocolitis can affect long-term outcomes.",
+    "lifeExpectancy": "Normal life expectancy with appropriate treatment and management.",
+    "diagnosticMethods": [
+        "Rectal biopsy (gold standard)",
+        "Anorectal manometry",
+        "Barium enema",
+        "Abdominal X-ray"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Surgical Resection (Pull-through procedure)",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Ostomy (temporary or permanent)",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Bowel irrigation",
+            "type": "SUPPORTIVE",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Antibiotics (for enterocolitis)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Dietary management",
+            "type": "SUPPORTIVE",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 30,
+    "keyResearchCenters": [
+        "Boston Children's Hospital",
+        "Cincinnati Children's Hospital Medical Center",
+        "Mayo Clinic"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Hirschsprung's Disease Association, Inc.",
+            "url": "http://www.hirschsprungs.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Bowel & Bladder UK",
+            "url": "https://www.bbuk.org.uk/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "Down Syndrome",
+        "Waardenburg Syndrome",
+        "Multiple Endocrine Neoplasia type 2 (MEN2)"
+    ],
+    "specialistTypes": [
+        "Pediatric Surgeon",
+        "Gastroenterologist",
+        "Clinical Geneticist",
+        "Neonatologist"
+    ],
+    "eli5Summary": "Imagine your tummy has a special tube that moves food down. In Hirschsprung's disease, some of the tiny helpers (ganglion cells) that push the food are missing in the end part of the tube. This makes it hard to poop, and sometimes doctors need to do surgery to fix it.",
+    "clinicalSummary": "Hirschsprung's disease (HSCR) results from the failure of neural crest cells to completely migrate to the distal colon during embryogenesis, leading to an aganglionic segment. This absence of ganglion cells disrupts the normal peristaltic activity, causing a functional obstruction. Diagnosis is typically made via rectal biopsy demonstrating the absence of ganglion cells. Anorectal manometry can also be used. Surgical intervention, involving resection of the aganglionic segment and pull-through of the normally innervated colon, is the mainstay of treatment. Postoperative complications can include enterocolitis, strictures, and incontinence. Genetic factors, particularly mutations in the *RET* proto-oncogene, play a significant role in the etiology of HSCR.",
+    "historicalBackground": "Hirschsprung's disease was first described by Harald Hirschsprung in 1888, who characterized the condition as a congenital megacolon associated with chronic constipation. The underlying pathophysiology, involving the absence of ganglion cells in the distal colon, was later elucidated, leading to improved diagnostic and therapeutic approaches.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Novel Genetic Variants Identified in Hirschsprung's Disease",
+            "description": "Whole-exome sequencing studies have identified new genes and variants associated with Hirschsprung's disease, providing insights into the complex genetic architecture of the disorder and potential targets for future therapies.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Minimally Invasive Surgical Techniques for Hirschsprung's Disease",
+            "description": "Advancements in laparoscopic and robotic-assisted surgical techniques have led to reduced invasiveness, shorter hospital stays, and improved cosmetic outcomes for patients undergoing surgical correction of Hirschsprung's disease.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/index.php"
+        },
+        {
+            "name": "National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK)",
+            "url": "https://www.niddk.nih.gov/"
+        },
+        {
+            "name": "PubMed",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/"
+        }
+    ]
+}

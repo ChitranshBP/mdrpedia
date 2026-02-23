@@ -1,0 +1,171 @@
+{
+    "name": "Fabry Disease",
+    "slug": "fabry-disease",
+    "aliases": [
+        "Alpha-galactosidase A deficiency",
+        "GLA deficiency",
+        "Anderson-Fabry disease"
+    ],
+    "description": "Fabry disease is a rare, inherited lysosomal storage disorder caused by a deficiency of the enzyme alpha-galactosidase A (α-Gal A). This deficiency leads to the accumulation of globotriaosylceramide (Gb3) in various cells throughout the body, leading to a wide range of symptoms affecting multiple organ systems. The disease is X-linked, affecting both males and females, though females often have milder symptoms.",
+    "category": "METABOLIC",
+    "icdCode": "E75.21",
+    "orphaCode": "793",
+    "omimCode": "301500",
+    "prevalence": "1 in 40,000 to 1 in 117,000",
+    "estimatedCases": 80000,
+    "ageOfOnset": "Childhood to adulthood",
+    "inheritance": "X_LINKED",
+    "symptoms": [
+        "Angiokeratomas",
+        "Acroparesthesia (pain in hands and feet)",
+        "Corneal opacities",
+        "Renal dysfunction",
+        "Cardiomyopathy",
+        "Gastrointestinal problems",
+        "Heat and cold intolerance",
+        "Stroke",
+        "Tinnitus",
+        "Vertigo"
+    ],
+    "affectedSystems": [
+        "Nervous System",
+        "Renal System",
+        "Cardiovascular System",
+        "Gastrointestinal System",
+        "Skin",
+        "Eyes"
+    ],
+    "prognosis": "Variable, depending on the severity of organ involvement and the effectiveness of treatment. Without treatment, organ damage can progress, leading to significant morbidity and reduced life expectancy.",
+    "lifeExpectancy": "Reduced by approximately 10-20 years without treatment. With enzyme replacement therapy or chaperone therapy, life expectancy can be significantly improved.",
+    "diagnosticMethods": [
+        "Enzyme assay (alpha-galactosidase A activity in leukocytes or plasma)",
+        "Genetic testing (GLA gene sequencing)",
+        "Kidney biopsy (to assess Gb3 accumulation)",
+        "Cardiac evaluation (ECG, echocardiogram, MRI)",
+        "Skin biopsy (to identify Gb3 deposits in endothelial cells)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Enzyme Replacement Therapy (ERT) - Agalsidase alfa",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2003
+        },
+        {
+            "name": "Enzyme Replacement Therapy (ERT) - Agalsidase beta",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2003
+        },
+        {
+            "name": "Chaperone Therapy - Migalastat",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2018
+        },
+        {
+            "name": "Pain management (NSAIDs, gabapentin, pregabalin)",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Renal dialysis or kidney transplant (for end-stage renal disease)",
+            "type": "SURGERY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Cardiac management (medications for cardiomyopathy, arrhythmia)",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Gene Therapy",
+            "type": "GENE_THERAPY",
+            "effectiveness": "EXPERIMENTAL",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 50,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Mount Sinai Fabry Disease Center",
+        "Boston Children's Hospital",
+        "University of Pennsylvania"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "National Fabry Disease Foundation",
+            "url": "https://www.fabrydisease.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Fabry Support & Information Group (FSIG)",
+            "url": "https://fabry.org/",
+            "country": "USA"
+        },
+        {
+            "name": "European Fabry Club",
+            "url": "https://www.europeanfabryclub.eu/",
+            "country": "Europe"
+        }
+    ],
+    "relatedConditions": [
+        "Gaucher Disease",
+        "Pompe Disease",
+        "Mucopolysaccharidoses (MPS)"
+    ],
+    "specialistTypes": [
+        "Nephrologist",
+        "Cardiologist",
+        "Neurologist",
+        "Geneticist",
+        "Lysosomal Storage Disorder Specialist",
+        "Pain Management Specialist"
+    ],
+    "eli5Summary": "Imagine your body has tiny workers that clean up a certain type of sugar. In Fabry disease, these workers are broken, so the sugar builds up and causes problems in your heart, kidneys, and other parts of your body. Doctors can give you medicine to help clean up the sugar or fix the broken workers.",
+    "clinicalSummary": "Fabry disease (FD) is an X-linked lysosomal storage disorder resulting from a deficiency in the enzyme α-galactosidase A (α-Gal A), encoded by the GLA gene. This enzymatic deficiency leads to the progressive accumulation of globotriaosylceramide (Gb3) and related glycosphingolipids within lysosomes of various cell types, including endothelial, epithelial, neuronal, and cardiac cells. The clinical manifestations are highly variable, ranging from mild to severe, and can include angiokeratomas, acroparesthesias, corneal and lenticular opacities, renal failure, cardiomyopathy, cerebrovascular events, and gastrointestinal disturbances. Diagnosis involves enzyme assays and genetic testing. Treatment options include enzyme replacement therapy (ERT) with recombinant α-Gal A and chaperone therapy with migalastat, a pharmacological chaperone that enhances the stability of certain mutant forms of α-Gal A. Supportive care addresses specific organ involvement and pain management. Early diagnosis and treatment are crucial to prevent or delay the progression of organ damage and improve patient outcomes.",
+    "historicalBackground": "Fabry disease was first described independently by Johannes Fabry and William Anderson in 1898. Fabry described a 13-year-old boy with angiokeratomas, while Anderson described a 39-year-old man with similar skin lesions and kidney disease. The underlying enzyme deficiency was not identified until the late 1960s, leading to the development of enzyme replacement therapy in the early 2000s.",
+    "recentBreakthroughs": [
+        {
+            "year": 2018,
+            "title": "FDA Approves Migalastat for Fabry Disease",
+            "description": "The FDA approved migalastat, an oral pharmacological chaperone, for the treatment of Fabry disease in adults with amenable GLA variants. This provides an alternative to enzyme replacement therapy for a subset of patients.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Gene Therapy Shows Promise in Early Clinical Trials",
+            "description": "Early clinical trials of gene therapy for Fabry disease have shown promising results, with sustained increases in α-Gal A activity and reductions in Gb3 accumulation in some patients. Further studies are underway to evaluate the long-term safety and efficacy of this approach.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Fabry Disease Foundation",
+            "url": "https://www.fabrydisease.org/"
+        },
+        {
+            "name": "National Institutes of Health (NIH)",
+            "url": "https://www.nih.gov/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        }
+    ]
+}

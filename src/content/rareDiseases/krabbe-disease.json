@@ -1,0 +1,150 @@
+{
+    "name": "Krabbe Disease",
+    "slug": "krabbe-disease",
+    "aliases": [
+        "Globoid Cell Leukodystrophy",
+        "Galactosylceramidase Deficiency"
+    ],
+    "description": "Krabbe disease is a rare, inherited lysosomal storage disorder that affects the nervous system. It results from a deficiency of the enzyme galactosylceramidase (GALC), leading to the accumulation of psychosine, a toxic galactolipid, in the brain and peripheral nerves. This accumulation damages the myelin sheath, the protective covering around nerve cells, causing neurological problems.",
+    "category": "GENETIC",
+    "icdCode": "E75.21",
+    "orphaCode": "500",
+    "omimCode": "245200",
+    "prevalence": "Approximately 1 in 100,000 births",
+    "estimatedCases": 33000,
+    "ageOfOnset": "Most commonly in infancy (before 6 months), but can occur later in childhood or adulthood (late-onset Krabbe disease)",
+    "inheritance": "AUTOSOMAL_RECESSIVE",
+    "symptoms": [
+        "Irritability",
+        "Feeding difficulties",
+        "Muscle stiffness and spasms",
+        "Developmental delay",
+        "Seizures",
+        "Vision loss",
+        "Hearing loss",
+        "Progressive loss of motor skills",
+        "Peripheral neuropathy",
+        "Fever (unexplained)",
+        "Vomiting"
+    ],
+    "affectedSystems": [
+        "Nervous System",
+        "Peripheral Nervous System",
+        "Musculoskeletal System",
+        "Sensory Systems (Vision, Hearing)"
+    ],
+    "prognosis": "The prognosis for infantile Krabbe disease is generally poor, with rapid neurological deterioration and death typically occurring within the first two years of life. Late-onset forms have a more variable and often slower progression.",
+    "lifeExpectancy": "Infantile Krabbe disease: typically 2 years. Late-onset Krabbe disease: variable, can survive into adulthood with supportive care.",
+    "diagnosticMethods": [
+        "Enzyme assay (GALC activity in leukocytes or fibroblasts)",
+        "Genetic testing (GLAC gene sequencing)",
+        "MRI of the brain (to assess myelin abnormalities)",
+        "Nerve conduction studies (to assess peripheral nerve function)",
+        "Newborn screening (in some regions)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Hematopoietic Stem Cell Transplantation (HSCT)",
+            "type": "GENE_THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Physical Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Nutritional Support",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Medications for symptom management (e.g., anti-seizure medications, muscle relaxants)",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 15,
+    "keyResearchCenters": [
+        "Duke University",
+        "University of Pittsburgh Medical Center (UPMC)",
+        "National Institutes of Health (NIH)"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Hunter's Hope Foundation",
+            "url": "https://www.huntershope.org/",
+            "country": "USA"
+        },
+        {
+            "name": "United Leukodystrophy Foundation (ULF)",
+            "url": "https://ulf.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Other Leukodystrophies",
+        "Metachromatic Leukodystrophy (MLD)",
+        "Adrenoleukodystrophy (ALD)"
+    ],
+    "specialistTypes": [
+        "Neurologist",
+        "Geneticist",
+        "Pediatrician",
+        "Physical Therapist",
+        "Occupational Therapist",
+        "Ophthalmologist",
+        "Audiologist"
+    ],
+    "eli5Summary": "Krabbe disease is when your body can't break down certain fats, which hurts your brain and nerves. It makes it hard to move, see, and hear. Doctors can try to help with special treatments, but it's a very serious illness.",
+    "clinicalSummary": "Krabbe disease, or globoid cell leukodystrophy, is an autosomal recessive disorder caused by a deficiency in galactosylceramidase (GALC). This deficiency leads to the accumulation of psychosine, a cytotoxic galactolipid, primarily affecting oligodendrocytes and Schwann cells. The accumulation results in demyelination, gliosis, and the formation of characteristic globoid cells in the brain. Clinically, infantile Krabbe disease presents with irritability, developmental regression, hypertonia, seizures, and progressive neurological decline. Late-onset forms exhibit a more variable phenotype, including spasticity, ataxia, and peripheral neuropathy. Diagnosis involves GALC enzyme assay, genetic testing for GLAC mutations, and MRI findings indicative of demyelination. Hematopoietic stem cell transplantation (HSCT) is the primary treatment option, particularly for pre-symptomatic or early-symptomatic infants. Supportive care focuses on managing symptoms and maximizing quality of life.",
+    "historicalBackground": "Krabbe disease was first described by Danish neurologist Knud Krabbe in 1916. He identified the characteristic globoid cells in the brain tissue of affected individuals, leading to the initial designation of the disease as 'globoid cell leukodystrophy'. The enzymatic defect (GALC deficiency) was identified later, leading to a better understanding of the disease's pathophysiology.",
+    "recentBreakthroughs": [
+        {
+            "year": 2023,
+            "title": "Gene Therapy Clinical Trials for Krabbe Disease",
+            "description": "Several clinical trials are underway evaluating the safety and efficacy of gene therapy approaches for Krabbe disease. These trials aim to deliver a functional copy of the GALC gene to cells in the central nervous system, potentially preventing or slowing disease progression. Early results have shown promise, particularly in pre-symptomatic infants.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2022,
+            "title": "Improved Newborn Screening Methods",
+            "description": "Advances in newborn screening technologies have led to more sensitive and specific methods for detecting Krabbe disease. This allows for earlier diagnosis and intervention, potentially improving outcomes with HSCT or other emerging therapies.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/Disorders/All-Disorders/Krabbe-Disease-Information-Page"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=EN&Expert=500"
+        },
+        {
+            "name": "GeneReviews",
+            "url": "https://www.ncbi.nlm.nih.gov/books/NBK1292/"
+        }
+    ]
+}

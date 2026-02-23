@@ -1,0 +1,169 @@
+{
+    "name": "Cerebral Autosomal Dominant Arteriopathy with Subcortical Infarcts and Leukoencephalopathy (CADASIL)",
+    "slug": "cerebral-autosomal-dominant-arteriopathy-with-subcortical-infarcts-and-leukoencephalopathy-cadasil",
+    "aliases": [
+        "CADASIL syndrome",
+        "Hereditary multi-infarct dementia",
+        "NOTCH3-related CADASIL"
+    ],
+    "description": "Cerebral Autosomal Dominant Arteriopathy with Subcortical Infarcts and Leukoencephalopathy (CADASIL) is a hereditary stroke disorder caused by mutations in the NOTCH3 gene. This condition primarily affects small blood vessels in the brain, leading to recurrent strokes, cognitive decline, migraine with aura, and psychiatric disturbances. The progressive accumulation of these infarcts and white matter lesions results in significant neurological impairment.",
+    "category": "NEUROLOGICAL",
+    "icdCode": "I67.85",
+    "orphaCode": "154",
+    "omimCode": "125310",
+    "prevalence": "Estimated 1-9 / 100,000",
+    "estimatedCases": 70000,
+    "ageOfOnset": "Typically between 30 and 50 years, but can vary.",
+    "inheritance": "AUTOSOMAL_DOMINANT",
+    "symptoms": [
+        "Migraine with aura",
+        "Recurrent ischemic strokes or transient ischemic attacks (TIAs)",
+        "Cognitive decline leading to dementia",
+        "Psychiatric disturbances (depression, apathy, psychosis)",
+        "Seizures",
+        "Subcortical infarcts and leukoencephalopathy (white matter lesions)",
+        "Muscle weakness",
+        "Dysarthria (difficulty speaking)",
+        "Pseudobulbar palsy"
+    ],
+    "affectedSystems": [
+        "Nervous System",
+        "Cardiovascular System"
+    ],
+    "prognosis": "Progressive neurological decline with increasing disability over time. The rate of progression varies among individuals.",
+    "lifeExpectancy": "Reduced compared to the general population, with the average survival after the first stroke being approximately 6-8 years. However, some individuals may live longer with supportive care.",
+    "diagnosticMethods": [
+        "Neurological examination",
+        "Brain MRI (magnetic resonance imaging) showing characteristic white matter lesions and subcortical infarcts",
+        "Genetic testing for NOTCH3 mutations",
+        "Skin biopsy with granular osmiophilic material (GOM) deposits around small blood vessels (less commonly used now due to genetic testing availability)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Symptomatic treatment for migraine",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Antiplatelet agents (e.g., aspirin, clopidogrel)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Antihypertensive medications",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Physical therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Speech therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Psychiatric support and medications for mood disorders",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Management of vascular risk factors (e.g., smoking cessation, diabetes control)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 15,
+    "keyResearchCenters": [
+        "National Institute of Neurological Disorders and Stroke (NINDS)",
+        "University College London (UCL) - Stroke Research Centre",
+        "Mayo Clinic",
+        "Massachusetts General Hospital"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "CADASIL Together We Have Hope",
+            "url": "https://www.cadasilfoundation.org/",
+            "country": "USA"
+        },
+        {
+            "name": "CADASIL Association",
+            "url": "https://www.cadasil-assos.org/",
+            "country": "France"
+        }
+    ],
+    "relatedConditions": [
+        "Small vessel disease",
+        "Binswanger's disease",
+        "Multiple sclerosis",
+        "Vascular dementia"
+    ],
+    "specialistTypes": [
+        "Neurologist",
+        "Geneticist",
+        "Radiologist",
+        "Psychiatrist",
+        "Physical Therapist",
+        "Occupational Therapist",
+        "Speech Therapist"
+    ],
+    "eli5Summary": "Imagine tiny blood vessels in your brain getting sick. CADASIL is like that. It's passed down in families and makes it hard for your brain to get enough blood. This can cause headaches, trouble thinking, and sometimes even make it hard to move or talk.",
+    "clinicalSummary": "CADASIL is a systemic arteriopathy caused by mutations in the NOTCH3 gene, leading to the accumulation of NOTCH3 protein in the smooth muscle cells of small to medium-sized arteries. This accumulation results in thickening of the vessel walls, fibrosis, and ultimately, reduced blood flow to the brain. Clinically, CADASIL manifests with migraine with aura, recurrent ischemic strokes, cognitive decline, and psychiatric disturbances. MRI findings include characteristic white matter hyperintensities, particularly in the anterior temporal lobes and external capsules, and lacunar infarcts. Diagnosis is confirmed by genetic testing for NOTCH3 mutations. Management focuses on symptomatic treatment and vascular risk factor modification.",
+    "historicalBackground": "CADASIL was first described in the late 20th century. The NOTCH3 gene was identified as the causative gene in 1996, marking a significant breakthrough in understanding the disease's pathogenesis.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Advancements in MRI techniques for early CADASIL diagnosis",
+            "description": "Improved MRI protocols, including diffusion tensor imaging (DTI) and quantitative susceptibility mapping (QSM), are enhancing the ability to detect subtle changes in brain microstructure, allowing for earlier diagnosis and monitoring of disease progression.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Potential therapeutic targets identified through NOTCH3 signaling pathway research",
+            "description": "Research into the NOTCH3 signaling pathway has identified potential therapeutic targets for modulating the disease process. Studies are exploring the use of gamma-secretase inhibitors and other agents to reduce NOTCH3 accumulation and improve vascular function.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/Disease_Search.php?lng=EN&data_id=154"
+        },
+        {
+            "name": "OMIM",
+            "url": "https://www.omim.org/entry/125310"
+        },
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/"
+        }
+    ]
+}

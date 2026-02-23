@@ -1,0 +1,164 @@
+{
+    "name": "Angelman Syndrome",
+    "slug": "angelman-syndrome",
+    "aliases": [
+        "AS",
+        "Happy Puppet Syndrome"
+    ],
+    "description": "Angelman syndrome is a complex genetic disorder that primarily affects the nervous system. It is characterized by severe intellectual disability, delayed development, problems with movement and balance (ataxia), seizures, and a generally happy demeanor with frequent smiling and laughter. Individuals with Angelman syndrome typically have a small head size (microcephaly) and fair skin with light-colored hair.",
+    "category": "GENETIC",
+    "icdCode": "Q93.51",
+    "orphaCode": "79",
+    "omimCode": "105830",
+    "prevalence": "1 in 12,000 to 1 in 20,000 live births",
+    "estimatedCases": 25000,
+    "ageOfOnset": "Usually noticed between 6-12 months of age",
+    "inheritance": "SPORADIC (most cases), but can also be due to deletion, uniparental disomy, imprinting defect, or UBE3A mutation.",
+    "symptoms": [
+        "Severe intellectual disability",
+        "Developmental delay",
+        "Speech impairment (minimal or no speech)",
+        "Movement and balance problems (ataxia)",
+        "Seizures",
+        "Frequent smiling and laughter",
+        "Microcephaly",
+        "Fair skin and light hair (in some cases)",
+        "Sleep disturbances",
+        "Hyperactivity",
+        "Fascination with water",
+        "Protruding tongue",
+        "Wide-based gait",
+        "Hand flapping"
+    ],
+    "affectedSystems": [
+        "Nervous System",
+        "Musculoskeletal System"
+    ],
+    "prognosis": "Angelman syndrome is a lifelong condition. While there is no cure, supportive treatments and therapies can help manage symptoms and improve quality of life. Individuals with Angelman syndrome can achieve developmental milestones, but at a slower pace than their peers.",
+    "lifeExpectancy": "Life expectancy is near normal with appropriate management of medical issues, particularly seizures.",
+    "diagnosticMethods": [
+        "Clinical evaluation",
+        "Genetic testing (DNA methylation analysis, UBE3A sequencing, chromosomal microarray)",
+        "Electroencephalogram (EEG)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Anti-epileptic drugs (AEDs)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Physical therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Speech therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Behavioral therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Sleep management strategies",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Gene Therapy (experimental)",
+            "type": "GENE_THERAPY",
+            "effectiveness": "EXPERIMENTAL",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 30,
+    "keyResearchCenters": [
+        "Angelman Syndrome Foundation",
+        "Foundation for Angelman Syndrome Therapeutics (FAST)",
+        "University of North Carolina Angelman Syndrome Clinic"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Angelman Syndrome Foundation",
+            "url": "https://www.angelman.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Foundation for Angelman Syndrome Therapeutics (FAST)",
+            "url": "https://cureangelman.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Prader-Willi Syndrome (due to similar genetic mechanisms)",
+        "Cerebral Palsy (due to similar motor impairments)",
+        "Autism Spectrum Disorder (due to overlapping behavioral features)"
+    ],
+    "specialistTypes": [
+        "Clinical Geneticist",
+        "Neurologist",
+        "Developmental Pediatrician",
+        "Epileptologist",
+        "Physical Therapist",
+        "Occupational Therapist",
+        "Speech Therapist",
+        "Behavioral Therapist"
+    ],
+    "eli5Summary": "Angelman Syndrome is a genetic condition that makes kids have trouble with talking, walking, and learning. They often smile and laugh a lot and seem very happy, but they need extra help to grow and develop.",
+    "clinicalSummary": "Angelman syndrome (AS) is a neurodevelopmental disorder caused by loss of function of the maternally inherited UBE3A gene located on chromosome 15q11.2-q13. The most common mechanism is a deletion of the maternal 15q11.2-q13 region. Other mechanisms include paternal uniparental disomy, imprinting defects, and mutations in the UBE3A gene itself. Clinically, AS is characterized by severe developmental delay or intellectual disability, speech impairment (often nonverbal), movement or balance disorder, usually ataxia of gait and/or tremulous movement of limbs, and a behavioral phenotype of frequent laughter/smiling, apparent happiness, and excitability. Seizures are common. Diagnosis is confirmed through genetic testing, including methylation analysis and UBE3A sequencing. Management focuses on symptomatic treatment, including seizure control, physical and occupational therapy, speech therapy, and behavioral interventions.",
+    "historicalBackground": "Angelman syndrome was first described by Dr. Harry Angelman in 1965, who observed three children with similar characteristics. He initially referred to the condition as 'Happy Puppet Syndrome' due to their jerky movements and frequent smiling. The genetic basis of the syndrome was later discovered in the late 1980s and early 1990s.",
+    "recentBreakthroughs": [
+        {
+            "year": 2023,
+            "title": "ASO Therapy Shows Promise in Angelman Syndrome",
+            "description": "Antisense oligonucleotide (ASO) therapy targeting the paternal UBE3A allele to unsilence it is showing promising results in clinical trials, with improvements in motor function, communication, and behavior observed in some patients.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2022,
+            "title": "Gene Therapy Approaches for Angelman Syndrome",
+            "description": "Researchers are actively exploring gene therapy strategies to deliver a functional copy of the UBE3A gene to neurons in individuals with Angelman syndrome. Preclinical studies have shown encouraging results.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/"
+        },
+        {
+            "name": "GeneReviews",
+            "url": "https://www.ncbi.nlm.nih.gov/books/NBK1116/"
+        },
+        {
+            "name": "Angelman Syndrome Foundation",
+            "url": "https://www.angelman.org/"
+        }
+    ]
+}

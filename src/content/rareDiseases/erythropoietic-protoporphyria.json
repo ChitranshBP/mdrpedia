@@ -1,0 +1,144 @@
+{
+    "name": "Erythropoietic Protoporphyria",
+    "slug": "erythropoietic-protoporphyria",
+    "aliases": [
+        "EPP",
+        "Protoporphyria",
+        "Erythrohepatic Protoporphyria"
+    ],
+    "description": "Erythropoietic protoporphyria (EPP) is a rare genetic metabolic disorder characterized by abnormal accumulation of protoporphyrin in erythrocytes (red blood cells), plasma, and sometimes the liver. This buildup leads to acute photosensitivity, causing painful, non-blistering skin reactions upon exposure to sunlight or certain artificial lights. In some cases, EPP can result in liver complications, including protoporphyric hepatopathy and liver failure.",
+    "category": "METABOLIC",
+    "icdCode": "E80.2",
+    "orphaCode": "729",
+    "omimCode": "177000",
+    "prevalence": "1 in 75,000 to 1 in 200,000",
+    "estimatedCases": 2500,
+    "ageOfOnset": "Usually in early childhood",
+    "inheritance": "AUTOSOMAL_RECESSIVE (biallelic mutations in FECH) or AUTOSOMAL_DOMINANT (gain-of-function mutation in ALAS2)",
+    "symptoms": [
+        "Acute photosensitivity (pain, burning, itching upon sun exposure)",
+        "Erythema (redness) and edema (swelling) of the skin",
+        "Burning sensation without blistering",
+        "Chronic skin thickening and scarring (lichenification)",
+        "Gallstones (protoporphyrin stones)",
+        "Liver dysfunction (in some cases)",
+        "Anemia (rare)"
+    ],
+    "affectedSystems": [
+        "Integumentary System (Skin)",
+        "Hematopoietic System (Blood)",
+        "Hepatic System (Liver)"
+    ],
+    "prognosis": "The prognosis for individuals with EPP varies. While most individuals primarily experience photosensitivity, a subset may develop liver complications that can be life-threatening. Management focuses on symptom relief and prevention of complications.",
+    "lifeExpectancy": "Generally normal, unless severe liver disease develops.",
+    "diagnosticMethods": [
+        "Clinical evaluation of symptoms",
+        "Measurement of protoporphyrin levels in red blood cells, plasma, and feces",
+        "Genetic testing for FECH and ALAS2 mutations",
+        "Liver function tests",
+        "Liver biopsy (in cases of suspected liver involvement)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Afamelanotide",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2019
+        },
+        {
+            "name": "Beta-Carotene",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Cholestyramine",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Hematopoietic Stem Cell Transplantation (HSCT)",
+            "type": "GENE_THERAPY",
+            "effectiveness": "EXPERIMENTAL",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Liver Transplantation",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Sun Protection (protective clothing, sunscreens)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 5,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "University of California, San Francisco (UCSF)",
+        "Mount Sinai Hospital"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "American Porphyria Foundation",
+            "url": "https://www.porphyriafoundation.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Porphyria UK",
+            "url": "https://www.porphyria.org.uk/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "X-linked Protoporphyria (XLPP)",
+        "Variegate Porphyria (VP)",
+        "Acute Intermittent Porphyria (AIP)"
+    ],
+    "specialistTypes": [
+        "Dermatologist",
+        "Gastroenterologist",
+        "Hematologist",
+        "Geneticist"
+    ],
+    "eli5Summary": "Imagine your skin is super sensitive to sunlight. That's like having EPP. When you go in the sun, your skin gets really painful, red, and itchy, but it doesn't usually get blisters. It's because your body has too much of a certain substance called protoporphyrin. You need to be extra careful in the sun and wear protective clothing.",
+    "clinicalSummary": "Erythropoietic protoporphyria (EPP) results from a deficiency in ferrochelatase (FECH), the enzyme catalyzing the insertion of iron into protoporphyrin to form heme. This deficiency leads to the accumulation of protoporphyrin in erythrocytes, plasma, and liver. Patients typically present with acute photosensitivity characterized by pain, erythema, and edema upon sun exposure. Chronic exposure can lead to lichenification. A subset of patients develop protoporphyric hepatopathy, potentially progressing to liver failure. Diagnosis involves measuring protoporphyrin levels and genetic testing. Management includes sun protection, afamelanotide, and, in severe cases, liver transplantation or hematopoietic stem cell transplantation.",
+    "historicalBackground": "Erythropoietic protoporphyria was first described in the 1960s. The genetic basis of EPP, involving mutations in the FECH gene, was identified in the 1990s. The development of afamelanotide has significantly improved the quality of life for many individuals with EPP.",
+    "recentBreakthroughs": [
+        {
+            "year": 2019,
+            "title": "FDA Approves Afamelanotide for EPP",
+            "description": "The FDA approved afamelanotide (Scenesse) for the treatment of erythropoietic protoporphyria. Afamelanotide is a synthetic melanocortin-1 receptor agonist that increases melanin production, providing photoprotection.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/index.php"
+        },
+        {
+            "name": "National Institutes of Health (NIH)",
+            "url": "https://www.nih.gov/"
+        },
+        {
+            "name": "American Porphyria Foundation",
+            "url": "https://www.porphyriafoundation.org/"
+        }
+    ]
+}

@@ -1,0 +1,167 @@
+{
+    "name": "Chronic Granulomatous Disease",
+    "slug": "chronic-granulomatous-disease",
+    "aliases": [
+        "CGD",
+        "Quie Syndrome",
+        "Chronic Granulomatous Disorder"
+    ],
+    "description": "Chronic Granulomatous Disease (CGD) is a group of hereditary diseases in which certain cells of the immune system have difficulty forming reactive oxygen compounds used to kill ingested pathogens. This leads to the formation of granulomas in various organs and increased susceptibility to bacterial and fungal infections.",
+    "category": "GENETIC",
+    "icdCode": "D71",
+    "orphaCode": "208",
+    "omimCode": "306400",
+    "prevalence": "1 in 200,000 to 1 in 250,000 live births",
+    "estimatedCases": 1600,
+    "ageOfOnset": "Typically in early childhood, but can vary.",
+    "inheritance": "X_LINKED, AUTOSOMAL_RECESSIVE",
+    "symptoms": [
+        "Recurrent bacterial and fungal infections",
+        "Granuloma formation in various organs (lungs, liver, spleen, lymph nodes)",
+        "Pneumonia",
+        "Abscesses",
+        "Lymphadenitis",
+        "Gastrointestinal inflammation",
+        "Delayed growth",
+        "Anemia"
+    ],
+    "affectedSystems": [
+        "Immune System",
+        "Respiratory System",
+        "Gastrointestinal System",
+        "Lymphatic System"
+    ],
+    "prognosis": "With proper management, individuals with CGD can live relatively normal lives, although they require ongoing medical care and monitoring.",
+    "lifeExpectancy": "Improved with prophylactic antibiotics and antifungals; many patients live into adulthood.",
+    "diagnosticMethods": [
+        "Neutrophil function tests (e.g., DHR assay)",
+        "Genetic testing",
+        "Blood tests (CBC, inflammatory markers)",
+        "Imaging studies (X-rays, CT scans) to detect infections and granulomas"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Prophylactic Antibiotics",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Prophylactic Antifungals",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Interferon Gamma",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 1990
+        },
+        {
+            "name": "Granulocyte Colony-Stimulating Factor (G-CSF)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Hematopoietic Stem Cell Transplantation (HSCT)",
+            "type": "GENE_THERAPY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Gene Therapy",
+            "type": "GENE_THERAPY",
+            "effectiveness": "EXPERIMENTAL",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Surgery (for abscess drainage)",
+            "type": "SURGERY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Corticosteroids",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 30,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Great Ormond Street Hospital",
+        "Boston Children's Hospital"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "CGD Association of America",
+            "url": "https://www.cgdconnect.org/",
+            "country": "USA"
+        },
+        {
+            "name": "CGD Society",
+            "url": "https://www.cgdsociety.org/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "Inflammatory Bowel Disease (IBD)",
+        "Discoid Lupus Erythematosus",
+        "Sarcoidosis"
+    ],
+    "specialistTypes": [
+        "Immunologist",
+        "Hematologist",
+        "Infectious Disease Specialist",
+        "Pulmonologist",
+        "Gastroenterologist",
+        "Geneticist"
+    ],
+    "eli5Summary": "Imagine your body's soldiers (immune cells) have trouble making the right weapons to fight off bad germs. This makes you get sick more often, and your body might form lumps (granulomas) trying to contain the germs. Doctors can give you medicine to help prevent infections and sometimes even fix the problem with a special transplant.",
+    "clinicalSummary": "Chronic Granulomatous Disease (CGD) is a primary immunodeficiency characterized by the inability of phagocytes (neutrophils, monocytes, macrophages) to produce superoxide and other reactive oxygen species (ROS) due to defects in the NADPH oxidase enzyme complex. This impaired oxidative burst compromises the cells' ability to kill catalase-positive bacteria and fungi, leading to recurrent and severe infections. The most common genetic defects involve mutations in the CYBB gene (X-linked CGD) or genes encoding other subunits of the NADPH oxidase complex (autosomal recessive forms). Clinical manifestations include pneumonia, abscesses, lymphadenitis, and granuloma formation in various organs. Diagnosis is typically confirmed by neutrophil function testing (DHR assay) and genetic analysis. Management involves prophylactic antibiotics and antifungals, interferon-gamma therapy, and hematopoietic stem cell transplantation (HSCT) for curative intent. Gene therapy is an emerging treatment option.",
+    "historicalBackground": "CGD was first described in the 1950s as a fatal disease of childhood characterized by recurrent infections and granuloma formation. The underlying defect in neutrophil function was identified in the 1960s, and the genetic basis of the disease was elucidated in subsequent decades.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Gene Therapy Shows Promise in CGD",
+            "description": "Early clinical trials of gene therapy for X-linked CGD have demonstrated promising results, with some patients achieving long-term correction of their neutrophil function and reduced infection rates.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Improved HSCT Outcomes for CGD",
+            "description": "Advances in hematopoietic stem cell transplantation (HSCT) techniques, including reduced-intensity conditioning regimens and improved donor matching, have led to better outcomes for patients with CGD undergoing HSCT.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institutes of Health (NIH)",
+            "url": "https://www.nih.gov/"
+        },
+        {
+            "name": "Immune Deficiency Foundation (IDF)",
+            "url": "https://www.primaryimmune.org/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        }
+    ]
+}

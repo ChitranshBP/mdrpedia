@@ -1,0 +1,146 @@
+{
+    "name": "Henoch-Schönlein Purpura",
+    "slug": "henoch-sch-nlein-purpura",
+    "aliases": [
+        "IgA Vasculitis",
+        "Anaphylactoid Purpura"
+    ],
+    "description": "Henoch-Schönlein Purpura (HSP), also known as IgA vasculitis, is a systemic small vessel vasculitis characterized by deposition of IgA-containing immune complexes in small vessels, leading to inflammation. It primarily affects the skin, intestines, kidneys, and joints. HSP is more common in children but can occur at any age. The exact cause is unknown, but it often follows an upper respiratory infection.",
+    "category": "AUTOIMMUNE",
+    "icdCode": "D69.0",
+    "orphaCode": "778",
+    "omimCode": "141000",
+    "prevalence": "3-26.7 per 100,000 children",
+    "estimatedCases": 10000,
+    "ageOfOnset": "Typically between 2 and 10 years old, but can occur at any age.",
+    "inheritance": "SPORADIC",
+    "symptoms": [
+        "Palpable purpura (typically on buttocks and lower extremities)",
+        "Arthritis or arthralgia (joint pain), especially in knees and ankles",
+        "Abdominal pain (colicky, may be severe)",
+        "Gastrointestinal bleeding",
+        "Kidney involvement (hematuria, proteinuria)",
+        "Edema (swelling), especially of the scalp, hands, and feet"
+    ],
+    "affectedSystems": [
+        "Skin",
+        "Musculoskeletal System",
+        "Gastrointestinal System",
+        "Renal System",
+        "Cardiovascular System (rarely)"
+    ],
+    "prognosis": "The prognosis is generally good, with most cases resolving spontaneously within weeks to months. However, kidney involvement can lead to chronic kidney disease in a small percentage of patients.",
+    "lifeExpectancy": "Normal life expectancy in most cases. Significant kidney involvement can affect life expectancy.",
+    "diagnosticMethods": [
+        "Clinical evaluation (based on characteristic symptoms)",
+        "Skin biopsy (to confirm IgA deposition in blood vessels)",
+        "Urinalysis (to assess kidney involvement)",
+        "Blood tests (CBC, renal function tests, coagulation studies)",
+        "Stool occult blood test",
+        "Kidney biopsy (if kidney involvement is severe or atypical)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Supportive Care",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Pain Management (NSAIDs)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Corticosteroids (e.g., Prednisone)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Immunosuppressants (e.g., Azathioprine, Cyclophosphamide)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Angiotensin-converting enzyme (ACE) inhibitors or angiotensin receptor blockers (ARBs)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Rituximab",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "OBSERVATIONAL",
+    "clinicalTrialsCount": 25,
+    "keyResearchCenters": [
+        "Mayo Clinic",
+        "National Institutes of Health (NIH)",
+        "Boston Children's Hospital"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Vasculitis Foundation",
+            "url": "https://www.vasculitisfoundation.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "IgA Nephropathy",
+        "Vasculitis",
+        "Glomerulonephritis"
+    ],
+    "specialistTypes": [
+        "Pediatric Rheumatologist",
+        "Nephrologist",
+        "Gastroenterologist",
+        "Dermatologist"
+    ],
+    "eli5Summary": "Imagine your body's defense system is a bit confused and starts attacking tiny blood vessels, especially in your skin, tummy, kidneys, and joints. This causes a rash with small, raised spots, tummy aches, sore joints, and sometimes problems with your pee. It usually gets better on its own, but doctors might give you medicine to help you feel better.",
+    "clinicalSummary": "Henoch-Schönlein Purpura (HSP) is a systemic vasculitis characterized by IgA deposition in small vessels. The pathogenesis involves immune complex formation and deposition, leading to inflammation and endothelial damage. Clinically, it presents with a tetrad of palpable purpura, arthritis/arthralgia, abdominal pain, and renal involvement. Diagnosis is primarily clinical, supported by skin biopsy demonstrating IgA deposition. Management focuses on supportive care and symptom relief. Corticosteroids may be used for severe abdominal pain or kidney involvement. Long-term monitoring for renal complications is essential.",
+    "historicalBackground": "Henoch-Schönlein Purpura was first described by Johann Schönlein in 1837, who noted the association of purpura and joint pain. Eduard Henoch, his student, later described the abdominal symptoms and renal involvement in 1874, leading to the eponymous name.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Biomarkers for Predicting Renal Involvement in Henoch-Schönlein Purpura",
+            "description": "Research has identified potential biomarkers, such as specific cytokines and chemokines, that may predict the risk of renal involvement in children with HSP, allowing for earlier intervention.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Efficacy of Rituximab in Severe Refractory Henoch-Schönlein Purpura",
+            "description": "A study demonstrated the potential efficacy of rituximab, an anti-CD20 monoclonal antibody, in patients with severe, refractory HSP who have failed conventional therapies.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/Disease_Search.php?lng=EN&data_id=778"
+        },
+        {
+            "name": "National Institute of Arthritis and Musculoskeletal and Skin Diseases (NIAMS)",
+            "url": "https://www.niams.nih.gov/"
+        },
+        {
+            "name": "Vasculitis Foundation",
+            "url": "https://www.vasculitisfoundation.org/"
+        }
+    ]
+}

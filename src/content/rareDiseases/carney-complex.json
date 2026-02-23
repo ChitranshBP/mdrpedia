@@ -1,0 +1,173 @@
+{
+    "name": "Carney Complex",
+    "slug": "carney-complex",
+    "aliases": [
+        "CNC",
+        "LAMB syndrome",
+        "NAME syndrome"
+    ],
+    "description": "Carney complex (CNC) is a rare, autosomal dominant multiple neoplasia syndrome characterized by spotty skin pigmentation (lentigines, blue nevi, and café-au-lait spots), myxomas (cardiac, cutaneous, and mammary), endocrine tumors (primary pigmented nodular adrenocortical disease leading to Cushing syndrome, thyroid tumors, and testicular tumors), and schwannomas. Other manifestations can include large cell calcifying Sertoli cell tumors (LCCSCTs) of the testes, ductal adenomas of the breast, psammomatous melanotic schwannomas (PMS), and growth hormone-producing pituitary adenomas (acromegaly).",
+    "category": "GENETIC",
+    "icdCode": "Q87.8",
+    "orphaCode": "148",
+    "omimCode": "160980",
+    "prevalence": "<1 / 1 000 000",
+    "estimatedCases": 700,
+    "ageOfOnset": "Variable; can present from infancy to adulthood, with most diagnoses occurring in the second or third decade of life.",
+    "inheritance": "AUTOSOMAL_DOMINANT",
+    "symptoms": [
+        "Spotty skin pigmentation (lentigines, blue nevi, café-au-lait spots)",
+        "Cardiac myxomas",
+        "Cutaneous myxomas",
+        "Mammary myxomas",
+        "Primary pigmented nodular adrenocortical disease (PPNAD) causing Cushing syndrome",
+        "Thyroid tumors",
+        "Testicular tumors (large cell calcifying Sertoli cell tumors)",
+        "Growth hormone-producing pituitary adenomas (acromegaly)",
+        "Psammomatous melanotic schwannomas"
+    ],
+    "affectedSystems": [
+        "Endocrine System",
+        "Cardiovascular System",
+        "Integumentary System",
+        "Nervous System"
+    ],
+    "prognosis": "Variable depending on the severity and location of tumors. Early diagnosis and treatment can improve outcomes. Cardiac myxomas can cause life-threatening complications if not treated. Endocrine tumors can lead to significant morbidity if not managed appropriately.",
+    "lifeExpectancy": "Generally normal if complications are managed effectively. Cardiac and endocrine complications can reduce life expectancy if untreated.",
+    "diagnosticMethods": [
+        "Clinical examination",
+        "Skin biopsy",
+        "Echocardiography",
+        "MRI of the heart, brain, and pituitary",
+        "Endocrine testing (cortisol, growth hormone, IGF-1)",
+        "Genetic testing for PRKAR1A mutations",
+        "Histopathological examination of tumors"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Surgical resection of cardiac myxomas",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": null,
+            "approvalYear": null
+        },
+        {
+            "name": "Surgical resection of cutaneous myxomas",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": null,
+            "approvalYear": null
+        },
+        {
+            "name": "Adrenalectomy for PPNAD",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": null,
+            "approvalYear": null
+        },
+        {
+            "name": "Somatostatin analogs (e.g., octreotide, lanreotide) for acromegaly",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Dopamine agonists (e.g., cabergoline) for acromegaly",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Pituitary surgery for acromegaly",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": null,
+            "approvalYear": null
+        },
+        {
+            "name": "Mitotane for PPNAD (off-label)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Thyroidectomy for thyroid tumors",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": null,
+            "approvalYear": null
+        },
+        {
+            "name": "Surveillance and monitoring for tumor recurrence",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": null,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 15,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Mayo Clinic",
+        "Massachusetts General Hospital"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Carney Complex Foundation",
+            "url": "https://carneycomplex.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Cushing Syndrome",
+        "Acromegaly",
+        "Multiple Endocrine Neoplasia (MEN) syndromes"
+    ],
+    "specialistTypes": [
+        "Endocrinologist",
+        "Cardiologist",
+        "Dermatologist",
+        "Geneticist",
+        "Surgeon",
+        "Oncologist"
+    ],
+    "eli5Summary": "Carney Complex is like having spots on your skin and sometimes getting bumps (tumors) in your heart, skin, or other places. Doctors need to check you regularly to make sure the bumps don't cause problems.",
+    "clinicalSummary": "Carney complex (CNC) is a multiple neoplasia syndrome caused primarily by mutations in the PRKAR1A gene. It is characterized by a constellation of tumors and other features, including cardiac and cutaneous myxomas, spotty skin pigmentation, endocrine tumors (PPNAD, thyroid tumors, testicular tumors, pituitary adenomas), and schwannomas. Diagnosis requires a high index of suspicion and careful clinical and genetic evaluation. Management involves surgical resection of tumors, medical management of endocrine abnormalities, and lifelong surveillance for tumor recurrence. Genetic counseling is essential for affected individuals and their families.",
+    "historicalBackground": "Carney complex was first described by J. Aidan Carney in 1985, who recognized the association of cardiac myxomas, skin pigmentation, and endocrine overactivity. The genetic basis of the disease was later identified as mutations in the PRKAR1A gene.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Novel PRKAR1A mutations identified in Carney Complex patients",
+            "description": "Researchers identified several novel PRKAR1A mutations in patients with Carney Complex, expanding the spectrum of known mutations and improving diagnostic capabilities.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Improved imaging techniques for early detection of cardiac myxomas",
+            "description": "Advancements in cardiac MRI technology have improved the early detection of small cardiac myxomas in Carney Complex patients, allowing for timely intervention.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/Disease_Search.php?lng=EN&data_id=148"
+        },
+        {
+            "name": "OMIM",
+            "url": "https://www.omim.org/entry/160980"
+        },
+        {
+            "name": "National Institutes of Health (NIH)",
+            "url": "https://www.ncbi.nlm.nih.gov/books/NBK1116/"
+        }
+    ]
+}

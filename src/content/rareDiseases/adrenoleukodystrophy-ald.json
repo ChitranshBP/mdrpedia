@@ -1,0 +1,152 @@
+{
+    "name": "Adrenoleukodystrophy",
+    "slug": "adrenoleukodystrophy-ald",
+    "aliases": [
+        "ALD",
+        "X-linked Adrenoleukodystrophy",
+        "X-ALD",
+        "Schilder's disease (variant)"
+    ],
+    "description": "Adrenoleukodystrophy (ALD) is a genetic disorder characterized by the buildup of very long-chain fatty acids (VLCFAs) in the brain, nervous system, and adrenal glands. This accumulation disrupts normal cellular function, leading to a range of neurological and hormonal problems. The most common form, X-linked ALD, primarily affects males due to its X-linked inheritance pattern. Different phenotypes exist, varying in severity and age of onset, from childhood cerebral ALD (CCALD) to adrenomyeloneuropathy (AMN) in adulthood.",
+    "category": "GENETIC",
+    "icdCode": "E71.3",
+    "orphaCode": "68",
+    "omimCode": "300100",
+    "prevalence": "1 in 17,000 males",
+    "estimatedCases": 23529,
+    "ageOfOnset": "Variable; childhood to adulthood",
+    "inheritance": "X_LINKED",
+    "symptoms": [
+        "Behavioral problems",
+        "Vision problems",
+        "Hearing loss",
+        "Muscle weakness",
+        "Seizures",
+        "Adrenal insufficiency",
+        "Cognitive decline",
+        "Spasticity",
+        "Skin hyperpigmentation",
+        "Gait abnormalities"
+    ],
+    "affectedSystems": [
+        "Nervous System",
+        "Endocrine System",
+        "Adrenal Glands",
+        "Brain",
+        "Spinal Cord"
+    ],
+    "prognosis": "Variable; depends on the phenotype and age of onset. Childhood cerebral ALD is rapidly progressive and often fatal if untreated. Adrenomyeloneuropathy progresses more slowly.",
+    "lifeExpectancy": "Variable; reduced life expectancy in severe cases, near-normal in milder forms with proper management.",
+    "diagnosticMethods": [
+        "Plasma VLCFA measurement",
+        "Genetic testing (ABCD1 gene)",
+        "MRI of the brain",
+        "Adrenal function tests",
+        "Neurological examination"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Hematopoietic Stem Cell Transplantation (HSCT)",
+            "type": "GENE_THERAPY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Gene Therapy (elivaldogene autotemcel)",
+            "type": "GENE_THERAPY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2021
+        },
+        {
+            "name": "Lorenzo's Oil",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Adrenal hormone replacement therapy",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Physical therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Symptomatic management",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 30,
+    "keyResearchCenters": [
+        "Kennedy Krieger Institute",
+        "Massachusetts General Hospital",
+        "University of Minnesota",
+        "Oregon Health & Science University"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "The ALD Connect Organization",
+            "url": "https://www.aldconnect.org/",
+            "country": "USA"
+        },
+        {
+            "name": "United Leukodystrophy Foundation (ULF)",
+            "url": "https://ulf.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Adrenomyeloneuropathy (AMN)",
+        "Cerebral ALD (CALD)",
+        "Addison's disease"
+    ],
+    "specialistTypes": [
+        "Neurologist",
+        "Endocrinologist",
+        "Geneticist",
+        "Neuropsychologist",
+        "Pediatrician"
+    ],
+    "eli5Summary": "ALD is like having a problem with your body's garbage disposal system. It can't break down certain fats, so they build up and cause damage, especially in the brain and adrenal glands. This can lead to problems with thinking, moving, and making hormones.",
+    "clinicalSummary": "Adrenoleukodystrophy (ALD) is an X-linked metabolic disorder resulting from mutations in the ABCD1 gene, which encodes a peroxisomal membrane protein involved in the transport of very long-chain fatty acids (VLCFAs). The accumulation of VLCFAs primarily affects the white matter of the brain, spinal cord, and adrenal cortex. Clinical manifestations are highly variable, ranging from rapidly progressive cerebral demyelination in childhood (CCALD) to a slowly progressive myelopathy in adulthood (AMN). Adrenal insufficiency is a common feature. Diagnosis is confirmed by elevated plasma VLCFA levels and genetic testing. Treatment options include hematopoietic stem cell transplantation (HSCT) for early-stage CCALD, gene therapy, adrenal hormone replacement, and symptomatic management. Lorenzo's oil may slow progression but is not a cure.",
+    "historicalBackground": "Adrenoleukodystrophy was first described by Siemerling and Creutzfeldt in 1923. The genetic basis of X-linked ALD was discovered in 1993 with the identification of the ABCD1 gene. Lorenzo's oil, a mixture of glyceryl trioleate and glyceryl trierucate, was developed in an attempt to reduce VLCFA levels and was popularized by the film 'Lorenzo's Oil'.",
+    "recentBreakthroughs": [
+        {
+            "year": 2021,
+            "title": "FDA Approves Gene Therapy for Adrenoleukodystrophy",
+            "description": "The FDA approved elivaldogene autotemcel (Skysona), a gene therapy for boys with early, active cerebral adrenoleukodystrophy (CALD). This therapy involves using the patient's own stem cells, modified to carry a functional copy of the ABCD1 gene.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/Disorders/All-Disorders/Adrenoleukodystrophy-Information-Page"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=EN&Expert=68"
+        },
+        {
+            "name": "MedlinePlus",
+            "url": "https://medlineplus.gov/adrenoleukodystrophy.html"
+        }
+    ]
+}

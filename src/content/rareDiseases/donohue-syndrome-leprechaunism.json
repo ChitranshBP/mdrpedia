@@ -1,0 +1,140 @@
+{
+    "name": "Donohue Syndrome (Leprechaunism)",
+    "slug": "donohue-syndrome-leprechaunism",
+    "aliases": [
+        "Leprechaunism",
+        "Insulin Resistance Syndrome Type A",
+        "INSR-Related Severe Insulin Resistance"
+    ],
+    "description": "Donohue syndrome, also known as leprechaunism, is a rare genetic disorder characterized by extreme insulin resistance, growth retardation, and distinctive facial features. It is caused by mutations in the INSR gene, which provides instructions for making the insulin receptor. This receptor is essential for insulin to regulate glucose levels in the body. Affected individuals typically have severe feeding difficulties, developmental delays, and a shortened lifespan.",
+    "category": "GENETIC",
+    "icdCode": "E88.8",
+    "orphaCode": "502",
+    "omimCode": "246200",
+    "prevalence": "Less than 1 in 1,000,000",
+    "estimatedCases": 700,
+    "ageOfOnset": "Infancy",
+    "inheritance": "AUTOSOMAL_RECESSIVE",
+    "symptoms": [
+        "Severe insulin resistance",
+        "Growth retardation",
+        "Failure to thrive",
+        "Decreased subcutaneous fat",
+        "Enlarged clitoris or small penis",
+        "Thickened skin (acanthosis nigricans)",
+        "Full lips",
+        "Large, low-set ears",
+        "Prominent eyes",
+        "Hirsutism (excessive hair growth)",
+        "Developmental delay",
+        "Feeding difficulties",
+        "Hypoglycemia",
+        "Hyperinsulinemia"
+    ],
+    "affectedSystems": [
+        "Endocrine System",
+        "Integumentary System",
+        "Metabolic System",
+        "Growth and Development"
+    ],
+    "prognosis": "Poor. Most affected individuals do not survive beyond infancy or early childhood.",
+    "lifeExpectancy": "Most individuals die in infancy or early childhood.",
+    "diagnosticMethods": [
+        "Clinical evaluation",
+        "Genetic testing (INSR gene sequencing)",
+        "Measurement of insulin and glucose levels",
+        "Physical examination revealing characteristic features",
+        "Insulin receptor binding studies"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Intensive Nutritional Support",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Recombinant Human Insulin",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "IGF-1 Therapy (Mecasermin)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2005
+        },
+        {
+            "name": "Diazoxide",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Gastrostomy Tube Feeding",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "OBSERVATIONAL",
+    "clinicalTrialsCount": 0,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "University of Chicago",
+        "Baylor College of Medicine"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Rabson-Mendenhall Syndrome",
+        "Insulin Resistance Syndrome Type B",
+        "Severe Insulin Resistance"
+    ],
+    "specialistTypes": [
+        "Endocrinologist",
+        "Geneticist",
+        "Pediatrician",
+        "Nutritionist"
+    ],
+    "eli5Summary": "Imagine your body has trouble using sugar from food because the key (insulin) doesn't fit the lock (insulin receptor) properly. This makes it hard to grow and stay healthy, and kids with this problem need special help eating and staying strong.",
+    "clinicalSummary": "Donohue syndrome is a rare autosomal recessive disorder resulting from mutations in the INSR gene, leading to severe insulin resistance. The pathophysiology involves impaired insulin receptor function, causing hyperinsulinemia and hyperglycemia. Clinically, patients present with intrauterine growth retardation, failure to thrive, characteristic facial features (e.g., prominent eyes, thick lips, low-set ears), acanthosis nigricans, and endocrine abnormalities. Diagnosis is confirmed through genetic testing. Management focuses on supportive care, including nutritional support and attempts to improve insulin sensitivity with medications like recombinant human insulin or IGF-1. Prognosis is generally poor, with most patients succumbing to complications in infancy or early childhood.",
+    "historicalBackground": "Donohue syndrome was first described by Dr. William L. Donohue in 1948, who reported a case of a patient with severe insulin resistance and unusual physical features. The genetic basis of the disease, involving mutations in the INSR gene, was later elucidated.",
+    "recentBreakthroughs": [
+        {
+            "year": 2017,
+            "title": "Long-term treatment with recombinant methionyl human IGF-1 (rhIGF-1) improves growth and metabolic control in patients with genetically defined Donohue syndrome",
+            "description": "A study published in the Journal of Clinical Endocrinology & Metabolism showed that long-term treatment with rhIGF-1 can improve growth and metabolic control in patients with Donohue syndrome. This suggests that rhIGF-1 may be a useful therapy for improving the outcomes of patients with this condition.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "OMIM",
+            "url": "https://www.omim.org/entry/246200"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=EN&Expert=502"
+        },
+        {
+            "name": "PubMed",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/"
+        }
+    ]
+}

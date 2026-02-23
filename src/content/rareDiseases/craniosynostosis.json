@@ -1,0 +1,140 @@
+{
+    "name": "Craniosynostosis",
+    "slug": "craniosynostosis",
+    "aliases": [
+        "Cranial stenosis",
+        "Premature cranial suture closure",
+        "Skull malformation"
+    ],
+    "description": "Craniosynostosis is a condition in which one or more of the fibrous sutures in an infant's skull prematurely fuses by turning into bone (ossification), thereby changing the growth pattern of the skull. Because the skull cannot expand perpendicular to the fused suture, it compensates by growing more in other directions. This results in an abnormal head shape. In some cases, the increased pressure inside the skull can lead to impaired vision, sleep problems, or impaired mental development. Craniosynostosis affects approximately 1 in every 2,500 births.",
+    "category": "GENETIC",
+    "icdCode": "Q75.0",
+    "orphaCode": "2080",
+    "omimCode": "123100",
+    "prevalence": "1 in 2,500 births",
+    "estimatedCases": 1600,
+    "ageOfOnset": "Congenital",
+    "inheritance": "SPORADIC, AUTOSOMAL_DOMINANT, AUTOSOMAL_RECESSIVE, X_LINKED",
+    "symptoms": [
+        "Abnormal head shape",
+        "Absent or late-closing fontanelle",
+        "Hard ridge along affected sutures",
+        "Increased intracranial pressure",
+        "Headache",
+        "Vision problems",
+        "Developmental delay",
+        "Seizures"
+    ],
+    "affectedSystems": [
+        "Skeletal System",
+        "Nervous System",
+        "Ocular System"
+    ],
+    "prognosis": "Variable, depending on severity and treatment. Surgical correction generally improves outcomes.",
+    "lifeExpectancy": "Normal, with appropriate treatment. Untreated cases with increased intracranial pressure may have reduced life expectancy.",
+    "diagnosticMethods": [
+        "Physical examination",
+        "Skull X-rays",
+        "CT scan",
+        "MRI",
+        "Genetic testing"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Endoscopic surgery",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Open cranial vault remodeling",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Helmet therapy",
+            "type": "SUPPORTIVE",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Management of increased intracranial pressure",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 50,
+    "keyResearchCenters": [
+        "Boston Children's Hospital",
+        "Johns Hopkins Children's Center",
+        "Stanford Children's Health",
+        "Children's Hospital of Philadelphia"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Children's Craniofacial Association",
+            "url": "https://ccakids.org/",
+            "country": "USA"
+        },
+        {
+            "name": "AboutFace",
+            "url": "https://www.aboutface.ca/",
+            "country": "Canada"
+        }
+    ],
+    "relatedConditions": [
+        "Apert Syndrome",
+        "Pfeiffer Syndrome",
+        "Crouzon Syndrome",
+        "Muenke Syndrome",
+        "Saethre-Chotzen Syndrome"
+    ],
+    "specialistTypes": [
+        "Craniofacial Surgeon",
+        "Neurosurgeon",
+        "Geneticist",
+        "Pediatrician"
+    ],
+    "eli5Summary": "Imagine your skull is made of puzzle pieces. Sometimes, one or more of those pieces get stuck together too early. This can change the shape of your head and might need surgery to fix it.",
+    "clinicalSummary": "Craniosynostosis is characterized by premature fusion of one or more cranial sutures, leading to restricted skull growth perpendicular to the affected suture. This results in compensatory skull expansion in other directions, causing characteristic skull deformities such as scaphocephaly (sagittal suture fusion), trigonocephaly (metopic suture fusion), plagiocephaly (coronal or lambdoid suture fusion), and brachycephaly (bilateral coronal suture fusion). Increased intracranial pressure can occur, leading to papilledema, vision loss, developmental delay, and cognitive impairment. Diagnosis is typically made clinically and confirmed with imaging studies. Genetic testing can identify underlying mutations in genes such as FGFR1, FGFR2, FGFR3, TWIST1, and EFNB1. Treatment involves surgical correction to release the fused suture(s) and reshape the skull, often followed by helmet therapy to maintain the corrected shape. Long-term follow-up is necessary to monitor for recurrence and neurodevelopmental outcomes.",
+    "historicalBackground": "The first descriptions of craniosynostosis date back to the 19th century. Surgical techniques for correction have evolved significantly over time, from extensive open procedures to minimally invasive endoscopic approaches.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Advancements in Endoscopic Craniosynostosis Surgery",
+            "description": "Improved endoscopic techniques and instrumentation have led to smaller incisions, reduced blood loss, and shorter hospital stays for infants undergoing craniosynostosis surgery.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Genetic Insights into Craniosynostosis",
+            "description": "Identification of novel genetic mutations associated with craniosynostosis has improved diagnostic accuracy and genetic counseling for affected families.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/"
+        },
+        {
+            "name": "Mayo Clinic",
+            "url": "https://www.mayoclinic.org/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        }
+    ]
+}

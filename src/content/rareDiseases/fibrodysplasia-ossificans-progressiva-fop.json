@@ -1,0 +1,130 @@
+{
+    "name": "Fibrodysplasia Ossificans Progressiva",
+    "slug": "fibrodysplasia-ossificans-progressiva-fop",
+    "aliases": [
+        "FOP",
+        "Myositis Ossificans Progressiva",
+        "MOP"
+    ],
+    "description": "Fibrodysplasia Ossificans Progressiva (FOP) is an extremely rare genetic disorder characterized by the abnormal development of bone in areas of the body where bone is not normally present (heterotopic ossification), such as muscles, tendons, ligaments, and other connective tissues. This progressive ossification leads to limited movement, disability, and a shortened lifespan. It is caused by a mutation in the ACVR1 gene.",
+    "category": "GENETIC",
+    "icdCode": "M61.1",
+    "orphaCode": "706",
+    "omimCode": "135100",
+    "prevalence": "1 in 1,000,000",
+    "estimatedCases": 800,
+    "ageOfOnset": "Early childhood (median age 5 years)",
+    "inheritance": "AUTOSOMAL_DOMINANT (most cases are sporadic due to new mutations)",
+    "symptoms": [
+        "Malformation of the great toes (hallux valgus or short great toes)",
+        "Progressive heterotopic ossification (bone formation outside the skeleton)",
+        "Swelling, inflammation, and pain preceding ossification",
+        "Limited range of motion",
+        "Scoliosis",
+        "Breathing difficulties due to chest wall restriction",
+        "Feeding difficulties"
+    ],
+    "affectedSystems": [
+        "Musculoskeletal System",
+        "Respiratory System"
+    ],
+    "prognosis": "Progressive disability and shortened lifespan due to complications.",
+    "lifeExpectancy": "Average lifespan is around 56 years, but varies depending on the severity and complications.",
+    "diagnosticMethods": [
+        "Clinical examination (presence of malformed great toes and progressive heterotopic ossification)",
+        "Genetic testing (ACVR1 gene mutation analysis)",
+        "Radiographs (X-rays) to visualize heterotopic bone formation",
+        "CT scans to assess the extent of ossification"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Corticosteroids (e.g., Prednisone)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE (to reduce inflammation during flare-ups)",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Nonsteroidal Anti-inflammatory Drugs (NSAIDs)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE (to manage pain and inflammation)",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Physical Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE (to maintain mobility and prevent contractures, but must be done very carefully to avoid triggering new bone formation)",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Supportive Care",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE (managing pain, preventing injuries, and providing assistive devices)",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Palovarotene",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE (Reduces new heterotopic ossification)",
+            "fdaApproved": true,
+            "approvalYear": 2023
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 15,
+    "keyResearchCenters": [
+        "University of Pennsylvania",
+        "The Children's Hospital of Philadelphia",
+        "National Institutes of Health (NIH)"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "International Fibrodysplasia Ossificans Progressiva Association (IFOPA)",
+            "url": "https://www.ifopa.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Heterotopic Ossification (HO)",
+        "Progressive Osseous Heteroplasia (POH)"
+    ],
+    "specialistTypes": [
+        "Clinical Geneticist",
+        "Orthopedic Surgeon",
+        "Rheumatologist",
+        "Physical Therapist",
+        "Pulmonologist"
+    ],
+    "eli5Summary": "Imagine your body is like a superhero, but instead of healing normally, it accidentally turns muscles and soft parts into bone. This makes it hard to move and can cause problems. Doctors are working hard to find ways to help!",
+    "clinicalSummary": "Fibrodysplasia Ossificans Progressiva (FOP) is a rare, autosomal dominant genetic disorder characterized by congenital malformation of the great toes and progressive heterotopic ossification (HO) of skeletal muscles, fascia, tendons, and ligaments. The disease is caused by activating mutations in the ACVR1 gene, encoding a bone morphogenetic protein (BMP) type I receptor. The most common mutation is R206H. Diagnosis is based on clinical findings and confirmed by genetic testing. The progressive HO leads to cumulative disability, restricted movement, and shortened lifespan due to respiratory complications. Management focuses on symptomatic relief, prevention of trauma, and careful physical therapy. Palovarotene is an approved medication to reduce the volume of new heterotopic ossification. Research is ongoing to develop more effective therapies, including gene therapy approaches.",
+    "historicalBackground": "FOP was first described in the late 17th century, but its genetic basis was not discovered until 2006 when the ACVR1 gene was identified as the causative gene. This discovery has led to significant advances in understanding the pathogenesis of FOP and developing potential therapies.",
+    "recentBreakthroughs": [
+        {
+            "year": 2023,
+            "title": "FDA Approves Palovarotene for FOP",
+            "description": "Palovarotene, a retinoic acid receptor gamma (RARγ) agonist, received FDA approval for reducing the volume of new heterotopic ossification (HO) in adults and children aged 8 years and older with FOP.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/"
+        },
+        {
+            "name": "International Fibrodysplasia Ossificans Progressiva Association (IFOPA)",
+            "url": "https://www.ifopa.org/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/index.php"
+        }
+    ]
+}

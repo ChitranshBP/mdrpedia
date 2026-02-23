@@ -1,0 +1,163 @@
+{
+    "name": "Guillain-Barré Syndrome",
+    "slug": "guillain-barr-syndrome",
+    "aliases": [
+        "Acute inflammatory demyelinating polyneuropathy (AIDP)",
+        "Acute motor axonal neuropathy (AMAN)",
+        "Acute motor sensory axonal neuropathy (AMSAN)",
+        "Miller Fisher syndrome (MFS)"
+    ],
+    "description": "Guillain-Barré Syndrome (GBS) is a rare autoimmune disorder in which the body's immune system attacks the peripheral nerves. This leads to muscle weakness, loss of reflexes, and numbness or tingling in the limbs. In severe cases, it can cause paralysis and affect breathing, requiring intensive care. Most individuals recover fully, but some have permanent nerve damage.",
+    "category": "AUTOIMMUNE",
+    "icdCode": "G61.0",
+    "orphaCode": "402",
+    "omimCode": "139300",
+    "prevalence": "1-4 per 100,000",
+    "estimatedCases": 7000,
+    "ageOfOnset": "All ages, but more common in adults and older people",
+    "inheritance": "SPORADIC",
+    "symptoms": [
+        "Muscle weakness (usually starting in the legs and ascending)",
+        "Loss of reflexes",
+        "Numbness or tingling in the hands and feet",
+        "Pain (muscle aches, cramping)",
+        "Difficulty with eye movements and facial expressions",
+        "Difficulty swallowing",
+        "Difficulty breathing",
+        "Uncoordinated movement",
+        "Abnormal heart rate or blood pressure",
+        "Problems with bladder control or bowel function"
+    ],
+    "affectedSystems": [
+        "Nervous System",
+        "Respiratory System",
+        "Cardiovascular System",
+        "Autonomic Nervous System"
+    ],
+    "prognosis": "Variable; most individuals recover significantly within months to a year. Some may have residual weakness or neurological deficits. A small percentage experience chronic GBS or relapse.",
+    "lifeExpectancy": "Generally normal, but complications can be life-threatening, especially if respiratory failure occurs.",
+    "diagnosticMethods": [
+        "Neurological examination",
+        "Nerve conduction studies (NCS)",
+        "Electromyography (EMG)",
+        "Lumbar puncture (spinal tap) to analyze cerebrospinal fluid (CSF)",
+        "Blood tests to rule out other conditions"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Intravenous Immunoglobulin (IVIg)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Plasma Exchange (Plasmapheresis)",
+            "type": "THERAPY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Mechanical Ventilation",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Pain Management (Medications)",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Physical Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Speech Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 150,
+    "keyResearchCenters": [
+        "National Institute of Neurological Disorders and Stroke (NINDS)",
+        "Mayo Clinic",
+        "Johns Hopkins University",
+        "University of Pennsylvania"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "The GBS/CIDP Foundation International",
+            "url": "https://www.gbs-cidp.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Chronic Inflammatory Demyelinating Polyneuropathy (CIDP)",
+        "Miller Fisher Syndrome",
+        "Acute Disseminated Encephalomyelitis (ADEM)",
+        "Lyme disease",
+        "Myasthenia Gravis"
+    ],
+    "specialistTypes": [
+        "Neurologist",
+        "Intensivist",
+        "Physiatrist",
+        "Physical Therapist",
+        "Occupational Therapist",
+        "Speech Therapist",
+        "Immunologist"
+    ],
+    "eli5Summary": "Imagine your body's police (immune system) get confused and start attacking your own nerves. This makes your muscles weak, like your legs feeling wobbly. Doctors can help by giving you special medicine to calm down the police or clean your blood to remove the attackers. Most people get better, but it takes time and help from therapists to get strong again.",
+    "clinicalSummary": "Guillain-Barré Syndrome (GBS) is an acute, immune-mediated polyradiculoneuropathy characterized by ascending symmetrical weakness, areflexia, and variable sensory findings. It is often preceded by a bacterial or viral infection, triggering an autoimmune response targeting peripheral nerve myelin or axons. Pathological hallmarks include demyelination, axonal degeneration, and inflammation of peripheral nerves and nerve roots. Clinical variants include AIDP, AMAN, AMSAN, and MFS. Diagnosis relies on clinical presentation, nerve conduction studies showing demyelination or axonal damage, and CSF analysis demonstrating albuminocytologic dissociation (elevated protein with normal cell count). Treatment involves IVIg or plasmapheresis to modulate the immune response, along with supportive care including mechanical ventilation for respiratory failure, pain management, and rehabilitation. Prognosis is variable, with most patients experiencing significant recovery, but some may have persistent deficits or relapse.",
+    "historicalBackground": "Guillain-Barré Syndrome was first described in 1916 by Georges Guillain, Jean Alexandre Barré, and André Strohl, who reported two soldiers with ascending paralysis and areflexia.",
+    "recentBreakthroughs": [
+        {
+            "year": 2023,
+            "title": "Anti-Ganglioside Antibodies and GBS Subtypes",
+            "description": "Research continues to refine the understanding of specific anti-ganglioside antibodies associated with different GBS subtypes (e.g., AMAN, MFS), aiding in more precise diagnosis and potentially targeted therapies.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2022,
+            "title": "Role of Complement Activation in GBS Pathogenesis",
+            "description": "Studies are investigating the role of the complement system in GBS pathogenesis, suggesting potential therapeutic targets for complement inhibitors.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/Disorders/All-Disorders/Guillain-Barr%C3%A9-Syndrome-Information-Page"
+        },
+        {
+            "name": "The GBS/CIDP Foundation International",
+            "url": "https://www.gbs-cidp.org/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=EN&Expert=402"
+        }
+    ]
+}

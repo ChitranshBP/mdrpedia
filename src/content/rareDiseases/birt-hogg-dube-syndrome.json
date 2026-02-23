@@ -1,0 +1,153 @@
+{
+    "name": "Birt-Hogg-Dube Syndrome",
+    "slug": "birt-hogg-dube-syndrome",
+    "aliases": [
+        "BHD Syndrome",
+        "Fibrofolliculomas, Trichodiscomas, and Acrochordons",
+        "Renal Cancer and Spontaneous Pneumothorax Syndrome"
+    ],
+    "description": "Birt-Hogg-Dube (BHD) syndrome is a rare genetic disorder characterized by skin lesions (fibrofolliculomas, trichodiscomas, acrochordons), lung cysts and spontaneous pneumothorax (collapsed lung), and an increased risk of renal (kidney) cancer. The severity and specific manifestations of the condition can vary significantly among affected individuals, even within the same family.",
+    "category": "GENETIC",
+    "icdCode": "Q85.8",
+    "orphaCode": "121",
+    "omimCode": "135150",
+    "prevalence": "Less than 1 in 200,000",
+    "estimatedCases": 3900,
+    "ageOfOnset": "Variable, typically between 20 and 50 years for skin lesions; lung and kidney manifestations can occur at various ages.",
+    "inheritance": "AUTOSOMAL_DOMINANT",
+    "symptoms": [
+        "Fibrofolliculomas (small, dome-shaped skin tumors on the face, neck, and upper trunk)",
+        "Trichodiscomas (skin-colored papules, often on the face)",
+        "Acrochordons (skin tags)",
+        "Lung cysts (often asymptomatic)",
+        "Spontaneous pneumothorax (collapsed lung)",
+        "Renal cell carcinoma (increased risk, often bilateral and multifocal)",
+        "Colorectal polyps"
+    ],
+    "affectedSystems": [
+        "Integumentary System (Skin)",
+        "Respiratory System (Lungs)",
+        "Urinary System (Kidneys)"
+    ],
+    "prognosis": "Variable; depends on the severity of symptoms and the development of complications, particularly renal cancer. Early detection and management of renal tumors can improve outcomes.",
+    "lifeExpectancy": "Generally normal, unless complications from renal cancer or severe lung disease arise.",
+    "diagnosticMethods": [
+        "Clinical examination (skin lesions)",
+        "Skin biopsy (histopathology of fibrofolliculomas)",
+        "Chest CT scan (lung cysts and pneumothorax)",
+        "Abdominal CT scan or MRI (renal tumors)",
+        "Genetic testing (FLCN gene mutation analysis)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Surgical removal of skin lesions (fibrofolliculomas)",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Laser therapy for skin lesions",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Management of pneumothorax (chest tube insertion, pleurodesis)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Surveillance for renal tumors (regular abdominal imaging)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Surgical resection or ablation of renal tumors",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "mTOR inhibitors (e.g., everolimus, sirolimus) for advanced renal cell carcinoma",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2009
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 25,
+    "keyResearchCenters": [
+        "National Cancer Institute (NCI), USA",
+        "National Institutes of Health (NIH), USA",
+        "University of Cambridge, UK",
+        "Mayo Clinic, USA"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Birt-Hogg-Dube Syndrome Foundation",
+            "url": "https://www.bhdsyndrome.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Rare Diseases UK",
+            "url": "https://www.rarediseases.org.uk/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "Renal cell carcinoma (various subtypes)",
+        "Spontaneous pneumothorax (idiopathic)",
+        "Tuberous sclerosis complex",
+        "Cowden syndrome"
+    ],
+    "specialistTypes": [
+        "Dermatologist",
+        "Pulmonologist",
+        "Urologist/Oncologist",
+        "Geneticist",
+        "Nephrologist"
+    ],
+    "eli5Summary": "Imagine your body sometimes makes little bumps on your skin, gets air stuck in your lungs, or grows lumps in your kidneys. Birt-Hogg-Dube Syndrome is when all these things can happen because of a tiny mistake in your body's instructions (genes). Doctors can help manage these problems to keep you healthy.",
+    "clinicalSummary": "Birt-Hogg-Dube (BHD) syndrome is a rare autosomal dominant disorder caused by mutations in the FLCN gene, which encodes folliculin, a tumor suppressor protein. The syndrome is characterized by the triad of cutaneous fibrofolliculomas, pulmonary cysts with increased risk of spontaneous pneumothorax, and renal tumors, particularly chromophobe and oncocytic hybrid tumors. Diagnosis is based on clinical findings, histopathology of skin lesions, radiographic evidence of lung cysts and renal tumors, and confirmation by genetic testing. Management involves surveillance for renal tumors, treatment of pneumothorax, and symptomatic management of skin lesions. The risk of renal cancer necessitates regular monitoring and prompt intervention.",
+    "historicalBackground": "Birt-Hogg-Dube syndrome was first described in 1977 by Arthur Birt, Georgina Hogg, and William Dubé, who reported the association of fibrofolliculomas, trichodiscomas, and acrochordons in a Canadian family.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Novel FLCN Mutation Identified in Atypical BHD Presentation",
+            "description": "A study identified a novel FLCN mutation in a patient presenting with atypical BHD features, expanding the known spectrum of mutations and clinical manifestations associated with the syndrome.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Improved Imaging Techniques for Early Detection of Renal Tumors in BHD Patients",
+            "description": "Advancements in MRI techniques have improved the sensitivity and specificity for detecting small renal tumors in BHD patients, facilitating earlier intervention and improved outcomes.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/Disease_Search.php?lng=EN&data_id=121"
+        },
+        {
+            "name": "OMIM",
+            "url": "https://www.omim.org/entry/135150"
+        },
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/"
+        }
+    ]
+}

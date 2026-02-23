@@ -1,0 +1,164 @@
+{
+    "name": "Immune Thrombocytopenic Purpura (ITP)",
+    "slug": "immune-thrombocytopenic-purpura-itp",
+    "aliases": [
+        "Idiopathic Thrombocytopenic Purpura",
+        "Autoimmune Thrombocytopenic Purpura"
+    ],
+    "description": "Immune Thrombocytopenic Purpura (ITP) is an autoimmune disorder characterized by a low platelet count (thrombocytopenia) due to the immune system attacking and destroying platelets. This can lead to increased risk of bleeding and bruising. ITP can be acute (short-term) or chronic (long-term).",
+    "category": "AUTOIMMUNE",
+    "icdCode": "D69.6",
+    "orphaCode": "796",
+    "omimCode": "604479",
+    "prevalence": "5-10 per 100,000 adults; 1-5 per 100,000 children",
+    "estimatedCases": 25000,
+    "ageOfOnset": "Any age, but more common in children (2-5 years) and adults (>60 years)",
+    "inheritance": "SPORADIC (though familial clustering can occur in rare cases)",
+    "symptoms": [
+        "Easy or excessive bruising (purpura)",
+        "Superficial bleeding into the skin that appears as pinpoint-sized reddish-purple spots (petechiae), usually on the lower legs",
+        "Prolonged bleeding from cuts",
+        "Spontaneous bleeding from gums or nose",
+        "Blood in urine or stool",
+        "Unusually heavy menstrual flow",
+        "Fatigue",
+        "Enlarged spleen (splenomegaly) - rare"
+    ],
+    "affectedSystems": [
+        "Hematologic System",
+        "Immune System"
+    ],
+    "prognosis": "Variable; many patients achieve remission with treatment, while others have chronic ITP requiring ongoing management.",
+    "lifeExpectancy": "Generally normal with appropriate management, but severe bleeding can be life-threatening.",
+    "diagnosticMethods": [
+        "Complete Blood Count (CBC) to assess platelet count",
+        "Peripheral blood smear to examine platelet morphology",
+        "Bone marrow aspiration and biopsy (to rule out other causes of thrombocytopenia)",
+        "Testing for anti-platelet antibodies (though not always reliable)",
+        "Ruling out other conditions (e.g., infections, drug-induced thrombocytopenia)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Corticosteroids (e.g., Prednisone)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Intravenous Immunoglobulin (IVIG)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Anti-RhD Immunoglobulin (WinRho)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Thrombopoietin Receptor Agonists (TPO-RAs) (e.g., Romiplostim, Eltrombopag, Avatrombopag)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Splenectomy (surgical removal of the spleen)",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Rituximab (anti-CD20 monoclonal antibody)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Fostamatinib (Syk inhibitor)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2018
+        },
+        {
+            "name": "Supportive Care (e.g., avoiding NSAIDs, managing bleeding risks)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 150,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Mayo Clinic",
+        "University of Pennsylvania",
+        "Stanford University"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Platelet Disorder Support Association (PDSA)",
+            "url": "https://www.pdsa.org/",
+            "country": "USA"
+        },
+        {
+            "name": "ITP Support Association",
+            "url": "https://itpsupport.org.uk/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "Evans Syndrome",
+        "Systemic Lupus Erythematosus (SLE)",
+        "Antiphospholipid Syndrome (APS)",
+        "Autoimmune Hemolytic Anemia (AIHA)"
+    ],
+    "specialistTypes": [
+        "Hematologist",
+        "Immunologist",
+        "Pediatric Hematologist"
+    ],
+    "eli5Summary": "Sometimes, your body's defense system gets confused and starts attacking your platelets, which are like tiny bandages in your blood. This makes you bruise and bleed more easily. Doctors can give you medicine to help your body stop attacking the platelets.",
+    "clinicalSummary": "Immune Thrombocytopenic Purpura (ITP) is an acquired autoimmune disorder characterized by isolated thrombocytopenia (platelet count <100 x 10^9/L) in the absence of other causes of thrombocytopenia. The underlying pathophysiology involves the production of autoantibodies against platelet membrane glycoproteins, leading to increased platelet destruction by splenic macrophages and, to a lesser extent, decreased platelet production by megakaryocytes. Clinical presentation varies from asymptomatic thrombocytopenia to severe bleeding. Diagnosis is based on exclusion of other causes of thrombocytopenia. Treatment strategies aim to increase platelet counts and reduce bleeding risk, utilizing corticosteroids, IVIG, anti-RhD immunoglobulin, TPO-RAs, rituximab, fostamatinib, and splenectomy in refractory cases. Monitoring for bleeding complications and treatment-related side effects is crucial.",
+    "historicalBackground": "ITP was first described in the 18th century, but its autoimmune nature was not fully understood until the mid-20th century. Early treatments focused on splenectomy, while more recent advances have led to the development of immunomodulatory therapies and TPO-RAs.",
+    "recentBreakthroughs": [
+        {
+            "year": 2018,
+            "title": "FDA Approves Fostamatinib for Chronic ITP",
+            "description": "Fostamatinib, a spleen tyrosine kinase (Syk) inhibitor, was approved by the FDA for the treatment of adults with chronic ITP who have had an insufficient response to previous treatment. This provides a new oral treatment option for patients with refractory ITP.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Avatrombopag Demonstrates Sustained Platelet Response in ITP",
+            "description": "Clinical trials have shown that avatrombopag, another TPO-RA, can achieve sustained platelet response and reduce the need for rescue therapies in patients with chronic ITP.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Heart, Lung, and Blood Institute (NHLBI)",
+            "url": "https://www.nhlbi.nih.gov/"
+        },
+        {
+            "name": "Mayo Clinic",
+            "url": "https://www.mayoclinic.org/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/index.php"
+        }
+    ]
+}

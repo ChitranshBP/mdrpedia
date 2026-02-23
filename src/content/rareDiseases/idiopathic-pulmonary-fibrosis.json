@@ -1,0 +1,149 @@
+{
+    "name": "Idiopathic Pulmonary Fibrosis",
+    "slug": "idiopathic-pulmonary-fibrosis",
+    "aliases": [
+        "IPF",
+        "Cryptogenic Fibrosing Alveolitis"
+    ],
+    "description": "Idiopathic Pulmonary Fibrosis (IPF) is a chronic, progressive, and ultimately fatal disease characterized by the scarring (fibrosis) of the lung tissue. The cause is unknown (idiopathic), and the scarring leads to shortness of breath, cough, and reduced oxygen levels in the blood. The disease primarily affects older adults and has a variable rate of progression.",
+    "category": "RESPIRATORY",
+    "icdCode": "J84.1",
+    "orphaCode": "737",
+    "omimCode": "178500",
+    "prevalence": "2-29 per 100,000 worldwide",
+    "estimatedCases": 80000,
+    "ageOfOnset": "Typically between 50 and 70 years",
+    "inheritance": "Most cases are SPORADIC; however, FAMILIAL forms exist with AUTOSOMAL_DOMINANT inheritance patterns in some families.",
+    "symptoms": [
+        "Shortness of breath (dyspnea), especially with exertion",
+        "Chronic dry cough",
+        "Fatigue",
+        "Clubbing of the fingers and toes",
+        "Weight loss",
+        "Chest discomfort"
+    ],
+    "affectedSystems": [
+        "Respiratory System"
+    ],
+    "prognosis": "Poor. IPF is a progressive disease with a median survival of 3-5 years after diagnosis.",
+    "lifeExpectancy": "Median survival is 3-5 years after diagnosis, but varies significantly among individuals.",
+    "diagnosticMethods": [
+        "High-resolution computed tomography (HRCT) scan of the chest",
+        "Pulmonary function tests (PFTs)",
+        "Lung biopsy (surgical or bronchoscopic)",
+        "Bronchoalveolar lavage (BAL)",
+        "Physical examination and medical history"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Pirfenidone",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2014
+        },
+        {
+            "name": "Nintedanib",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2014
+        },
+        {
+            "name": "Lung Transplantation",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Pulmonary Rehabilitation",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Oxygen Therapy",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Antitussives",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 350,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Mayo Clinic",
+        "Cleveland Clinic",
+        "University of California, San Francisco (UCSF)"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Pulmonary Fibrosis Foundation",
+            "url": "https://www.pulmonaryfibrosis.org/",
+            "country": "USA"
+        },
+        {
+            "name": "European Pulmonary Fibrosis Federation",
+            "url": "https://www.eupff.org/",
+            "country": "Europe"
+        }
+    ],
+    "relatedConditions": [
+        "Connective tissue disease-associated interstitial lung disease (CTD-ILD)",
+        "Hypersensitivity pneumonitis",
+        "Asbestosis",
+        "Sarcoidosis"
+    ],
+    "specialistTypes": [
+        "Pulmonologist",
+        "Rheumatologist",
+        "Radiologist",
+        "Pathologist",
+        "Thoracic Surgeon"
+    ],
+    "eli5Summary": "Imagine your lungs are like a sponge, and in IPF, the sponge gets hard and stiff, making it difficult to breathe. Doctors don't know exactly why this happens, but there are medicines to help slow it down.",
+    "clinicalSummary": "Idiopathic Pulmonary Fibrosis (IPF) is a specific form of chronic, progressive fibrosing interstitial pneumonia of unknown cause, occurring primarily in older adults, limited to the lungs, and associated with the histopathologic and/or radiologic pattern of usual interstitial pneumonia (UIP). The diagnosis requires exclusion of other known causes of interstitial lung disease. The clinical course is variable, but characterized by progressive dyspnea, cough, and eventual respiratory failure. High-resolution CT imaging and lung biopsy are crucial for diagnosis. Management focuses on antifibrotic medications (pirfenidone and nintedanib), supportive care, and lung transplantation in eligible candidates.",
+    "historicalBackground": "IPF was first described in the mid-20th century, with increasing recognition and research into its pathogenesis and treatment options over the decades. The introduction of antifibrotic therapies in the 21st century marked a significant advancement in the management of the disease.",
+    "recentBreakthroughs": [
+        {
+            "year": 2019,
+            "title": "TOPS Study: Nintedanib in Progressive Fibrosing Interstitial Lung Diseases",
+            "description": "The INBUILD trial demonstrated the efficacy of nintedanib in slowing disease progression in patients with progressive fibrosing interstitial lung diseases other than IPF.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2022,
+            "title": "Research on biomarkers for early detection of IPF",
+            "description": "Ongoing research focuses on identifying biomarkers in blood and bronchoalveolar lavage fluid that can aid in early diagnosis and predict disease progression.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/index.php"
+        },
+        {
+            "name": "National Institutes of Health (NIH)",
+            "url": "https://www.nih.gov/"
+        },
+        {
+            "name": "Pulmonary Fibrosis Foundation",
+            "url": "https://www.pulmonaryfibrosis.org/"
+        }
+    ]
+}

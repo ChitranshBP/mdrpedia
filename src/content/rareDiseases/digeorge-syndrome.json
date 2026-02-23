@@ -1,0 +1,176 @@
+{
+    "name": "DiGeorge Syndrome",
+    "slug": "digeorge-syndrome",
+    "aliases": [
+        "22q11.2 deletion syndrome",
+        "Velocardiofacial syndrome (VCFS)",
+        "Congenital Thymic Aplasia",
+        "Immunodeficiency with Hypoparathyroidism and Cardiac Defects"
+    ],
+    "description": "DiGeorge syndrome is a genetic disorder caused by a deletion on chromosome 22, specifically at the 22q11.2 locus. This deletion leads to the maldevelopment of several body systems, including the heart, parathyroid glands, thymus gland, and facial features. The severity of symptoms varies widely among affected individuals.",
+    "category": "GENETIC",
+    "icdCode": "D82.1",
+    "orphaCode": "214",
+    "omimCode": "188400",
+    "prevalence": "1 in 3,000 to 1 in 6,000 live births",
+    "estimatedCases": 50000,
+    "ageOfOnset": "Congenital (at birth)",
+    "inheritance": "SPORADIC (most cases), AUTOSOMAL_DOMINANT (inherited in some cases)",
+    "symptoms": [
+        "Congenital heart defects (e.g., tetralogy of Fallot, interrupted aortic arch)",
+        "Hypoparathyroidism (leading to hypocalcemia)",
+        "Thymic hypoplasia or aplasia (resulting in immunodeficiency)",
+        "Facial dysmorphism (e.g., cleft palate, micrognathia, hypertelorism)",
+        "Learning difficulties and developmental delay",
+        "Speech and feeding difficulties",
+        "Increased susceptibility to infections",
+        "Kidney abnormalities",
+        "Skeletal abnormalities",
+        "Behavioral and psychiatric problems (e.g., ADHD, autism spectrum disorder, schizophrenia)"
+    ],
+    "affectedSystems": [
+        "Cardiovascular System",
+        "Endocrine System",
+        "Immune System",
+        "Skeletal System",
+        "Neurological System",
+        "Renal System"
+    ],
+    "prognosis": "The prognosis varies depending on the severity of the condition, particularly the extent of cardiac and immune system involvement. Early diagnosis and intervention can improve outcomes.",
+    "lifeExpectancy": "Life expectancy can be significantly reduced in severe cases due to cardiac complications or severe immunodeficiency. With proper management, many individuals can live into adulthood.",
+    "diagnosticMethods": [
+        "Fluorescence in situ hybridization (FISH) for 22q11.2 deletion",
+        "Chromosomal microarray analysis (CMA)",
+        "Echocardiogram to assess heart defects",
+        "Blood tests to measure calcium and parathyroid hormone levels",
+        "Immunological assessment to evaluate T-cell function",
+        "Physical examination to identify characteristic facial features"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Calcium and Vitamin D supplementation",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Thymus transplantation",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Corrective heart surgery",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Intravenous immunoglobulin (IVIG)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Physical therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Speech therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Early intervention programs",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Psychiatric and behavioral therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 35,
+    "keyResearchCenters": [
+        "Children's Hospital of Philadelphia",
+        "National Institutes of Health (NIH)",
+        "Stanford University",
+        "University of California, San Francisco (UCSF)"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "The International 22q11.2 Foundation",
+            "url": "https://www.22q.org/",
+            "country": "USA"
+        },
+        {
+            "name": "VCFS Education Foundation",
+            "url": "http://www.vcfsef.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "CHARGE syndrome",
+        "Down syndrome",
+        "Fetal alcohol syndrome"
+    ],
+    "specialistTypes": [
+        "Clinical Geneticist",
+        "Cardiologist",
+        "Immunologist",
+        "Endocrinologist",
+        "Developmental Pediatrician",
+        "Speech Therapist",
+        "Psychiatrist"
+    ],
+    "eli5Summary": "Imagine your body is like a car, and sometimes a tiny piece of the instruction manual (chromosome 22) is missing. This can cause problems with the heart, immune system, and other parts, making it harder for the car to run smoothly. Doctors can help by giving medicine, doing surgery, and providing extra support to make the car work as best as it can.",
+    "clinicalSummary": "DiGeorge syndrome (22q11.2 deletion syndrome) is a complex multisystem disorder resulting from a microdeletion on the long arm of chromosome 22. The deletion encompasses approximately 30-40 genes, with TBX1 being a key gene involved in the pathogenesis of many features. The syndrome is characterized by variable expressivity, leading to a wide spectrum of clinical manifestations. Cardiac anomalies, particularly conotruncal defects, are common. Thymic hypoplasia or aplasia results in T-cell lymphopenia and increased susceptibility to opportunistic infections. Hypoparathyroidism leads to hypocalcemia, which can cause seizures and other neurological symptoms. Craniofacial features include cleft palate, micrognathia, and hypertelorism. Neurodevelopmental delays and psychiatric disorders are frequently observed. Diagnosis is typically confirmed by FISH or CMA. Management involves addressing specific organ system involvement, including cardiac surgery, calcium supplementation, and immune support. Long-term follow-up is essential to monitor for complications and provide appropriate interventions.",
+    "historicalBackground": "DiGeorge syndrome was first described by Angelo DiGeorge in 1965, who noted the association between thymic aplasia and parathyroid abnormalities. The genetic basis of the syndrome, specifically the 22q11.2 deletion, was identified in the early 1990s.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "CRISPR-Cas9 Gene Editing for TBX1 Gene",
+            "description": "Researchers are exploring CRISPR-Cas9 gene editing to correct TBX1 gene mutations in vitro, showing promise for future gene therapy approaches.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Improved Diagnostic Accuracy with Whole-Genome Sequencing",
+            "description": "Whole-genome sequencing is being used to identify atypical deletions and duplications in the 22q11.2 region, improving diagnostic accuracy and understanding of genotype-phenotype correlations.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/"
+        },
+        {
+            "name": "Genetics Home Reference",
+            "url": "https://ghr.nlm.nih.gov/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        }
+    ]
+}

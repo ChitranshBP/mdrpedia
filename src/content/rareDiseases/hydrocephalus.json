@@ -1,0 +1,159 @@
+{
+    "name": "Hydrocephalus",
+    "slug": "hydrocephalus",
+    "aliases": [
+        "Water on the brain",
+        "Increased intracranial pressure"
+    ],
+    "description": "Hydrocephalus is a condition characterized by an abnormal accumulation of cerebrospinal fluid (CSF) within the ventricles of the brain. This excess fluid increases the size of the ventricles and puts pressure on the brain, which can lead to a variety of neurological symptoms and developmental problems if left untreated. It can be congenital or acquired.",
+    "category": "NEUROLOGICAL",
+    "icdCode": "G91",
+    "orphaCode": "435",
+    "omimCode": "236600",
+    "prevalence": "Approximately 1 in 500 births",
+    "estimatedCases": 800000,
+    "ageOfOnset": "Varies; can be congenital or acquired at any age",
+    "inheritance": "Multifactorial; can be associated with genetic syndromes or be sporadic",
+    "symptoms": [
+        "Headache",
+        "Nausea and vomiting",
+        "Blurred vision or double vision",
+        "Difficulty walking",
+        "Lethargy",
+        "Irritability",
+        "Seizures",
+        "Cognitive impairment",
+        "Developmental delay (in children)",
+        "Enlarged head (in infants)",
+        "Sunsetting eyes (in infants)"
+    ],
+    "affectedSystems": [
+        "Nervous System"
+    ],
+    "prognosis": "Variable; depends on the cause, severity, and timeliness of treatment. Early diagnosis and intervention can improve outcomes.",
+    "lifeExpectancy": "Variable; can be normal with effective management, but significantly reduced without treatment.",
+    "diagnosticMethods": [
+        "Neurological examination",
+        "Cranial ultrasound (in infants)",
+        "Computed tomography (CT) scan",
+        "Magnetic resonance imaging (MRI)",
+        "Lumbar puncture",
+        "Intracranial pressure monitoring"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Ventriculoperitoneal (VP) Shunt",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Endoscopic Third Ventriculostomy (ETV)",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Endoscopic Third Ventriculostomy with Choroid Plexus Cauterization (ETV/CPC)",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Medications to reduce CSF production (Acetazolamide, Furosemide)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Physical therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Speech therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 50,
+    "keyResearchCenters": [
+        "Boston Children's Hospital",
+        "Mayo Clinic",
+        "Johns Hopkins Hospital",
+        "University of California, San Francisco (UCSF) Medical Center"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Hydrocephalus Association",
+            "url": "https://www.hydroassoc.org/",
+            "country": "USA"
+        },
+        {
+            "name": "International Federation for Spina Bifida and Hydrocephalus (IFSBH)",
+            "url": "https://www.ifsbh.org/",
+            "country": "Belgium"
+        }
+    ],
+    "relatedConditions": [
+        "Spina Bifida",
+        "Arnold-Chiari Malformation",
+        "Dandy-Walker Syndrome",
+        "Meningitis",
+        "Brain Tumors",
+        "Intraventricular Hemorrhage"
+    ],
+    "specialistTypes": [
+        "Neurosurgeon",
+        "Neurologist",
+        "Pediatric Neurologist",
+        "Developmental Pediatrician"
+    ],
+    "eli5Summary": "Imagine your brain is like a house with water pipes. Hydrocephalus is like having too much water in those pipes, making the house (your brain) swell and not work properly. Doctors can put in a special tube to drain the extra water or make a new escape route for it.",
+    "clinicalSummary": "Hydrocephalus results from an imbalance between CSF production and absorption, leading to ventricular enlargement and increased intracranial pressure. This can be caused by obstruction of CSF flow (obstructive hydrocephalus) or impaired CSF absorption (communicating hydrocephalus). Congenital causes include neural tube defects and genetic syndromes, while acquired causes include infections, hemorrhage, and tumors. Clinical presentation varies with age and severity, ranging from macrocephaly and developmental delay in infants to headache, gait disturbances, and cognitive impairment in adults. Diagnosis involves neuroimaging to visualize ventricular size and identify underlying causes. Treatment primarily involves surgical intervention to divert CSF flow, either through shunt placement or ETV. Long-term management focuses on monitoring for shunt malfunction and addressing neurological sequelae.",
+    "historicalBackground": "Hydrocephalus has been recognized since ancient times, with descriptions found in the writings of Hippocrates and Galen. Early treatments were largely ineffective, and the condition was often fatal. The development of shunt surgery in the 20th century revolutionized the management of hydrocephalus, significantly improving outcomes and quality of life for affected individuals.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Advancements in Endoscopic Third Ventriculostomy (ETV) Techniques",
+            "description": "Refinements in ETV procedures, including the use of intraoperative neuro-navigation and advanced endoscopic tools, have improved success rates and reduced complications in select patients.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Development of Programmable Shunts with Wireless Monitoring",
+            "description": "New shunt designs allow for non-invasive adjustment of drainage pressure and wireless monitoring of shunt function, potentially reducing the need for revision surgeries.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/Disorders/All-Disorders/Hydrocephalus-Information-Page"
+        },
+        {
+            "name": "Mayo Clinic",
+            "url": "https://www.mayoclinic.org/diseases-conditions/hydrocephalus/symptoms-causes/syc-20392909"
+        }
+    ]
+}

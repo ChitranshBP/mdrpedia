@@ -1,0 +1,167 @@
+{
+    "name": "Hyper IgM Syndrome",
+    "slug": "hyper-igm-syndrome",
+    "aliases": [
+        "HIGM",
+        "CD40 Ligand Deficiency",
+        "X-linked Hyper IgM Syndrome",
+        "Autosomal Hyper IgM Syndrome"
+    ],
+    "description": "Hyper IgM syndrome is a group of rare genetic disorders characterized by a defect in the immune system, specifically affecting the ability of B cells to switch from producing IgM antibodies to other types of antibodies such as IgG, IgA, and IgE. This leads to elevated levels of IgM in the blood and a deficiency in other antibody types, making affected individuals highly susceptible to infections, particularly opportunistic infections.",
+    "category": "GENETIC",
+    "icdCode": "D80.3",
+    "orphaCode": "428",
+    "omimCode": "308230",
+    "prevalence": "1 in 1,000,000",
+    "estimatedCases": 800,
+    "ageOfOnset": "Infancy or early childhood",
+    "inheritance": "X_LINKED, AUTOSOMAL_RECESSIVE, AUTOSOMAL_DOMINANT",
+    "symptoms": [
+        "Recurrent respiratory infections (pneumonia, sinusitis, bronchitis)",
+        "Opportunistic infections (Pneumocystis jirovecii pneumonia, Cryptosporidium parvum infection)",
+        "Chronic diarrhea",
+        "Failure to thrive",
+        "Neutropenia",
+        "Thrombocytopenia",
+        "Hepatitis",
+        "Encephalopathy",
+        "Increased susceptibility to autoimmune disorders"
+    ],
+    "affectedSystems": [
+        "Immune System",
+        "Respiratory System",
+        "Gastrointestinal System",
+        "Hematopoietic System"
+    ],
+    "prognosis": "Variable, depending on the specific genetic defect and the effectiveness of treatment. Without treatment, prognosis is poor, with increased risk of severe infections and complications. With proper management, including prophylactic antibiotics and immunoglobulin replacement therapy, survival can be significantly improved.",
+    "lifeExpectancy": "Reduced without treatment; can be significantly improved with appropriate management, potentially reaching near-normal life expectancy in some cases.",
+    "diagnosticMethods": [
+        "Serum immunoglobulin levels (elevated IgM, low IgG, IgA, and IgE)",
+        "Flow cytometry to assess CD40 ligand expression on T cells (for X-linked HIGM)",
+        "Genetic testing to identify specific gene mutations",
+        "Lymph node biopsy",
+        "Complete blood count (CBC) to assess neutrophil and platelet counts",
+        "T-cell function tests"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Immunoglobulin Replacement Therapy (IVIG or SCIG)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Prophylactic Antibiotics (e.g., trimethoprim/sulfamethoxazole)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Hematopoietic Stem Cell Transplantation (HSCT)",
+            "type": "GENE_THERAPY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Granulocyte Colony-Stimulating Factor (G-CSF)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Gene Therapy",
+            "type": "GENE_THERAPY",
+            "effectiveness": "EXPERIMENTAL",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Supportive Care (nutritional support, management of complications)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 15,
+    "keyResearchCenters": [
+        "National Institute of Allergy and Infectious Diseases (NIAID)",
+        "Boston Children's Hospital",
+        "Cincinnati Children's Hospital Medical Center",
+        "Great Ormond Street Hospital (UK)"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Immune Deficiency Foundation (IDF)",
+            "url": "https://www.primaryimmune.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Jeffrey Modell Foundation",
+            "url": "https://www.jeffreymodellfoundation.org/",
+            "country": "USA"
+        },
+        {
+            "name": "PID UK",
+            "url": "https://www.piduk.org/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "Common Variable Immunodeficiency (CVID)",
+        "Severe Combined Immunodeficiency (SCID)",
+        "Wiskott-Aldrich Syndrome"
+    ],
+    "specialistTypes": [
+        "Immunologist",
+        "Hematologist",
+        "Geneticist",
+        "Infectious Disease Specialist",
+        "Pulmonologist",
+        "Gastroenterologist"
+    ],
+    "eli5Summary": "Imagine your body's army (immune system) can only make one type of weapon (IgM antibodies) and can't switch to making other important weapons (IgG, IgA). This makes it hard to fight off infections, so doctors give you extra weapons (antibodies) and medicine to help.",
+    "clinicalSummary": "Hyper IgM syndrome (HIGM) encompasses a group of primary immunodeficiency disorders characterized by defective immunoglobulin class switching. The most common form is X-linked HIGM (HIGM1), caused by mutations in the CD40 ligand (CD40L) gene. Other forms include autosomal recessive HIGM due to mutations in genes such as AICDA, UNG, and CD40. Clinically, HIGM presents with recurrent sinopulmonary infections, opportunistic infections (Pneumocystis jirovecii pneumonia, Cryptosporidium parvum), and an increased risk of autoimmune complications. Diagnosis involves assessing serum immunoglobulin levels (elevated IgM, decreased IgG, IgA, and IgE), flow cytometry for CD40L expression, and genetic testing. Management includes immunoglobulin replacement therapy, prophylactic antibiotics, and hematopoietic stem cell transplantation (HSCT) for severe cases. Gene therapy is an emerging treatment option.",
+    "historicalBackground": "The first description of Hyper IgM syndrome was in the 1960s. The genetic basis of the X-linked form (CD40L deficiency) was identified in the early 1990s, leading to a better understanding of the disease mechanism and improved diagnostic and therapeutic approaches.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Gene Therapy for X-linked Hyper IgM Syndrome Shows Promise",
+            "description": "Early phase clinical trials of gene therapy for X-linked Hyper IgM syndrome have demonstrated promising results, with some patients achieving sustained immune reconstitution and reduced need for immunoglobulin replacement therapy.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Improved Outcomes with Early Hematopoietic Stem Cell Transplantation",
+            "description": "A retrospective study showed that early hematopoietic stem cell transplantation (HSCT) in patients with Hyper IgM syndrome is associated with improved long-term survival and reduced risk of complications compared to delayed HSCT.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/index.php"
+        },
+        {
+            "name": "OMIM",
+            "url": "https://www.omim.org/"
+        },
+        {
+            "name": "Immune Deficiency Foundation",
+            "url": "https://www.primaryimmune.org/"
+        },
+        {
+            "name": "National Institute of Allergy and Infectious Diseases (NIAID)",
+            "url": "https://www.niaid.nih.gov/"
+        }
+    ]
+}

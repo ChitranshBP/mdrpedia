@@ -1,0 +1,144 @@
+{
+    "name": "Hereditary Hemochromatosis",
+    "slug": "hemochromatosis",
+    "aliases": [
+        "HFE-related hemochromatosis",
+        "Primary hemochromatosis",
+        "Iron overload disease"
+    ],
+    "description": "Hereditary hemochromatosis is a genetic disorder characterized by excessive iron absorption from the diet, leading to iron accumulation in the body's organs, particularly the liver, heart, and pancreas. If left untreated, this iron overload can cause significant organ damage and dysfunction.",
+    "category": "GENETIC",
+    "icdCode": "E83.11",
+    "orphaCode": "408",
+    "omimCode": "235200",
+    "prevalence": "1 in 200 to 1 in 400 individuals of Northern European descent",
+    "estimatedCases": 800000,
+    "ageOfOnset": "Typically between 30 and 60 years, but can vary",
+    "inheritance": "AUTOSOMAL_RECESSIVE",
+    "symptoms": [
+        "Fatigue",
+        "Joint pain",
+        "Abdominal pain",
+        "Liver enlargement",
+        "Skin pigmentation (bronzing)",
+        "Diabetes",
+        "Heart problems (cardiomyopathy, arrhythmias)",
+        "Erectile dysfunction",
+        "Arthritis"
+    ],
+    "affectedSystems": [
+        "Gastrointestinal System",
+        "Endocrine System",
+        "Cardiovascular System",
+        "Musculoskeletal System",
+        "Integumentary System"
+    ],
+    "prognosis": "Good with early diagnosis and treatment; poor if untreated, leading to organ damage and failure.",
+    "lifeExpectancy": "Normal with early treatment; reduced if complications develop due to iron overload.",
+    "diagnosticMethods": [
+        "Serum iron studies (serum iron, total iron-binding capacity, transferrin saturation)",
+        "Ferritin level",
+        "Genetic testing for HFE gene mutations (C282Y, H63D)",
+        "Liver biopsy (to assess iron levels and liver damage)",
+        "MRI (to assess iron overload in organs)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Phlebotomy (blood removal)",
+            "type": "THERAPY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Iron chelation therapy (e.g., deferoxamine, deferasirox, deferiprone)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Dietary modifications (avoiding iron-rich foods and supplements)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Treatment of complications (e.g., diabetes management, heart failure treatment)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 30,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Mayo Clinic",
+        "Cleveland Clinic",
+        "University of California, San Francisco (UCSF)"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Iron Disorders Institute",
+            "url": "https://www.irondisorders.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Hemochromatosis UK",
+            "url": "https://www.haemochromatosis.org.uk/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "Porphyria cutanea tarda",
+        "Alcoholic liver disease",
+        "Non-alcoholic fatty liver disease (NAFLD)",
+        "Thalassemia"
+    ],
+    "specialistTypes": [
+        "Gastroenterologist",
+        "Hepatologist",
+        "Hematologist",
+        "Endocrinologist",
+        "Cardiologist",
+        "Geneticist"
+    ],
+    "eli5Summary": "Imagine your body is like a piggy bank that's collecting too much iron. This extra iron can hurt your liver, heart, and other body parts. Doctors can help by taking out some of the iron, like emptying the piggy bank a little bit at a time.",
+    "clinicalSummary": "Hereditary hemochromatosis (HH) is an autosomal recessive disorder primarily caused by mutations in the HFE gene, most commonly C282Y and H63D. These mutations lead to increased intestinal iron absorption and subsequent iron deposition in parenchymal organs. Clinical manifestations vary but typically include fatigue, arthralgia, hepatomegaly, skin hyperpigmentation, diabetes mellitus, and cardiac dysfunction. Diagnosis involves assessing serum iron studies (elevated transferrin saturation and ferritin levels) and confirming the presence of HFE mutations through genetic testing. Liver biopsy may be performed to quantify hepatic iron concentration and assess liver damage. Treatment primarily consists of phlebotomy to deplete excess iron stores. Iron chelation therapy is reserved for patients who cannot tolerate phlebotomy or have severe iron overload. Early diagnosis and treatment are crucial to prevent irreversible organ damage and improve long-term outcomes.",
+    "historicalBackground": "Hemochromatosis was first described in the late 19th century, but its genetic basis was not understood until the discovery of the HFE gene in 1996. This discovery revolutionized the diagnosis and management of the disease, allowing for earlier detection and prevention of complications.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Novel Biomarkers for Early Detection of Liver Fibrosis in Hemochromatosis",
+            "description": "Research identified new serum biomarkers that can predict the development of liver fibrosis in patients with hemochromatosis, potentially allowing for earlier intervention and prevention of advanced liver disease.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Improved Iron Chelation Therapies with Reduced Side Effects",
+            "description": "Clinical trials have shown that newer formulations of iron chelators have improved efficacy and fewer side effects compared to traditional chelation therapies, enhancing patient compliance and treatment outcomes.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK)",
+            "url": "https://www.niddk.nih.gov/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        },
+        {
+            "name": "Genetics Home Reference",
+            "url": "https://ghr.nlm.nih.gov/"
+        }
+    ]
+}

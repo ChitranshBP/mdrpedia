@@ -1,0 +1,146 @@
+{
+    "name": "Hereditary Angioedema",
+    "slug": "hereditary-angioedema",
+    "aliases": [
+        "HAE",
+        "C1 Inhibitor Deficiency",
+        "Hereditary Angioneurotic Edema"
+    ],
+    "description": "Hereditary angioedema (HAE) is a rare genetic disorder characterized by recurrent episodes of severe swelling (angioedema). The swelling most commonly affects the limbs, face, intestinal tract, and airway. HAE is caused by a deficiency or dysfunction of the C1 inhibitor protein, which is involved in regulating the complement system, a part of the immune system.",
+    "category": "GENETIC",
+    "icdCode": "D84.1",
+    "orphaCode": "415",
+    "omimCode": "106100",
+    "prevalence": "1 in 50,000",
+    "estimatedCases": 6600,
+    "ageOfOnset": "Childhood or adolescence, but can occur at any age",
+    "inheritance": "AUTOSOMAL_DOMINANT",
+    "symptoms": [
+        "Recurrent episodes of swelling (angioedema)",
+        "Swelling of the limbs, face, larynx, and abdomen",
+        "Abdominal pain, nausea, vomiting, and diarrhea",
+        "Difficulty breathing due to airway swelling",
+        "Skin rash (erythema marginatum) may occur in some cases"
+    ],
+    "affectedSystems": [
+        "Immune System",
+        "Gastrointestinal System",
+        "Respiratory System",
+        "Integumentary System"
+    ],
+    "prognosis": "Variable; with proper management, individuals can lead relatively normal lives. Untreated airway swelling can be life-threatening.",
+    "lifeExpectancy": "Near normal with appropriate diagnosis and treatment.",
+    "diagnosticMethods": [
+        "Measurement of C4 protein levels",
+        "Measurement of C1 inhibitor protein levels and function",
+        "Genetic testing for mutations in the SERPING1 gene"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "C1-Inhibitor Concentrate (Berinert, Cinryze, Ruconest)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 1970
+        },
+        {
+            "name": "Ecallantide (Kalbitor)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2009
+        },
+        {
+            "name": "Icatibant (Firazyr)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2011
+        },
+        {
+            "name": "Lanadelumab (Takhzyro)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2018
+        },
+        {
+            "name": "Oral Attenuated Androgens (Danazol, Stanozolol)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Plasma-Derived C1-INH",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 50,
+    "keyResearchCenters": [
+        "National Institute of Allergy and Infectious Diseases (NIAID)",
+        "University of California, San Diego",
+        "Medical University of South Carolina"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "U.S. Hereditary Angioedema Association (HAEA)",
+            "url": "https://www.haea.org/",
+            "country": "USA"
+        },
+        {
+            "name": "HAEi - Hereditary Angioedema International",
+            "url": "https://haei.org/",
+            "country": "International"
+        }
+    ],
+    "relatedConditions": [
+        "Acquired Angioedema",
+        "ACE-inhibitor induced angioedema"
+    ],
+    "specialistTypes": [
+        "Allergist/Immunologist",
+        "Hematologist",
+        "Gastroenterologist",
+        "Emergency Medicine Physician"
+    ],
+    "eli5Summary": "Imagine your body has a security system that sometimes goes haywire and causes swelling. Hereditary Angioedema is like having a glitch in that security system, leading to sudden swelling attacks, especially in your face, tummy, or throat. Doctors can give you special medicine to fix the glitch and stop the swelling.",
+    "clinicalSummary": "Hereditary angioedema (HAE) is a genetic disorder resulting from a deficiency or dysfunction of C1 inhibitor (C1-INH), a serine protease inhibitor that regulates the complement, contact, and coagulation cascades. This deficiency leads to uncontrolled production of bradykinin, a potent vasodilator that increases vascular permeability, resulting in angioedema. HAE is characterized by recurrent, self-limiting episodes of non-pitting edema involving the skin, gastrointestinal tract, and upper airway. Diagnosis is based on measuring C4 and C1-INH levels and function. Acute attacks are treated with C1-INH concentrate, ecallantide, or icatibant. Prophylactic treatment includes C1-INH concentrate, lanadelumab, or attenuated androgens.",
+    "historicalBackground": "Hereditary angioedema was first described by Quincke in 1888. In 1963, Donald and Rosen identified the deficiency of C1 inhibitor as the underlying cause. Subsequent research led to the development of effective treatments, significantly improving the prognosis for individuals with HAE.",
+    "recentBreakthroughs": [
+        {
+            "year": 2018,
+            "title": "FDA Approves Lanadelumab for HAE Prophylaxis",
+            "description": "The FDA approved lanadelumab, a monoclonal antibody that inhibits plasma kallikrein, for the prevention of HAE attacks in patients 12 years and older. This subcutaneous injection significantly reduces the frequency of angioedema attacks.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2020,
+            "title": "Oral Plasma Kallikrein Inhibitor Shows Promise in HAE",
+            "description": "Clinical trials have shown that oral plasma kallikrein inhibitors are effective in preventing HAE attacks, offering a more convenient alternative to injectable therapies.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/"
+        },
+        {
+            "name": "U.S. Hereditary Angioedema Association (HAEA)",
+            "url": "https://www.haea.org/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        }
+    ]
+}

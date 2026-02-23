@@ -1,0 +1,169 @@
+{
+    "name": "Hemophilia",
+    "slug": "hemophilia",
+    "aliases": [
+        "Haemophilia",
+        "Classic Hemophilia",
+        "Christmas Disease",
+        "Factor VIII Deficiency",
+        "Factor IX Deficiency"
+    ],
+    "description": "Hemophilia is a rare, inherited bleeding disorder in which the blood does not clot normally. This is due to a deficiency or absence of certain clotting factors, proteins needed for blood to clot. The two main types are hemophilia A (factor VIII deficiency) and hemophilia B (factor IX deficiency).",
+    "category": "GENETIC",
+    "icdCode": "D66",
+    "orphaCode": "408",
+    "omimCode": "306700",
+    "prevalence": "Approximately 1 in 5,000 males for Hemophilia A; 1 in 30,000 males for Hemophilia B",
+    "estimatedCases": 20000,
+    "ageOfOnset": "Usually diagnosed in early childhood, often before age 2",
+    "inheritance": "X_LINKED",
+    "symptoms": [
+        "Prolonged bleeding after injuries, surgery, or dental work",
+        "Spontaneous bleeding into joints (hemarthrosis), causing pain and swelling",
+        "Easy bruising",
+        "Nosebleeds",
+        "Bleeding into muscles and soft tissues",
+        "Blood in urine or stool",
+        "Prolonged bleeding after vaccinations",
+        "Intracranial hemorrhage (rare but serious)"
+    ],
+    "affectedSystems": [
+        "Hematologic System",
+        "Musculoskeletal System"
+    ],
+    "prognosis": "With proper treatment, individuals with hemophilia can live relatively normal lives. However, severe bleeding episodes can lead to chronic joint damage and disability if not managed effectively.",
+    "lifeExpectancy": "With modern treatment, life expectancy is near normal. Without treatment, life expectancy is significantly reduced.",
+    "diagnosticMethods": [
+        "Blood tests to measure clotting factor levels (Factor VIII and Factor IX)",
+        "Genetic testing to identify specific mutations in the F8 or F9 gene",
+        "Clotting assays (e.g., activated partial thromboplastin time (aPTT))"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Replacement Therapy (Factor VIII or Factor IX concentrates)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Prophylactic Treatment (Regular infusions of clotting factor concentrates)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "On-Demand Treatment (Infusions given in response to bleeding episodes)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Desmopressin (DDAVP)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Emicizumab (Hemlibra)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2017
+        },
+        {
+            "name": "Gene Therapy",
+            "type": "GENE_THERAPY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2022
+        },
+        {
+            "name": "Physical Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Amicar (aminocaproic acid) or Lysteda (tranexamic acid)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 150,
+    "keyResearchCenters": [
+        "National Hemophilia Foundation",
+        "World Federation of Hemophilia",
+        "Mayo Clinic",
+        "University of California, San Francisco (UCSF)"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "National Hemophilia Foundation (NHF)",
+            "url": "https://www.hemophilia.org/",
+            "country": "USA"
+        },
+        {
+            "name": "World Federation of Hemophilia (WFH)",
+            "url": "https://www.wfh.org/",
+            "country": "International"
+        }
+    ],
+    "relatedConditions": [
+        "Von Willebrand Disease",
+        "Factor V Deficiency",
+        "Factor VII Deficiency",
+        "Factor X Deficiency",
+        "Factor XI Deficiency",
+        "Factor XIII Deficiency"
+    ],
+    "specialistTypes": [
+        "Hematologist",
+        "Pediatric Hematologist",
+        "Geneticist",
+        "Orthopedic Surgeon",
+        "Physical Therapist"
+    ],
+    "eli5Summary": "Imagine your blood is like glue that helps stop cuts from bleeding. Hemophilia is when your blood doesn't have enough of the special ingredients to make that glue, so you might bleed longer than usual if you get hurt.",
+    "clinicalSummary": "Hemophilia is an X-linked recessive bleeding disorder characterized by a deficiency in coagulation factors, most commonly factor VIII (hemophilia A) or factor IX (hemophilia B). The severity of hemophilia varies depending on the level of clotting factor activity. Severe hemophilia is defined as <1% factor activity, moderate hemophilia as 1-5% factor activity, and mild hemophilia as 5-40% factor activity. Clinical manifestations include spontaneous or prolonged bleeding into joints, muscles, and other tissues. Diagnosis is confirmed by measuring factor VIII or IX levels and genetic testing. Treatment involves replacement therapy with recombinant or plasma-derived clotting factors, emicizumab for hemophilia A, and gene therapy for certain subtypes. Complications include joint damage, inhibitor development, and transfusion-related infections (rare with modern recombinant products).",
+    "historicalBackground": "Hemophilia has been recognized for centuries, with descriptions dating back to ancient times. It was historically known as 'the royal disease' due to its prevalence among European royal families, particularly descendants of Queen Victoria, who was a carrier of the hemophilia B gene.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "FDA Approves First Gene Therapy for Hemophilia B",
+            "description": "The FDA approved Hemgenix, the first gene therapy for adults with hemophilia B. This one-time intravenous infusion delivers a functional copy of the factor IX gene to the liver, enabling patients to produce their own factor IX and reducing the need for regular infusions.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "FDA Approves Gene Therapy for Hemophilia A",
+            "description": "Roctavian is approved for severe hemophilia A. This is a one-time gene therapy that reduces the need for factor VIII infusions.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Hemophilia Foundation",
+            "url": "https://www.hemophilia.org/"
+        },
+        {
+            "name": "World Federation of Hemophilia",
+            "url": "https://www.wfh.org/"
+        },
+        {
+            "name": "Mayo Clinic",
+            "url": "https://www.mayoclinic.org/diseases-conditions/hemophilia/symptoms-causes/syc-20373243"
+        }
+    ]
+}

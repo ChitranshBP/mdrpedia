@@ -1,0 +1,149 @@
+{
+    "name": "Giant Cell Arteritis",
+    "slug": "giant-cell-arteritis",
+    "aliases": [
+        "Temporal Arteritis",
+        "Horton's Arteritis",
+        "Cranial Arteritis"
+    ],
+    "description": "Giant cell arteritis (GCA) is a chronic inflammatory disease of large and medium-sized arteries, predominantly affecting branches of the aortic arch, especially the temporal arteries. It is characterized by granulomatous inflammation and intimal thickening, leading to vessel stenosis or occlusion. GCA typically affects individuals over the age of 50 and is often associated with polymyalgia rheumatica (PMR).",
+    "category": "AUTOIMMUNE",
+    "icdCode": "M31.3",
+    "orphaCode": "80",
+    "omimCode": "612349",
+    "prevalence": "40-240 per 100,000 individuals over 50 years old",
+    "estimatedCases": 120000,
+    "ageOfOnset": "Typically over 50 years",
+    "inheritance": "Not typically inherited; complex genetic and environmental factors are implicated",
+    "symptoms": [
+        "Headache (often new onset and severe)",
+        "Temporal artery tenderness or throbbing",
+        "Jaw claudication (pain with chewing)",
+        "Visual disturbances (blurred vision, double vision, vision loss)",
+        "Fever",
+        "Fatigue",
+        "Weight loss",
+        "Scalp tenderness",
+        "Tongue claudication",
+        "Polymyalgia rheumatica (PMR) symptoms: pain and stiffness in the shoulders and hips"
+    ],
+    "affectedSystems": [
+        "Cardiovascular System",
+        "Nervous System",
+        "Musculoskeletal System",
+        "Ocular System"
+    ],
+    "prognosis": "With prompt diagnosis and treatment, the prognosis is generally good. However, untreated GCA can lead to irreversible vision loss and other serious complications.",
+    "lifeExpectancy": "Generally normal with treatment. Complications can reduce life expectancy if untreated.",
+    "diagnosticMethods": [
+        "Physical examination",
+        "Erythrocyte sedimentation rate (ESR) and C-reactive protein (CRP) blood tests",
+        "Temporal artery biopsy",
+        "Imaging studies (e.g., ultrasound, MRI, PET/CT) to assess large vessel involvement"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Prednisone (oral corticosteroids)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Tocilizumab (IL-6 receptor antagonist)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2017
+        },
+        {
+            "name": "Aspirin (low-dose)",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Methotrexate (steroid-sparing agent)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "TNF inhibitors (e.g., Infliximab, Adalimumab)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Supportive care (calcium and vitamin D supplementation)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 50,
+    "keyResearchCenters": [
+        "Mayo Clinic",
+        "National Institutes of Health (NIH)",
+        "University of California, San Francisco (UCSF)",
+        "Johns Hopkins University"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Vasculitis Foundation",
+            "url": "https://www.vasculitisfoundation.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Polymyalgia Rheumatica (PMR)",
+        "Takayasu Arteritis",
+        "Large Vessel Vasculitis"
+    ],
+    "specialistTypes": [
+        "Rheumatologist",
+        "Ophthalmologist",
+        "Neurologist",
+        "Vascular Surgeon"
+    ],
+    "eli5Summary": "Giant cell arteritis is like when the pipes (blood vessels) in your head get swollen and angry, causing headaches and sometimes vision problems. Doctors give medicine to calm them down.",
+    "clinicalSummary": "Giant cell arteritis (GCA) is a systemic vasculitis affecting large and medium-sized arteries, particularly the branches of the aortic arch. The pathogenesis involves an inflammatory cascade initiated by dendritic cells and macrophages, leading to granuloma formation and intimal hyperplasia. Clinically, GCA presents with headache, temporal artery tenderness, jaw claudication, and visual disturbances. Diagnosis requires a high index of suspicion, elevated inflammatory markers (ESR, CRP), and confirmation by temporal artery biopsy. Treatment primarily involves high-dose corticosteroids, often followed by steroid-sparing agents like methotrexate or tocilizumab to minimize long-term steroid exposure and relapse risk. Complications include irreversible vision loss, aortic aneurysm, and stroke.",
+    "historicalBackground": "Giant cell arteritis was first described by Jonathan Hutchinson in 1890. Horton et al. provided a detailed pathological description in 1932, leading to the alternative name 'Horton's arteritis.' The association with polymyalgia rheumatica was recognized later, highlighting the systemic nature of the disease.",
+    "recentBreakthroughs": [
+        {
+            "year": 2017,
+            "title": "FDA Approval of Tocilizumab for Giant Cell Arteritis",
+            "description": "Tocilizumab, an interleukin-6 receptor antagonist, was approved by the FDA for the treatment of giant cell arteritis. This marked the first FDA-approved therapy specifically for GCA and provided an alternative to long-term high-dose corticosteroid use.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2021,
+            "title": "Advances in Imaging Techniques for GCA Diagnosis",
+            "description": "Improved imaging modalities, such as high-resolution vessel wall MRI and PET/CT, have enhanced the ability to diagnose GCA non-invasively, particularly in cases involving large vessel vasculitis.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/"
+        },
+        {
+            "name": "Mayo Clinic",
+            "url": "https://www.mayoclinic.org/"
+        },
+        {
+            "name": "Vasculitis Foundation",
+            "url": "https://www.vasculitisfoundation.org/"
+        }
+    ]
+}

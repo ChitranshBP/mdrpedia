@@ -1,0 +1,163 @@
+{
+    "name": "Focal Segmental Glomerulosclerosis (FSGS)",
+    "slug": "focal-segmental-glomerulosclerosis-fsgs",
+    "aliases": [
+        "FSGS",
+        "Focal Sclerosis",
+        "Segmental Glomerular Sclerosis"
+    ],
+    "description": "Focal Segmental Glomerulosclerosis (FSGS) is a pathological lesion of the kidney characterized by sclerosis (scarring) of some glomeruli and in only segments of each glomerulus. It is a relatively common cause of nephrotic syndrome in children and adults, potentially leading to end-stage renal disease. FSGS can be primary (idiopathic) or secondary to other conditions such as infections, drugs, or genetic mutations.",
+    "category": "RENAL",
+    "icdCode": "N04",
+    "orphaCode": "79447",
+    "omimCode": "603278",
+    "prevalence": "Approximately 7 per million people",
+    "estimatedCases": 2300,
+    "ageOfOnset": "Variable; can occur in childhood or adulthood",
+    "inheritance": "Variable; can be SPORADIC, AUTOSOMAL_DOMINANT, or AUTOSOMAL_RECESSIVE depending on the underlying cause",
+    "symptoms": [
+        "Proteinuria (protein in the urine)",
+        "Edema (swelling, especially in the ankles and feet)",
+        "Weight gain",
+        "High blood pressure",
+        "Fatigue",
+        "Elevated cholesterol levels",
+        "Decreased kidney function"
+    ],
+    "affectedSystems": [
+        "Renal System",
+        "Cardiovascular System"
+    ],
+    "prognosis": "Variable; some patients respond well to treatment, while others progress to end-stage renal disease requiring dialysis or kidney transplantation.",
+    "lifeExpectancy": "May be reduced depending on the severity of the disease and response to treatment. Progression to end-stage renal disease significantly impacts life expectancy.",
+    "diagnosticMethods": [
+        "Urinalysis (to detect proteinuria)",
+        "Blood tests (to assess kidney function, cholesterol levels, and albumin levels)",
+        "Kidney biopsy (to confirm the diagnosis and determine the type of FSGS)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Corticosteroids (e.g., Prednisone)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Immunosuppressants (e.g., Cyclosporine, Tacrolimus, Mycophenolate Mofetil)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "ACE inhibitors or ARBs (e.g., Lisinopril, Losartan)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Diuretics (e.g., Furosemide)",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Dietary Modifications (low-sodium diet)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Dialysis",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Kidney Transplantation",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Lipid-lowering medications (Statins)",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 50,
+    "keyResearchCenters": [
+        "National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK)",
+        "Mayo Clinic",
+        "Cleveland Clinic",
+        "University of Michigan"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "National Kidney Foundation",
+            "url": "https://www.kidney.org/",
+            "country": "USA"
+        },
+        {
+            "name": "NephCure Kidney International",
+            "url": "https://nephcure.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Nephrotic Syndrome",
+        "Minimal Change Disease",
+        "Membranous Nephropathy",
+        "Diabetic Nephropathy",
+        "HIV-Associated Nephropathy"
+    ],
+    "specialistTypes": [
+        "Nephrologist",
+        "Pediatric Nephrologist",
+        "Geneticist"
+    ],
+    "eli5Summary": "Imagine your kidney has tiny filters that clean your blood. FSGS is when some of these filters get clogged and scarred, letting protein leak into your pee. This can cause swelling and other problems, so doctors try to help the filters work better with medicine and diet.",
+    "clinicalSummary": "Focal Segmental Glomerulosclerosis (FSGS) is a clinicopathological entity characterized by the presence of sclerosis in some, but not all (focal), glomeruli and in segments of the affected glomeruli (segmental). FSGS is a common cause of nephrotic syndrome and can progress to end-stage renal disease. Primary FSGS is thought to be caused by a circulating permeability factor, while secondary FSGS is associated with identifiable causes such as infections, drugs, or genetic mutations. Diagnosis requires a kidney biopsy. Treatment focuses on reducing proteinuria and slowing disease progression with immunosuppressants, ACE inhibitors/ARBs, and supportive care. Prognosis varies, with some patients responding to treatment and others progressing to renal failure.",
+    "historicalBackground": "FSGS was first described as a distinct entity in the mid-20th century. Over time, understanding of its various causes and subtypes has evolved, leading to more targeted treatment approaches. Research continues to focus on identifying the underlying mechanisms and developing more effective therapies.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Identification of Novel Genetic Mutations Associated with FSGS",
+            "description": "Recent studies have identified new genetic mutations that contribute to the development of FSGS, providing potential targets for future therapies.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Development of Targeted Therapies for Specific FSGS Subtypes",
+            "description": "Researchers are developing targeted therapies based on the underlying cause of FSGS, such as gene therapies for genetic forms of the disease.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Kidney Foundation",
+            "url": "https://www.kidney.org/"
+        },
+        {
+            "name": "NephCure Kidney International",
+            "url": "https://nephcure.org/"
+        },
+        {
+            "name": "National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK)",
+            "url": "https://www.niddk.nih.gov/"
+        }
+    ]
+}

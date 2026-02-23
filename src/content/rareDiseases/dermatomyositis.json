@@ -1,0 +1,173 @@
+{
+    "name": "Dermatomyositis",
+    "slug": "dermatomyositis",
+    "aliases": [
+        "DM",
+        "Polymyositis with skin involvement"
+    ],
+    "description": "Dermatomyositis is a rare autoimmune disease characterized by muscle inflammation (myositis) and a distinctive skin rash. The condition can affect both adults and children, with varying degrees of severity. The cause is unknown, but it is believed to involve a combination of genetic predisposition and environmental factors. Dermatomyositis can be associated with underlying malignancies, particularly in adults.",
+    "category": "AUTOIMMUNE",
+    "icdCode": "M33.0",
+    "orphaCode": "217",
+    "omimCode": "103100",
+    "prevalence": "1 in 100,000",
+    "estimatedCases": 330000,
+    "ageOfOnset": "Bimodal: Childhood (5-15 years) and Adulthood (late 40s to early 60s)",
+    "inheritance": "SPORADIC",
+    "symptoms": [
+        "Characteristic skin rash (Gottron's papules, heliotrope rash)",
+        "Muscle weakness (proximal muscles)",
+        "Fatigue",
+        "Difficulty swallowing (dysphagia)",
+        "Shortness of breath",
+        "Joint pain",
+        "Calcinosis (calcium deposits in muscles or skin)",
+        "Photosensitivity",
+        "Raynaud's phenomenon"
+    ],
+    "affectedSystems": [
+        "Musculoskeletal System",
+        "Integumentary System",
+        "Respiratory System",
+        "Gastrointestinal System",
+        "Cardiovascular System"
+    ],
+    "prognosis": "Variable; depends on disease severity, response to treatment, and presence of complications or associated malignancies. Early diagnosis and treatment improve prognosis.",
+    "lifeExpectancy": "Reduced compared to the general population, particularly in cases with severe muscle involvement, lung disease, or associated malignancy. With treatment, many patients can achieve remission and have a near-normal life expectancy.",
+    "diagnosticMethods": [
+        "Physical examination",
+        "Skin biopsy",
+        "Muscle biopsy",
+        "Blood tests (creatine kinase, aldolase, anti-Jo-1 antibodies, anti-Mi-2 antibodies, other myositis-specific antibodies)",
+        "Electromyography (EMG)",
+        "Magnetic resonance imaging (MRI) of muscles",
+        "Cancer screening (age-appropriate)",
+        "Pulmonary function tests"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Corticosteroids (e.g., Prednisone)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Immunosuppressants (e.g., Methotrexate, Azathioprine, Mycophenolate mofetil)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Intravenous Immunoglobulin (IVIG)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Rituximab",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2019
+        },
+        {
+            "name": "Physical therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Speech therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Calcinosis management (e.g., surgical removal, medications)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 150,
+    "keyResearchCenters": [
+        "National Institute of Arthritis and Musculoskeletal and Skin Diseases (NIAMS)",
+        "Johns Hopkins Myositis Center",
+        "Mayo Clinic",
+        "University of California, San Francisco (UCSF)"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "The Myositis Association",
+            "url": "https://www.myositis.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Polymyositis",
+        "Inclusion Body Myositis",
+        "Systemic Lupus Erythematosus",
+        "Scleroderma",
+        "Rheumatoid Arthritis",
+        "Interstitial Lung Disease"
+    ],
+    "specialistTypes": [
+        "Rheumatologist",
+        "Dermatologist",
+        "Neurologist",
+        "Pulmonologist",
+        "Gastroenterologist",
+        "Physical Therapist",
+        "Occupational Therapist",
+        "Speech Therapist"
+    ],
+    "eli5Summary": "Imagine your body is like a garden, and sometimes your immune system, which is supposed to protect you, gets confused and starts attacking your own muscles and skin. This causes a rash and makes your muscles weak. Doctors can give you medicine to calm down your immune system and help you feel better.",
+    "clinicalSummary": "Dermatomyositis (DM) is an idiopathic inflammatory myopathy characterized by proximal muscle weakness and distinctive cutaneous manifestations. The pathogenesis involves an autoimmune response targeting the microvasculature of muscles and skin. Diagnostic criteria include characteristic skin findings (Gottron's papules/sign, heliotrope rash), elevated muscle enzymes (CK, aldolase), myositis-specific antibodies, abnormal EMG findings, and muscle biopsy demonstrating perifascicular atrophy and inflammatory infiltrates. DM can be classified as classic DM, amyopathic DM (skin findings without clinical myositis), and overlap myositis (associated with other connective tissue diseases). A significant association exists between DM and malignancy, particularly in older adults. Treatment involves corticosteroids, immunosuppressants, and IVIG. Monitoring for complications such as interstitial lung disease, dysphagia, and cardiac involvement is crucial. Prognosis varies depending on disease severity, response to therapy, and the presence of associated malignancies.",
+    "historicalBackground": "Dermatomyositis was first described in the late 19th century. The association with malignancy was recognized in the mid-20th century. Significant advances in understanding the immunopathogenesis and developing targeted therapies have occurred in recent decades.",
+    "recentBreakthroughs": [
+        {
+            "year": 2023,
+            "title": "Novel Myositis-Specific Antibodies Identified",
+            "description": "Identification of new myositis-specific antibodies that can aid in diagnosis and potentially predict disease phenotype and prognosis.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2022,
+            "title": "Targeted Therapies Showing Promise in Refractory Dermatomyositis",
+            "description": "Clinical trials evaluating targeted therapies, such as JAK inhibitors and B-cell depleting agents, have shown promising results in patients with refractory dermatomyositis.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "The Myositis Association",
+            "url": "https://www.myositis.org/"
+        },
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        }
+    ]
+}

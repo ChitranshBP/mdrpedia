@@ -1,0 +1,155 @@
+{
+    "name": "Fanconi Anemia",
+    "slug": "fanconi-anemia",
+    "aliases": [
+        "FA",
+        "Familial Pancytopenia",
+        "Constitutional Aplastic Anemia"
+    ],
+    "description": "Fanconi anemia (FA) is a rare genetic disorder characterized by bone marrow failure, physical abnormalities, and an increased risk of certain cancers. It results from defects in a group of proteins responsible for DNA repair, specifically the repair of DNA damage caused by crosslinking agents. The condition typically presents in childhood with symptoms related to bone marrow failure, such as anemia, thrombocytopenia, and leukopenia.",
+    "category": "GENETIC",
+    "icdCode": "D61.0",
+    "orphaCode": "306",
+    "omimCode": "227650",
+    "prevalence": "1 in 100,000 births",
+    "estimatedCases": 3300,
+    "ageOfOnset": "Typically between 2 and 15 years",
+    "inheritance": "AUTOSOMAL_RECESSIVE",
+    "symptoms": [
+        "Bone marrow failure (anemia, thrombocytopenia, leukopenia)",
+        "Short stature",
+        "Skeletal abnormalities (e.g., absent or abnormal thumbs, radius)",
+        "Skin pigmentation changes (café-au-lait spots)",
+        "Eye and ear abnormalities",
+        "Kidney abnormalities",
+        "Increased risk of leukemia (acute myeloid leukemia)",
+        "Increased risk of solid tumors (e.g., head and neck cancers, gynecological cancers)"
+    ],
+    "affectedSystems": [
+        "Hematopoietic System",
+        "Skeletal System",
+        "Integumentary System",
+        "Renal System",
+        "Ocular System",
+        "Auditory System"
+    ],
+    "prognosis": "Variable, depending on the severity of bone marrow failure, the development of complications such as leukemia or solid tumors, and the success of treatment interventions.",
+    "lifeExpectancy": "Reduced; without treatment, many individuals die in childhood or young adulthood. Hematopoietic stem cell transplantation (HSCT) can significantly improve survival.",
+    "diagnosticMethods": [
+        "Complete blood count (CBC) to assess for cytopenias",
+        "Bone marrow aspiration and biopsy",
+        "Chromosome breakage test (diepoxybutane (DEB) or mitomycin C (MMC) test) to assess DNA repair capacity",
+        "Genetic testing to identify mutations in FA genes (e.g., FANCA, FANCB, FANCC, FANCD2, FANCE, FANCF, FANCG, FANCI, FANCL, FANCM, FANCN, FANCO, FANCP, FANCR, FANCS, FANCT, FANCV, FANCW, FANCX)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Hematopoietic Stem Cell Transplantation (HSCT)",
+            "type": "GENE_THERAPY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Androgens (e.g., Oxymetholone)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Hematopoietic Growth Factors (e.g., G-CSF, GM-CSF)",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Blood Transfusions",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Gene Therapy",
+            "type": "GENE_THERAPY",
+            "effectiveness": "EXPERIMENTAL",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Supportive Care",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 50,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Fred Hutchinson Cancer Research Center",
+        "Dana-Farber Cancer Institute",
+        "University of Minnesota"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Fanconi Anemia Research Fund (FARF)",
+            "url": "https://www.fanconi.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Fanconi Hope",
+            "url": "https://fanconihope.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Diamond-Blackfan Anemia",
+        "Dyskeratosis Congenita",
+        "Shwachman-Diamond Syndrome"
+    ],
+    "specialistTypes": [
+        "Hematologist",
+        "Pediatrician",
+        "Geneticist",
+        "Oncologist",
+        "Bone Marrow Transplant Specialist"
+    ],
+    "eli5Summary": "Fanconi anemia is a rare disease where your body can't fix damaged DNA very well. This can cause problems with your blood, like not having enough red blood cells, and can make you more likely to get sick or get cancer. Doctors can help with special treatments like bone marrow transplants.",
+    "clinicalSummary": "Fanconi anemia (FA) is a genetically heterogeneous disorder characterized by cellular hypersensitivity to DNA cross-linking agents, genomic instability, bone marrow failure, variable congenital abnormalities, and a predisposition to cancer. The underlying pathophysiology involves defects in the FA pathway, a complex network of proteins involved in DNA damage repair, particularly the repair of interstrand crosslinks (ICLs). Mutations in any of the FA genes (FANCA, FANCB, FANCC, FANCD2, FANCE, FANCF, FANCG, FANCI, FANCL, FANCM, FANCN, FANCO, FANCP, FANCR, FANCS, FANCT, FANCV, FANCW, FANCX) disrupt this pathway, leading to the accumulation of DNA damage and subsequent cellular dysfunction. Clinically, FA typically presents in childhood with manifestations of bone marrow failure, such as anemia, thrombocytopenia, and leukopenia. Congenital abnormalities are common, including short stature, skeletal anomalies (e.g., radial ray defects), skin pigmentation changes, and genitourinary abnormalities. Patients with FA have a significantly increased risk of developing acute myeloid leukemia (AML) and solid tumors, particularly head and neck cancers and gynecological cancers. Diagnosis is based on clinical findings, chromosome breakage testing, and genetic testing. Treatment options include hematopoietic stem cell transplantation (HSCT), androgen therapy, hematopoietic growth factors, and supportive care. HSCT is the only curative option but is associated with significant risks. Gene therapy is an emerging therapeutic approach.",
+    "historicalBackground": "Fanconi anemia was first described in 1927 by Swiss pediatrician Guido Fanconi. The genetic basis of the disease began to be elucidated in the 1990s with the identification of the first FA genes. Hematopoietic stem cell transplantation emerged as a life-saving treatment option in the late 20th century.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Improved Outcomes with Reduced-Intensity Conditioning HSCT",
+            "description": "Studies have shown that reduced-intensity conditioning regimens in HSCT for FA patients can reduce the risk of transplant-related complications while maintaining good engraftment and disease control.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Advancements in Gene Therapy for Fanconi Anemia",
+            "description": "Research is ongoing to develop gene therapy approaches for FA, with early-phase clinical trials showing promising results in correcting the underlying genetic defect and improving hematopoiesis.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/"
+        },
+        {
+            "name": "GeneReviews",
+            "url": "https://www.ncbi.nlm.nih.gov/books/NBK1116/"
+        },
+        {
+            "name": "Fanconi Anemia Research Fund (FARF)",
+            "url": "https://www.fanconi.org/"
+        }
+    ]
+}

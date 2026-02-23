@@ -1,0 +1,161 @@
+{
+    "name": "Achondroplasia",
+    "slug": "achondroplasia",
+    "aliases": [
+        "ACH",
+        "Dwarfism",
+        "Short-limbed dwarfism"
+    ],
+    "description": "Achondroplasia is the most common form of dwarfism, characterized by rhizomelic shortening of the limbs, relatively large head with frontal bossing, and midface hypoplasia. It is a genetic disorder of bone growth that results in disproportionate short stature.",
+    "category": "GENETIC",
+    "icdCode": "Q77.4",
+    "orphaCode": "68",
+    "omimCode": "100800",
+    "prevalence": "1 in 15,000 to 40,000 live births",
+    "estimatedCases": 250000,
+    "ageOfOnset": "Congenital",
+    "inheritance": "AUTOSOMAL_DOMINANT",
+    "symptoms": [
+        "Disproportionate short stature",
+        "Rhizomelic shortening of limbs (upper arms and thighs)",
+        "Relatively large head (macrocephaly)",
+        "Frontal bossing (prominent forehead)",
+        "Midface hypoplasia (flattened facial features)",
+        "Short fingers (brachydactyly)",
+        "Trident hand (separation between middle and ring fingers)",
+        "Spinal stenosis (narrowing of the spinal canal)",
+        "Recurrent ear infections",
+        "Apnea (pauses in breathing)",
+        "Kyphosis (curvature of the upper back)",
+        "Lordosis (curvature of the lower back)",
+        "Hypotonia (decreased muscle tone) in infancy"
+    ],
+    "affectedSystems": [
+        "Skeletal System",
+        "Neurological System",
+        "Respiratory System"
+    ],
+    "prognosis": "The prognosis for individuals with achondroplasia varies. While many individuals live full and productive lives, potential complications such as spinal stenosis and respiratory issues can affect quality of life and life expectancy. Careful monitoring and management of these complications are important.",
+    "lifeExpectancy": "Near normal, but can be reduced by complications such as spinal cord compression or respiratory problems.",
+    "diagnosticMethods": [
+        "Clinical evaluation",
+        "Radiographic studies (X-rays)",
+        "Genetic testing (FGFR3 gene sequencing)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Vosoritide",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2021
+        },
+        {
+            "name": "Limb Lengthening Surgery",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Decompression Surgery for Spinal Stenosis",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Management of Ear Infections",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Treatment for Apnea",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Physical Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 50,
+    "keyResearchCenters": [
+        "University of California, Los Angeles (UCLA)",
+        "Nemours Children's Hospital",
+        "Johns Hopkins University",
+        "Stanford University"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Little People of America (LPA)",
+            "url": "https://www.lpaonline.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Restricted Growth Association UK",
+            "url": "https://www.rgauk.org/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "Hypochondroplasia",
+        "Thanatophoric dysplasia",
+        "SADDAN dysplasia"
+    ],
+    "specialistTypes": [
+        "Geneticist",
+        "Pediatrician",
+        "Orthopedic Surgeon",
+        "Neurosurgeon",
+        "Otolaryngologist (ENT)",
+        "Pulmonologist"
+    ],
+    "eli5Summary": "Imagine your bones didn't grow as long as they should. That's like achondroplasia! It makes people shorter, especially their arms and legs. They might also have a bigger head and need help with breathing sometimes.",
+    "clinicalSummary": "Achondroplasia is a skeletal dysplasia caused by mutations in the FGFR3 gene, leading to constitutive activation of the receptor and impaired endochondral ossification. Clinically, it presents with rhizomelic dwarfism, macrocephaly, frontal bossing, midface hypoplasia, and trident hands. Complications include spinal stenosis, foramen magnum compression, and respiratory issues. Diagnosis is based on clinical and radiographic findings, confirmed by genetic testing. Management involves addressing complications and may include surgical interventions and, more recently, targeted therapies like vosoritide.",
+    "historicalBackground": "Achondroplasia has been recognized since ancient times, with depictions found in ancient Egyptian and Roman art. The genetic basis was elucidated in the 1990s with the discovery of mutations in the FGFR3 gene.",
+    "recentBreakthroughs": [
+        {
+            "year": 2021,
+            "title": "FDA Approves Vosoritide for Achondroplasia",
+            "description": "The FDA approved vosoritide, a C-type natriuretic peptide (CNP) analog, for children with achondroplasia. This medication helps promote bone growth and improve height velocity.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Long-term Efficacy of Vosoritide Demonstrated",
+            "description": "Longitudinal studies have shown sustained improvements in height and body proportions in children treated with vosoritide over several years.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institutes of Health (NIH)",
+            "url": "https://www.nih.gov/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        },
+        {
+            "name": "Online Mendelian Inheritance in Man (OMIM)",
+            "url": "https://www.omim.org/"
+        },
+        {
+            "name": "U.S. Food and Drug Administration (FDA)",
+            "url": "https://www.fda.gov/"
+        }
+    ]
+}

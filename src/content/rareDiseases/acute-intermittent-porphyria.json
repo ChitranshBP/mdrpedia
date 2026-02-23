@@ -1,0 +1,159 @@
+{
+    "name": "Acute Intermittent Porphyria",
+    "slug": "acute-intermittent-porphyria",
+    "aliases": [
+        "AIP",
+        "Swedish Porphyria",
+        "Pyrroloporphyria"
+    ],
+    "description": "Acute Intermittent Porphyria (AIP) is a rare genetic metabolic disorder characterized by deficiency of the enzyme hydroxymethylbilane synthase (also known as porphobilinogen deaminase), leading to the accumulation of porphyrin precursors in the liver, blood, and urine. This can result in acute neurovisceral attacks, which are episodes of severe abdominal pain, neurological dysfunction, and psychiatric symptoms. AIP is one of the most common forms of acute porphyria.",
+    "category": "METABOLIC",
+    "icdCode": "E80.21",
+    "orphaCode": "714",
+    "omimCode": "176000",
+    "prevalence": "1 in 20,000",
+    "estimatedCases": 16500,
+    "ageOfOnset": "Typically adulthood (20s-40s), but can occur earlier.",
+    "inheritance": "AUTOSOMAL_DOMINANT",
+    "symptoms": [
+        "Severe abdominal pain",
+        "Nausea and vomiting",
+        "Constipation",
+        "Muscle weakness",
+        "Seizures",
+        "Hyponatremia",
+        "Tachycardia",
+        "Hypertension",
+        "Anxiety",
+        "Confusion",
+        "Hallucinations",
+        "Paralysis",
+        "Red or brown urine"
+    ],
+    "affectedSystems": [
+        "Nervous System",
+        "Digestive System",
+        "Cardiovascular System",
+        "Renal System",
+        "Psychiatric"
+    ],
+    "prognosis": "Variable. With prompt diagnosis and treatment, acute attacks can be managed, and long-term complications minimized. Recurrent attacks can lead to chronic symptoms and reduced quality of life. Rarely, severe attacks can be life-threatening.",
+    "lifeExpectancy": "Generally normal with proper management, but recurrent severe attacks can reduce life expectancy due to complications.",
+    "diagnosticMethods": [
+        "Urine porphyrin and porphyrin precursor (porphobilinogen and aminolevulinic acid) measurements",
+        "Erythrocyte porphobilinogen deaminase (hydroxymethylbilane synthase) enzyme activity assay",
+        "Genetic testing for mutations in the HMBS gene"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Intravenous Hemin Arginate (Panhematin)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 1983
+        },
+        {
+            "name": "Givosiran (Givlaari)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2019
+        },
+        {
+            "name": "Glucose and fluid administration",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Pain management (opioids)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Beta-blockers (for tachycardia and hypertension)",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Anti-epileptic drugs (for seizures)",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Liver transplantation",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 15,
+    "keyResearchCenters": [
+        "Mount Sinai Hospital, New York",
+        "University of Utah",
+        "Porphyria Center - UCSF",
+        "Mayo Clinic"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "American Porphyria Foundation",
+            "url": "https://www.porphyriafoundation.org/",
+            "country": "USA"
+        },
+        {
+            "name": "European Porphyria Network",
+            "url": "https://www.europeanporphyrianetwork.org/",
+            "country": "Europe"
+        }
+    ],
+    "relatedConditions": [
+        "Variegate Porphyria (VP)",
+        "Hereditary Coproporphyria (HCP)",
+        "ALA Dehydratase Deficiency Porphyria (ADP)"
+    ],
+    "specialistTypes": [
+        "Gastroenterologist",
+        "Neurologist",
+        "Hematologist",
+        "Geneticist",
+        "Psychiatrist"
+    ],
+    "eli5Summary": "Imagine your body has a factory that makes a special ingredient for your blood. In AIP, this factory has a missing part, causing it to make too much of some stuff that can make you feel really sick with tummy aches, nerve problems, and even make you confused. Doctors can give you medicine to help your factory work better and make you feel better.",
+    "clinicalSummary": "Acute Intermittent Porphyria (AIP) is an autosomal dominant metabolic disorder resulting from a deficiency in hydroxymethylbilane synthase (HMBS), an enzyme in the heme biosynthetic pathway. This deficiency leads to the accumulation of porphyrin precursors, particularly porphobilinogen (PBG) and aminolevulinic acid (ALA), in various tissues and fluids. Acute attacks are characterized by severe abdominal pain, neurological dysfunction (peripheral neuropathy, seizures, altered mental status), and psychiatric symptoms. These attacks are often triggered by factors such as certain medications, alcohol, stress, and hormonal changes. Diagnosis involves measuring urinary PBG and ALA levels, erythrocyte HMBS activity, and genetic testing for HMBS mutations. Treatment focuses on managing acute attacks with intravenous hemin arginate or givosiran to reduce porphyrin precursor production, along with supportive care for pain, nausea, and other symptoms. Long-term management involves avoiding triggers and, in some cases, prophylactic treatment with givosiran or liver transplantation for severe, recurrent attacks.",
+    "historicalBackground": "AIP was first described in the late 19th century, with early observations linking it to psychiatric symptoms and abdominal pain. The enzymatic defect was identified in the mid-20th century, leading to improved diagnostic and therapeutic approaches. The development of hemin therapy in the 1970s significantly improved the management of acute attacks.",
+    "recentBreakthroughs": [
+        {
+            "year": 2019,
+            "title": "FDA Approves Givosiran for Acute Hepatic Porphyria",
+            "description": "Givosiran, a small interfering RNA (siRNA) targeting ALAS1 mRNA in hepatocytes, was approved by the FDA for the treatment of acute hepatic porphyrias, including AIP. This approval marked a significant advance in the management of AIP by reducing the frequency of acute attacks.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/"
+        },
+        {
+            "name": "American Porphyria Foundation",
+            "url": "https://www.porphyriafoundation.org/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        }
+    ]
+}

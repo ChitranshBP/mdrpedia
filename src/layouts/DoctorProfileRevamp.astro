@@ -342,7 +342,9 @@ function slugifyInstitution(name: string): string {
                     <h1 class="hero__name">{doctor.fullName}</h1>
 
                     <p class="hero__specialty">
-                        {doctor.specialty}
+                        <a href={`/doctors?specialty=${encodeURIComponent(doctor.specialty)}`} style="color: inherit; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
+                            {doctor.specialty}
+                        </a>
                         {doctor.subSpecialty && <span class="hero__subspecialty"> · {doctor.subSpecialty}</span>}
                     </p>
 
@@ -860,7 +862,7 @@ function slugifyInstitution(name: string): string {
                                             <h4 class="expertise-group__title">Medical Specialties</h4>
                                             <div class="tags">
                                                 {doctor.medicalSpecialty.map(spec => (
-                                                    <span class="tag tag--specialty">{spec}</span>
+                                                    <a href={`/doctors?specialty=${encodeURIComponent(spec)}`} class="tag tag--specialty" style="text-decoration: none;">{spec}</a>
                                                 ))}
                                             </div>
                                         </div>
@@ -870,7 +872,7 @@ function slugifyInstitution(name: string): string {
                                             <h4 class="expertise-group__title">Conditions & Diseases Treated</h4>
                                             <div class="tags">
                                                 {doctor.conditionsTreated.map(condition => (
-                                                    <span class="tag tag--condition">{condition}</span>
+                                                    <a href={`/search?q=${encodeURIComponent(condition)}`} class="tag tag--condition" style="text-decoration: none;">{condition}</a>
                                                 ))}
                                             </div>
                                         </div>
@@ -880,7 +882,7 @@ function slugifyInstitution(name: string): string {
                                             <h4 class="expertise-group__title">Clinical Knowledge & Procedures</h4>
                                             <div class="tags">
                                                 {doctor.knowsAbout.map(topic => (
-                                                    <span class="tag">{topic}</span>
+                                                    <a href={`/search?q=${encodeURIComponent(topic)}`} class="tag" style="text-decoration: none;">{topic}</a>
                                                 ))}
                                             </div>
                                         </div>

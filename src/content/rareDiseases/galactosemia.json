@@ -1,0 +1,151 @@
+{
+    "name": "Galactosemia",
+    "slug": "galactosemia",
+    "aliases": [
+        "GALT Deficiency",
+        "Classic Galactosemia",
+        "Galactose-1-Phosphate Uridyltransferase Deficiency"
+    ],
+    "description": "Galactosemia is a rare inherited metabolic disorder that affects an individual's ability to metabolize galactose, a sugar found in milk and other dairy products, as well as some fruits and vegetables. This occurs due to a deficiency in one of the enzymes needed to convert galactose into glucose, which the body uses for energy. The most common and severe form is classic galactosemia, caused by a deficiency in the galactose-1-phosphate uridyltransferase (GALT) enzyme. Early diagnosis and dietary management are crucial to prevent serious complications.",
+    "category": "METABOLIC",
+    "icdCode": "E74.2",
+    "orphaCode": "354",
+    "omimCode": "230400",
+    "prevalence": "1 in 30,000 to 60,000 newborns",
+    "estimatedCases": 5000,
+    "ageOfOnset": "Newborn",
+    "inheritance": "AUTOSOMAL_RECESSIVE",
+    "symptoms": [
+        "Feeding difficulties",
+        "Vomiting",
+        "Diarrhea",
+        "Lethargy",
+        "Jaundice",
+        "Hepatomegaly (enlarged liver)",
+        "Failure to thrive",
+        "Cataracts",
+        "Intellectual disability (if untreated)",
+        "Seizures",
+        "Increased risk of E. coli sepsis in newborns",
+        "Ovarian failure in females"
+    ],
+    "affectedSystems": [
+        "Metabolic",
+        "Gastrointestinal",
+        "Hepatic",
+        "Neurological",
+        "Ophthalmological",
+        "Reproductive"
+    ],
+    "prognosis": "With early diagnosis and strict dietary management, individuals with galactosemia can lead relatively normal lives. However, even with treatment, some long-term complications may occur.",
+    "lifeExpectancy": "Near normal with early diagnosis and adherence to dietary restrictions. Without treatment, life expectancy is significantly reduced.",
+    "diagnosticMethods": [
+        "Newborn screening (GALT enzyme activity)",
+        "Quantitative GALT enzyme assay",
+        "Galactose-1-phosphate levels in red blood cells",
+        "Genetic testing for GALT gene mutations"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Galactose-free diet",
+            "type": "SUPPORTIVE",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": null,
+            "approvalYear": null
+        },
+        {
+            "name": "Calcium supplementation",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": null,
+            "approvalYear": null
+        },
+        {
+            "name": "Vitamin D supplementation",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": null,
+            "approvalYear": null
+        },
+        {
+            "name": "Speech therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": null,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": null,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 5,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Boston Children's Hospital",
+        "Mayo Clinic"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "National Galactosemia Foundation",
+            "url": "https://www.galactosemia.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Galactosaemia Support Group UK",
+            "url": "https://www.galactosemia.org.uk/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "Duarte Galactosemia",
+        "Galactokinase Deficiency",
+        "UDP-Galactose-4-Epimerase Deficiency"
+    ],
+    "specialistTypes": [
+        "Metabolic Geneticist",
+        "Pediatrician",
+        "Dietitian",
+        "Endocrinologist",
+        "Gastroenterologist"
+    ],
+    "eli5Summary": "Imagine your body has trouble using a type of sugar called galactose, which is in milk. Galactosemia is when your body can't break down galactose properly. If you have it, you need to avoid milk and some other foods to stay healthy.",
+    "clinicalSummary": "Galactosemia is a metabolic disorder characterized by the body's inability to metabolize galactose due to enzyme deficiencies, most commonly galactose-1-phosphate uridyltransferase (GALT). This leads to the accumulation of galactose and its metabolites in the blood and tissues, causing liver damage, neurological impairment, cataracts, and other complications. Newborn screening is crucial for early detection. Management involves strict dietary restriction of galactose throughout life. Long-term complications, such as speech deficits, motor skill challenges, and ovarian dysfunction in females, may still occur despite dietary control. Regular monitoring and multidisciplinary care are essential.",
+    "historicalBackground": "Galactosemia was first described in 1917 by Von Reuss. The enzymatic defect was identified by Leloir in the 1950s, leading to the development of newborn screening programs and dietary interventions that have dramatically improved the prognosis for affected individuals.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Advances in Understanding Long-Term Complications of Galactosemia",
+            "description": "Research continues to investigate the underlying mechanisms of long-term complications in galactosemia, such as speech and motor deficits, despite dietary treatment. Studies are focusing on the role of specific galactose metabolites and their impact on brain development.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Novel Biomarkers for Monitoring Galactosemia",
+            "description": "Researchers are exploring novel biomarkers to improve the monitoring of galactosemia and predict long-term outcomes. These biomarkers may help to identify individuals at higher risk of complications and tailor treatment strategies accordingly.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institutes of Health (NIH)",
+            "url": "https://www.nih.gov/"
+        },
+        {
+            "name": "National Galactosemia Foundation",
+            "url": "https://www.galactosemia.org/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        }
+    ]
+}

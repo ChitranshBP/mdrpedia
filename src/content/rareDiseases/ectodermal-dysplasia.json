@@ -1,0 +1,165 @@
+{
+    "name": "Ectodermal Dysplasia",
+    "slug": "ectodermal-dysplasia",
+    "aliases": [
+        "ED",
+        "Hypohidrotic Ectodermal Dysplasia (HED)",
+        "Anhidrotic Ectodermal Dysplasia",
+        "Christ-Siemens-Touraine Syndrome"
+    ],
+    "description": "Ectodermal dysplasias (EDs) are a group of genetic disorders characterized by abnormal development of ectodermal structures, including the skin, hair, teeth, and sweat glands. The severity and specific features vary widely depending on the specific gene affected. Some individuals may have mild symptoms, while others experience significant functional and cosmetic challenges. The most common form is hypohidrotic ectodermal dysplasia (HED), characterized by reduced or absent sweating, sparse hair, and abnormal or missing teeth.",
+    "category": "GENETIC",
+    "icdCode": "Q82.4",
+    "orphaCode": "278",
+    "omimCode": "129490",
+    "prevalence": "1 in 10,000 births",
+    "estimatedCases": 80000,
+    "ageOfOnset": "Infancy or early childhood",
+    "inheritance": "X_LINKED, AUTOSOMAL_RECESSIVE, AUTOSOMAL_DOMINANT",
+    "symptoms": [
+        "Sparse hair (hypotrichosis)",
+        "Reduced or absent sweating (hypohidrosis or anhidrosis)",
+        "Abnormal or missing teeth (hypodontia or anodontia)",
+        "Dry skin",
+        "Thickened nails",
+        "Craniofacial abnormalities (e.g., prominent forehead, saddle nose)",
+        "Heat intolerance",
+        "Eczema",
+        "Respiratory infections",
+        "Dry eyes"
+    ],
+    "affectedSystems": [
+        "Integumentary System",
+        "Skeletal System",
+        "Respiratory System",
+        "Immune System",
+        "Dental System"
+    ],
+    "prognosis": "The prognosis varies depending on the specific type and severity of ectodermal dysplasia. With appropriate management, many individuals can lead relatively normal lives. However, complications such as hyperthermia, respiratory infections, and dental problems can impact quality of life.",
+    "lifeExpectancy": "Life expectancy is generally normal, but complications such as severe hyperthermia or recurrent infections can reduce lifespan in some cases.",
+    "diagnosticMethods": [
+        "Clinical examination",
+        "Family history",
+        "Genetic testing (e.g., sequencing of EDA, EDAR, EDARADD, WNT10A genes)",
+        "Skin biopsy (to assess sweat gland function)",
+        "Dental X-rays",
+        "Physical Examination"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Cooling measures (e.g., fans, cooling vests)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Artificial tears",
+            "type": "SUPPORTIVE",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Emollients and moisturizers",
+            "type": "SUPPORTIVE",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Dental prosthetics (e.g., dentures, implants)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Gene therapy (experimental)",
+            "type": "GENE_THERAPY",
+            "effectiveness": "EXPERIMENTAL",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Ectodysplasin A replacement therapy",
+            "type": "THERAPY",
+            "effectiveness": "EXPERIMENTAL",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Antibiotics (for infections)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 15,
+    "keyResearchCenters": [
+        "National Foundation for Ectodermal Dysplasias (NFED)",
+        "University of Bonn, Germany",
+        "Stanford University, USA"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "National Foundation for Ectodermal Dysplasias (NFED)",
+            "url": "https://www.nfed.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Ectodermal Dysplasia Society",
+            "url": "https://www.ectodermaldysplasia.org/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "Clouston Syndrome",
+        "Ellis-van Creveld Syndrome",
+        "Rapp-Hodgkin Ectodermal Dysplasia Syndrome"
+    ],
+    "specialistTypes": [
+        "Geneticist",
+        "Dermatologist",
+        "Dentist",
+        "Pediatrician",
+        "Otolaryngologist (ENT)"
+    ],
+    "eli5Summary": "Imagine your body has trouble making things like sweat, hair, and teeth. Ectodermal dysplasia is when some parts of your body that are supposed to make these things don't work right. So, you might not sweat enough, have thin hair, or have missing teeth. Doctors can help with special ways to stay cool and get new teeth.",
+    "clinicalSummary": "Ectodermal dysplasias encompass a heterogeneous group of inherited disorders affecting the development of ectodermal derivatives. These disorders are characterized by abnormalities in two or more ectodermal structures, including the skin, hair, teeth, and sweat glands. The underlying genetic defects involve genes crucial for ectodermal development, such as EDA, EDAR, EDARADD, and WNT10A. Clinical manifestations vary widely, ranging from mild hypohidrosis and dental anomalies to severe anhidrosis, alopecia, and craniofacial dysmorphism. Diagnosis involves clinical evaluation, family history, and genetic testing. Management is primarily supportive, focusing on preventing hyperthermia, managing skin dryness, and providing dental rehabilitation. Emerging therapies, including ectodysplasin A replacement and gene therapy, hold promise for future treatment.",
+    "historicalBackground": "Ectodermal dysplasia was first described in the late 19th century. The term 'anhidrotic ectodermal dysplasia' was coined by Thurmon in 1921. The X-linked inheritance pattern of the most common form (HED) was established in the mid-20th century. The identification of the EDA gene and its role in ectodermal development in the 1990s marked a significant breakthrough in understanding the molecular basis of ED.",
+    "recentBreakthroughs": [
+        {
+            "year": 2020,
+            "title": "Long-term safety and efficacy of ER-004 (recombinant ectodysplasin A) in X-linked hypohidrotic ectodermal dysplasia",
+            "description": "A clinical trial demonstrated the long-term safety and efficacy of ER-004, a recombinant ectodysplasin A replacement therapy, in improving sweat gland function and quality of life in individuals with X-linked hypohidrotic ectodermal dysplasia.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2022,
+            "title": "Prenatal treatment with recombinant ectodysplasin A1 prevents manifestations of X-linked hypohidrotic ectodermal dysplasia",
+            "description": "A study showed that prenatal administration of recombinant ectodysplasin A1 could prevent the development of X-linked hypohidrotic ectodermal dysplasia in affected fetuses, offering a potential avenue for early intervention.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Foundation for Ectodermal Dysplasias (NFED)",
+            "url": "https://www.nfed.org/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        },
+        {
+            "name": "OMIM",
+            "url": "https://www.omim.org/"
+        }
+    ]
+}

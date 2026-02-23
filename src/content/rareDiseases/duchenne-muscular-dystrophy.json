@@ -1,0 +1,187 @@
+{
+    "name": "Duchenne Muscular Dystrophy",
+    "slug": "duchenne-muscular-dystrophy",
+    "aliases": [
+        "DMD",
+        "Muscular Dystrophy, Duchenne Type"
+    ],
+    "description": "Duchenne Muscular Dystrophy (DMD) is a severe X-linked recessive genetic disorder characterized by progressive muscle degeneration and weakness due to alterations in the dystrophin protein. Primarily affecting males, DMD typically manifests in early childhood, leading to loss of ambulation, respiratory and cardiac complications, and reduced life expectancy. Management focuses on supportive care, including physical therapy, respiratory support, and pharmacological interventions to slow disease progression and improve quality of life.",
+    "category": "GENETIC",
+    "icdCode": "G71.0",
+    "orphaCode": "ORPHA274",
+    "omimCode": "310200",
+    "prevalence": "Approximately 1 in 3,500-5,000 live male births",
+    "estimatedCases": 20000,
+    "ageOfOnset": "2-5 years",
+    "inheritance": "X_LINKED",
+    "symptoms": [
+        "Progressive muscle weakness",
+        "Delayed motor milestones",
+        "Gower's sign",
+        "Frequent falls",
+        "Difficulty running and jumping",
+        "Muscle cramps",
+        "Learning disabilities",
+        "Respiratory difficulties",
+        "Cardiomyopathy",
+        "Scoliosis",
+        "Elevated creatine kinase (CK) levels"
+    ],
+    "affectedSystems": [
+        "Musculoskeletal System",
+        "Cardiovascular System",
+        "Respiratory System",
+        "Neurological System"
+    ],
+    "prognosis": "Progressive muscle weakness leading to significant disability and reduced life expectancy.",
+    "lifeExpectancy": "Without intervention, life expectancy is typically into the late teens or twenties. With comprehensive care, many individuals live into their thirties and beyond.",
+    "diagnosticMethods": [
+        "Clinical examination",
+        "Creatine kinase (CK) level measurement",
+        "Genetic testing (dystrophin gene mutation analysis)",
+        "Muscle biopsy",
+        "Electromyography (EMG)",
+        "Echocardiogram",
+        "MRI of muscles"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Corticosteroids (Prednisone, Deflazacort)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Ataluren",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Exon-skipping therapies (e.g., eteplirsen, golodirsen, viltolarsen)",
+            "type": "GENE_THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Gene Therapy (delandistrogene moxeparvovec-rokl)",
+            "type": "GENE_THERAPY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2023
+        },
+        {
+            "name": "Physical Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Respiratory Support (e.g., BiPAP, mechanical ventilation)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Cardiac Management (e.g., ACE inhibitors, beta-blockers)",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Scoliosis Surgery",
+            "type": "SURGERY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 250,
+    "keyResearchCenters": [
+        "University of Florida",
+        "Nationwide Children's Hospital",
+        "University of Oxford",
+        "Stanford University",
+        "University College London"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Parent Project Muscular Dystrophy (PPMD)",
+            "url": "https://www.parentprojectmd.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Muscular Dystrophy Association (MDA)",
+            "url": "https://www.mda.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Action Duchenne",
+            "url": "https://www.actionduchenne.org/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "Becker Muscular Dystrophy",
+        "Limb-Girdle Muscular Dystrophy",
+        "Spinal Muscular Atrophy"
+    ],
+    "specialistTypes": [
+        "Neurologist",
+        "Geneticist",
+        "Cardiologist",
+        "Pulmonologist",
+        "Physiatrist",
+        "Physical Therapist",
+        "Occupational Therapist"
+    ],
+    "eli5Summary": "Imagine your muscles are like building blocks, and in Duchenne Muscular Dystrophy, some of those blocks are missing. This makes it hard to run, jump, and even breathe as you get older. Doctors try to help by giving medicine and exercises to keep your muscles as strong as possible.",
+    "clinicalSummary": "Duchenne Muscular Dystrophy (DMD) is an X-linked recessive disorder resulting from mutations in the DMD gene, which encodes dystrophin, a protein essential for muscle fiber integrity. The absence or dysfunction of dystrophin leads to progressive muscle fiber damage, inflammation, and eventual replacement of muscle tissue with fat and connective tissue. Clinically, DMD presents with proximal muscle weakness, elevated creatine kinase levels, and characteristic features such as Gower's sign. Cardiac and respiratory complications are common and contribute significantly to morbidity and mortality. Diagnosis is confirmed through genetic testing and muscle biopsy. Management includes corticosteroids, exon-skipping therapies, gene therapy, and supportive care to optimize function and prolong survival.",
+    "historicalBackground": "Duchenne Muscular Dystrophy was first described in detail by the French neurologist Guillaume Benjamin Amand Duchenne in the mid-19th century. The genetic basis of the disease was discovered in 1986, with the identification of the dystrophin gene on the X chromosome.",
+    "recentBreakthroughs": [
+        {
+            "year": 2023,
+            "title": "FDA Approves First Gene Therapy for Duchenne Muscular Dystrophy",
+            "description": "The FDA approved delandistrogene moxeparvovec-rokl (Elevidys), the first gene therapy for Duchenne muscular dystrophy (DMD). This adeno-associated virus (AAV) vector-based gene therapy delivers a truncated (micro-dystrophin) gene to muscle cells, aiming to improve muscle function in DMD patients.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2020,
+            "title": "Viltolarsen Approved for DMD Patients Amenable to Exon 53 Skipping",
+            "description": "The FDA approved viltolarsen, an exon-skipping drug, for DMD patients with mutations amenable to exon 53 skipping. This approval expanded the therapeutic options for a subset of DMD patients, offering a potential improvement in muscle function and disease progression.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/"
+        },
+        {
+            "name": "Muscular Dystrophy Association (MDA)",
+            "url": "https://www.mda.org/"
+        },
+        {
+            "name": "Parent Project Muscular Dystrophy (PPMD)",
+            "url": "https://www.parentprojectmd.org/"
+        }
+    ]
+}

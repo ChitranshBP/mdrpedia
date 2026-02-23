@@ -1,0 +1,166 @@
+{
+    "name": "Kartagener Syndrome",
+    "slug": "kartagener-syndrome",
+    "aliases": [
+        "Primary Ciliary Dyskinesia with Situs Inversus",
+        "PCD with Situs Inversus"
+    ],
+    "description": "Kartagener syndrome is a rare genetic disorder characterized by the triad of situs inversus (reversal of the internal organs), chronic sinusitis, and bronchiectasis. It is a subtype of primary ciliary dyskinesia (PCD), a condition affecting the function of cilia, which are microscopic hair-like structures that line the airways, sinuses, and other organs. The impaired ciliary function leads to mucus buildup and recurrent respiratory infections.",
+    "category": "GENETIC",
+    "icdCode": "Q89.3",
+    "orphaCode": "486",
+    "omimCode": "244400",
+    "prevalence": "1 in 20,000 to 1 in 40,000 live births",
+    "estimatedCases": 25000,
+    "ageOfOnset": "Infancy or early childhood",
+    "inheritance": "AUTOSOMAL_RECESSIVE",
+    "symptoms": [
+        "Situs inversus (reversed position of internal organs)",
+        "Chronic sinusitis",
+        "Bronchiectasis (widening of the bronchi)",
+        "Recurrent respiratory infections (pneumonia, bronchitis)",
+        "Nasal congestion",
+        "Chronic cough",
+        "Ear infections (otitis media)",
+        "Infertility (in males, due to immotile sperm)",
+        "Hydrocephalus (rare)",
+        "Hearing impairment"
+    ],
+    "affectedSystems": [
+        "Respiratory System",
+        "Skeletal System",
+        "Reproductive System",
+        "ENT (Ears, Nose, Throat)"
+    ],
+    "prognosis": "The prognosis varies. With proper management, individuals can live relatively normal lives, but chronic respiratory issues persist. Lung function may decline over time, leading to complications.",
+    "lifeExpectancy": "Near normal with appropriate management, but respiratory complications can reduce life expectancy.",
+    "diagnosticMethods": [
+        "Nasal Nitric Oxide (nNO) measurement",
+        "High-speed video microscopy of ciliary beat frequency and pattern",
+        "Electron microscopy of cilia",
+        "Genetic testing for PCD-related genes",
+        "Saccharin test (ciliary function test)",
+        "Chest X-ray or CT scan (to assess bronchiectasis and situs inversus)",
+        "Bronchoscopy with biopsy"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Airway Clearance Techniques (Chest Physiotherapy)",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Antibiotics",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Bronchodilators",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Mucolytics (e.g., Dornase alfa, Hypertonic Saline)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Nasal Saline Irrigation",
+            "type": "SUPPORTIVE",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Influenza and Pneumococcal Vaccinations",
+            "type": "SUPPORTIVE",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Surgery (e.g., sinus surgery, lung transplantation)",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 20,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Mayo Clinic",
+        "University of North Carolina at Chapel Hill",
+        "University of Southampton"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Primary Ciliary Dyskinesia Foundation",
+            "url": "https://www.pcdfoundation.org/",
+            "country": "USA"
+        },
+        {
+            "name": "PCD Family Support UK",
+            "url": "https://www.pcdsupport.org.uk/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "Primary Ciliary Dyskinesia (PCD)",
+        "Cystic Fibrosis",
+        "Asthma",
+        "Chronic Obstructive Pulmonary Disease (COPD)"
+    ],
+    "specialistTypes": [
+        "Pulmonologist",
+        "Otolaryngologist (ENT specialist)",
+        "Geneticist",
+        "Pediatrician",
+        "Infectious Disease Specialist",
+        "Reproductive Endocrinologist"
+    ],
+    "eli5Summary": "Imagine tiny hairs in your body that help clean your lungs and nose. In Kartagener syndrome, these hairs don't work right, so you get lots of colds and sinus infections. Also, your organs might be flipped around inside your body!",
+    "clinicalSummary": "Kartagener syndrome is a genetically heterogeneous disorder characterized by defects in ciliary structure and function, leading to impaired mucociliary clearance. The classic triad of situs inversus, chronic sinusitis, and bronchiectasis results from the failure of cilia to properly establish left-right asymmetry during embryogenesis and ineffective clearance of mucus from the airways. Diagnosis involves assessing ciliary beat frequency and pattern, electron microscopy, and genetic testing. Management focuses on airway clearance, infection control, and supportive care. Fertility issues are common in males due to sperm immotility. Lung transplantation may be considered in severe cases of bronchiectasis.",
+    "historicalBackground": "Kartagener syndrome was first described in 1933 by Manes Kartagener, a Swiss physician, who noted the association between situs inversus, sinusitis, and bronchiectasis.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Improved Genetic Diagnostic Tools for PCD",
+            "description": "Advances in next-generation sequencing have expanded the number of known PCD-causing genes, improving diagnostic accuracy and enabling more precise genetic counseling.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Novel Therapies Targeting Mucus Clearance",
+            "description": "Research into new mucolytic agents and airway clearance techniques shows promise in improving mucus clearance and reducing the frequency of respiratory infections in PCD patients.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/Disease_Search.php?lng=EN&data_id=486"
+        },
+        {
+            "name": "National Institutes of Health (NIH)",
+            "url": "https://www.ncbi.nlm.nih.gov/books/NBK1124/"
+        },
+        {
+            "name": "Primary Ciliary Dyskinesia Foundation",
+            "url": "https://www.pcdfoundation.org/"
+        }
+    ]
+}

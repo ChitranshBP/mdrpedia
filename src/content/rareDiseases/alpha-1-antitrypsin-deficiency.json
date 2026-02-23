@@ -1,0 +1,179 @@
+{
+    "name": "Alpha-1 Antitrypsin Deficiency",
+    "slug": "alpha-1-antitrypsin-deficiency",
+    "aliases": [
+        "AATD",
+        "Alpha1-antitrypsin deficiency",
+        "Alpha-1 protease inhibitor deficiency"
+    ],
+    "description": "Alpha-1 Antitrypsin Deficiency (AATD) is a genetic disorder characterized by a deficiency of alpha-1 antitrypsin (AAT), a protein primarily produced in the liver that protects the lungs from damage caused by enzymes like elastase. The deficiency can lead to lung diseases, such as emphysema and chronic obstructive pulmonary disease (COPD), as well as liver disease, including cirrhosis and hepatocellular carcinoma. The severity and onset of symptoms vary widely among affected individuals.",
+    "category": "GENETIC",
+    "icdCode": "E88.01",
+    "orphaCode": "79",
+    "omimCode": "613490",
+    "prevalence": "1 in 3,000 to 1 in 5,000 individuals of European descent",
+    "estimatedCases": 100000,
+    "ageOfOnset": "Variable; can range from infancy to adulthood",
+    "inheritance": "AUTOSOMAL_RECESSIVE",
+    "symptoms": [
+        "Shortness of breath",
+        "Wheezing",
+        "Chronic cough",
+        "Sputum production",
+        "Fatigue",
+        "Unintentional weight loss",
+        "Vision problems",
+        "Liver problems (jaundice, abdominal swelling)",
+        "Skin problems (panniculitis)"
+    ],
+    "affectedSystems": [
+        "Respiratory System",
+        "Hepatic System",
+        "Integumentary System"
+    ],
+    "prognosis": "Variable; depends on the severity of the deficiency, lifestyle factors (e.g., smoking), and the presence of lung or liver disease. Early diagnosis and treatment can improve outcomes.",
+    "lifeExpectancy": "Reduced, especially in individuals with severe lung or liver disease. However, with proper management, many individuals can live relatively normal lifespans.",
+    "diagnosticMethods": [
+        "Alpha-1 antitrypsin (AAT) blood test",
+        "Genetic testing (to identify specific mutations in the SERPINA1 gene)",
+        "Pulmonary function tests (spirometry)",
+        "Liver function tests",
+        "Liver biopsy (in some cases)",
+        "Chest X-ray or CT scan"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Augmentation Therapy (AAT protein infusions)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 1987
+        },
+        {
+            "name": "Bronchodilators",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Inhaled Corticosteroids",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Antibiotics (for respiratory infections)",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Pulmonary Rehabilitation",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Oxygen Therapy",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Lung Transplantation",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Liver Transplantation",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Gene Therapy",
+            "type": "GENE_THERAPY",
+            "effectiveness": "EXPERIMENTAL",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 50,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Alpha-1 Foundation Research Registry",
+        "University of Florida",
+        "Mayo Clinic"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Alpha-1 Foundation",
+            "url": "https://www.alpha1.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Alpha-1 UK Support Group",
+            "url": "https://www.alpha1.org.uk/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "COPD",
+        "Emphysema",
+        "Cirrhosis",
+        "Hepatocellular Carcinoma",
+        "Asthma",
+        "Bronchiectasis"
+    ],
+    "specialistTypes": [
+        "Pulmonologist",
+        "Hepatologist",
+        "Gastroenterologist",
+        "Geneticist",
+        "Primary Care Physician"
+    ],
+    "eli5Summary": "Imagine your lungs have tiny protectors called Alpha-1. If you don't have enough of them because of a problem you got from your parents, your lungs can get damaged, making it hard to breathe. Sometimes, it can also hurt your liver. Doctors can give you medicine to help protect your lungs, and it's super important not to smoke!",
+    "clinicalSummary": "Alpha-1 Antitrypsin Deficiency (AATD) is a genetic disorder resulting from mutations in the SERPINA1 gene, leading to reduced levels or dysfunctional AAT protein. AAT, a serine protease inhibitor, primarily targets neutrophil elastase in the lungs, preventing alveolar damage. The most common pathogenic variant is the PiZ allele. Severe deficiency (PiZZ genotype) results in increased risk of early-onset emphysema, COPD, and liver disease due to AAT protein misfolding and accumulation in hepatocytes. Diagnosis involves measuring serum AAT levels and genetic testing. Management includes augmentation therapy with purified AAT protein, bronchodilators, pulmonary rehabilitation, and, in severe cases, lung or liver transplantation. Smoking cessation is crucial.",
+    "historicalBackground": "AATD was first described by Carl-Bertil Laurell and Sten Eriksson in Sweden in 1963, who noted the association between AAT deficiency and early-onset emphysema. The genetic basis of the disease was later elucidated, leading to the development of diagnostic tests and augmentation therapy.",
+    "recentBreakthroughs": [
+        {
+            "year": 2023,
+            "title": "Novel Gene Therapy Approaches for AATD",
+            "description": "Research is ongoing to develop gene therapy strategies that can correct the SERPINA1 gene defect and restore normal AAT production in the liver. Several clinical trials are evaluating the safety and efficacy of adeno-associated virus (AAV) vectors to deliver a functional SERPINA1 gene to hepatocytes.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2022,
+            "title": "Small Molecule Correctors for AAT Protein Misfolding",
+            "description": "Researchers are investigating small molecule compounds that can stabilize the AAT protein and prevent its misfolding and accumulation in the liver, potentially reducing liver damage and increasing circulating AAT levels.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Heart, Lung, and Blood Institute (NHLBI)",
+            "url": "https://www.nhlbi.nih.gov/"
+        },
+        {
+            "name": "Alpha-1 Foundation",
+            "url": "https://www.alpha1.org/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/index.php"
+        }
+    ]
+}

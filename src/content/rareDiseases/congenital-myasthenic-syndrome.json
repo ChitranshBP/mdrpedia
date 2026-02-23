@@ -1,0 +1,169 @@
+{
+    "name": "Congenital Myasthenic Syndrome",
+    "slug": "congenital-myasthenic-syndrome",
+    "aliases": [
+        "CMS",
+        "Familial infantile myasthenia",
+        "Myasthenic syndrome, congenital"
+    ],
+    "description": "Congenital myasthenic syndromes (CMS) are a heterogeneous group of inherited disorders affecting neuromuscular transmission. They are characterized by muscle weakness and fatigability, typically presenting in infancy or early childhood, although later onset is possible. CMS arises from genetic defects affecting various components of the neuromuscular junction, leading to impaired signal transmission between nerve and muscle.",
+    "category": "NEUROLOGICAL",
+    "icdCode": "G70.2",
+    "orphaCode": "608",
+    "omimCode": "601462",
+    "prevalence": "Estimated 1 in 500,000",
+    "estimatedCases": 1600,
+    "ageOfOnset": "Infancy to early childhood, but can vary.",
+    "inheritance": "Most commonly AUTOSOMAL_RECESSIVE, but can also be AUTOSOMAL_DOMINANT or rarely X_LINKED",
+    "symptoms": [
+        "Muscle weakness",
+        "Fatigability",
+        "Ptosis (drooping eyelids)",
+        "Diplopia (double vision)",
+        "Difficulty swallowing (dysphagia)",
+        "Feeding difficulties in infants",
+        "Respiratory insufficiency",
+        "Limb weakness",
+        "Hypotonia (decreased muscle tone) in infants",
+        "Delayed motor milestones"
+    ],
+    "affectedSystems": [
+        "Neuromuscular System",
+        "Musculoskeletal System",
+        "Respiratory System"
+    ],
+    "prognosis": "Variable, depending on the specific genetic defect and severity of symptoms. With appropriate management, many individuals can lead relatively normal lives. Some forms are more severe and can lead to significant disability or even death.",
+    "lifeExpectancy": "Generally normal with appropriate management, but can be reduced in severe cases with respiratory complications.",
+    "diagnosticMethods": [
+        "Clinical evaluation",
+        "Electrophysiological studies (repetitive nerve stimulation, single-fiber EMG)",
+        "Genetic testing (gene panel or exome sequencing)",
+        "Muscle biopsy (in some cases)",
+        "Pharmacological testing (response to cholinesterase inhibitors)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Cholinesterase inhibitors (e.g., pyridostigmine)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "3,4-Diaminopyridine (3,4-DAP)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Albuterol",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Ephedrine",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Supportive care (e.g., respiratory support, feeding assistance)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Physical therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Gene therapy (experimental)",
+            "type": "GENE_THERAPY",
+            "effectiveness": "EXPERIMENTAL",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 15,
+    "keyResearchCenters": [
+        "Mayo Clinic",
+        "National Institutes of Health (NIH)",
+        "University College London (UCL)",
+        "Columbia University Irving Medical Center"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Myasthenia Gravis Foundation of America (MGFA)",
+            "url": "https://myasthenia.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Genetic and Rare Diseases (GARD) Information Center",
+            "url": "https://rarediseases.info.nih.gov/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Lambert-Eaton Myasthenic Syndrome (LEMS)",
+        "Myasthenia Gravis (MG)",
+        "Other neuromuscular disorders"
+    ],
+    "specialistTypes": [
+        "Neurologist",
+        "Clinical Geneticist",
+        "Pulmonologist",
+        "Physical Therapist",
+        "Occupational Therapist"
+    ],
+    "eli5Summary": "Imagine your muscles need a message to move, like a text message. In CMS, the message doesn't get through properly, so your muscles get tired easily. It's like having a weak signal for your muscles.",
+    "clinicalSummary": "Congenital myasthenic syndromes (CMS) encompass a genetically heterogeneous group of disorders characterized by impaired neuromuscular transmission. Pathogenic variants in genes encoding proteins involved in presynaptic, synaptic, or postsynaptic function at the neuromuscular junction lead to variable clinical phenotypes. Electrophysiological studies, particularly repetitive nerve stimulation and single-fiber EMG, are crucial for diagnosis, demonstrating decremental responses. Genetic testing is essential for identifying the specific underlying mutation, guiding treatment strategies, and providing accurate genetic counseling. Management focuses on symptomatic relief using cholinesterase inhibitors, 3,4-DAP, or other medications, along with supportive care to address respiratory and feeding difficulties. The long-term prognosis varies depending on the specific genetic defect and the effectiveness of treatment.",
+    "historicalBackground": "The first descriptions of congenital myasthenic syndromes date back to the early 20th century, but the genetic basis of these disorders has only been elucidated in recent decades. Advancements in molecular genetics have led to the identification of numerous genes associated with CMS, improving diagnostic accuracy and enabling more targeted therapeutic approaches.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Novel Gene Discoveries in Congenital Myasthenic Syndromes",
+            "description": "Identification of new genes associated with CMS expands the genetic landscape and improves diagnostic capabilities.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Advancements in Gene Therapy for CMS",
+            "description": "Preclinical studies show promise for gene therapy approaches in specific forms of CMS, offering potential for disease modification.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/index.php"
+        },
+        {
+            "name": "OMIM",
+            "url": "https://www.omim.org/"
+        },
+        {
+            "name": "PubMed",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/"
+        }
+    ]
+}

@@ -1,0 +1,147 @@
+{
+    "name": "Distal Spinal Muscular Atrophy",
+    "slug": "distal-spinal-muscular-atrophy",
+    "aliases": [
+        "dSMA",
+        "Distal SMA",
+        "Hereditary Motor Neuropathy, Distal Type"
+    ],
+    "description": "Distal spinal muscular atrophy (dSMA) comprises a group of rare genetic disorders characterized by progressive muscle weakness and wasting (atrophy) primarily affecting the distal muscles of the limbs (hands and feet). Different forms of dSMA exist, each with varying genetic causes, age of onset, and severity. The condition is caused by the degeneration of motor neurons in the spinal cord, which control voluntary muscle movement.",
+    "category": "NEUROLOGICAL",
+    "icdCode": "G12.1",
+    "orphaCode": "98954",
+    "omimCode": "600794",
+    "prevalence": "Rare (estimated 1-9 / 1,000,000)",
+    "estimatedCases": 7000,
+    "ageOfOnset": "Variable; can range from childhood to adulthood",
+    "inheritance": "Variable; can be autosomal dominant, autosomal recessive, or X-linked depending on the specific genetic subtype",
+    "symptoms": [
+        "Distal muscle weakness (hands and feet)",
+        "Muscle atrophy",
+        "Foot deformities (e.g., pes cavus)",
+        "Hand deformities (e.g., claw hand)",
+        "Progressive motor impairment",
+        "Sensory abnormalities (in some subtypes)",
+        "Tremors (in some subtypes)",
+        "Respiratory muscle weakness (in severe cases)"
+    ],
+    "affectedSystems": [
+        "Nervous System",
+        "Musculoskeletal System",
+        "Respiratory System (in severe cases)"
+    ],
+    "prognosis": "Variable; depends on the specific genetic subtype and severity of symptoms. Some forms are slowly progressive, while others can lead to significant disability.",
+    "lifeExpectancy": "Generally normal, unless respiratory complications arise from severe muscle weakness.",
+    "diagnosticMethods": [
+        "Clinical examination",
+        "Electromyography (EMG)",
+        "Nerve conduction studies",
+        "Muscle biopsy",
+        "Genetic testing (to identify specific gene mutations)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Physical Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Orthotics and Assistive Devices",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Respiratory Support (if needed)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Nutritional Support",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Gene Therapy (experimental)",
+            "type": "GENE_THERAPY",
+            "effectiveness": "EXPERIMENTAL",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 5,
+    "keyResearchCenters": [
+        "National Institute of Neurological Disorders and Stroke (NINDS)",
+        "University College London (UCL) - Institute of Neurology",
+        "Mayo Clinic"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Cure SMA",
+            "url": "https://www.curesma.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Muscular Dystrophy Association (MDA)",
+            "url": "https://www.mda.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Charcot-Marie-Tooth disease",
+        "Amyotrophic Lateral Sclerosis (ALS)",
+        "Spinal Muscular Atrophy (SMA)"
+    ],
+    "specialistTypes": [
+        "Neurologist",
+        "Geneticist",
+        "Physiatrist",
+        "Pulmonologist"
+    ],
+    "eli5Summary": "Imagine your muscles are like tiny workers that help you move. In dSMA, the workers in your hands and feet get tired and weak, making it hard to do things like write or walk. Doctors try to help by giving you special exercises and tools to make things easier.",
+    "clinicalSummary": "Distal spinal muscular atrophy (dSMA) represents a heterogeneous group of motor neuron disorders characterized by progressive distal limb weakness and atrophy. Pathologically, dSMA involves the degeneration of lower motor neurons in the anterior horn of the spinal cord. Genetic causes vary, with mutations in genes such as HSPB1, GARS1, and DYNC1H1 identified in different subtypes. Clinical presentation includes distal muscle weakness, atrophy, and often sensory changes. Diagnosis involves clinical evaluation, EMG, nerve conduction studies, and genetic testing. Management is primarily supportive, focusing on physical and occupational therapy, orthotics, and respiratory support as needed. Research is ongoing to explore potential gene therapies and other targeted treatments.",
+    "historicalBackground": "Distal spinal muscular atrophies have been recognized as distinct entities within the broader spectrum of motor neuron diseases for several decades. Initial descriptions focused on clinical phenotypes, with subsequent advances in genetics leading to the identification of specific gene mutations responsible for different subtypes.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Gene Therapy Approaches for dSMA",
+            "description": "Early-stage research is exploring gene therapy strategies to deliver functional copies of mutated genes in specific dSMA subtypes. Preclinical studies have shown promising results in animal models.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Identification of Novel Genetic Mutations",
+            "description": "Ongoing genetic research continues to identify novel mutations associated with dSMA, improving diagnostic capabilities and expanding our understanding of the disease's genetic landscape.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        },
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/"
+        }
+    ]
+}

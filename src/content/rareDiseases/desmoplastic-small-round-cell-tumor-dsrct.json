@@ -1,0 +1,157 @@
+{
+    "name": "Desmoplastic Small Round Cell Tumor",
+    "slug": "desmoplastic-small-round-cell-tumor-dsrct",
+    "aliases": [
+        "DSRCT",
+        "Desmoplastic Small Round Cell Sarcoma"
+    ],
+    "description": "Desmoplastic Small Round Cell Tumor (DSRCT) is a rare and aggressive type of cancer that primarily occurs in adolescents and young adults. It is characterized by the presence of small, round, blue cells surrounded by a desmoplastic stroma (dense fibrous tissue). DSRCT most commonly arises in the abdomen but can also occur in other locations such as the pelvis, chest, and extremities. The tumor is driven by a specific chromosomal translocation that results in the fusion of the EWSR1 gene and the WT1 gene.",
+    "category": "ONCOLOGICAL",
+    "icdCode": "C49.A2",
+    "orphaCode": "79457",
+    "omimCode": "231605",
+    "prevalence": "Very rare (less than 1 in 1,000,000)",
+    "estimatedCases": 300,
+    "ageOfOnset": "Adolescence to young adulthood (10-30 years)",
+    "inheritance": "SPORADIC",
+    "symptoms": [
+        "Abdominal pain and swelling",
+        "Palpable abdominal mass",
+        "Bowel obstruction",
+        "Weight loss",
+        "Fatigue",
+        "Nausea and vomiting",
+        "Constipation",
+        "Back pain (if tumor involves the spine)",
+        "Urinary symptoms (if tumor involves the bladder or ureters)"
+    ],
+    "affectedSystems": [
+        "Digestive System",
+        "Musculoskeletal System",
+        "Urinary System",
+        "Respiratory System (less common)"
+    ],
+    "prognosis": "Poor. DSRCT is an aggressive tumor with a high rate of recurrence and metastasis. Long-term survival rates are low.",
+    "lifeExpectancy": "The median overall survival is approximately 17-25 months. Five-year survival rates are typically below 30%.",
+    "diagnosticMethods": [
+        "Physical examination",
+        "Imaging studies (CT scan, MRI, PET scan)",
+        "Biopsy (surgical or image-guided)",
+        "Histopathological examination",
+        "Immunohistochemistry (positive for WT1, desmin, cytokeratin)",
+        "Molecular genetic testing (detection of EWSR1-WT1 fusion transcript)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Surgery",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Chemotherapy (multi-agent regimens such as P6 protocol)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Radiation therapy",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "High-dose chemotherapy with stem cell transplant",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Hyperthermic intraperitoneal chemotherapy (HIPEC)",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Targeted therapies (e.g., tyrosine kinase inhibitors, angiogenesis inhibitors) - Investigational",
+            "type": "MEDICATION",
+            "effectiveness": "EXPERIMENTAL",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 25,
+    "keyResearchCenters": [
+        "Memorial Sloan Kettering Cancer Center",
+        "Dana-Farber Cancer Institute",
+        "St. Jude Children's Research Hospital",
+        "National Cancer Institute (NCI)"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "The Sarcoma Foundation of America",
+            "url": "https://www.curesarcoma.org/",
+            "country": "USA"
+        },
+        {
+            "name": "The Ewing's Sarcoma Family Foundation",
+            "url": "https://www.ewingssarcomafoundation.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Ewing sarcoma",
+        "Wilms tumor",
+        "Neuroblastoma",
+        "Rhabdomyosarcoma"
+    ],
+    "specialistTypes": [
+        "Pediatric Oncologist",
+        "Medical Oncologist",
+        "Surgical Oncologist",
+        "Radiation Oncologist",
+        "Pathologist",
+        "Genetic Counselor"
+    ],
+    "eli5Summary": "Imagine tiny bad cells growing in your tummy or other parts of your body. These cells are called Desmoplastic Small Round Cell Tumor, or DSRCT. It's a rare type of cancer that's hard to treat, but doctors use surgery, medicine, and special rays to try and make you better.",
+    "clinicalSummary": "Desmoplastic Small Round Cell Tumor (DSRCT) is a rare and aggressive sarcoma characterized by distinctive histological features, including nests of small round cells surrounded by a prominent desmoplastic stroma. The tumor cells typically express markers such as WT1 (C-terminus), desmin, cytokeratins, and NSE. The pathognomonic feature is the presence of the EWSR1-WT1 fusion transcript, resulting from the t(11;22)(p13;q12) chromosomal translocation. Clinically, DSRCT presents with abdominal or pelvic masses, often with widespread peritoneal involvement. The disease course is typically aggressive, with a high propensity for local recurrence and distant metastasis. Treatment involves a multimodality approach, including aggressive surgical resection, multi-agent chemotherapy (e.g., P6 protocol), and radiation therapy. HIPEC may be considered in select cases. Despite aggressive therapy, the prognosis remains poor.",
+    "historicalBackground": "DSRCT was first described as a distinct entity in 1989 by Gerald et al. The characteristic EWSR1-WT1 translocation was identified in the early 1990s, solidifying its classification as a unique sarcoma subtype.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Novel targeted therapies show promise in preclinical models of DSRCT",
+            "description": "Research has identified potential therapeutic targets in DSRCT, including tyrosine kinases and angiogenesis pathways. Preclinical studies have demonstrated the efficacy of targeted therapies in inhibiting tumor growth and metastasis.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Improved outcomes with intensified chemotherapy regimens and HIPEC in select DSRCT patients",
+            "description": "A retrospective study suggested that intensified chemotherapy regimens, combined with HIPEC, may improve survival outcomes in a subset of DSRCT patients with limited disease burden.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Cancer Institute (NCI)",
+            "url": "https://www.cancer.gov/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        },
+        {
+            "name": "PubMed",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/"
+        }
+    ]
+}

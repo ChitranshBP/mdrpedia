@@ -1,0 +1,146 @@
+{
+    "name": "Glutaric Acidemia Type 1",
+    "slug": "glutaric-acidemia-type-1",
+    "aliases": [
+        "GA1",
+        "Glutaric Aciduria Type I",
+        "Glutarate CoA Ligase Deficiency",
+        "GCDH Deficiency"
+    ],
+    "description": "Glutaric acidemia type 1 (GA1) is a rare inherited metabolic disorder in which the body is unable to properly process certain amino acids, particularly lysine, hydroxylysine, and tryptophan. This leads to a buildup of toxic substances, including glutaric acid, in the blood and tissues, which can damage the brain and cause neurological problems.",
+    "category": "METABOLIC",
+    "icdCode": "E72.3",
+    "orphaCode": "364",
+    "omimCode": "231670",
+    "prevalence": "1 in 100,000 newborns",
+    "estimatedCases": 80000,
+    "ageOfOnset": "Infancy or early childhood, but can be later in some cases",
+    "inheritance": "AUTOSOMAL_RECESSIVE",
+    "symptoms": [
+        "Encephalopathic crises (sudden neurological deterioration)",
+        "Dystonia (involuntary muscle contractions)",
+        "Choreoathetosis (involuntary, jerky movements)",
+        "Macrocephaly (abnormally large head)",
+        "Hypotonia (poor muscle tone) in infancy",
+        "Developmental delay",
+        "Seizures",
+        "Acute metabolic decompensation triggered by illness or stress",
+        "Progressive motor impairment"
+    ],
+    "affectedSystems": [
+        "Nervous System",
+        "Metabolic System"
+    ],
+    "prognosis": "Variable; early diagnosis and treatment can significantly improve outcomes and prevent severe neurological damage. Without treatment, GA1 can lead to severe disability and even death.",
+    "lifeExpectancy": "With early diagnosis and treatment, individuals with GA1 can have a near-normal life expectancy. Without treatment, life expectancy is significantly reduced.",
+    "diagnosticMethods": [
+        "Newborn screening (detects elevated levels of glutaric acid)",
+        "Urine organic acid analysis (identifies abnormal metabolites)",
+        "Plasma acylcarnitine analysis (detects elevated glutarylcarnitine)",
+        "Genetic testing (confirms mutations in the GCDH gene)",
+        "MRI of the brain (may show characteristic changes in the basal ganglia)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Low-lysine diet",
+            "type": "THERAPY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "L-carnitine supplementation",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Emergency protocol for metabolic crises (high-calorie, carbohydrate-rich diet)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Riboflavin supplementation (in some cases)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Physical and occupational therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 5,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Mayo Clinic",
+        "Boston Children's Hospital",
+        "University of Pittsburgh Medical Center (UPMC)"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Metabolic Support UK",
+            "url": "https://www.metabolicsupportuk.org/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "Other organic acidemias",
+        "Cerebral palsy (symptoms can mimic GA1)",
+        "Other metabolic disorders causing dystonia"
+    ],
+    "specialistTypes": [
+        "Metabolic Geneticist",
+        "Neurologist",
+        "Dietitian",
+        "Developmental Pediatrician"
+    ],
+    "eli5Summary": "Imagine your body is like a car, and food is the fuel. Glutaric acidemia type 1 is like having a broken part in the engine that doesn't let you use certain fuels (proteins) correctly. This causes bad stuff to build up and hurt your brain. Doctors can help by giving you special fuel and medicine to keep your brain safe.",
+    "clinicalSummary": "Glutaric acidemia type 1 (GA1) is an autosomal recessive metabolic disorder caused by a deficiency of glutaryl-CoA dehydrogenase (GCDH), an enzyme involved in the catabolism of lysine, hydroxylysine, and tryptophan. This deficiency leads to the accumulation of glutaric acid and other metabolites in body fluids and tissues, particularly the brain. Clinically, GA1 typically presents in infancy or early childhood with acute encephalopathic crises, often triggered by intercurrent infections or other stressors. These crises can result in irreversible damage to the basal ganglia, leading to dystonia, choreoathetosis, and developmental delay. Macrocephaly is a common early finding. Diagnosis is based on newborn screening, urine organic acid analysis, plasma acylcarnitine analysis, and genetic testing. MRI of the brain may reveal characteristic changes in the basal ganglia. Treatment focuses on dietary restriction of lysine, supplementation with L-carnitine, and aggressive management of metabolic crises. Early diagnosis and treatment are crucial to prevent or minimize neurological sequelae.",
+    "historicalBackground": "Glutaric acidemia type 1 was first described in the 1970s. The identification of GCDH as the causative enzyme deficiency and the development of newborn screening programs have significantly improved the early diagnosis and management of this condition.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Gene Therapy Approaches for GA1",
+            "description": "Preclinical studies are exploring gene therapy as a potential curative treatment for GA1, aiming to restore GCDH enzyme activity in affected individuals. Adeno-associated viral (AAV) vectors are being investigated to deliver a functional copy of the GCDH gene to liver cells.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Improved Dietary Management Strategies",
+            "description": "Refined dietary guidelines and monitoring techniques are being developed to optimize lysine restriction and prevent metabolic decompensation in individuals with GA1. These strategies aim to improve long-term outcomes and quality of life.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/Disease_Search.php?lng=EN&data_id=364"
+        },
+        {
+            "name": "National Institutes of Health (NIH)",
+            "url": "https://www.ncbi.nlm.nih.gov/books/NBK1374/"
+        },
+        {
+            "name": "OMIM",
+            "url": "https://www.omim.org/entry/231670"
+        }
+    ]
+}

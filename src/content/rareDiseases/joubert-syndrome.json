@@ -1,0 +1,164 @@
+{
+    "name": "Joubert Syndrome",
+    "slug": "joubert-syndrome",
+    "aliases": [
+        "JS",
+        "Joubert Syndrome and Related Disorders (JSRD)"
+    ],
+    "description": "Joubert syndrome (JS) is a rare genetic disorder characterized by the malformation of the brainstem and cerebellum, specifically the 'molar tooth sign' (MTS) visible on brain imaging. This malformation leads to a range of neurological and physical symptoms, varying in severity among affected individuals. JS is often associated with other organ system involvement, making it a ciliopathy.",
+    "category": "GENETIC",
+    "icdCode": "Q04.3",
+    "orphaCode": "486",
+    "omimCode": "213300",
+    "prevalence": "1 in 80,000 to 100,000 live births",
+    "estimatedCases": 4000,
+    "ageOfOnset": "Infancy or early childhood",
+    "inheritance": "AUTOSOMAL_RECESSIVE",
+    "symptoms": [
+        "Hypotonia (decreased muscle tone)",
+        "Ataxia (lack of coordination)",
+        "Developmental delays",
+        "Intellectual disability",
+        "Abnormal eye movements (nystagmus, oculomotor apraxia)",
+        "Breathing abnormalities (apnea, hyperpnea)",
+        "Molar tooth sign on brain MRI",
+        "Polydactyly (extra fingers or toes)",
+        "Tongue protrusion",
+        "Renal disease (nephronophthisis)",
+        "Hepatic fibrosis",
+        "Retinal dystrophy"
+    ],
+    "affectedSystems": [
+        "Neurological",
+        "Musculoskeletal",
+        "Ophthalmological",
+        "Renal",
+        "Hepatic",
+        "Respiratory"
+    ],
+    "prognosis": "Variable, depending on the severity of symptoms and associated complications. Some individuals have mild symptoms and near-normal development, while others experience significant disabilities and reduced lifespan.",
+    "lifeExpectancy": "Variable; some individuals may live into adulthood, while others may have a significantly shortened lifespan due to complications.",
+    "diagnosticMethods": [
+        "Clinical evaluation",
+        "Neurological examination",
+        "Brain MRI (to identify the molar tooth sign)",
+        "Genetic testing (to identify causative gene mutations)",
+        "Renal ultrasound",
+        "Eye examination",
+        "Liver function tests"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Physical Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Speech Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Special Education",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Management of Breathing Abnormalities",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Treatment of Renal Disease",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Medications for Seizures (if present)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 15,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Boston Children's Hospital",
+        "Mayo Clinic"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "The Joubert Syndrome & Related Disorders Foundation",
+            "url": "https://www.jsrdf.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Molar Tooth Sign",
+        "Nephronophthisis",
+        "Bardet-Biedl Syndrome",
+        "Meckel-Gruber Syndrome",
+        "Ciliopathies"
+    ],
+    "specialistTypes": [
+        "Clinical Geneticist",
+        "Neurologist",
+        "Nephrologist",
+        "Ophthalmologist",
+        "Developmental Pediatrician"
+    ],
+    "eli5Summary": "Imagine your brain has a special part that helps you balance and move smoothly. In Joubert Syndrome, that part doesn't form correctly, like a funny-looking tooth on a scan. This can make it hard to walk, talk, and sometimes causes problems with your eyes, kidneys, or breathing. Doctors and therapists can help you learn and grow!",
+    "clinicalSummary": "Joubert syndrome (JS) is a rare autosomal recessive disorder characterized by cerebellar vermis hypoplasia and a distinctive 'molar tooth sign' (MTS) on axial MRI, resulting from abnormal development of the midbrain and hindbrain. The MTS is pathognomonic, involving thickened superior cerebellar peduncles, a deep interpeduncular fossa, and cerebellar vermis hypoplasia. Clinically, JS presents with hypotonia, ataxia, developmental delay, intellectual disability, and abnormal eye movements. Respiratory abnormalities, such as episodic hyperpnea or apnea, are common in infancy. Multi-organ involvement, including renal disease (nephronophthisis), retinal dystrophy, and hepatic fibrosis, is frequently observed, classifying JS as a ciliopathy due to mutations in genes encoding proteins involved in cilia function. Diagnosis is based on clinical findings and neuroimaging, confirmed by genetic testing. Management is supportive, focusing on symptom management and addressing associated complications. Prognosis varies depending on the severity of neurological and systemic involvement.",
+    "historicalBackground": "Joubert syndrome was first described by Dr. Marie Joubert in 1969, who reported four affected siblings with cerebellar ataxia, mental retardation, and episodic hyperpnea. Subsequent research has elucidated the genetic basis and expanded the clinical spectrum of the disorder.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Novel Gene Discoveries in Joubert Syndrome",
+            "description": "Identification of new causative genes for Joubert syndrome through whole-exome sequencing, expanding the genetic landscape and improving diagnostic capabilities.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Improved Understanding of Ciliary Dysfunction in JS",
+            "description": "Research elucidating the specific roles of ciliary proteins in brain development and the pathogenesis of Joubert syndrome, paving the way for targeted therapies.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/index.php"
+        },
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/"
+        },
+        {
+            "name": "GeneReviews",
+            "url": "https://www.ncbi.nlm.nih.gov/books/NBK1116/"
+        }
+    ]
+}

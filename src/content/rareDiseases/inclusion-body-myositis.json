@@ -1,0 +1,157 @@
+{
+    "name": "Inclusion Body Myositis",
+    "slug": "inclusion-body-myositis",
+    "aliases": [
+        "IBM",
+        "Sporadic Inclusion Body Myositis (sIBM)"
+    ],
+    "description": "Inclusion Body Myositis (IBM) is a rare, acquired muscle disease characterized by progressive muscle weakness and wasting, predominantly affecting the muscles of the thighs, forearms, and fingers. It is the most common acquired muscle disease in people over the age of 50. The condition progresses slowly over years, leading to significant disability.",
+    "category": "AUTOIMMUNE",
+    "icdCode": "G72.4",
+    "orphaCode": "606",
+    "omimCode": "600737",
+    "prevalence": "1-9 / 1,000,000",
+    "estimatedCases": 2500,
+    "ageOfOnset": "Typically after age 50",
+    "inheritance": "SPORADIC",
+    "symptoms": [
+        "Progressive muscle weakness",
+        "Muscle wasting (atrophy)",
+        "Dysphagia (difficulty swallowing)",
+        "Knee extension weakness",
+        "Finger flexor weakness",
+        "Foot drop",
+        "Asymmetric weakness",
+        "Decreased grip strength",
+        "Fatigue",
+        "Muscle pain (myalgia) - less common"
+    ],
+    "affectedSystems": [
+        "Musculoskeletal System",
+        "Neuromuscular System",
+        "Gastrointestinal System (in some cases)"
+    ],
+    "prognosis": "Progressive and chronic; leads to significant disability over time. Rate of progression varies among individuals.",
+    "lifeExpectancy": "Generally normal, but quality of life is significantly affected by muscle weakness and disability.",
+    "diagnosticMethods": [
+        "Physical examination",
+        "Muscle biopsy (gold standard; reveals rimmed vacuoles and amyloid deposits)",
+        "Electromyography (EMG)",
+        "Blood tests (Creatine kinase levels may be mildly elevated)",
+        "MRI of muscles"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Physical Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Speech Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Intravenous Immunoglobulin (IVIg)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Immunosuppressants (e.g., Methotrexate, Azathioprine)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Corticosteroids (e.g., Prednisone)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Alemtuzumab",
+            "type": "MEDICATION",
+            "effectiveness": "EXPERIMENTAL",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 25,
+    "keyResearchCenters": [
+        "National Institute of Neurological Disorders and Stroke (NINDS)",
+        "Johns Hopkins Myositis Center",
+        "Mayo Clinic",
+        "Stanford University"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "The Myositis Association",
+            "url": "https://www.myositis.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Polymyositis",
+        "Dermatomyositis",
+        "Limb-Girdle Muscular Dystrophy"
+    ],
+    "specialistTypes": [
+        "Neurologist",
+        "Rheumatologist",
+        "Physiatrist",
+        "Physical Therapist",
+        "Occupational Therapist",
+        "Speech Therapist"
+    ],
+    "eli5Summary": "Inclusion Body Myositis is a rare disease that makes your muscles weak, especially in your legs, arms, and fingers. It happens mostly to older people and gets worse slowly over time. Doctors can help you stay strong with exercises and sometimes medicines, but there is no cure.",
+    "clinicalSummary": "Inclusion Body Myositis (IBM) is a chronic, progressive myopathy characterized by muscle weakness, particularly affecting the quadriceps, distal upper extremity muscles (finger flexors), and pharyngeal muscles. Histopathological hallmarks include endomysial inflammation, rimmed vacuoles, and amyloid deposits containing TDP-43. The pathogenesis involves both autoimmune and degenerative mechanisms. Diagnosis requires muscle biopsy demonstrating characteristic features. Treatment is primarily supportive, focusing on physical and occupational therapy. Immunosuppressive therapies have limited efficacy. Disease progression leads to significant functional impairment and disability.",
+    "historicalBackground": "Inclusion Body Myositis was first described as a distinct entity in the 1960s and 1970s, differentiating it from other inflammatory myopathies like polymyositis. The identification of rimmed vacuoles and amyloid deposits in muscle biopsies led to its recognition as a unique disease with a distinct pathophysiology.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Identification of novel autoantibodies in IBM patients",
+            "description": "Research has identified novel autoantibodies targeting specific muscle proteins in a subset of IBM patients, potentially providing new diagnostic and therapeutic targets.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Clinical trial of experimental drug targeting muscle inflammation shows promise",
+            "description": "A phase II clinical trial of an experimental drug targeting muscle inflammation in IBM patients demonstrated improvements in muscle strength and function in some participants.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "The Myositis Association",
+            "url": "https://www.myositis.org/"
+        },
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/index.php"
+        }
+    ]
+}

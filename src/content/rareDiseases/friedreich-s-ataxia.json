@@ -1,0 +1,189 @@
+{
+    "name": "Friedreich's Ataxia",
+    "slug": "friedreich-s-ataxia",
+    "aliases": [
+        "FRDA",
+        "Spinocerebellar Degeneration with Cardiomyopathy",
+        "Friedreich Ataxia"
+    ],
+    "description": "Friedreich's ataxia (FRDA) is a rare, inherited neurodegenerative disease that causes progressive damage to the nervous system, resulting in symptoms ranging from muscle weakness and speech problems to heart disease. It is primarily caused by a deficiency of the protein frataxin, which leads to mitochondrial dysfunction and iron accumulation in cells, particularly in the spinal cord, peripheral nerves, and cerebellum. The condition typically manifests in childhood or adolescence and leads to increasing disability over time.",
+    "category": "NEUROLOGICAL",
+    "icdCode": "G11.1",
+    "orphaCode": "71",
+    "omimCode": "229300",
+    "prevalence": "1 in 40,000 to 1 in 50,000",
+    "estimatedCases": 8000,
+    "ageOfOnset": "Typically between 5 and 15 years, but can range from early childhood to adulthood",
+    "inheritance": "AUTOSOMAL_RECESSIVE",
+    "symptoms": [
+        "Progressive ataxia (loss of coordination)",
+        "Muscle weakness",
+        "Dysarthria (speech problems)",
+        "Dysphagia (difficulty swallowing)",
+        "Scoliosis",
+        "Cardiomyopathy (heart muscle disease)",
+        "Diabetes mellitus",
+        "Vision impairment",
+        "Hearing loss",
+        "Fatigue",
+        "Nystagmus (involuntary eye movements)",
+        "Loss of reflexes",
+        "Foot deformities (pes cavus, hammer toes)"
+    ],
+    "affectedSystems": [
+        "Nervous System",
+        "Cardiovascular System",
+        "Musculoskeletal System",
+        "Endocrine System",
+        "Sensory System"
+    ],
+    "prognosis": "Progressive and debilitating, leading to significant disability. The rate of progression varies among individuals.",
+    "lifeExpectancy": "Reduced, with many individuals living into their 30s to 50s, although some may live longer with proper management.",
+    "diagnosticMethods": [
+        "Neurological examination",
+        "Genetic testing for FXN gene mutations",
+        "MRI of the brain and spinal cord",
+        "Electrocardiogram (ECG) and echocardiogram",
+        "Nerve conduction studies",
+        "Electromyography (EMG)",
+        "Blood tests (glucose levels, iron studies)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Omaveloxolone (Skyclarys)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2023
+        },
+        {
+            "name": "Physical therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Speech therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Cardiac management (medications, devices)",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Scoliosis bracing or surgery",
+            "type": "SURGERY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Diabetes management (insulin or oral medications)",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Idebenone",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 50,
+    "keyResearchCenters": [
+        "Friedreich's Ataxia Research Alliance (FARA)",
+        "National Institute of Neurological Disorders and Stroke (NINDS)",
+        "University of California, Los Angeles (UCLA)",
+        "Children's Hospital of Philadelphia (CHOP)"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Friedreich's Ataxia Research Alliance (FARA)",
+            "url": "https://www.curefa.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Ataxia UK",
+            "url": "https://www.ataxia.org.uk/",
+            "country": "UK"
+        },
+        {
+            "name": "Association Française de l'Ataxie de Friedreich (AFAF)",
+            "url": "https://www.afaf.asso.fr/",
+            "country": "France"
+        }
+    ],
+    "relatedConditions": [
+        "Spinocerebellar Ataxias (SCAs)",
+        "Ataxia-Telangiectasia",
+        "Mitochondrial Diseases",
+        "Charcot-Marie-Tooth Disease"
+    ],
+    "specialistTypes": [
+        "Neurologist",
+        "Cardiologist",
+        "Geneticist",
+        "Orthopedic Surgeon",
+        "Endocrinologist",
+        "Physical Therapist",
+        "Occupational Therapist",
+        "Speech Therapist"
+    ],
+    "eli5Summary": "Imagine your body's wires are getting tangled, making it hard to walk, talk, and even keep your heart strong. That's kind of like Friedreich's Ataxia. It's a rare disease that makes it difficult for your body to control movement and can cause heart problems. Doctors are working hard to find better ways to help people with this condition.",
+    "clinicalSummary": "Friedreich's ataxia (FRDA) is an autosomal recessive neurodegenerative disorder primarily caused by GAA repeat expansions within the first intron of the FXN gene, leading to reduced frataxin expression. Frataxin deficiency impairs mitochondrial iron-sulfur cluster (ISC) biogenesis, resulting in mitochondrial dysfunction, iron accumulation, and oxidative stress. Clinically, FRDA presents with progressive limb and gait ataxia, dysarthria, muscle weakness, sensory neuropathy, and areflexia. Cardiomyopathy is a significant cause of morbidity and mortality. Diagnosis is confirmed by genetic testing. Management focuses on symptomatic relief, including physical and occupational therapy, cardiac monitoring and treatment, and scoliosis management. Omaveloxolone is the first FDA-approved medication to treat FRDA. Research is ongoing to develop more effective therapies, including gene therapy and frataxin-enhancing compounds.",
+    "historicalBackground": "Friedreich's ataxia was first described in the 1860s by Nikolaus Friedreich, a German pathologist and neurologist. He characterized the clinical features of the disease in a series of patients, establishing it as a distinct neurological entity. The genetic basis of FRDA was discovered in 1996, with the identification of the FXN gene and the GAA repeat expansion mutation.",
+    "recentBreakthroughs": [
+        {
+            "year": 2023,
+            "title": "FDA Approves Omaveloxolone for Friedreich's Ataxia",
+            "description": "The FDA approved Omaveloxolone (Skyclarys) as the first treatment specifically for Friedreich's ataxia. This medication has shown to improve neurological function in patients with FRDA by activating Nrf2 pathway.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2024,
+            "title": "Gene Therapy Clinical Trials Showing Promise",
+            "description": "Early-stage clinical trials are evaluating the safety and efficacy of gene therapy approaches to increase frataxin expression in patients with Friedreich's ataxia. Preliminary results suggest potential for disease modification.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/Disorders/All-Disorders/Friedreichs-Ataxia-Information-Page"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/Disease_Search.php?lng=EN&data_id=71"
+        },
+        {
+            "name": "Friedreich's Ataxia Research Alliance (FARA)",
+            "url": "https://www.curefa.org/"
+        },
+        {
+            "name": "U.S. National Library of Medicine",
+            "url": "https://medlineplus.gov/genetics/condition/friedreich-ataxia/"
+        }
+    ]
+}

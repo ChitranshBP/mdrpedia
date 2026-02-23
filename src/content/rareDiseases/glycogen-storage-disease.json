@@ -1,0 +1,175 @@
+{
+    "name": "Glycogen Storage Disease",
+    "slug": "glycogen-storage-disease",
+    "aliases": [
+        "GSD",
+        "Glycogenosis",
+        "Dextrinosis",
+        "Hepatorenal Glycogenosis",
+        "Forbes Disease",
+        "Cori Disease",
+        "Andersen Disease",
+        "McArdle Disease",
+        "Hers Disease",
+        "Tarui Disease",
+        "Fanconi-Bickel Syndrome"
+    ],
+    "description": "Glycogen storage disease (GSD) is a group of inherited metabolic disorders caused by defects in enzymes that regulate the synthesis or breakdown of glycogen. These defects lead to abnormal accumulation or deficiency of glycogen in various tissues, primarily the liver and muscles, resulting in a wide range of clinical manifestations depending on the specific enzyme deficiency.",
+    "category": "METABOLIC",
+    "icdCode": "E74.0",
+    "orphaCode": "79354",
+    "omimCode": "232100",
+    "prevalence": "Approximately 1 in 20,000 to 40,000 live births",
+    "estimatedCases": 15000,
+    "ageOfOnset": "Varies depending on the specific type of GSD; can range from infancy to adulthood",
+    "inheritance": "Most types are AUTOSOMAL_RECESSIVE, but some rare forms can be AUTOSOMAL_DOMINANT or X_LINKED",
+    "symptoms": [
+        "Hepatomegaly (enlarged liver)",
+        "Hypoglycemia (low blood sugar)",
+        "Muscle weakness and cramps",
+        "Exercise intolerance",
+        "Growth retardation",
+        "Delayed motor development",
+        "Cardiomyopathy (heart muscle disease)",
+        "Kidney disease",
+        "Progressive liver disease (cirrhosis)",
+        "Elevated liver enzymes",
+        "Fatigue",
+        "Seizures"
+    ],
+    "affectedSystems": [
+        "Liver",
+        "Muscles",
+        "Kidneys",
+        "Heart",
+        "Metabolic System"
+    ],
+    "prognosis": "Varies widely depending on the specific type of GSD, the severity of the enzyme deficiency, and the effectiveness of treatment. Some types are relatively mild, while others can be life-threatening.",
+    "lifeExpectancy": "Varies depending on the type and severity of GSD. With proper management, many individuals can live into adulthood, but some severe forms can lead to early mortality.",
+    "diagnosticMethods": [
+        "Physical examination and medical history",
+        "Blood tests (glucose, liver enzymes, creatine kinase)",
+        "Urine tests (ketones)",
+        "Muscle biopsy",
+        "Liver biopsy",
+        "Enzyme assays (to measure enzyme activity in tissues or blood)",
+        "Genetic testing (DNA sequencing to identify mutations in GSD-related genes)",
+        "Imaging studies (ultrasound, MRI) to assess liver and muscle involvement"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Dietary Management (Frequent small meals, uncooked cornstarch)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Glucose Monitoring",
+            "type": "SUPPORTIVE",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Enzyme Replacement Therapy (Myozyme for Pompe disease)",
+            "type": "ENZYME_THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2006
+        },
+        {
+            "name": "Liver Transplantation",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Gene Therapy",
+            "type": "GENE_THERAPY",
+            "effectiveness": "EXPERIMENTAL",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Avoidance of Strenuous Exercise (McArdle Disease)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 35,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Boston Children's Hospital",
+        "University of Florida",
+        "Stanford University",
+        "Mayo Clinic"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Association for Glycogen Storage Disease (AGSD)",
+            "url": "https://www.agsdus.org/",
+            "country": "USA"
+        },
+        {
+            "name": "European Study Group on Glycogen Storage Disease (ESGSD)",
+            "url": "https://www.glycogen.org/",
+            "country": "Europe"
+        }
+    ],
+    "relatedConditions": [
+        "Cystic Fibrosis",
+        "Fatty Acid Oxidation Disorders",
+        "Galactosemia",
+        "Maple Syrup Urine Disease (MSUD)",
+        "Phenylketonuria (PKU)"
+    ],
+    "specialistTypes": [
+        "Metabolic Geneticist",
+        "Pediatric Gastroenterologist",
+        "Endocrinologist",
+        "Hepatologist",
+        "Neurologist",
+        "Cardiologist",
+        "Dietitian"
+    ],
+    "eli5Summary": "Imagine your body has trouble storing and using sugar properly. Glycogen Storage Disease is when your body's sugar storage system doesn't work right, causing problems like low blood sugar and a big tummy because your liver gets too full.",
+    "clinicalSummary": "Glycogen storage diseases (GSDs) are a group of inherited metabolic disorders characterized by defects in enzymes involved in glycogen synthesis or degradation. These defects lead to abnormal glycogen accumulation or deficiency in various tissues, most commonly the liver and muscle. Clinical manifestations vary depending on the specific enzyme deficiency and the affected tissues. Common symptoms include hepatomegaly, hypoglycemia, muscle weakness, exercise intolerance, and growth retardation. Diagnosis involves a combination of clinical evaluation, biochemical testing (blood and urine), enzyme assays, and genetic testing. Management focuses on dietary modifications to maintain stable blood glucose levels, enzyme replacement therapy (for some types), and supportive care to address specific complications. Prognosis varies widely depending on the type and severity of GSD.",
+    "historicalBackground": "The first description of glycogen storage disease was by von Gierke in 1929, who identified a patient with hepatomegaly and hypoglycemia due to a deficiency in glucose-6-phosphatase. Subsequent research led to the identification of other enzyme deficiencies involved in glycogen metabolism, leading to the classification of different types of GSD.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Advances in Gene Therapy for Glycogen Storage Disease Type Ia",
+            "description": "Significant progress has been made in gene therapy approaches for GSD Ia, with early-phase clinical trials showing promising results in restoring glucose homeostasis and reducing the need for dietary management.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Novel Enzyme Enhancer for Glycogen Storage Disease Type V (McArdle Disease)",
+            "description": "Researchers have identified a small molecule enhancer that increases the activity of the deficient myophosphorylase enzyme in McArdle disease, potentially improving exercise tolerance and reducing muscle cramps.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institutes of Health (NIH)",
+            "url": "https://www.nih.gov/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        },
+        {
+            "name": "Online Mendelian Inheritance in Man (OMIM)",
+            "url": "https://www.omim.org/"
+        }
+    ]
+}

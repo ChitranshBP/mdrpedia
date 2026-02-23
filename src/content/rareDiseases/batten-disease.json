@@ -1,0 +1,164 @@
+{
+    "name": "Batten Disease",
+    "slug": "batten-disease",
+    "aliases": [
+        "Neuronal Ceroid Lipofuscinoses (NCLs)",
+        "Spielmeyer-Vogt Disease",
+        "Jansky-Bielschowsky Disease",
+        "Batten-Spielmeyer-Vogt Disease",
+        "Kufs Disease"
+    ],
+    "description": "Batten disease is a rare, fatal, autosomal recessive neurodegenerative disorder that begins in childhood. It is the general name for a group of disorders called neuronal ceroid lipofuscinoses (NCLs). In Batten disease, abnormal storage of fatty, granular substances (lipopigments) called ceroid lipofuscin accumulates in nerve cells (neurons) in the brain, as well as in other tissues, such as the eye. This accumulation leads to progressive neurological impairment, including seizures, vision loss, motor difficulties, cognitive decline, and premature death. Different forms of Batten disease are classified by the gene affected and the age of onset of symptoms.",
+    "category": "NEUROLOGICAL",
+    "icdCode": "E75.4",
+    "orphaCode": "97",
+    "omimCode": "204200",
+    "prevalence": "Approximately 1 in 100,000 live births",
+    "estimatedCases": 3300,
+    "ageOfOnset": "Varies depending on the type; Infantile, Late-infantile, Juvenile, and Adult forms exist.",
+    "inheritance": "AUTOSOMAL_RECESSIVE",
+    "symptoms": [
+        "Progressive vision loss",
+        "Seizures",
+        "Motor difficulties (ataxia, clumsiness)",
+        "Cognitive decline",
+        "Dementia",
+        "Myoclonus",
+        "Behavioral changes",
+        "Speech difficulties",
+        "Sleep disturbances",
+        "Movement disorders (e.g., dystonia)"
+    ],
+    "affectedSystems": [
+        "Nervous System",
+        "Eyes",
+        "Musculoskeletal System"
+    ],
+    "prognosis": "Poor; Batten disease is a progressive and ultimately fatal disorder.",
+    "lifeExpectancy": "Varies depending on the type; ranges from childhood to adulthood.",
+    "diagnosticMethods": [
+        "Enzyme assays (e.g., PPT1, TPP1)",
+        "Genetic testing (DNA sequencing of known NCL genes)",
+        "Brain MRI",
+        "Electroencephalogram (EEG)",
+        "Skin or tissue biopsy (to detect lipopigments)",
+        "Eye exam (fundoscopy to look for retinal changes)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Brineura (cerliponase alfa)",
+            "type": "ENZYME_REPLACEMENT_THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2017
+        },
+        {
+            "name": "Seizure Medications (Antiepileptics)",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Physical Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Speech Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Nutritional Support",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Palliative Care",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 25,
+    "keyResearchCenters": [
+        "National Institute of Neurological Disorders and Stroke (NINDS)",
+        "University of Rochester Medical Center",
+        "Great Ormond Street Hospital (UK)"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Batten Disease Support and Research Association (BDSRA)",
+            "url": "https://www.bdsra.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Batten Disease Family Association (BDFA)",
+            "url": "https://www.bdfa-uk.org.uk/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "Other Lysosomal Storage Disorders",
+        "Epilepsy",
+        "Cerebral Palsy (differential diagnosis in early stages)"
+    ],
+    "specialistTypes": [
+        "Neurologist",
+        "Pediatric Neurologist",
+        "Ophthalmologist",
+        "Geneticist",
+        "Developmental Pediatrician"
+    ],
+    "eli5Summary": "Imagine your brain cells have tiny garbage trucks that aren't working right. Batten disease is when these garbage trucks get too full of junk, and it makes it hard for your brain to work. This can cause problems with seeing, moving, and thinking.",
+    "clinicalSummary": "Batten disease, or neuronal ceroid lipofuscinosis (NCL), represents a group of inherited neurodegenerative disorders characterized by the accumulation of autofluorescent lipopigments within neurons and other cells. The underlying pathophysiology involves mutations in various genes (e.g., CLN1, CLN2, CLN3, CLN5, CLN6, CLN8, CLN10, CLN11, CLN12, CLN13, CLN14) that encode lysosomal enzymes or membrane proteins involved in lysosomal function. This leads to impaired protein degradation and the buildup of ceroid lipofuscin. Clinically, Batten disease manifests with progressive vision loss, seizures, motor and cognitive decline, and behavioral abnormalities. Diagnosis involves enzyme assays, genetic testing, brain imaging, and histopathological examination of tissue biopsies. Management is primarily supportive, focusing on symptom control and maximizing quality of life. Enzyme replacement therapy with cerliponase alfa is available for CLN2 disease. Gene therapy approaches are under investigation.",
+    "historicalBackground": "Batten disease was first described by Frederick Batten, a British pediatrician, in 1903. He identified a distinct form of progressive neurological deterioration in several children. Subsequent research led to the recognition of different genetic subtypes and the underlying biochemical defects.",
+    "recentBreakthroughs": [
+        {
+            "year": 2017,
+            "title": "FDA Approves Brineura (cerliponase alfa) for CLN2 Disease",
+            "description": "The FDA approved Brineura, the first enzyme replacement therapy for CLN2 disease, a specific form of Batten disease. This marked a significant advancement in the treatment of this previously untreatable condition.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Advancements in Gene Therapy for Batten Disease",
+            "description": "Several gene therapy clinical trials are underway, showing promise in slowing disease progression in various forms of Batten disease. These trials aim to deliver functional copies of the mutated genes to affected cells.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/Disorders/All-Disorders/Batten-Disease-Information-Page"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/index.php"
+        },
+        {
+            "name": "Batten Disease Support and Research Association (BDSRA)",
+            "url": "https://www.bdsra.org/"
+        }
+    ]
+}

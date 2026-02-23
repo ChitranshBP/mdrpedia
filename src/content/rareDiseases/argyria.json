@@ -1,0 +1,91 @@
+{
+    "name": "Argyria",
+    "slug": "argyria",
+    "aliases": [
+        "Silver poisoning",
+        "Blue skin"
+    ],
+    "description": "Argyria is a rare condition caused by the accumulation of silver in the body, leading to a permanent bluish-gray discoloration of the skin and other tissues. It typically results from chronic exposure to silver compounds, either through ingestion, inhalation, or skin contact. While generally considered a cosmetic issue, argyria can cause psychological distress due to the altered appearance.",
+    "category": "METABOLIC",
+    "icdCode": "L60.8",
+    "orphaCode": "98355",
+    "omimCode": "104300",
+    "prevalence": "Extremely rare",
+    "estimatedCases": null,
+    "ageOfOnset": "Variable, typically after prolonged exposure",
+    "inheritance": "Not applicable (acquired condition)",
+    "symptoms": [
+        "Bluish-gray discoloration of the skin (most prominent in sun-exposed areas)",
+        "Bluish-gray discoloration of the gums",
+        "Bluish-gray discoloration of the nails",
+        "Possible discoloration of internal organs in severe cases"
+    ],
+    "affectedSystems": [
+        "Integumentary system"
+    ],
+    "prognosis": "The discoloration is usually permanent, but the condition is not life-threatening.",
+    "lifeExpectancy": "Normal",
+    "diagnosticMethods": [
+        "Clinical examination",
+        "Patient history of silver exposure",
+        "Skin biopsy with silver staining",
+        "Energy-dispersive X-ray analysis of skin samples"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Laser therapy",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Sun protection",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Chelation therapy (experimental)",
+            "type": "MEDICATION",
+            "effectiveness": "EXPERIMENTAL",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "OBSERVATIONAL",
+    "clinicalTrialsCount": 0,
+    "keyResearchCenters": [],
+    "patientOrganizations": [],
+    "relatedConditions": [],
+    "specialistTypes": [
+        "Dermatologist",
+        "Toxicologist"
+    ],
+    "eli5Summary": "Imagine you drink or touch tiny bits of silver for a long time. Your skin can turn blue-gray. It's not dangerous, but it can change how you look.",
+    "clinicalSummary": "Argyria is characterized by the deposition of silver in the dermis, leading to a blue-gray discoloration of the skin. This occurs following chronic exposure to silver compounds, either through occupational exposure, dietary supplements containing silver, or medical treatments involving silver. The discoloration is most prominent in sun-exposed areas due to the photochemical reduction of silver ions to metallic silver. Diagnosis is typically made through clinical examination and confirmed by skin biopsy. While generally benign, argyria can cause significant cosmetic disfigurement and psychological distress. Treatment options are limited, with laser therapy showing some promise in reducing the discoloration. Prevention through avoidance of silver exposure is the most effective strategy.",
+    "historicalBackground": "Argyria has been recognized since ancient times, with reports of individuals developing skin discoloration after using silver-containing medications or being exposed to silver in occupational settings. The condition became more prevalent in the early 20th century with the widespread use of silver nitrate as an antiseptic. With the decline in the use of silver-based medications, argyria has become less common, although cases still occur due to the use of colloidal silver products marketed as dietary supplements.",
+    "recentBreakthroughs": [
+        {
+            "year": 2019,
+            "title": "Laser treatment for argyria",
+            "description": "A study published in the Journal of the American Academy of Dermatology demonstrated the effectiveness of Q-switched lasers in reducing skin discoloration in patients with argyria.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institutes of Health (NIH)",
+            "url": "https://www.nih.gov/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        }
+    ]
+}

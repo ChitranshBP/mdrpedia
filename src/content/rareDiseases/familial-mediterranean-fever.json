@@ -1,0 +1,137 @@
+{
+    "name": "Familial Mediterranean Fever",
+    "slug": "familial-mediterranean-fever",
+    "aliases": [
+        "FMF",
+        "Periodic Fever Syndrome, Autosomal Recessive",
+        "Serositis, Recurrent"
+    ],
+    "description": "Familial Mediterranean Fever (FMF) is an inherited autoinflammatory disorder characterized by recurrent, short episodes of fever accompanied by inflammation of the abdomen, chest, or joints. It primarily affects people of Mediterranean ancestry, including Sephardic Jews, Turks, Armenians, and Arabs. The condition is caused by mutations in the MEFV gene, which leads to dysregulation of the inflammatory response. Untreated FMF can lead to amyloidosis, a serious complication affecting the kidneys.",
+    "category": "AUTOIMMUNE",
+    "icdCode": "E85.0",
+    "orphaCode": "307",
+    "omimCode": "249100",
+    "prevalence": "1 in 200 to 1 in 1,000 in at-risk populations",
+    "estimatedCases": 100000,
+    "ageOfOnset": "Typically between 5 and 15 years old, but can vary.",
+    "inheritance": "AUTOSOMAL_RECESSIVE",
+    "symptoms": [
+        "Recurrent fever",
+        "Abdominal pain",
+        "Chest pain",
+        "Joint pain and swelling",
+        "Skin rash (erysipelas-like)",
+        "Myalgia (muscle pain)",
+        "Headache"
+    ],
+    "affectedSystems": [
+        "Immune System",
+        "Gastrointestinal System",
+        "Musculoskeletal System",
+        "Renal System (potential for amyloidosis)"
+    ],
+    "prognosis": "With proper treatment, the prognosis is generally good. Untreated FMF can lead to amyloidosis and kidney failure.",
+    "lifeExpectancy": "Normal with appropriate treatment and monitoring.",
+    "diagnosticMethods": [
+        "Clinical evaluation based on Tel Hashomer criteria",
+        "Genetic testing for MEFV gene mutations",
+        "Inflammatory markers (ESR, CRP) during attacks",
+        "Amyloidosis screening (e.g., renal biopsy)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Colchicine",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Nonsteroidal Anti-inflammatory Drugs (NSAIDs)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Interleukin-1 (IL-1) inhibitors (e.g., anakinra, canakinumab)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Supportive care for symptom management",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 15,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Sheba Medical Center, Israel",
+        "Mayo Clinic"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "FMF Society",
+            "url": "https://www.fmfsociety.org/",
+            "country": "USA"
+        },
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Amyloidosis",
+        "Crohn's Disease",
+        "Ulcerative Colitis",
+        "Behcet's Disease"
+    ],
+    "specialistTypes": [
+        "Rheumatologist",
+        "Gastroenterologist",
+        "Nephrologist",
+        "Geneticist"
+    ],
+    "eli5Summary": "Imagine your body sometimes gets confused and thinks it's hurt, even when it's not. This makes you feel sick with fever and tummy aches. It's like a glitch in your body's alarm system. Doctors can give you medicine to calm the alarm down.",
+    "clinicalSummary": "Familial Mediterranean Fever (FMF) is an autosomal recessive autoinflammatory disease caused by mutations in the MEFV gene, located on chromosome 16. The MEFV gene encodes pyrin, a protein involved in regulating inflammation. Mutations in MEFV lead to uncontrolled activation of the inflammasome and excessive production of interleukin-1β (IL-1β), resulting in recurrent episodes of fever and serositis. Clinical diagnosis is based on the Tel Hashomer criteria, which include major criteria (recurrent fever, abdominal pain, chest pain, arthritis) and minor criteria (erysipelas-like rash, family history). Genetic testing confirms the diagnosis by identifying MEFV mutations. Complications include AA amyloidosis, primarily affecting the kidneys, leading to proteinuria and renal failure. Treatment with colchicine is highly effective in preventing attacks and amyloidosis. IL-1 inhibitors are used in colchicine-resistant cases.",
+    "historicalBackground": "FMF was first described in the early 20th century, with significant advancements in understanding its genetic basis and pathophysiology in the late 20th and early 21st centuries. The discovery of the MEFV gene in 1997 was a major breakthrough.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Long-term Efficacy of IL-1 Inhibitors in Colchicine-Resistant FMF",
+            "description": "A study demonstrated the sustained efficacy and safety of IL-1 inhibitors (anakinra and canakinumab) in patients with FMF who are resistant or intolerant to colchicine, providing an alternative treatment option.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Novel MEFV Gene Mutations Identified",
+            "description": "Researchers identified new rare MEFV gene mutations associated with atypical FMF presentations, expanding the spectrum of genetic variants and improving diagnostic accuracy.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/Disease_Search.php?lng=EN&data_id=307"
+        },
+        {
+            "name": "OMIM",
+            "url": "https://www.omim.org/entry/249100"
+        },
+        {
+            "name": "National Institutes of Health (NIH)",
+            "url": "https://www.niams.nih.gov/health-topics/familial-mediterranean-fever"
+        }
+    ]
+}

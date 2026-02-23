@@ -1,0 +1,162 @@
+{
+    "name": "Pantothenate Kinase-Associated Neurodegeneration",
+    "slug": "hallervorden-spatz-disease",
+    "aliases": [
+        "PKAN",
+        "Hallervorden-Spatz Syndrome",
+        "Neurodegeneration with Brain Iron Accumulation (NBIA) Type 1"
+    ],
+    "description": "Pantothenate kinase-associated neurodegeneration (PKAN) is a rare, inherited neurological disorder characterized by progressive movement difficulties, including dystonia, rigidity, and choreoathetosis. It is caused by mutations in the PANK2 gene, leading to abnormal iron accumulation in the brain, particularly in the basal ganglia. This iron accumulation results in progressive damage to nerve cells, leading to the various motor and cognitive symptoms associated with the condition.",
+    "category": "NEUROLOGICAL",
+    "icdCode": "G23.0",
+    "orphaCode": "79364",
+    "omimCode": "234200",
+    "prevalence": "1-9 / 1,000,000",
+    "estimatedCases": 700,
+    "ageOfOnset": "Childhood (typically before age 10)",
+    "inheritance": "AUTOSOMAL_RECESSIVE",
+    "symptoms": [
+        "Dystonia",
+        "Rigidity",
+        "Choreoathetosis",
+        "Spasticity",
+        "Dysarthria",
+        "Dysphagia",
+        "Vision problems (e.g., retinal degeneration)",
+        "Cognitive decline",
+        "Behavioral problems (e.g., impulsivity, depression)",
+        "Seizures"
+    ],
+    "affectedSystems": [
+        "Nervous System",
+        "Musculoskeletal System",
+        "Eyes"
+    ],
+    "prognosis": "Progressive neurological decline, leading to significant disability and reduced quality of life.",
+    "lifeExpectancy": "Variable; some individuals may live into adulthood, while others have a significantly shortened lifespan due to complications.",
+    "diagnosticMethods": [
+        "Clinical evaluation",
+        "Magnetic Resonance Imaging (MRI) of the brain (demonstrates 'eye-of-the-tiger' sign in the globus pallidus)",
+        "Genetic testing for PANK2 mutations",
+        "Neurological examination",
+        "Eye exam"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Symptomatic management",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Physical therapy",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational therapy",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Speech therapy",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Medications for dystonia (e.g., baclofen, trihexyphenidyl)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Iron chelators (e.g., deferiprone)",
+            "type": "MEDICATION",
+            "effectiveness": "EXPERIMENTAL",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Deep Brain Stimulation (DBS)",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 5,
+    "keyResearchCenters": [
+        "Oregon Health & Science University",
+        "National Institutes of Health (NIH)",
+        "University College London (UCL)"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "NBIA Disorders Association",
+            "url": "https://www.nbiadisorders.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Pantothenate Kinase-Associated Neurodegeneration (PKAN) Research and Support",
+            "url": "https://www.pkan.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Neurodegeneration with Brain Iron Accumulation (NBIA)",
+        "Aceruloplasminemia",
+        "Friedreich's Ataxia"
+    ],
+    "specialistTypes": [
+        "Neurologist",
+        "Geneticist",
+        "Ophthalmologist",
+        "Physical Therapist",
+        "Speech Therapist",
+        "Occupational Therapist"
+    ],
+    "eli5Summary": "Imagine your brain has a special ingredient, like iron, that helps it work. In PKAN, too much of this ingredient builds up in a part of the brain that controls movement, making it hard to walk, talk, and see. Doctors try to help by giving medicine and therapy to make things a little easier.",
+    "clinicalSummary": "Pantothenate kinase-associated neurodegeneration (PKAN) is a progressive neurodegenerative disorder characterized by iron accumulation in the basal ganglia, primarily the globus pallidus and substantia nigra. The underlying cause is mutations in the PANK2 gene, which encodes pantothenate kinase, an enzyme crucial for coenzyme A synthesis. The resulting metabolic dysfunction leads to mitochondrial impairment and oxidative stress, contributing to neuronal damage. Clinically, PKAN presents with a range of motor symptoms, including dystonia, rigidity, choreoathetosis, and spasticity. Ocular manifestations, such as retinal degeneration and optic atrophy, are also common. Cognitive and behavioral abnormalities can further complicate the clinical picture. Diagnosis relies on clinical findings, MRI demonstrating the characteristic 'eye-of-the-tiger' sign, and genetic confirmation of PANK2 mutations. Management is primarily symptomatic, involving medications to alleviate dystonia, physical and occupational therapy to maintain function, and speech therapy to address communication and swallowing difficulties. Experimental therapies, such as iron chelators and gene therapy, are under investigation.",
+    "historicalBackground": "Hallervorden-Spatz disease was first described in 1922 by Julius Hallervorden and Hugo Spatz, who examined the brains of five individuals with similar neurological symptoms. The term 'Hallervorden-Spatz' was later replaced by 'Pantothenate Kinase-Associated Neurodegeneration' (PKAN) after the discovery of the causative gene, PANK2, in 2001, to reflect the underlying genetic and biochemical basis of the disorder and to remove the association with the Nazi past of the original describers.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Gene Therapy Shows Promise in PKAN Mouse Model",
+            "description": "AAV-mediated gene therapy targeting PANK2 demonstrated improved motor function and reduced iron accumulation in a PKAN mouse model, suggesting potential for future clinical trials.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Identification of Novel Biomarkers for PKAN",
+            "description": "Researchers identified potential biomarkers in cerebrospinal fluid that may aid in early diagnosis and monitoring of disease progression in PKAN patients.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/Disease_Search.php?lng=EN&data_id=166&Disease_Disease_Search_diseaseGroup=Hallervorden-Spatz&Disease_Disease_Search_diseaseType=Pat&Disease(name)=Hallervorden-Spatz%20disease&title=Hallervorden-Spatz%20disease"
+        },
+        {
+            "name": "OMIM",
+            "url": "https://www.omim.org/entry/234200"
+        },
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/"
+        }
+    ]
+}

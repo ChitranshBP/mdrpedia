@@ -1,0 +1,140 @@
+{
+    "name": "Congenital Central Hypoventilation Syndrome",
+    "slug": "congenital-central-hypoventilation-syndrome",
+    "aliases": [
+        "CCHS",
+        "Ondine's Curse",
+        "Primary Alveolar Hypoventilation of Childhood"
+    ],
+    "description": "Congenital Central Hypoventilation Syndrome (CCHS) is a rare, lifelong disorder affecting the autonomic nervous system, primarily impacting respiratory control. Individuals with CCHS have a reduced or absent ventilatory response to hypercapnia (increased carbon dioxide) and hypoxemia (decreased oxygen) and may require lifelong ventilatory support, especially during sleep. The condition is often associated with mutations in the PHOX2B gene.",
+    "category": "NEUROLOGICAL",
+    "icdCode": "G47.33",
+    "orphaCode": "636",
+    "omimCode": "209880",
+    "prevalence": "1 in 50,000 to 1 in 200,000 live births",
+    "estimatedCases": 750,
+    "ageOfOnset": "Neonatal",
+    "inheritance": "AUTOSOMAL_DOMINANT (with high penetrance) or SPORADIC",
+    "symptoms": [
+        "Hypoventilation (especially during sleep)",
+        "Cyanosis (bluish discoloration of the skin due to low oxygen levels)",
+        "Sleep apnea",
+        "Bradycardia (slow heart rate)",
+        "Hirschsprung's disease (in some cases)",
+        "Autonomic dysfunction (e.g., altered pupillary response, sweating abnormalities)",
+        "Tumors of neural crest origin (e.g., neuroblastoma, ganglioneuroma) in a small percentage of cases"
+    ],
+    "affectedSystems": [
+        "Respiratory System",
+        "Nervous System",
+        "Autonomic Nervous System",
+        "Gastrointestinal System (in some cases)",
+        "Cardiovascular System"
+    ],
+    "prognosis": "Variable; with proper management and ventilatory support, individuals with CCHS can live into adulthood. However, the prognosis depends on the severity of the condition, associated complications, and adherence to treatment.",
+    "lifeExpectancy": "Near normal with adequate ventilatory support and management of complications.",
+    "diagnosticMethods": [
+        "Clinical evaluation and observation of hypoventilation",
+        "Polysomnography (sleep study) to assess respiratory patterns during sleep",
+        "Arterial blood gas analysis to measure oxygen and carbon dioxide levels",
+        "Genetic testing for PHOX2B mutations",
+        "Autonomic function testing",
+        "Evaluation for Hirschsprung's disease"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Mechanical Ventilation (Tracheostomy or Non-Invasive)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Diaphragm Pacing (Phrenic Nerve Stimulation)",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Medications to manage associated conditions (e.g., bradycardia)",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Gene Therapy (Experimental)",
+            "type": "GENE_THERAPY",
+            "effectiveness": "EXPERIMENTAL",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 5,
+    "keyResearchCenters": [
+        "Ann & Robert H. Lurie Children's Hospital of Chicago",
+        "Boston Children's Hospital",
+        "Stanford University Medical Center"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "CCHS Foundation",
+            "url": "https://www.cchsnetwork.org/",
+            "country": "USA"
+        },
+        {
+            "name": "The CCHS Family Network",
+            "url": "https://cchsfamilynetwork.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Hirschsprung's Disease",
+        "Neuroblastoma",
+        "Autonomic Nervous System Disorders"
+    ],
+    "specialistTypes": [
+        "Pulmonologist",
+        "Neurologist",
+        "Geneticist",
+        "Sleep Medicine Specialist",
+        "Cardiologist"
+    ],
+    "eli5Summary": "Imagine your body sometimes forgets to breathe, especially when you're sleeping. CCHS is when that happens because a part of your brain that controls breathing isn't working right. Doctors help by giving you a machine to help you breathe.",
+    "clinicalSummary": "Congenital Central Hypoventilation Syndrome (CCHS) is a rare disorder characterized by a failure of autonomic control of respiration, leading to alveolar hypoventilation. The primary defect lies in the brainstem's chemoreceptors, resulting in an impaired response to hypercapnia and hypoxemia. The majority of cases are linked to heterozygous mutations in the PHOX2B gene, a transcription factor crucial for the development of the autonomic nervous system. Clinical presentation typically occurs in the neonatal period with unexplained hypoventilation, often requiring mechanical ventilation. Associated features may include Hirschsprung's disease, neural crest tumors, and other autonomic dysfunctions. Diagnosis involves polysomnography, arterial blood gas analysis, and genetic testing. Management focuses on providing adequate ventilatory support, either through tracheostomy with mechanical ventilation or diaphragm pacing. Long-term monitoring for complications and associated conditions is essential.",
+    "historicalBackground": "CCHS was first described in the medical literature in the 1970s. The association with PHOX2B mutations was discovered in 2003, marking a significant advancement in understanding the genetic basis of the disease.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Novel PHOX2B Mutation Identified in CCHS Patient",
+            "description": "Researchers identified a new mutation in the PHOX2B gene in a patient with atypical CCHS, expanding the known spectrum of genetic variants associated with the condition.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Improved Diaphragm Pacing Techniques for CCHS",
+            "description": "A study demonstrated improved outcomes with refined diaphragm pacing techniques, leading to reduced reliance on mechanical ventilation in some CCHS patients.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/Disease_Search.php?lng=EN&data_id=636"
+        },
+        {
+            "name": "OMIM",
+            "url": "https://www.omim.org/entry/209880"
+        },
+        {
+            "name": "National Institutes of Health (NIH)",
+            "url": "https://www.nih.gov/"
+        }
+    ]
+}

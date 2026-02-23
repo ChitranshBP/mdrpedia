@@ -1,0 +1,126 @@
+{
+    "name": "Benign Essential Blepharospasm",
+    "slug": "benign-essential-blepharospasm",
+    "aliases": [
+        "BEB",
+        "Idiopathic Blepharospasm"
+    ],
+    "description": "Benign Essential Blepharospasm (BEB) is a neurological movement disorder characterized by involuntary, forceful, and repetitive contractions of the muscles around the eyes, leading to involuntary blinking or eyelid closure. It is considered 'benign' because it is not life-threatening, and 'essential' because the cause is unknown (idiopathic).",
+    "category": "NEUROLOGICAL",
+    "icdCode": "G24.5",
+    "orphaCode": "98246",
+    "omimCode": "109500",
+    "prevalence": "Approximately 16 to 133 per million individuals",
+    "estimatedCases": 20000,
+    "ageOfOnset": "Typically between 40 and 70 years of age",
+    "inheritance": "SPORADIC",
+    "symptoms": [
+        "Involuntary eyelid closure",
+        "Increased blinking",
+        "Eye irritation",
+        "Facial spasms",
+        "Light sensitivity (photophobia)",
+        "Dry eyes",
+        "Blurred vision",
+        "Fatigue",
+        "Stress"
+    ],
+    "affectedSystems": [
+        "Nervous System",
+        "Musculoskeletal System",
+        "Sensory Organs (Eyes)"
+    ],
+    "prognosis": "BEB is a chronic condition with symptoms that can fluctuate in severity. It is not life-threatening, but can significantly impact quality of life.",
+    "lifeExpectancy": "Normal",
+    "diagnosticMethods": [
+        "Clinical neurological examination",
+        "Patient history",
+        "EMG (Electromyography) to rule out other conditions"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Botulinum Toxin Injections (Botox)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 1989
+        },
+        {
+            "name": "Oral Medications (e.g., Trihexyphenidyl, Clonazepam)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Surgery (Myectomy)",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Supportive Therapies (e.g., artificial tears, stress management)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 15,
+    "keyResearchCenters": [
+        "National Eye Institute (NEI)",
+        "Mayo Clinic",
+        "Johns Hopkins Medicine"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Benign Essential Blepharospasm Research Foundation (BEBRF)",
+            "url": "https://www.blepharospasm.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Meige Syndrome",
+        "Hemifacial Spasm",
+        "Tardive Dyskinesia",
+        "Dry Eye Syndrome"
+    ],
+    "specialistTypes": [
+        "Neurologist",
+        "Ophthalmologist",
+        "Movement Disorder Specialist"
+    ],
+    "eli5Summary": "Imagine your eyes keep blinking and closing on their own, even when you don't want them to. That's like having a little glitch in the part of your brain that controls your eyelids. Doctors can help by giving special shots to relax those muscles.",
+    "clinicalSummary": "Benign Essential Blepharospasm (BEB) is a focal dystonia characterized by involuntary, repetitive contractions of the orbicularis oculi, procerus, and corrugator muscles. The pathophysiology is not fully understood, but is believed to involve dysfunction in the basal ganglia. Diagnosis is primarily clinical, based on observation of characteristic symptoms and exclusion of secondary causes. Treatment focuses on symptomatic relief, primarily with botulinum toxin injections. In severe cases, surgical myectomy may be considered. The condition is chronic and can significantly impair vision and quality of life.",
+    "historicalBackground": "The first detailed description of blepharospasm was provided in the late 19th century. The term 'benign essential blepharospasm' was coined to differentiate it from other forms of eyelid spasms. Botulinum toxin injections were introduced as a treatment in the 1980s and have since become the standard of care.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Advancements in Botulinum Toxin Delivery Methods",
+            "description": "Research is ongoing to improve the delivery and efficacy of botulinum toxin injections, including the use of novel injection techniques and formulations to prolong the duration of effect and reduce side effects.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Exploring the Role of Deep Brain Stimulation (DBS)",
+            "description": "While not yet a standard treatment for BEB, studies are exploring the potential of DBS for patients who are refractory to botulinum toxin injections. Preliminary results suggest that DBS may provide significant symptom relief in select cases.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/"
+        },
+        {
+            "name": "Benign Essential Blepharospasm Research Foundation (BEBRF)",
+            "url": "https://www.blepharospasm.org/"
+        }
+    ]
+}

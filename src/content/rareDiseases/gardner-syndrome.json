@@ -1,0 +1,169 @@
+{
+    "name": "Gardner Syndrome",
+    "slug": "gardner-syndrome",
+    "aliases": [
+        "Familial Colorectal Polyposis with Extracolonic Manifestations",
+        "APC-Associated Polyposis Conditions"
+    ],
+    "description": "Gardner syndrome is a rare genetic disorder characterized by the presence of multiple colorectal polyps (adenomas), various types of benign and malignant tumors, and certain skeletal abnormalities. It is considered a variant of familial adenomatous polyposis (FAP) and is caused by mutations in the APC gene. Individuals with Gardner syndrome have a significantly increased risk of developing colorectal cancer, as well as other cancers and noncancerous growths.",
+    "category": "GENETIC",
+    "icdCode": "Q87.8",
+    "orphaCode": "68447",
+    "omimCode": "175300",
+    "prevalence": "1 in 10,000 to 1 in 30,000 live births",
+    "estimatedCases": 20000,
+    "ageOfOnset": "Childhood to early adulthood (10-30 years)",
+    "inheritance": "AUTOSOMAL_DOMINANT",
+    "symptoms": [
+        "Multiple colorectal polyps (adenomas)",
+        "Colorectal cancer",
+        "Epidermoid cysts",
+        "Osteomas (benign bone tumors)",
+        "Desmoid tumors",
+        "Dental abnormalities (e.g., impacted teeth, supernumerary teeth)",
+        "Congenital hypertrophy of the retinal pigment epithelium (CHRPE)",
+        "Fibromas",
+        "Lipomas"
+    ],
+    "affectedSystems": [
+        "Gastrointestinal System",
+        "Skeletal System",
+        "Integumentary System",
+        "Eyes",
+        "Endocrine System"
+    ],
+    "prognosis": "Variable, depending on the severity of the condition and the effectiveness of treatment. Without treatment, the risk of colorectal cancer is very high.",
+    "lifeExpectancy": "Reduced if colorectal cancer develops and is not treated effectively. With proper management, life expectancy can be near normal.",
+    "diagnosticMethods": [
+        "Colonoscopy with biopsy",
+        "Genetic testing for APC gene mutations",
+        "Physical examination",
+        "Imaging studies (e.g., X-rays, CT scans, MRI)",
+        "Ophthalmological examination (for CHRPE)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Prophylactic colectomy",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Endoscopic polypectomy",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "NSAIDs (e.g., Sulindac)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "COX-2 inhibitors (e.g., Celecoxib)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 1998
+        },
+        {
+            "name": "Desmoid tumor resection",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Chemotherapy (for desmoid tumors or colorectal cancer)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Radiation therapy (for desmoid tumors)",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Regular screening and surveillance (colonoscopies, upper endoscopy)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 25,
+    "keyResearchCenters": [
+        "Mayo Clinic",
+        "Johns Hopkins University",
+        "Cleveland Clinic",
+        "National Cancer Institute (NCI)"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Familial Adenomatous Polyposis (FAP) Registry",
+            "url": "https://fapregistry.org/",
+            "country": "USA"
+        },
+        {
+            "name": "The Clearity Foundation",
+            "url": "https://www.clarityfoundation.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Familial Adenomatous Polyposis (FAP)",
+        "Attenuated Familial Adenomatous Polyposis (AFAP)",
+        "Turcot Syndrome"
+    ],
+    "specialistTypes": [
+        "Gastroenterologist",
+        "Geneticist",
+        "Surgeon",
+        "Oncologist",
+        "Ophthalmologist"
+    ],
+    "eli5Summary": "Imagine your body is like a garden, and sometimes little weeds (polyps) grow in your tummy. Gardner Syndrome is when you get lots of these weeds, and sometimes they can turn into bigger problems. Doctors need to check your tummy often and maybe take out the weeds so you stay healthy!",
+    "clinicalSummary": "Gardner syndrome is an autosomal dominant disorder characterized by multiple colorectal adenomas, osteomas (especially of the skull and mandible), epidermoid cysts, desmoid tumors, dental abnormalities, and congenital hypertrophy of the retinal pigment epithelium (CHRPE). It is a phenotypic variant of familial adenomatous polyposis (FAP) caused by mutations in the APC gene. The presence of numerous colorectal polyps necessitates prophylactic colectomy to prevent colorectal cancer. Extracolonic manifestations require careful monitoring and management. Desmoid tumors, in particular, can be challenging to treat and may require surgical resection, radiation therapy, or systemic therapies. Regular screening and surveillance are crucial for early detection and management of complications.",
+    "historicalBackground": "Gardner syndrome was first described by Eldon J. Gardner in 1951, who noted the association of colonic polyps with osteomas and soft tissue tumors. It was later recognized as a variant of familial adenomatous polyposis (FAP) due to the shared underlying genetic cause (APC gene mutations).",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Novel Therapies for Desmoid Tumors in Gardner Syndrome",
+            "description": "Recent studies have shown promising results with novel therapies, including tyrosine kinase inhibitors and gamma-secretase inhibitors, for the treatment of desmoid tumors associated with Gardner syndrome. These therapies may offer alternatives to surgery and radiation therapy.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Liquid Biopsy for Early Detection of Colorectal Cancer in FAP/Gardner Syndrome",
+            "description": "Research is underway to develop liquid biopsy techniques for the early detection of colorectal cancer in individuals with FAP and Gardner syndrome. These non-invasive methods could improve screening and surveillance strategies.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/"
+        },
+        {
+            "name": "Genetics Home Reference",
+            "url": "https://ghr.nlm.nih.gov/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        }
+    ]
+}

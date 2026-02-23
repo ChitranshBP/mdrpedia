@@ -1,0 +1,149 @@
+{
+    "name": "Bernard-Soulier Syndrome",
+    "slug": "bernard-soulier-syndrome",
+    "aliases": [
+        "BSS",
+        "Giant Platelet Syndrome",
+        "Bernard-Soulier Giant Platelet Syndrome"
+    ],
+    "description": "Bernard-Soulier syndrome (BSS) is a rare genetic bleeding disorder characterized by abnormally large platelets (thrombocytopenia), a reduced platelet count (thrombocytopenia), and impaired platelet function, leading to a tendency to bleed excessively. It is caused by defects in the glycoprotein Ib/IX/V complex, which is essential for platelet adhesion to damaged blood vessel walls.",
+    "category": "GENETIC",
+    "icdCode": "D69.1",
+    "orphaCode": "132",
+    "omimCode": "231200",
+    "prevalence": "Less than 1 in 1,000,000",
+    "estimatedCases": 7000,
+    "ageOfOnset": "Usually at birth or early childhood",
+    "inheritance": "AUTOSOMAL_RECESSIVE",
+    "symptoms": [
+        "Easy bruising",
+        "Nosebleeds (epistaxis)",
+        "Prolonged bleeding after injuries or surgery",
+        "Heavy menstrual periods (menorrhagia) in females",
+        "Gum bleeding",
+        "Skin bleeding (petechiae or purpura)",
+        "Thrombocytopenia (low platelet count)",
+        "Giant platelets on blood smear"
+    ],
+    "affectedSystems": [
+        "Hematologic System",
+        "Vascular System"
+    ],
+    "prognosis": "The prognosis varies depending on the severity of the bleeding tendency. With proper management, individuals with BSS can lead relatively normal lives. Severe bleeding episodes can be life-threatening.",
+    "lifeExpectancy": "Normal life expectancy is possible with appropriate management and avoidance of trauma.",
+    "diagnosticMethods": [
+        "Complete blood count (CBC) with platelet count",
+        "Peripheral blood smear examination (to identify giant platelets)",
+        "Platelet aggregation studies (to assess platelet function)",
+        "Flow cytometry (to assess the expression of the glycoprotein Ib/IX/V complex on platelets)",
+        "Genetic testing (to identify mutations in the genes encoding the glycoprotein Ib/IX/V complex subunits: GP1BA, GP1BB, and GP9)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Platelet Transfusions",
+            "type": "SUPPORTIVE",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Recombinant Factor VIIa (rFVIIa)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 1999
+        },
+        {
+            "name": "Desmopressin (DDAVP)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 1978
+        },
+        {
+            "name": "Antifibrinolytic Agents (e.g., tranexamic acid, aminocaproic acid)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Hematopoietic Stem Cell Transplantation (HSCT)",
+            "type": "GENE_THERAPY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Avoidance of Antiplatelet Medications (e.g., aspirin, NSAIDs)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 5,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Mayo Clinic",
+        "University of Pennsylvania"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Platelet Disorder Support Association (PDSA)",
+            "url": "https://www.pdsa.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Glanzmann Thrombasthenia",
+        "Gray Platelet Syndrome",
+        "Wiskott-Aldrich Syndrome"
+    ],
+    "specialistTypes": [
+        "Hematologist",
+        "Geneticist",
+        "Pediatric Hematologist"
+    ],
+    "eli5Summary": "Imagine your blood has tiny helpers called platelets that stop you from bleeding too much when you get a cut. In Bernard-Soulier Syndrome, these helpers are too big and don't work properly, so you might bleed more easily and for a longer time.",
+    "clinicalSummary": "Bernard-Soulier syndrome (BSS) is a rare inherited bleeding disorder characterized by thrombocytopenia, giant platelets, and impaired platelet function due to defects in the glycoprotein Ib/IX/V complex. This complex mediates the initial adhesion of platelets to the subendothelium at sites of vascular injury. Mutations in the GP1BA, GP1BB, or GP9 genes, encoding subunits of the complex, lead to reduced or absent expression of the complex on the platelet surface, resulting in impaired platelet adhesion and prolonged bleeding times. Diagnosis involves CBC, peripheral blood smear, platelet aggregation studies, and flow cytometry. Management focuses on supportive care, including platelet transfusions and avoidance of antiplatelet agents. Recombinant factor VIIa and antifibrinolytic agents may be used to control bleeding episodes. Hematopoietic stem cell transplantation is a curative option.",
+    "historicalBackground": "Bernard-Soulier syndrome was first described in 1948 by French hematologists Jean Bernard and Jean-Pierre Soulier, who identified a bleeding disorder characterized by giant platelets and prolonged bleeding times in two unrelated patients.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Gene Therapy Approaches for Bernard-Soulier Syndrome",
+            "description": "Research is ongoing to develop gene therapy strategies to correct the genetic defects underlying Bernard-Soulier Syndrome. Early preclinical studies show promise in restoring normal platelet function and reducing bleeding tendencies.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Novel Anti-Thrombotic Agents for BSS",
+            "description": "Development of novel anti-thrombotic agents that bypass the defective GPIb-IX-V complex is under investigation to improve platelet function in BSS patients without increasing bleeding risk.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/index.php"
+        },
+        {
+            "name": "National Center for Biotechnology Information (NCBI)",
+            "url": "https://www.ncbi.nlm.nih.gov/"
+        },
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/"
+        }
+    ]
+}

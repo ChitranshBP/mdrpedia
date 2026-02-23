@@ -1,0 +1,157 @@
+{
+    "name": "Costello Syndrome",
+    "slug": "costello-syndrome",
+    "aliases": [
+        "RASopathy",
+        "Facio-cardio-cutaneous syndrome"
+    ],
+    "description": "Costello syndrome is a rare genetic disorder characterized by developmental delays, intellectual disability, distinctive facial features, cardiac abnormalities, skin and musculoskeletal problems, and an increased risk of certain cancers. It is caused by mutations in the HRAS gene, which plays a role in cell growth and division.",
+    "category": "GENETIC",
+    "icdCode": "Q87.8",
+    "orphaCode": "2016",
+    "omimCode": "218040",
+    "prevalence": "Estimated 1 in 300,000 to 1 in 1,250,000 live births",
+    "estimatedCases": 2000,
+    "ageOfOnset": "Congenital/Infancy",
+    "inheritance": "AUTOSOMAL_DOMINANT (de novo mutations)",
+    "symptoms": [
+        "Distinctive facial features (coarse face, full lips, large mouth)",
+        "Developmental delay",
+        "Intellectual disability",
+        "Cardiac abnormalities (hypertrophic cardiomyopathy, arrhythmia)",
+        "Skin abnormalities (papillomata, loose skin)",
+        "Musculoskeletal problems (joint laxity, short stature)",
+        "Increased risk of tumors (rhabdomyosarcoma, neuroblastoma)",
+        "Feeding difficulties",
+        "Hypotonia",
+        "Curly or sparse hair"
+    ],
+    "affectedSystems": [
+        "Cardiovascular System",
+        "Integumentary System",
+        "Musculoskeletal System",
+        "Nervous System",
+        "Endocrine System"
+    ],
+    "prognosis": "Variable; depends on the severity of cardiac issues, tumor development, and other complications. Lifelong monitoring and management are required.",
+    "lifeExpectancy": "Reduced; influenced by cardiac complications and cancer risk. Some individuals live into adulthood with appropriate management.",
+    "diagnosticMethods": [
+        "Clinical evaluation",
+        "Genetic testing (HRAS gene sequencing)",
+        "Echocardiogram",
+        "Electrocardiogram (ECG)",
+        "Radiological studies",
+        "Developmental assessment"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Cardiac Management (e.g., Beta-blockers, ACE inhibitors)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Surgical Intervention (for cardiac defects or papillomata)",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Growth Hormone Therapy",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Developmental Therapies (Physical, Occupational, Speech)",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Tumor Surveillance and Management",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Nutritional Support",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 15,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Boston Children's Hospital",
+        "Cincinnati Children's Hospital Medical Center"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Costello Syndrome Family Support Network",
+            "url": "https://costellokids.org/",
+            "country": "USA"
+        },
+        {
+            "name": "RASopathies Network",
+            "url": "https://rasopathiesnet.org/",
+            "country": "International"
+        }
+    ],
+    "relatedConditions": [
+        "Noonan Syndrome",
+        "Cardiofaciocutaneous Syndrome",
+        "Neurofibromatosis Type 1"
+    ],
+    "specialistTypes": [
+        "Clinical Geneticist",
+        "Cardiologist",
+        "Dermatologist",
+        "Developmental Pediatrician",
+        "Oncologist",
+        "Endocrinologist"
+    ],
+    "eli5Summary": "Costello Syndrome is a rare problem kids are born with. It makes them look a little different, learn slower, and sometimes have heart problems. Doctors help them grow and stay healthy.",
+    "clinicalSummary": "Costello syndrome is a rare RASopathy caused by heterozygous mutations in the HRAS gene. The syndrome is characterized by distinctive facial features, cardiac abnormalities (particularly hypertrophic cardiomyopathy), cutaneous papillomata, musculoskeletal abnormalities, neurocognitive delays, and an increased predisposition to certain malignancies, notably rhabdomyosarcoma and neuroblastoma. Diagnosis is typically made clinically and confirmed by genetic testing. Management involves multidisciplinary care, including cardiology, dermatology, developmental pediatrics, and oncology. Surveillance for tumor development is crucial. Prognosis varies depending on the severity of cardiac and oncologic complications.",
+    "historicalBackground": "Costello syndrome was first described by Dr. John Costello in 1977. The genetic basis of the syndrome, mutations in the HRAS gene, was identified in 2004.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Identification of Novel HRAS Mutation Modifiers",
+            "description": "Research has identified genetic modifiers that influence the severity of Costello syndrome phenotypes, offering potential targets for future therapies.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Improved Cardiac Management Strategies",
+            "description": "Advances in cardiac imaging and medical management have improved outcomes for individuals with hypertrophic cardiomyopathy associated with Costello syndrome.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/"
+        },
+        {
+            "name": "Genetic and Rare Diseases Information Center (GARD)",
+            "url": "https://rarediseases.info.nih.gov/"
+        },
+        {
+            "name": "OMIM",
+            "url": "https://www.omim.org/"
+        }
+    ]
+}

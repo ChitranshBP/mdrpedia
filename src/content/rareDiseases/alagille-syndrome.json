@@ -1,0 +1,170 @@
+{
+    "name": "Alagille Syndrome",
+    "slug": "alagille-syndrome",
+    "aliases": [
+        "ALGS",
+        "Arteriohepatic Dysplasia",
+        "Watson-Miller Syndrome"
+    ],
+    "description": "Alagille syndrome is a genetic disorder that affects multiple organ systems in the body, including the liver, heart, kidneys, and eyes. The most prominent feature of Alagille syndrome is liver damage caused by abnormalities in the bile ducts. Bile, a fluid produced by the liver, aids in digestion. In individuals with Alagille syndrome, the bile ducts may be narrowed, malformed, or reduced in number, leading to bile buildup in the liver (cholestasis) and subsequent liver damage. Other common features include heart defects, butterfly vertebrae, characteristic facial features, and kidney abnormalities.",
+    "category": "GENETIC",
+    "icdCode": "Q44.7",
+    "orphaCode": "70",
+    "omimCode": "118450",
+    "prevalence": "Estimated 1 in 30,000 to 1 in 70,000 live births",
+    "estimatedCases": 4000,
+    "ageOfOnset": "Infancy or early childhood",
+    "inheritance": "AUTOSOMAL_DOMINANT",
+    "symptoms": [
+        "Jaundice (yellowing of the skin and eyes)",
+        "Pruritus (severe itching)",
+        "Xanthomas (cholesterol deposits in the skin)",
+        "Hepatomegaly (enlarged liver)",
+        "Cardiac murmur (heart defect)",
+        "Butterfly vertebrae (spinal abnormality)",
+        "Posterior embryotoxon (eye abnormality)",
+        "Renal abnormalities",
+        "Facial features (prominent forehead, deep-set eyes, small pointed chin)",
+        "Failure to thrive",
+        "Developmental delay"
+    ],
+    "affectedSystems": [
+        "Hepatic (Liver)",
+        "Cardiovascular (Heart)",
+        "Skeletal (Vertebrae)",
+        "Ocular (Eyes)",
+        "Renal (Kidneys)",
+        "Neurological (Brain)"
+    ],
+    "prognosis": "Variable; depends on the severity of liver and heart involvement. Some individuals have mild symptoms and live relatively normal lives, while others require liver transplantation or die in infancy or childhood.",
+    "lifeExpectancy": "Variable; can range from infancy to adulthood depending on the severity of the disease and the presence of complications.",
+    "diagnosticMethods": [
+        "Clinical evaluation",
+        "Liver biopsy",
+        "Genetic testing (JAG1 and NOTCH2 genes)",
+        "Echocardiogram (heart ultrasound)",
+        "Abdominal ultrasound",
+        "Ophthalmologic examination",
+        "Skeletal X-rays"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Ursodeoxycholic acid (UDCA)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Cholestyramine",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Rifampin",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Nutritional support (high-calorie diet, fat-soluble vitamin supplementation)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Partial external biliary diversion (PEBD)",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Liver transplantation",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Maralixibat",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2021
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 25,
+    "keyResearchCenters": [
+        "Cincinnati Children's Hospital Medical Center",
+        "Boston Children's Hospital",
+        "Mayo Clinic",
+        "University of California, San Francisco"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Alagille Syndrome Alliance (ALGSA)",
+            "url": "https://www.algsalliance.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Children's Liver Disease Foundation",
+            "url": "https://childliverdisease.org/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "Biliary Atresia",
+        "Progressive Familial Intrahepatic Cholestasis (PFIC)",
+        "Alpha-1 Antitrypsin Deficiency"
+    ],
+    "specialistTypes": [
+        "Gastroenterologist",
+        "Hepatologist",
+        "Cardiologist",
+        "Geneticist",
+        "Ophthalmologist",
+        "Nephrologist",
+        "Transplant Surgeon"
+    ],
+    "eli5Summary": "Imagine your liver has tiny tubes that help it clean your body. In Alagille syndrome, these tubes are messed up, so the liver can't clean properly. This can cause yellow skin, itchy skin, and other problems with your heart, eyes, and bones. Doctors can help with medicine and sometimes surgery to make you feel better.",
+    "clinicalSummary": "Alagille syndrome (ALGS) is a multisystemic disorder primarily affecting the liver, heart, eyes, skeleton, and kidneys. It is caused by mutations in the JAG1 gene (most common) or NOTCH2 gene, which encode ligands involved in the Notch signaling pathway, crucial for cell fate determination during development. The hallmark hepatic feature is paucity of interlobular bile ducts, leading to cholestasis and progressive liver damage. Cardiac manifestations commonly include peripheral pulmonary artery stenosis. Ocular findings include posterior embryotoxon. Skeletal abnormalities, such as butterfly vertebrae, are also characteristic. Renal involvement can range from mild abnormalities to renal tubular acidosis. Diagnosis is based on clinical findings, liver biopsy, and genetic testing. Management focuses on symptomatic relief of pruritus, nutritional support, and treatment of complications. Liver transplantation is considered for patients with severe liver disease. The prognosis is variable, with some patients experiencing mild disease and others requiring liver transplantation or succumbing to complications in infancy or childhood.",
+    "historicalBackground": "Alagille syndrome was first described by Daniel Alagille in 1969, who characterized the association of cholestasis, heart disease, and skeletal abnormalities in affected individuals. The genetic basis of the disease was later identified in the 1990s with the discovery of mutations in the JAG1 gene.",
+    "recentBreakthroughs": [
+        {
+            "year": 2021,
+            "title": "FDA Approves Maralixibat for Cholestatic Pruritus in Alagille Syndrome",
+            "description": "The FDA approved maralixibat, an ileal bile acid transporter (IBAT) inhibitor, for the treatment of cholestatic pruritus in patients with Alagille syndrome aged 1 year and older. This provides a new therapeutic option for managing the debilitating itch associated with ALGS.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Gene Therapy Approaches Showing Promise in Preclinical Studies",
+            "description": "Research into gene therapy for Alagille syndrome is ongoing, with preclinical studies showing promising results in animal models. These approaches aim to correct the underlying genetic defect in JAG1 or NOTCH2, potentially offering a curative therapy in the future.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/Disease_Search.php?lng=EN&data_id=70"
+        },
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/rare-diseases/alagille-syndrome/"
+        },
+        {
+            "name": "MedlinePlus",
+            "url": "https://medlineplus.gov/genetics/condition/alagille-syndrome/"
+        }
+    ]
+}

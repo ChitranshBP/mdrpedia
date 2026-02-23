@@ -1,0 +1,158 @@
+{
+    "name": "Bloom Syndrome",
+    "slug": "bloom-syndrome",
+    "aliases": [
+        "Bloom-Torre-Machacek syndrome",
+        "Congenital telangiectatic erythema and stunted growth"
+    ],
+    "description": "Bloom syndrome is a rare autosomal recessive genetic disorder characterized by short stature, sun-sensitive skin rash (telangiectatic erythema) on the face, increased susceptibility to infections, and a significantly elevated risk of developing various cancers at a young age. It is caused by mutations in the BLM gene, which is responsible for DNA repair and maintaining genomic stability.",
+    "category": "GENETIC",
+    "icdCode": "Q82.8",
+    "orphaCode": "127",
+    "omimCode": "210900",
+    "prevalence": "1 in 48,000 Ashkenazi Jews; rarer in other populations",
+    "estimatedCases": 100,
+    "ageOfOnset": "Infancy",
+    "inheritance": "AUTOSOMAL_RECESSIVE",
+    "symptoms": [
+        "Short stature",
+        "Facial rash (telangiectatic erythema)",
+        "Sun sensitivity",
+        "Increased risk of infections",
+        "Increased risk of cancer (leukemia, lymphoma, carcinomas)",
+        "Immunodeficiency",
+        "High-pitched voice",
+        "Learning disabilities",
+        "Male infertility",
+        "Diabetes"
+    ],
+    "affectedSystems": [
+        "Integumentary System",
+        "Immune System",
+        "Endocrine System",
+        "Hematopoietic System",
+        "Reproductive System"
+    ],
+    "prognosis": "Variable, depending on the development and management of complications, particularly cancer.",
+    "lifeExpectancy": "Reduced, with a median age of death in the late 20s, primarily due to cancer. However, with careful monitoring and treatment, some individuals live longer.",
+    "diagnosticMethods": [
+        "Clinical evaluation",
+        "Physical examination",
+        "Genetic testing (BLM gene sequencing)",
+        "Chromosome breakage studies (sister chromatid exchange analysis)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Sun protection (sunscreen, protective clothing)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Infection management (antibiotics, antivirals)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Cancer surveillance (regular screenings)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Cancer treatment (chemotherapy, radiation, surgery)",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Hematopoietic stem cell transplantation (for certain cancers)",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Intravenous immunoglobulin (IVIG) therapy (for immunodeficiency)",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Growth hormone therapy (for short stature)",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 5,
+    "keyResearchCenters": [
+        "Memorial Sloan Kettering Cancer Center",
+        "National Institutes of Health (NIH)",
+        "Stanford University"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Bloom Syndrome Association",
+            "url": "https://www.bloomsyndrome.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Fanconi Anemia",
+        "Ataxia-Telangiectasia",
+        "Nijmegen Breakage Syndrome"
+    ],
+    "specialistTypes": [
+        "Clinical Geneticist",
+        "Pediatrician",
+        "Dermatologist",
+        "Oncologist",
+        "Hematologist",
+        "Immunologist",
+        "Endocrinologist"
+    ],
+    "eli5Summary": "Bloom syndrome is a rare problem where kids don't grow very tall, get a sunburn-like rash on their face easily, and have a higher chance of getting sick and getting cancer. It happens because their bodies have trouble fixing broken DNA.",
+    "clinicalSummary": "Bloom syndrome (BS) is a rare autosomal recessive disorder caused by mutations in the BLM gene, encoding a RecQ helicase involved in DNA replication, repair, and recombination. The hallmark features include proportionate short stature, facial telangiectatic erythema with sun sensitivity, immune deficiency, and a predisposition to a wide range of cancers, often at an early age. Chromosomal instability, manifested as increased sister chromatid exchange (SCE), is a key diagnostic feature. Management focuses on sun protection, infection control, cancer surveillance, and treatment of complications. The prognosis is guarded due to the high risk of malignancy.",
+    "historicalBackground": "Bloom syndrome was first described in 1954 by Dr. David Bloom, a dermatologist, who observed a group of patients with characteristic facial telangiectasia and stunted growth.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Improved understanding of BLM helicase function",
+            "description": "Research has further elucidated the role of the BLM helicase in maintaining genomic stability and preventing tumorigenesis, providing potential targets for therapeutic intervention.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Development of novel cancer therapies for Bloom syndrome patients",
+            "description": "Researchers are exploring targeted therapies and immunotherapies that may be more effective and less toxic for individuals with Bloom syndrome who develop cancer.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/"
+        },
+        {
+            "name": "Genetics Home Reference",
+            "url": "https://ghr.nlm.nih.gov/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        }
+    ]
+}

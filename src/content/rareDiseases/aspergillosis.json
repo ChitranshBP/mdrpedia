@@ -1,0 +1,164 @@
+{
+    "name": "Aspergillosis",
+    "slug": "aspergillosis",
+    "aliases": [
+        "Aspergillus infection",
+        "Fungal lung infection"
+    ],
+    "description": "Aspergillosis is an infection caused by Aspergillus, a common mold that lives indoors and outdoors. Most people breathe in Aspergillus spores every day without getting sick. However, people with weakened immune systems or lung diseases are at a higher risk of developing health problems due to Aspergillus. The types of health problems caused by Aspergillus include allergic reactions, lung infections, and infections in other organs.",
+    "category": "INFECTIOUS",
+    "icdCode": "B44",
+    "orphaCode": "98358",
+    "omimCode": "607543",
+    "prevalence": "Varies depending on the population and underlying conditions; higher in immunocompromised individuals.",
+    "estimatedCases": null,
+    "ageOfOnset": "Varies; can occur at any age, but more common in adults with underlying conditions.",
+    "inheritance": "Not applicable (infectious disease)",
+    "symptoms": [
+        "Fever",
+        "Cough (may produce blood or mucus)",
+        "Chest pain",
+        "Shortness of breath",
+        "Wheezing",
+        "Weight loss",
+        "Fatigue",
+        "Invasive aspergillosis can affect other organs, leading to organ-specific symptoms"
+    ],
+    "affectedSystems": [
+        "Respiratory system",
+        "Immune system",
+        "Central nervous system (in invasive cases)",
+        "Skin (in cutaneous cases)"
+    ],
+    "prognosis": "Varies depending on the type of aspergillosis and the patient's overall health. Allergic forms generally have a better prognosis than invasive forms. Invasive aspergillosis can be life-threatening, especially in immunocompromised individuals.",
+    "lifeExpectancy": "Varies; invasive aspergillosis can significantly reduce life expectancy if untreated, while allergic forms typically do not affect life expectancy.",
+    "diagnosticMethods": [
+        "Chest X-ray",
+        "CT scan",
+        "Sputum culture",
+        "Bronchoscopy with bronchoalveolar lavage (BAL)",
+        "Blood tests (e.g., galactomannan assay, beta-D-glucan assay)",
+        "Biopsy of affected tissue"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Voriconazole",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2002
+        },
+        {
+            "name": "Itraconazole",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 1992
+        },
+        {
+            "name": "Posaconazole",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2006
+        },
+        {
+            "name": "Isavuconazole",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2015
+        },
+        {
+            "name": "Amphotericin B",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Corticosteroids (for allergic forms)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Surgical resection (for aspergilloma)",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Supportive care (oxygen therapy, nutritional support)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 50,
+    "keyResearchCenters": [
+        "National Institute of Allergy and Infectious Diseases (NIAID)",
+        "Centers for Disease Control and Prevention (CDC)",
+        "Major university hospitals with infectious disease departments"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "The Aspergillus & Aspergillosis Website",
+            "url": "https://aspergillus.org.uk/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "Asthma",
+        "Cystic fibrosis",
+        "COPD (Chronic Obstructive Pulmonary Disease)",
+        "Leukemia",
+        "Organ transplantation",
+        "HIV/AIDS"
+    ],
+    "specialistTypes": [
+        "Pulmonologist",
+        "Infectious Disease Specialist",
+        "Immunologist",
+        "Critical Care Physician"
+    ],
+    "eli5Summary": "Aspergillosis is like getting sick from a mold called Aspergillus. This mold is everywhere, but it usually only makes people with weak immune systems or lung problems sick. It can cause coughing, fever, and trouble breathing, but doctors can give you medicine to help you get better.",
+    "clinicalSummary": "Aspergillosis encompasses a spectrum of diseases caused by fungi of the genus Aspergillus, most commonly Aspergillus fumigatus. Clinical manifestations range from allergic bronchopulmonary aspergillosis (ABPA) and chronic pulmonary aspergillosis (CPA) to invasive aspergillosis (IA). ABPA is characterized by an allergic response to Aspergillus antigens in the airways, leading to asthma-like symptoms and bronchiectasis. CPA includes aspergilloma (a fungal ball in a pre-existing lung cavity) and chronic necrotizing pulmonary aspergillosis (CNPA), a progressive destructive lung infection. IA is a life-threatening infection that primarily affects immunocompromised individuals, such as those with neutropenia, hematopoietic stem cell transplant recipients, and solid organ transplant recipients. Diagnosis involves imaging studies, mycological testing (culture, galactomannan assay), and histopathology. Treatment depends on the type of aspergillosis and includes antifungal medications (azoles, amphotericin B), corticosteroids (for ABPA), and surgical resection (for aspergilloma).",
+    "historicalBackground": "Aspergillosis was first described in the 19th century. The association between Aspergillus and lung disease was recognized early on, and the understanding of the different forms of aspergillosis has evolved over time with advances in medical mycology and immunology.",
+    "recentBreakthroughs": [
+        {
+            "year": 2023,
+            "title": "Novel Antifungal Agents in Development",
+            "description": "Several new antifungal agents are in preclinical and clinical development, showing promise for improved efficacy and reduced toxicity compared to existing treatments for aspergillosis.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2022,
+            "title": "Improved Diagnostic Methods for Invasive Aspergillosis",
+            "description": "Advances in molecular diagnostics, such as PCR-based assays, are improving the speed and accuracy of diagnosing invasive aspergillosis, leading to earlier treatment and better outcomes.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "CDC - Aspergillosis",
+            "url": "https://www.cdc.gov/aspergillosis/index.html"
+        },
+        {
+            "name": "The Aspergillus Website",
+            "url": "https://aspergillus.org.uk/"
+        },
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/"
+        }
+    ]
+}

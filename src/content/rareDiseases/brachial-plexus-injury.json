@@ -1,0 +1,181 @@
+{
+    "name": "Brachial Plexus Injury",
+    "slug": "brachial-plexus-injury",
+    "aliases": [
+        "Brachial Plexus Palsy",
+        "Erb's Palsy",
+        "Klumpke's Palsy",
+        "Obstetrical Brachial Plexus Palsy (OBPP)",
+        "Traumatic Brachial Plexus Injury"
+    ],
+    "description": "Brachial plexus injury refers to damage to the brachial plexus, a network of nerves that originates in the neck and shoulder and provides motor and sensory function to the arm, hand, and fingers. These injuries can range from mild stretches to complete avulsion of the nerve roots from the spinal cord. The severity and location of the injury determine the extent of functional impairment.",
+    "category": "NEUROLOGICAL",
+    "icdCode": "G54.0",
+    "orphaCode": "98874",
+    "omimCode": "609370",
+    "prevalence": "Approximately 1-4 per 1,000 live births for obstetrical brachial plexus palsy; variable for traumatic injuries.",
+    "estimatedCases": 2000,
+    "ageOfOnset": "Varies; can be congenital (obstetrical) or occur at any age due to trauma.",
+    "inheritance": "SPORADIC (typically not inherited, but caused by injury)",
+    "symptoms": [
+        "Weakness or paralysis in the arm or hand",
+        "Loss of sensation in the arm or hand",
+        "Pain in the shoulder, arm, or hand",
+        "Limited range of motion in the shoulder, arm, or hand",
+        "Muscle atrophy",
+        "Numbness or tingling in the arm or hand",
+        "Horner's syndrome (in severe cases involving nerve root avulsion)",
+        "Claw hand deformity (in Klumpke's palsy)"
+    ],
+    "affectedSystems": [
+        "Nervous System",
+        "Musculoskeletal System"
+    ],
+    "prognosis": "Variable; depends on the severity and type of injury. Some individuals recover spontaneously, while others require extensive rehabilitation or surgery. Complete recovery is not always possible, and permanent disability may occur.",
+    "lifeExpectancy": "Normal, unless complications arise from the injury or associated conditions.",
+    "diagnosticMethods": [
+        "Physical examination",
+        "Neurological examination",
+        "Electromyography (EMG)",
+        "Nerve conduction studies (NCS)",
+        "Magnetic resonance imaging (MRI)",
+        "Computed tomography (CT) myelography",
+        "Ultrasound"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Observation and Physical Therapy",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational Therapy",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Microsurgical Nerve Repair",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Nerve Grafting",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Nerve Transfer",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Muscle Transfer",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Botulinum Toxin (Botox) Injections",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Pain Management (medications, nerve blocks)",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 25,
+    "keyResearchCenters": [
+        "Mayo Clinic",
+        "Boston Children's Hospital",
+        "University of Pennsylvania",
+        "Washington University in St. Louis",
+        "Texas Children's Hospital"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "United Brachial Plexus Network",
+            "url": "https://ubpn.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Erb's Palsy Group",
+            "url": "https://www.erbs-palsy.org.uk/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "Cerebral Palsy",
+        "Spinal Cord Injury",
+        "Shoulder Dystocia",
+        "Horner's Syndrome",
+        "Thoracic Outlet Syndrome"
+    ],
+    "specialistTypes": [
+        "Neurologist",
+        "Neurosurgeon",
+        "Orthopedic Surgeon",
+        "Physical Therapist",
+        "Occupational Therapist",
+        "Pain Management Specialist",
+        "Pediatrician (for OBPP)"
+    ],
+    "eli5Summary": "Imagine your arm is like a puppet controlled by strings (nerves) from your neck. If those strings get stretched or broken during birth or an accident, your arm might not move as well. Doctors can sometimes fix the strings with surgery or help you learn to use your arm better with exercises.",
+    "clinicalSummary": "Brachial plexus injuries result from traction, compression, or laceration of the brachial plexus nerves. Obstetrical brachial plexus palsy (OBPP) commonly occurs during difficult vaginal deliveries, particularly with shoulder dystocia. Traumatic injuries can result from motor vehicle accidents, sports injuries, or penetrating trauma. The clinical presentation varies depending on the specific nerve roots involved (C5-T1). Erb's palsy (C5-C6) results in weakness of shoulder abduction and external rotation, elbow flexion, and wrist extension. Klumpke's palsy (C8-T1) affects the intrinsic hand muscles, causing a claw hand deformity. Diagnosis involves clinical examination, electrodiagnostic studies, and imaging. Treatment ranges from conservative management with physical therapy to surgical intervention for nerve repair or reconstruction. Long-term outcomes depend on the severity of the injury and the effectiveness of treatment.",
+    "historicalBackground": "Descriptions of brachial plexus injuries date back to the late 18th century. Guillaume Benjamin Amand Duchenne described obstetrical brachial plexus palsy in the mid-19th century, and Wilhelm Heinrich Erb further characterized the upper plexus injury. Augusta Déjerine-Klumpke described the lower plexus injury. Surgical techniques for nerve repair and reconstruction have evolved significantly over the past century, improving outcomes for patients with brachial plexus injuries.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Advanced Imaging Techniques for Brachial Plexus Injury Assessment",
+            "description": "Improved MRI protocols, including diffusion tensor imaging (DTI), are enhancing the ability to visualize and assess the extent of nerve damage in brachial plexus injuries, leading to more precise surgical planning.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Expanded Use of Nerve Transfers in Brachial Plexus Reconstruction",
+            "description": "Nerve transfer techniques, involving the transfer of functioning nerves to reinnervate paralyzed muscles, are showing promising results in restoring upper extremity function in patients with severe brachial plexus injuries.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2024,
+            "title": "Development of Novel Biomaterials for Nerve Grafting",
+            "description": "Researchers are developing new biomaterials and nerve conduits to improve nerve regeneration and functional outcomes following nerve grafting procedures in brachial plexus injury repair.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/"
+        },
+        {
+            "name": "United Brachial Plexus Network (UBPN)",
+            "url": "https://ubpn.org/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        }
+    ]
+}

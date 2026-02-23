@@ -1,0 +1,145 @@
+{
+    "name": "Ichthyosis",
+    "slug": "ichthyosis",
+    "aliases": [
+        "Fish Scale Disease",
+        "Xeroderma"
+    ],
+    "description": "Ichthyosis is a group of genetic skin disorders characterized by dry, thickened, scaling skin. The severity and type of scaling can vary widely depending on the specific genetic mutation. Ichthyosis can be inherited or, rarely, acquired.",
+    "category": "GENETIC",
+    "icdCode": "Q80",
+    "orphaCode": "98376",
+    "omimCode": "242100",
+    "prevalence": "Approximately 1 in 250 people are affected by some form of ichthyosis. Severe forms are rarer.",
+    "estimatedCases": 3200000,
+    "ageOfOnset": "Varies depending on the type; can be present at birth or develop in early childhood or adulthood.",
+    "inheritance": "Varies depending on the type; can be AUTOSOMAL_RECESSIVE, AUTOSOMAL_DOMINANT, X_LINKED, or SPORADIC.",
+    "symptoms": [
+        "Dry, scaly skin",
+        "Thickened skin",
+        "Flaking",
+        "Itching",
+        "Redness",
+        "Cracked skin",
+        "Blisters (in some forms)",
+        "Heat intolerance (in some forms)",
+        "Impaired sweating (in some forms)"
+    ],
+    "affectedSystems": [
+        "Integumentary System"
+    ],
+    "prognosis": "Ichthyosis is a chronic condition, but symptoms can often be managed with proper skin care. The prognosis varies depending on the specific type and severity.",
+    "lifeExpectancy": "Generally normal, except in very severe cases with complications.",
+    "diagnosticMethods": [
+        "Clinical examination",
+        "Skin biopsy",
+        "Genetic testing"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Emollients and Moisturizers",
+            "type": "SUPPORTIVE",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Keratolytics (e.g., urea, salicylic acid)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Topical Retinoids (e.g., tazarotene, tretinoin)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Oral Retinoids (e.g., acitretin)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Bathing and Hydration Techniques",
+            "type": "SUPPORTIVE",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Gene Therapy (Investigational)",
+            "type": "GENE_THERAPY",
+            "effectiveness": "EXPERIMENTAL",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 50,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Stanford University",
+        "University of Dundee"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Foundation for Ichthyosis & Related Skin Types (FIRST)",
+            "url": "https://www.firstskinfoundation.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Ichthyosis Support Group",
+            "url": "https://www.ichthyosis.org.uk/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "Eczema",
+        "Psoriasis",
+        "Keratosis Pilaris"
+    ],
+    "specialistTypes": [
+        "Dermatologist",
+        "Geneticist"
+    ],
+    "eli5Summary": "Imagine your skin is like a wall made of bricks, and the glue holding them together isn't working right. Ichthyosis is when your skin gets super dry and flaky because it can't hold onto moisture properly, like those bricks falling apart. Lotions and special creams can help keep your skin healthy!",
+    "clinicalSummary": "Ichthyosis encompasses a heterogeneous group of disorders characterized by abnormal epidermal differentiation and desquamation, resulting in visible scaling. The underlying pathophysiology involves mutations in genes responsible for keratinocyte structure, lipid metabolism, and epidermal barrier function. Clinical presentation varies widely, ranging from mild xerosis to severe, disfiguring scaling. Diagnosis involves clinical evaluation, skin biopsy, and genetic testing to identify the specific subtype and guide management. Treatment focuses on symptomatic relief through emollients, keratolytics, and retinoids, with emerging therapies targeting specific genetic defects.",
+    "historicalBackground": "Descriptions of ichthyosis date back to ancient times, with early medical texts recognizing the characteristic scaling and dryness of the skin. The genetic basis of ichthyosis began to be elucidated in the 20th century, with the identification of specific gene mutations associated with different subtypes. Advances in molecular genetics have led to improved diagnostic capabilities and the development of targeted therapies.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Identification of Novel Gene Mutations in Congenital Ichthyosis",
+            "description": "Researchers identified new mutations in genes involved in lipid metabolism that contribute to the pathogenesis of congenital ichthyosis, providing potential targets for future therapies.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Development of Topical Gene Therapy for Lamellar Ichthyosis",
+            "description": "A topical gene therapy approach showed promise in preclinical studies for treating lamellar ichthyosis by correcting the underlying genetic defect in affected skin cells.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net"
+        },
+        {
+            "name": "OMIM",
+            "url": "https://www.omim.org"
+        },
+        {
+            "name": "National Institutes of Health (NIH)",
+            "url": "https://www.nih.gov"
+        }
+    ]
+}

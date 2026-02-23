@@ -1,0 +1,158 @@
+{
+    "name": "Chronic Inflammatory Demyelinating Polyneuropathy (CIDP)",
+    "slug": "chronic-inflammatory-demyelinating-polyneuropathy-cidp",
+    "aliases": [
+        "CIDP",
+        "Chronic relapsing polyneuropathy",
+        "Demyelinating polyradiculoneuropathy"
+    ],
+    "description": "Chronic Inflammatory Demyelinating Polyneuropathy (CIDP) is a rare acquired immune-mediated inflammatory disorder of the peripheral nervous system. It is characterized by progressive symmetric weakness and impaired sensory function in the arms and legs. Unlike its acute counterpart, Guillain-Barré syndrome (GBS), CIDP has a chronic course, progressing for at least 8 weeks. The condition results from damage to the myelin sheath surrounding nerve fibers, leading to impaired nerve conduction and neurological dysfunction.",
+    "category": "AUTOIMMUNE",
+    "icdCode": "G61.81",
+    "orphaCode": "791",
+    "omimCode": "609159",
+    "prevalence": "1-9 / 100,000",
+    "estimatedCases": 70000,
+    "ageOfOnset": "Variable, but most commonly between 40 and 60 years of age. Can occur at any age.",
+    "inheritance": "SPORADIC",
+    "symptoms": [
+        "Progressive weakness in arms and legs",
+        "Sensory loss (numbness, tingling)",
+        "Loss of reflexes",
+        "Fatigue",
+        "Pain",
+        "Impaired balance and coordination",
+        "Difficulty walking",
+        "Muscle atrophy",
+        "Cranial nerve involvement (less common)"
+    ],
+    "affectedSystems": [
+        "Nervous System",
+        "Musculoskeletal System"
+    ],
+    "prognosis": "Variable. With treatment, many individuals experience improvement or stabilization of their condition. Some may achieve remission, while others require long-term maintenance therapy. A subset of patients may have a progressive course despite treatment.",
+    "lifeExpectancy": "Generally normal with appropriate treatment and management. However, complications from the disease or its treatment can impact life expectancy in some cases.",
+    "diagnosticMethods": [
+        "Clinical examination",
+        "Nerve conduction studies (NCS)",
+        "Electromyography (EMG)",
+        "Cerebrospinal fluid (CSF) analysis (elevated protein)",
+        "Nerve biopsy (in select cases)",
+        "MRI of the spine and brain (to rule out other conditions)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Intravenous Immunoglobulin (IVIg)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Plasma Exchange (Plasmapheresis)",
+            "type": "THERAPY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Corticosteroids (e.g., Prednisone)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Subcutaneous Immunoglobulin (SCIg)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Immunosuppressants (e.g., Azathioprine, Cyclophosphamide, Mycophenolate Mofetil)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Physical Therapy",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational Therapy",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 150,
+    "keyResearchCenters": [
+        "National Institute of Neurological Disorders and Stroke (NINDS)",
+        "Mayo Clinic",
+        "Johns Hopkins University",
+        "University of Pennsylvania",
+        "Massachusetts General Hospital"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "The GBS/CIDP Foundation International",
+            "url": "https://www.gbs-cidp.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Guillain-Barré Syndrome (GBS)",
+        "Multifocal Motor Neuropathy (MMN)",
+        "Vasculitic Neuropathy",
+        "POEMS Syndrome"
+    ],
+    "specialistTypes": [
+        "Neurologist",
+        "Neuroimmunologist",
+        "Physiatrist",
+        "Physical Therapist",
+        "Occupational Therapist"
+    ],
+    "eli5Summary": "Imagine your body's wires (nerves) are covered in a protective coating. In CIDP, your body's defense system mistakenly attacks this coating, making it hard for signals to travel along the wires. This causes weakness and numbness, especially in your arms and legs. Doctors can give you medicine to calm down your defense system and protect the wires.",
+    "clinicalSummary": "Chronic Inflammatory Demyelinating Polyneuropathy (CIDP) is an acquired immune-mediated disorder of the peripheral nervous system characterized by progressive, symmetric proximal and distal weakness and sensory dysfunction persisting for at least 8 weeks. Pathologically, it involves demyelination and inflammation of peripheral nerves and nerve roots. Diagnostic criteria include clinical features, electrodiagnostic findings consistent with demyelination (e.g., conduction block, prolonged distal latencies, slowed conduction velocities), elevated CSF protein, and exclusion of other causes of neuropathy. Treatment strategies aim to suppress the immune system and reduce inflammation, commonly employing IVIg, plasmapheresis, or corticosteroids. Long-term management often involves maintenance therapy to prevent relapses and supportive care to optimize functional abilities.",
+    "historicalBackground": "CIDP was first described as a distinct entity in the late 1950s and early 1960s, differentiating it from the more acute Guillain-Barré syndrome. The recognition of its chronic and relapsing nature led to the development of specific diagnostic criteria and treatment approaches.",
+    "recentBreakthroughs": [
+        {
+            "year": 2023,
+            "title": "Efgartigimod Approved for CIDP",
+            "description": "Efgartigimod alfa-fcab is now approved for the treatment of chronic inflammatory demyelinating polyneuropathy (CIDP) in adult patients. Efgartigimod is a human IgG1 antibody fragment that binds to the neonatal Fc receptor (FcRn), resulting in a reduction of circulating IgG.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2022,
+            "title": "New insights into CIDP subtypes and biomarkers",
+            "description": "Research has identified distinct CIDP subtypes based on clinical, electrophysiological, and immunological characteristics. Studies are also exploring potential biomarkers to improve diagnosis and predict treatment response.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/"
+        },
+        {
+            "name": "The GBS/CIDP Foundation International",
+            "url": "https://www.gbs-cidp.org/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        }
+    ]
+}

@@ -1,0 +1,151 @@
+{
+    "name": "Campomelic Dysplasia",
+    "slug": "campomelic-dysplasia",
+    "aliases": [
+        "CMD1",
+        "Campomelic syndrome",
+        "Camptomelic dysplasia"
+    ],
+    "description": "Campomelic dysplasia (CMD) is a rare, severe skeletal dysplasia characterized by bowing of the long bones, particularly the femurs and tibias (campomelia), and a high rate of male-to-female sex reversal in individuals with a 46,XY karyotype. It is often associated with respiratory distress and other life-threatening complications in infancy.",
+    "category": "GENETIC",
+    "icdCode": "Q77.6",
+    "orphaCode": "188",
+    "omimCode": "114290",
+    "prevalence": "1 in 40,000 to 1 in 200,000 live births",
+    "estimatedCases": 100,
+    "ageOfOnset": "Prenatal",
+    "inheritance": "AUTOSOMAL_DOMINANT",
+    "symptoms": [
+        "Bowing of long bones (especially femurs and tibias)",
+        "Male-to-female sex reversal in 46,XY individuals",
+        "Hypoplastic scapulae",
+        "Clubfoot",
+        "Bell-shaped thorax",
+        "Respiratory distress",
+        "Cleft palate",
+        "Micrognathia (small jaw)",
+        "Hydrocephalus",
+        "Scoliosis",
+        "Hearing loss",
+        "Facial dysmorphism (e.g., prominent forehead, hypertelorism)"
+    ],
+    "affectedSystems": [
+        "Skeletal System",
+        "Respiratory System",
+        "Reproductive System",
+        "Neurological System",
+        "Auditory System"
+    ],
+    "prognosis": "Poor, with high mortality in infancy due to respiratory complications. Survival beyond infancy is possible but associated with significant morbidity.",
+    "lifeExpectancy": "Most affected individuals die in infancy. Those who survive may have a significantly reduced life expectancy due to complications.",
+    "diagnosticMethods": [
+        "Prenatal ultrasound",
+        "Postnatal radiographic examination",
+        "Genetic testing (SOX9 gene sequencing)",
+        "Physical examination"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Respiratory Support",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Surgical Correction of Skeletal Deformities",
+            "type": "SURGERY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Management of Cleft Palate",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Hearing Aids/Cochlear Implants",
+            "type": "SUPPORTIVE",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Physical Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "OBSERVATIONAL",
+    "clinicalTrialsCount": 0,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "University of California, San Francisco (UCSF)",
+        "Boston Children's Hospital"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Genetic and Rare Diseases (GARD) Information Center",
+            "url": "https://rarediseases.info.nih.gov/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Achondroplasia",
+        "Osteogenesis Imperfecta",
+        "Thanatophoric Dysplasia"
+    ],
+    "specialistTypes": [
+        "Clinical Geneticist",
+        "Pediatric Orthopedist",
+        "Neonatologist",
+        "Pediatric Pulmonologist",
+        "Endocrinologist",
+        "Otolaryngologist"
+    ],
+    "eli5Summary": "Campomelic dysplasia is a rare condition where babies are born with bent bones, breathing problems, and sometimes, boys can look like girls. It's very serious, and many babies don't live long, but doctors try to help them breathe and fix their bones.",
+    "clinicalSummary": "Campomelic dysplasia (CMD) is a severe skeletal dysplasia primarily caused by heterozygous mutations in the SOX9 gene, a crucial transcription factor involved in skeletal and gonadal development. The characteristic bowing of long bones, particularly the femurs and tibias, results from abnormal chondrogenesis and osteogenesis. The frequent occurrence of 46,XY sex reversal is due to SOX9's role in testis determination. Clinical management focuses on supportive care, especially respiratory support, and surgical interventions to address skeletal deformities and cleft palate. Prognosis remains guarded, with high infant mortality.",
+    "historicalBackground": "Campomelic dysplasia was first described in the early 1970s. The identification of SOX9 as the causative gene in the 1990s significantly advanced our understanding of the pathogenesis of this condition.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Advances in Understanding SOX9 Regulation",
+            "description": "Recent research has focused on the complex regulatory mechanisms controlling SOX9 expression, providing insights into the variable expressivity of campomelic dysplasia and potential therapeutic targets.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Improved Respiratory Management Strategies",
+            "description": "Novel approaches to respiratory management, including high-frequency oscillatory ventilation and early tracheostomy, have shown promise in improving survival rates in infants with campomelic dysplasia.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=EN&Expert=188"
+        },
+        {
+            "name": "OMIM",
+            "url": "https://www.omim.org/entry/114290"
+        },
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/"
+        }
+    ]
+}

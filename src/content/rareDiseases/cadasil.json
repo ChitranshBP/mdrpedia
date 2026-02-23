@@ -1,0 +1,161 @@
+{
+    "name": "Cerebral Autosomal Dominant Arteriopathy with Subcortical Infarcts and Leukoencephalopathy",
+    "slug": "cadasil",
+    "aliases": [
+        "CADASIL",
+        "Hereditary multi-infarct dementia",
+        "NOTCH3-related CADASIL"
+    ],
+    "description": "CADASIL is a hereditary stroke disorder caused by mutations in the NOTCH3 gene. It leads to thickening of blood vessel walls, reducing blood flow to the brain and causing a variety of neurological symptoms, including migraine with aura, recurrent stroke, cognitive decline, and psychiatric disturbances. The condition typically manifests in adulthood and progresses over time.",
+    "category": "NEUROLOGICAL",
+    "icdCode": "I67.8",
+    "orphaCode": "154",
+    "omimCode": "125310",
+    "prevalence": "1-9 / 100,000",
+    "estimatedCases": 8000,
+    "ageOfOnset": "Typically between 30 and 50 years, but can vary.",
+    "inheritance": "AUTOSOMAL_DOMINANT",
+    "symptoms": [
+        "Migraine with aura",
+        "Recurrent stroke or transient ischemic attacks (TIAs)",
+        "Cognitive decline leading to dementia",
+        "Psychiatric disturbances (depression, apathy, psychosis)",
+        "Seizures",
+        "White matter lesions on brain MRI",
+        "Muscle weakness",
+        "Dysarthria (difficulty speaking)",
+        "Dysphagia (difficulty swallowing)"
+    ],
+    "affectedSystems": [
+        "Nervous System",
+        "Cardiovascular System",
+        "Muscular System"
+    ],
+    "prognosis": "Progressive neurological decline with variable rate of progression. The disease course is characterized by recurrent strokes and gradual cognitive impairment.",
+    "lifeExpectancy": "Reduced compared to the general population, with death often occurring in the 60s or 70s, but can vary significantly.",
+    "diagnosticMethods": [
+        "Clinical evaluation",
+        "Brain MRI (magnetic resonance imaging) showing characteristic white matter lesions",
+        "Genetic testing for NOTCH3 mutations",
+        "Skin biopsy with granular osmiophilic material (GOM) deposition in blood vessels"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Symptomatic treatment for migraine",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Antiplatelet agents (e.g., aspirin, clopidogrel)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Antihypertensive medications",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Physical therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Speech therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Psychiatric support and medications for mood disorders",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 15,
+    "keyResearchCenters": [
+        "National Institute of Neurological Disorders and Stroke (NINDS)",
+        "University College London (UCL)",
+        "Mayo Clinic"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "CADASIL Together We Have Hope",
+            "url": "https://www.cadasilfoundation.org/",
+            "country": "USA"
+        },
+        {
+            "name": "CADASIL Association",
+            "url": "https://www.cadasil.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Small vessel disease",
+        "Binswanger's disease",
+        "Multiple sclerosis"
+    ],
+    "specialistTypes": [
+        "Neurologist",
+        "Geneticist",
+        "Radiologist",
+        "Psychiatrist",
+        "Physical Therapist",
+        "Occupational Therapist",
+        "Speech Therapist"
+    ],
+    "eli5Summary": "CADASIL is like having tiny problems in the pipes that bring blood to your brain. These problems can cause headaches, make it hard to think clearly, and sometimes cause strokes. It's something you can get from your parents, and doctors can help manage the symptoms.",
+    "clinicalSummary": "CADASIL is a systemic arteriopathy caused by mutations in the NOTCH3 gene, leading to accumulation of NOTCH3 extracellular domain (N3ECD) in the walls of small- to medium-sized arteries. This accumulation results in thickening of the vessel walls and reduced cerebral blood flow, leading to ischemic events. Clinically, CADASIL presents with migraine with aura, recurrent stroke or TIA, cognitive impairment progressing to dementia, and psychiatric disturbances. Diagnosis is confirmed by genetic testing for NOTCH3 mutations and can be supported by skin biopsy showing GOM deposits. MRI findings include characteristic white matter hyperintensities, particularly in the anterior temporal lobes and external capsules. Management is primarily symptomatic, focusing on stroke prevention and management of associated symptoms.",
+    "historicalBackground": "CADASIL was first described in 1977 by Marie-Germaine Bousser and colleagues in a French family. The genetic basis of the disease, mutations in the NOTCH3 gene, was identified in 1996 by Elisabeth Tournier-Lasserve's group.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Novel therapeutic targets identified in CADASIL pathogenesis",
+            "description": "Research has identified potential therapeutic targets by elucidating the role of specific inflammatory pathways and vascular remodeling processes in CADASIL. These findings may lead to the development of targeted therapies to slow disease progression.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Improved MRI techniques for early CADASIL diagnosis",
+            "description": "Advanced MRI techniques, such as diffusion tensor imaging (DTI) and quantitative susceptibility mapping (QSM), are being used to detect subtle changes in brain microstructure in early stages of CADASIL, potentially improving diagnostic accuracy and enabling earlier intervention.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/Disease_Search.php?lng=EN&data_id=154"
+        },
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/"
+        },
+        {
+            "name": "PubMed",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/"
+        }
+    ]
+}

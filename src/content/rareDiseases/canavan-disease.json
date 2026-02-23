@@ -1,0 +1,145 @@
+{
+    "name": "Canavan Disease",
+    "slug": "canavan-disease",
+    "aliases": [
+        "Aspartoacylase Deficiency",
+        "ASPA Deficiency",
+        "Van Bogaert-Bertrand Disease"
+    ],
+    "description": "Canavan disease is a rare, progressive, inherited neurological disorder characterized by the spongy degeneration of the white matter (myelin) in the brain. It is caused by a deficiency of the enzyme aspartoacylase, which leads to a buildup of N-acetyl-L-aspartic acid (NAA) in the brain. This accumulation disrupts normal brain development and function.",
+    "category": "NEUROLOGICAL",
+    "icdCode": "E75.2",
+    "orphaCode": "166",
+    "omimCode": "271900",
+    "prevalence": "1 in 6,400 to 1 in 13,500 among Ashkenazi Jewish individuals; rarer in other populations.",
+    "estimatedCases": 200,
+    "ageOfOnset": "Infancy (typically 3-5 months)",
+    "inheritance": "AUTOSOMAL_RECESSIVE",
+    "symptoms": [
+        "Hypotonia (poor muscle tone)",
+        "Developmental delay",
+        "Macrocephaly (abnormally large head)",
+        "Irritability",
+        "Feeding difficulties",
+        "Seizures",
+        "Vision loss",
+        "Progressive loss of motor skills",
+        "Intellectual disability"
+    ],
+    "affectedSystems": [
+        "Nervous System",
+        "Musculoskeletal System",
+        "Sensory System (Vision)"
+    ],
+    "prognosis": "Poor. Canavan disease is a progressive and ultimately fatal disorder.",
+    "lifeExpectancy": "Most children with Canavan disease do not survive beyond childhood, typically living into their teens. However, some individuals with milder forms may live longer.",
+    "diagnosticMethods": [
+        "MRI of the brain (showing characteristic white matter changes)",
+        "Urine test (detecting elevated levels of N-acetyl-L-aspartic acid)",
+        "Blood test (detecting aspartoacylase enzyme deficiency)",
+        "Genetic testing (identifying mutations in the ASPA gene)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Supportive Care",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Physical Therapy",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational Therapy",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Speech Therapy",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Medications for Seizures",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Gene Therapy",
+            "type": "GENE_THERAPY",
+            "effectiveness": "EXPERIMENTAL",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 5,
+    "keyResearchCenters": [
+        "Nationwide Children's Hospital",
+        "Thomas Jefferson University",
+        "Icahn School of Medicine at Mount Sinai"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "National Canavan Foundation",
+            "url": "https://www.canavanfoundation.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Canavan Research Foundation",
+            "url": "http://www.canavan.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Alexander Disease",
+        "Pelizaeus-Merzbacher Disease",
+        "Tay-Sachs Disease"
+    ],
+    "specialistTypes": [
+        "Neurologist",
+        "Geneticist",
+        "Pediatrician",
+        "Ophthalmologist"
+    ],
+    "eli5Summary": "Canavan disease is a rare brain problem where a part of the brain called myelin doesn't grow right. It makes it hard for kids to move, see, and learn. Doctors are trying to find better ways to help them.",
+    "clinicalSummary": "Canavan disease is a leukodystrophy resulting from a deficiency in aspartoacylase, leading to elevated levels of N-acetyl-L-aspartic acid (NAA) in the brain. This disrupts oligodendrocyte function and myelin formation, causing spongy degeneration of white matter. Clinically, it presents in infancy with hypotonia, macrocephaly, developmental delay, and progressive neurological decline. Diagnosis is confirmed by elevated NAA in urine, enzyme assay, and genetic testing. MRI reveals characteristic diffuse white matter abnormalities. Management is primarily supportive, with emerging gene therapy approaches showing promise.",
+    "historicalBackground": "Canavan disease was first described by Myrtelle Canavan in 1931, who identified the characteristic spongy degeneration of the brain in affected individuals. The genetic basis of the disease was later elucidated, leading to improved diagnostic and potential therapeutic strategies.",
+    "recentBreakthroughs": [
+        {
+            "year": 2023,
+            "title": "Gene Therapy Shows Promise in Early-Phase Trials",
+            "description": "Early-phase clinical trials of gene therapy for Canavan disease have demonstrated some improvements in motor function and developmental milestones in treated patients. Further research is ongoing to assess long-term efficacy and safety.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institute of Neurological Disorders and Stroke (NINDS)",
+            "url": "https://www.ninds.nih.gov/"
+        },
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/"
+        },
+        {
+            "name": "OMIM",
+            "url": "https://www.omim.org/"
+        }
+    ]
+}

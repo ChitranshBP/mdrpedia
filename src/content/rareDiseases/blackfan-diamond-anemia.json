@@ -1,0 +1,144 @@
+{
+    "name": "Blackfan-Diamond Anemia",
+    "slug": "blackfan-diamond-anemia",
+    "aliases": [
+        "Diamond-Blackfan Anemia",
+        "DBA",
+        "Congenital Hypoplastic Anemia"
+    ],
+    "description": "Blackfan-Diamond anemia (DBA) is a rare inherited bone marrow failure syndrome characterized by a selective deficiency in erythroid progenitors, leading to a profound anemia. It typically presents in infancy or early childhood. While anemia is the hallmark, DBA is also associated with an increased risk of certain cancers and congenital anomalies.",
+    "category": "GENETIC",
+    "icdCode": "D61.0",
+    "orphaCode": "218",
+    "omimCode": "105650",
+    "prevalence": "1 in 200,000 to 1 in 400,000 live births",
+    "estimatedCases": 1000,
+    "ageOfOnset": "Infancy or early childhood (typically before 1 year of age)",
+    "inheritance": "AUTOSOMAL_DOMINANT (approximately 25% of cases), AUTOSOMAL_RECESSIVE (rare), SPORADIC (approximately 50% of cases)",
+    "symptoms": [
+        "Pallor (paleness)",
+        "Lethargy",
+        "Poor feeding",
+        "Short stature",
+        "Craniofacial abnormalities (e.g., webbed neck, cleft palate, small head)",
+        "Thumb abnormalities (e.g., triphalangeal thumb)",
+        "Heart defects",
+        "Increased risk of cancer (e.g., leukemia, osteosarcoma)"
+    ],
+    "affectedSystems": [
+        "Hematopoietic System",
+        "Skeletal System",
+        "Cardiovascular System"
+    ],
+    "prognosis": "Variable; depends on the severity of anemia, response to treatment, and development of complications such as iron overload or cancer.",
+    "lifeExpectancy": "Reduced, but with proper management, many individuals can live into adulthood. Increased risk of cancer and treatment-related complications can impact life expectancy.",
+    "diagnosticMethods": [
+        "Complete blood count (CBC) showing macrocytic anemia",
+        "Bone marrow aspiration and biopsy revealing a marked reduction in erythroid precursors",
+        "Erythrocyte adenosine deaminase (eADA) activity: Elevated in most DBA patients",
+        "Ribosomal protein gene mutation analysis (RPS19, RPL5, RPL11, etc.)",
+        "Exclusion of other causes of anemia"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Corticosteroids (e.g., Prednisone)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Red Blood Cell Transfusions",
+            "type": "SUPPORTIVE",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Hematopoietic Stem Cell Transplantation (HSCT)",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Iron Chelation Therapy (e.g., Deferoxamine, Deferasirox, Deferiprone)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Luspatercept",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2020
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 25,
+    "keyResearchCenters": [
+        "Boston Children's Hospital",
+        "National Institutes of Health (NIH)",
+        "Cincinnati Children's Hospital Medical Center"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Diamond Blackfan Anemia Foundation (DBAF)",
+            "url": "https://dbafoundation.org/",
+            "country": "USA"
+        },
+        {
+            "name": "DBA UK",
+            "url": "https://www.dbauk.org/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "Fanconi Anemia",
+        "Shwachman-Diamond Syndrome",
+        "Myelodysplastic Syndromes (MDS)"
+    ],
+    "specialistTypes": [
+        "Hematologist",
+        "Pediatric Hematologist",
+        "Geneticist",
+        "Bone Marrow Transplant Specialist"
+    ],
+    "eli5Summary": "Imagine your body has a factory that makes red blood cells, which carry oxygen. In DBA, this factory isn't working well, so you don't have enough red blood cells. This makes you tired and pale. Doctors can give you medicine or blood transfusions to help, or even give you a new factory (bone marrow transplant)!",
+    "clinicalSummary": "Blackfan-Diamond anemia (DBA) is a congenital erythroid aplasia characterized by a selective deficiency of erythroid progenitor cells in the bone marrow, resulting in macrocytic anemia. The underlying pathophysiology involves impaired ribosome biogenesis due to mutations in ribosomal protein genes. Clinical presentation typically occurs in infancy with pallor, fatigue, and poor feeding. Congenital anomalies are common, affecting the craniofacial region, upper limbs, and heart. Diagnosis is based on bone marrow examination, elevated eADA activity, and genetic testing. Treatment options include corticosteroids, red blood cell transfusions, iron chelation therapy, and hematopoietic stem cell transplantation. Luspatercept is a newer treatment option. Long-term complications include iron overload, increased risk of myelodysplastic syndrome (MDS), and certain cancers.",
+    "historicalBackground": "Blackfan and Diamond independently described the disease in the 1930s, leading to its current name. The genetic basis of DBA began to be elucidated in the late 20th and early 21st centuries with the identification of mutations in ribosomal protein genes.",
+    "recentBreakthroughs": [
+        {
+            "year": 2020,
+            "title": "FDA Approves Luspatercept for DBA",
+            "description": "Luspatercept, an erythroid maturation agent, was approved by the FDA for the treatment of anemia in adult patients with DBA who have failed or are ineligible for corticosteroid therapy. This provides a new treatment option for patients who are transfusion-dependent or have significant side effects from corticosteroids.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Gene Therapy Approaches in Preclinical Studies",
+            "description": "Research is ongoing to develop gene therapy approaches for DBA, aiming to correct the underlying genetic defects in ribosomal protein genes. Preclinical studies have shown promising results in restoring erythropoiesis in animal models.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/index.php"
+        },
+        {
+            "name": "National Institutes of Health (NIH)",
+            "url": "https://www.nih.gov/"
+        },
+        {
+            "name": "Diamond Blackfan Anemia Foundation (DBAF)",
+            "url": "https://dbafoundation.org/"
+        }
+    ]
+}

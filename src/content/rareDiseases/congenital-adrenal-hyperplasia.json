@@ -1,0 +1,146 @@
+{
+    "name": "Congenital Adrenal Hyperplasia",
+    "slug": "congenital-adrenal-hyperplasia",
+    "aliases": [
+        "CAH",
+        "Adrenogenital Syndrome"
+    ],
+    "description": "Congenital adrenal hyperplasia (CAH) is a group of autosomal recessive genetic disorders that affect the adrenal glands. These disorders result in the deficiency of enzymes involved in the synthesis of cortisol, aldosterone, or both. The most common form is caused by a deficiency of 21-hydroxylase, leading to virilization in females and salt-wasting crisis in severe cases.",
+    "category": "GENETIC",
+    "icdCode": "E25.0",
+    "orphaCode": "190",
+    "omimCode": "201910",
+    "prevalence": "1 in 10,000 to 1 in 15,000 live births",
+    "estimatedCases": 35000,
+    "ageOfOnset": "Varies; can be present at birth or develop later in life (non-classic form)",
+    "inheritance": "AUTOSOMAL_RECESSIVE",
+    "symptoms": [
+        "Ambiguous genitalia in females",
+        "Early puberty in males",
+        "Rapid growth in childhood",
+        "Short adult stature",
+        "Salt-wasting crisis (dehydration, vomiting, diarrhea)",
+        "Virilization (excessive hair growth, deepening of voice) in females",
+        "Acne",
+        "Infertility"
+    ],
+    "affectedSystems": [
+        "Endocrine System",
+        "Reproductive System",
+        "Skeletal System"
+    ],
+    "prognosis": "With proper diagnosis and treatment, individuals with CAH can lead relatively normal lives. However, lifelong hormone replacement therapy is typically required.",
+    "lifeExpectancy": "Generally normal with adequate treatment and monitoring.",
+    "diagnosticMethods": [
+        "Newborn screening (17-hydroxyprogesterone levels)",
+        "Physical examination",
+        "Hormone level testing (ACTH stimulation test)",
+        "Genetic testing (CYP21A2 gene analysis)",
+        "Pelvic ultrasound (in females)",
+        "Karyotype analysis"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Glucocorticoid replacement therapy (Hydrocortisone, Prednisone, Dexamethasone)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Mineralocorticoid replacement therapy (Fludrocortisone)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Sodium chloride supplementation (in salt-wasting forms)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Reconstructive surgery (for ambiguous genitalia in females)",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Experimental Gene Therapy",
+            "type": "GENE_THERAPY",
+            "effectiveness": "EXPERIMENTAL",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 25,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Boston Children's Hospital",
+        "Mayo Clinic",
+        "University of California, San Francisco (UCSF)"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "CARES Foundation",
+            "url": "https://www.caresfoundation.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Living with CAH",
+            "url": "https://www.livingwithcah.com/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Polycystic Ovary Syndrome (PCOS)",
+        "Addison's Disease",
+        "Cushing's Syndrome"
+    ],
+    "specialistTypes": [
+        "Endocrinologist",
+        "Pediatric Endocrinologist",
+        "Geneticist",
+        "Urologist",
+        "Surgeon"
+    ],
+    "eli5Summary": "Imagine your body has a factory that makes important hormones. In CAH, there's a problem in the factory, so it doesn't make enough of some hormones and makes too much of others. This can cause problems with how kids grow and develop, especially with their bodies looking different.",
+    "clinicalSummary": "Congenital adrenal hyperplasia (CAH) encompasses a group of autosomal recessive disorders characterized by impaired cortisol synthesis, most commonly due to 21-hydroxylase deficiency (21OHD). This deficiency leads to increased ACTH secretion, resulting in adrenal hyperplasia and overproduction of adrenal androgens. Clinical manifestations vary depending on the severity of the enzyme deficiency. Classic CAH presents with virilization in females, salt-wasting crisis in severe cases, and precocious puberty in males. Non-classic CAH presents later in life with milder symptoms such as hirsutism, acne, and menstrual irregularities in females. Diagnosis involves newborn screening, hormonal assays (17-OHP, ACTH stimulation test), and genetic testing. Management includes lifelong glucocorticoid and mineralocorticoid replacement therapy to suppress ACTH secretion and maintain electrolyte balance. Surgical correction of ambiguous genitalia may be necessary in affected females. Long-term monitoring is crucial to optimize hormone replacement and prevent complications such as adrenal crisis, growth abnormalities, and infertility.",
+    "historicalBackground": "The first descriptions of CAH date back to the late 19th century, with clearer understanding of the underlying hormonal imbalances emerging in the mid-20th century. The discovery of cortisol and its role in adrenal function, along with the identification of specific enzyme deficiencies, revolutionized the diagnosis and management of CAH.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Development of Novel Glucocorticoids with Improved Safety Profiles",
+            "description": "Research is focused on developing glucocorticoids with more targeted action and fewer side effects, such as bone loss and metabolic disturbances.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Gene Therapy Approaches for CAH",
+            "description": "Early-stage clinical trials are exploring the potential of gene therapy to correct the underlying genetic defect in CAH, potentially offering a long-term cure.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "National Institutes of Health (NIH)",
+            "url": "https://www.nih.gov/"
+        },
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/"
+        },
+        {
+            "name": "Mayo Clinic",
+            "url": "https://www.mayoclinic.org/"
+        }
+    ]
+}

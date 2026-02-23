@@ -1,0 +1,165 @@
+{
+    "name": "Hypophosphatasia",
+    "slug": "hypophosphatasia",
+    "aliases": [
+        "HPP",
+        "Rathbun's disease",
+        "Phosphoethanolaminuria"
+    ],
+    "description": "Hypophosphatasia (HPP) is a rare genetic metabolic disorder characterized by defective bone mineralization. This defect results from a deficiency of the enzyme tissue-nonspecific alkaline phosphatase (TNSALP). The severity of HPP varies widely, ranging from stillbirth without mineralized bone to pathological fractures in adulthood. Clinical manifestations primarily affect the skeleton and teeth, but can also involve other organ systems.",
+    "category": "GENETIC",
+    "icdCode": "E83.3",
+    "orphaCode": "434",
+    "omimCode": "146300",
+    "prevalence": "1 in 100,000 live births (severe forms); carrier frequency estimated at 1 in 300 in European populations",
+    "estimatedCases": 3300,
+    "ageOfOnset": "Variable; can range from prenatal to adulthood",
+    "inheritance": "AUTOSOMAL_RECESSIVE, AUTOSOMAL_DOMINANT",
+    "symptoms": [
+        "Skeletal deformities (e.g., bowed legs, knock knees)",
+        "Rickets (in children)",
+        "Osteomalacia (in adults)",
+        "Fractures (especially of the long bones)",
+        "Premature loss of deciduous teeth",
+        "Craniosynostosis (premature fusion of skull bones)",
+        "Seizures (especially in infantile HPP)",
+        "Muscle weakness",
+        "Bone pain",
+        "Nephrocalcinosis (calcium deposits in the kidneys)",
+        "Respiratory complications (in severe infantile HPP)",
+        "Failure to thrive (in infantile HPP)"
+    ],
+    "affectedSystems": [
+        "Skeletal System",
+        "Dental System",
+        "Neurological System",
+        "Renal System",
+        "Respiratory System"
+    ],
+    "prognosis": "Variable; depends on the age of onset and severity of the disease. Perinatal and infantile forms have the poorest prognosis.  Adult-onset HPP is generally milder.",
+    "lifeExpectancy": "Variable; perinatal and infantile forms can be fatal.  Later-onset forms may have a normal life expectancy with appropriate management.",
+    "diagnosticMethods": [
+        "Serum alkaline phosphatase (ALP) measurement (low levels)",
+        "Genetic testing for ALPL gene mutations",
+        "Radiographic imaging (X-rays, bone densitometry) to assess bone mineralization",
+        "Urine phosphoethanolamine (PEA) measurement (elevated levels)",
+        "Bone biopsy (rarely needed)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Enzyme Replacement Therapy (Asfotase Alfa)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2015
+        },
+        {
+            "name": "Vitamin B6 (Pyridoxine)",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Nonsteroidal Anti-inflammatory Drugs (NSAIDs)",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Orthopedic Management (Fracture care, bracing)",
+            "type": "SURGERY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Dental Care",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Physical Therapy",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 15,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "University of California, Los Angeles (UCLA)",
+        "University of Pennsylvania",
+        "Shire (now Takeda)"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Soft Bones Foundation",
+            "url": "https://www.softbones.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Hypophosphatasia Europe",
+            "url": "http://www.hypophosphatasia.eu/",
+            "country": "Europe"
+        }
+    ],
+    "relatedConditions": [
+        "Rickets",
+        "Osteogenesis Imperfecta",
+        "Achondroplasia",
+        "Osteoporosis"
+    ],
+    "specialistTypes": [
+        "Endocrinologist",
+        "Geneticist",
+        "Orthopedic Surgeon",
+        "Dentist",
+        "Nephrologist",
+        "Neurologist"
+    ],
+    "eli5Summary": "Imagine your bones need special glue to become strong. In hypophosphatasia, your body doesn't make enough of that glue, so your bones and teeth can be weak and break easily. Doctors can give you medicine to help make the glue and keep your bones strong!",
+    "clinicalSummary": "Hypophosphatasia (HPP) is a heritable disorder of bone mineralization caused by loss-of-function mutations in the ALPL gene, encoding tissue-nonspecific alkaline phosphatase (TNSALP). TNSALP is crucial for bone mineralization by hydrolyzing phosphate substrates, including inorganic pyrophosphate (PPi), a mineralization inhibitor. Reduced TNSALP activity leads to PPi accumulation, impaired hydroxyapatite crystal formation, and defective bone and tooth mineralization. Clinical presentation varies widely, ranging from severe perinatal forms with skeletal hypomineralization and respiratory failure to milder adult forms with stress fractures and dental abnormalities. Diagnosis involves assessing serum ALP levels, genetic testing, and radiographic evaluation. Enzyme replacement therapy with asfotase alfa has significantly improved outcomes, particularly in severe infantile-onset HPP.",
+    "historicalBackground": "Hypophosphatasia was first described by Dr. John Campbell Rathbun in 1948 in a Canadian pediatrician journal. He described a severe form of the disease in a young infant. Further research elucidated the role of alkaline phosphatase and the genetic basis of the condition.",
+    "recentBreakthroughs": [
+        {
+            "year": 2015,
+            "title": "FDA Approval of Asfotase Alfa",
+            "description": "Asfotase alfa, a recombinant TNSALP enzyme replacement therapy, received FDA approval for the treatment of perinatal, infantile, and juvenile-onset hypophosphatasia. This marked a significant advancement in the management of severe HPP, improving survival and skeletal outcomes.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Long-term Outcomes of Asfotase Alfa",
+            "description": "Longitudinal studies have demonstrated the sustained efficacy and safety of asfotase alfa in patients with HPP, with improvements in bone mineralization, motor function, and respiratory function observed over several years of treatment.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/Disease_Search.php?lng=EN&data_id=434"
+        },
+        {
+            "name": "OMIM",
+            "url": "https://www.omim.org/entry/146300"
+        },
+        {
+            "name": "Soft Bones Foundation",
+            "url": "https://www.softbones.org/"
+        },
+        {
+            "name": "National Institutes of Health (NIH)",
+            "url": "https://www.nih.gov/"
+        }
+    ]
+}

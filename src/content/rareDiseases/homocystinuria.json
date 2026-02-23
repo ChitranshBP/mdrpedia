@@ -1,0 +1,172 @@
+{
+    "name": "Homocystinuria",
+    "slug": "homocystinuria",
+    "aliases": [
+        "Classical Homocystinuria",
+        "HCU",
+        "CBS Deficiency",
+        "Cystathionine Beta-Synthase Deficiency"
+    ],
+    "description": "Homocystinuria is a rare, inherited metabolic disorder caused by a deficiency of cystathionine beta-synthase (CBS), an enzyme essential for processing methionine. This deficiency leads to an abnormal accumulation of homocysteine and its metabolites in the blood and urine, causing a range of systemic complications affecting the eyes, skeleton, brain, and vascular system.",
+    "category": "METABOLIC",
+    "icdCode": "E72.11",
+    "orphaCode": "424",
+    "omimCode": "236200",
+    "prevalence": "1 in 200,000 to 1 in 300,000 live births",
+    "estimatedCases": 2000,
+    "ageOfOnset": "Variable; infancy to adulthood, but often in childhood",
+    "inheritance": "AUTOSOMAL_RECESSIVE",
+    "symptoms": [
+        "Dislocation of the lens of the eye (ectopia lentis)",
+        "Myopia (nearsightedness)",
+        "Increased risk of blood clots (thromboembolism)",
+        "Developmental delay",
+        "Intellectual disability",
+        "Skeletal abnormalities (e.g., scoliosis, pectus excavatum/carinatum)",
+        "Osteoporosis",
+        "Seizures",
+        "Psychiatric disorders",
+        "Failure to thrive"
+    ],
+    "affectedSystems": [
+        "Eyes",
+        "Skeletal System",
+        "Central Nervous System",
+        "Vascular System",
+        "Metabolic System"
+    ],
+    "prognosis": "Variable; early diagnosis and treatment can significantly improve outcomes and reduce the risk of complications. Untreated homocystinuria can lead to significant disability and premature death.",
+    "lifeExpectancy": "Reduced if untreated; near-normal with early and consistent treatment.",
+    "diagnosticMethods": [
+        "Newborn screening (measuring methionine levels)",
+        "Plasma amino acid analysis (elevated homocysteine and methionine)",
+        "Urine organic acid analysis (homocysteine metabolites)",
+        "CBS enzyme activity assay in fibroblasts",
+        "Genetic testing (CBS gene sequencing)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Vitamin B6 (Pyridoxine) Supplementation",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Betaine (Trimethylglycine)",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Folic Acid Supplementation",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Vitamin B12 (Cobalamin) Supplementation",
+            "type": "MEDICATION",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Dietary Methionine Restriction",
+            "type": "THERAPY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Cystine Supplementation",
+            "type": "THERAPY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Management of Thromboembolism",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Ophthalmological Management (e.g., lens extraction)",
+            "type": "SURGERY",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 15,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Boston Children's Hospital",
+        "Mayo Clinic",
+        "University of California, San Francisco (UCSF)"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Metabolic Support UK",
+            "url": "https://www.metabolicsupportuk.org/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "MTHFR Deficiency",
+        "Cystathioninuria",
+        "Sulfite Oxidase Deficiency"
+    ],
+    "specialistTypes": [
+        "Metabolic Geneticist",
+        "Ophthalmologist",
+        "Neurologist",
+        "Cardiologist",
+        "Dietitian"
+    ],
+    "eli5Summary": "Imagine your body has a special machine that helps break down food. In homocystinuria, one part of that machine is broken, causing a build-up of a substance called homocysteine. This can cause problems with your eyes, bones, brain, and blood. Doctors can help by giving you special vitamins and a special diet to keep you healthy.",
+    "clinicalSummary": "Homocystinuria due to cystathionine beta-synthase (CBS) deficiency is an autosomal recessive metabolic disorder characterized by elevated plasma homocysteine levels. The deficiency of CBS impairs the transsulfuration pathway, leading to the accumulation of homocysteine and its precursors. Clinically, patients may present with ectopia lentis, myopia, thromboembolic events, developmental delay, intellectual disability, skeletal abnormalities (such as marfanoid habitus and osteoporosis), and neurological complications including seizures and psychiatric disorders. Diagnosis is typically made through newborn screening or clinical suspicion, confirmed by plasma amino acid analysis and genetic testing. Management involves dietary methionine restriction, supplementation with vitamin B6, betaine, folic acid, and vitamin B12, and monitoring for and treatment of complications such as thromboembolism and ocular issues. Early diagnosis and treatment are crucial to prevent or minimize long-term complications.",
+    "historicalBackground": "Homocystinuria was first described in 1962 by Gerritsen, Vaughn, and Waisman, who identified elevated levels of homocysteine in the urine of a patient with intellectual disability and dislocated lenses. The enzymatic defect, CBS deficiency, was subsequently identified, leading to a better understanding of the metabolic pathway and the development of targeted therapies.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Advances in Newborn Screening for Homocystinuria",
+            "description": "Improved tandem mass spectrometry techniques have enhanced the sensitivity and specificity of newborn screening programs, allowing for earlier detection and intervention in infants with homocystinuria.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Novel Therapeutic Approaches Targeting Homocysteine Metabolism",
+            "description": "Research is ongoing to explore novel therapeutic strategies, including enzyme replacement therapy and gene therapy, to address the underlying metabolic defect in homocystinuria. Preclinical studies have shown promising results in animal models.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/index.php"
+        },
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/"
+        },
+        {
+            "name": "MedlinePlus",
+            "url": "https://medlineplus.gov/"
+        }
+    ]
+}

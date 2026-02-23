@@ -1,0 +1,157 @@
+{
+    "name": "Autoimmune Lymphoproliferative Syndrome",
+    "slug": "autoimmune-lymphoproliferative-syndrome-alps",
+    "aliases": [
+        "ALPS",
+        "Canale-Smith Syndrome"
+    ],
+    "description": "Autoimmune Lymphoproliferative Syndrome (ALPS) is a rare genetic disorder characterized by a failure of lymphocyte homeostasis, leading to chronic, non-malignant lymphoproliferation, autoimmunity, and an increased risk of lymphoma. The underlying defect involves impaired apoptosis (programmed cell death) of lymphocytes, resulting in their accumulation in lymphoid organs and subsequent autoimmune manifestations.",
+    "category": "AUTOIMMUNE",
+    "icdCode": "D89.813",
+    "orphaCode": "79247",
+    "omimCode": "601859",
+    "prevalence": "Estimated 1 in 1,000,000",
+    "estimatedCases": 330,
+    "ageOfOnset": "Usually in childhood, often before age 5",
+    "inheritance": "Most commonly AUTOSOMAL_DOMINANT, but can also be AUTOSOMAL_RECESSIVE or SPORADIC",
+    "symptoms": [
+        "Chronic, non-malignant lymphadenopathy",
+        "Splenomegaly",
+        "Hepatomegaly",
+        "Autoimmune cytopenias (e.g., hemolytic anemia, thrombocytopenia, neutropenia)",
+        "Increased risk of lymphoma",
+        "Elevated levels of double-negative T cells (DNTs)",
+        "Increased susceptibility to infections",
+        "Uveitis",
+        "Glomerulonephritis",
+        "Arthritis"
+    ],
+    "affectedSystems": [
+        "Immune System",
+        "Hematologic System",
+        "Lymphatic System"
+    ],
+    "prognosis": "Variable; depends on the severity of autoimmune manifestations and the development of complications such as lymphoma. With appropriate management, many individuals can lead relatively normal lives.",
+    "lifeExpectancy": "May be reduced due to complications such as severe infections or lymphoma, but with proper management, many patients have a normal life expectancy.",
+    "diagnosticMethods": [
+        "Clinical evaluation",
+        "Complete blood count (CBC)",
+        "Immunophenotyping to detect elevated DNTs",
+        "Apoptosis assays to assess lymphocyte apoptosis",
+        "Genetic testing for mutations in FAS, FASLG, CASP10, or other related genes",
+        "Lymph node biopsy (if needed to rule out malignancy)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Immunosuppressants (e.g., sirolimus, mycophenolate mofetil)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Corticosteroids (e.g., prednisone)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Intravenous immunoglobulin (IVIG)",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Rituximab (anti-CD20 antibody)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Alemtuzumab (anti-CD52 antibody)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Hematopoietic stem cell transplantation (HSCT)",
+            "type": "THERAPY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Supportive care (e.g., prophylactic antibiotics, vaccinations)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 15,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Boston Children's Hospital",
+        "University of California, San Francisco (UCSF)"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Immune Deficiency Foundation (IDF)",
+            "url": "https://www.primaryimmune.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Jeffrey Modell Foundation",
+            "url": "https://www.jeffreymodellfoundation.org/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Evans Syndrome",
+        "Systemic Lupus Erythematosus (SLE)",
+        "Autoimmune hemolytic anemia",
+        "Immune thrombocytopenic purpura (ITP)"
+    ],
+    "specialistTypes": [
+        "Immunologist",
+        "Hematologist",
+        "Rheumatologist",
+        "Geneticist"
+    ],
+    "eli5Summary": "Imagine your body's immune system has soldiers that don't know when to stop fighting. In ALPS, these soldiers (lymphocytes) don't die when they should, causing swelling in your body and attacking healthy cells. Doctors can use medicine to calm down these soldiers and help them behave.",
+    "clinicalSummary": "Autoimmune Lymphoproliferative Syndrome (ALPS) is a disorder of lymphocyte homeostasis characterized by defective apoptosis of lymphocytes, leading to lymphoproliferation and autoimmunity. Mutations in genes such as FAS, FASLG, and CASP10 disrupt the normal apoptotic pathway, resulting in the accumulation of autoreactive lymphocytes. Clinically, ALPS presents with chronic lymphadenopathy, splenomegaly, and autoimmune cytopenias. Elevated levels of double-negative T cells (DNTs) are a hallmark of the disease. Diagnosis involves clinical evaluation, immunophenotyping, apoptosis assays, and genetic testing. Treatment focuses on immunosuppression to control autoimmune manifestations and prevent complications such as lymphoma.",
+    "historicalBackground": "ALPS was first described in the 1990s, with the genetic basis being elucidated in subsequent years. The discovery of mutations in FAS and other apoptosis-related genes provided critical insights into the pathogenesis of the disease.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Targeted Therapies for ALPS",
+            "description": "Ongoing research is focused on developing targeted therapies that specifically address the underlying defects in lymphocyte apoptosis, such as inhibitors of specific signaling pathways involved in lymphocyte survival.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Improved Diagnostic Criteria for ALPS",
+            "description": "Refinement of diagnostic criteria based on genetic and immunologic markers has improved the accuracy and speed of ALPS diagnosis, allowing for earlier intervention and management.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/Disease_Search.php?lng=EN&data_id=146&Disease_Disease_Search_diseaseGroup=ALPS&Disease_Disease_Search_diseaseType=Pat&Disease(s)/group%20of%20diseases=Autoimmune-lymphoproliferative-syndrome&title=Autoimmune-lymphoproliferative-syndrome"
+        },
+        {
+            "name": "National Institutes of Health (NIH)",
+            "url": "https://www.genome.gov/health/illnesses-and-diseases/autoimmune-lymphoproliferative-syndrome"
+        }
+    ]
+}

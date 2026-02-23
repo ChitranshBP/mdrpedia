@@ -1,0 +1,179 @@
+{
+    "name": "CHARGE Syndrome",
+    "slug": "charge-syndrome",
+    "aliases": [
+        "Hall-Hittner Syndrome",
+        "Coloboma, Heart Defects, Choanal Atresia, Retarded Growth and Development, Genital Hypoplasia, and Ear Anomalies"
+    ],
+    "description": "CHARGE syndrome is a rare, complex genetic disorder characterized by a specific pattern of congenital anomalies. The acronym CHARGE stands for Coloboma, Heart defects, Atresia of the choanae, Retardation of growth and/or development, Genital and/or urinary abnormalities, and Ear abnormalities and deafness. However, not every child with CHARGE syndrome has all of these features. The severity and combination of features can vary significantly among affected individuals.",
+    "category": "GENETIC",
+    "icdCode": "Q87.0",
+    "orphaCode": "128",
+    "omimCode": "214800",
+    "prevalence": "1 in 8,500 to 1 in 10,000 live births",
+    "estimatedCases": 35000,
+    "ageOfOnset": "Congenital",
+    "inheritance": "AUTOSOMAL_DOMINANT, SPORADIC",
+    "symptoms": [
+        "Coloboma (eye defect)",
+        "Heart defects (e.g., tetralogy of Fallot, atrial septal defect)",
+        "Choanal atresia (blocked nasal passages)",
+        "Growth retardation",
+        "Developmental delay",
+        "Genital hypoplasia (in males)",
+        "Ear anomalies (e.g., abnormal shape, hearing loss)",
+        "Cranial nerve dysfunction",
+        "Swallowing difficulties",
+        "Facial palsy",
+        "Tracheoesophageal fistula",
+        "Cognitive impairment"
+    ],
+    "affectedSystems": [
+        "Eyes",
+        "Cardiovascular",
+        "Respiratory",
+        "Growth",
+        "Developmental",
+        "Genitourinary",
+        "Ears",
+        "Neurological",
+        "Gastrointestinal"
+    ],
+    "prognosis": "Variable, depending on the severity of symptoms and associated complications. Early diagnosis and comprehensive management can improve outcomes.",
+    "lifeExpectancy": "Variable; may be reduced due to severe congenital anomalies, but many individuals can live into adulthood with appropriate medical care.",
+    "diagnosticMethods": [
+        "Clinical evaluation based on characteristic features",
+        "Genetic testing (CHD7 gene sequencing)",
+        "Echocardiogram (for heart defects)",
+        "CT scan or MRI (for choanal atresia and other structural anomalies)",
+        "Hearing tests (audiometry)",
+        "Ophthalmologic examination (for coloboma)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Surgical repair of heart defects",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Surgical repair of choanal atresia",
+            "type": "SURGERY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "G-tube feeding (for swallowing difficulties)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Hearing aids or cochlear implants (for hearing loss)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        },
+        {
+            "name": "Physical therapy",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Occupational therapy",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Speech therapy",
+            "type": "THERAPY",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Hormone replacement therapy (for genital hypoplasia)",
+            "type": "MEDICATION",
+            "effectiveness": "MODERATELY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 25,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Stanford University",
+        "Boston Children's Hospital"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "CHARGE Syndrome Foundation",
+            "url": "https://www.chargesyndrome.org/",
+            "country": "USA"
+        },
+        {
+            "name": "CHARGE Association UK",
+            "url": "https://www.charge.org.uk/",
+            "country": "UK"
+        }
+    ],
+    "relatedConditions": [
+        "Kabuki Syndrome",
+        "VACTERL Association",
+        "DiGeorge Syndrome"
+    ],
+    "specialistTypes": [
+        "Clinical Geneticist",
+        "Cardiologist",
+        "Otolaryngologist",
+        "Ophthalmologist",
+        "Endocrinologist",
+        "Developmental Pediatrician",
+        "Gastroenterologist",
+        "Surgeon"
+    ],
+    "eli5Summary": "Imagine a puzzle where some important pieces are missing. CHARGE syndrome is like that, but instead of puzzle pieces, it's about missing or not-quite-right parts of the body, like the eyes, heart, nose, ears, and private parts. It can make it hard to see, hear, breathe, grow, and learn.",
+    "clinicalSummary": "CHARGE syndrome is a complex genetic disorder primarily caused by mutations in the CHD7 gene. This gene plays a crucial role in chromatin remodeling and regulation of gene expression during embryonic development. The clinical presentation is highly variable, but the acronym CHARGE is a useful mnemonic for the most common features: Coloboma (typically retinal), Heart defects (conotruncal abnormalities), Choanal atresia, Retardation of growth and development, Genital hypoplasia, and Ear anomalies (sensorineural or mixed hearing loss, structural abnormalities). Cranial nerve involvement is common, leading to feeding difficulties, facial palsy, and swallowing dysfunction. Diagnosis is based on clinical criteria and confirmed by genetic testing. Management requires a multidisciplinary approach, including surgical correction of congenital anomalies, supportive care, and developmental therapies.",
+    "historicalBackground": "CHARGE syndrome was first described as a distinct entity in the late 1970s and early 1980s. The acronym CHARGE was proposed by Pagon et al. in 1981 to describe the constellation of findings. The identification of CHD7 as the major causative gene in 2004 significantly advanced our understanding of the syndrome's etiology.",
+    "recentBreakthroughs": [
+        {
+            "year": 2022,
+            "title": "Improved Diagnostic Criteria for CHARGE Syndrome",
+            "description": "Refined diagnostic criteria have been proposed to improve the accuracy and efficiency of CHARGE syndrome diagnosis, particularly in cases with atypical presentations.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "Longitudinal Study of Cognitive and Behavioral Outcomes in CHARGE Syndrome",
+            "description": "A longitudinal study revealed insights into the cognitive and behavioral profiles of individuals with CHARGE syndrome, highlighting the importance of early intervention and individualized educational plans.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/Disease_Search.php?lng=EN&data_id=128"
+        },
+        {
+            "name": "National Organization for Rare Disorders (NORD)",
+            "url": "https://rarediseases.org/"
+        },
+        {
+            "name": "GeneReviews",
+            "url": "https://www.ncbi.nlm.nih.gov/books/NBK1116/"
+        }
+    ]
+}

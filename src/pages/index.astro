@@ -26,7 +26,7 @@ type DoctorData = {
 };
 
 let allDoctors: DoctorData[] = [];
-let dataSource = 'database';
+let dataSource = "database";
 
 try {
 	// Fetch from database
@@ -42,41 +42,41 @@ try {
 			geography: {
 				select: {
 					country: true,
-					city: true
-				}
-			}
-		}
+					city: true,
+				},
+			},
+		},
 	});
 
 	if (dbDoctors.length > 0) {
-		allDoctors = dbDoctors.map(d => ({
+		allDoctors = dbDoctors.map((d) => ({
 			slug: d.slug,
 			fullName: d.full_name,
 			specialty: d.specialty,
 			subSpecialty: d.sub_specialty || undefined,
 			tier: d.tier,
-			country: d.geography?.country || 'Unknown',
+			country: d.geography?.country || "Unknown",
 			city: d.geography?.city || undefined,
 			portraitUrl: d.portrait_url,
-			hIndex: d.h_index || undefined
+			hIndex: d.h_index || undefined,
 		}));
 	} else {
-		throw new Error('No profiles in database');
+		throw new Error("No profiles in database");
 	}
 } catch (e) {
-	dataSource = 'static';
-	console.log('Homepage falling back to static content:', e);
+	dataSource = "static";
+	console.log("Homepage falling back to static content:", e);
 	const staticDoctors = await getCollection("doctors");
-	allDoctors = staticDoctors.map(d => ({
+	allDoctors = staticDoctors.map((d) => ({
 		slug: d.id,
 		fullName: d.data.fullName,
 		specialty: d.data.specialty,
 		subSpecialty: (d.data as any).subSpecialty || undefined,
-		tier: d.data.tier || 'UNRANKED',
-		country: d.data.geography?.country || 'Unknown',
+		tier: d.data.tier || "UNRANKED",
+		country: d.data.geography?.country || "Unknown",
 		city: d.data.geography?.city || undefined,
 		portraitUrl: d.data.portraitUrl || null,
-		hIndex: (d.data as any).hIndex || undefined
+		hIndex: (d.data as any).hIndex || undefined,
 	}));
 }
 
@@ -88,14 +88,19 @@ const countrySet = new Set(allDoctors.map((d) => d.country));
 const countriesCount = countrySet.size;
 
 // Get unique specialties for categories
-const specialtySet = new Set(allDoctors.map(d => d.specialty).filter(Boolean));
+const specialtySet = new Set(
+	allDoctors.map((d) => d.specialty).filter(Boolean),
+);
 const topSpecialties = Array.from(specialtySet).slice(0, 8);
 
 // Get top countries
-const countryCounts = allDoctors.reduce((acc, d) => {
-	acc[d.country] = (acc[d.country] || 0) + 1;
-	return acc;
-}, {} as Record<string, number>);
+const countryCounts = allDoctors.reduce(
+	(acc, d) => {
+		acc[d.country] = (acc[d.country] || 0) + 1;
+		return acc;
+	},
+	{} as Record<string, number>,
+);
 const topCountries = Object.entries(countryCounts)
 	.sort((a, b) => b[1] - a[1])
 	.slice(0, 6)
@@ -103,16 +108,18 @@ const topCountries = Object.entries(countryCounts)
 
 // Featured titans
 const featuredTitans = allDoctors
-	.filter(d => d.tier === 'TITAN' && d.portraitUrl && !d.portraitUrl.startsWith('data:'))
+	.filter(
+		(d) =>
+			d.tier === "TITAN" &&
+			d.portraitUrl &&
+			!d.portraitUrl.startsWith("data:"),
+	)
 	.slice(0, 4);
 
 // Build search index
 const searchIndex = allDoctors
 	.filter(
-		(d) =>
-			d.fullName &&
-			d.fullName.length > 2 &&
-			isNaN(Number(d.fullName)),
+		(d) => d.fullName && d.fullName.length > 2 && isNaN(Number(d.fullName)),
 	)
 	.map((d) => ({
 		id: d.slug,
@@ -123,7 +130,10 @@ const searchIndex = allDoctors
 		c: d.country || "",
 		ct: d.city || "",
 		cc: countryToCode(d.country || ""),
-		img: d.portraitUrl && !d.portraitUrl.startsWith("data:") ? d.portraitUrl : "",
+		img:
+			d.portraitUrl && !d.portraitUrl.startsWith("data:")
+				? d.portraitUrl
+				: "",
 		h: d.hIndex || 0,
 	}))
 	.slice(0, 800);
@@ -143,9 +153,15 @@ const searchIndex = allDoctors
 		<!-- Hero Section -->
 		<section class="hero">
 			<div class="hero__badge">
-				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-					<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-					<path d="M9 12l2 2 4-4" />
+				<svg
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+				>
+					<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
+					></path>
+					<path d="M9 12l2 2 4-4"></path>
 				</svg>
 				<span>Verified Medical Professionals</span>
 			</div>
@@ -155,7 +171,8 @@ const searchIndex = allDoctors
 			</h1>
 
 			<p class="hero__subtitle">
-				The world's most comprehensive encyclopedia of verified doctors, surgeons, and medical researchers
+				The world's most comprehensive encyclopedia of verified doctors,
+				surgeons, and medical researchers
 			</p>
 		</section>
 
@@ -164,7 +181,12 @@ const searchIndex = allDoctors
 			<div class="search-wrapper">
 				<div class="search-bar" id="search-bar">
 					<div class="search-bar__icon">
-						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+						<svg
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2.5"
+						>
 							<circle cx="11" cy="11" r="8"></circle>
 							<path d="m21 21-4.3-4.3"></path>
 						</svg>
@@ -178,8 +200,18 @@ const searchIndex = allDoctors
 						spellcheck="false"
 					/>
 					<div class="search-bar__actions">
-						<button type="button" id="clear-btn" class="search-bar__clear" hidden>
-							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<button
+							type="button"
+							id="clear-btn"
+							class="search-bar__clear"
+							hidden
+						>
+							<svg
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+							>
 								<path d="M18 6L6 18M6 6l12 12"></path>
 							</svg>
 						</button>
@@ -195,50 +227,132 @@ const searchIndex = allDoctors
 							<span>Quick Access</span>
 						</div>
 						<div class="quick-grid">
-							<button class="quick-item" data-category="specialty" data-value="Cardiology">
-								<svg class="quick-item__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-									<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+							<button
+								class="quick-item"
+								data-category="specialty"
+								data-value="Cardiology"
+							>
+								<svg
+									class="quick-item__icon-svg"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+								>
+									<path
+										d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+									></path>
 								</svg>
-								<span class="quick-item__label">Cardiology</span>
+								<span class="quick-item__label">Cardiology</span
+								>
 							</button>
-							<button class="quick-item" data-category="specialty" data-value="Neurosurgery">
-								<svg class="quick-item__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-									<circle cx="12" cy="12" r="10"/>
-									<path d="M12 16v-4M12 8h.01"/>
-									<path d="M8 12h8"/>
+							<button
+								class="quick-item"
+								data-category="specialty"
+								data-value="Neurosurgery"
+							>
+								<svg
+									class="quick-item__icon-svg"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+								>
+									<circle cx="12" cy="12" r="10"></circle>
+									<path d="M12 16v-4M12 8h.01"></path>
+									<path d="M8 12h8"></path>
 								</svg>
-								<span class="quick-item__label">Neurosurgery</span>
+								<span class="quick-item__label"
+									>Neurosurgery</span
+								>
 							</button>
-							<button class="quick-item" data-category="specialty" data-value="Oncology">
-								<svg class="quick-item__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-									<circle cx="12" cy="12" r="3"/>
-									<path d="M12 2v4m0 12v4M2 12h4m12 0h4"/>
-									<path d="M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/>
+							<button
+								class="quick-item"
+								data-category="specialty"
+								data-value="Oncology"
+							>
+								<svg
+									class="quick-item__icon-svg"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+								>
+									<circle cx="12" cy="12" r="3"></circle>
+									<path d="M12 2v4m0 12v4M2 12h4m12 0h4"
+									></path>
+									<path
+										d="M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"
+									></path>
 								</svg>
 								<span class="quick-item__label">Oncology</span>
 							</button>
-							<button class="quick-item" data-category="specialty" data-value="Orthopedics">
-								<svg class="quick-item__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-									<path d="M18 4a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12z"/>
-									<path d="M6 10v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-8"/>
-									<path d="M10 14h4"/>
+							<button
+								class="quick-item"
+								data-category="specialty"
+								data-value="Orthopedics"
+							>
+								<svg
+									class="quick-item__icon-svg"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+								>
+									<path
+										d="M18 4a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12z"
+									></path>
+									<path
+										d="M6 10v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-8"
+									></path>
+									<path d="M10 14h4"></path>
 								</svg>
-								<span class="quick-item__label">Orthopedics</span>
+								<span class="quick-item__label"
+									>Orthopedics</span
+								>
 							</button>
-							<button class="quick-item" data-category="tier" data-value="TITAN">
-								<svg class="quick-item__icon-svg quick-item__icon-svg--gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-									<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+							<button
+								class="quick-item"
+								data-category="tier"
+								data-value="TITAN"
+							>
+								<svg
+									class="quick-item__icon-svg quick-item__icon-svg--gold"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+								>
+									<polygon
+										points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+									></polygon>
 								</svg>
-								<span class="quick-item__label">Titan Tier</span>
+								<span class="quick-item__label">Titan Tier</span
+								>
 							</button>
-							<button class="quick-item" data-category="browse" data-value="all">
-								<svg class="quick-item__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-									<rect x="3" y="3" width="7" height="7"/>
-									<rect x="14" y="3" width="7" height="7"/>
-									<rect x="14" y="14" width="7" height="7"/>
-									<rect x="3" y="14" width="7" height="7"/>
+							<button
+								class="quick-item"
+								data-category="browse"
+								data-value="all"
+							>
+								<svg
+									class="quick-item__icon-svg"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+								>
+									<rect x="3" y="3" width="7" height="7"
+									></rect>
+									<rect x="14" y="3" width="7" height="7"
+									></rect>
+									<rect x="14" y="14" width="7" height="7"
+									></rect>
+									<rect x="3" y="14" width="7" height="7"
+									></rect>
 								</svg>
-								<span class="quick-item__label">Browse All</span>
+								<span class="quick-item__label">Browse All</span
+								>
 							</button>
 						</div>
 					</div>
@@ -247,7 +361,8 @@ const searchIndex = allDoctors
 					<div class="palette-section" id="search-results" hidden>
 						<div class="palette-section__header">
 							<span>Results</span>
-							<span class="results-count" id="results-count"></span>
+							<span class="results-count" id="results-count"
+							></span>
 						</div>
 						<div class="results-list" id="results-list"></div>
 					</div>
@@ -256,7 +371,9 @@ const searchIndex = allDoctors
 					<div class="palette-section" id="recent-section" hidden>
 						<div class="palette-section__header">
 							<span>Recent</span>
-							<button class="clear-recent" id="clear-recent">Clear</button>
+							<button class="clear-recent" id="clear-recent"
+								>Clear</button
+							>
 						</div>
 						<div class="recent-list" id="recent-list"></div>
 					</div>
@@ -277,18 +394,29 @@ const searchIndex = allDoctors
 		<section class="stats-section">
 			<div class="stats-pills">
 				<a href="/doctors" class="stat-pill">
-					<span class="stat-pill__value">{totalCount.toLocaleString()}</span>
+					<span class="stat-pill__value"
+						>{totalCount.toLocaleString()}</span
+					>
 					<span class="stat-pill__label">Profiles</span>
 				</a>
-				<a href="/doctors?tier=TITAN" class="stat-pill stat-pill--titan">
+				<a
+					href="/doctors?tier=TITAN"
+					class="stat-pill stat-pill--titan"
+				>
 					<span class="stat-pill__value">{titanCount}</span>
 					<span class="stat-pill__label">Titans</span>
 				</a>
-				<a href="/doctors?tier=ELITE" class="stat-pill stat-pill--elite">
+				<a
+					href="/doctors?tier=ELITE"
+					class="stat-pill stat-pill--elite"
+				>
 					<span class="stat-pill__value">{eliteCount}</span>
 					<span class="stat-pill__label">Elite</span>
 				</a>
-				<a href="/doctors?tier=MASTER" class="stat-pill stat-pill--master">
+				<a
+					href="/doctors?tier=MASTER"
+					class="stat-pill stat-pill--master"
+				>
 					<span class="stat-pill__value">{masterCount}</span>
 					<span class="stat-pill__label">Master</span>
 				</a>
@@ -300,120 +428,300 @@ const searchIndex = allDoctors
 		</section>
 
 		<!-- Featured Titans -->
-		{featuredTitans.length > 0 && (
-			<section class="featured-section">
-				<h2 class="section-heading">
-					<svg class="section-heading__icon-svg section-heading__icon-svg--gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-					</svg>
-					<span>Featured Titans</span>
-				</h2>
-				<div class="featured-grid">
-					{featuredTitans.map(doc => (
-						<a href={`/doctors/${doc.slug}`} class="featured-card">
-							<div class="featured-card__avatar">
-								<img src={doc.portraitUrl} alt={doc.fullName} loading="lazy" />
-								<div class="featured-card__tier">TITAN</div>
-							</div>
-							<div class="featured-card__info">
-								<h3>{doc.fullName}</h3>
-								<p>{doc.specialty}</p>
-								<span class="featured-card__location">
-									{countryToCode(doc.country) && (
-										<span class="flag">{String.fromCodePoint(...countryToCode(doc.country).toUpperCase().split('').map(c => 0x1f1e6 + c.charCodeAt(0) - 65))}</span>
-									)}
-									{doc.country}
-								</span>
-							</div>
-						</a>
-					))}
-				</div>
-				<a href="/doctors?tier=TITAN" class="view-more-link">
-					View all Titan profiles
-					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M5 12h14M12 5l7 7-7 7"/>
-					</svg>
-				</a>
-			</section>
-		)}
+		{
+			featuredTitans.length > 0 && (
+				<section class="featured-section">
+					<h2 class="section-heading">
+						<svg
+							class="section-heading__icon-svg section-heading__icon-svg--gold"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+						>
+							<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+						</svg>
+						<span>Featured Titans</span>
+					</h2>
+					<div class="featured-grid">
+						{featuredTitans.map((doc) => (
+							<a
+								href={`/doctors/${doc.slug}`}
+								class="featured-card"
+							>
+								<div class="featured-card__avatar">
+									<img
+										src={doc.portraitUrl}
+										alt={doc.fullName}
+										loading="lazy"
+									/>
+									<div class="featured-card__tier">TITAN</div>
+								</div>
+								<div class="featured-card__info">
+									<h3>{doc.fullName}</h3>
+									<p>{doc.specialty}</p>
+									<span class="featured-card__location">
+										{countryToCode(doc.country) && (
+											<span class="flag">
+												{String.fromCodePoint(
+													...countryToCode(
+														doc.country,
+													)
+														.toUpperCase()
+														.split("")
+														.map(
+															(c) =>
+																0x1f1e6 +
+																c.charCodeAt(
+																	0,
+																) -
+																65,
+														),
+												)}
+											</span>
+										)}
+										{doc.country}
+									</span>
+								</div>
+							</a>
+						))}
+					</div>
+					<a href="/doctors?tier=TITAN" class="view-more-link">
+						View all Titan profiles
+						<svg
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+						>
+							<path d="M5 12h14M12 5l7 7-7 7" />
+						</svg>
+					</a>
+				</section>
+			)
+		}
 
 		<!-- Explore by Specialty -->
 		<section class="explore-section">
 			<h2 class="section-heading">
-				<svg class="section-heading__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-					<circle cx="12" cy="12" r="3"/>
-					<path d="M12 2v4m0 12v4M2 12h4m12 0h4"/>
+				<svg
+					class="section-heading__icon-svg"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+				>
+					<circle cx="12" cy="12" r="3"></circle>
+					<path d="M12 2v4m0 12v4M2 12h4m12 0h4"></path>
 				</svg>
 				<span>Explore by Specialty</span>
 			</h2>
 			<div class="specialty-grid">
 				<a href="/doctors?specialty=Cardiology" class="specialty-card">
-					<svg class="specialty-card__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+					<svg
+						class="specialty-card__icon-svg"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+					>
+						<path
+							d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+						></path>
 					</svg>
 					<span class="specialty-card__name">Cardiology</span>
 					<span class="specialty-card__arrow">→</span>
 				</a>
-				<a href="/doctors?specialty=Neurosurgery" class="specialty-card">
-					<svg class="specialty-card__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<circle cx="12" cy="12" r="10"/>
-						<path d="M12 16v-4M12 8h.01"/>
-						<path d="M8 12h8"/>
+				<a
+					href="/doctors?specialty=Neurosurgery"
+					class="specialty-card"
+				>
+					<svg
+						class="specialty-card__icon-svg"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+					>
+						<circle cx="12" cy="12" r="10"></circle>
+						<path d="M12 16v-4M12 8h.01"></path>
+						<path d="M8 12h8"></path>
 					</svg>
 					<span class="specialty-card__name">Neurosurgery</span>
 					<span class="specialty-card__arrow">→</span>
 				</a>
 				<a href="/doctors?specialty=Oncology" class="specialty-card">
-					<svg class="specialty-card__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<circle cx="12" cy="12" r="3"/>
-						<path d="M12 2v4m0 12v4M2 12h4m12 0h4"/>
-						<path d="M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/>
+					<svg
+						class="specialty-card__icon-svg"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+					>
+						<circle cx="12" cy="12" r="3"></circle>
+						<path d="M12 2v4m0 12v4M2 12h4m12 0h4"></path>
+						<path
+							d="M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"
+						></path>
 					</svg>
 					<span class="specialty-card__name">Oncology</span>
 					<span class="specialty-card__arrow">→</span>
 				</a>
 				<a href="/doctors?specialty=Orthopedics" class="specialty-card">
-					<svg class="specialty-card__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M18 4a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12z"/>
-						<path d="M6 10v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-8"/>
-						<path d="M10 14h4"/>
+					<svg
+						class="specialty-card__icon-svg"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+					>
+						<path
+							d="M18 4a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12z"
+						></path>
+						<path d="M6 10v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-8"
+						></path>
+						<path d="M10 14h4"></path>
 					</svg>
 					<span class="specialty-card__name">Orthopedics</span>
 					<span class="specialty-card__arrow">→</span>
 				</a>
-				<a href="/doctors?specialty=Transplant Surgery" class="specialty-card">
-					<svg class="specialty-card__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M12 2L2 7l10 5 10-5-10-5z"/>
-						<path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+				<a
+					href="/doctors?specialty=Transplant Surgery"
+					class="specialty-card"
+				>
+					<svg
+						class="specialty-card__icon-svg"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+					>
+						<path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+						<path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path>
 					</svg>
 					<span class="specialty-card__name">Transplant Surgery</span>
 					<span class="specialty-card__arrow">→</span>
 				</a>
-				<a href="/doctors?specialty=Plastic Surgery" class="specialty-card">
-					<svg class="specialty-card__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M12 3l1.39 4.28h4.5l-3.64 2.64 1.39 4.28L12 11.56l-3.64 2.64 1.39-4.28-3.64-2.64h4.5L12 3z"/>
-						<circle cx="12" cy="12" r="10"/>
+				<a
+					href="/doctors?specialty=Plastic Surgery"
+					class="specialty-card"
+				>
+					<svg
+						class="specialty-card__icon-svg"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+					>
+						<path
+							d="M12 3l1.39 4.28h4.5l-3.64 2.64 1.39 4.28L12 11.56l-3.64 2.64 1.39-4.28-3.64-2.64h4.5L12 3z"
+						></path>
+						<circle cx="12" cy="12" r="10"></circle>
 					</svg>
 					<span class="specialty-card__name">Plastic Surgery</span>
 					<span class="specialty-card__arrow">→</span>
 				</a>
 				<a href="/doctors?specialty=Pediatrics" class="specialty-card">
-					<svg class="specialty-card__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-						<circle cx="9" cy="7" r="4"/>
-						<path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+					<svg
+						class="specialty-card__icon-svg"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+					>
+						<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"
+						></path>
+						<circle cx="9" cy="7" r="4"></circle>
+						<path
+							d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"
+						></path>
 					</svg>
 					<span class="specialty-card__name">Pediatrics</span>
 					<span class="specialty-card__arrow">→</span>
 				</a>
 				<a href="/doctors" class="specialty-card specialty-card--all">
-					<svg class="specialty-card__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<rect x="3" y="3" width="7" height="7"/>
-						<rect x="14" y="3" width="7" height="7"/>
-						<rect x="14" y="14" width="7" height="7"/>
-						<rect x="3" y="14" width="7" height="7"/>
+					<svg
+						class="specialty-card__icon-svg"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+					>
+						<rect x="3" y="3" width="7" height="7"></rect>
+						<rect x="14" y="3" width="7" height="7"></rect>
+						<rect x="14" y="14" width="7" height="7"></rect>
+						<rect x="3" y="14" width="7" height="7"></rect>
 					</svg>
 					<span class="specialty-card__name">All Specialties</span>
+					<span class="specialty-card__arrow">→</span>
+				</a>
+			</div>
+		</section>
+
+		<!-- Explore Directories -->
+		<section class="explore-section">
+			<h2 class="section-heading">
+				<svg
+					class="section-heading__icon-svg"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+				>
+					<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+					<path
+						d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+					></path>
+				</svg>
+				<span>Explore Medical Directories</span>
+			</h2>
+			<div class="specialty-grid">
+				<a href="/rare-diseases" class="specialty-card">
+					<span style="font-size: 1.5rem; line-height: 1;">🧬</span>
+					<span
+						class="specialty-card__name"
+						style="margin-left: 12px;">Rare Diseases</span
+					>
+					<span class="specialty-card__arrow">→</span>
+				</a>
+				<a href="/hospitals" class="specialty-card">
+					<span style="font-size: 1.5rem; line-height: 1;">🏥</span>
+					<span
+						class="specialty-card__name"
+						style="margin-left: 12px;">Hospitals</span
+					>
+					<span class="specialty-card__arrow">→</span>
+				</a>
+				<a href="/clinical-trials" class="specialty-card">
+					<span style="font-size: 1.5rem; line-height: 1;">🔬</span>
+					<span
+						class="specialty-card__name"
+						style="margin-left: 12px;">Clinical Trials</span
+					>
+					<span class="specialty-card__arrow">→</span>
+				</a>
+				<a href="/prizes" class="specialty-card">
+					<span style="font-size: 1.5rem; line-height: 1;">🏆</span>
+					<span
+						class="specialty-card__name"
+						style="margin-left: 12px;">Medical Awards</span
+					>
+					<span class="specialty-card__arrow">→</span>
+				</a>
+				<a href="/communities" class="specialty-card">
+					<span style="font-size: 1.5rem; line-height: 1;">🌍</span>
+					<span
+						class="specialty-card__name"
+						style="margin-left: 12px;">Communities</span
+					>
+					<span class="specialty-card__arrow">→</span>
+				</a>
+				<a href="/news" class="specialty-card">
+					<span style="font-size: 1.5rem; line-height: 1;">📰</span>
+					<span
+						class="specialty-card__name"
+						style="margin-left: 12px;">Latest News</span
+					>
 					<span class="specialty-card__arrow">→</span>
 				</a>
 			</div>
@@ -424,11 +732,15 @@ const searchIndex = allDoctors
 			<section class="content-block">
 				<h2>The MDRPedia Vision: A Beacon of Truth in Medical Data</h2>
 				<p>
-					In an era where medical information is abundant yet frequently unverified,
-					the need for a definitive, trusted source of truth has never been greater.
-					MDRPedia was founded on a singular powerful principle: <strong>distinction through verification</strong>.
-					We are not merely a directory; we are a curated encyclopedia of the world's finest medical minds,
-					a repository of excellence that documents the careers of those who have shaped modern medicine.
+					In an era where medical information is abundant yet
+					frequently unverified, the need for a definitive, trusted
+					source of truth has never been greater. MDRPedia was founded
+					on a singular powerful principle: <strong
+						>distinction through verification</strong
+					>. We are not merely a directory; we are a curated
+					encyclopedia of the world's finest medical minds, a
+					repository of excellence that documents the careers of those
+					who have shaped modern medicine.
 				</p>
 			</section>
 
@@ -438,22 +750,38 @@ const searchIndex = allDoctors
 					<div class="pillar-card">
 						<div class="pillar-card__number">1</div>
 						<h3>Clinical Mastery Index</h3>
-						<p>Surgical volume, success rates in complex cases, board certifications, and specialization in high-acuity interventions.</p>
+						<p>
+							Surgical volume, success rates in complex cases,
+							board certifications, and specialization in
+							high-acuity interventions.
+						</p>
 					</div>
 					<div class="pillar-card">
 						<div class="pillar-card__number">2</div>
 						<h3>Intellectual Legacy</h3>
-						<p>H-Index metrics, landmark publications, textbook authorship, and contributions that change clinical guidelines.</p>
+						<p>
+							H-Index metrics, landmark publications, textbook
+							authorship, and contributions that change clinical
+							guidelines.
+						</p>
 					</div>
 					<div class="pillar-card">
 						<div class="pillar-card__number">3</div>
 						<h3>Global Mentorship Score</h3>
-						<p>Medical lineage tracking—who they trained and what those students achieved, ensuring legacy reproduction.</p>
+						<p>
+							Medical lineage tracking—who they trained and what
+							those students achieved, ensuring legacy
+							reproduction.
+						</p>
 					</div>
 					<div class="pillar-card">
 						<div class="pillar-card__number">4</div>
 						<h3>Humanitarian Impact</h3>
-						<p>Contributions to global health equity, disaster response, free clinics, and care for underserved populations.</p>
+						<p>
+							Contributions to global health equity, disaster
+							response, free clinics, and care for underserved
+							populations.
+						</p>
 					</div>
 				</div>
 			</section>
@@ -463,15 +791,27 @@ const searchIndex = allDoctors
 				<div class="audience-grid">
 					<div class="audience-card">
 						<h4>For Patients</h4>
-						<p><strong>Find the Best Care:</strong> Filter by specific expertise and procedural volume. Our Titan/Elite/Master tiers help you gauge standing without interpreting CVs.</p>
+						<p>
+							<strong>Find the Best Care:</strong> Filter by specific
+							expertise and procedural volume. Our Titan/Elite/Master
+							tiers help you gauge standing without interpreting CVs.
+						</p>
 					</div>
 					<div class="audience-card">
 						<h4>For Researchers</h4>
-						<p><strong>Identify Collaborators:</strong> Assess research focus and output. Track which institutions lead in specific fields and identify rising stars.</p>
+						<p>
+							<strong>Identify Collaborators:</strong> Assess research
+							focus and output. Track which institutions lead in specific
+							fields and identify rising stars.
+						</p>
 					</div>
 					<div class="audience-card">
 						<h4>For Institutions</h4>
-						<p><strong>Recruitment & Benchmarking:</strong> Compare faculty against global standards. Ensure top talent is accurately represented for institutional prestige.</p>
+						<p>
+							<strong>Recruitment & Benchmarking:</strong> Compare faculty
+							against global standards. Ensure top talent is accurately
+							represented for institutional prestige.
+						</p>
 					</div>
 				</div>
 			</section>
@@ -481,21 +821,21 @@ const searchIndex = allDoctors
 
 <script define:vars={{ searchIndex }}>
 	const DATA = searchIndex;
-	const RECENT_KEY = 'mdrpedia_recent_v2';
+	const RECENT_KEY = "mdrpedia_recent_v2";
 	const MAX_RECENT = 5;
 
 	// Elements
-	const searchInput = document.getElementById('search-input');
-	const searchBar = document.getElementById('search-bar');
-	const palette = document.getElementById('command-palette');
-	const clearBtn = document.getElementById('clear-btn');
-	const quickCategories = document.getElementById('quick-categories');
-	const searchResults = document.getElementById('search-results');
-	const resultsList = document.getElementById('results-list');
-	const resultsCount = document.getElementById('results-count');
-	const recentSection = document.getElementById('recent-section');
-	const recentList = document.getElementById('recent-list');
-	const clearRecent = document.getElementById('clear-recent');
+	const searchInput = document.getElementById("search-input");
+	const searchBar = document.getElementById("search-bar");
+	const palette = document.getElementById("command-palette");
+	const clearBtn = document.getElementById("clear-btn");
+	const quickCategories = document.getElementById("quick-categories");
+	const searchResults = document.getElementById("search-results");
+	const resultsList = document.getElementById("results-list");
+	const resultsCount = document.getElementById("results-count");
+	const recentSection = document.getElementById("recent-section");
+	const recentList = document.getElementById("recent-list");
+	const clearRecent = document.getElementById("clear-recent");
 
 	let activeIdx = -1;
 	let recentSearches = [];
@@ -503,46 +843,84 @@ const searchIndex = allDoctors
 
 	// Tier configuration
 	const tierConfig = {
-		TITAN: { icon: '👑', label: 'TITAN', color: '#fbbf24', bg: 'linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(251, 191, 36, 0.05))' },
-		ELITE: { icon: '⭐', label: 'ELITE', color: '#3b82f6', bg: 'linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05))' },
-		MASTER: { icon: '✦', label: 'MASTER', color: '#10b981', bg: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05))' },
-		UNRANKED: { icon: '○', label: '', color: '#64748b', bg: 'rgba(100, 116, 139, 0.1)' },
+		TITAN: {
+			icon: "👑",
+			label: "TITAN",
+			color: "#fbbf24",
+			bg: "linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(251, 191, 36, 0.05))",
+		},
+		ELITE: {
+			icon: "⭐",
+			label: "ELITE",
+			color: "#3b82f6",
+			bg: "linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05))",
+		},
+		MASTER: {
+			icon: "✦",
+			label: "MASTER",
+			color: "#10b981",
+			bg: "linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05))",
+		},
+		UNRANKED: {
+			icon: "○",
+			label: "",
+			color: "#64748b",
+			bg: "rgba(100, 116, 139, 0.1)",
+		},
 	};
 
 	// Load recent searches
 	try {
 		const stored = localStorage.getItem(RECENT_KEY);
 		if (stored) recentSearches = JSON.parse(stored);
-	} catch(e) {}
+	} catch (e) {}
 
 	function saveRecent(term, url) {
 		if (!term || term.length < 2) return;
 		const entry = { term, url, time: Date.now() };
-		recentSearches = [entry, ...recentSearches.filter(s => s.term !== term)].slice(0, MAX_RECENT);
-		try { localStorage.setItem(RECENT_KEY, JSON.stringify(recentSearches)); } catch(e) {}
+		recentSearches = [
+			entry,
+			...recentSearches.filter((s) => s.term !== term),
+		].slice(0, MAX_RECENT);
+		try {
+			localStorage.setItem(RECENT_KEY, JSON.stringify(recentSearches));
+		} catch (e) {}
 	}
 
 	function toFlag(cc) {
 		if (!cc || cc.length !== 2) return "";
-		return String.fromCodePoint(...cc.toUpperCase().split("").map(c => 0x1f1e6 + c.charCodeAt(0) - 65));
+		return String.fromCodePoint(
+			...cc
+				.toUpperCase()
+				.split("")
+				.map((c) => 0x1f1e6 + c.charCodeAt(0) - 65),
+		);
 	}
 
 	function getInitials(name) {
-		return name.split(" ").map(w => w[0]).filter((_, i) => i < 2).join("").toUpperCase();
+		return name
+			.split(" ")
+			.map((w) => w[0])
+			.filter((_, i) => i < 2)
+			.join("")
+			.toUpperCase();
 	}
 
 	function highlightMatch(text, query) {
 		if (!query || query.length < 2) return text;
-		const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-		return text.replace(regex, '<mark>$1</mark>');
+		const regex = new RegExp(
+			`(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+			"gi",
+		);
+		return text.replace(regex, "<mark>$1</mark>");
 	}
 
 	function openPalette() {
 		if (isPaletteOpen) return;
 		isPaletteOpen = true;
 		palette.hidden = false;
-		searchBar.classList.add('search-bar--focused');
-		document.body.style.overflow = 'hidden';
+		searchBar.classList.add("search-bar--focused");
+		document.body.style.overflow = "hidden";
 
 		// Show recent or quick categories
 		const query = searchInput.value.trim();
@@ -559,8 +937,8 @@ const searchIndex = allDoctors
 	function closePalette() {
 		isPaletteOpen = false;
 		palette.hidden = true;
-		searchBar.classList.remove('search-bar--focused');
-		document.body.style.overflow = '';
+		searchBar.classList.remove("search-bar--focused");
+		document.body.style.overflow = "";
 		activeIdx = -1;
 	}
 
@@ -570,7 +948,9 @@ const searchIndex = allDoctors
 			return;
 		}
 
-		recentList.innerHTML = recentSearches.map((r, i) => `
+		recentList.innerHTML = recentSearches
+			.map(
+				(r, i) => `
 			<a href="${r.url || `/search?q=${encodeURIComponent(r.term)}`}" class="recent-item" data-idx="recent-${i}">
 				<svg class="recent-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 					<circle cx="12" cy="12" r="10"/>
@@ -581,7 +961,9 @@ const searchIndex = allDoctors
 					<path d="M9 18l6-6-6-6"/>
 				</svg>
 			</a>
-		`).join('');
+		`,
+			)
+			.join("");
 
 		recentSection.hidden = false;
 	}
@@ -599,52 +981,59 @@ const searchIndex = allDoctors
 					<span>Try a different search or browse all profiles</span>
 				</div>
 			`;
-			resultsCount.textContent = '';
+			resultsCount.textContent = "";
 			searchResults.hidden = false;
 			quickCategories.hidden = true;
 			recentSection.hidden = true;
 			return;
 		}
 
-		resultsCount.textContent = `${matches.length}${matches.length >= 10 ? '+' : ''}`;
+		resultsCount.textContent = `${matches.length}${matches.length >= 10 ? "+" : ""}`;
 		activeIdx = -1;
 
-		resultsList.innerHTML = matches.map((m, i) => {
-			const tier = tierConfig[m.t] || tierConfig.UNRANKED;
-			const flag = toFlag(m.cc);
-			const initials = getInitials(m.n);
-			const location = [m.ct, m.c].filter(Boolean).join(', ');
+		resultsList.innerHTML = matches
+			.map((m, i) => {
+				const tier = tierConfig[m.t] || tierConfig.UNRANKED;
+				const flag = toFlag(m.cc);
+				const initials = getInitials(m.n);
+				const location = [m.ct, m.c].filter(Boolean).join(", ");
 
-			return `
+				return `
 				<a href="/doctors/${m.id}" class="result-card" data-idx="${i}">
 					<div class="result-card__avatar" style="border-color: ${tier.color}40; background: ${tier.bg}">
-						${m.img
-							? `<img src="${m.img}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><span class="avatar-initials" style="display:none;color:${tier.color}">${initials}</span>`
-							: `<span class="avatar-initials" style="color:${tier.color}">${initials}</span>`
+						${
+							m.img
+								? `<img src="${m.img}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><span class="avatar-initials" style="display:none;color:${tier.color}">${initials}</span>`
+								: `<span class="avatar-initials" style="color:${tier.color}">${initials}</span>`
 						}
 					</div>
 					<div class="result-card__content">
 						<div class="result-card__header">
 							<span class="result-card__name">${highlightMatch(m.n, query)}</span>
-							${m.t !== 'UNRANKED' ? `<span class="result-card__tier" style="background:${tier.bg};color:${tier.color}">${tier.icon} ${tier.label}</span>` : ''}
+							${m.t !== "UNRANKED" ? `<span class="result-card__tier" style="background:${tier.bg};color:${tier.color}">${tier.icon} ${tier.label}</span>` : ""}
 						</div>
 						<div class="result-card__meta">
 							<span class="result-card__specialty">${highlightMatch(m.s, query)}</span>
-							${location ? `<span class="result-card__divider">·</span><span class="result-card__location">${flag} ${location}</span>` : ''}
+							${location ? `<span class="result-card__divider">·</span><span class="result-card__location">${flag} ${location}</span>` : ""}
 						</div>
 					</div>
-					${m.h > 0 ? `
+					${
+						m.h > 0
+							? `
 						<div class="result-card__hindex">
 							<span class="hindex-value">${m.h}</span>
 							<span class="hindex-label">h-index</span>
 						</div>
-					` : ''}
+					`
+							: ""
+					}
 					<svg class="result-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 						<path d="M9 18l6-6-6-6"/>
 					</svg>
 				</a>
 			`;
-		}).join('');
+			})
+			.join("");
 
 		// Add "View all results" link if there are more
 		if (matches.length >= 10) {
@@ -664,8 +1053,8 @@ const searchIndex = allDoctors
 	}
 
 	// Keyboard shortcut
-	document.addEventListener('keydown', (e) => {
-		if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+	document.addEventListener("keydown", (e) => {
+		if ((e.metaKey || e.ctrlKey) && e.key === "k") {
 			e.preventDefault();
 			searchInput?.focus();
 			openPalette();
@@ -674,7 +1063,7 @@ const searchIndex = allDoctors
 
 	// Input handler
 	let searchTimer;
-	searchInput?.addEventListener('input', () => {
+	searchInput?.addEventListener("input", () => {
 		clearTimeout(searchTimer);
 		const val = searchInput.value;
 		clearBtn.hidden = !val;
@@ -692,8 +1081,10 @@ const searchIndex = allDoctors
 				return;
 			}
 
-			const matches = DATA.filter(d =>
-				`${d.n} ${d.s} ${d.ss} ${d.c} ${d.ct}`.toLowerCase().includes(q)
+			const matches = DATA.filter((d) =>
+				`${d.n} ${d.s} ${d.ss} ${d.c} ${d.ct}`
+					.toLowerCase()
+					.includes(q),
 			).slice(0, 10);
 
 			renderResults(matches, q);
@@ -701,13 +1092,13 @@ const searchIndex = allDoctors
 	});
 
 	// Focus handler
-	searchInput?.addEventListener('focus', () => {
+	searchInput?.addEventListener("focus", () => {
 		openPalette();
 	});
 
 	// Clear button
-	clearBtn?.addEventListener('click', () => {
-		searchInput.value = '';
+	clearBtn?.addEventListener("click", () => {
+		searchInput.value = "";
 		clearBtn.hidden = true;
 		searchInput.focus();
 		searchResults.hidden = true;
@@ -719,68 +1110,77 @@ const searchIndex = allDoctors
 	});
 
 	// Clear recent
-	clearRecent?.addEventListener('click', () => {
+	clearRecent?.addEventListener("click", () => {
 		recentSearches = [];
 		localStorage.removeItem(RECENT_KEY);
 		recentSection.hidden = true;
 	});
 
 	// Quick category clicks
-	document.querySelectorAll('.quick-item').forEach(item => {
-		item.addEventListener('click', () => {
+	document.querySelectorAll(".quick-item").forEach((item) => {
+		item.addEventListener("click", () => {
 			const category = item.dataset.category;
 			const value = item.dataset.value;
 
-			if (category === 'browse') {
-				window.location.href = '/doctors';
-			} else if (category === 'specialty') {
+			if (category === "browse") {
+				window.location.href = "/doctors";
+			} else if (category === "specialty") {
 				window.location.href = `/doctors?specialty=${encodeURIComponent(value)}`;
-			} else if (category === 'tier') {
+			} else if (category === "tier") {
 				window.location.href = `/doctors?tier=${value}`;
 			}
 		});
 	});
 
 	// Keyboard navigation
-	searchInput?.addEventListener('keydown', (e) => {
+	searchInput?.addEventListener("keydown", (e) => {
 		if (!isPaletteOpen) return;
 
-		const items = palette.querySelectorAll('.result-card, .recent-item, .quick-item');
+		const items = palette.querySelectorAll(
+			".result-card, .recent-item, .quick-item",
+		);
 		const itemCount = items.length;
 
-		if (e.key === 'ArrowDown') {
+		if (e.key === "ArrowDown") {
 			e.preventDefault();
 			activeIdx = Math.min(activeIdx + 1, itemCount - 1);
-			items.forEach((el, i) => el.classList.toggle('active', i === activeIdx));
-			items[activeIdx]?.scrollIntoView({ block: 'nearest' });
-		} else if (e.key === 'ArrowUp') {
+			items.forEach((el, i) =>
+				el.classList.toggle("active", i === activeIdx),
+			);
+			items[activeIdx]?.scrollIntoView({ block: "nearest" });
+		} else if (e.key === "ArrowUp") {
 			e.preventDefault();
 			activeIdx = Math.max(activeIdx - 1, 0);
-			items.forEach((el, i) => el.classList.toggle('active', i === activeIdx));
-			items[activeIdx]?.scrollIntoView({ block: 'nearest' });
-		} else if (e.key === 'Enter') {
+			items.forEach((el, i) =>
+				el.classList.toggle("active", i === activeIdx),
+			);
+			items[activeIdx]?.scrollIntoView({ block: "nearest" });
+		} else if (e.key === "Enter") {
 			e.preventDefault();
 			if (activeIdx >= 0 && items[activeIdx]) {
 				const item = items[activeIdx];
 				if (item.href) {
 					saveRecent(searchInput.value.trim(), item.href);
 					window.location.href = item.href;
-				} else if (item.classList.contains('quick-item')) {
+				} else if (item.classList.contains("quick-item")) {
 					item.click();
 				}
 			} else if (searchInput.value.trim().length >= 2) {
-				saveRecent(searchInput.value.trim(), `/search?q=${encodeURIComponent(searchInput.value)}`);
+				saveRecent(
+					searchInput.value.trim(),
+					`/search?q=${encodeURIComponent(searchInput.value)}`,
+				);
 				window.location.href = `/search?q=${encodeURIComponent(searchInput.value)}`;
 			}
-		} else if (e.key === 'Escape') {
+		} else if (e.key === "Escape") {
 			closePalette();
 			searchInput.blur();
 		}
 	});
 
 	// Click outside
-	document.addEventListener('click', (e) => {
-		const root = document.getElementById('search-root');
+	document.addEventListener("click", (e) => {
+		const root = document.getElementById("search-root");
 		if (isPaletteOpen && !root?.contains(e.target)) {
 			closePalette();
 		}
@@ -817,7 +1217,11 @@ const searchIndex = allDoctors
 	.ambient-orb--1 {
 		width: 600px;
 		height: 600px;
-		background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
+		background: radial-gradient(
+			circle,
+			rgba(139, 92, 246, 0.3) 0%,
+			transparent 70%
+		);
 		top: -200px;
 		left: 50%;
 		transform: translateX(-50%);
@@ -826,7 +1230,11 @@ const searchIndex = allDoctors
 	.ambient-orb--2 {
 		width: 400px;
 		height: 400px;
-		background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
+		background: radial-gradient(
+			circle,
+			rgba(59, 130, 246, 0.2) 0%,
+			transparent 70%
+		);
 		top: 40%;
 		right: -100px;
 		animation-delay: -7s;
@@ -835,15 +1243,24 @@ const searchIndex = allDoctors
 	.ambient-orb--3 {
 		width: 500px;
 		height: 500px;
-		background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+		background: radial-gradient(
+			circle,
+			rgba(16, 185, 129, 0.15) 0%,
+			transparent 70%
+		);
 		bottom: -100px;
 		left: -100px;
 		animation-delay: -14s;
 	}
 
 	@keyframes float {
-		0%, 100% { transform: translateY(0) scale(1); }
-		50% { transform: translateY(-30px) scale(1.05); }
+		0%,
+		100% {
+			transform: translateY(0) scale(1);
+		}
+		50% {
+			transform: translateY(-30px) scale(1.05);
+		}
 	}
 
 	/* Hero Section */
@@ -859,7 +1276,11 @@ const searchIndex = allDoctors
 		align-items: center;
 		gap: 8px;
 		padding: 8px 16px;
-		background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(139, 92, 246, 0.05));
+		background: linear-gradient(
+			135deg,
+			rgba(139, 92, 246, 0.15),
+			rgba(139, 92, 246, 0.05)
+		);
 		border: 1px solid rgba(139, 92, 246, 0.25);
 		border-radius: 100px;
 		font-size: 0.8rem;
@@ -1494,7 +1915,11 @@ const searchIndex = allDoctors
 		flex-direction: column;
 		align-items: center;
 		padding: 24px 16px;
-		background: linear-gradient(145deg, rgba(30, 30, 50, 0.6), rgba(20, 20, 40, 0.3));
+		background: linear-gradient(
+			145deg,
+			rgba(30, 30, 50, 0.6),
+			rgba(20, 20, 40, 0.3)
+		);
 		border: 1px solid rgba(255, 215, 0, 0.1);
 		border-radius: 20px;
 		text-decoration: none;
@@ -1632,7 +2057,9 @@ const searchIndex = allDoctors
 
 	.specialty-card__arrow {
 		color: #475569;
-		transition: color 0.15s, transform 0.15s;
+		transition:
+			color 0.15s,
+			transform 0.15s;
 	}
 
 	.specialty-card:hover .specialty-card__arrow {
@@ -1641,7 +2068,11 @@ const searchIndex = allDoctors
 	}
 
 	.specialty-card--all {
-		background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.05));
+		background: linear-gradient(
+			135deg,
+			rgba(139, 92, 246, 0.1),
+			rgba(139, 92, 246, 0.05)
+		);
 		border-color: rgba(139, 92, 246, 0.2);
 	}
 
@@ -1688,7 +2119,11 @@ const searchIndex = allDoctors
 	.pillar-card {
 		position: relative;
 		padding: 28px;
-		background: linear-gradient(145deg, rgba(30, 30, 50, 0.5), rgba(20, 20, 40, 0.3));
+		background: linear-gradient(
+			145deg,
+			rgba(30, 30, 50, 0.5),
+			rgba(20, 20, 40, 0.3)
+		);
 		border: 1px solid rgba(255, 255, 255, 0.05);
 		border-radius: 20px;
 		overflow: hidden;
@@ -1727,7 +2162,11 @@ const searchIndex = allDoctors
 
 	.audience-card {
 		padding: 28px;
-		background: linear-gradient(145deg, rgba(30, 30, 50, 0.5), rgba(20, 20, 40, 0.3));
+		background: linear-gradient(
+			145deg,
+			rgba(30, 30, 50, 0.5),
+			rgba(20, 20, 40, 0.3)
+		);
 		border: 1px solid rgba(255, 255, 255, 0.05);
 		border-radius: 20px;
 	}

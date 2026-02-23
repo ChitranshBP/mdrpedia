@@ -1,0 +1,130 @@
+{
+    "name": "Adenosine Deaminase Deficiency (ADA Deficiency)",
+    "slug": "adenosine-deaminase-deficiency-ada-deficiency",
+    "aliases": [
+        "ADA-SCID",
+        "Severe Combined Immunodeficiency due to Adenosine Deaminase Deficiency"
+    ],
+    "description": "Adenosine Deaminase Deficiency (ADA Deficiency) is a rare, inherited metabolic disorder that causes severe combined immunodeficiency (SCID). It results from a deficiency of the adenosine deaminase (ADA) enzyme, leading to the accumulation of toxic metabolites that are particularly harmful to lymphocytes. This impairs the development and function of the immune system, making affected individuals highly susceptible to severe and recurrent infections.",
+    "category": "GENETIC",
+    "icdCode": "D81.0",
+    "orphaCode": "85",
+    "omimCode": "102700",
+    "prevalence": "1 in 200,000 to 1 in 1,000,000 live births",
+    "estimatedCases": 50,
+    "ageOfOnset": "Usually within the first few months of life, but can be delayed in some cases.",
+    "inheritance": "AUTOSOMAL_RECESSIVE",
+    "symptoms": [
+        "Severe and recurrent infections (e.g., pneumonia, sepsis)",
+        "Failure to thrive",
+        "Chronic diarrhea",
+        "Skin rashes",
+        "Developmental delay",
+        "Neurological abnormalities (in some cases)",
+        "Skeletal abnormalities (e.g., costochondral thickening)",
+        "Hepatosplenomegaly (enlarged liver and spleen)"
+    ],
+    "affectedSystems": [
+        "Immune System",
+        "Skeletal System",
+        "Nervous System",
+        "Gastrointestinal System"
+    ],
+    "prognosis": "Without treatment, prognosis is very poor, with death typically occurring in infancy or early childhood due to overwhelming infections. With treatment, prognosis can be significantly improved, allowing for immune reconstitution and improved quality of life.",
+    "lifeExpectancy": "Untreated: Infancy to early childhood. Treated: Can live into adulthood with varying degrees of immune function.",
+    "diagnosticMethods": [
+        "Newborn screening (in some regions)",
+        "Measurement of ADA enzyme activity in red blood cells",
+        "Lymphocyte count and function tests",
+        "Genetic testing for mutations in the ADA gene",
+        "Assessment of immune function (e.g., immunoglobulin levels, T-cell subsets)"
+    ],
+    "treatmentOptions": [
+        {
+            "name": "Enzyme Replacement Therapy (ERT) with PEG-ADA",
+            "type": "MEDICATION",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 1990
+        },
+        {
+            "name": "Hematopoietic Stem Cell Transplantation (HSCT)",
+            "type": "GENE_THERAPY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        },
+        {
+            "name": "Gene Therapy",
+            "type": "GENE_THERAPY",
+            "effectiveness": "HIGHLY_EFFECTIVE",
+            "fdaApproved": true,
+            "approvalYear": 2021
+        },
+        {
+            "name": "Supportive Care (e.g., antibiotics, immunoglobulin replacement)",
+            "type": "SUPPORTIVE",
+            "effectiveness": "SUPPORTIVE",
+            "fdaApproved": false,
+            "approvalYear": null
+        }
+    ],
+    "researchStatus": "ACTIVE_TRIALS",
+    "clinicalTrialsCount": 5,
+    "keyResearchCenters": [
+        "National Institutes of Health (NIH)",
+        "Great Ormond Street Hospital (London)",
+        "St. Jude Children's Research Hospital"
+    ],
+    "patientOrganizations": [
+        {
+            "name": "Immune Deficiency Foundation (IDF)",
+            "url": "https://www.primaryimmune.org/",
+            "country": "USA"
+        },
+        {
+            "name": "Genetic and Rare Diseases (GARD) Information Center",
+            "url": "https://rarediseases.info.nih.gov/",
+            "country": "USA"
+        }
+    ],
+    "relatedConditions": [
+        "Severe Combined Immunodeficiency (SCID)",
+        "Purine Nucleoside Phosphorylase (PNP) Deficiency"
+    ],
+    "specialistTypes": [
+        "Immunologist",
+        "Geneticist",
+        "Hematologist",
+        "Pediatrician"
+    ],
+    "eli5Summary": "Imagine your body's army (immune system) is missing some important soldiers because of a broken part. ADA Deficiency is like having that broken part, so your body can't fight off germs very well, and you get sick easily. Doctors can give you medicine or a special transplant to fix it.",
+    "clinicalSummary": "Adenosine Deaminase Deficiency (ADA Deficiency) is an autosomal recessive disorder resulting from mutations in the ADA gene, leading to a deficiency of the ADA enzyme. This deficiency causes the accumulation of deoxyadenosine and deoxy-ATP, which are toxic to lymphocytes, leading to lymphopenia and impaired T, B, and NK cell function. Clinically, patients present with severe combined immunodeficiency (SCID), characterized by recurrent and opportunistic infections, failure to thrive, and potential neurological and skeletal abnormalities. Diagnosis involves enzyme assays, lymphocyte phenotyping, and genetic testing. Treatment options include enzyme replacement therapy (ERT) with PEG-ADA, hematopoietic stem cell transplantation (HSCT), and gene therapy. HSCT and gene therapy offer the potential for immune reconstitution, while ERT provides temporary immune support. Long-term monitoring for immune function and potential complications is essential.",
+    "historicalBackground": "ADA Deficiency was first described in 1972 as a cause of severe combined immunodeficiency. It was one of the first genetic diseases to be treated with gene therapy, marking a significant milestone in the field of genetic medicine.",
+    "recentBreakthroughs": [
+        {
+            "year": 2021,
+            "title": "FDA Approves Gene Therapy for ADA-SCID",
+            "description": "The FDA approved Strimvelis, a gene therapy for ADA-SCID, providing a potentially curative treatment option for affected individuals. This approval marks a significant advancement in the treatment of this rare disease.",
+            "sourceUrl": null
+        }
+    ],
+    "heroImage": null,
+    "diagrams": [],
+    "lastUpdated": "2024-12-01",
+    "reviewedBy": "MDRPedia Medical Team",
+    "sources": [
+        {
+            "name": "Orphanet",
+            "url": "https://www.orpha.net/consor/cgi-bin/index.php"
+        },
+        {
+            "name": "National Institutes of Health (NIH)",
+            "url": "https://www.nih.gov/"
+        },
+        {
+            "name": "Immune Deficiency Foundation (IDF)",
+            "url": "https://www.primaryimmune.org/"
+        }
+    ]
+}
