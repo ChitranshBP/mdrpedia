@@ -184,6 +184,82 @@ export async function getTopDoctors(limit = 10) {
 }
 
 /**
+ * Get featured Titans for homepage display
+ * Returns Titans with valid portrait URLs first, then fills with any Titans
+ */
+export async function getFeaturedTitans(limit = 8) {
+    return cache.getOrFetch(
+        `doctors:featured_titans:${limit}`,
+        async () => {
+            // First get Titans with portrait URLs
+            const titansWithPortrait = await prisma.profile.findMany({
+                where: {
+                    tier: 'TITAN',
+                    AND: [
+                        { portrait_url: { not: null } },
+                        { portrait_url: { not: '' } },
+                        { NOT: { portrait_url: { startsWith: 'data:' } } }
+                    ]
+                },
+                select: {
+                    slug: true,
+                    full_name: true,
+                    specialty: true,
+                    sub_specialty: true,
+                    tier: true,
+                    portrait_url: true,
+                    h_index: true,
+                    geography: {
+                        select: { country: true, city: true }
+                    }
+                },
+                orderBy: [
+                    { ranking_score: 'desc' },
+                    { h_index: 'desc' }
+                ],
+                take: limit
+            });
+
+            // If we have enough, return them
+            if (titansWithPortrait.length >= limit) {
+                return titansWithPortrait.slice(0, limit);
+            }
+
+            // Otherwise, get more Titans without portrait requirement
+            const remainingNeeded = limit - titansWithPortrait.length;
+            const existingSlugs = titansWithPortrait.map(t => t.slug);
+
+            const additionalTitans = await prisma.profile.findMany({
+                where: {
+                    tier: 'TITAN',
+                    slug: { notIn: existingSlugs }
+                },
+                select: {
+                    slug: true,
+                    full_name: true,
+                    specialty: true,
+                    sub_specialty: true,
+                    tier: true,
+                    portrait_url: true,
+                    h_index: true,
+                    geography: {
+                        select: { country: true, city: true }
+                    }
+                },
+                orderBy: [
+                    { ranking_score: 'desc' },
+                    { h_index: 'desc' }
+                ],
+                take: remainingNeeded
+            });
+
+            return [...titansWithPortrait, ...additionalTitans];
+        },
+        CacheTTL.MEDIUM
+    );
+}
+
+/**
  * Invalidate all stats caches (call after data updates)
  */
 export function invalidateStatsCache(): void {

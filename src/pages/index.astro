@@ -3,12 +3,14 @@
  * MDRPedia — Homepage
  * Premium command-palette style search experience
  * Database-first with static fallback
+ * Uses cached stats for consistent data across all pages
  */
 
 import Layout from "../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import { countryToCode } from "../lib/country-flags";
 import { prisma } from "../lib/prisma";
+import { getTierCounts, getCountryStats, getFeaturedTitans } from "../lib/cached-stats";
 
 export const prerender = false;
 
@@ -25,11 +27,39 @@ type DoctorData = {
 	hIndex?: number;
 };
 
+// Type for featured titan from cache
+type FeaturedTitan = {
+	slug: string;
+	full_name: string;
+	specialty: string;
+	sub_specialty: string | null;
+	tier: string;
+	portrait_url: string | null;
+	h_index: number | null;
+	geography: { country: string; city: string | null } | null;
+};
+
 let allDoctors: DoctorData[] = [];
 let dataSource = "database";
 
+// Get cached stats for consistent tier counts across all pages
+let tierCounts = { titan: 0, elite: 0, master: 0, unranked: 0, total: 0 };
+let countriesCount = 0;
+let featuredTitans: FeaturedTitan[] = [];
+
 try {
-	// Fetch from database
+	// Fetch cached stats (single source of truth for all pages)
+	const [cachedTierCounts, countryStats, cachedFeaturedTitans] = await Promise.all([
+		getTierCounts(),
+		getCountryStats(),
+		getFeaturedTitans(8) // Get up to 8 featured titans
+	]);
+
+	tierCounts = cachedTierCounts;
+	countriesCount = countryStats.length;
+	featuredTitans = cachedFeaturedTitans;
+
+	// Fetch doctors for search index
 	const dbDoctors = await prisma.profile.findMany({
 		select: {
 			slug: true,
@@ -78,43 +108,39 @@ try {
 		portraitUrl: d.data.portraitUrl || null,
 		hIndex: (d.data as any).hIndex || undefined,
 	}));
+
+	// Fallback: calculate stats from static data
+	tierCounts = {
+		titan: allDoctors.filter((d) => d.tier === "TITAN").length,
+		elite: allDoctors.filter((d) => d.tier === "ELITE").length,
+		master: allDoctors.filter((d) => d.tier === "MASTER").length,
+		unranked: allDoctors.filter((d) => d.tier === "UNRANKED").length,
+		total: allDoctors.length
+	};
+	const countrySet = new Set(allDoctors.map((d) => d.country));
+	countriesCount = countrySet.size;
+
+	// Fallback: get featured titans from static data
+	featuredTitans = allDoctors
+		.filter((d) => d.tier === "TITAN")
+		.slice(0, 8)
+		.map((d) => ({
+			slug: d.slug,
+			full_name: d.fullName,
+			specialty: d.specialty,
+			sub_specialty: d.subSpecialty || null,
+			tier: d.tier,
+			portrait_url: d.portraitUrl,
+			h_index: d.hIndex || null,
+			geography: { country: d.country, city: d.city || null }
+		}));
 }
 
-const totalCount = allDoctors.length;
-const titanCount = allDoctors.filter((d) => d.tier === "TITAN").length;
-const eliteCount = allDoctors.filter((d) => d.tier === "ELITE").length;
-const masterCount = allDoctors.filter((d) => d.tier === "MASTER").length;
-const countrySet = new Set(allDoctors.map((d) => d.country));
-const countriesCount = countrySet.size;
-
-// Get unique specialties for categories
-const specialtySet = new Set(
-	allDoctors.map((d) => d.specialty).filter(Boolean),
-);
-const topSpecialties = Array.from(specialtySet).slice(0, 8);
-
-// Get top countries
-const countryCounts = allDoctors.reduce(
-	(acc, d) => {
-		acc[d.country] = (acc[d.country] || 0) + 1;
-		return acc;
-	},
-	{} as Record<string, number>,
-);
-const topCountries = Object.entries(countryCounts)
-	.sort((a, b) => b[1] - a[1])
-	.slice(0, 6)
-	.map(([country]) => country);
-
-// Featured titans
-const featuredTitans = allDoctors
-	.filter(
-		(d) =>
-			d.tier === "TITAN" &&
-			d.portraitUrl &&
-			!d.portraitUrl.startsWith("data:"),
-	)
-	.slice(0, 4);
+// Use cached stats for display
+const totalCount = tierCounts.total;
+const titanCount = tierCounts.titan;
+const eliteCount = tierCounts.elite;
+const masterCount = tierCounts.master;
 
 // Build search index
 const searchIndex = allDoctors
@@ -444,50 +470,64 @@ const searchIndex = allDoctors
 						<span>Featured Titans</span>
 					</h2>
 					<div class="featured-grid">
-						{featuredTitans.map((doc) => (
-							<a
-								href={`/doctors/${doc.slug}`}
-								class="featured-card"
-							>
-								<div class="featured-card__avatar">
-									<img
-										src={doc.portraitUrl}
-										alt={doc.fullName}
-										loading="lazy"
-									/>
-									<div class="featured-card__tier">TITAN</div>
-								</div>
-								<div class="featured-card__info">
-									<h3>{doc.fullName}</h3>
-									<p>{doc.specialty}</p>
-									<span class="featured-card__location">
-										{countryToCode(doc.country) && (
-											<span class="flag">
-												{String.fromCodePoint(
-													...countryToCode(
-														doc.country,
-													)
-														.toUpperCase()
-														.split("")
-														.map(
-															(c) =>
-																0x1f1e6 +
-																c.charCodeAt(
-																	0,
-																) -
-																65,
-														),
-												)}
-											</span>
+						{featuredTitans.slice(0, 4).map((doc) => {
+							const docCountry = doc.geography?.country || "Unknown";
+							const countryCode = countryToCode(docCountry);
+							const initials = doc.full_name
+								.split(" ")
+								.map((w: string) => w[0])
+								.filter((_: string, i: number) => i < 2)
+								.join("")
+								.toUpperCase();
+							const hasValidPortrait = doc.portrait_url && !doc.portrait_url.startsWith("data:");
+
+							return (
+								<a
+									href={`/doctors/${doc.slug}`}
+									class="featured-card"
+								>
+									<div class="featured-card__avatar">
+										{hasValidPortrait ? (
+											<img
+												src={doc.portrait_url}
+												alt={doc.full_name}
+												loading="lazy"
+											/>
+										) : (
+											<span class="featured-card__initials">{initials}</span>
 										)}
-										{doc.country}
-									</span>
-								</div>
-							</a>
-						))}
+										<div class="featured-card__tier">TITAN</div>
+									</div>
+									<div class="featured-card__info">
+										<h3>{doc.full_name}</h3>
+										<p>{doc.specialty}</p>
+										<span class="featured-card__location">
+											{countryCode && (
+												<span class="flag">
+													{String.fromCodePoint(
+														...countryCode
+															.toUpperCase()
+															.split("")
+															.map(
+																(c) =>
+																	0x1f1e6 +
+																	c.charCodeAt(
+																		0,
+																	) -
+																	65,
+															),
+													)}
+												</span>
+											)}
+											{docCountry}
+										</span>
+									</div>
+								</a>
+							);
+						})}
 					</div>
 					<a href="/doctors?tier=TITAN" class="view-more-link">
-						View all Titan profiles
+						View all {titanCount} Titan profiles
 						<svg
 							viewBox="0 0 24 24"
 							fill="none"
@@ -1946,6 +1986,13 @@ const searchIndex = allDoctors
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+	}
+
+	.featured-card__initials {
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: #ffd700;
+		text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
 	}
 
 	.featured-card__tier {

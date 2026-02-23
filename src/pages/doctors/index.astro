@@ -3,6 +3,7 @@
  * MDRPedia — Browse All Doctors
  * Searchable grid of all verified doctor profiles
  * Database-first with static fallback
+ * Uses cached stats for consistent data across all pages
  */
 import Layout from "../../layouts/Layout.astro";
 import TierBadge from "../../components/TierBadge.astro";
@@ -10,6 +11,7 @@ import OptimizedImage from "../../components/OptimizedImage.astro";
 import EnhancedSearch from "../../components/EnhancedSearch";
 import { getCollection } from "astro:content";
 import { prisma } from "../../lib/prisma";
+import { getTierCounts } from "../../lib/cached-stats";
 
 export const prerender = false;
 
@@ -145,10 +147,25 @@ try {
     specialties = Array.from(new Set(sortedDoctors.map(d => d.specialty).filter(Boolean))).sort();
 }
 
-// Stats
-const titanCount = sortedDoctors.filter(d => d.tier === "TITAN").length;
-const eliteCount = sortedDoctors.filter(d => d.tier === "ELITE").length;
-const masterCount = sortedDoctors.filter(d => d.tier === "MASTER").length;
+// Get cached stats for consistent tier counts across all pages (single source of truth)
+let tierCounts = { titan: 0, elite: 0, master: 0, unranked: 0, total: 0 };
+try {
+    tierCounts = await getTierCounts();
+} catch (e) {
+    // Fallback: calculate from local data
+    tierCounts = {
+        titan: sortedDoctors.filter(d => d.tier === "TITAN").length,
+        elite: sortedDoctors.filter(d => d.tier === "ELITE").length,
+        master: sortedDoctors.filter(d => d.tier === "MASTER").length,
+        unranked: sortedDoctors.filter(d => d.tier === "UNRANKED").length,
+        total: sortedDoctors.length
+    };
+}
+
+// Use cached stats for display
+const titanCount = tierCounts.titan;
+const eliteCount = tierCounts.elite;
+const masterCount = tierCounts.master;
 ---
 
 <Layout title="Browse All Doctors — MDRPedia">
