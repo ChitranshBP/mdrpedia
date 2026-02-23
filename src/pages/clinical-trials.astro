@@ -1,0 +1,954 @@
+---
+/**
+ * MDRPedia — Clinical Trials & Drug Development Tracker
+ * Real-time updates on vaccines, treatments, and breakthrough therapies
+ */
+export const prerender = true;
+
+import Layout from "../layouts/Layout.astro";
+import trialsData from "../content/trials/index.json";
+
+const { companies, categories, lastUpdated } = trialsData;
+
+// Count totals
+const totalTrials = companies.reduce((acc, c) => acc + c.trials.length, 0);
+const activePhase3 = companies.reduce((acc, c) =>
+    acc + c.trials.filter(t => t.phase.includes('Phase 3')).length, 0);
+const totalEnrollment = companies.reduce((acc, c) =>
+    acc + c.trials.reduce((sum, t) => sum + (t.enrollment || 0), 0), 0);
+
+// Get status color
+function getStatusColor(status: string): string {
+    switch (status.toLowerCase()) {
+        case 'active': return '#10b981';
+        case 'completed': return '#3b82f6';
+        case 'recruiting': return '#f59e0b';
+        case 'suspended': return '#ef4444';
+        default: return '#94a3b8';
+    }
+}
+
+// Get phase color
+function getPhaseColor(phase: string): string {
+    if (phase.includes('4') || phase.includes('Post')) return '#8b5cf6';
+    if (phase.includes('3')) return '#10b981';
+    if (phase.includes('2')) return '#3b82f6';
+    if (phase.includes('1')) return '#f59e0b';
+    return '#94a3b8';
+}
+
+// Format date
+function formatDate(dateStr: string): string {
+    return new Date(dateStr).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+}
+---
+
+<Layout title="Clinical Trials & Drug Development — MDRPedia" description="Track the latest clinical trials, vaccine development, and breakthrough treatments from leading pharmaceutical companies worldwide.">
+    <div class="trials-page">
+        <!-- Hero -->
+        <header class="trials-hero">
+            <div class="container">
+                <div class="hero-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                    Live Clinical Trial Updates
+                </div>
+                <h1>Clinical Trials & Drug Development</h1>
+                <p class="hero-tagline">
+                    Track breakthrough vaccines, treatments, and therapies from the world's leading pharmaceutical companies.
+                    Updated with the latest trial results and regulatory milestones.
+                </p>
+
+                <!-- Stats -->
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-value">{totalTrials}</span>
+                        <span class="stat-label">Active Trials</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <span class="stat-value">{activePhase3}</span>
+                        <span class="stat-label">Phase 3 Studies</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <span class="stat-value">{(totalEnrollment / 1000).toFixed(0)}K+</span>
+                        <span class="stat-label">Patients Enrolled</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <span class="stat-value">{companies.length}</span>
+                        <span class="stat-label">Companies Tracked</span>
+                    </div>
+                </div>
+
+                <p class="last-updated">Last updated: {formatDate(lastUpdated)}</p>
+            </div>
+        </header>
+
+        <!-- Category Filter -->
+        <nav class="category-nav">
+            <div class="container">
+                <div class="category-pills">
+                    <button class="category-pill active" data-category="all">
+                        All Trials
+                    </button>
+                    {categories.map(cat => (
+                        <button class="category-pill" data-category={cat.id}>
+                            <span class="cat-icon">{cat.icon}</span>
+                            {cat.name}
+                        </button>
+                    ))}
+                </div>
+            </div>
+        </nav>
+
+        <!-- Companies & Trials -->
+        <main class="trials-content">
+            <div class="container">
+                {companies.map(company => (
+                    <section class="company-section" id={company.id}>
+                        <div class="company-header">
+                            <div class="company-info">
+                                <div class="company-logo">
+                                    <img src={company.logo} alt={company.name} onerror="this.style.display='none'" />
+                                </div>
+                                <div class="company-details">
+                                    <h2>{company.name}</h2>
+                                    <div class="company-meta">
+                                        <span class="meta-item">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                                <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            </svg>
+                                            {company.headquarters}
+                                        </span>
+                                        <span class="meta-item">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                            {company.marketCap}
+                                        </span>
+                                        <span class="meta-item">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                                            </svg>
+                                            {company.trials.length} Active Trials
+                                        </span>
+                                    </div>
+                                    <div class="company-focus">
+                                        {company.focus.map(f => <span class="focus-tag">{f}</span>)}
+                                    </div>
+                                </div>
+                            </div>
+                            <a href={company.website} target="_blank" rel="noopener" class="company-link">
+                                Visit Website
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                </svg>
+                            </a>
+                        </div>
+
+                        <div class="trials-grid">
+                            {company.trials.map(trial => (
+                                <article class="trial-card" data-category={trial.category}>
+                                    <div class="trial-header">
+                                        <div class="trial-badges">
+                                            <span class="phase-badge" style={`background: ${getPhaseColor(trial.phase)}20; color: ${getPhaseColor(trial.phase)}`}>
+                                                {trial.phase}
+                                            </span>
+                                            <span class="status-badge" style={`background: ${getStatusColor(trial.status)}20; color: ${getStatusColor(trial.status)}`}>
+                                                <span class="status-dot" style={`background: ${getStatusColor(trial.status)}`}></span>
+                                                {trial.status}
+                                            </span>
+                                        </div>
+                                        <span class="trial-category">
+                                            {categories.find(c => c.id === trial.category)?.icon}
+                                        </span>
+                                    </div>
+
+                                    <h3 class="trial-name">{trial.name}</h3>
+                                    <p class="trial-indication">{trial.indication}</p>
+                                    <p class="trial-description">{trial.description}</p>
+
+                                    <!-- Latest Update -->
+                                    {trial.latestUpdate && (
+                                        <div class="latest-update">
+                                            <div class="update-header">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                                </svg>
+                                                Latest Update
+                                                <span class="update-date">{formatDate(trial.latestUpdate.date)}</span>
+                                            </div>
+                                            <p class="update-summary">{trial.latestUpdate.summary}</p>
+                                        </div>
+                                    )}
+
+                                    <!-- Trial Stats -->
+                                    <div class="trial-stats">
+                                        <div class="trial-stat">
+                                            <span class="stat-icon">👥</span>
+                                            <div>
+                                                <span class="stat-value">{trial.enrollment.toLocaleString()}</span>
+                                                <span class="stat-label">Enrolled</span>
+                                            </div>
+                                        </div>
+                                        <div class="trial-stat">
+                                            <span class="stat-icon">🏥</span>
+                                            <div>
+                                                <span class="stat-value">{trial.sites}</span>
+                                                <span class="stat-label">Sites</span>
+                                            </div>
+                                        </div>
+                                        <div class="trial-stat">
+                                            <span class="stat-icon">🌍</span>
+                                            <div>
+                                                <span class="stat-value">{trial.countries.length}</span>
+                                                <span class="stat-label">Countries</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Timeline -->
+                                    <div class="trial-timeline">
+                                        <div class="timeline-item">
+                                            <span class="timeline-label">Started</span>
+                                            <span class="timeline-value">{trial.startDate}</span>
+                                        </div>
+                                        <div class="timeline-progress">
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" style={`width: ${Math.min(100, ((new Date().getTime() - new Date(trial.startDate).getTime()) / (new Date(trial.estimatedCompletion).getTime() - new Date(trial.startDate).getTime())) * 100)}%`}></div>
+                                            </div>
+                                        </div>
+                                        <div class="timeline-item">
+                                            <span class="timeline-label">Est. Completion</span>
+                                            <span class="timeline-value">{trial.estimatedCompletion}</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Lead Investigators -->
+                                    {trial.leadInvestigators && trial.leadInvestigators.length > 0 && (
+                                        <div class="investigators">
+                                            <h4>Lead Investigators</h4>
+                                            <div class="investigator-list">
+                                                {trial.leadInvestigators.map(inv => (
+                                                    <div class="investigator">
+                                                        {inv.mdrpediaSlug ? (
+                                                            <a href={`/doctors/${inv.mdrpediaSlug}`} class="investigator-link">
+                                                                <span class="inv-name">{inv.name}</span>
+                                                                <span class="inv-role">{inv.role}</span>
+                                                                <span class="view-profile">View Profile →</span>
+                                                            </a>
+                                                        ) : (
+                                                            <div class="investigator-info">
+                                                                <span class="inv-name">{inv.name}</span>
+                                                                <span class="inv-role">{inv.role}</span>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    <!-- Countries -->
+                                    <div class="trial-countries">
+                                        <span class="countries-label">Trial Locations:</span>
+                                        <span class="countries-list">{trial.countries.join(' • ')}</span>
+                                    </div>
+                                </article>
+                            ))}
+                        </div>
+                    </section>
+                ))}
+            </div>
+        </main>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <h2>Are You a Clinical Trial Investigator?</h2>
+                <p>Claim your MDRPedia profile to highlight your research contributions and connect with the global medical community.</p>
+                <a href="/doctor/claim" class="cta-button">Claim Your Profile</a>
+            </div>
+        </section>
+    </div>
+</Layout>
+
+<script>
+    // Category filtering
+    const pills = document.querySelectorAll('.category-pill');
+    const cards = document.querySelectorAll('.trial-card');
+
+    pills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            const category = pill.dataset.category;
+
+            // Update active pill
+            pills.forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+
+            // Filter cards
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    (card as HTMLElement).style.display = '';
+                } else {
+                    (card as HTMLElement).style.display = 'none';
+                }
+            });
+
+            // Show/hide empty company sections
+            document.querySelectorAll('.company-section').forEach(section => {
+                const visibleCards = section.querySelectorAll('.trial-card:not([style*="display: none"])');
+                (section as HTMLElement).style.display = visibleCards.length > 0 ? '' : 'none';
+            });
+        });
+    });
+</script>
+
+<style>
+    .trials-page {
+        min-height: 100vh;
+        background: var(--bg-primary);
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+
+    /* Hero */
+    .trials-hero {
+        padding: 80px 0 60px;
+        text-align: center;
+        background: linear-gradient(180deg, rgba(139, 92, 246, 0.08) 0%, transparent 100%);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        border-radius: 100px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #10b981;
+        margin-bottom: 24px;
+    }
+
+    .hero-badge svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .trials-hero h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        color: white;
+        margin-bottom: 16px;
+        letter-spacing: -0.02em;
+    }
+
+    .hero-tagline {
+        font-size: 1.15rem;
+        color: var(--text-secondary);
+        max-width: 700px;
+        margin: 0 auto 40px;
+        line-height: 1.7;
+    }
+
+    .hero-stats {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 32px;
+        padding: 24px 40px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 20px;
+        margin-bottom: 24px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-stats .stat {
+        text-align: center;
+    }
+
+    .hero-stats .stat-value {
+        display: block;
+        font-size: 2rem;
+        font-weight: 800;
+        color: white;
+        letter-spacing: -0.02em;
+    }
+
+    .hero-stats .stat-label {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .stat-divider {
+        width: 1px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .last-updated {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+    }
+
+    /* Category Nav */
+    .category-nav {
+        position: sticky;
+        top: 60px;
+        z-index: 50;
+        padding: 16px 0;
+        background: rgba(10, 10, 20, 0.95);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .category-pills {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        scrollbar-width: none;
+    }
+
+    .category-pills::-webkit-scrollbar {
+        display: none;
+    }
+
+    .category-pill {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 18px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 100px;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: all 0.2s;
+    }
+
+    .category-pill:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: white;
+    }
+
+    .category-pill.active {
+        background: rgba(139, 92, 246, 0.2);
+        border-color: rgba(139, 92, 246, 0.4);
+        color: #a78bfa;
+    }
+
+    .cat-icon {
+        font-size: 1rem;
+    }
+
+    /* Content */
+    .trials-content {
+        padding: 60px 0;
+    }
+
+    /* Company Section */
+    .company-section {
+        margin-bottom: 80px;
+    }
+
+    .company-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 24px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 20px;
+        margin-bottom: 24px;
+    }
+
+    .company-info {
+        display: flex;
+        gap: 20px;
+    }
+
+    .company-logo {
+        width: 64px;
+        height: 64px;
+        background: white;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .company-logo img {
+        width: 48px;
+        height: 48px;
+        object-fit: contain;
+    }
+
+    .company-details h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 8px;
+    }
+
+    .company-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-bottom: 12px;
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+    }
+
+    .meta-item svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .company-focus {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .focus-tag {
+        padding: 4px 12px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        background: rgba(139, 92, 246, 0.1);
+        color: #a78bfa;
+        border-radius: 100px;
+    }
+
+    .company-link {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 18px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+    .company-link:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: white;
+    }
+
+    .company-link svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    /* Trials Grid */
+    .trials-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+        gap: 24px;
+    }
+
+    /* Trial Card */
+    .trial-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 20px;
+        padding: 24px;
+        transition: all 0.3s;
+    }
+
+    .trial-card:hover {
+        background: rgba(255, 255, 255, 0.04);
+        border-color: rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .trial-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 16px;
+    }
+
+    .trial-badges {
+        display: flex;
+        gap: 8px;
+    }
+
+    .phase-badge, .status-badge {
+        padding: 4px 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        border-radius: 100px;
+    }
+
+    .status-badge {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+
+    .trial-category {
+        font-size: 1.5rem;
+    }
+
+    .trial-name {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 8px;
+        line-height: 1.4;
+    }
+
+    .trial-indication {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #a78bfa;
+        margin-bottom: 12px;
+    }
+
+    .trial-description {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    /* Latest Update */
+    .latest-update {
+        background: rgba(16, 185, 129, 0.08);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 20px;
+    }
+
+    .update-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #10b981;
+        margin-bottom: 8px;
+    }
+
+    .update-header svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .update-date {
+        margin-left: auto;
+        font-weight: 400;
+        color: rgba(16, 185, 129, 0.7);
+    }
+
+    .update-summary {
+        font-size: 0.9rem;
+        color: var(--text-primary);
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    /* Trial Stats */
+    .trial-stats {
+        display: flex;
+        gap: 24px;
+        padding: 16px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        margin-bottom: 16px;
+    }
+
+    .trial-stat {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .stat-icon {
+        font-size: 1.25rem;
+    }
+
+    .trial-stat .stat-value {
+        display: block;
+        font-size: 1rem;
+        font-weight: 700;
+        color: white;
+    }
+
+    .trial-stat .stat-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+    }
+
+    /* Timeline */
+    .trial-timeline {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .timeline-item {
+        text-align: center;
+    }
+
+    .timeline-label {
+        display: block;
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .timeline-value {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+
+    .timeline-progress {
+        flex: 1;
+    }
+
+    .progress-bar {
+        height: 6px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #8b5cf6, #10b981);
+        border-radius: 3px;
+        transition: width 0.5s ease;
+    }
+
+    /* Investigators */
+    .investigators {
+        margin-bottom: 16px;
+    }
+
+    .investigators h4 {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 12px;
+    }
+
+    .investigator-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .investigator {
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 10px;
+    }
+
+    .investigator-link {
+        display: block;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+    .investigator-link:hover {
+        transform: translateX(4px);
+    }
+
+    .investigator-info {
+        display: block;
+    }
+
+    .inv-name {
+        display: block;
+        font-weight: 600;
+        color: white;
+        margin-bottom: 2px;
+    }
+
+    .inv-role {
+        display: block;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+    }
+
+    .view-profile {
+        display: block;
+        font-size: 0.8rem;
+        color: #8b5cf6;
+        margin-top: 6px;
+    }
+
+    /* Countries */
+    .trial-countries {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+
+    .countries-label {
+        font-weight: 500;
+    }
+
+    .countries-list {
+        margin-left: 4px;
+        color: var(--text-secondary);
+    }
+
+    /* CTA Section */
+    .cta-section {
+        padding: 80px 0;
+        text-align: center;
+        background: linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.08) 100%);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .cta-section h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 12px;
+    }
+
+    .cta-section p {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        max-width: 600px;
+        margin: 0 auto 32px;
+    }
+
+    .cta-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 16px 32px;
+        font-size: 1rem;
+        font-weight: 600;
+        color: white;
+        background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        border-radius: 12px;
+        text-decoration: none;
+        transition: all 0.3s;
+        box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+    }
+
+    .cta-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+        .trials-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .company-header {
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .company-link {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .hero-stats {
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .stat-divider {
+            display: none;
+        }
+
+        .trials-hero h1 {
+            font-size: 2rem;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .company-info {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .company-meta {
+            justify-content: center;
+        }
+
+        .company-focus {
+            justify-content: center;
+        }
+
+        .trial-stats {
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .trial-timeline {
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .timeline-progress {
+            width: 100%;
+        }
+    }
+</style>

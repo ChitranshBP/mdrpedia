@@ -1,0 +1,784 @@
+{
+  "lastUpdated": "2026-02-23",
+  "categories": [
+    {
+      "id": "vaccines",
+      "name": "Vaccines & Immunization",
+      "icon": "💉",
+      "description": "Next-generation vaccine platforms and novel immunization strategies"
+    },
+    {
+      "id": "oncology",
+      "name": "Oncology & Cancer Treatment",
+      "icon": "🎗️",
+      "description": "Breakthrough cancer therapies including CAR-T, checkpoint inhibitors, and targeted treatments"
+    },
+    {
+      "id": "neurology",
+      "name": "Neurology & Brain Health",
+      "icon": "🧠",
+      "description": "Treatments for Alzheimer's, Parkinson's, and other neurological conditions"
+    },
+    {
+      "id": "rare-diseases",
+      "name": "Rare & Orphan Diseases",
+      "icon": "🧬",
+      "description": "Gene therapies and treatments for rare genetic conditions"
+    },
+    {
+      "id": "infectious",
+      "name": "Infectious Diseases",
+      "icon": "🦠",
+      "description": "Antivirals, antibiotics, and treatments for emerging pathogens"
+    }
+  ],
+  "companies": [
+    {
+      "id": "moderna",
+      "name": "Moderna",
+      "logo": "https://logo.clearbit.com/modernatx.com",
+      "headquarters": "Cambridge, MA, USA",
+      "founded": 2010,
+      "focus": ["mRNA therapeutics", "Vaccines", "Oncology"],
+      "marketCap": "$45.2B",
+      "website": "https://www.modernatx.com",
+      "trials": [
+        {
+          "id": "mrna-1283",
+          "name": "mRNA-1283 Next-Gen COVID-19 Vaccine",
+          "phase": "Phase 3",
+          "status": "Active",
+          "category": "vaccines",
+          "indication": "COVID-19 Prevention (Omicron-specific)",
+          "enrollment": 25000,
+          "startDate": "2025-03",
+          "estimatedCompletion": "2026-09",
+          "description": "Next-generation mRNA vaccine targeting multiple Omicron subvariants with improved durability and broader protection.",
+          "primaryEndpoints": ["Neutralizing antibody response", "Vaccine efficacy against symptomatic infection"],
+          "latestUpdate": {
+            "date": "2026-02-15",
+            "summary": "Interim analysis shows 78% efficacy against symptomatic infection. Strong T-cell responses observed across age groups."
+          },
+          "leadInvestigators": [
+            {
+              "name": "Dr. Jacqueline Miller",
+              "role": "Senior VP, Infectious Disease Development",
+              "mdrpediaSlug": null
+            }
+          ],
+          "sites": 180,
+          "countries": ["USA", "UK", "Germany", "Japan", "Brazil"]
+        },
+        {
+          "id": "mrna-4157",
+          "name": "mRNA-4157/V940 (Personalized Cancer Vaccine)",
+          "phase": "Phase 3",
+          "status": "Active",
+          "category": "oncology",
+          "indication": "Melanoma (adjuvant treatment)",
+          "enrollment": 1089,
+          "startDate": "2023-07",
+          "estimatedCompletion": "2029-12",
+          "description": "Individualized neoantigen therapy in combination with Keytruda for high-risk melanoma patients post-surgery.",
+          "primaryEndpoints": ["Recurrence-free survival", "Overall survival"],
+          "latestUpdate": {
+            "date": "2026-02-10",
+            "summary": "Phase 2b results showed 44% reduction in recurrence/death risk vs Keytruda alone. FDA granted Breakthrough Therapy designation."
+          },
+          "leadInvestigators": [
+            {
+              "name": "Dr. Jeffrey Weber",
+              "role": "Deputy Director, Perlmutter Cancer Center, NYU",
+              "mdrpediaSlug": null
+            }
+          ],
+          "sites": 165,
+          "countries": ["USA", "Australia", "UK", "Germany", "France"]
+        },
+        {
+          "id": "mrna-3927",
+          "name": "mRNA-3927 (Propionic Acidemia Gene Therapy)",
+          "phase": "Phase 1/2",
+          "status": "Active",
+          "category": "rare-diseases",
+          "indication": "Propionic Acidemia",
+          "enrollment": 24,
+          "startDate": "2024-01",
+          "estimatedCompletion": "2027-06",
+          "description": "mRNA therapy encoding PCCA and PCCB enzymes for this life-threatening metabolic disorder.",
+          "primaryEndpoints": ["Safety", "Reduction in metabolic decompensation events"],
+          "latestUpdate": {
+            "date": "2026-01-28",
+            "summary": "All 12 patients in dose-escalation phase showed reduced plasma biomarkers. No serious adverse events reported."
+          },
+          "leadInvestigators": [],
+          "sites": 8,
+          "countries": ["USA", "UK"]
+        }
+      ]
+    },
+    {
+      "id": "pfizer",
+      "name": "Pfizer",
+      "logo": "https://logo.clearbit.com/pfizer.com",
+      "headquarters": "New York, NY, USA",
+      "founded": 1849,
+      "focus": ["Vaccines", "Oncology", "Rare Diseases", "Immunology"],
+      "marketCap": "$158.7B",
+      "website": "https://www.pfizer.com",
+      "trials": [
+        {
+          "id": "pf-07304814",
+          "name": "PF-07304814 (Universal Coronavirus Vaccine)",
+          "phase": "Phase 2",
+          "status": "Active",
+          "category": "vaccines",
+          "indication": "Pan-coronavirus protection",
+          "enrollment": 4500,
+          "startDate": "2025-06",
+          "estimatedCompletion": "2027-03",
+          "description": "Novel vaccine targeting conserved regions of coronaviruses to provide broad protection against future variants and related viruses.",
+          "primaryEndpoints": ["Cross-reactive antibody response", "T-cell immunity breadth"],
+          "latestUpdate": {
+            "date": "2026-02-18",
+            "summary": "Phase 1 data demonstrated robust cross-neutralizing antibodies against SARS-CoV-1, SARS-CoV-2 variants, and MERS-CoV."
+          },
+          "leadInvestigators": [
+            {
+              "name": "Dr. Kathrin Jansen",
+              "role": "Former Head of Vaccine R&D",
+              "mdrpediaSlug": null
+            }
+          ],
+          "sites": 95,
+          "countries": ["USA", "Germany", "South Africa", "Singapore"]
+        },
+        {
+          "id": "pf-06939926",
+          "name": "Fordadistrogene Movaparvovec (DMD Gene Therapy)",
+          "phase": "Phase 3",
+          "status": "Active",
+          "category": "rare-diseases",
+          "indication": "Duchenne Muscular Dystrophy",
+          "enrollment": 99,
+          "startDate": "2022-06",
+          "estimatedCompletion": "2026-12",
+          "description": "AAV-based gene therapy delivering micro-dystrophin for ambulatory boys with DMD aged 4-7.",
+          "primaryEndpoints": ["North Star Ambulatory Assessment change", "Micro-dystrophin expression"],
+          "latestUpdate": {
+            "date": "2026-02-05",
+            "summary": "52-week data shows significant improvement in muscle function. BLA submission expected Q3 2026."
+          },
+          "leadInvestigators": [
+            {
+              "name": "Dr. Jerry Mendell",
+              "role": "Director, Center for Gene Therapy, Nationwide Children's",
+              "mdrpediaSlug": null
+            }
+          ],
+          "sites": 35,
+          "countries": ["USA", "UK", "Italy", "Spain"]
+        },
+        {
+          "id": "sasanlimab",
+          "name": "Sasanlimab (Anti-PD-1) + Elranatamab Combo",
+          "phase": "Phase 3",
+          "status": "Active",
+          "category": "oncology",
+          "indication": "Relapsed/Refractory Multiple Myeloma",
+          "enrollment": 750,
+          "startDate": "2024-09",
+          "estimatedCompletion": "2028-06",
+          "description": "Combination of subcutaneous PD-1 inhibitor with BCMA-CD3 bispecific antibody for heavily pretreated myeloma.",
+          "primaryEndpoints": ["Progression-free survival", "Overall response rate"],
+          "latestUpdate": {
+            "date": "2026-01-30",
+            "summary": "Early cohort shows 68% overall response rate with manageable safety profile. Enrollment ahead of schedule."
+          },
+          "leadInvestigators": [],
+          "sites": 120,
+          "countries": ["USA", "Japan", "Germany", "France", "Australia"]
+        }
+      ]
+    },
+    {
+      "id": "biontech",
+      "name": "BioNTech",
+      "logo": "https://logo.clearbit.com/biontech.de",
+      "headquarters": "Mainz, Germany",
+      "founded": 2008,
+      "focus": ["mRNA therapeutics", "Cancer immunotherapy", "Infectious diseases"],
+      "marketCap": "$28.4B",
+      "website": "https://www.biontech.de",
+      "trials": [
+        {
+          "id": "bnt162b4",
+          "name": "BNT162b4 (T-Cell Boosting COVID Vaccine)",
+          "phase": "Phase 2",
+          "status": "Active",
+          "category": "vaccines",
+          "indication": "COVID-19 (Enhanced T-cell response)",
+          "enrollment": 1800,
+          "startDate": "2025-08",
+          "estimatedCompletion": "2026-11",
+          "description": "Novel vaccine component designed to enhance T-cell immunity for longer-lasting protection regardless of variants.",
+          "primaryEndpoints": ["T-cell response magnitude", "Duration of cellular immunity"],
+          "latestUpdate": {
+            "date": "2026-02-12",
+            "summary": "Phase 1 showed 4-fold increase in virus-specific T-cells persisting at 6 months. Moving to expanded Phase 2."
+          },
+          "leadInvestigators": [
+            {
+              "name": "Dr. Ugur Sahin",
+              "role": "CEO & Co-founder, BioNTech",
+              "mdrpediaSlug": null
+            },
+            {
+              "name": "Dr. Özlem Türeci",
+              "role": "CMO & Co-founder, BioNTech",
+              "mdrpediaSlug": null
+            }
+          ],
+          "sites": 45,
+          "countries": ["Germany", "USA", "UK"]
+        },
+        {
+          "id": "bnt211",
+          "name": "BNT211 (CAR-T + mRNA Vaccine for Solid Tumors)",
+          "phase": "Phase 1/2",
+          "status": "Active",
+          "category": "oncology",
+          "indication": "Claudin-6 positive solid tumors",
+          "enrollment": 180,
+          "startDate": "2023-03",
+          "estimatedCompletion": "2027-09",
+          "description": "First-in-class combination of CAR-T cells with mRNA vaccine boosting targeting Claudin-6 in ovarian, testicular, and lung cancers.",
+          "primaryEndpoints": ["Overall response rate", "CAR-T cell persistence"],
+          "latestUpdate": {
+            "date": "2026-02-01",
+            "summary": "59% objective response rate in evaluable patients. Complete responses seen in 3 ovarian cancer patients."
+          },
+          "leadInvestigators": [],
+          "sites": 22,
+          "countries": ["Germany", "USA", "Spain"]
+        },
+        {
+          "id": "bnt141",
+          "name": "BNT141 (mRNA Cancer Immunotherapy)",
+          "phase": "Phase 1",
+          "status": "Active",
+          "category": "oncology",
+          "indication": "CLDN18.2+ Gastric Cancer",
+          "enrollment": 90,
+          "startDate": "2025-01",
+          "estimatedCompletion": "2027-06",
+          "description": "Intravenously administered mRNA encoding a secreted antibody targeting Claudin 18.2.",
+          "primaryEndpoints": ["Safety", "Antibody expression levels", "Tumor response"],
+          "latestUpdate": {
+            "date": "2026-01-15",
+            "summary": "Dose escalation ongoing. Therapeutic antibody levels detected in all patients at higher dose levels."
+          },
+          "leadInvestigators": [],
+          "sites": 15,
+          "countries": ["Germany", "Spain", "USA"]
+        }
+      ]
+    },
+    {
+      "id": "novartis",
+      "name": "Novartis",
+      "logo": "https://logo.clearbit.com/novartis.com",
+      "headquarters": "Basel, Switzerland",
+      "founded": 1996,
+      "focus": ["Oncology", "Cardiovascular", "Immunology", "Neuroscience"],
+      "marketCap": "$212.5B",
+      "website": "https://www.novartis.com",
+      "trials": [
+        {
+          "id": "kymriah-all",
+          "name": "Kymriah (Tisagenlecleucel) in Pediatric ALL",
+          "phase": "Phase 4 (Post-Marketing)",
+          "status": "Active",
+          "category": "oncology",
+          "indication": "Pediatric B-cell ALL (Expanded Age Range)",
+          "enrollment": 350,
+          "startDate": "2024-06",
+          "estimatedCompletion": "2028-12",
+          "description": "Real-world study evaluating CAR-T therapy in broader pediatric population including infants.",
+          "primaryEndpoints": ["Complete remission rate", "Event-free survival", "Long-term safety"],
+          "latestUpdate": {
+            "date": "2026-02-08",
+            "summary": "92% complete remission rate maintained. FDA approved expanded indication down to age 1 month."
+          },
+          "leadInvestigators": [
+            {
+              "name": "Dr. Carl June",
+              "role": "Director, Center for Cellular Immunotherapies, UPenn",
+              "mdrpediaSlug": "carl-june"
+            }
+          ],
+          "sites": 80,
+          "countries": ["USA", "Germany", "Japan", "UK", "France"]
+        },
+        {
+          "id": "pluvicto-combo",
+          "name": "Pluvicto + Checkpoint Inhibitor Combination",
+          "phase": "Phase 3",
+          "status": "Active",
+          "category": "oncology",
+          "indication": "Metastatic Castration-Resistant Prostate Cancer",
+          "enrollment": 1200,
+          "startDate": "2025-02",
+          "estimatedCompletion": "2028-06",
+          "description": "Radioligand therapy combined with pembrolizumab for enhanced tumor killing.",
+          "primaryEndpoints": ["Overall survival", "Radiographic progression-free survival"],
+          "latestUpdate": {
+            "date": "2026-02-20",
+            "summary": "Interim analysis triggered early. Results expected Q2 2026 with potential accelerated approval pathway."
+          },
+          "leadInvestigators": [],
+          "sites": 200,
+          "countries": ["USA", "Germany", "France", "Australia", "Canada"]
+        },
+        {
+          "id": "iptacopan",
+          "name": "Iptacopan (Factor B Inhibitor)",
+          "phase": "Phase 3",
+          "status": "Active",
+          "category": "rare-diseases",
+          "indication": "C3 Glomerulopathy",
+          "enrollment": 98,
+          "startDate": "2024-03",
+          "estimatedCompletion": "2026-09",
+          "description": "Oral Factor B inhibitor for complement-mediated kidney disease.",
+          "primaryEndpoints": ["Proteinuria reduction", "eGFR stabilization"],
+          "latestUpdate": {
+            "date": "2026-01-25",
+            "summary": "66% of patients achieved >50% proteinuria reduction. BLA under FDA review with PDUFA date August 2026."
+          },
+          "leadInvestigators": [],
+          "sites": 45,
+          "countries": ["USA", "UK", "Germany", "Netherlands"]
+        }
+      ]
+    },
+    {
+      "id": "regeneron",
+      "name": "Regeneron",
+      "logo": "https://logo.clearbit.com/regeneron.com",
+      "headquarters": "Tarrytown, NY, USA",
+      "founded": 1988,
+      "focus": ["Immunology", "Oncology", "Ophthalmology", "Rare Diseases"],
+      "marketCap": "$95.8B",
+      "website": "https://www.regeneron.com",
+      "trials": [
+        {
+          "id": "regn5458",
+          "name": "REGN5458 (BCMAxCD3 Bispecific)",
+          "phase": "Phase 3",
+          "status": "Active",
+          "category": "oncology",
+          "indication": "Relapsed/Refractory Multiple Myeloma",
+          "enrollment": 500,
+          "startDate": "2024-05",
+          "estimatedCompletion": "2027-11",
+          "description": "Bispecific antibody redirecting T-cells to BCMA-expressing myeloma cells.",
+          "primaryEndpoints": ["Overall survival", "Complete response rate"],
+          "latestUpdate": {
+            "date": "2026-02-14",
+            "summary": "Phase 2 showed 63% overall response rate. Registrational Phase 3 fully enrolled ahead of schedule."
+          },
+          "leadInvestigators": [],
+          "sites": 85,
+          "countries": ["USA", "France", "Spain", "Italy", "Japan"]
+        },
+        {
+          "id": "regn-rsa",
+          "name": "Pozelimab + Cemdisiran (C5 Inhibition)",
+          "phase": "Phase 3",
+          "status": "Active",
+          "category": "rare-diseases",
+          "indication": "Generalized Myasthenia Gravis",
+          "enrollment": 235,
+          "startDate": "2024-08",
+          "estimatedCompletion": "2026-12",
+          "description": "Dual complement inhibition approach combining antibody and siRNA therapy.",
+          "primaryEndpoints": ["MG-ADL score improvement", "Complete stable remission rate"],
+          "latestUpdate": {
+            "date": "2026-02-06",
+            "summary": "Primary endpoint met with 4.2 point improvement vs placebo. Filing expected H2 2026."
+          },
+          "leadInvestigators": [],
+          "sites": 75,
+          "countries": ["USA", "Japan", "Germany", "Poland", "Canada"]
+        }
+      ]
+    },
+    {
+      "id": "eli-lilly",
+      "name": "Eli Lilly",
+      "logo": "https://logo.clearbit.com/lilly.com",
+      "headquarters": "Indianapolis, IN, USA",
+      "founded": 1876,
+      "focus": ["Neuroscience", "Oncology", "Diabetes", "Immunology"],
+      "marketCap": "$685.2B",
+      "website": "https://www.lilly.com",
+      "trials": [
+        {
+          "id": "donanemab",
+          "name": "Donanemab (TRAILBLAZER-ALZ 3)",
+          "phase": "Phase 3",
+          "status": "Active",
+          "category": "neurology",
+          "indication": "Early Symptomatic Alzheimer's Disease",
+          "enrollment": 3300,
+          "startDate": "2023-10",
+          "estimatedCompletion": "2027-06",
+          "description": "Anti-amyloid antibody targeting N3pG amyloid for earlier-stage Alzheimer's patients.",
+          "primaryEndpoints": ["iADRS score change", "Amyloid plaque clearance"],
+          "latestUpdate": {
+            "date": "2026-02-19",
+            "summary": "FDA approved Kisunla (donanemab) in July 2025. Post-marketing study confirms 35% slowing of decline at 18 months."
+          },
+          "leadInvestigators": [
+            {
+              "name": "Dr. Reisa Sperling",
+              "role": "Director, Center for Alzheimer Research, BWH",
+              "mdrpediaSlug": null
+            }
+          ],
+          "sites": 275,
+          "countries": ["USA", "Japan", "UK", "Germany", "Australia"]
+        },
+        {
+          "id": "orforglipron",
+          "name": "Orforglipron (Oral GLP-1)",
+          "phase": "Phase 3",
+          "status": "Active",
+          "category": "metabolic",
+          "indication": "Obesity and Type 2 Diabetes",
+          "enrollment": 6000,
+          "startDate": "2024-01",
+          "estimatedCompletion": "2026-09",
+          "description": "Once-daily oral GLP-1 receptor agonist for weight management and glycemic control.",
+          "primaryEndpoints": ["Percent weight change", "HbA1c reduction"],
+          "latestUpdate": {
+            "date": "2026-02-11",
+            "summary": "Phase 2 showed 14.7% weight loss at 36 weeks. Phase 3 on track for H2 2026 readout."
+          },
+          "leadInvestigators": [],
+          "sites": 350,
+          "countries": ["USA", "Mexico", "Japan", "Germany", "Australia"]
+        },
+        {
+          "id": "lebrikizumab-ad",
+          "name": "Lebrikizumab (IL-13 Inhibitor)",
+          "phase": "Phase 4",
+          "status": "Active",
+          "category": "immunology",
+          "indication": "Moderate-to-Severe Atopic Dermatitis",
+          "enrollment": 800,
+          "startDate": "2025-06",
+          "estimatedCompletion": "2028-12",
+          "description": "Real-world effectiveness study in diverse patient population.",
+          "primaryEndpoints": ["IGA 0/1 response", "EASI-75 achievement"],
+          "latestUpdate": {
+            "date": "2026-01-20",
+            "summary": "Approved in EU and US. Real-world data confirms efficacy with convenient monthly dosing."
+          },
+          "leadInvestigators": [],
+          "sites": 150,
+          "countries": ["USA", "Germany", "France", "UK", "Canada"]
+        }
+      ]
+    },
+    {
+      "id": "gsk",
+      "name": "GSK",
+      "logo": "https://logo.clearbit.com/gsk.com",
+      "headquarters": "London, UK",
+      "founded": 2000,
+      "focus": ["Vaccines", "Infectious Diseases", "Oncology", "Immunology"],
+      "marketCap": "$78.5B",
+      "website": "https://www.gsk.com",
+      "trials": [
+        {
+          "id": "rsv-older-adults",
+          "name": "Arexvy RSV Vaccine (Extended Protection Study)",
+          "phase": "Phase 3b",
+          "status": "Active",
+          "category": "vaccines",
+          "indication": "RSV Prevention in Older Adults",
+          "enrollment": 12000,
+          "startDate": "2024-09",
+          "estimatedCompletion": "2027-03",
+          "description": "Evaluating duration of protection and need for revaccination with approved RSV vaccine.",
+          "primaryEndpoints": ["Efficacy against RSV-LRTD at Season 3", "Immunogenicity persistence"],
+          "latestUpdate": {
+            "date": "2026-02-16",
+            "summary": "Season 2 efficacy of 67% against RSV-LRTD maintained. Single dose may provide multi-season protection."
+          },
+          "leadInvestigators": [],
+          "sites": 200,
+          "countries": ["USA", "UK", "Belgium", "Japan", "Australia"]
+        },
+        {
+          "id": "blenrep-combo",
+          "name": "Blenrep + Pomalidomide + Dexamethasone",
+          "phase": "Phase 3",
+          "status": "Active",
+          "category": "oncology",
+          "indication": "Relapsed/Refractory Multiple Myeloma",
+          "enrollment": 430,
+          "startDate": "2023-11",
+          "estimatedCompletion": "2026-06",
+          "description": "BCMA-targeted ADC in combination with standard of care for myeloma.",
+          "primaryEndpoints": ["Progression-free survival", "Overall response rate"],
+          "latestUpdate": {
+            "date": "2026-02-03",
+            "summary": "Primary analysis shows significant PFS improvement. Re-filing with FDA planned for Q2 2026."
+          },
+          "leadInvestigators": [],
+          "sites": 140,
+          "countries": ["USA", "Spain", "France", "Germany", "UK"]
+        },
+        {
+          "id": "malaria-vaccine-r21",
+          "name": "Malaria Vaccine Booster Study",
+          "phase": "Phase 3",
+          "status": "Active",
+          "category": "vaccines",
+          "indication": "Malaria Prevention in Children",
+          "enrollment": 4500,
+          "startDate": "2025-03",
+          "estimatedCompletion": "2028-06",
+          "description": "Evaluating optimal booster schedules for sustained malaria protection in endemic regions.",
+          "primaryEndpoints": ["Clinical malaria incidence", "Antibody persistence"],
+          "latestUpdate": {
+            "date": "2026-01-28",
+            "summary": "WHO prequalification received. Over 18 million doses shipped to endemic countries."
+          },
+          "leadInvestigators": [],
+          "sites": 25,
+          "countries": ["Ghana", "Kenya", "Burkina Faso", "Tanzania", "Nigeria"]
+        }
+      ]
+    },
+    {
+      "id": "merck",
+      "name": "Merck (MSD)",
+      "logo": "https://logo.clearbit.com/merck.com",
+      "headquarters": "Rahway, NJ, USA",
+      "founded": 1891,
+      "focus": ["Oncology", "Vaccines", "Infectious Disease", "Immunology"],
+      "marketCap": "$245.8B",
+      "website": "https://www.merck.com",
+      "trials": [
+        {
+          "id": "keytruda-adjuvant",
+          "name": "Keytruda Adjuvant Combinations",
+          "phase": "Phase 3",
+          "status": "Active",
+          "category": "oncology",
+          "indication": "Multiple Solid Tumors (Adjuvant Setting)",
+          "enrollment": 8500,
+          "startDate": "2024-02",
+          "estimatedCompletion": "2029-12",
+          "description": "Master protocol evaluating pembrolizumab combinations across 12 tumor types in adjuvant setting.",
+          "primaryEndpoints": ["Disease-free survival", "Overall survival"],
+          "latestUpdate": {
+            "date": "2026-02-17",
+            "summary": "Positive results in renal cell carcinoma arm. Two additional tumor types showing promising interim data."
+          },
+          "leadInvestigators": [],
+          "sites": 450,
+          "countries": ["USA", "China", "Japan", "Germany", "UK", "Brazil"]
+        },
+        {
+          "id": "v116-pneumonia",
+          "name": "V116 (21-Valent Pneumococcal Vaccine)",
+          "phase": "Phase 3",
+          "status": "Active",
+          "category": "vaccines",
+          "indication": "Pneumococcal Disease in Adults",
+          "enrollment": 6400,
+          "startDate": "2023-09",
+          "estimatedCompletion": "2026-06",
+          "description": "Next-generation pneumococcal vaccine covering 8 unique serotypes not in current vaccines.",
+          "primaryEndpoints": ["Opsonophagocytic activity", "IgG geometric mean concentrations"],
+          "latestUpdate": {
+            "date": "2026-02-09",
+            "summary": "Met all primary endpoints. BLA submitted to FDA; approval expected H2 2026."
+          },
+          "leadInvestigators": [],
+          "sites": 180,
+          "countries": ["USA", "Germany", "Japan", "Australia", "Belgium"]
+        },
+        {
+          "id": "sotatercept",
+          "name": "Sotatercept (PAH Treatment)",
+          "phase": "Phase 3 (HYPERION)",
+          "status": "Active",
+          "category": "cardiovascular",
+          "indication": "Pulmonary Arterial Hypertension",
+          "enrollment": 600,
+          "startDate": "2024-07",
+          "estimatedCompletion": "2027-09",
+          "description": "First-in-class activin signaling inhibitor as monotherapy for treatment-naive PAH.",
+          "primaryEndpoints": ["6-minute walk distance", "Time to clinical worsening"],
+          "latestUpdate": {
+            "date": "2026-02-04",
+            "summary": "FDA approved Winrevair (sotatercept) March 2024. HYPERION study exploring expanded use ongoing."
+          },
+          "leadInvestigators": [],
+          "sites": 110,
+          "countries": ["USA", "France", "Germany", "UK", "Italy"]
+        }
+      ]
+    },
+    {
+      "id": "astrazeneca",
+      "name": "AstraZeneca",
+      "logo": "https://logo.clearbit.com/astrazeneca.com",
+      "headquarters": "Cambridge, UK",
+      "founded": 1999,
+      "focus": ["Oncology", "Cardiovascular", "Respiratory", "Immunology"],
+      "marketCap": "$198.4B",
+      "website": "https://www.astrazeneca.com",
+      "trials": [
+        {
+          "id": "dato-dxd",
+          "name": "Dato-DXd (Trop2-directed ADC)",
+          "phase": "Phase 3",
+          "status": "Active",
+          "category": "oncology",
+          "indication": "HR+/HER2- Metastatic Breast Cancer",
+          "enrollment": 930,
+          "startDate": "2022-09",
+          "estimatedCompletion": "2026-04",
+          "description": "Antibody-drug conjugate targeting Trop2 with novel topoisomerase I inhibitor payload.",
+          "primaryEndpoints": ["Progression-free survival", "Overall survival"],
+          "latestUpdate": {
+            "date": "2026-02-21",
+            "summary": "Met primary PFS endpoint with 6.9 month improvement vs chemotherapy. FDA filing imminent."
+          },
+          "leadInvestigators": [],
+          "sites": 175,
+          "countries": ["USA", "Japan", "France", "Germany", "Spain"]
+        },
+        {
+          "id": "nirsevimab-infants",
+          "name": "Nirsevimab (Beyfortus) Effectiveness Study",
+          "phase": "Phase 4",
+          "status": "Active",
+          "category": "infectious",
+          "indication": "RSV Prevention in Infants",
+          "enrollment": 25000,
+          "startDate": "2025-07",
+          "estimatedCompletion": "2027-06",
+          "description": "Real-world effectiveness study of long-acting RSV monoclonal antibody in infants.",
+          "primaryEndpoints": ["RSV hospitalization rate", "Medically attended RSV"],
+          "latestUpdate": {
+            "date": "2026-02-13",
+            "summary": "First full RSV season data shows 83% reduction in hospitalizations vs historical controls."
+          },
+          "leadInvestigators": [],
+          "sites": 500,
+          "countries": ["USA", "France", "Spain", "UK", "Germany"]
+        },
+        {
+          "id": "volrustomig",
+          "name": "Volrustomig (PD-1/CTLA-4 Bispecific)",
+          "phase": "Phase 3",
+          "status": "Active",
+          "category": "oncology",
+          "indication": "1L Metastatic NSCLC",
+          "enrollment": 1100,
+          "startDate": "2024-11",
+          "estimatedCompletion": "2028-03",
+          "description": "Novel bispecific antibody combining PD-1 and CTLA-4 blockade in single molecule.",
+          "primaryEndpoints": ["Overall survival", "Progression-free survival"],
+          "latestUpdate": {
+            "date": "2026-01-22",
+            "summary": "Phase 2 showed 48% ORR in PD-L1 high patients. Pivotal Phase 3 enrollment progressing well."
+          },
+          "leadInvestigators": [],
+          "sites": 220,
+          "countries": ["USA", "China", "Japan", "South Korea", "Germany"]
+        }
+      ]
+    },
+    {
+      "id": "sanofi",
+      "name": "Sanofi",
+      "logo": "https://logo.clearbit.com/sanofi.com",
+      "headquarters": "Paris, France",
+      "founded": 2004,
+      "focus": ["Immunology", "Oncology", "Vaccines", "Rare Diseases"],
+      "marketCap": "$132.6B",
+      "website": "https://www.sanofi.com",
+      "trials": [
+        {
+          "id": "dupixent-copd",
+          "name": "Dupixent in Type 2 COPD",
+          "phase": "Phase 3",
+          "status": "Active",
+          "category": "respiratory",
+          "indication": "COPD with Type 2 Inflammation",
+          "enrollment": 1800,
+          "startDate": "2023-05",
+          "estimatedCompletion": "2026-03",
+          "description": "IL-4/IL-13 blockade for COPD patients with eosinophilic phenotype.",
+          "primaryEndpoints": ["Annualized rate of moderate/severe exacerbations", "FEV1 change"],
+          "latestUpdate": {
+            "date": "2026-02-22",
+            "summary": "Primary endpoint met with 30% reduction in exacerbations. First biologic therapy for COPD potentially launching 2026."
+          },
+          "leadInvestigators": [],
+          "sites": 280,
+          "countries": ["USA", "Germany", "France", "UK", "Japan", "China"]
+        },
+        {
+          "id": "itepekimab",
+          "name": "Itepekimab (Anti-IL-33)",
+          "phase": "Phase 3",
+          "status": "Active",
+          "category": "respiratory",
+          "indication": "Moderate-to-Severe Asthma",
+          "enrollment": 2200,
+          "startDate": "2024-04",
+          "estimatedCompletion": "2027-06",
+          "description": "Monoclonal antibody targeting IL-33, a key upstream cytokine in allergic inflammation.",
+          "primaryEndpoints": ["Severe exacerbation rate", "Pre-bronchodilator FEV1"],
+          "latestUpdate": {
+            "date": "2026-01-18",
+            "summary": "Phase 2b showed benefit across all asthma phenotypes including those not responsive to existing biologics."
+          },
+          "leadInvestigators": [],
+          "sites": 190,
+          "countries": ["USA", "France", "Germany", "Japan", "Poland"]
+        },
+        {
+          "id": "rilzabrutinib",
+          "name": "Rilzabrutinib (BTK Inhibitor)",
+          "phase": "Phase 3",
+          "status": "Active",
+          "category": "rare-diseases",
+          "indication": "Immune Thrombocytopenia (ITP)",
+          "enrollment": 300,
+          "startDate": "2024-09",
+          "estimatedCompletion": "2026-12",
+          "description": "Oral reversible BTK inhibitor for chronic ITP patients.",
+          "primaryEndpoints": ["Durable platelet response", "Reduction in bleeding events"],
+          "latestUpdate": {
+            "date": "2026-02-07",
+            "summary": "Phase 2 showed 50% durable response rate. Potential first oral therapy for ITP."
+          },
+          "leadInvestigators": [],
+          "sites": 85,
+          "countries": ["USA", "France", "Germany", "UK", "Canada"]
+        }
+      ]
+    }
+  ]
+}
