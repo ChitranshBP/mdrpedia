@@ -454,9 +454,9 @@ const statusLabels: Record<string, string> = {
         border-radius: 12px;
         font-size: 0.75rem;
         font-weight: 600;
-        background: rgba(var(--status-color), 0.15);
+        background: color-mix(in srgb, var(--status-color) 15%, transparent);
         color: var(--status-color);
-        border: 1px solid var(--status-color);
+        border: 1px solid color-mix(in srgb, var(--status-color) 40%, transparent);
     }
 
     .verification-cell {

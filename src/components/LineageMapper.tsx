@@ -57,7 +57,13 @@ export default function LineageMapper({ onLinkCreated }: LineageMapperProps) {
     return (
         <div className="bg-white/5 border border-white/10 rounded-xl p-6 backdrop-blur-md">
             <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                <span className="text-2xl">🧬</span> Lineage Mapper
+                <svg className="w-6 h-6 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="5" r="3"/>
+                    <circle cx="5" cy="19" r="3"/>
+                    <circle cx="19" cy="19" r="3"/>
+                    <path d="M12 8v4M8.5 16.5l2-2M15.5 16.5l-2-2"/>
+                </svg>
+                Lineage Mapper
             </h2>
 
             <div className="flex flex-col md:flex-row items-center gap-4">

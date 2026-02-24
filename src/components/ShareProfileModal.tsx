@@ -15,7 +15,7 @@ export default function ShareProfileModal({ slug, fullName }: Props) {
     const [isOpen, setIsOpen] = useState(false);
     const [copied, setCopied] = useState(false);
 
-    const url = typeof window !== 'undefined' ? `${window.location.origin}/doctor/${slug}` : '';
+    const url = typeof window !== 'undefined' ? `${window.location.origin}/doctors/${slug}` : '';
 
     useEffect(() => {
         if (!isOpen) return;
@@ -159,7 +159,7 @@ export default function ShareProfileModal({ slug, fullName }: Props) {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    z-index: 100;
+                    z-index: 99999;
                     padding: 16px;
                 }
 
