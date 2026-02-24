@@ -1,10 +1,50 @@
 /**
  * MDRPedia — Cached Statistics Service
  * Provides cached access to expensive database statistics
+ * Falls back to static content when database is unavailable
  */
 
 import { prisma } from './prisma';
 import { cache, CacheKeys, CacheTTL } from './cache';
+import fs from 'fs';
+import path from 'path';
+
+const DOCTORS_DIR = path.join(process.cwd(), 'src/content/doctors');
+
+/**
+ * Get tier counts from static content files (fallback)
+ */
+function getStaticTierCounts(): TierCounts {
+    try {
+        const files = fs.readdirSync(DOCTORS_DIR).filter(f => f.endsWith('.json'));
+        const result: TierCounts = {
+            titan: 0,
+            elite: 0,
+            master: 0,
+            unranked: 0,
+            total: files.length
+        };
+
+        for (const file of files) {
+            try {
+                const content = fs.readFileSync(path.join(DOCTORS_DIR, file), 'utf8');
+                const doctor = JSON.parse(content);
+                const tier = (doctor.tier || 'UNRANKED').toLowerCase() as keyof TierCounts;
+                if (tier in result && tier !== 'total') {
+                    result[tier]++;
+                } else {
+                    result.unranked++;
+                }
+            } catch {
+                result.unranked++;
+            }
+        }
+
+        return result;
+    } catch {
+        return { titan: 0, elite: 0, master: 0, unranked: 0, total: 0 };
+    }
+}
 
 export interface TierCounts {
     titan: number;
@@ -24,33 +64,47 @@ export interface PlatformStats {
 
 /**
  * Get tier counts with caching
+ * Uses static content as source of truth (properly classified by h-index)
+ * Falls back to database only if static content fails
  */
 export async function getTierCounts(): Promise<TierCounts> {
     return cache.getOrFetch(
         CacheKeys.tierCounts(),
         async () => {
-            const counts = await prisma.profile.groupBy({
-                by: ['tier'],
-                _count: { tier: true }
-            });
+            // Use static content as primary source (properly classified tiers)
+            const staticCounts = getStaticTierCounts();
+            if (staticCounts.total > 0) {
+                return staticCounts;
+            }
 
-            const result: TierCounts = {
-                titan: 0,
-                elite: 0,
-                master: 0,
-                unranked: 0,
-                total: 0
-            };
+            // Fallback to database if static content fails
+            try {
+                const counts = await prisma.profile.groupBy({
+                    by: ['tier'],
+                    _count: { tier: true }
+                });
 
-            counts.forEach(c => {
-                const tier = c.tier.toLowerCase() as keyof TierCounts;
-                if (tier in result) {
-                    result[tier] = c._count.tier;
-                }
-                result.total += c._count.tier;
-            });
+                const result: TierCounts = {
+                    titan: 0,
+                    elite: 0,
+                    master: 0,
+                    unranked: 0,
+                    total: 0
+                };
 
-            return result;
+                counts.forEach(c => {
+                    const tier = c.tier.toLowerCase() as keyof TierCounts;
+                    if (tier in result) {
+                        result[tier] = c._count.tier;
+                    }
+                    result.total += c._count.tier;
+                });
+
+                return result;
+            } catch (error) {
+                console.error('Database error fetching tier counts:', error);
+                return { titan: 0, elite: 0, master: 0, unranked: 0, total: 0 };
+            }
         },
         CacheTTL.MEDIUM
     );
@@ -184,76 +238,125 @@ export async function getTopDoctors(limit = 10) {
 }
 
 /**
+ * Get featured Titans from static content (fallback)
+ */
+function getStaticFeaturedTitans(limit: number) {
+    try {
+        const files = fs.readdirSync(DOCTORS_DIR).filter(f => f.endsWith('.json'));
+        const titans: any[] = [];
+
+        for (const file of files) {
+            try {
+                const content = fs.readFileSync(path.join(DOCTORS_DIR, file), 'utf8');
+                const doctor = JSON.parse(content);
+                if (doctor.tier === 'TITAN') {
+                    titans.push({
+                        slug: doctor.slug || file.replace('.json', ''),
+                        full_name: doctor.fullName || doctor.full_name,
+                        specialty: doctor.specialty,
+                        sub_specialty: doctor.subSpecialty || doctor.sub_specialty,
+                        tier: doctor.tier,
+                        portrait_url: doctor.portraitUrl || doctor.portrait_url,
+                        h_index: doctor.hIndex || doctor.h_index || 0,
+                        geography: {
+                            country: doctor.country,
+                            city: doctor.city
+                        }
+                    });
+                }
+            } catch { /* skip invalid files */ }
+        }
+
+        // Sort by h-index and return top results
+        return titans
+            .sort((a, b) => (b.h_index || 0) - (a.h_index || 0))
+            .slice(0, limit);
+    } catch {
+        return [];
+    }
+}
+
+/**
  * Get featured Titans for homepage display
- * Returns Titans with valid portrait URLs first, then fills with any Titans
+ * Uses static content as source of truth (properly classified by h-index)
+ * Returns Titans sorted by h-index
  */
 export async function getFeaturedTitans(limit = 8) {
     return cache.getOrFetch(
         `doctors:featured_titans:${limit}`,
         async () => {
-            // First get Titans with portrait URLs
-            const titansWithPortrait = await prisma.profile.findMany({
-                where: {
-                    tier: 'TITAN',
-                    AND: [
-                        { portrait_url: { not: null } },
-                        { portrait_url: { not: '' } },
-                        { NOT: { portrait_url: { startsWith: 'data:' } } }
-                    ]
-                },
-                select: {
-                    slug: true,
-                    full_name: true,
-                    specialty: true,
-                    sub_specialty: true,
-                    tier: true,
-                    portrait_url: true,
-                    h_index: true,
-                    geography: {
-                        select: { country: true, city: true }
-                    }
-                },
-                orderBy: [
-                    { ranking_score: 'desc' },
-                    { h_index: 'desc' }
-                ],
-                take: limit
-            });
-
-            // If we have enough, return them
-            if (titansWithPortrait.length >= limit) {
-                return titansWithPortrait.slice(0, limit);
+            // Use static content as primary source (properly classified tiers)
+            const staticTitans = getStaticFeaturedTitans(limit);
+            if (staticTitans.length > 0) {
+                return staticTitans;
             }
 
-            // Otherwise, get more Titans without portrait requirement
-            const remainingNeeded = limit - titansWithPortrait.length;
-            const existingSlugs = titansWithPortrait.map(t => t.slug);
+            // Fallback to database
+            try {
+                const titansWithPortrait = await prisma.profile.findMany({
+                    where: {
+                        tier: 'TITAN',
+                        AND: [
+                            { portrait_url: { not: null } },
+                            { portrait_url: { not: '' } },
+                            { NOT: { portrait_url: { startsWith: 'data:' } } }
+                        ]
+                    },
+                    select: {
+                        slug: true,
+                        full_name: true,
+                        specialty: true,
+                        sub_specialty: true,
+                        tier: true,
+                        portrait_url: true,
+                        h_index: true,
+                        geography: {
+                            select: { country: true, city: true }
+                        }
+                    },
+                    orderBy: [
+                        { ranking_score: 'desc' },
+                        { h_index: 'desc' }
+                    ],
+                    take: limit
+                });
 
-            const additionalTitans = await prisma.profile.findMany({
-                where: {
-                    tier: 'TITAN',
-                    slug: { notIn: existingSlugs }
-                },
-                select: {
-                    slug: true,
-                    full_name: true,
-                    specialty: true,
-                    sub_specialty: true,
-                    tier: true,
-                    portrait_url: true,
-                    h_index: true,
-                    geography: {
-                        select: { country: true, city: true }
-                    }
-                },
-                orderBy: [
-                    { ranking_score: 'desc' },
-                    { h_index: 'desc' }
-                ],
-                take: remainingNeeded
-            });
+                if (titansWithPortrait.length >= limit) {
+                    return titansWithPortrait.slice(0, limit);
+                }
 
-            return [...titansWithPortrait, ...additionalTitans];
+                const remainingNeeded = limit - titansWithPortrait.length;
+                const existingSlugs = titansWithPortrait.map(t => t.slug);
+
+                const additionalTitans = await prisma.profile.findMany({
+                    where: {
+                        tier: 'TITAN',
+                        slug: { notIn: existingSlugs }
+                    },
+                    select: {
+                        slug: true,
+                        full_name: true,
+                        specialty: true,
+                        sub_specialty: true,
+                        tier: true,
+                        portrait_url: true,
+                        h_index: true,
+                        geography: {
+                            select: { country: true, city: true }
+                        }
+                    },
+                    orderBy: [
+                        { ranking_score: 'desc' },
+                        { h_index: 'desc' }
+                    ],
+                    take: remainingNeeded
+                });
+
+                return [...titansWithPortrait, ...additionalTitans];
+            } catch (error) {
+                console.error('Database error fetching featured Titans:', error);
+                return [];
+            }
         },
         CacheTTL.MEDIUM
     );
