@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 module.exports = {
   apps: [
     {
@@ -12,6 +14,7 @@ module.exports = {
         NODE_ENV: 'production',
         HOST: '127.0.0.1',
         PORT: '4321',
+        ...require('dotenv').config().parsed,
       },
     },
   ],
