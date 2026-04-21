@@ -202,12 +202,12 @@ const { journey, doctorName, tier = 'UNRANKED' } = Astro.props;
 
 <style>
     .journey-section {
-        background: var(--card-bg, rgba(20, 20, 35, 0.8));
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 2rem;
         margin-bottom: 2rem;
-        backdrop-filter: blur(10px);
+        
     }
 
     .section-header {
@@ -217,7 +217,7 @@ const { journey, doctorName, tier = 'UNRANKED' } = Astro.props;
         gap: 1rem;
         margin-bottom: 1.5rem;
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
+        border-bottom: 1px solid var(--rule);
     }
 
     .section-title {
@@ -225,13 +225,13 @@ const { journey, doctorName, tier = 'UNRANKED' } = Astro.props;
         align-items: center;
         gap: 0.75rem;
         font-size: 1.25rem;
-        font-weight: 700;
+        font-weight: 500;
         margin: 0;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .section-title svg {
-        color: #10b981;
+        color: var(--verdant);
         opacity: 0.9;
     }
 
@@ -244,19 +244,19 @@ const { journey, doctorName, tier = 'UNRANKED' } = Astro.props;
     .condition-badge,
     .procedure-badge {
         padding: 4px 10px;
-        border-radius: 100px;
+        border-radius: var(--r-pill);
         font-size: 0.7rem;
         font-weight: 600;
     }
 
     .condition-badge {
         background: rgba(16, 185, 129, 0.15);
-        color: #10b981;
+        color: var(--verdant);
     }
 
     .procedure-badge {
-        background: rgba(139, 92, 246, 0.15);
-        color: #a78bfa;
+        background: var(--paper-3);
+        color: var(--ink-blue);
     }
 
     .duration-bar {
@@ -272,13 +272,13 @@ const { journey, doctorName, tier = 'UNRANKED' } = Astro.props;
 
     .duration-label {
         font-size: 0.8rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .duration-value {
         font-size: 0.9rem;
         font-weight: 600;
-        color: #10b981;
+        color: var(--verdant);
     }
 
     /* Timeline */
@@ -306,7 +306,7 @@ const { journey, doctorName, tier = 'UNRANKED' } = Astro.props;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, #10b981, #059669);
+        background: var(--verdant);
         border-radius: 50%;
         font-size: 0.9rem;
         font-weight: 700;
@@ -318,22 +318,22 @@ const { journey, doctorName, tier = 'UNRANKED' } = Astro.props;
         width: 2px;
         flex: 1;
         min-height: 40px;
-        background: linear-gradient(to bottom, #10b981, rgba(16, 185, 129, 0.2));
+        background: linear-gradient(to bottom, var(--verdant), color-mix(in oklch, var(--verdant) 20%, transparent));
         margin-top: -4px;
     }
 
     .stage-content {
         flex: 1;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 12px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 1.25rem;
         margin-bottom: 1rem;
         transition: all 0.2s ease;
     }
 
     .stage-content:hover {
-        border-color: rgba(255, 255, 255, 0.1);
+        border-color: var(--rule-strong);
     }
 
     .stage-header {
@@ -348,20 +348,20 @@ const { journey, doctorName, tier = 'UNRANKED' } = Astro.props;
         font-size: 1.05rem;
         font-weight: 700;
         margin: 0;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .stage-timeframe {
         padding: 3px 10px;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 100px;
+        background: var(--paper-3);
+        border-radius: var(--r-pill);
         font-size: 0.7rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .stage-description {
         font-size: 0.9rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         line-height: 1.6;
         margin: 0 0 1rem;
     }
@@ -397,15 +397,15 @@ const { journey, doctorName, tier = 'UNRANKED' } = Astro.props;
         text-transform: uppercase;
         letter-spacing: 0.05em;
         margin: 0 0 0.5rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
-    .doctor-role .detail-title svg { color: #3b82f6; }
-    .patient-exp .detail-title svg { color: #ec4899; }
+    .doctor-role .detail-title svg { color: var(--ink-blue); }
+    .patient-exp .detail-title svg { color: var(--sanguine); }
 
     .detail-column p {
         font-size: 0.85rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         line-height: 1.5;
         margin: 0;
     }
@@ -416,7 +416,7 @@ const { journey, doctorName, tier = 'UNRANKED' } = Astro.props;
     .success-section {
         margin-top: 1rem;
         padding-top: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        border-top: 1px solid var(--rule);
     }
 
     .milestones-title,
@@ -424,7 +424,7 @@ const { journey, doctorName, tier = 'UNRANKED' } = Astro.props;
     .success-title {
         font-size: 0.75rem;
         font-weight: 600;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         margin: 0 0 0.5rem;
     }
 
@@ -439,12 +439,12 @@ const { journey, doctorName, tier = 'UNRANKED' } = Astro.props;
         align-items: center;
         gap: 0.5rem;
         font-size: 0.8rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         margin-bottom: 0.25rem;
     }
 
     .milestones-list li svg {
-        color: #10b981;
+        color: var(--verdant);
         flex-shrink: 0;
     }
 
@@ -455,12 +455,12 @@ const { journey, doctorName, tier = 'UNRANKED' } = Astro.props;
 
     .challenges-list li {
         font-size: 0.8rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         margin-bottom: 0.2rem;
     }
 
     .challenges-list li::marker {
-        color: #f59e0b;
+        color: var(--aged-gold);
     }
 
     .success-tags {
@@ -471,10 +471,10 @@ const { journey, doctorName, tier = 'UNRANKED' } = Astro.props;
 
     .success-tag {
         padding: 3px 8px;
-        background: rgba(16, 185, 129, 0.1);
+        background: var(--paper-3);
         border-radius: 4px;
         font-size: 0.7rem;
-        color: #10b981;
+        color: var(--verdant);
     }
 
     /* Outcomes */
@@ -483,7 +483,7 @@ const { journey, doctorName, tier = 'UNRANKED' } = Astro.props;
         padding: 1.5rem;
         background: rgba(16, 185, 129, 0.05);
         border: 1px solid rgba(16, 185, 129, 0.1);
-        border-radius: 12px;
+        border-radius: var(--r-4);
     }
 
     .outcomes-title {
@@ -493,11 +493,11 @@ const { journey, doctorName, tier = 'UNRANKED' } = Astro.props;
         font-size: 1rem;
         font-weight: 600;
         margin: 0 0 1rem;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .outcomes-title svg {
-        color: #10b981;
+        color: var(--verdant);
     }
 
     .outcomes-grid {
@@ -515,26 +515,26 @@ const { journey, doctorName, tier = 'UNRANKED' } = Astro.props;
     .stat-value {
         font-size: 1.5rem;
         font-weight: 700;
-        color: #10b981;
+        color: var(--verdant);
     }
 
     .stat-label {
         font-size: 0.75rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     /* Testimonials */
     .testimonials-section {
         margin-top: 1.5rem;
         padding-top: 1.5rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        border-top: 1px solid var(--rule);
     }
 
     .testimonials-title {
         font-size: 0.9rem;
         font-weight: 600;
         margin: 0 0 0.75rem;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .testimonial-themes {
@@ -546,10 +546,10 @@ const { journey, doctorName, tier = 'UNRANKED' } = Astro.props;
     .theme-tag {
         padding: 6px 12px;
         background: rgba(236, 72, 153, 0.1);
-        border-radius: 100px;
+        border-radius: var(--r-pill);
         font-size: 0.8rem;
         font-style: italic;
-        color: #f472b6;
+        color: var(--sanguine);
     }
 
     /* Disclaimer */
@@ -571,17 +571,17 @@ const { journey, doctorName, tier = 'UNRANKED' } = Astro.props;
 
     .disclaimer p {
         font-size: 0.75rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         line-height: 1.5;
         margin: 0;
     }
 
     /* Tier colors */
-    .tier-titan .section-title svg { color: #ffd700; }
-    .tier-titan .stage-number { background: linear-gradient(135deg, #ffd700, #b8860b); }
-    .tier-elite .section-title svg { color: #00aaff; }
-    .tier-elite .stage-number { background: linear-gradient(135deg, #00aaff, #0077b3); }
-    .tier-master .section-title svg { color: #00cc66; }
+    .tier-titan .section-title svg { color: var(--aged-gold); }
+    .tier-titan .stage-number { background: var(--aged-gold); }
+    .tier-elite .section-title svg { color: var(--ink-blue); }
+    .tier-elite .stage-number { background: var(--ink-blue); }
+    .tier-master .section-title svg { color: var(--verdant); }
 
     @media (max-width: 768px) {
         .journey-section {

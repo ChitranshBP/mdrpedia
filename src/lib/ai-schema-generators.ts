@@ -3,6 +3,7 @@
 // Generates HowTo, FAQPage, ClaimReview, Dataset schemas for AI crawlers
 // ============================================================================
 
+import { slugify } from './utils';
 import type {
     TechniqueBreakdownData,
     VerifiedClaimData,
@@ -500,10 +501,6 @@ export function generateAIContentSchemaGraph(input: AIContentSchemaInput): objec
 }
 
 // ─── Utility Functions ──────────────────────────────────────────────────────
-
-function slugify(text: string): string {
-    return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-}
 
 function parseDurationToISO(duration: string): string {
     // Convert human-readable duration to ISO 8601 format

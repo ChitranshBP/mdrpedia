@@ -39,15 +39,16 @@ export default function FloatingActionBar({ slug, fullName }: { slug: string; fu
 
             {/* QR Code Popover */}
             {showQR && (
-                <div className="absolute bottom-full right-0 mb-4 p-3 bg-white rounded-xl shadow-2xl animate-fade-in border border-gray-200">
+                <div className="absolute bottom-full right-0 mb-4 p-3 rounded-xl shadow-2xl animate-fade-in" style={{ background: 'var(--paper)', border: '1px solid var(--rule)' }}>
                     <img src={qrUrl} alt="QR Code" className="w-[150px] h-[150px]" style={{ imageRendering: 'pixelated' }} />
-                    <div className="text-center text-xs text-gray-500 mt-2 font-medium">Scan to view on mobile</div>
+                    <div className="text-center text-xs mt-2 font-medium" style={{ color: 'var(--slate)' }}>Scan to view on mobile</div>
                 </div>
             )}
 
             <button
                 onClick={() => setShowQR(!showQR)}
-                className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/10 flex items-center justify-center text-white shadow-lg transition-all hover:scale-110 group"
+                className="w-12 h-12 rounded-full border flex items-center justify-center shadow-lg transition-all hover:scale-110 group"
+                style={{ background: 'var(--paper-2)', borderColor: 'var(--rule)', color: 'var(--ink)' }}
                 title="Show QR Code"
             >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,7 +58,8 @@ export default function FloatingActionBar({ slug, fullName }: { slug: string; fu
 
             <button
                 onClick={() => window.print()}
-                className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/10 flex items-center justify-center text-white shadow-lg transition-all hover:scale-110"
+                className="w-12 h-12 rounded-full border flex items-center justify-center shadow-lg transition-all hover:scale-110"
+                style={{ background: 'var(--paper-2)', borderColor: 'var(--rule)', color: 'var(--ink)' }}
                 title="Print Profile"
             >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -67,7 +69,8 @@ export default function FloatingActionBar({ slug, fullName }: { slug: string; fu
 
             <button
                 onClick={scrollToTop}
-                className="w-12 h-12 rounded-full bg-purple-600 hover:bg-purple-500 text-white flex items-center justify-center shadow-lg shadow-purple-500/30 transition-all hover:scale-110"
+                className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110"
+                style={{ background: 'var(--ink-blue)', color: 'var(--paper)' }}
                 title="Scroll to Top"
             >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

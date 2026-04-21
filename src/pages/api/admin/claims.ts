@@ -8,6 +8,9 @@ export const prerender = false;
 import { prisma } from '../../../lib/prisma';
 import { requireSuperAdmin } from '../../../lib/rbac';
 import { logAdminAction } from '../../../lib/audit';
+import { checkRateLimit, getClientIdentifier, RATE_LIMITS, rateLimitResponse } from '../../../lib/rate-limit';
+import { apiError } from '../../../lib/api-response';
+import type { ClaimStatus } from '@prisma/client';
 
 // GET - List claims by status
 export async function GET({ request }: { request: Request }) {
@@ -18,12 +21,15 @@ export async function GET({ request }: { request: Request }) {
         });
     }
 
+    const rateCheck = checkRateLimit(getClientIdentifier(request), RATE_LIMITS.adminGeneral);
+    if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime);
+
     const url = new URL(request.url);
     const status = url.searchParams.get('status');
 
     try {
         const whereClause = status && status !== 'all'
-            ? { claim_status: status as any }
+            ? { claim_status: status as ClaimStatus }
             : {};
 
         const profiles = await prisma.profile.findMany({
@@ -37,7 +43,6 @@ export async function GET({ request }: { request: Request }) {
                 claim_status: true,
                 npi_number: true,
                 orcid_id: true,
-                email: true,
                 updatedAt: true,
                 geography: {
                     select: { country: true, city: true }
@@ -51,10 +56,7 @@ export async function GET({ request }: { request: Request }) {
             headers: { "Content-Type": "application/json" }
         });
     } catch (e) {
-        return new Response(JSON.stringify({ error: (e as Error).message }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" }
-        });
+        return apiError('Claims GET', e, 'Failed to fetch claims');
     }
 }
 
@@ -66,6 +68,9 @@ export async function PUT({ request }: { request: Request }) {
             headers: { "Content-Type": "application/json" }
         });
     }
+
+    const rateCheck = checkRateLimit(getClientIdentifier(request), RATE_LIMITS.adminGeneral);
+    if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime);
 
     try {
         const body = await request.json();
@@ -91,7 +96,7 @@ export async function PUT({ request }: { request: Request }) {
         const updatedProfile = await prisma.profile.update({
             where: { id: profileId },
             data: {
-                claim_status: status as any
+                claim_status: status as ClaimStatus
             },
             select: {
                 id: true,
@@ -114,10 +119,7 @@ export async function PUT({ request }: { request: Request }) {
             headers: { "Content-Type": "application/json" }
         });
     } catch (e) {
-        return new Response(JSON.stringify({ error: (e as Error).message }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" }
-        });
+        return apiError('Claims PUT', e, 'Failed to update claim status');
     }
 }
 

@@ -41,25 +41,99 @@ const relatedDiseases = allDiseases.filter(d =>
     ) && d.data.slug !== disease.slug
 ).slice(0, 4);
 
+// Category SVG icon paths (24x24 viewBox, stroke-based)
+const CATEGORY_ICONS: Record<string, string> = {
+    'GENETIC': 'M2 15c6.667-6 13.333 0 20-6M2 9c6.667 6 13.333 0 20 6M9 3v18m6-18v18',
+    'METABOLIC': 'M9 3h6v2H9V3zm0 4v6l-3 6h12l-3-6V7H9z',
+    'NEUROLOGICAL': 'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
+    'CARDIOVASCULAR': 'M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z',
+    'IMMUNOLOGICAL': 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
+    'ONCOLOGICAL': 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
+    'HEMATOLOGICAL': 'M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z',
+    'MUSCULOSKELETAL': 'M22 12h-4l-3 9L9 3l-3 9H2',
+    'DERMATOLOGICAL': 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
+    'GASTROINTESTINAL': 'M22 12h-4l-3 9L9 3l-3 9H2',
+    'RESPIRATORY': 'M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2',
+    'ENDOCRINE': 'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
+    'OPHTHALMOLOGICAL': 'M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z',
+    'OTHER': 'M9 3h6v2H9V3zm0 4v6l-3 6h12l-3-6V7H9z',
+};
+
 // Category info
 const CATEGORY_INFO: Record<string, { icon: string; color: string; label: string }> = {
-    'GENETIC': { icon: '🧬', color: '#a78bfa', label: 'Genetic Disorder' },
-    'METABOLIC': { icon: '⚗️', color: '#fbbf24', label: 'Metabolic Disorder' },
-    'NEUROLOGICAL': { icon: '🧠', color: '#f472b6', label: 'Neurological Disorder' },
-    'CARDIOVASCULAR': { icon: '❤️', color: '#ef4444', label: 'Cardiovascular Disorder' },
-    'IMMUNOLOGICAL': { icon: '🛡️', color: '#10b981', label: 'Immunological Disorder' },
-    'ONCOLOGICAL': { icon: '🎗️', color: '#8b5cf6', label: 'Oncological Disorder' },
-    'HEMATOLOGICAL': { icon: '🩸', color: '#dc2626', label: 'Hematological Disorder' },
-    'MUSCULOSKELETAL': { icon: '🦴', color: '#78716c', label: 'Musculoskeletal Disorder' },
-    'DERMATOLOGICAL': { icon: '🩹', color: '#f97316', label: 'Dermatological Disorder' },
-    'GASTROINTESTINAL': { icon: '🫁', color: '#84cc16', label: 'Gastrointestinal Disorder' },
-    'RESPIRATORY': { icon: '🌬️', color: '#38bdf8', label: 'Respiratory Disorder' },
-    'ENDOCRINE': { icon: '⚡', color: '#c084fc', label: 'Endocrine Disorder' },
-    'OPHTHALMOLOGICAL': { icon: '👁️', color: '#06b6d4', label: 'Ophthalmological Disorder' },
-    'OTHER': { icon: '🔬', color: '#71717a', label: 'Other' }
+    'GENETIC': { icon: CATEGORY_ICONS['GENETIC'], color: '#a78bfa', label: 'Genetic Disorder' },
+    'METABOLIC': { icon: CATEGORY_ICONS['METABOLIC'], color: '#fbbf24', label: 'Metabolic Disorder' },
+    'NEUROLOGICAL': { icon: CATEGORY_ICONS['NEUROLOGICAL'], color: '#f472b6', label: 'Neurological Disorder' },
+    'CARDIOVASCULAR': { icon: CATEGORY_ICONS['CARDIOVASCULAR'], color: '#ef4444', label: 'Cardiovascular Disorder' },
+    'IMMUNOLOGICAL': { icon: CATEGORY_ICONS['IMMUNOLOGICAL'], color: '#10b981', label: 'Immunological Disorder' },
+    'ONCOLOGICAL': { icon: CATEGORY_ICONS['ONCOLOGICAL'], color: '#8b5cf6', label: 'Oncological Disorder' },
+    'HEMATOLOGICAL': { icon: CATEGORY_ICONS['HEMATOLOGICAL'], color: '#dc2626', label: 'Hematological Disorder' },
+    'MUSCULOSKELETAL': { icon: CATEGORY_ICONS['MUSCULOSKELETAL'], color: '#78716c', label: 'Musculoskeletal Disorder' },
+    'DERMATOLOGICAL': { icon: CATEGORY_ICONS['DERMATOLOGICAL'], color: '#f97316', label: 'Dermatological Disorder' },
+    'GASTROINTESTINAL': { icon: CATEGORY_ICONS['GASTROINTESTINAL'], color: '#84cc16', label: 'Gastrointestinal Disorder' },
+    'RESPIRATORY': { icon: CATEGORY_ICONS['RESPIRATORY'], color: '#38bdf8', label: 'Respiratory Disorder' },
+    'ENDOCRINE': { icon: CATEGORY_ICONS['ENDOCRINE'], color: '#c084fc', label: 'Endocrine Disorder' },
+    'OPHTHALMOLOGICAL': { icon: CATEGORY_ICONS['OPHTHALMOLOGICAL'], color: '#06b6d4', label: 'Ophthalmological Disorder' },
+    'OTHER': { icon: CATEGORY_ICONS['OTHER'], color: '#71717a', label: 'Other' }
 };
 
 const catInfo = CATEGORY_INFO[disease.category] || CATEGORY_INFO['OTHER'];
+
+// Structured Data: MedicalCondition JSON-LD
+const siteBase = Astro.site ?? 'https://mdrpedia.com';
+const diseaseUrl = new URL(`/rare-diseases/${disease.slug}`, siteBase).href;
+const diseaseSchema = {
+    "@context": "https://schema.org",
+    "@type": "MedicalCondition",
+    "name": disease.name,
+    "alternateName": disease.aliases || [],
+    "description": disease.description,
+    "url": diseaseUrl,
+    ...(disease.prevalence && { "epidemiology": disease.prevalence }),
+    ...(disease.category && { "medicalSpecialty": catInfo.label }),
+    ...(disease.symptoms?.length && {
+        "signOrSymptom": disease.symptoms.map((s: string) => ({
+            "@type": "MedicalSignOrSymptom",
+            "name": s
+        }))
+    }),
+    ...(disease.treatmentOptions?.length && {
+        "possibleTreatment": disease.treatmentOptions.map((t: any) => ({
+            "@type": "MedicalTherapy",
+            "name": t.name
+        }))
+    }),
+    ...(treatingDoctors.length > 0 && {
+        "subjectOf": {
+            "@type": "CollectionPage",
+            "name": `${disease.name} Specialists on MDRPedia`,
+            "url": diseaseUrl,
+            "mainEntity": {
+                "@type": "ItemList",
+                "numberOfItems": treatingDoctors.length,
+                "itemListElement": treatingDoctors.slice(0, 20).map((doc, i) => ({
+                    "@type": "ListItem",
+                    "position": i + 1,
+                    "item": {
+                        "@type": "Physician",
+                        "name": doc.data.fullName,
+                        "url": new URL(`/doctors/${doc.id}`, siteBase).href
+                    }
+                }))
+            }
+        }
+    })
+};
+
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": siteBase.toString() },
+        { "@type": "ListItem", "position": 2, "name": "Rare Diseases", "item": new URL('/rare-diseases', siteBase).href },
+        { "@type": "ListItem", "position": 3, "name": disease.name, "item": diseaseUrl }
+    ]
+};
 
 // Inheritance labels
 const INHERITANCE_LABELS: Record<string, string> = {
@@ -84,6 +158,8 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
     title={`${disease.name} — Rare Disease Profile | MDRPedia`}
     description={disease.description}
 >
+    <script type="application/ld+json" set:html={JSON.stringify(diseaseSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
     <article class="disease-profile" style={`--accent: ${catInfo.color}`}>
         <!-- Hero Section -->
         <header class="hero">
@@ -97,7 +173,7 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
                 <div class="hero-content">
                     <div class="hero-main">
                         <span class="category-badge">
-                            <span class="cat-icon">{catInfo.icon}</span>
+                            <span class="cat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={catInfo.icon}/></svg></span>
                             {catInfo.label}
                         </span>
 
@@ -133,21 +209,21 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
                     <div class="hero-stats">
                         {disease.prevalence && (
                             <div class="stat-card">
-                                <span class="stat-icon">👥</span>
+                                <span class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg></span>
                                 <span class="stat-value">{disease.prevalence}</span>
                                 <span class="stat-label">Prevalence</span>
                             </div>
                         )}
                         {disease.clinicalTrialsCount > 0 && (
                             <div class="stat-card stat-card--active">
-                                <span class="stat-icon">🔬</span>
+                                <span class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v2H9V3zm0 4v6l-3 6h12l-3-6V7H9z"/></svg></span>
                                 <span class="stat-value">{disease.clinicalTrialsCount}</span>
                                 <span class="stat-label">Active Trials</span>
                             </div>
                         )}
                         {treatingDoctors.length > 0 && (
                             <div class="stat-card">
-                                <span class="stat-icon">👨‍⚕️</span>
+                                <span class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg></span>
                                 <span class="stat-value">{treatingDoctors.length}</span>
                                 <span class="stat-label">Expert{treatingDoctors.length !== 1 ? 's' : ''}</span>
                             </div>
@@ -304,7 +380,7 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
                                         <a href={`/doctor/${doctor.id}`} class="doctor-card">
                                             <div class="doctor-avatar">
                                                 {doctor.data.portraitUrl ? (
-                                                    <img src={doctor.data.portraitUrl} alt={doctor.data.fullName} />
+                                                    <img src={doctor.data.portraitUrl} alt={doctor.data.fullName} loading="lazy" />
                                                 ) : (
                                                     <span class="initials">
                                                         {doctor.data.fullName.split(' ').map((n: string) => n[0]).join('').slice(0, 2)}
@@ -493,21 +569,21 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
 
 <style>
     .disease-profile {
-        background: var(--bg-primary, #0a0a12);
+        background: var(--paper);
         min-height: 100vh;
     }
 
     .container {
-        max-width: 1200px;
+        max-width: var(--max);
         margin: 0 auto;
-        padding: 0 1.5rem;
+        padding: 0 var(--gutter);
     }
 
     /* Hero */
     .hero {
         padding: 2rem 0 3rem;
-        background: linear-gradient(180deg, rgba(var(--accent-rgb, 139, 92, 246), 0.08) 0%, transparent 100%);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper);
+        border-bottom: 1px solid var(--rule);
     }
 
     .breadcrumb {
@@ -515,18 +591,18 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
         align-items: center;
         gap: 0.5rem;
         font-size: 0.8rem;
-        color: #71717a;
+        color: var(--ink-3);
         margin-bottom: 1.5rem;
     }
 
     .breadcrumb a {
-        color: #a1a1aa;
+        color: var(--ink-2);
         text-decoration: none;
-        transition: color 0.2s;
+        transition: color var(--t-fast);
     }
 
     .breadcrumb a:hover {
-        color: var(--accent);
+        color: var(--ink-blue);
     }
 
     .hero-content {
@@ -541,12 +617,12 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
         align-items: center;
         gap: 0.5rem;
         padding: 8px 16px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid var(--accent);
-        border-radius: 100px;
+        background: var(--paper-2);
+        border: 1px solid var(--ink-blue);
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
         font-weight: 600;
-        color: var(--accent);
+        color: var(--ink-blue);
         margin-bottom: 1rem;
     }
 
@@ -557,8 +633,8 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
     .hero h1 {
         font-family: var(--font-serif);
         font-size: clamp(2rem, 4vw, 2.75rem);
-        font-weight: 800;
-        color: #fafafa;
+        font-weight: 400;
+        color: var(--ink);
         margin: 0 0 0.75rem;
         letter-spacing: -0.02em;
         line-height: 1.2;
@@ -566,14 +642,14 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
 
     .aliases {
         font-size: 0.9rem;
-        color: #71717a;
+        color: var(--ink-3);
         margin: 0 0 1rem;
         font-style: italic;
     }
 
     .description {
         font-size: 1.1rem;
-        color: #a1a1aa;
+        color: var(--ink-2);
         line-height: 1.7;
         margin: 0 0 1.5rem;
     }
@@ -586,26 +662,27 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
 
     .code {
         padding: 6px 12px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 8px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         font-size: 0.8rem;
-        color: #a1a1aa;
+        font-family: var(--font-mono);
+        color: var(--ink-2);
     }
 
     .code strong {
-        color: #e5e7eb;
+        color: var(--ink);
         margin-right: 4px;
     }
 
     .code--link {
         text-decoration: none;
-        transition: all 0.2s;
+        transition: all var(--t-fast);
     }
 
     .code--link:hover {
-        background: rgba(255, 255, 255, 0.08);
-        border-color: var(--accent);
+        background: var(--paper-3);
+        border-color: var(--ink-blue);
     }
 
     .hero-stats {
@@ -620,14 +697,14 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
         align-items: center;
         text-align: center;
         padding: 1.25rem;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 14px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
     }
 
     .stat-card--active {
-        background: rgba(16, 185, 129, 0.08);
-        border-color: rgba(16, 185, 129, 0.2);
+        background: var(--verdant-2);
+        border-color: var(--verdant);
     }
 
     .stat-icon {
@@ -638,15 +715,15 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
     .stat-card .stat-value {
         font-family: var(--font-mono);
         font-size: 1.25rem;
-        font-weight: 700;
-        color: #fafafa;
+        font-weight: 500;
+        color: var(--ink);
     }
 
     .stat-card .stat-label {
         font-size: 0.7rem;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: #71717a;
+        color: var(--ink-3);
         margin-top: 2px;
     }
 
@@ -664,9 +741,9 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
 
     /* Cards */
     .card {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 16px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 1.75rem;
         margin-bottom: 1.5rem;
     }
@@ -675,16 +752,17 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
         display: flex;
         align-items: center;
         gap: 0.75rem;
+        font-family: var(--font-serif);
         font-size: 1.1rem;
-        font-weight: 700;
-        color: #fafafa;
+        font-weight: 400;
+        color: var(--ink);
         margin: 0 0 1.25rem;
         padding-bottom: 1rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid var(--rule);
     }
 
     .card-title svg {
-        color: var(--accent);
+        color: var(--ink-blue);
         opacity: 0.8;
     }
 
@@ -701,30 +779,30 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
 
     .toggle-btn {
         padding: 0.5rem 1rem;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 8px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         font-size: 0.8rem;
         font-weight: 500;
-        color: #71717a;
+        color: var(--ink-3);
         cursor: pointer;
-        transition: all 0.2s;
+        transition: all var(--t-fast);
     }
 
     .toggle-btn:hover {
-        background: rgba(255, 255, 255, 0.08);
-        color: #a1a1aa;
+        background: var(--paper-3);
+        color: var(--ink-2);
     }
 
     .toggle-btn.active {
-        background: var(--accent);
-        border-color: var(--accent);
-        color: white;
+        background: var(--ink-blue);
+        border-color: var(--ink-blue);
+        color: var(--paper);
     }
 
     .summary-content {
         font-size: 1rem;
-        color: #a1a1aa;
+        color: var(--ink-2);
         line-height: 1.75;
     }
 
@@ -747,15 +825,15 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
         align-items: flex-start;
         gap: 0.5rem;
         padding: 0.75rem 1rem;
-        background: rgba(255, 255, 255, 0.02);
-        border-radius: 10px;
+        background: var(--paper-2);
+        border-radius: var(--r-3);
         font-size: 0.9rem;
-        color: #e5e7eb;
+        color: var(--ink);
     }
 
     .symptom-list li::before {
-        content: '•';
-        color: var(--accent);
+        content: '\2022';
+        color: var(--ink-blue);
         font-weight: bold;
     }
 
@@ -768,9 +846,9 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
 
     .treatment-card {
         padding: 1.25rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
     }
 
     .treatment-header {
@@ -785,63 +863,63 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: #71717a;
+        color: var(--ink-3);
     }
 
     .fda-badge {
         padding: 3px 8px;
-        background: rgba(16, 185, 129, 0.15);
-        border-radius: 4px;
+        background: var(--verdant-2);
+        border-radius: var(--r-2);
         font-size: 0.6rem;
         font-weight: 600;
-        color: #34d399;
+        color: var(--verdant);
     }
 
     .treatment-name {
         font-size: 0.95rem;
-        font-weight: 600;
-        color: #fafafa;
+        font-weight: 500;
+        color: var(--ink);
         margin: 0 0 0.5rem;
     }
 
     .effectiveness {
         display: inline-block;
         padding: 3px 10px;
-        border-radius: 100px;
+        border-radius: var(--r-pill);
         font-size: 0.7rem;
         font-weight: 500;
     }
 
     .effectiveness--curative {
-        background: rgba(16, 185, 129, 0.15);
-        color: #34d399;
+        background: var(--verdant-2);
+        color: var(--verdant);
     }
 
     .effectiveness--highly-effective {
-        background: rgba(59, 130, 246, 0.15);
-        color: #60a5fa;
+        background: var(--ink-blue-2);
+        color: var(--ink-blue);
     }
 
     .effectiveness--moderately-effective {
-        background: rgba(251, 191, 36, 0.15);
-        color: #fbbf24;
+        background: var(--aged-gold-2);
+        color: var(--aged-gold);
     }
 
     .effectiveness--palliative {
-        background: rgba(156, 163, 175, 0.15);
-        color: #9ca3af;
+        background: var(--paper-3);
+        color: var(--ink-3);
     }
 
     .effectiveness--experimental {
-        background: rgba(139, 92, 246, 0.15);
-        color: #a78bfa;
+        background: var(--ink-blue-2);
+        color: var(--ink-blue);
     }
 
     .approval-year {
         display: block;
         margin-top: 0.5rem;
         font-size: 0.75rem;
-        color: #71717a;
+        color: var(--ink-3);
     }
 
     /* Diagnostics */
@@ -856,9 +934,9 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
         align-items: center;
         gap: 0.75rem;
         padding: 0.75rem 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid var(--rule);
         font-size: 0.9rem;
-        color: #e5e7eb;
+        color: var(--ink);
     }
 
     .diagnostic-list li:last-child {
@@ -866,22 +944,22 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
     }
 
     .diagnostic-list li::before {
-        content: '✓';
+        content: '\2713';
         display: flex;
         align-items: center;
         justify-content: center;
         width: 20px;
         height: 20px;
-        background: rgba(16, 185, 129, 0.15);
+        background: var(--verdant-2);
         border-radius: 50%;
         font-size: 0.6rem;
-        color: #34d399;
+        color: var(--verdant);
     }
 
     /* Prose */
     .prose {
         font-size: 0.95rem;
-        color: #a1a1aa;
+        color: var(--ink-2);
         line-height: 1.75;
     }
 
@@ -900,8 +978,8 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
         display: flex;
         gap: 1rem;
         padding: 1rem;
-        background: rgba(255, 255, 255, 0.02);
-        border-radius: 12px;
+        background: var(--paper-2);
+        border-radius: var(--r-4);
     }
 
     .breakthrough-year {
@@ -911,24 +989,24 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(139, 92, 246, 0.05));
-        border-radius: 10px;
+        background: var(--ink-blue-2);
+        border-radius: var(--r-3);
         font-family: var(--font-mono);
         font-size: 0.85rem;
-        font-weight: 700;
-        color: #a78bfa;
+        font-weight: 600;
+        color: var(--ink-blue);
     }
 
     .breakthrough-content h4 {
         font-size: 0.95rem;
-        font-weight: 600;
-        color: #fafafa;
+        font-weight: 500;
+        color: var(--ink);
         margin: 0 0 0.35rem;
     }
 
     .breakthrough-content p {
         font-size: 0.85rem;
-        color: #a1a1aa;
+        color: var(--ink-2);
         margin: 0;
         line-height: 1.5;
     }
@@ -946,16 +1024,16 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
         align-items: center;
         text-align: center;
         padding: 1.25rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         text-decoration: none;
-        transition: all 0.2s;
+        transition: all var(--t-fast);
     }
 
     .doctor-card:hover {
-        background: rgba(255, 255, 255, 0.04);
-        border-color: rgba(139, 92, 246, 0.3);
+        background: var(--paper-2);
+        border-color: var(--rule-strong);
         transform: translateY(-2px);
     }
 
@@ -966,7 +1044,7 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
         border-radius: 50%;
         overflow: hidden;
         margin-bottom: 0.75rem;
-        background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(139, 92, 246, 0.1));
+        background: var(--ink-blue-2);
     }
 
     .doctor-avatar img {
@@ -982,8 +1060,8 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
         width: 100%;
         height: 100%;
         font-size: 1.25rem;
-        font-weight: 700;
-        color: #a78bfa;
+        font-weight: 600;
+        color: var(--ink-blue);
     }
 
     .tier-badge {
@@ -991,32 +1069,33 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
         bottom: -4px;
         right: -4px;
         padding: 2px 6px;
-        border-radius: 4px;
+        border-radius: var(--r-2);
         font-size: 0.55rem;
         font-weight: 700;
-        color: white;
+        color: var(--paper);
     }
 
-    .tier-badge--titan { background: linear-gradient(135deg, #fbbf24, #d97706); }
-    .tier-badge--elite { background: linear-gradient(135deg, #38bdf8, #0284c7); }
-    .tier-badge--master { background: linear-gradient(135deg, #4ade80, #16a34a); }
+    .tier-badge--titan { background: var(--aged-gold); }
+    .tier-badge--elite { background: var(--ink-blue); }
+    .tier-badge--master { background: var(--verdant); }
 
     .doctor-info h4 {
+        font-family: var(--font-serif);
         font-size: 0.9rem;
-        font-weight: 600;
-        color: #fafafa;
+        font-weight: 500;
+        color: var(--ink);
         margin: 0 0 0.25rem;
     }
 
     .doctor-info .specialty {
         font-size: 0.75rem;
-        color: #a1a1aa;
+        color: var(--ink-2);
         margin: 0;
     }
 
     .doctor-info .location {
         font-size: 0.7rem;
-        color: #71717a;
+        color: var(--ink-3);
         margin: 0.25rem 0 0;
     }
 
@@ -1025,16 +1104,16 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
         text-align: center;
         margin-top: 1.25rem;
         padding-top: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-top: 1px solid var(--rule);
         font-size: 0.85rem;
         font-weight: 500;
-        color: var(--accent);
+        color: var(--ink-blue);
         text-decoration: none;
-        transition: color 0.2s;
+        transition: color var(--t-fast);
     }
 
     .view-all-link:hover {
-        color: #c4b5fd;
+        color: var(--ink);
     }
 
     /* Sidebar */
@@ -1051,9 +1130,9 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
     }
 
     .sidebar-card {
-        background: linear-gradient(145deg, rgba(20, 20, 35, 0.95) 0%, rgba(17, 17, 27, 0.9) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 16px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 1.25rem;
     }
 
@@ -1062,10 +1141,10 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: #71717a;
+        color: var(--ink-3);
         margin: 0 0 1rem;
         padding-bottom: 0.75rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid var(--rule);
     }
 
     .facts-list {
@@ -1076,7 +1155,7 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
         display: flex;
         justify-content: space-between;
         padding: 0.6rem 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid var(--rule);
         font-size: 0.8rem;
     }
 
@@ -1085,12 +1164,12 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
     }
 
     .fact-row dt {
-        color: #71717a;
+        color: var(--ink-3);
     }
 
     .fact-row dd {
         margin: 0;
-        color: #e5e7eb;
+        color: var(--ink);
         font-weight: 500;
         text-align: right;
     }
@@ -1101,8 +1180,8 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
         align-items: center;
         gap: 0.5rem;
         padding: 0.75rem;
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 10px;
+        background: var(--paper-2);
+        border-radius: var(--r-3);
         font-size: 0.85rem;
         font-weight: 600;
         color: var(--status-color);
@@ -1125,7 +1204,7 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        color: #71717a;
+        color: var(--ink-3);
         margin: 0 0 0.5rem;
     }
 
@@ -1138,8 +1217,8 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
     .research-centers li {
         padding: 0.4rem 0;
         font-size: 0.8rem;
-        color: #a1a1aa;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        color: var(--ink-2);
+        border-bottom: 1px solid var(--rule);
     }
 
     .research-centers li:last-child {
@@ -1155,10 +1234,10 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
 
     .tag {
         padding: 6px 12px;
-        background: rgba(255, 255, 255, 0.04);
-        border-radius: 100px;
+        background: var(--paper-2);
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
-        color: #a1a1aa;
+        color: var(--ink-2);
     }
 
     /* Specialist List */
@@ -1171,17 +1250,17 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
     .specialist-link {
         display: block;
         padding: 0.6rem 0.75rem;
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 8px;
+        background: var(--paper-2);
+        border-radius: var(--r-3);
         font-size: 0.8rem;
-        color: #a1a1aa;
+        color: var(--ink-2);
         text-decoration: none;
-        transition: all 0.2s;
+        transition: all var(--t-fast);
     }
 
     .specialist-link:hover {
-        background: rgba(139, 92, 246, 0.1);
-        color: #a78bfa;
+        background: var(--ink-blue-2);
+        color: var(--ink-blue);
     }
 
     /* Organizations */
@@ -1196,24 +1275,24 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
         justify-content: space-between;
         align-items: center;
         padding: 0.6rem 0.75rem;
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 8px;
+        background: var(--paper-2);
+        border-radius: var(--r-3);
         text-decoration: none;
-        transition: all 0.2s;
+        transition: all var(--t-fast);
     }
 
     .org-link:hover {
-        background: rgba(255, 255, 255, 0.06);
+        background: var(--paper-3);
     }
 
     .org-name {
         font-size: 0.8rem;
-        color: #e5e7eb;
+        color: var(--ink);
     }
 
     .org-country {
         font-size: 0.7rem;
-        color: #71717a;
+        color: var(--ink-3);
     }
 
     /* Related */
@@ -1226,22 +1305,22 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
     .related-link {
         display: block;
         padding: 0.6rem 0.75rem;
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 8px;
+        background: var(--paper-2);
+        border-radius: var(--r-3);
         font-size: 0.8rem;
-        color: #a1a1aa;
+        color: var(--ink-2);
         text-decoration: none;
-        transition: all 0.2s;
+        transition: all var(--t-fast);
     }
 
     .related-link:hover {
-        background: rgba(139, 92, 246, 0.1);
-        color: #a78bfa;
+        background: var(--ink-blue-2);
+        color: var(--ink-blue);
     }
 
     /* Sources */
     .sources-card {
-        background: rgba(255, 255, 255, 0.02);
+        background: var(--paper-2);
     }
 
     .sources-list {
@@ -1252,7 +1331,7 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
 
     .sources-list li {
         padding: 0.4rem 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid var(--rule);
     }
 
     .sources-list li:last-child {
@@ -1261,7 +1340,7 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
 
     .sources-list a {
         font-size: 0.8rem;
-        color: #60a5fa;
+        color: var(--ink-blue);
         text-decoration: none;
     }
 
@@ -1272,9 +1351,9 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
     .last-updated {
         margin: 1rem 0 0;
         padding-top: 0.75rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        border-top: 1px solid var(--rule);
         font-size: 0.7rem;
-        color: #52525b;
+        color: var(--ink-3);
     }
 
     /* Responsive */

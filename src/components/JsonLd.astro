@@ -48,6 +48,8 @@ interface Props {
     description?: string | null;
     thumbnail?: string | null;
   }[];
+  createdAt?: string | null;
+  updatedAt?: string | null;
 }
 
 const props = Astro.props;
@@ -73,8 +75,8 @@ const speakableSchema = {
 const profilePageSchema = {
   "@context": "https://schema.org",
   "@type": "ProfilePage",
-  "dateCreated": new Date().toISOString(),
-  "dateModified": new Date().toISOString(),
+  "dateCreated": props.createdAt || "2024-01-01T00:00:00Z",
+  "dateModified": props.updatedAt || new Date().toISOString(),
   "mainEntity": {
     "@type": "Person",
     "name": props.fullName,

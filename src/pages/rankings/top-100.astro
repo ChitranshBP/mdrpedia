@@ -1,0 +1,526 @@
+---
+/**
+ * MDRPedia — Top 100 Medical Professionals
+ * Flagship leaderboard page with filter tabs
+ */
+import Layout from '../../layouts/Layout.astro';
+import { getTop100 } from '../../lib/ranking';
+
+export const prerender = false;
+
+const specialty = Astro.url.searchParams.get('specialty') || undefined;
+const country = Astro.url.searchParams.get('country') || undefined;
+
+const top100 = await getTop100({ specialty, country });
+
+// Get distinct specialties and countries from the unfiltered list for filter tabs
+const allTop100 = await getTop100();
+const specialties = [...new Set(allTop100.map(d => d.specialty))].sort();
+const countries = [...new Set(allTop100.map(d => d.geography?.country).filter(Boolean))].sort() as string[];
+
+const tierColors: Record<string, string> = {
+    TITAN: 'var(--aged-gold, #b78e3a)',
+    ELITE: 'var(--ink-blue, #2a629a)',
+    MASTER: 'var(--verdant, #4a9664)',
+    UNRANKED: 'var(--slate, #78788c)',
+};
+
+const tierLabels: Record<string, string> = {
+    TITAN: 'Titan',
+    ELITE: 'Elite',
+    MASTER: 'Master',
+    UNRANKED: '',
+};
+
+const medalEmojis: Record<number, string> = {
+    1: 'gold',
+    2: 'silver',
+    3: 'bronze',
+};
+
+function buildUrl(params: Record<string, string | undefined>): string {
+    const url = new URL('/rankings/top-100', 'https://mdrpedia.com');
+    for (const [key, val] of Object.entries(params)) {
+        if (val) url.searchParams.set(key, val);
+    }
+    return url.pathname + url.search;
+}
+---
+
+<Layout
+    title="Top 100 Medical Professionals — MDRPedia"
+    description="The definitive ranking of the world's 100 most impactful medical professionals, based on research output, clinical impact, and humanitarian contribution."
+>
+    <div class="top100-page">
+        <!-- Hero -->
+        <header class="top100-hero">
+            <div class="container">
+                <span class="top100-hero__badge">GLOBAL LEADERBOARD</span>
+                <h1 class="top100-hero__title">MDRPedia Top 100</h1>
+                <p class="top100-hero__desc">
+                    The world's most impactful medical professionals, ranked by research contribution,
+                    clinical excellence, and humanitarian impact.
+                </p>
+            </div>
+        </header>
+
+        <div class="container">
+            <!-- Filter Tabs -->
+            <nav class="top100-filters">
+                <div class="filter-group">
+                    <label class="filter-label">View:</label>
+                    <div class="filter-tabs">
+                        <a href="/rankings/top-100" class={`filter-tab ${!specialty && !country ? 'filter-tab--active' : ''}`}>All</a>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">By Specialty:</label>
+                    <select class="filter-select" id="specialty-filter" onchange="window.location.href=this.value">
+                        <option value="/rankings/top-100" selected={!specialty}>All Specialties</option>
+                        {specialties.map(s => (
+                            <option value={buildUrl({ specialty: s, country })} selected={specialty === s}>{s}</option>
+                        ))}
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">By Country:</label>
+                    <select class="filter-select" id="country-filter" onchange="window.location.href=this.value">
+                        <option value={buildUrl({ specialty })} selected={!country}>All Countries</option>
+                        {countries.map(c => (
+                            <option value={buildUrl({ specialty, country: c })} selected={country === c}>{c}</option>
+                        ))}
+                    </select>
+                </div>
+            </nav>
+
+            {/* Active filters */}
+            {(specialty || country) && (
+                <div class="active-filters">
+                    {specialty && (
+                        <a href={buildUrl({ country })} class="active-filter">
+                            {specialty}
+                            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        </a>
+                    )}
+                    {country && (
+                        <a href={buildUrl({ specialty })} class="active-filter">
+                            {country}
+                            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        </a>
+                    )}
+                    <a href="/rankings/top-100" class="clear-filters">Clear all</a>
+                </div>
+            )}
+
+            <!-- Leaderboard Table -->
+            {top100.length > 0 ? (
+                <div class="leaderboard-wrapper">
+                    <table class="leaderboard">
+                        <thead>
+                            <tr>
+                                <th class="col-rank">Rank</th>
+                                <th class="col-doctor">Doctor</th>
+                                <th class="col-tier">Tier</th>
+                                <th class="col-specialty">Specialty</th>
+                                <th class="col-hindex">H-Index</th>
+                                <th class="col-institution">Institution</th>
+                                <th class="col-score">Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {top100.map(doctor => (
+                                <tr class={`leaderboard-row ${doctor.globalRank <= 3 ? `leaderboard-row--${medalEmojis[doctor.globalRank]}` : ''}`}>
+                                    <td class="col-rank">
+                                        {doctor.globalRank <= 3 ? (
+                                            <span class={`medal medal--${medalEmojis[doctor.globalRank]}`}>
+                                                {doctor.globalRank}
+                                            </span>
+                                        ) : (
+                                            <span class="rank-num">{doctor.globalRank}</span>
+                                        )}
+                                    </td>
+                                    <td class="col-doctor">
+                                        <a href={`/doctors/${doctor.slug}`} class="doctor-link">
+                                            <div class="doctor-portrait">
+                                                {doctor.portraitUrl && !doctor.portraitUrl.startsWith('data:') ? (
+                                                    <img src={doctor.portraitUrl} alt={doctor.fullName} loading="lazy" width="40" height="40" />
+                                                ) : (
+                                                    <span class="doctor-initials">
+                                                        {doctor.fullName.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <span class="doctor-name">{doctor.fullName}</span>
+                                        </a>
+                                    </td>
+                                    <td class="col-tier">
+                                        {tierLabels[doctor.tier] && (
+                                            <span class="tier-pill" style={`--tier-color: ${tierColors[doctor.tier]}`}>
+                                                {tierLabels[doctor.tier]}
+                                            </span>
+                                        )}
+                                    </td>
+                                    <td class="col-specialty">{doctor.specialty}</td>
+                                    <td class="col-hindex">{doctor.hIndex || '—'}</td>
+                                    <td class="col-institution">
+                                        {doctor.geography?.country || '—'}
+                                    </td>
+                                    <td class="col-score">
+                                        <strong>{Math.round(doctor.score).toLocaleString()}</strong>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            ) : (
+                <div class="no-results">
+                    <p>No doctors match the selected filters.</p>
+                    <a href="/rankings/top-100">View all Top 100</a>
+                </div>
+            )}
+
+            <p class="leaderboard-note">
+                Rankings are based on the MDRPedia composite score, combining research output (H-index, citations),
+                clinical impact (procedures, lives saved), and peer recognition (awards, mentorship).
+                Updated regularly as new data is verified.
+            </p>
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .top100-page {
+        padding-bottom: 4rem;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    /* Hero */
+    .top100-hero {
+        padding: 4rem 0 3rem;
+        border-bottom: 1px solid var(--rule);
+        background: var(--paper-2);
+        text-align: center;
+    }
+
+    .top100-hero__badge {
+        display: inline-block;
+        padding: 4px 14px;
+        background: var(--paper-3);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-2);
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: var(--ink-3);
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+    }
+
+    .top100-hero__title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--ink);
+        margin: 0 0 0.75rem;
+        font-family: var(--font-serif, Georgia, serif);
+    }
+
+    .top100-hero__desc {
+        font-size: 1rem;
+        color: var(--ink-2);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    /* Filters */
+    .top100-filters {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 1.5rem 0;
+        border-bottom: 1px solid var(--rule);
+        flex-wrap: wrap;
+    }
+
+    .filter-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .filter-label {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--ink-3);
+        white-space: nowrap;
+    }
+
+    .filter-tabs {
+        display: flex;
+        gap: 4px;
+    }
+
+    .filter-tab {
+        padding: 6px 14px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--ink-2);
+        text-decoration: none;
+        border: 1px solid var(--rule);
+        border-radius: var(--r-2);
+        transition: all 0.15s;
+    }
+
+    .filter-tab:hover {
+        background: var(--paper-2);
+    }
+
+    .filter-tab--active {
+        background: var(--ink-blue);
+        color: #fff;
+        border-color: var(--ink-blue);
+    }
+
+    .filter-select {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        border: 1px solid var(--rule);
+        border-radius: var(--r-2);
+        background: var(--paper);
+        color: var(--ink);
+        cursor: pointer;
+    }
+
+    .active-filters {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        padding: 1rem 0 0;
+    }
+
+    .active-filter {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 10px;
+        font-size: 0.75rem;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-2);
+        color: var(--ink-2);
+        text-decoration: none;
+    }
+
+    .active-filter:hover {
+        border-color: #c53030;
+        color: #c53030;
+    }
+
+    .clear-filters {
+        font-size: 0.75rem;
+        color: var(--ink-blue);
+        text-decoration: none;
+    }
+
+    /* Leaderboard Table */
+    .leaderboard-wrapper {
+        overflow-x: auto;
+        margin: 1.5rem 0;
+    }
+
+    .leaderboard {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.88rem;
+    }
+
+    .leaderboard thead {
+        border-bottom: 2px solid var(--rule);
+    }
+
+    .leaderboard th {
+        padding: 12px 14px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--ink-3);
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    .leaderboard td {
+        padding: 14px;
+        border-bottom: 1px solid var(--rule);
+        vertical-align: middle;
+    }
+
+    .leaderboard-row:hover {
+        background: var(--paper-2);
+    }
+
+    .leaderboard-row--gold {
+        background: rgba(255, 215, 0, 0.04);
+    }
+
+    .leaderboard-row--silver {
+        background: rgba(192, 192, 192, 0.04);
+    }
+
+    .leaderboard-row--bronze {
+        background: rgba(205, 127, 50, 0.04);
+    }
+
+    .col-rank {
+        width: 60px;
+        text-align: center;
+    }
+
+    .rank-num {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--ink-3);
+    }
+
+    .medal {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+
+    .medal--gold {
+        background: #FFD700;
+        color: #5c4a00;
+    }
+
+    .medal--silver {
+        background: #C0C0C0;
+        color: #3a3a3a;
+    }
+
+    .medal--bronze {
+        background: #CD7F32;
+        color: #3a2000;
+    }
+
+    .doctor-link {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .doctor-link:hover .doctor-name {
+        color: var(--ink-blue);
+    }
+
+    .doctor-portrait {
+        width: 40px;
+        height: 40px;
+        border-radius: var(--r-2);
+        overflow: hidden;
+        flex-shrink: 0;
+        background: var(--paper-3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .doctor-portrait img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .doctor-initials {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--ink-3);
+    }
+
+    .doctor-name {
+        font-weight: 600;
+        color: var(--ink);
+        transition: color 0.15s;
+        white-space: nowrap;
+    }
+
+    .tier-pill {
+        display: inline-block;
+        padding: 2px 8px;
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        border: 1px solid var(--tier-color);
+        color: var(--tier-color);
+        border-radius: var(--r-2);
+    }
+
+    .col-specialty {
+        color: var(--ink-2);
+        font-size: 0.82rem;
+    }
+
+    .col-hindex {
+        font-weight: 600;
+        color: var(--ink);
+    }
+
+    .col-institution {
+        color: var(--ink-2);
+        font-size: 0.82rem;
+    }
+
+    .col-score strong {
+        color: var(--ink-blue);
+    }
+
+    .no-results {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: var(--ink-3);
+    }
+
+    .no-results a {
+        color: var(--ink-blue);
+    }
+
+    .leaderboard-note {
+        font-size: 0.78rem;
+        color: var(--ink-3);
+        line-height: 1.6;
+        padding: 1rem 0;
+        border-top: 1px solid var(--rule);
+    }
+
+    @media (max-width: 768px) {
+        .top100-hero__title {
+            font-size: 1.8rem;
+        }
+
+        .top100-filters {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .col-institution,
+        .col-specialty {
+            display: none;
+        }
+    }
+</style>

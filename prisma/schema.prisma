@@ -3,9 +3,13 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL") // Used for migrations (bypasses connection pooler)
 }
+
+// NOTE: For production, append these params to DATABASE_URL:
+// ?connection_limit=20&pool_timeout=30&statement_timeout=30000&idle_in_transaction_session_timeout=60000
 
 model Geography {
   id        String     @id @default(cuid())
@@ -37,7 +41,8 @@ model Hospital {
   createdAt            DateTime                    @default(now())
   updatedAt            DateTime                    @updatedAt
   affiliations         DoctorHospitalAffiliation[]
-  geography            Geography?                  @relation(fields: [geography_id], references: [id])
+  geography            Geography?                  @relation(fields: [geography_id], references: [id], onDelete: SetNull)
+  ethics_certification ClinicCertification?
 
   @@index([sector])
   @@index([geography_id])
@@ -109,7 +114,7 @@ model Profile {
   historical_artifacts    HistoricalArtifact[]
   impact_metrics          ImpactMetric?
   legacy_timeline         LegacyTimeline[]
-  geography               Geography?                  @relation(fields: [geography_id], references: [id])
+  geography               Geography?                  @relation(fields: [geography_id], references: [id], onDelete: SetNull)
   mentored_by             Profile?                    @relation("MentorLineage", fields: [mentored_by_id], references: [id])
   mentees                 Profile[]                   @relation("MentorLineage")
   techniques              Technique[]
@@ -117,6 +122,15 @@ model Profile {
   views                   ProfileView[]               // Page view analytics
   media                   ProfileMedia[]              // Videos, images, documents
   impact_votes            ImpactVote[]                // User impact testimonials
+  ethics_applications     EthicsApplication[]
+  ethics_subscription     EthicsSubscription?
+
+  // Ethics certification fields
+  ethics_tier             EthicsLevel?
+  ethics_cert_id          String?                     @unique // MDR-ETHICS-2025-XXXXXXXX
+  ethics_certified_at     DateTime?
+  ethics_status           EthicsStatus?
+  ethics_score            Float?                      // 0-100
 
   @@index([specialty])
   @@index([tier])
@@ -124,6 +138,8 @@ model Profile {
   @@index([ranking_score])
   @@index([geography_id])
   @@index([claim_status])
+  @@index([ethics_status])
+  @@index([ethics_tier])
   @@map("profiles")
 }
 
@@ -154,6 +170,7 @@ model Citation {
   @@index([profile_id])
   @@index([verification_status])
   @@index([evidence_classification])
+  @@index([profile_id, verification_status])
   @@map("citations")
 }
 
@@ -309,6 +326,7 @@ model SearchLog {
   clickedSlug  String?
 
   @@index([createdAt])
+  @@index([queryText])
   @@map("search_logs")
 }
 
@@ -340,6 +358,7 @@ model ProfileEdit {
 
   @@index([profile_slug])
   @@index([status])
+  @@index([status, createdAt])
   @@map("profile_edits")
 }
 
@@ -504,6 +523,7 @@ model ProfileView {
   @@index([profile_id])
   @@index([createdAt])
   @@index([is_bot])
+  @@index([profile_id, is_bot, createdAt])
   @@map("profile_views")
 }
 
@@ -589,4 +609,210 @@ enum ImpactType {
   HIGHLY_SKILLED  // "Highly skilled professional"
   MENTOR          // "Great mentor" (for colleagues)
   RESEARCHER      // "Important research contributions"
+}
+
+// ============================================
+// ETHICS CERTIFICATION SYSTEM
+// ============================================
+
+enum EthicsLevel {
+  ADVOCATE
+  GUARDIAN
+  LEGEND
+}
+
+enum EthicsStatus {
+  DRAFT
+  SUBMITTED
+  UNDER_REVIEW
+  APPROVED
+  SUSPENDED
+  REVOKED
+  EXPIRED
+}
+
+enum AuditType {
+  INITIAL
+  QUARTERLY
+  ANNUAL
+}
+
+enum AuditItemCategory {
+  PATIENT_TRANSPARENCY
+  PEER_REVIEW_COMPLIANCE
+  COMMUNITY_PROBONO
+}
+
+enum SubscriptionTier {
+  FREE
+  GUARDIAN_TIER
+  LEGEND_TIER
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELLED
+  TRIALING
+}
+
+enum ClinicCertStatus {
+  PENDING
+  CERTIFIED
+  SUSPENDED
+  REVOKED
+}
+
+enum BadgeEmbedType {
+  SVG_STATIC
+  JS_WIDGET
+}
+
+model EthicsApplication {
+  id               String        @id @default(cuid())
+  profile_id       String
+  target_tier      EthicsLevel
+  status           EthicsStatus  @default(DRAFT)
+  contact_email    String
+  agreed_to_terms  Boolean       @default(false)
+  notes            String?
+  reviewed_by      String?
+  reviewed_at      DateTime?
+  rejection_reason String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  profile          Profile       @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+  audits           EthicsAudit[]
+
+  @@index([profile_id])
+  @@index([status])
+  @@map("ethics_applications")
+}
+
+model EthicsAudit {
+  id             String            @id @default(cuid())
+  application_id String
+  audit_type     AuditType
+  period_start   DateTime
+  period_end     DateTime
+  due_date       DateTime
+  overall_score  Float?
+  status         EthicsStatus      @default(DRAFT)
+  reviewer_notes String?
+  reviewed_by    String?
+  reviewed_at    DateTime?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  application    EthicsApplication @relation(fields: [application_id], references: [id], onDelete: Cascade)
+  items          EthicsAuditItem[]
+
+  @@index([application_id])
+  @@index([audit_type])
+  @@index([status])
+  @@index([due_date])
+  @@map("ethics_audits")
+}
+
+model EthicsAuditItem {
+  id              String            @id @default(cuid())
+  audit_id        String
+  item_key        String
+  category        AuditItemCategory
+  response        String?
+  evidence_urls   String[]
+  points_earned   Float?
+  max_points      Float
+  reviewer_verdict String?          // PASS, FAIL, PARTIAL
+  reviewer_notes  String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  audit           EthicsAudit       @relation(fields: [audit_id], references: [id], onDelete: Cascade)
+
+  @@unique([audit_id, item_key])
+  @@index([audit_id])
+  @@map("ethics_audit_items")
+}
+
+model EthicsChecklistTemplate {
+  id          String            @id @default(cuid())
+  item_key    String            @unique
+  label       String
+  description String?
+  category    AuditItemCategory
+  max_points  Float
+  audit_types AuditType[]
+  tiers       EthicsLevel[]
+  is_required Boolean           @default(false)
+  sort_order  Int               @default(0)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@index([category])
+  @@map("ethics_checklist_templates")
+}
+
+model EthicsSubscription {
+  id                   String             @id @default(cuid())
+  profile_id           String             @unique
+  tier                 SubscriptionTier   @default(FREE)
+  status               SubscriptionStatus @default(ACTIVE)
+  stripe_customer_id   String?
+  stripe_subscription_id String?
+  current_period_start DateTime?
+  current_period_end   DateTime?
+  cancel_at            DateTime?
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+  profile              Profile            @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+
+  @@index([status])
+  @@map("ethics_subscriptions")
+}
+
+model ClinicCertification {
+  id               String          @id @default(cuid())
+  hospital_id      String          @unique
+  status           ClinicCertStatus @default(PENDING)
+  tier             EthicsLevel?
+  certified_doctors Int            @default(0)
+  total_doctors    Int              @default(0)
+  contact_email    String?
+  reviewed_by      String?
+  reviewed_at      DateTime?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  hospital         Hospital        @relation(fields: [hospital_id], references: [id], onDelete: Cascade)
+
+  @@index([status])
+  @@map("clinic_certifications")
+}
+
+model EthicsBadgeEmbed {
+  id            String        @id @default(cuid())
+  cert_id       String
+  embed_type    BadgeEmbedType
+  embed_host    String?
+  request_count Int           @default(1)
+  last_accessed DateTime      @default(now())
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@unique([cert_id, embed_type, embed_host])
+  @@index([cert_id])
+  @@map("ethics_badge_embeds")
+}
+
+// ============================================
+// NEWSLETTER SUBSCRIBERS
+// ============================================
+
+model NewsletterSubscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  source    String   @default("footer") // footer, homepage, profile
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([verified])
+  @@map("newsletter_subscribers")
 }

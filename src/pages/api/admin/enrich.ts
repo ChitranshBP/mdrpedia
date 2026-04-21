@@ -10,6 +10,7 @@ import path from 'node:path';
 import { getCollection } from 'astro:content';
 import { syncDoctorPapers } from '../../../lib/pubmed-sync';
 import { calculateMDRScore } from '../../../lib/mdr-score-engine';
+import { apiError } from '../../../lib/api-response';
 import { requireSuperAdmin } from '../../../lib/rbac';
 import { logAdminAction } from '../../../lib/audit';
 import { checkRateLimit, getClientIdentifier, rateLimitResponse, RATE_LIMITS } from '../../../lib/rate-limit';
@@ -187,7 +188,7 @@ async function enrichDoctorProfile(docEntry: any): Promise<{
     const doc = docEntry.data;
     const jsonPath = path.join(process.cwd(), 'src/content/doctors', `${docEntry.id}.json`);
 
-    console.log(`[Enrich] Starting enrichment for: ${doc.fullName}`);
+    // Starting enrichment
 
     // Step 1: Search OpenAlex for author
     const affiliation = doc.affiliations?.[0]?.hospitalName?.replace(/[^a-zA-Z\s]/g, '');
@@ -200,7 +201,7 @@ async function enrichDoctorProfile(docEntry: any): Promise<{
         };
     }
 
-    console.log(`[Enrich] Found in OpenAlex: ${author.display_name} (H-index: ${author.summary_stats?.h_index})`);
+    // Found in OpenAlex
 
     // Step 2: Extract specialty and data
     const { specialty, subSpecialty } = extractSpecialty(author);
@@ -334,7 +335,15 @@ export async function POST({ request }: { request: Request }) {
         });
     }
 
-    const body = await request.json();
+    let body;
+    try {
+        body = await request.json();
+    } catch {
+        return new Response(JSON.stringify({ error: "Invalid JSON body" }), {
+            status: 400,
+            headers: { "Content-Type": "application/json" }
+        });
+    }
     const { action, slug } = body;
 
     await logAdminAction('ENRICH', slug || 'bulk', { action }, request);
@@ -353,7 +362,7 @@ export async function POST({ request }: { request: Request }) {
             const result = await enrichDoctorProfile(doc);
             return new Response(JSON.stringify(result), { status: result.success ? 200 : 400 });
         } catch (e) {
-            return new Response(JSON.stringify({ success: false, message: (e as Error).message }), { status: 500 });
+            return apiError('admin/enrich single', e);
         }
     }
 
@@ -379,14 +388,14 @@ export async function POST({ request }: { request: Request }) {
                         const result = await enrichDoctorProfile(doc);
 
                         if (result.success) {
-                            send(`✅ ${result.message}`, 'success');
+                            send(`[OK] ${result.message}`, 'success');
                             successCount++;
                         } else {
-                            send(`⚠️ ${result.message}`, 'warning');
+                            send(`[WARN] ${result.message}`, 'warning');
                             failCount++;
                         }
                     } catch (e) {
-                        send(`❌ Failed ${doc.data.fullName}: ${(e as Error).message}`, 'error');
+                        send(`[ERR] Failed ${doc.data.fullName}: enrichment error`, 'error');
                         failCount++;
                     }
                 }
@@ -411,7 +420,7 @@ export async function GET({ request }: { request: Request }) {
     }
 
     const doctors = await getCollection('doctors');
-    const enriched = doctors.filter(d => d.data.hIndex > 0 && d.data.citations?.length > 0);
+    const enriched = doctors.filter(d => d.data.hIndex > 0 && (d.data.citations?.length ?? 0) > 0);
     const needsEnrichment = doctors.filter(d => !d.data.hIndex || d.data.hIndex === 0);
 
     return new Response(JSON.stringify({

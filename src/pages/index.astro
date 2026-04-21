@@ -1,20 +1,35 @@
 ---
 /**
- * MDRPedia — Homepage
- * Premium command-palette style search experience
+ * MDRPedia 2.0 — Homepage
+ * Editorial / scholarly design with ethics programme
  * Database-first with static fallback
- * Uses cached stats for consistent data across all pages
  */
 
 import Layout from "../layouts/Layout.astro";
+import SealRound from "../components/SealRound.astro";
+import RecentlyViewed from "../components/RecentlyViewed";
 import { getCollection } from "astro:content";
-import { countryToCode } from "../lib/country-flags";
 import { prisma } from "../lib/prisma";
-import { getTierCounts, getCountryStats, getFeaturedTitans } from "../lib/cached-stats";
+import { getTierCounts, getCountryStats, getFeaturedTitans, getSpecialtyStats } from "../lib/cached-stats";
 
 export const prerender = false;
 
-// Type for unified doctor data
+type FeaturedTitan = {
+	slug: string;
+	full_name: string;
+	specialty: string;
+	sub_specialty: string | null;
+	tier: string;
+	portrait_url: string | null;
+	h_index: number | null;
+	geography: { country: string; city: string | null } | null;
+};
+
+let tierCounts = { titan: 0, elite: 0, master: 0, unranked: 0, total: 0 };
+let countriesCount = 0;
+let featuredTitans: FeaturedTitan[] = [];
+let specialtyCount = 0;
+
 type DoctorData = {
 	slug: string;
 	fullName: string;
@@ -27,39 +42,21 @@ type DoctorData = {
 	hIndex?: number;
 };
 
-// Type for featured titan from cache
-type FeaturedTitan = {
-	slug: string;
-	full_name: string;
-	specialty: string;
-	sub_specialty: string | null;
-	tier: string;
-	portrait_url: string | null;
-	h_index: number | null;
-	geography: { country: string; city: string | null } | null;
-};
-
 let allDoctors: DoctorData[] = [];
-let dataSource = "database";
-
-// Get cached stats for consistent tier counts across all pages
-let tierCounts = { titan: 0, elite: 0, master: 0, unranked: 0, total: 0 };
-let countriesCount = 0;
-let featuredTitans: FeaturedTitan[] = [];
 
 try {
-	// Fetch cached stats (single source of truth for all pages)
-	const [cachedTierCounts, countryStats, cachedFeaturedTitans] = await Promise.all([
+	const [cachedTierCounts, countryStats, cachedFeaturedTitans, specialtyStats] = await Promise.all([
 		getTierCounts(),
 		getCountryStats(),
-		getFeaturedTitans(8) // Get up to 8 featured titans
+		getFeaturedTitans(8),
+		getSpecialtyStats(),
 	]);
 
 	tierCounts = cachedTierCounts;
 	countriesCount = countryStats.length;
 	featuredTitans = cachedFeaturedTitans;
+	specialtyCount = specialtyStats.length;
 
-	// Fetch doctors for search index
 	const dbDoctors = await prisma.profile.findMany({
 		select: {
 			slug: true,
@@ -69,12 +66,7 @@ try {
 			tier: true,
 			portrait_url: true,
 			h_index: true,
-			geography: {
-				select: {
-					country: true,
-					city: true,
-				},
-			},
+			geography: { select: { country: true, city: true } },
 		},
 	});
 
@@ -94,8 +86,7 @@ try {
 		throw new Error("No profiles in database");
 	}
 } catch (e) {
-	dataSource = "static";
-	console.log("Homepage falling back to static content:", e);
+	// Fallback to static content when DB is unavailable
 	const staticDoctors = await getCollection("doctors");
 	allDoctors = staticDoctors.map((d) => ({
 		slug: d.id,
@@ -109,7 +100,6 @@ try {
 		hIndex: (d.data as any).hIndex || undefined,
 	}));
 
-	// Fallback: calculate stats from static data
 	tierCounts = {
 		titan: allDoctors.filter((d) => d.tier === "TITAN").length,
 		elite: allDoctors.filter((d) => d.tier === "ELITE").length,
@@ -119,2162 +109,526 @@ try {
 	};
 	const countrySet = new Set(allDoctors.map((d) => d.country));
 	countriesCount = countrySet.size;
-
-	// Fallback: get featured titans from static data
-	featuredTitans = allDoctors
-		.filter((d) => d.tier === "TITAN")
-		.slice(0, 8)
-		.map((d) => ({
-			slug: d.slug,
-			full_name: d.fullName,
-			specialty: d.specialty,
-			sub_specialty: d.subSpecialty || null,
-			tier: d.tier,
-			portrait_url: d.portraitUrl,
-			h_index: d.hIndex || null,
-			geography: { country: d.country, city: d.city || null }
-		}));
+	specialtyCount = new Set(allDoctors.map((d) => d.specialty)).size;
 }
 
-// Use cached stats for display
-const totalCount = tierCounts.total;
-const titanCount = tierCounts.titan;
-const eliteCount = tierCounts.elite;
-const masterCount = tierCounts.master;
+// Get initials from name
+function getInitials(name: string): string {
+	return name.split(' ').filter(Boolean).map(n => n[0]).join('').slice(0, 2).toUpperCase();
+}
 
-// Build search index
-const searchIndex = allDoctors
-	.filter(
-		(d) => d.fullName && d.fullName.length > 2 && isNaN(Number(d.fullName)),
-	)
-	.map((d) => ({
-		id: d.slug,
-		n: d.fullName,
-		s: d.specialty || "",
-		ss: d.subSpecialty || "",
-		t: d.tier || "UNRANKED",
-		c: d.country || "",
-		ct: d.city || "",
-		cc: countryToCode(d.country || ""),
-		img:
-			d.portraitUrl && !d.portraitUrl.startsWith("data:")
-				? d.portraitUrl
-				: "",
-		h: d.hIndex || 0,
-	}))
-	.slice(0, 800);
+// Verification Ledger — real data from AdminLog + ProfileEdit
+type LedgerEntry = { time: string; type: string; subject: string; evidence: string; verdict: string; positive: boolean };
+let ledgerEntries: LedgerEntry[] = [];
+try {
+	const [logs, edits] = await Promise.all([
+		prisma.adminLog.findMany({ orderBy: { createdAt: 'desc' }, take: 4 }),
+		prisma.profileEdit.findMany({
+			where: { status: 'APPROVED' },
+			orderBy: { createdAt: 'desc' },
+			take: 2,
+		}),
+	]);
+	for (const log of logs) {
+		const t = log.createdAt;
+		const hh = String(t.getHours()).padStart(2, '0');
+		const mm = String(t.getMinutes()).padStart(2, '0');
+		ledgerEntries.push({
+			time: `${hh}:${mm}`,
+			type: log.action.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, c => c.toUpperCase()),
+			subject: log.target,
+			evidence: log.details ? JSON.parse(log.details).reason || 'Admin action' : 'Admin action',
+			verdict: '\u2713 Applied',
+			positive: true,
+		});
+	}
+	for (const edit of edits) {
+		const t = edit.createdAt;
+		const hh = String(t.getHours()).padStart(2, '0');
+		const mm = String(t.getMinutes()).padStart(2, '0');
+		ledgerEntries.push({
+			time: `${hh}:${mm}`,
+			type: 'Correction',
+			subject: `${edit.field_name} updated — ${edit.profile_slug}`,
+			evidence: `${edit.contributor_name} · ${edit.reason || 'community edit'}`,
+			verdict: '\u2713 Approved',
+			positive: true,
+		});
+	}
+	ledgerEntries.sort((a, b) => b.time.localeCompare(a.time));
+	ledgerEntries = ledgerEntries.slice(0, 6);
+} catch {}
+const hasLedgerData = ledgerEntries.length > 0;
+
+// Search index for inline search
+const searchIndex = allDoctors.slice(0, 800).map(d => ({
+	s: d.slug, n: d.fullName, sp: d.specialty,
+	t: d.tier, c: d.country, ci: d.city || '',
+	p: d.portraitUrl || '', h: d.hIndex || 0,
+}));
+
+// Ethics count from database
+let ethicsCount = 0;
+try {
+	ethicsCount = await prisma.profile.count({ where: { ethics_tier: { not: null } } });
+} catch {
+	ethicsCount = 0;
+}
+
+Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, stale-while-revalidate=300');
 ---
 
-<Layout
-	title="MDRPedia — The Free Encyclopedia of Verified Medical Professionals"
->
-	<div class="homepage">
-		<!-- Ambient Background -->
-		<div class="ambient-bg">
-			<div class="ambient-orb ambient-orb--1"></div>
-			<div class="ambient-orb ambient-orb--2"></div>
-			<div class="ambient-orb ambient-orb--3"></div>
-		</div>
+<Layout title="MDRPedia — The Physicians' Register">
 
-		<!-- Hero Section -->
-		<section class="hero">
-			<div class="hero__badge">
-				<svg
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-				>
-					<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
-					></path>
-					<path d="M9 12l2 2 4-4"></path>
-				</svg>
-				<span>Verified Medical Professionals</span>
-			</div>
-
-			<h1 class="hero__title">
-				<span class="hero__title-main">MDRPedia</span>
-			</h1>
-
-			<p class="hero__subtitle">
-				The world's most comprehensive encyclopedia of verified doctors,
-				surgeons, and medical researchers
-			</p>
-		</section>
-
-		<!-- Command Palette Search -->
-		<section class="search-section" id="search-root">
-			<div class="search-wrapper">
-				<div class="search-bar" id="search-bar">
-					<div class="search-bar__icon">
-						<svg
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2.5"
-						>
-							<circle cx="11" cy="11" r="8"></circle>
-							<path d="m21 21-4.3-4.3"></path>
-						</svg>
-					</div>
-					<input
-						type="text"
-						id="search-input"
-						class="search-bar__input"
-						placeholder="Search doctors, specialties, or locations..."
-						autocomplete="off"
-						spellcheck="false"
-					/>
-					<div class="search-bar__actions">
-						<button
-							type="button"
-							id="clear-btn"
-							class="search-bar__clear"
-							hidden
-						>
-							<svg
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-							>
-								<path d="M18 6L6 18M6 6l12 12"></path>
-							</svg>
-						</button>
-						<kbd class="search-bar__kbd">⌘K</kbd>
-					</div>
-				</div>
-
-				<!-- Command Palette Dropdown -->
-				<div class="command-palette" id="command-palette" hidden>
-					<!-- Quick Categories -->
-					<div class="palette-section" id="quick-categories">
-						<div class="palette-section__header">
-							<span>Quick Access</span>
-						</div>
-						<div class="quick-grid">
-							<button
-								class="quick-item"
-								data-category="specialty"
-								data-value="Cardiology"
-							>
-								<svg
-									class="quick-item__icon-svg"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									stroke-width="2"
-								>
-									<path
-										d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-									></path>
-								</svg>
-								<span class="quick-item__label">Cardiology</span
-								>
-							</button>
-							<button
-								class="quick-item"
-								data-category="specialty"
-								data-value="Neurosurgery"
-							>
-								<svg
-									class="quick-item__icon-svg"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									stroke-width="2"
-								>
-									<circle cx="12" cy="12" r="10"></circle>
-									<path d="M12 16v-4M12 8h.01"></path>
-									<path d="M8 12h8"></path>
-								</svg>
-								<span class="quick-item__label"
-									>Neurosurgery</span
-								>
-							</button>
-							<button
-								class="quick-item"
-								data-category="specialty"
-								data-value="Oncology"
-							>
-								<svg
-									class="quick-item__icon-svg"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									stroke-width="2"
-								>
-									<circle cx="12" cy="12" r="3"></circle>
-									<path d="M12 2v4m0 12v4M2 12h4m12 0h4"
-									></path>
-									<path
-										d="M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"
-									></path>
-								</svg>
-								<span class="quick-item__label">Oncology</span>
-							</button>
-							<button
-								class="quick-item"
-								data-category="specialty"
-								data-value="Orthopedics"
-							>
-								<svg
-									class="quick-item__icon-svg"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									stroke-width="2"
-								>
-									<path
-										d="M18 4a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12z"
-									></path>
-									<path
-										d="M6 10v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-8"
-									></path>
-									<path d="M10 14h4"></path>
-								</svg>
-								<span class="quick-item__label"
-									>Orthopedics</span
-								>
-							</button>
-							<button
-								class="quick-item"
-								data-category="tier"
-								data-value="TITAN"
-							>
-								<svg
-									class="quick-item__icon-svg quick-item__icon-svg--gold"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									stroke-width="2"
-								>
-									<polygon
-										points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
-									></polygon>
-								</svg>
-								<span class="quick-item__label">Titan Tier</span
-								>
-							</button>
-							<button
-								class="quick-item"
-								data-category="browse"
-								data-value="all"
-							>
-								<svg
-									class="quick-item__icon-svg"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									stroke-width="2"
-								>
-									<rect x="3" y="3" width="7" height="7"
-									></rect>
-									<rect x="14" y="3" width="7" height="7"
-									></rect>
-									<rect x="14" y="14" width="7" height="7"
-									></rect>
-									<rect x="3" y="14" width="7" height="7"
-									></rect>
-								</svg>
-								<span class="quick-item__label">Browse All</span
-								>
-							</button>
-						</div>
-					</div>
-
-					<!-- Search Results -->
-					<div class="palette-section" id="search-results" hidden>
-						<div class="palette-section__header">
-							<span>Results</span>
-							<span class="results-count" id="results-count"
-							></span>
-						</div>
-						<div class="results-list" id="results-list"></div>
-					</div>
-
-					<!-- Recent Searches -->
-					<div class="palette-section" id="recent-section" hidden>
-						<div class="palette-section__header">
-							<span>Recent</span>
-							<button class="clear-recent" id="clear-recent"
-								>Clear</button
-							>
-						</div>
-						<div class="recent-list" id="recent-list"></div>
-					</div>
-
-					<!-- Palette Footer -->
-					<div class="palette-footer">
-						<div class="palette-footer__hints">
-							<span><kbd>↑</kbd><kbd>↓</kbd> Navigate</span>
-							<span><kbd>↵</kbd> Open</span>
-							<span><kbd>Esc</kbd> Close</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<!-- Stats Pills -->
-		<section class="stats-section">
-			<div class="stats-pills">
-				<a href="/doctors" class="stat-pill">
-					<span class="stat-pill__value"
-						>{totalCount.toLocaleString()}</span
-					>
-					<span class="stat-pill__label">Profiles</span>
-				</a>
-				<a
-					href="/doctors?tier=TITAN"
-					class="stat-pill stat-pill--titan"
-				>
-					<span class="stat-pill__value">{titanCount}</span>
-					<span class="stat-pill__label">Titans</span>
-				</a>
-				<a
-					href="/doctors?tier=ELITE"
-					class="stat-pill stat-pill--elite"
-				>
-					<span class="stat-pill__value">{eliteCount}</span>
-					<span class="stat-pill__label">Elite</span>
-				</a>
-				<a
-					href="/doctors?tier=MASTER"
-					class="stat-pill stat-pill--master"
-				>
-					<span class="stat-pill__value">{masterCount}</span>
-					<span class="stat-pill__label">Master</span>
-				</a>
-				<div class="stat-pill">
-					<span class="stat-pill__value">{countriesCount}</span>
-					<span class="stat-pill__label">Countries</span>
-				</div>
-			</div>
-		</section>
-
-		<!-- Featured Titans -->
-		{
-			featuredTitans.length > 0 && (
-				<section class="featured-section">
-					<h2 class="section-heading">
-						<svg
-							class="section-heading__icon-svg section-heading__icon-svg--gold"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-						>
-							<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-						</svg>
-						<span>Featured Titans</span>
-					</h2>
-					<div class="featured-grid">
-						{featuredTitans.slice(0, 4).map((doc) => {
-							const docCountry = doc.geography?.country || "Unknown";
-							const countryCode = countryToCode(docCountry);
-							const initials = doc.full_name
-								.split(" ")
-								.map((w: string) => w[0])
-								.filter((_: string, i: number) => i < 2)
-								.join("")
-								.toUpperCase();
-							const hasValidPortrait = doc.portrait_url && !doc.portrait_url.startsWith("data:");
-
-							return (
-								<a
-									href={`/doctors/${doc.slug}`}
-									class="featured-card"
-								>
-									<div class="featured-card__avatar">
-										{hasValidPortrait ? (
-											<img
-												src={doc.portrait_url}
-												alt={doc.full_name}
-												loading="lazy"
-											/>
-										) : (
-											<span class="featured-card__initials">{initials}</span>
-										)}
-										<div class="featured-card__tier">TITAN</div>
-									</div>
-									<div class="featured-card__info">
-										<h3>{doc.full_name}</h3>
-										<p>{doc.specialty}</p>
-										<span class="featured-card__location">
-											{countryCode && (
-												<span class="flag">
-													{String.fromCodePoint(
-														...countryCode
-															.toUpperCase()
-															.split("")
-															.map(
-																(c) =>
-																	0x1f1e6 +
-																	c.charCodeAt(
-																		0,
-																	) -
-																	65,
-															),
-													)}
-												</span>
-											)}
-											{docCountry}
-										</span>
-									</div>
-								</a>
-							);
-						})}
-					</div>
-					<a href="/doctors?tier=TITAN" class="view-more-link">
-						View all {titanCount} Titan profiles
-						<svg
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-						>
-							<path d="M5 12h14M12 5l7 7-7 7" />
-						</svg>
-					</a>
-				</section>
-			)
-		}
-
-		<!-- Explore by Specialty -->
-		<section class="explore-section">
-			<h2 class="section-heading">
-				<svg
-					class="section-heading__icon-svg"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-				>
-					<circle cx="12" cy="12" r="3"></circle>
-					<path d="M12 2v4m0 12v4M2 12h4m12 0h4"></path>
-				</svg>
-				<span>Explore by Specialty</span>
-			</h2>
-			<div class="specialty-grid">
-				<a href="/doctors?specialty=Cardiology" class="specialty-card">
-					<svg
-						class="specialty-card__icon-svg"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-					>
-						<path
-							d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-						></path>
-					</svg>
-					<span class="specialty-card__name">Cardiology</span>
-					<span class="specialty-card__arrow">→</span>
-				</a>
-				<a
-					href="/doctors?specialty=Neurosurgery"
-					class="specialty-card"
-				>
-					<svg
-						class="specialty-card__icon-svg"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-					>
-						<circle cx="12" cy="12" r="10"></circle>
-						<path d="M12 16v-4M12 8h.01"></path>
-						<path d="M8 12h8"></path>
-					</svg>
-					<span class="specialty-card__name">Neurosurgery</span>
-					<span class="specialty-card__arrow">→</span>
-				</a>
-				<a href="/doctors?specialty=Oncology" class="specialty-card">
-					<svg
-						class="specialty-card__icon-svg"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-					>
-						<circle cx="12" cy="12" r="3"></circle>
-						<path d="M12 2v4m0 12v4M2 12h4m12 0h4"></path>
-						<path
-							d="M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"
-						></path>
-					</svg>
-					<span class="specialty-card__name">Oncology</span>
-					<span class="specialty-card__arrow">→</span>
-				</a>
-				<a href="/doctors?specialty=Orthopedics" class="specialty-card">
-					<svg
-						class="specialty-card__icon-svg"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-					>
-						<path
-							d="M18 4a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12z"
-						></path>
-						<path d="M6 10v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-8"
-						></path>
-						<path d="M10 14h4"></path>
-					</svg>
-					<span class="specialty-card__name">Orthopedics</span>
-					<span class="specialty-card__arrow">→</span>
-				</a>
-				<a
-					href="/doctors?specialty=Transplant Surgery"
-					class="specialty-card"
-				>
-					<svg
-						class="specialty-card__icon-svg"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-					>
-						<path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-						<path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path>
-					</svg>
-					<span class="specialty-card__name">Transplant Surgery</span>
-					<span class="specialty-card__arrow">→</span>
-				</a>
-				<a
-					href="/doctors?specialty=Plastic Surgery"
-					class="specialty-card"
-				>
-					<svg
-						class="specialty-card__icon-svg"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-					>
-						<path
-							d="M12 3l1.39 4.28h4.5l-3.64 2.64 1.39 4.28L12 11.56l-3.64 2.64 1.39-4.28-3.64-2.64h4.5L12 3z"
-						></path>
-						<circle cx="12" cy="12" r="10"></circle>
-					</svg>
-					<span class="specialty-card__name">Plastic Surgery</span>
-					<span class="specialty-card__arrow">→</span>
-				</a>
-				<a href="/doctors?specialty=Pediatrics" class="specialty-card">
-					<svg
-						class="specialty-card__icon-svg"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-					>
-						<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"
-						></path>
-						<circle cx="9" cy="7" r="4"></circle>
-						<path
-							d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"
-						></path>
-					</svg>
-					<span class="specialty-card__name">Pediatrics</span>
-					<span class="specialty-card__arrow">→</span>
-				</a>
-				<a href="/doctors" class="specialty-card specialty-card--all">
-					<svg
-						class="specialty-card__icon-svg"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-					>
-						<rect x="3" y="3" width="7" height="7"></rect>
-						<rect x="14" y="3" width="7" height="7"></rect>
-						<rect x="14" y="14" width="7" height="7"></rect>
-						<rect x="3" y="14" width="7" height="7"></rect>
-					</svg>
-					<span class="specialty-card__name">All Specialties</span>
-					<span class="specialty-card__arrow">→</span>
-				</a>
-			</div>
-		</section>
-
-		<!-- Explore Directories -->
-		<section class="explore-section">
-			<h2 class="section-heading">
-				<svg
-					class="section-heading__icon-svg"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-				>
-					<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-					<path
-						d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
-					></path>
-				</svg>
-				<span>Explore Medical Directories</span>
-			</h2>
-			<div class="specialty-grid">
-				<a href="/rare-diseases" class="specialty-card">
-					<span class="specialty-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span>
-					<span class="specialty-card__name">Rare Diseases</span>
-					<span class="specialty-card__arrow">→</span>
-				</a>
-				<a href="/hospitals" class="specialty-card">
-					<span class="specialty-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/><path d="M10 10h4M12 8v4"/></svg></span>
-					<span class="specialty-card__name">Hospitals</span>
-					<span class="specialty-card__arrow">→</span>
-				</a>
-				<a href="/clinical-trials" class="specialty-card">
-					<span class="specialty-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M9 3h6v2H9zM12 5v6"/><circle cx="12" cy="14" r="7"/><path d="M12 11v3l2 2"/></svg></span>
-					<span class="specialty-card__name">Clinical Trials</span>
-					<span class="specialty-card__arrow">→</span>
-				</a>
-				<a href="/prizes" class="specialty-card">
-					<span class="specialty-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></span>
-					<span class="specialty-card__name">Medical Awards</span>
-					<span class="specialty-card__arrow">→</span>
-				</a>
-				<a href="/communities" class="specialty-card">
-					<span class="specialty-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
-					<span class="specialty-card__name">Communities</span>
-					<span class="specialty-card__arrow">→</span>
-				</a>
-				<a href="/news" class="specialty-card">
-					<span class="specialty-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg></span>
-					<span class="specialty-card__name">Latest News</span>
-					<span class="specialty-card__arrow">→</span>
-				</a>
-			</div>
-		</section>
-
-		<!-- Content Enrichment -->
-		<article class="content-enrichment">
-			<section class="content-block">
-				<h2>The MDRPedia Vision: A Beacon of Truth in Medical Data</h2>
-				<p>
-					In an era where medical information is abundant yet
-					frequently unverified, the need for a definitive, trusted
-					source of truth has never been greater. MDRPedia was founded
-					on a singular powerful principle: <strong
-						>distinction through verification</strong
-					>. We are not merely a directory; we are a curated
-					encyclopedia of the world's finest medical minds, a
-					repository of excellence that documents the careers of those
-					who have shaped modern medicine.
-				</p>
-			</section>
-
-			<section class="content-block content-block--alt">
-				<h2>Our 4-Pillar Verification System</h2>
-				<div class="pillars-grid">
-					<div class="pillar-card">
-						<div class="pillar-card__number">1</div>
-						<h3>Clinical Mastery Index</h3>
-						<p>
-							Surgical volume, success rates in complex cases,
-							board certifications, and specialization in
-							high-acuity interventions.
-						</p>
-					</div>
-					<div class="pillar-card">
-						<div class="pillar-card__number">2</div>
-						<h3>Intellectual Legacy</h3>
-						<p>
-							H-Index metrics, landmark publications, textbook
-							authorship, and contributions that change clinical
-							guidelines.
-						</p>
-					</div>
-					<div class="pillar-card">
-						<div class="pillar-card__number">3</div>
-						<h3>Global Mentorship Score</h3>
-						<p>
-							Medical lineage tracking—who they trained and what
-							those students achieved, ensuring legacy
-							reproduction.
-						</p>
-					</div>
-					<div class="pillar-card">
-						<div class="pillar-card__number">4</div>
-						<h3>Humanitarian Impact</h3>
-						<p>
-							Contributions to global health equity, disaster
-							response, free clinics, and care for underserved
-							populations.
-						</p>
-					</div>
-				</div>
-			</section>
-
-			<section class="content-block">
-				<h2>For Patients, Researchers, and Institutions</h2>
-				<div class="audience-grid">
-					<div class="audience-card">
-						<h4>For Patients</h4>
-						<p>
-							<strong>Find the Best Care:</strong> Filter by specific
-							expertise and procedural volume. Our Titan/Elite/Master
-							tiers help you gauge standing without interpreting CVs.
-						</p>
-					</div>
-					<div class="audience-card">
-						<h4>For Researchers</h4>
-						<p>
-							<strong>Identify Collaborators:</strong> Assess research
-							focus and output. Track which institutions lead in specific
-							fields and identify rising stars.
-						</p>
-					</div>
-					<div class="audience-card">
-						<h4>For Institutions</h4>
-						<p>
-							<strong>Recruitment & Benchmarking:</strong> Compare faculty
-							against global standards. Ensure top talent is accurately
-							represented for institutional prestige.
-						</p>
-					</div>
-				</div>
-			</section>
-		</article>
+<!-- HERO -->
+<section class="hero container">
+	<div class="hero__masthead">
+		<span class="edition">Vol. II &middot; Edition 2026-04 &middot; The Physicians' Register</span>
+		<span class="edition">Open Encyclopedia &middot; CC-BY-SA &middot; <span id="hero-date"></span></span>
 	</div>
+
+	<h1 class="reveal">A record of<br><em>who practices medicine —</em><br>and how they practice it.</h1>
+
+	<div class="hero__lede">
+		<p>
+			MDRPedia is an independently-verified encyclopedia of {tierCounts.total.toLocaleString()} physicians across {countriesCount} countries. Every profile is built from primary sources — journals, registries, institutions — and carries a single, revocable mark of stature. In 2026, it earned a second mark: <strong>Ethics</strong>.
+		</p>
+		<div class="hero__stats">
+			<div class="hero__stat"><div class="n tnum" data-count={tierCounts.total}>{tierCounts.total.toLocaleString()}</div><div class="l">Verified Profiles</div></div>
+			<div class="hero__stat"><div class="n tnum" data-count={countriesCount}>{countriesCount}</div><div class="l">Countries</div></div>
+			<div class="hero__stat"><div class="n tnum" data-count={tierCounts.titan}>{tierCounts.titan}</div><div class="l">Titans &middot; Tier I</div></div>
+			<div class="hero__stat"><div class="n tnum" data-count={ethicsCount}>{ethicsCount}</div><div class="l">Ethics Legends</div></div>
+		</div>
+	</div>
+
+	<div class="command">
+		<label class="command__bar">
+			<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+			<input id="hero-search" placeholder={`Search ${tierCounts.total.toLocaleString()} profiles by name, specialty, institution, DOI...`} autocomplete="off" />
+			<kbd class="mono" style="font-size:10px; padding:3px 6px; border:1px solid var(--rule); border-radius:3px; color:var(--ink-3);">&#8984;K</kbd>
+		</label>
+		<div class="command__facets">
+			<button class="facet">Specialty <span class="count">{specialtyCount}</span></button>
+			<button class="facet">Country <span class="count">{countriesCount}</span></button>
+			<button class="facet">Tier</button>
+			<button class="facet">Ethics <span class="count">{ethicsCount}</span></button>
+			<button class="facet">Institution</button>
+			<button class="facet">Mentorship Lineage</button>
+			<button class="facet">Rare Disease</button>
+		</div>
+	</div>
+</section>
+
+<!-- RECENTLY VIEWED (client-only, renders only if localStorage has entries) -->
+<div class="container" style="padding-top: var(--s-6);">
+	<RecentlyViewed client:load />
+</div>
+
+<!-- ETHICAL DOCTORS — new section -->
+<section class="container">
+	<div class="ethics-hero reveal">
+		<div>
+			<span class="new-mark"><span class="dot"></span>New &middot; 2026 Programme</span>
+			<h2>Merit is one register.<br><em>Integrity is another.</em></h2>
+			<p>Stature tells you how much a doctor knows. The <strong>Ethics Register</strong> tells you how they practice. It's independently verified, publicly revocable, and — for the first time — embeddable on their own clinic website. A seal they earn, and a promise they sign.</p>
+			<div class="ethics-hero__actions">
+				<a href="/ethical-doctors" class="btn btn--verdant">Enter the Ethics Register &rarr;</a>
+				<a href="/doctor/claim" class="btn btn--ghost">Nominate a Doctor</a>
+			</div>
+		</div>
+		<div class="ethics-hero__seals">
+			<div><SealRound kind="legend" id="E-001" size={160} /></div>
+			<div><SealRound kind="guardian" id="E-044" size={130} /></div>
+			<div><SealRound kind="advocate" id="E-215" size={110} /></div>
+		</div>
+	</div>
+</section>
+
+<!-- FEATURED TITANS -->
+<section class="sec container">
+	<div class="sec-head">
+		<div class="sec-head__left">
+			<span class="num">&sect; 01</span>
+			<h2>The <em>Titans</em></h2>
+		</div>
+		<div class="sec-head__right">{tierCounts.titan} profiles &middot; <a href="/rankings">the complete register &rarr;</a></div>
+	</div>
+	<div class="roll">
+		{featuredTitans.slice(0, 8).map(titan => (
+			<a class="roll__card" href={`/doctors/${titan.slug}`}>
+				<div class="roll__portrait">
+					{titan.portrait_url ? (
+						<img src={titan.portrait_url} alt={titan.full_name} loading="lazy" width="88" height="88" class="roll__img" />
+					) : (
+						<div class="pp">{getInitials(titan.full_name)}</div>
+					)}
+				</div>
+				<div>
+					<h3>{titan.full_name}</h3>
+					<div class="spec">{titan.specialty}{titan.sub_specialty ? ` \u00B7 ${titan.sub_specialty}` : ''}</div>
+				</div>
+				<div class="meta">
+					<span>{titan.geography?.city ? `${titan.geography.city}, ` : ''}{titan.geography?.country || 'Unknown'}</span>
+					<strong>h-index {titan.h_index || '—'}</strong>
+				</div>
+			</a>
+		))}
+		{/* Fill empty slots if fewer than 8 titans */}
+		{featuredTitans.length < 8 && Array.from({ length: Math.min(8 - featuredTitans.length, 4) }).map((_, i) => (
+			<a class="roll__card" href="/rankings" style="opacity:0.5;">
+				<div class="roll__portrait"><div class="pp">?</div></div>
+				<div>
+					<h3>View More</h3>
+					<div class="spec">Browse the full register</div>
+				</div>
+				<div class="meta"><span>&nbsp;</span><strong>&rarr;</strong></div>
+			</a>
+		))}
+	</div>
+</section>
+
+<!-- PILLARS -->
+<section class="sec container">
+	<div class="sec-head">
+		<div class="sec-head__left">
+			<span class="num">&sect; 02</span>
+			<h2>How a tier <em>is decided</em></h2>
+		</div>
+		<div class="sec-head__right">Methodology v2.0</div>
+	</div>
+	<div class="pillars">
+		<div class="pillar"><div class="num">01</div><h3>Clinical Mastery</h3><p>Case volume in high-acuity interventions, complication rates, board certifications, registries.</p><div class="metric">Weight 30%<div class="bar" style="--w: 30%"></div></div></div>
+		<div class="pillar"><div class="num">02</div><h3>Intellectual Legacy</h3><p>H-index, landmark trials, textbook authorship, changes to clinical guidelines.</p><div class="metric">Weight 30%<div class="bar" style="--w: 30%"></div></div></div>
+		<div class="pillar"><div class="num">03</div><h3>Mentorship</h3><p>Tracked lineage of trainees and what they went on to do. Legacy reproduced.</p><div class="metric">Weight 20%<div class="bar" style="--w: 20%"></div></div></div>
+		<div class="pillar"><div class="num">04</div><h3>Humanitarian Impact</h3><p>Global health, disaster work, free clinics, care for the underserved.</p><div class="metric">Weight 20%<div class="bar" style="--w: 20%"></div></div></div>
+	</div>
+</section>
+
+<!-- DIRECTORIES -->
+<section class="sec container">
+	<div class="sec-head">
+		<div class="sec-head__left">
+			<span class="num">&sect; 03</span>
+			<h2>The <em>register</em> of records</h2>
+		</div>
+		<div class="sec-head__right">Seven adjacent encyclopedias</div>
+	</div>
+	<div class="dirs">
+		<a class="dir" href="/doctors"><span class="dir__tag">Directory 01</span><h3>Physicians</h3><p>Every verified doctor, living or historical, with full dossier and ethics record.</p><div class="dir__meta"><span>{tierCounts.total.toLocaleString()} profiles</span><span class="dir__n">&nearr;</span></div></a>
+		<a class="dir" href="/ethical-doctors"><span class="dir__tag">Directory 02</span><h3>Ethical Doctors</h3><p>The register of integrity — Legends, Guardians, and Advocates of ethical practice.</p><div class="dir__meta"><span>{ethicsCount} seals</span><span class="dir__n">&nearr;</span></div></a>
+		<a class="dir" href="/rankings"><span class="dir__tag">Directory 03</span><h3>Rankings</h3><p>By specialty, country, institution, and the four pillars of verification.</p><div class="dir__meta"><span>{specialtyCount} specialties</span><span class="dir__n">&nearr;</span></div></a>
+		<a class="dir" href="/institutions"><span class="dir__tag">Directory 04</span><h3>Institutions</h3><p>Hospitals, research centers, and centers of excellence — ranked and mapped.</p><div class="dir__meta"><span>Hospitals</span><span class="dir__n">&nearr;</span></div></a>
+		<a class="dir" href="/rare-diseases"><span class="dir__tag">Directory 05</span><h3>Rare Diseases</h3><p>Conditions and the physicians verified to treat them, by country.</p><div class="dir__meta"><span>Conditions</span><span class="dir__n">&nearr;</span></div></a>
+		<a class="dir" href="/clinical-trials"><span class="dir__tag">Directory 06</span><h3>Clinical Trials</h3><p>Active trials, investigators, and the lineage of evidence they produce.</p><div class="dir__meta"><span>Trials</span><span class="dir__n">&nearr;</span></div></a>
+	</div>
+</section>
+
+<!-- VERIFICATION LEDGER -->
+<section class="ledger">
+	<div class="container">
+		<div class="ledger__head">
+			<h3>The Verification Ledger</h3>
+			{hasLedgerData ? (
+				<span class="live"><span class="dot"></span>Recent activity</span>
+			) : (
+				<span class="live">Sample data</span>
+			)}
+		</div>
+		<div class="ledger__list">
+			<div class="ledger__row head"><span>Time</span><span>Type</span><span>Subject</span><span>Evidence</span><span>Verdict</span></div>
+			{hasLedgerData ? (
+				ledgerEntries.map(entry => (
+					<div class="ledger__row">
+						<span>{entry.time}</span>
+						<span>{entry.type}</span>
+						<span>{entry.subject}</span>
+						<span>{entry.evidence}</span>
+						<span class={`verdict ${entry.positive ? 'v' : 'r'}`}>{entry.verdict}</span>
+					</div>
+				))
+			) : (
+				<div class="ledger__row"><span></span><span></span><span>No recent activity recorded.</span><span></span><span></span></div>
+			)}
+		</div>
+	</div>
+</section>
+
+<!-- EDITORIAL -->
+<section class="ed container">
+	<div class="ed__side">
+		On the <br>Editorial <br>Mission
+	</div>
+	<div class="ed__body">
+		<h2>Why build an <em>encyclopedia</em> and not another directory?</h2>
+		<p class="drop">Directories rank doctors. Review sites count stars. Insurance portals list contracts. None of those answer the question a patient, a researcher, or a hospital actually asks: <em>what did this person do, and does it hold up?</em></p>
+		<p>MDRPedia is built as a work of record. Every claim is sourced. Every source is citable. Every tier is revocable. And starting in 2026, every doctor also has an Ethics file — a separate, public ledger of how they practice, which any of us can nominate into, and any of us can scrutinize. It is not the faster way to find a doctor. It is the truer one.</p>
+		<p><a href="/about">Read the full editorial &rarr;</a></p>
+	</div>
+</section>
+
+<!-- REGIONAL NAMES -->
+<section class="regional container">
+	<div class="sec-head">
+		<div class="sec-head__left">
+			<span class="num">&sect; 04</span>
+			<h2>One register, <em>two names</em></h2>
+		</div>
+		<div class="sec-head__right"><a href="/about/our-name">the full story &rarr;</a></div>
+	</div>
+	<div class="regional__grid">
+		<a href="/about/mdpedia" class="regional__card">
+			<div class="regional__label">In the West</div>
+			<div class="regional__name">MDpedia</div>
+			<div class="regional__origin">From "MD" — Doctor of Medicine</div>
+			<p>Across the Americas, Europe, and Australasia, physicians shortened our name to reflect their primary credential. MDpedia is how the register is known in hospitals from Boston to Berlin.</p>
+			<div class="regional__tags">
+				<span>Americas</span><span>Europe</span><span>Australasia</span>
+			</div>
+		</a>
+		<a href="/about/drpedia" class="regional__card">
+			<div class="regional__label">In the East</div>
+			<div class="regional__name">DRpedia</div>
+			<div class="regional__origin">From "Dr." — the universal honorific</div>
+			<p>Across the Middle East, South Asia, East Asia, and Africa, the platform became DRpedia — honouring the title that binds physicians from Cairo to Shanghai.</p>
+			<div class="regional__tags">
+				<span>Middle East</span><span>South Asia</span><span>East Asia</span><span>Africa</span>
+			</div>
+		</a>
+	</div>
+</section>
+
+<!-- CTA -->
+<section class="cta container">
+	<span class="eyebrow">Claim &middot; Embed &middot; Nominate</span>
+	<h2 style="margin-top:16px;">If your record is here, <em>own it.</em><br>If a doctor earned the seal, <em>give them one.</em></h2>
+	<div class="cta__actions">
+		<a href="/doctor/claim" class="btn btn--primary">Claim your profile</a>
+		<a href="/doctor/claim" class="btn btn--ghost">Get the embed kit</a>
+		<a href="/doctor/claim" class="btn btn--ghost" style="border-color: var(--verdant); color: var(--verdant);">Nominate for Ethics</a>
+	</div>
+</section>
+
 </Layout>
 
-<script define:vars={{ searchIndex }}>
-	const DATA = searchIndex;
-	const RECENT_KEY = "mdrpedia_recent_v2";
-	const MAX_RECENT = 5;
-
-	// Elements
-	const searchInput = document.getElementById("search-input");
-	const searchBar = document.getElementById("search-bar");
-	const palette = document.getElementById("command-palette");
-	const clearBtn = document.getElementById("clear-btn");
-	const quickCategories = document.getElementById("quick-categories");
-	const searchResults = document.getElementById("search-results");
-	const resultsList = document.getElementById("results-list");
-	const resultsCount = document.getElementById("results-count");
-	const recentSection = document.getElementById("recent-section");
-	const recentList = document.getElementById("recent-list");
-	const clearRecent = document.getElementById("clear-recent");
-
-	let activeIdx = -1;
-	let recentSearches = [];
-	let isPaletteOpen = false;
-
-	// Tier configuration
-	const tierConfig = {
-		TITAN: {
-			icon: "👑",
-			label: "TITAN",
-			color: "#fbbf24",
-			bg: "linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(251, 191, 36, 0.05))",
-		},
-		ELITE: {
-			icon: "⭐",
-			label: "ELITE",
-			color: "#3b82f6",
-			bg: "linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05))",
-		},
-		MASTER: {
-			icon: "✦",
-			label: "MASTER",
-			color: "#10b981",
-			bg: "linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05))",
-		},
-		UNRANKED: {
-			icon: "○",
-			label: "",
-			color: "#64748b",
-			bg: "rgba(100, 116, 139, 0.1)",
-		},
-	};
-
-	// Load recent searches
-	try {
-		const stored = localStorage.getItem(RECENT_KEY);
-		if (stored) recentSearches = JSON.parse(stored);
-	} catch (e) {}
-
-	function saveRecent(term, url) {
-		if (!term || term.length < 2) return;
-		const entry = { term, url, time: Date.now() };
-		recentSearches = [
-			entry,
-			...recentSearches.filter((s) => s.term !== term),
-		].slice(0, MAX_RECENT);
-		try {
-			localStorage.setItem(RECENT_KEY, JSON.stringify(recentSearches));
-		} catch (e) {}
-	}
-
-	function toFlag(cc) {
-		if (!cc || cc.length !== 2) return "";
-		return String.fromCodePoint(
-			...cc
-				.toUpperCase()
-				.split("")
-				.map((c) => 0x1f1e6 + c.charCodeAt(0) - 65),
-		);
-	}
-
-	function getInitials(name) {
-		return name
-			.split(" ")
-			.map((w) => w[0])
-			.filter((_, i) => i < 2)
-			.join("")
-			.toUpperCase();
-	}
-
-	function highlightMatch(text, query) {
-		if (!query || query.length < 2) return text;
-		const regex = new RegExp(
-			`(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
-			"gi",
-		);
-		return text.replace(regex, "<mark>$1</mark>");
-	}
-
-	function openPalette() {
-		if (isPaletteOpen) return;
-		isPaletteOpen = true;
-		palette.hidden = false;
-		searchBar.classList.add("search-bar--focused");
-		document.body.style.overflow = "hidden";
-
-		// Show recent or quick categories
-		const query = searchInput.value.trim();
-		if (query.length < 2) {
-			if (recentSearches.length > 0) {
-				renderRecent();
-				recentSection.hidden = false;
-			}
-			quickCategories.hidden = false;
-			searchResults.hidden = true;
-		}
-	}
-
-	function closePalette() {
-		isPaletteOpen = false;
-		palette.hidden = true;
-		searchBar.classList.remove("search-bar--focused");
-		document.body.style.overflow = "";
-		activeIdx = -1;
-	}
-
-	function renderRecent() {
-		if (recentSearches.length === 0) {
-			recentSection.hidden = true;
-			return;
-		}
-
-		recentList.innerHTML = recentSearches
-			.map(
-				(r, i) => `
-			<a href="${r.url || `/search?q=${encodeURIComponent(r.term)}`}" class="recent-item" data-idx="recent-${i}">
-				<svg class="recent-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-					<circle cx="12" cy="12" r="10"/>
-					<path d="M12 6v6l4 2"/>
-				</svg>
-				<span class="recent-item__text">${r.term}</span>
-				<svg class="recent-item__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-					<path d="M9 18l6-6-6-6"/>
-				</svg>
-			</a>
-		`,
-			)
-			.join("");
-
-		recentSection.hidden = false;
-	}
-
-	function renderResults(matches, query) {
-		if (matches.length === 0) {
-			resultsList.innerHTML = `
-				<div class="no-results">
-					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-						<circle cx="11" cy="11" r="8"/>
-						<path d="m21 21-4.3-4.3"/>
-						<path d="M8 11h6"/>
-					</svg>
-					<p>No results for "${query}"</p>
-					<span>Try a different search or browse all profiles</span>
-				</div>
-			`;
-			resultsCount.textContent = "";
-			searchResults.hidden = false;
-			quickCategories.hidden = true;
-			recentSection.hidden = true;
-			return;
-		}
-
-		resultsCount.textContent = `${matches.length}${matches.length >= 10 ? "+" : ""}`;
-		activeIdx = -1;
-
-		resultsList.innerHTML = matches
-			.map((m, i) => {
-				const tier = tierConfig[m.t] || tierConfig.UNRANKED;
-				const flag = toFlag(m.cc);
-				const initials = getInitials(m.n);
-				const location = [m.ct, m.c].filter(Boolean).join(", ");
-
-				return `
-				<a href="/doctors/${m.id}" class="result-card" data-idx="${i}">
-					<div class="result-card__avatar" style="border-color: ${tier.color}40; background: ${tier.bg}">
-						${
-							m.img
-								? `<img src="${m.img}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><span class="avatar-initials" style="display:none;color:${tier.color}">${initials}</span>`
-								: `<span class="avatar-initials" style="color:${tier.color}">${initials}</span>`
-						}
-					</div>
-					<div class="result-card__content">
-						<div class="result-card__header">
-							<span class="result-card__name">${highlightMatch(m.n, query)}</span>
-							${m.t !== "UNRANKED" ? `<span class="result-card__tier" style="background:${tier.bg};color:${tier.color}">${tier.icon} ${tier.label}</span>` : ""}
-						</div>
-						<div class="result-card__meta">
-							<span class="result-card__specialty">${highlightMatch(m.s, query)}</span>
-							${location ? `<span class="result-card__divider">·</span><span class="result-card__location">${flag} ${location}</span>` : ""}
-						</div>
-					</div>
-					${
-						m.h > 0
-							? `
-						<div class="result-card__hindex">
-							<span class="hindex-value">${m.h}</span>
-							<span class="hindex-label">h-index</span>
-						</div>
-					`
-							: ""
-					}
-					<svg class="result-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M9 18l6-6-6-6"/>
-					</svg>
-				</a>
-			`;
-			})
-			.join("");
-
-		// Add "View all results" link if there are more
-		if (matches.length >= 10) {
-			resultsList.innerHTML += `
-				<a href="/search?q=${encodeURIComponent(query)}" class="view-all-results">
-					<span>View all results for "${query}"</span>
-					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M5 12h14M12 5l7 7-7 7"/>
-					</svg>
-				</a>
-			`;
-		}
-
-		searchResults.hidden = false;
-		quickCategories.hidden = true;
-		recentSection.hidden = true;
-	}
-
-	// Keyboard shortcut
-	document.addEventListener("keydown", (e) => {
-		if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-			e.preventDefault();
-			searchInput?.focus();
-			openPalette();
-		}
-	});
-
-	// Input handler
-	let searchTimer;
-	searchInput?.addEventListener("input", () => {
-		clearTimeout(searchTimer);
-		const val = searchInput.value;
-		clearBtn.hidden = !val;
-
-		searchTimer = setTimeout(() => {
-			const q = val.trim().toLowerCase();
-
-			if (q.length < 2) {
-				searchResults.hidden = true;
-				quickCategories.hidden = false;
-				if (recentSearches.length > 0) {
-					renderRecent();
-					recentSection.hidden = false;
-				}
-				return;
-			}
-
-			const matches = DATA.filter((d) =>
-				`${d.n} ${d.s} ${d.ss} ${d.c} ${d.ct}`
-					.toLowerCase()
-					.includes(q),
-			).slice(0, 10);
-
-			renderResults(matches, q);
-		}, 100);
-	});
-
-	// Focus handler
-	searchInput?.addEventListener("focus", () => {
-		openPalette();
-	});
-
-	// Clear button
-	clearBtn?.addEventListener("click", () => {
-		searchInput.value = "";
-		clearBtn.hidden = true;
-		searchInput.focus();
-		searchResults.hidden = true;
-		quickCategories.hidden = false;
-		if (recentSearches.length > 0) {
-			renderRecent();
-			recentSection.hidden = false;
-		}
-	});
-
-	// Clear recent
-	clearRecent?.addEventListener("click", () => {
-		recentSearches = [];
-		localStorage.removeItem(RECENT_KEY);
-		recentSection.hidden = true;
-	});
-
-	// Quick category clicks
-	document.querySelectorAll(".quick-item").forEach((item) => {
-		item.addEventListener("click", () => {
-			const category = item.dataset.category;
-			const value = item.dataset.value;
-
-			if (category === "browse") {
-				window.location.href = "/doctors";
-			} else if (category === "specialty") {
-				window.location.href = `/doctors?specialty=${encodeURIComponent(value)}`;
-			} else if (category === "tier") {
-				window.location.href = `/doctors?tier=${value}`;
-			}
-		});
-	});
-
-	// Keyboard navigation
-	searchInput?.addEventListener("keydown", (e) => {
-		if (!isPaletteOpen) return;
-
-		const items = palette.querySelectorAll(
-			".result-card, .recent-item, .quick-item",
-		);
-		const itemCount = items.length;
-
-		if (e.key === "ArrowDown") {
-			e.preventDefault();
-			activeIdx = Math.min(activeIdx + 1, itemCount - 1);
-			items.forEach((el, i) =>
-				el.classList.toggle("active", i === activeIdx),
-			);
-			items[activeIdx]?.scrollIntoView({ block: "nearest" });
-		} else if (e.key === "ArrowUp") {
-			e.preventDefault();
-			activeIdx = Math.max(activeIdx - 1, 0);
-			items.forEach((el, i) =>
-				el.classList.toggle("active", i === activeIdx),
-			);
-			items[activeIdx]?.scrollIntoView({ block: "nearest" });
-		} else if (e.key === "Enter") {
-			e.preventDefault();
-			if (activeIdx >= 0 && items[activeIdx]) {
-				const item = items[activeIdx];
-				if (item.href) {
-					saveRecent(searchInput.value.trim(), item.href);
-					window.location.href = item.href;
-				} else if (item.classList.contains("quick-item")) {
-					item.click();
-				}
-			} else if (searchInput.value.trim().length >= 2) {
-				saveRecent(
-					searchInput.value.trim(),
-					`/search?q=${encodeURIComponent(searchInput.value)}`,
-				);
-				window.location.href = `/search?q=${encodeURIComponent(searchInput.value)}`;
-			}
-		} else if (e.key === "Escape") {
-			closePalette();
-			searchInput.blur();
-		}
-	});
-
-	// Click outside
-	document.addEventListener("click", (e) => {
-		const root = document.getElementById("search-root");
-		if (isPaletteOpen && !root?.contains(e.target)) {
-			closePalette();
-		}
-	});
-</script>
-
 <style>
-	.homepage {
-		min-height: 100vh;
-		position: relative;
-		overflow-x: hidden;
-	}
-
-	/* Ambient Background */
-	.ambient-bg {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		pointer-events: none;
-		z-index: -1;
-		overflow: hidden;
-	}
-
-	.ambient-orb {
-		position: absolute;
-		border-radius: 50%;
-		filter: blur(100px);
-		opacity: 0.4;
-		animation: float 20s ease-in-out infinite;
-	}
-
-	.ambient-orb--1 {
-		width: 600px;
-		height: 600px;
-		background: radial-gradient(
-			circle,
-			rgba(139, 92, 246, 0.3) 0%,
-			transparent 70%
-		);
-		top: -200px;
-		left: 50%;
-		transform: translateX(-50%);
-	}
-
-	.ambient-orb--2 {
-		width: 400px;
-		height: 400px;
-		background: radial-gradient(
-			circle,
-			rgba(59, 130, 246, 0.2) 0%,
-			transparent 70%
-		);
-		top: 40%;
-		right: -100px;
-		animation-delay: -7s;
-	}
-
-	.ambient-orb--3 {
-		width: 500px;
-		height: 500px;
-		background: radial-gradient(
-			circle,
-			rgba(16, 185, 129, 0.15) 0%,
-			transparent 70%
-		);
-		bottom: -100px;
-		left: -100px;
-		animation-delay: -14s;
-	}
-
-	@keyframes float {
-		0%,
-		100% {
-			transform: translateY(0) scale(1);
-		}
-		50% {
-			transform: translateY(-30px) scale(1.05);
-		}
-	}
-
-	/* Hero Section */
-	.hero {
-		text-align: center;
-		padding: 100px 24px 40px;
-		max-width: 800px;
-		margin: 0 auto;
-	}
-
-	.hero__badge {
-		display: inline-flex;
-		align-items: center;
-		gap: 8px;
-		padding: 8px 16px;
-		background: linear-gradient(
-			135deg,
-			rgba(139, 92, 246, 0.15),
-			rgba(139, 92, 246, 0.05)
-		);
-		border: 1px solid rgba(139, 92, 246, 0.25);
-		border-radius: 100px;
-		font-size: 0.8rem;
-		font-weight: 600;
-		color: #a78bfa;
-		margin-bottom: 24px;
-		animation: fadeInUp 0.6s ease-out;
-	}
-
-	.hero__badge svg {
-		width: 16px;
-		height: 16px;
-	}
-
-	.hero__title {
-		margin-bottom: 20px;
-		animation: fadeInUp 0.6s ease-out 0.1s both;
-	}
-
-	.hero__title-main {
-		font-size: 5rem;
-		font-weight: 800;
-		letter-spacing: -0.04em;
-		background: linear-gradient(135deg, #fff 0%, #fff 50%, #a78bfa 100%);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
-		line-height: 1.1;
-	}
-
-	.hero__subtitle {
-		font-size: 1.25rem;
-		color: var(--text-secondary);
-		max-width: 550px;
-		margin: 0 auto;
-		line-height: 1.6;
-		animation: fadeInUp 0.6s ease-out 0.2s both;
-	}
-
-	@keyframes fadeInUp {
-		from {
-			opacity: 0;
-			transform: translateY(20px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
-	/* Search Section */
-	.search-section {
-		max-width: 700px;
-		margin: 0 auto;
-		padding: 0 24px 32px;
-		animation: fadeInUp 0.6s ease-out 0.3s both;
-	}
-
-	.search-wrapper {
-		position: relative;
-	}
-
-	.search-bar {
-		position: relative;
-		display: flex;
-		align-items: center;
-		background: rgba(15, 15, 25, 0.9);
-		border: 2px solid rgba(255, 255, 255, 0.08);
-		border-radius: 20px;
-		transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-		box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
-	}
-
-	.search-bar:hover {
-		border-color: rgba(255, 255, 255, 0.12);
-	}
-
-	.search-bar--focused {
-		border-color: rgba(139, 92, 246, 0.5);
-		background: rgba(20, 20, 35, 0.98);
-		box-shadow:
-			0 0 0 4px rgba(139, 92, 246, 0.1),
-			0 20px 50px rgba(0, 0, 0, 0.4);
-		border-radius: 20px 20px 0 0;
-	}
-
-	.search-bar__icon {
-		position: absolute;
-		left: 20px;
-		width: 24px;
-		height: 24px;
-		color: #64748b;
-		transition: color 0.2s;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.search-bar--focused .search-bar__icon {
-		color: #a78bfa;
-	}
-
-	.search-bar__input {
-		width: 100%;
-		padding: 22px 120px 22px 56px;
-		font-size: 1.1rem;
-		font-family: inherit;
-		background: transparent;
-		border: none;
-		color: white;
-		outline: none;
-	}
-
-	.search-bar__input::placeholder {
-		color: #64748b;
-	}
-
-	.search-bar__actions {
-		position: absolute;
-		right: 16px;
-		display: flex;
-		align-items: center;
-		gap: 8px;
-	}
-
-	.search-bar__clear {
-		width: 28px;
-		height: 28px;
-		padding: 0;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background: rgba(255, 255, 255, 0.06);
-		border: none;
-		border-radius: 8px;
-		color: #64748b;
-		cursor: pointer;
-		transition: all 0.15s;
-	}
-
-	.search-bar__clear:hover {
-		background: rgba(255, 255, 255, 0.12);
-		color: white;
-	}
-
-	.search-bar__clear svg {
-		width: 14px;
-		height: 14px;
-	}
-
-	.search-bar__kbd {
-		padding: 6px 12px;
-		background: rgba(255, 255, 255, 0.06);
-		border: 1px solid rgba(255, 255, 255, 0.08);
-		border-radius: 8px;
-		font-size: 0.75rem;
-		font-weight: 600;
-		color: #64748b;
-		font-family: inherit;
-	}
-
-	/* Command Palette */
-	.command-palette {
-		position: absolute;
-		top: 100%;
-		left: 0;
-		right: 0;
-		background: rgba(15, 15, 25, 0.98);
-		border: 2px solid rgba(139, 92, 246, 0.5);
-		border-top: 1px solid rgba(255, 255, 255, 0.06);
-		border-radius: 0 0 20px 20px;
-		box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
-		max-height: 70vh;
-		overflow-y: auto;
-		z-index: 1000;
-		backdrop-filter: blur(20px);
-	}
-
-	.palette-section {
-		border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-	}
-
-	.palette-section:last-of-type {
-		border-bottom: none;
-	}
-
-	.palette-section__header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 14px 20px 8px;
-		font-size: 0.7rem;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		color: #64748b;
-	}
-
-	.results-count {
-		font-size: 0.65rem;
-		padding: 2px 8px;
-		background: rgba(139, 92, 246, 0.15);
-		border-radius: 10px;
-		color: #a78bfa;
-	}
-
-	.clear-recent {
-		font-size: 0.7rem;
-		font-weight: 500;
-		text-transform: none;
-		letter-spacing: 0;
-		color: #475569;
-		background: none;
-		border: none;
-		cursor: pointer;
-		transition: color 0.15s;
-	}
-
-	.clear-recent:hover {
-		color: #94a3b8;
-	}
-
-	/* Quick Grid */
-	.quick-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 8px;
-		padding: 8px 16px 16px;
-	}
-
-	.quick-item {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 6px;
-		padding: 16px 12px;
-		background: rgba(255, 255, 255, 0.02);
-		border: 1px solid rgba(255, 255, 255, 0.04);
-		border-radius: 14px;
-		cursor: pointer;
-		transition: all 0.2s;
-	}
-
-	.quick-item:hover,
-	.quick-item.active {
-		background: rgba(139, 92, 246, 0.1);
-		border-color: rgba(139, 92, 246, 0.3);
-		transform: translateY(-2px);
-	}
-
-	.quick-item__icon-svg {
-		width: 24px;
-		height: 24px;
-		color: #a78bfa;
-	}
-
-	.quick-item__icon-svg--gold {
-		color: #fbbf24;
-	}
-
-	.quick-item__label {
-		font-size: 0.75rem;
-		font-weight: 500;
-		color: #94a3b8;
-	}
-
-	/* Results */
-	.results-list {
-		padding: 8px;
-	}
-
-	.result-card {
-		display: flex;
-		align-items: center;
-		gap: 14px;
-		padding: 14px 12px;
-		border-radius: 14px;
-		text-decoration: none;
-		color: white;
-		transition: all 0.15s;
-	}
-
-	.result-card:hover,
-	.result-card.active {
-		background: rgba(139, 92, 246, 0.1);
-	}
-
-	.result-card__avatar {
-		width: 50px;
-		height: 50px;
-		border-radius: 14px;
-		overflow: hidden;
-		flex-shrink: 0;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		border: 2px solid;
-	}
-
-	.result-card__avatar img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-
-	.avatar-initials {
-		font-weight: 700;
-		font-size: 0.9rem;
-	}
-
-	.result-card__content {
-		flex: 1;
-		min-width: 0;
-	}
-
-	.result-card__header {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		margin-bottom: 4px;
-	}
-
-	.result-card__name {
-		font-weight: 600;
-		font-size: 0.95rem;
-	}
-
-	.result-card__name :global(mark) {
-		background: rgba(139, 92, 246, 0.3);
-		color: white;
-		border-radius: 2px;
-		padding: 0 2px;
-	}
-
-	.result-card__tier {
-		font-size: 0.6rem;
-		font-weight: 700;
-		padding: 3px 8px;
-		border-radius: 6px;
-		flex-shrink: 0;
-	}
-
-	.result-card__meta {
-		display: flex;
-		align-items: center;
-		gap: 6px;
-		font-size: 0.85rem;
-		color: #94a3b8;
-	}
-
-	.result-card__divider {
-		color: #475569;
-	}
-
-	.result-card__location {
-		color: #64748b;
-	}
-
-	.result-card__hindex {
-		text-align: right;
-		padding-right: 8px;
-		flex-shrink: 0;
-	}
-
-	.hindex-value {
-		display: block;
-		font-size: 1rem;
-		font-weight: 700;
-		color: white;
-		font-family: var(--font-mono, monospace);
-	}
-
-	.hindex-label {
-		font-size: 0.6rem;
-		color: #64748b;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-	}
-
-	.result-card__arrow {
-		width: 16px;
-		height: 16px;
-		color: #475569;
-		flex-shrink: 0;
-		opacity: 0;
-		transition: opacity 0.15s;
-	}
-
-	.result-card:hover .result-card__arrow,
-	.result-card.active .result-card__arrow {
-		opacity: 1;
-	}
-
-	.view-all-results {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 8px;
-		padding: 16px;
-		margin: 8px;
-		background: rgba(139, 92, 246, 0.08);
-		border-radius: 12px;
-		font-size: 0.9rem;
-		font-weight: 500;
-		color: #a78bfa;
-		text-decoration: none;
-		transition: all 0.15s;
-	}
-
-	.view-all-results:hover {
-		background: rgba(139, 92, 246, 0.15);
-	}
-
-	.view-all-results svg {
-		width: 16px;
-		height: 16px;
-	}
-
-	/* No Results */
-	.no-results {
-		padding: 48px 24px;
-		text-align: center;
-	}
-
-	.no-results svg {
-		width: 48px;
-		height: 48px;
-		color: #475569;
-		margin-bottom: 16px;
-	}
-
-	.no-results p {
-		color: #94a3b8;
-		font-size: 0.95rem;
-		margin-bottom: 4px;
-	}
-
-	.no-results span {
-		color: #64748b;
-		font-size: 0.85rem;
-	}
-
-	/* Recent */
-	.recent-list {
-		padding: 4px 8px 12px;
-	}
-
-	.recent-item {
-		display: flex;
-		align-items: center;
-		gap: 12px;
-		padding: 12px;
-		border-radius: 12px;
-		text-decoration: none;
-		color: #cbd5e1;
-		transition: background 0.15s;
-	}
-
-	.recent-item:hover,
-	.recent-item.active {
-		background: rgba(255, 255, 255, 0.05);
-	}
-
-	.recent-item__icon {
-		width: 16px;
-		height: 16px;
-		color: #64748b;
-		flex-shrink: 0;
-	}
-
-	.recent-item__text {
-		flex: 1;
-		font-size: 0.9rem;
-	}
-
-	.recent-item__arrow {
-		width: 14px;
-		height: 14px;
-		color: #475569;
-		opacity: 0;
-		transition: opacity 0.15s;
-	}
-
-	.recent-item:hover .recent-item__arrow {
-		opacity: 1;
-	}
-
-	/* Palette Footer */
-	.palette-footer {
-		padding: 12px 20px;
-		background: rgba(0, 0, 0, 0.2);
-		border-top: 1px solid rgba(255, 255, 255, 0.04);
-	}
-
-	.palette-footer__hints {
-		display: flex;
-		gap: 24px;
-		font-size: 0.7rem;
-		color: #475569;
-	}
-
-	.palette-footer__hints span {
-		display: flex;
-		align-items: center;
-		gap: 4px;
-	}
-
-	.palette-footer__hints kbd {
-		padding: 2px 6px;
-		background: rgba(255, 255, 255, 0.06);
-		border-radius: 4px;
-		font-family: inherit;
-	}
-
-	/* Stats Section */
-	.stats-section {
-		padding: 0 24px 48px;
-		animation: fadeInUp 0.6s ease-out 0.4s both;
-	}
-
-	.stats-pills {
-		display: flex;
-		justify-content: center;
-		flex-wrap: wrap;
-		gap: 12px;
-	}
-
-	.stat-pill {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		padding: 16px 28px;
-		background: rgba(255, 255, 255, 0.02);
-		border: 1px solid rgba(255, 255, 255, 0.06);
-		border-radius: 16px;
-		text-decoration: none;
-		transition: all 0.2s;
-	}
-
-	.stat-pill:hover {
-		background: rgba(255, 255, 255, 0.04);
-		border-color: rgba(255, 255, 255, 0.1);
-		transform: translateY(-2px);
-	}
-
-	.stat-pill__value {
-		font-size: 1.75rem;
-		font-weight: 800;
-		color: white;
-		line-height: 1;
-	}
-
-	.stat-pill__label {
-		font-size: 0.7rem;
-		font-weight: 500;
-		color: #64748b;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		margin-top: 4px;
-	}
-
-	.stat-pill--titan .stat-pill__value {
-		background: linear-gradient(135deg, #ffd700, #ffaa00);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-
-	.stat-pill--titan:hover {
-		border-color: rgba(255, 215, 0, 0.3);
-		background: rgba(255, 215, 0, 0.05);
-	}
-
-	.stat-pill--elite .stat-pill__value {
-		background: linear-gradient(135deg, #60a5fa, #3b82f6);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-
-	.stat-pill--elite:hover {
-		border-color: rgba(59, 130, 246, 0.3);
-		background: rgba(59, 130, 246, 0.05);
-	}
-
-	.stat-pill--master .stat-pill__value {
-		background: linear-gradient(135deg, #34d399, #10b981);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-
-	.stat-pill--master:hover {
-		border-color: rgba(16, 185, 129, 0.3);
-		background: rgba(16, 185, 129, 0.05);
-	}
-
-	/* Featured Section */
-	.featured-section {
-		max-width: 900px;
-		margin: 0 auto;
-		padding: 48px 24px;
-	}
-
-	.section-heading {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 10px;
-		font-size: 1.1rem;
-		font-weight: 600;
-		color: #94a3b8;
-		margin-bottom: 28px;
-	}
-
-	.section-heading__icon-svg {
-		width: 22px;
-		height: 22px;
-		color: #a78bfa;
-	}
-
-	.section-heading__icon-svg--gold {
-		color: #fbbf24;
-	}
-
-	.featured-grid {
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		gap: 16px;
-		margin-bottom: 24px;
-	}
-
-	.featured-card {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		padding: 24px 16px;
-		background: linear-gradient(
-			145deg,
-			rgba(30, 30, 50, 0.6),
-			rgba(20, 20, 40, 0.3)
-		);
-		border: 1px solid rgba(255, 215, 0, 0.1);
-		border-radius: 20px;
-		text-decoration: none;
-		transition: all 0.3s;
-	}
-
-	.featured-card:hover {
-		border-color: rgba(255, 215, 0, 0.3);
-		transform: translateY(-4px);
-		box-shadow: 0 20px 40px -20px rgba(255, 215, 0, 0.2);
-	}
-
-	.featured-card__avatar {
-		position: relative;
-		width: 80px;
-		height: 80px;
-		border-radius: 50%;
-		overflow: hidden;
-		border: 3px solid rgba(255, 215, 0, 0.4);
-		margin-bottom: 16px;
-	}
-
-	.featured-card__avatar img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-
-	.featured-card__initials {
-		font-size: 1.5rem;
-		font-weight: 700;
-		color: #ffd700;
-		text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
-	}
-
-	.featured-card__tier {
-		position: absolute;
-		bottom: -4px;
-		left: 50%;
-		transform: translateX(-50%);
-		font-size: 0.55rem;
-		font-weight: 700;
-		padding: 2px 8px;
-		background: linear-gradient(135deg, #ffd700, #ffaa00);
-		color: #000;
-		border-radius: 6px;
-	}
-
-	.featured-card__info {
-		text-align: center;
-	}
-
-	.featured-card__info h3 {
-		font-size: 0.95rem;
-		font-weight: 600;
-		color: #ffd700;
-		margin-bottom: 4px;
-		line-height: 1.3;
-	}
-
-	.featured-card__info p {
-		font-size: 0.8rem;
-		color: #94a3b8;
-		margin-bottom: 6px;
-	}
-
-	.featured-card__location {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 4px;
-		font-size: 0.75rem;
-		color: #64748b;
-	}
-
-	.view-more-link {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 8px;
-		color: #fbbf24;
-		font-size: 0.9rem;
-		font-weight: 500;
-		text-decoration: none;
-		transition: all 0.2s;
-	}
-
-	.view-more-link:hover {
-		color: #fcd34d;
-		gap: 12px;
-	}
-
-	.view-more-link svg {
-		width: 18px;
-		height: 18px;
-	}
-
-	/* Explore Section */
-	.explore-section {
-		max-width: 900px;
-		margin: 0 auto;
-		padding: 24px 24px 64px;
-	}
-
-	.specialty-grid {
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		gap: 12px;
-	}
-
-	.specialty-card {
-		display: flex;
-		align-items: center;
-		gap: 12px;
-		padding: 18px 16px;
-		background: rgba(255, 255, 255, 0.02);
-		border: 1px solid rgba(255, 255, 255, 0.05);
-		border-radius: 14px;
-		text-decoration: none;
-		color: #cbd5e1;
-		transition: all 0.2s;
-	}
-
-	.specialty-card:hover {
-		background: rgba(139, 92, 246, 0.08);
-		border-color: rgba(139, 92, 246, 0.25);
-		transform: translateX(4px);
-	}
-
-	.specialty-card__icon-svg {
-		width: 22px;
-		height: 22px;
-		color: #a78bfa;
-		flex-shrink: 0;
-	}
-
-	.specialty-card__name {
-		flex: 1;
-		font-size: 0.9rem;
-		font-weight: 500;
-	}
-
-	.specialty-card__arrow {
-		color: #475569;
-		transition:
-			color 0.15s,
-			transform 0.15s;
-	}
-
-	.specialty-card:hover .specialty-card__arrow {
-		color: #a78bfa;
-		transform: translateX(2px);
-	}
-
-	.specialty-card--all {
-		background: linear-gradient(
-			135deg,
-			rgba(139, 92, 246, 0.1),
-			rgba(139, 92, 246, 0.05)
-		);
-		border-color: rgba(139, 92, 246, 0.2);
-	}
-
-	/* Content Enrichment */
-	.content-enrichment {
-		max-width: 900px;
-		margin: 0 auto;
-		padding: 0 24px;
-	}
-
-	.content-block {
-		padding: 64px 0;
-		border-top: 1px solid rgba(255, 255, 255, 0.04);
-	}
-
-	.content-block--alt {
-		background: rgba(255, 255, 255, 0.01);
-		margin: 0 -24px;
-		padding: 64px 24px;
-	}
-
-	.content-block h2 {
-		font-size: 2rem;
-		font-weight: 700;
-		color: white;
-		margin-bottom: 20px;
-		letter-spacing: -0.02em;
-	}
-
-	.content-block p {
-		font-size: 1.05rem;
-		color: #94a3b8;
-		line-height: 1.7;
-	}
-
-	/* Pillars Grid */
-	.pillars-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 20px;
-		margin-top: 36px;
-	}
-
-	.pillar-card {
-		position: relative;
-		padding: 28px;
-		background: linear-gradient(
-			145deg,
-			rgba(30, 30, 50, 0.5),
-			rgba(20, 20, 40, 0.3)
-		);
-		border: 1px solid rgba(255, 255, 255, 0.05);
-		border-radius: 20px;
-		overflow: hidden;
-	}
-
-	.pillar-card__number {
-		position: absolute;
-		top: 16px;
-		right: 20px;
-		font-size: 3rem;
-		font-weight: 800;
-		color: rgba(139, 92, 246, 0.1);
-		line-height: 1;
-	}
-
-	.pillar-card h3 {
-		font-size: 1.1rem;
-		font-weight: 600;
-		color: #a78bfa;
-		margin-bottom: 12px;
-	}
-
-	.pillar-card p {
-		font-size: 0.9rem;
-		color: #94a3b8;
-		line-height: 1.6;
-	}
-
-	/* Audience Grid */
-	.audience-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 20px;
-		margin-top: 36px;
-	}
-
-	.audience-card {
-		padding: 28px;
-		background: linear-gradient(
-			145deg,
-			rgba(30, 30, 50, 0.5),
-			rgba(20, 20, 40, 0.3)
-		);
-		border: 1px solid rgba(255, 255, 255, 0.05);
-		border-radius: 20px;
-	}
-
-	.audience-card h4 {
-		font-size: 1.05rem;
-		font-weight: 600;
-		color: #fcd34d;
-		margin-bottom: 12px;
-	}
-
-	.audience-card p {
-		font-size: 0.9rem;
-		color: #94a3b8;
-		line-height: 1.6;
-	}
-
-	.audience-card strong {
-		color: white;
-	}
-
-	/* Responsive */
-	@media (max-width: 900px) {
-		.featured-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
-
-		.specialty-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
-
-		.pillars-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.audience-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-
-	@media (max-width: 640px) {
-		.hero {
-			padding: 60px 20px 32px;
-		}
-
-		.hero__title-main {
-			font-size: 3rem;
-		}
-
-		.hero__subtitle {
-			font-size: 1.1rem;
-		}
-
-		.quick-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
-
-		.stats-pills {
-			gap: 8px;
-		}
-
-		.stat-pill {
-			padding: 12px 20px;
-		}
-
-		.stat-pill__value {
-			font-size: 1.4rem;
-		}
-
-		.featured-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.specialty-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.content-block h2 {
-			font-size: 1.5rem;
-		}
-	}
+/* ── HERO ── */
+.hero { padding: 80px 0 40px; position: relative; }
+.hero__masthead { display:flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--ink); padding-bottom: 8px; margin-bottom: 40px; }
+.hero__masthead .edition { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); }
+.hero h1 { font-size: clamp(56px, 9vw, 140px); font-weight: 300; line-height: 0.92; letter-spacing: -0.03em; }
+.hero h1 em { font-style: italic; color: var(--ink-3); font-weight: 300; }
+.hero__lede { display:grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 40px; align-items: end; }
+.hero__lede p { font-family: var(--font-serif); font-size: 22px; line-height: 1.45; color: var(--ink); font-weight: 400; max-width: 40ch; }
+.hero__lede p::first-letter { font-size: 64px; float: left; line-height: 0.82; padding: 6px 10px 0 0; font-weight: 300; }
+.hero__stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-left: 1px solid var(--rule); }
+.hero__stat { padding-left: 20px; border-right: 1px solid var(--rule); padding-right: 20px; }
+.hero__stat:last-child { border-right: 0; }
+.hero__stat .n { font-family: var(--font-serif); font-size: 40px; font-weight: 400; line-height: 1; font-variant-numeric: tabular-nums; }
+.hero__stat .l { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); margin-top: 6px; }
+
+/* ── SEARCH ── */
+.command {
+  margin-top: 64px; background: var(--paper-2); border: 1px solid var(--rule);
+  border-radius: var(--r-3); padding: 8px;
+}
+.command__bar { display:flex; align-items:center; gap: 12px; padding: 16px 20px; background: var(--paper); border-radius: var(--r-2); border: 1px solid var(--rule); cursor: text; }
+.command__bar input { flex: 1; border: 0; background: transparent; font-family: var(--font-serif); font-size: 22px; color: var(--ink); outline: none; }
+.command__bar input::placeholder { color: var(--ink-3); }
+.command__facets { display:flex; gap: 8px; padding: 10px 12px 4px; flex-wrap: wrap; }
+.facet { display:inline-flex; align-items:center; gap: 6px; padding: 5px 10px; border: 1px solid var(--rule); border-radius: var(--r-pill); font-size: 12px; color: var(--ink-2); background: var(--paper); cursor: pointer; font-family: var(--font-sans); }
+.facet:hover { border-color: var(--ink); color: var(--ink); }
+.facet .count { font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); }
+
+/* ── ETHICS HERO ── */
+.ethics-hero {
+  margin-top: 96px; padding: 64px 48px; position: relative;
+  background: var(--verdant-2);
+  border: 1px solid color-mix(in oklch, var(--verdant) 40%, var(--rule));
+  display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: center;
+  overflow: hidden;
+}
+.ethics-hero::before {
+  content: ""; position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, color-mix(in oklch, var(--verdant) 20%, transparent) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, color-mix(in oklch, var(--guardian) 15%, transparent) 0%, transparent 40%);
+  pointer-events: none;
+}
+.ethics-hero > * { position: relative; }
+.ethics-hero h2 { font-size: clamp(36px, 4.5vw, 60px); font-weight: 300; }
+.ethics-hero h2 em { font-style: italic; color: var(--verdant); font-weight: 300; }
+.ethics-hero .new-mark { display:inline-flex; align-items:center; gap: 8px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--verdant); padding-bottom: 20px; }
+.ethics-hero .new-mark .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--verdant); animation: pulse 2.2s infinite; }
+.ethics-hero p { font-size: 17px; line-height: 1.6; max-width: 48ch; margin-top: 20px; color: var(--ink); }
+.ethics-hero__actions { display:flex; gap: 12px; margin-top: 28px; }
+.ethics-hero__seals { display:flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; }
+.ethics-hero__seals > * { filter: drop-shadow(0 4px 16px color-mix(in oklch, var(--verdant) 20%, transparent)); }
+
+/* ── SECTION HEAD ── */
+.sec { padding: 96px 0; }
+.sec-head { display:flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--ink); padding-bottom: 16px; margin-bottom: 40px; }
+.sec-head__left { display:flex; align-items: baseline; gap: 20px; }
+.sec-head__left .num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); }
+.sec-head__left h2 { font-size: clamp(32px, 3.5vw, 48px); font-weight: 400; }
+.sec-head__left h2 em { font-style: italic; color: var(--ink-3); font-weight: 400; }
+.sec-head__right { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.1em; text-transform: uppercase; }
+.sec-head__right a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); }
+
+/* ── TITAN ROLL ── */
+.roll { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--rule); border-top: 1px solid var(--rule); border-left: 1px solid var(--rule); }
+.roll__card { background: var(--paper); padding: 28px; display:flex; flex-direction: column; gap: 16px; transition: background var(--t-base) var(--ease); text-decoration: none; color: var(--ink); }
+.roll__card:hover { background: var(--paper-2); }
+.roll__portrait { width: 88px; height: 88px; border-radius: 50%; border: 1px solid var(--rule-strong); position: relative; overflow: hidden; }
+.roll__portrait img { width: 100%; height: 100%; object-fit: cover; }
+.roll__portrait .pp { width: 100%; height: 100%; display:flex; align-items:center; justify-content: center; font-family: var(--font-serif); font-size: 32px; font-weight: 400; color: var(--ink-3); background: var(--paper-2); }
+.roll__card h3 { font-size: 20px; font-weight: 500; font-family: var(--font-serif); }
+.roll__card .spec { font-size: 13px; color: var(--ink-2); font-family: var(--font-sans); }
+.roll__card .meta { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--ink-3); text-transform: uppercase; display:flex; justify-content: space-between; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--rule); }
+.roll__card .meta strong { font-weight: 500; color: var(--ink); }
+
+/* ── PILLARS ── */
+.pillars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--ink); }
+.pillar { padding: 28px 28px 32px; border-right: 1px solid var(--rule); position: relative; }
+.pillar:last-child { border-right: 0; }
+.pillar .num { font-family: var(--font-serif); font-size: 64px; font-weight: 300; color: var(--ink); line-height: 1; }
+.pillar h3 { font-size: 22px; font-weight: 500; margin: 20px 0 10px; }
+.pillar p { font-size: 14px; color: var(--ink-2); }
+.pillar .metric { margin-top: 20px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.05em; }
+.pillar .bar { height: 3px; background: var(--rule); margin-top: 6px; position: relative; }
+.pillar .bar::after { content: ""; position:absolute; left: 0; top: 0; height: 100%; background: var(--ink); width: var(--w, 80%); }
+
+/* ── DIRECTORIES ── */
+.dirs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.dir { padding: 32px; border: 1px solid var(--rule); background: var(--paper-2); text-decoration: none; color: var(--ink); display:flex; flex-direction: column; gap: 16px; transition: all var(--t-base) var(--ease); position: relative; overflow: hidden; }
+.dir:hover { background: var(--ink); color: var(--paper); }
+.dir:hover .dir__meta, .dir:hover .dir__n { color: var(--paper); }
+.dir__tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); }
+.dir h3 { font-size: 28px; font-weight: 400; font-family: var(--font-serif); }
+.dir p { font-size: 13px; color: inherit; opacity: 0.8; }
+.dir__meta { display:flex; gap: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.08em; text-transform: uppercase; margin-top: auto; padding-top: 20px; border-top: 1px solid currentColor; }
+.dir__n { font-weight: 600; color: var(--ink); }
+
+/* ── LEDGER ── */
+.ledger { padding: 64px 0; background: var(--paper-2); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-top: 64px; }
+.ledger__head { display:flex; justify-content: space-between; align-items:center; margin-bottom: 32px; }
+.ledger__head h3 { font-size: 22px; font-weight: 400; font-family: var(--font-serif); }
+.ledger__head .live { display:inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10px; color: var(--verdant); letter-spacing: 0.18em; text-transform: uppercase; }
+.ledger__head .live .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--verdant); animation: pulse 1.8s infinite; }
+.ledger__list { display:flex; flex-direction: column; }
+.ledger__row { display:grid; grid-template-columns: 120px 120px 1fr 1fr 120px; gap: 16px; padding: 14px 0; border-top: 1px solid var(--rule); font-family: var(--font-mono); font-size: 12px; }
+.ledger__row.head { color: var(--ink-3); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; }
+.ledger__row.head + .ledger__row { border-top: 1px solid var(--ink); }
+.ledger__row .verdict { font-family: var(--font-sans); font-weight: 600; }
+.ledger__row .verdict.v { color: var(--verdant); }
+.ledger__row .verdict.r { color: var(--sanguine); }
+
+/* ── EDITORIAL ── */
+.ed { display: grid; grid-template-columns: 1fr 2fr; gap: 80px; padding: 96px 0; border-top: 1px solid var(--rule); }
+.ed__side { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; color: var(--ink-3); text-transform: uppercase; }
+.ed__body h2 { font-size: 48px; font-weight: 300; max-width: 16ch; margin-bottom: 24px; }
+.ed__body h2 em { font-style: italic; color: var(--ink-3); font-weight: 300; }
+.ed__body > p { font-family: var(--font-serif); font-size: 20px; line-height: 1.6; max-width: 60ch; margin-bottom: 16px; }
+.ed__body > p.drop::first-letter { font-size: 68px; float: left; line-height: 0.82; padding: 6px 10px 0 0; font-weight: 300; color: var(--ink); }
+
+/* ── REGIONAL NAMES ── */
+.regional { padding: 96px 0; }
+.regional__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.regional__card {
+  padding: 40px; border: 1px solid var(--rule); background: var(--paper-2);
+  text-decoration: none; color: var(--ink); display: flex; flex-direction: column;
+  gap: 8px; transition: all var(--t-base) var(--ease); position: relative;
+}
+.regional__card:hover { border-color: var(--ink); background: var(--paper); box-shadow: var(--shadow-2); }
+.regional__label {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+.regional__name {
+  font-family: var(--font-serif); font-size: clamp(36px, 4vw, 56px);
+  font-weight: 300; line-height: 1;
+}
+.regional__origin {
+  font-family: var(--font-mono); font-size: 12px; color: var(--ink-blue);
+  letter-spacing: 0.04em; margin-bottom: 8px;
+}
+.regional__card p { font-size: 14px; color: var(--ink-2); line-height: 1.6; max-width: 36ch; }
+.regional__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--rule); }
+.regional__tags span {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink-3);
+  padding: 3px 8px; border: 1px solid var(--rule); border-radius: var(--r-1);
+}
+
+/* ── CTA ── */
+.cta { padding: 80px 0 96px; text-align: center; }
+.cta h2 { font-size: clamp(40px, 5vw, 72px); font-weight: 300; max-width: 16ch; margin: 0 auto; }
+.cta h2 em { font-style: italic; color: var(--ink-3); font-weight: 300; }
+.cta__actions { margin-top: 32px; display:flex; gap: 12px; justify-content: center; }
+
+@media (max-width: 900px) {
+  .hero__lede, .hero__stats { grid-template-columns: 1fr; }
+  .hero__stats { border-left: 0; margin-top: 32px; }
+  .hero__stat { border-right: 0; padding: 12px 0; border-top: 1px solid var(--rule); }
+  .roll, .dirs, .pillars, .regional__grid { grid-template-columns: 1fr 1fr; }
+  .ethics-hero { grid-template-columns: 1fr; padding: 40px 24px; }
+  .ed { grid-template-columns: 1fr; gap: 24px; padding: 64px 0; }
+  .ledger__row { grid-template-columns: 80px 1fr 60px; gap: 8px; font-size: 11px; }
+  .ledger__row > :nth-child(4), .ledger__row > :nth-child(5) { display: none; }
+  .sec { padding: 64px 0; }
+  .hero__masthead { flex-direction: column; gap: 4px; }
+  .cta__actions { flex-direction: column; align-items: center; }
+}
+
+@media (max-width: 600px) {
+  .roll, .pillars, .regional__grid { grid-template-columns: 1fr; }
+  .dirs { grid-template-columns: 1fr; }
+  .hero h1 { font-size: clamp(40px, 12vw, 56px); }
+  .ethics-hero__seals { gap: 12px; }
+}
 </style>
+
+<script define:vars={{ searchIndex }}>
+  // Today's date
+  const d = new Date();
+  const dateEl = document.getElementById('hero-date');
+  if (dateEl) dateEl.textContent = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+  // Count-up animation
+  const ease = t => 1 - Math.pow(1 - t, 3);
+  const startCount = (el) => {
+    const target = +el.dataset.count;
+    if (!target) return;
+    const dur = 1400;
+    const t0 = performance.now();
+    const step = (now) => {
+      const p = Math.min(1, (now - t0) / dur);
+      el.textContent = Math.round(target * ease(p)).toLocaleString();
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  const countObserver = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting && !e.target.dataset.done) {
+      e.target.dataset.done = '1';
+      startCount(e.target);
+    }
+  }));
+  document.querySelectorAll('[data-count]').forEach(el => countObserver.observe(el));
+
+  // Reveal on scroll
+  const revealObserver = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('in');
+  }), { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // Hero search → open global search modal
+  const heroSearch = document.getElementById('hero-search');
+  if (heroSearch) {
+    heroSearch.addEventListener('focus', () => {
+      heroSearch.blur();
+      document.dispatchEvent(new KeyboardEvent('keydown', {
+        key: 'k', code: 'KeyK', metaKey: true, ctrlKey: false, bubbles: true
+      }));
+    });
+  }
+</script>

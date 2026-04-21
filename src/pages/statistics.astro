@@ -1,0 +1,595 @@
+---
+/**
+ * MDRPedia — Open Data Dashboard
+ * Live statistics drawn from the database.
+ * SSR only (prerender = false) so numbers are always fresh.
+ */
+import Layout from "../layouts/Layout.astro";
+import { prisma } from "../lib/prisma";
+
+export const prerender = false;
+
+/* ── helpers ────────────────────────────────────────────────── */
+const pct = (n: number, total: number) =>
+	total === 0 ? "0" : ((n / total) * 100).toFixed(1);
+
+const fmtMonth = (d: Date) =>
+	d.toLocaleDateString("en-US", { year: "numeric", month: "short" });
+
+/* ── data fetches ───────────────────────────────────────────── */
+const now = new Date();
+const twelveMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 11, 1);
+
+let tierCounts: { tier: string; _count: { _all: number } }[] = [];
+let countryCounts: { country: string; _count: { _all: number } }[] = [];
+let specialtyCounts: { specialty: string; _count: { _all: number } }[] = [];
+let ethicsCounts: { ethics_tier: string; _count: { _all: number } }[] = [];
+let totalProfiles = 0;
+let portraitCount = 0;
+let hIndexCount = 0;
+let biographyCount = 0;
+let growthRaw: { createdAt: Date }[] = [];
+
+try {
+	const [
+		_tierCounts,
+		_countryCounts,
+		_specialtyCounts,
+		_ethicsCounts,
+		_totalProfiles,
+		_portraitCount,
+		_hIndexCount,
+		_biographyCount,
+		_growthRaw,
+	] = await Promise.all([
+		prisma.profile.groupBy({
+			by: ["tier"],
+			_count: { _all: true },
+		}),
+		prisma.geography.groupBy({
+			by: ["country"],
+			_count: { _all: true },
+			orderBy: { _count: { country: "desc" } },
+			take: 20,
+		}),
+		prisma.profile.groupBy({
+			by: ["specialty"],
+			_count: { _all: true },
+			orderBy: { _count: { specialty: "desc" } },
+			take: 20,
+		}),
+		prisma.profile.groupBy({
+			by: ["ethics_tier"],
+			_count: { _all: true },
+			where: { ethics_tier: { not: null } },
+		}),
+		prisma.profile.count(),
+		prisma.profile.count({ where: { portrait_url: { not: null } } }),
+		prisma.profile.count({ where: { h_index: { gt: 0 } } }),
+		prisma.profile.count({ where: { biography: { not: null } } }),
+		prisma.profile.findMany({
+			where: { createdAt: { gte: twelveMonthsAgo } },
+			select: { createdAt: true },
+			orderBy: { createdAt: "asc" },
+		}),
+	]);
+
+	tierCounts = _tierCounts as typeof tierCounts;
+	countryCounts = _countryCounts as typeof countryCounts;
+	specialtyCounts = _specialtyCounts as typeof specialtyCounts;
+	ethicsCounts = _ethicsCounts as typeof ethicsCounts;
+	totalProfiles = _totalProfiles;
+	portraitCount = _portraitCount;
+	hIndexCount = _hIndexCount;
+	biographyCount = _biographyCount;
+	growthRaw = _growthRaw;
+} catch (e) {
+	// If DB is unavailable every array stays empty — the page renders gracefully.
+	console.error("Statistics page DB error:", e);
+}
+
+/* ── derived data ───────────────────────────────────────────── */
+
+// Tier map
+const tierMap: Record<string, number> = { TITAN: 0, ELITE: 0, MASTER: 0, UNRANKED: 0 };
+for (const t of tierCounts) tierMap[t.tier] = t._count._all;
+const tierTotal = Object.values(tierMap).reduce((a, b) => a + b, 0);
+
+// Country max for bar scaling
+const countryMax = countryCounts.length > 0 ? countryCounts[0]._count._all : 1;
+
+// Specialty max for bar scaling
+const specMax = specialtyCounts.length > 0 ? specialtyCounts[0]._count._all : 1;
+
+// Ethics
+const ethicsMap: Record<string, number> = { LEGEND: 0, GUARDIAN: 0, ADVOCATE: 0 };
+for (const e of ethicsCounts) {
+	if (e.ethics_tier in ethicsMap) ethicsMap[e.ethics_tier] = e._count._all;
+}
+const ethicsTotal = Object.values(ethicsMap).reduce((a, b) => a + b, 0);
+
+// Growth — bucket by month
+const growthBuckets: { label: string; count: number }[] = [];
+for (let i = 11; i >= 0; i--) {
+	const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+	const label = fmtMonth(d);
+	const nextMonth = new Date(d.getFullYear(), d.getMonth() + 1, 1);
+	const count = growthRaw.filter(
+		(r) => r.createdAt >= d && r.createdAt < nextMonth
+	).length;
+	growthBuckets.push({ label, count });
+}
+const growthMax = Math.max(...growthBuckets.map((b) => b.count), 1);
+
+// Data quality
+const quality = [
+	{ label: "Portrait image", count: portraitCount, pct: pct(portraitCount, totalProfiles) },
+	{ label: "h-index recorded", count: hIndexCount, pct: pct(hIndexCount, totalProfiles) },
+	{ label: "Biography written", count: biographyCount, pct: pct(biographyCount, totalProfiles) },
+];
+
+// Tier metadata for display
+const tierMeta: Record<string, { label: string; color: string; bg: string }> = {
+	TITAN:    { label: "Titan",    color: "var(--titan-text)",  bg: "var(--titan-bg)" },
+	ELITE:    { label: "Elite",    color: "var(--elite-text)",  bg: "var(--elite-bg)" },
+	MASTER:   { label: "Master",   color: "var(--master-text)", bg: "var(--master-bg)" },
+	UNRANKED: { label: "Unranked", color: "var(--ink-3)",       bg: "var(--paper-2)" },
+};
+
+const ethicsMeta: Record<string, { label: string; color: string }> = {
+	LEGEND:   { label: "Legend",   color: "var(--legend)" },
+	GUARDIAN: { label: "Guardian", color: "var(--guardian)" },
+	ADVOCATE: { label: "Advocate", color: "var(--advocate)" },
+};
+
+const refreshedAt = now.toISOString();
+
+Astro.response.headers.set(
+	"Cache-Control",
+	"public, max-age=300, s-maxage=600, stale-while-revalidate=600"
+);
+---
+
+<Layout
+	title="Open Data Dashboard — MDRPedia"
+	description="Explore MDRPedia's open data: physician distributions by tier, country, specialty, and ethics status."
+>
+
+<!-- JSON-LD: BreadcrumbList -->
+<script type="application/ld+json" set:html={JSON.stringify({
+	"@context": "https://schema.org",
+	"@type": "BreadcrumbList",
+	"itemListElement": [
+		{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mdrpedia.com/" },
+		{ "@type": "ListItem", "position": 2, "name": "Open Data Dashboard", "item": "https://mdrpedia.com/statistics" },
+	]
+})} />
+
+<!-- JSON-LD: Dataset -->
+<script type="application/ld+json" set:html={JSON.stringify({
+	"@context": "https://schema.org",
+	"@type": "Dataset",
+	"name": "MDRPedia Open Data Dashboard",
+	"description": "Aggregated, anonymized statistics about the MDRPedia physician registry — tier distribution, country coverage, specialty breakdown, ethics programme participation, growth trends, and data-quality metrics.",
+	"url": "https://mdrpedia.com/statistics",
+	"license": "https://creativecommons.org/licenses/by-sa/4.0/",
+	"creator": {
+		"@type": "Organization",
+		"name": "MDRPedia",
+		"url": "https://mdrpedia.com"
+	},
+	"temporalCoverage": `2024/${now.getFullYear()}`,
+	"variableMeasured": [
+		"Physician tier distribution",
+		"Country coverage",
+		"Specialty distribution",
+		"Ethics certification status",
+		"Monthly profile growth",
+		"Data completeness"
+	]
+})} />
+
+<div class="stats-page">
+
+	<!-- HERO -->
+	<header class="stats-hero container">
+		<div class="stats-hero__masthead">
+			<span class="edition">Open Data &middot; CC-BY-SA 4.0 &middot; The Physicians' Register</span>
+			<span class="edition">Auto-refreshed every 5 min</span>
+		</div>
+		<h1>Open Data <em>Dashboard</em></h1>
+		<p class="stats-hero__lede">
+			Every number on this page is drawn live from the MDRPedia database. No sampling, no estimates — the full picture of {totalProfiles.toLocaleString()} verified physician profiles, updated every five minutes and licensed under CC-BY-SA.
+		</p>
+		<div class="stats-hero__meta">
+			<span class="mono">Data last refreshed: <time datetime={refreshedAt}>{now.toLocaleString("en-US", { dateStyle: "long", timeStyle: "short" })}</time></span>
+			<span class="mono">{totalProfiles.toLocaleString()} profiles &middot; {countryCounts.length}+ countries</span>
+		</div>
+	</header>
+
+	<!-- S01 — TIER DISTRIBUTION -->
+	<section class="sec container">
+		<div class="sec-head">
+			<div class="sec-head__left">
+				<span class="num">&sect; 01</span>
+				<h2>Tier <em>Distribution</em></h2>
+			</div>
+			<div class="sec-head__right">{tierTotal.toLocaleString()} total profiles</div>
+		</div>
+
+		<div class="tier-grid">
+			{(["TITAN", "ELITE", "MASTER", "UNRANKED"] as const).map((key) => (
+				<div class="tier-card" style={`--card-bg: ${tierMeta[key].bg}; --card-color: ${tierMeta[key].color};`}>
+					<span class="tier-card__label">{tierMeta[key].label}</span>
+					<div class="tier-card__value">{tierMap[key].toLocaleString()}</div>
+					<div class="tier-card__pct">{pct(tierMap[key], tierTotal)}%</div>
+					<div class="tier-card__bar">
+						<div class="tier-card__fill" style={`width: ${pct(tierMap[key], tierTotal)}%`}></div>
+					</div>
+				</div>
+			))}
+		</div>
+	</section>
+
+	<!-- S02 — COUNTRY DISTRIBUTION -->
+	<section class="sec container">
+		<div class="sec-head">
+			<div class="sec-head__left">
+				<span class="num">&sect; 02</span>
+				<h2>Country <em>Distribution</em></h2>
+			</div>
+			<div class="sec-head__right">Top 20 by profile count</div>
+		</div>
+
+		<div class="bar-list">
+			{countryCounts.map((c, i) => (
+				<div class="bar-row">
+					<span class="bar-row__rank">{String(i + 1).padStart(2, "0")}</span>
+					<span class="bar-row__label">{c.country}</span>
+					<div class="bar-row__track">
+						<div class="bar-row__fill" style={`width: ${(c._count._all / countryMax) * 100}%`}></div>
+					</div>
+					<span class="bar-row__value">{c._count._all.toLocaleString()}</span>
+				</div>
+			))}
+			{countryCounts.length === 0 && (
+				<p class="empty-state">No country data available.</p>
+			)}
+		</div>
+	</section>
+
+	<!-- S03 — SPECIALTY DISTRIBUTION -->
+	<section class="sec container">
+		<div class="sec-head">
+			<div class="sec-head__left">
+				<span class="num">&sect; 03</span>
+				<h2>Specialty <em>Distribution</em></h2>
+			</div>
+			<div class="sec-head__right">Top 20 by profile count</div>
+		</div>
+
+		<div class="bar-list">
+			{specialtyCounts.map((s, i) => (
+				<div class="bar-row">
+					<span class="bar-row__rank">{String(i + 1).padStart(2, "0")}</span>
+					<span class="bar-row__label">{s.specialty}</span>
+					<div class="bar-row__track">
+						<div class="bar-row__fill bar-row__fill--spec" style={`width: ${(s._count._all / specMax) * 100}%`}></div>
+					</div>
+					<span class="bar-row__value">{s._count._all.toLocaleString()}</span>
+				</div>
+			))}
+			{specialtyCounts.length === 0 && (
+				<p class="empty-state">No specialty data available.</p>
+			)}
+		</div>
+	</section>
+
+	<!-- S04 — ETHICS STATS -->
+	<section class="sec container">
+		<div class="sec-head">
+			<div class="sec-head__left">
+				<span class="num">&sect; 04</span>
+				<h2>Ethics <em>Programme</em></h2>
+			</div>
+			<div class="sec-head__right">{ethicsTotal.toLocaleString()} certified physicians</div>
+		</div>
+
+		<div class="tier-grid tier-grid--ethics">
+			{(["LEGEND", "GUARDIAN", "ADVOCATE"] as const).map((key) => (
+				<div class="tier-card tier-card--ethics" style={`--card-color: ${ethicsMeta[key].color};`}>
+					<span class="tier-card__label">{ethicsMeta[key].label}</span>
+					<div class="tier-card__value">{ethicsMap[key].toLocaleString()}</div>
+					<div class="tier-card__pct">{ethicsTotal > 0 ? pct(ethicsMap[key], ethicsTotal) : "0"}%</div>
+					<div class="tier-card__bar">
+						<div class="tier-card__fill" style={`width: ${ethicsTotal > 0 ? (ethicsMap[key] / ethicsTotal) * 100 : 0}%`}></div>
+					</div>
+				</div>
+			))}
+		</div>
+	</section>
+
+	<!-- S05 — GROWTH STATS -->
+	<section class="sec container">
+		<div class="sec-head">
+			<div class="sec-head__left">
+				<span class="num">&sect; 05</span>
+				<h2>Growth <em>Trend</em></h2>
+			</div>
+			<div class="sec-head__right">Last 12 months &middot; new profiles per month</div>
+		</div>
+
+		<div class="growth-chart">
+			{growthBuckets.map((b) => (
+				<div class="growth-col">
+					<div class="growth-col__bar-wrap">
+						<div class="growth-col__bar" style={`height: ${(b.count / growthMax) * 100}%`}>
+							{b.count > 0 && <span class="growth-col__tip">{b.count}</span>}
+						</div>
+					</div>
+					<span class="growth-col__label">{b.label.split(" ")[0]}</span>
+				</div>
+			))}
+		</div>
+	</section>
+
+	<!-- S06 — DATA QUALITY -->
+	<section class="sec container">
+		<div class="sec-head">
+			<div class="sec-head__left">
+				<span class="num">&sect; 06</span>
+				<h2>Data <em>Quality</em></h2>
+			</div>
+			<div class="sec-head__right">Profile completeness metrics</div>
+		</div>
+
+		<div class="quality-grid">
+			{quality.map((q) => (
+				<div class="quality-card">
+					<div class="quality-card__head">
+						<span class="quality-card__label">{q.label}</span>
+						<span class="quality-card__pct">{q.pct}%</span>
+					</div>
+					<div class="quality-card__track">
+						<div class="quality-card__fill" style={`width: ${q.pct}%`}></div>
+					</div>
+					<span class="quality-card__detail">{q.count.toLocaleString()} of {totalProfiles.toLocaleString()} profiles</span>
+				</div>
+			))}
+		</div>
+	</section>
+
+	<!-- CTA -->
+	<section class="cta container">
+		<span class="eyebrow">Open Data &middot; CC-BY-SA 4.0</span>
+		<h2 style="margin-top:16px;">Use the data. <em>Cite the source.</em></h2>
+		<p class="cta__note">
+			All aggregate statistics on this page are released under Creative Commons Attribution-ShareAlike 4.0. If you use them in research, journalism, or any derivative work, please cite MDRPedia.
+		</p>
+		<div class="cta__actions">
+			<a href="/about" class="btn btn--primary">Read the methodology</a>
+			<a href="/contact" class="btn btn--ghost">Contact the editorial board</a>
+		</div>
+	</section>
+
+</div>
+</Layout>
+
+<style>
+/* ── PAGE ── */
+.stats-page { padding-bottom: 64px; }
+
+/* ── HERO ── */
+.stats-hero { padding: 80px 0 40px; }
+.stats-hero__masthead {
+	display: flex; justify-content: space-between; align-items: baseline;
+	border-bottom: 1px solid var(--ink); padding-bottom: 8px; margin-bottom: 40px;
+}
+.stats-hero__masthead .edition {
+	font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em;
+	text-transform: uppercase; color: var(--ink-3);
+}
+.stats-hero h1 {
+	font-size: clamp(48px, 7vw, 100px); font-weight: 300;
+	line-height: 0.95; letter-spacing: -0.03em;
+}
+.stats-hero h1 em { font-style: italic; color: var(--ink-3); font-weight: 300; }
+.stats-hero__lede {
+	font-family: var(--font-serif); font-size: 20px; line-height: 1.5;
+	color: var(--ink); max-width: 64ch; margin-top: 28px;
+}
+.stats-hero__meta {
+	display: flex; justify-content: space-between; align-items: baseline;
+	margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--rule);
+}
+.stats-hero__meta .mono {
+	font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em;
+	text-transform: uppercase; color: var(--ink-3);
+}
+
+/* ── SECTION HEAD (matches index.astro) ── */
+.sec { padding: 72px 0; }
+.sec-head {
+	display: flex; justify-content: space-between; align-items: flex-end;
+	border-bottom: 1px solid var(--ink); padding-bottom: 16px; margin-bottom: 40px;
+}
+.sec-head__left { display: flex; align-items: baseline; gap: 20px; }
+.sec-head__left .num {
+	font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em;
+	text-transform: uppercase; color: var(--ink-3);
+}
+.sec-head__left h2 { font-size: clamp(28px, 3.5vw, 44px); font-weight: 400; }
+.sec-head__left h2 em { font-style: italic; color: var(--ink-3); font-weight: 400; }
+.sec-head__right {
+	font-family: var(--font-mono); font-size: 11px; color: var(--ink-3);
+	letter-spacing: 0.1em; text-transform: uppercase;
+}
+
+/* ── TIER CARDS ── */
+.tier-grid {
+	display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+	background: var(--rule); border: 1px solid var(--rule);
+}
+.tier-grid--ethics { grid-template-columns: repeat(3, 1fr); }
+
+.tier-card {
+	background: var(--card-bg, var(--paper));
+	padding: 32px 28px; display: flex; flex-direction: column; gap: 8px;
+}
+.tier-card--ethics { background: var(--paper); }
+.tier-card__label {
+	font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em;
+	text-transform: uppercase; color: var(--card-color, var(--ink-3));
+	font-weight: 600;
+}
+.tier-card__value {
+	font-family: var(--font-serif); font-size: 48px; font-weight: 400;
+	line-height: 1; color: var(--card-color, var(--ink));
+	font-variant-numeric: tabular-nums;
+}
+.tier-card__pct {
+	font-family: var(--font-mono); font-size: 13px; color: var(--ink-3);
+	font-variant-numeric: tabular-nums;
+}
+.tier-card__bar {
+	height: 4px; background: var(--rule); margin-top: 8px; border-radius: 2px;
+	overflow: hidden;
+}
+.tier-card__fill {
+	height: 100%; background: var(--card-color, var(--ink));
+	border-radius: 2px; transition: width 0.6s ease;
+}
+
+/* ── BAR LIST (countries + specialties) ── */
+.bar-list { display: flex; flex-direction: column; }
+.bar-row {
+	display: grid; grid-template-columns: 36px 180px 1fr 72px;
+	gap: 16px; align-items: center;
+	padding: 12px 0; border-top: 1px solid var(--rule);
+}
+.bar-row:first-child { border-top: none; }
+.bar-row__rank {
+	font-family: var(--font-mono); font-size: 11px; color: var(--ink-3);
+	letter-spacing: 0.1em;
+}
+.bar-row__label {
+	font-family: var(--font-serif); font-size: 15px; color: var(--ink);
+	white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.bar-row__track {
+	height: 24px; background: var(--paper-2); border-radius: 2px;
+	overflow: hidden; position: relative;
+}
+.bar-row__fill {
+	height: 100%; background: var(--ink); border-radius: 2px;
+	transition: width 0.5s ease; min-width: 2px;
+}
+.bar-row__fill--spec { background: var(--ink-blue); }
+.bar-row__value {
+	font-family: var(--font-mono); font-size: 13px; color: var(--ink);
+	text-align: right; font-variant-numeric: tabular-nums; font-weight: 500;
+}
+
+/* ── GROWTH CHART ── */
+.growth-chart {
+	display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px;
+	height: 240px; align-items: end;
+	border-bottom: 1px solid var(--rule); padding-bottom: 0;
+}
+.growth-col {
+	display: flex; flex-direction: column; align-items: center;
+	height: 100%;
+}
+.growth-col__bar-wrap {
+	flex: 1; width: 100%; display: flex; align-items: flex-end;
+	justify-content: center;
+}
+.growth-col__bar {
+	width: 100%; max-width: 48px; background: var(--ink);
+	border-radius: 3px 3px 0 0; position: relative;
+	transition: height 0.5s ease; min-height: 2px;
+}
+.growth-col__tip {
+	position: absolute; top: -22px; left: 50%; transform: translateX(-50%);
+	font-family: var(--font-mono); font-size: 11px; color: var(--ink);
+	font-weight: 500; white-space: nowrap;
+}
+.growth-col__label {
+	font-family: var(--font-mono); font-size: 10px; color: var(--ink-3);
+	letter-spacing: 0.08em; text-transform: uppercase; margin-top: 10px;
+	text-align: center;
+}
+
+/* ── DATA QUALITY ── */
+.quality-grid {
+	display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+	background: var(--rule); border: 1px solid var(--rule);
+}
+.quality-card {
+	background: var(--paper); padding: 28px;
+	display: flex; flex-direction: column; gap: 12px;
+}
+.quality-card__head {
+	display: flex; justify-content: space-between; align-items: baseline;
+}
+.quality-card__label {
+	font-family: var(--font-serif); font-size: 17px; color: var(--ink);
+	font-weight: 500;
+}
+.quality-card__pct {
+	font-family: var(--font-mono); font-size: 24px; color: var(--ink);
+	font-weight: 500; font-variant-numeric: tabular-nums;
+}
+.quality-card__track {
+	height: 6px; background: var(--paper-2); border-radius: 3px;
+	overflow: hidden;
+}
+.quality-card__fill {
+	height: 100%; background: var(--verdant); border-radius: 3px;
+	transition: width 0.6s ease;
+}
+.quality-card__detail {
+	font-family: var(--font-mono); font-size: 11px; color: var(--ink-3);
+	letter-spacing: 0.06em;
+}
+
+/* ── CTA ── */
+.cta { padding: 80px 0 64px; text-align: center; border-top: 1px solid var(--rule); }
+.cta h2 { font-size: clamp(36px, 4.5vw, 64px); font-weight: 300; max-width: 16ch; margin: 0 auto; }
+.cta h2 em { font-style: italic; color: var(--ink-3); font-weight: 300; }
+.cta__note {
+	font-family: var(--font-serif); font-size: 16px; color: var(--ink-2);
+	max-width: 56ch; margin: 20px auto 0; line-height: 1.6;
+}
+.cta__actions { margin-top: 32px; display: flex; gap: 12px; justify-content: center; }
+
+.empty-state {
+	font-family: var(--font-serif); font-size: 16px; color: var(--ink-3);
+	font-style: italic; padding: 32px 0; text-align: center;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+	.stats-hero__masthead { flex-direction: column; gap: 4px; }
+	.stats-hero__meta { flex-direction: column; gap: 8px; }
+	.tier-grid { grid-template-columns: 1fr 1fr; }
+	.tier-grid--ethics { grid-template-columns: 1fr 1fr; }
+	.bar-row { grid-template-columns: 28px 120px 1fr 56px; gap: 8px; }
+	.bar-row__label { font-size: 13px; }
+	.growth-chart { height: 180px; gap: 3px; }
+	.quality-grid { grid-template-columns: 1fr 1fr; }
+	.sec { padding: 56px 0; }
+	.cta__actions { flex-direction: column; align-items: center; }
+}
+
+@media (max-width: 600px) {
+	.tier-grid, .tier-grid--ethics { grid-template-columns: 1fr; }
+	.bar-row { grid-template-columns: 24px 1fr 56px; }
+	.bar-row__track { display: none; }
+	.growth-chart { grid-template-columns: repeat(6, 1fr); height: 160px; }
+	.growth-col:nth-child(-n+6) { display: flex; }
+	.growth-col:nth-child(n+7) { display: none; }
+	.quality-grid { grid-template-columns: 1fr; }
+	.sec-head { flex-direction: column; align-items: flex-start; gap: 8px; }
+}
+</style>

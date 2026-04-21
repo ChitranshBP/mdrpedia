@@ -308,9 +308,9 @@ const hasRealPortrait =
 
 <style>
     .infobox {
-        background: var(--bg-card, #14142a);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         overflow: hidden;
         font-size: 0.82rem;
         line-height: 1.5;
@@ -327,15 +327,15 @@ const hasRealPortrait =
 
     .infobox__name {
         display: block;
-        font-weight: 700;
+        font-weight: 500;
         font-size: 1rem;
-        color: var(--text-primary);
+        color: var(--ink);
     }
 
     .infobox__title {
         display: block;
         font-size: 0.78rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin-top: 2px;
     }
 
@@ -348,8 +348,8 @@ const hasRealPortrait =
         width: 100%;
         max-height: 220px;
         object-fit: cover;
-        border-radius: 8px;
-        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: var(--r-3);
+        border: 1px solid var(--rule);
     }
 
     .infobox__facts {
@@ -360,7 +360,7 @@ const hasRealPortrait =
     .infobox__row {
         display: flex;
         padding: 6px 16px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        border-bottom: 1px solid var(--rule);
         gap: 8px;
     }
 
@@ -372,7 +372,7 @@ const hasRealPortrait =
         width: 95px;
         flex-shrink: 0;
         font-weight: 600;
-        color: var(--text-muted);
+        color: var(--ink-3);
         font-size: 0.75rem;
         padding-top: 1px;
     }
@@ -380,7 +380,7 @@ const hasRealPortrait =
     .infobox__row dd {
         flex: 1;
         margin: 0;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         word-break: break-word;
     }
 
@@ -393,7 +393,7 @@ const hasRealPortrait =
     .infobox__sub {
         display: block;
         font-size: 0.72rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin-top: 1px;
     }
 
@@ -419,7 +419,7 @@ const hasRealPortrait =
 
     .infobox__tier-badge {
         display: inline-block;
-        font-weight: 700;
+        font-weight: 500;
         font-size: 0.72rem;
         padding: 2px 8px;
         border-radius: 4px;

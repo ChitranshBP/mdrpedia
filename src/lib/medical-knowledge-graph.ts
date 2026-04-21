@@ -5,6 +5,8 @@
 // Uses: MedicalEntity, MedicalScholarlyArticle, Physician, Hospital
 // ============================================================================
 
+import { slugify } from './utils';
+
 interface TechniqueData {
     name: string;
     description?: string;
@@ -131,10 +133,6 @@ const SPECIALTY_CODES: Record<string, string> = {
 
 function getSpecialtyCode(specialty: string): string {
     return SPECIALTY_CODES[specialty.toLowerCase().trim()] || 'MedicalSpecialty';
-}
-
-function slugify(text: string): string {
-    return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
 
 // ─── Generate Stable @id References ──────────────────────────────────────────

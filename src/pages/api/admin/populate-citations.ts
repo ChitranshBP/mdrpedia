@@ -8,15 +8,8 @@ export const prerender = false;
 import { prisma } from '../../../lib/prisma';
 import { syncDoctorPapers, type PubMedPaper } from '../../../lib/pubmed-sync';
 import { logAdminAction } from '../../../lib/audit';
-
-// Validate admin key
-function validateAdminKey(request: Request): boolean {
-    const adminKey = import.meta.env.ADMIN_ACCESS_KEY;
-    if (!adminKey) return false;
-
-    const providedKey = request.headers.get('x-admin-key');
-    return providedKey === adminKey;
-}
+import { requireSuperAdmin } from '../../../lib/rbac';
+import { checkRateLimit, getClientIdentifier, RATE_LIMITS, rateLimitResponse } from '../../../lib/rate-limit';
 
 // Map evidence strength to database classification
 function mapEvidenceClassification(evidenceLabel: string): 'SUPPORTED' | 'PARTIALLY_SUPPORTED' | 'HISTORICAL_LANDMARK' | null {
@@ -34,12 +27,15 @@ function mapEvidenceClassification(evidenceLabel: string): 'SUPPORTED' | 'PARTIA
 }
 
 export async function POST({ request }: { request: Request }) {
-    if (!validateAdminKey(request)) {
+    if (!requireSuperAdmin(request)) {
         return new Response(JSON.stringify({ error: 'Unauthorized' }), {
             status: 401,
             headers: { 'Content-Type': 'application/json' }
         });
     }
+
+    const rateCheck = checkRateLimit(getClientIdentifier(request), RATE_LIMITS.adminSync);
+    if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime);
 
     const body = await request.json();
     const { action, slug, batchSize = 10 } = body;
@@ -183,6 +179,8 @@ async function syncSingleProfile(
                 added = result.count;
             } catch (err) {
                 // Fallback to individual inserts if batch fails
+                send({ type: 'warning', message: `Batch insert failed, falling back to individual inserts: ${err instanceof Error ? err.message : 'Unknown'}` });
+                let individualErrors = 0;
                 for (const paper of newPapers) {
                     try {
                         await prisma.citation.create({
@@ -207,9 +205,17 @@ async function syncSingleProfile(
                             }
                         });
                         added++;
-                    } catch {
-                        // Skip duplicate constraint errors silently
+                    } catch (insertErr) {
+                        individualErrors++;
+                        // Only log non-duplicate errors
+                        const msg = insertErr instanceof Error ? insertErr.message : '';
+                        if (!msg.includes('Unique constraint')) {
+                            send({ type: 'warning', message: `Failed to insert citation "${paper.title?.slice(0, 50)}": ${msg}` });
+                        }
                     }
+                }
+                if (individualErrors > 0) {
+                    send({ type: 'info', message: `Individual insert: ${added} succeeded, ${individualErrors} skipped/failed` });
                 }
             }
         }
@@ -326,8 +332,8 @@ async function syncAllProfiles(
                         skipDuplicates: true
                     });
                     added = batchResult.count;
-                } catch {
-                    // Skip errors silently in batch mode
+                } catch (batchErr) {
+                    send({ type: 'warning', message: `Batch insert failed for ${profile.full_name}: ${batchErr instanceof Error ? batchErr.message : 'Unknown'}` });
                 }
             }
 
@@ -357,12 +363,15 @@ async function syncAllProfiles(
  * GET endpoint to check sync status
  */
 export async function GET({ request }: { request: Request }) {
-    if (!validateAdminKey(request)) {
+    if (!requireSuperAdmin(request)) {
         return new Response(JSON.stringify({ error: 'Unauthorized' }), {
             status: 401,
             headers: { 'Content-Type': 'application/json' }
         });
     }
+
+    const rateCheck = checkRateLimit(getClientIdentifier(request), RATE_LIMITS.adminGeneral);
+    if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime);
 
     // Get citation statistics
     const [totalCitations, profilesWithCitations, profilesWithoutCitations] = await Promise.all([

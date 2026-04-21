@@ -4,6 +4,7 @@
  * Manage news articles with CRUD operations
  */
 import Layout from "../../../layouts/Layout.astro";
+import AdminSidebar from "../../../components/admin/AdminSidebar.astro";
 import { getCollection } from "astro:content";
 import { requireSuperAdmin } from "../../../lib/rbac";
 
@@ -26,7 +27,9 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
 ---
 
 <Layout title="Manage News — MDRPedia Admin">
-    <div class="container admin-dashboard">
+    <div class="admin">
+        <AdminSidebar adminKey={adminKey} activePage="news" />
+        <main class="main">
         <header class="admin-header">
             <div class="admin-header__top">
                 <span class="badge badge--admin">SUPER ADMIN</span>
@@ -35,9 +38,6 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
             <div class="admin-actions">
                 <a href={`/admin/news/create?key=${adminKey}`} class="btn btn--primary">
                     + New Article
-                </a>
-                <a href={`/admin?key=${adminKey}`} class="btn btn--outline">
-                    &larr; Dashboard
                 </a>
             </div>
         </header>
@@ -116,6 +116,7 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
                 </tbody>
             </table>
         </div>
+        </main>
     </div>
 </Layout>
 
@@ -123,7 +124,7 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
     // Category filter
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            const category = btn.dataset.category;
+            const category = (btn as HTMLElement).dataset.category;
 
             // Update active state
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -131,10 +132,10 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
 
             // Filter rows
             document.querySelectorAll('tbody tr').forEach(row => {
-                if (category === 'all' || row.dataset.category === category) {
-                    row.style.display = '';
+                if (category === 'all' || (row as HTMLElement).dataset.category === category) {
+                    (row as HTMLElement).style.display = '';
                 } else {
-                    row.style.display = 'none';
+                    (row as HTMLElement).style.display = 'none';
                 }
             });
         });
@@ -143,7 +144,7 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
     // Delete handlers
     document.querySelectorAll('[data-delete]').forEach(btn => {
         btn.addEventListener('click', async () => {
-            const slug = btn.dataset.delete;
+            const slug = (btn as HTMLElement).dataset.delete;
             if (!confirm(`Delete article "${slug}"? This cannot be undone.`)) return;
 
             const key = new URLSearchParams(window.location.search).get('key');
@@ -166,7 +167,7 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
     .admin-dashboard {
         padding: 40px 20px;
         max-width: 1400px;
-        color: var(--text-primary);
+        color: var(--ink);
     }
 
     .admin-header {
@@ -183,9 +184,9 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
     }
 
     .badge--admin {
-        background: #ffd700;
+        background: var(--aged-gold);
         color: #000;
-        font-weight: 700;
+        font-weight: 500;
         padding: 2px 8px;
         border-radius: 4px;
         font-size: 0.7rem;
@@ -195,7 +196,9 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
     h1 {
         font-family: var(--font-serif);
         font-size: 2rem;
+        font-weight: 400;
         margin: 0;
+        color: var(--ink);
     }
 
     .admin-actions {
@@ -212,9 +215,9 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
     }
 
     .stat-card {
-        background: var(--bg-card, #14142a);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 20px;
         text-align: center;
     }
@@ -222,13 +225,13 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
     .stat-value {
         display: block;
         font-size: 2rem;
-        font-weight: 700;
-        color: var(--accent-purple, #8b5cf6);
+        font-weight: 500;
+        color: var(--ink-blue);
     }
 
     .stat-label {
         font-size: 0.8rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
@@ -243,8 +246,8 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
     }
 
     .filter-label {
-        font-weight: 600;
-        color: var(--text-secondary);
+        font-weight: 500;
+        color: var(--ink-2);
     }
 
     .filter-buttons {
@@ -255,31 +258,31 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
 
     .filter-btn {
         padding: 6px 14px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        border: 1px solid var(--rule);
         background: transparent;
-        color: var(--text-secondary);
-        border-radius: 20px;
+        color: var(--ink-2);
+        border-radius: var(--r-3);
         font-size: 0.85rem;
         cursor: pointer;
         transition: all 0.2s;
     }
 
     .filter-btn:hover {
-        border-color: var(--accent-purple);
-        color: var(--accent-purple);
+        border-color: var(--ink-blue);
+        color: var(--ink-blue);
     }
 
     .filter-btn.active {
-        background: var(--accent-purple);
-        border-color: var(--accent-purple);
+        background: var(--ink-blue);
+        border-color: var(--ink-blue);
         color: white;
     }
 
     /* Table */
     .table-container {
-        background: var(--bg-card, #14142a);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         overflow: hidden;
     }
 
@@ -292,19 +295,19 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
     .admin-table td {
         padding: 16px;
         text-align: left;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid var(--rule);
     }
 
     .admin-table th {
-        background: rgba(255, 255, 255, 0.03);
-        font-weight: 600;
-        color: var(--text-secondary);
+        background: var(--paper-2);
+        font-weight: 500;
+        color: var(--ink-2);
     }
 
     .article-title {
-        color: var(--accent-purple);
+        color: var(--ink-blue);
         text-decoration: none;
-        font-weight: 600;
+        font-weight: 500;
     }
 
     .article-title:hover {
@@ -313,18 +316,18 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
 
     .article-summary {
         font-size: 0.8rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin: 4px 0 0;
     }
 
     .category-badge {
         display: inline-block;
         padding: 4px 10px;
-        background: rgba(139, 92, 246, 0.15);
-        color: var(--accent-purple);
-        border-radius: 12px;
+        background: var(--ink-blue-2);
+        color: var(--ink-blue);
+        border-radius: var(--r-3);
         font-size: 0.75rem;
-        font-weight: 600;
+        font-weight: 500;
     }
 
     .actions-cell {
@@ -335,7 +338,7 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
     .empty-state {
         text-align: center;
         padding: 40px;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     /* Buttons */
@@ -345,8 +348,8 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
         align-items: center;
         justify-content: center;
         padding: 10px 16px;
-        border-radius: 6px;
-        font-weight: 600;
+        border-radius: var(--r-3);
+        font-weight: 500;
         font-size: 0.9rem;
         cursor: pointer;
         transition: all 0.2s;
@@ -354,20 +357,20 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
     }
 
     .btn--primary {
-        background: #8b5cf6;
+        background: var(--ink-blue);
         color: white;
     }
 
     .btn--outline {
         background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: var(--text-primary);
+        border: 1px solid var(--rule);
+        color: var(--ink);
     }
 
     .btn--danger {
-        background: rgba(239, 68, 68, 0.15);
-        color: #ef4444;
-        border: 1px solid rgba(239, 68, 68, 0.3);
+        background: var(--sanguine-2);
+        color: var(--sanguine);
+        border: 1px solid var(--sanguine);
     }
 
     .btn--sm {

@@ -1,0 +1,539 @@
+---
+/**
+ * MDRPedia — Ethics Certification Admin Dashboard
+ * View and manage ethics applications, audits, and clinic certifications
+ */
+import Layout from "../../layouts/Layout.astro";
+import AdminSidebar from "../../components/admin/AdminSidebar.astro";
+import { prisma } from "../../lib/prisma";
+import { requireSuperAdmin } from "../../lib/rbac";
+
+export const prerender = false;
+
+if (!requireSuperAdmin(Astro.request)) {
+    return Astro.redirect("/login");
+}
+
+const adminKey = new URL(Astro.request.url).searchParams.get("key");
+const tab = new URL(Astro.request.url).searchParams.get("tab") || "applications";
+const filterStatus = new URL(Astro.request.url).searchParams.get("status") || "all";
+
+// Applications
+const appWhere: Record<string, unknown> = {};
+if (filterStatus !== "all") appWhere.status = filterStatus;
+
+const applications = await prisma.ethicsApplication.findMany({
+    where: appWhere,
+    include: {
+        profile: {
+            select: {
+                id: true,
+                full_name: true,
+                slug: true,
+                specialty: true,
+                ethics_tier: true,
+                ethics_score: true,
+                ethics_status: true,
+                ethics_cert_id: true,
+            },
+        },
+        audits: {
+            orderBy: { createdAt: "desc" },
+            take: 1,
+            select: {
+                id: true,
+                audit_type: true,
+                status: true,
+                overall_score: true,
+                due_date: true,
+            },
+        },
+    },
+    orderBy: { updatedAt: "desc" },
+    take: 100,
+});
+
+// Stats
+const appStats = await prisma.ethicsApplication.groupBy({
+    by: ["status"],
+    _count: true,
+});
+const statusCounts: Record<string, number> = {};
+appStats.forEach((s) => (statusCounts[s.status] = s._count));
+
+// Clinics
+const clinics = await prisma.clinicCertification.findMany({
+    include: {
+        hospital: {
+            select: { id: true, name: true, slug: true },
+        },
+    },
+    orderBy: { updatedAt: "desc" },
+    take: 50,
+});
+
+// Pending audits (due soon)
+const pendingAudits = await prisma.ethicsAudit.findMany({
+    where: {
+        status: { in: ["DRAFT", "SUBMITTED"] },
+    },
+    include: {
+        application: {
+            include: {
+                profile: {
+                    select: { full_name: true, slug: true },
+                },
+            },
+        },
+    },
+    orderBy: { due_date: "asc" },
+    take: 20,
+});
+
+const statusColors: Record<string, string> = {
+    DRAFT: "#6b7280",
+    SUBMITTED: "#f59e0b",
+    UNDER_REVIEW: "#3b82f6",
+    APPROVED: "#10b981",
+    SUSPENDED: "#f97316",
+    REVOKED: "#ef4444",
+    EXPIRED: "#9ca3af",
+};
+
+const tierColors: Record<string, string> = {
+    ADVOCATE: "#40916c",
+    GUARDIAN: "#1b4332",
+    LEGEND: "#2d6a4f",
+};
+---
+
+<Layout title="Ethics Management -- MDRPedia Admin" robots="noindex, nofollow">
+    <div class="admin">
+        <AdminSidebar adminKey={adminKey} activePage="ethics" />
+        <main class="main">
+
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <a href={`/admin/ethics?key=${adminKey}&tab=applications`} class={`tab-btn ${tab === 'applications' ? 'active' : ''}`}>Applications</a>
+            <a href={`/admin/ethics?key=${adminKey}&tab=audits`} class={`tab-btn ${tab === 'audits' ? 'active' : ''}`}>Pending Audits</a>
+            <a href={`/admin/ethics?key=${adminKey}&tab=clinics`} class={`tab-btn ${tab === 'clinics' ? 'active' : ''}`}>Clinics</a>
+        </div>
+
+        {tab === 'applications' && (
+            <>
+            <!-- Stats -->
+            <div class="stats-grid">
+                {Object.entries(statusCounts).map(([status, count]) => (
+                    <a
+                        href={`/admin/ethics?key=${adminKey}&tab=applications&status=${status}`}
+                        class={`stat-card ${filterStatus === status ? 'active' : ''}`}
+                        style={`--stat-color: ${statusColors[status] || '#6b7280'}`}
+                    >
+                        <span class="stat-value">{count}</span>
+                        <span class="stat-label">{status.replace('_', ' ')}</span>
+                    </a>
+                ))}
+            </div>
+
+            <!-- Filter -->
+            <div class="filter-bar">
+                <span class="filter-label">Filter:</span>
+                <div class="filter-buttons">
+                    <a href={`/admin/ethics?key=${adminKey}&tab=applications&status=all`} class={`filter-btn ${filterStatus === 'all' ? 'active' : ''}`}>All</a>
+                    <a href={`/admin/ethics?key=${adminKey}&tab=applications&status=SUBMITTED`} class={`filter-btn ${filterStatus === 'SUBMITTED' ? 'active' : ''}`}>Submitted</a>
+                    <a href={`/admin/ethics?key=${adminKey}&tab=applications&status=APPROVED`} class={`filter-btn ${filterStatus === 'APPROVED' ? 'active' : ''}`}>Approved</a>
+                    <a href={`/admin/ethics?key=${adminKey}&tab=applications&status=SUSPENDED`} class={`filter-btn ${filterStatus === 'SUSPENDED' ? 'active' : ''}`}>Suspended</a>
+                </div>
+            </div>
+
+            <!-- Applications Table -->
+            <div class="table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Doctor</th>
+                            <th>Target Tier</th>
+                            <th>Status</th>
+                            <th>Score</th>
+                            <th>Latest Audit</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {applications.length > 0 ? (
+                            applications.map((app) => (
+                                <tr data-id={app.id}>
+                                    <td>
+                                        <a href={`/${app.profile.slug}`} target="_blank" class="doctor-name">{app.profile.full_name}</a>
+                                        <p class="sub-text">{app.profile.specialty}</p>
+                                        {app.profile.ethics_cert_id && <p class="cert-id">{app.profile.ethics_cert_id}</p>}
+                                    </td>
+                                    <td>
+                                        <span class="tier-pill" style={`--tier-color: ${tierColors[app.target_tier] || '#6b7280'}`}>
+                                            {app.target_tier}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="status-badge" style={`--status-color: ${statusColors[app.status] || '#6b7280'}`}>
+                                            {app.status.replace('_', ' ')}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {app.profile.ethics_score != null ? (
+                                            <span class="score">{app.profile.ethics_score.toFixed(1)}</span>
+                                        ) : <span class="text-muted">--</span>}
+                                    </td>
+                                    <td>
+                                        {app.audits[0] ? (
+                                            <div>
+                                                <span class="audit-type">{app.audits[0].audit_type}</span>
+                                                <span class="status-badge" style={`--status-color: ${statusColors[app.audits[0].status] || '#6b7280'}`}>
+                                                    {app.audits[0].status}
+                                                </span>
+                                            </div>
+                                        ) : <span class="text-muted">None</span>}
+                                    </td>
+                                    <td class="actions-cell">
+                                        {app.status === 'SUBMITTED' && (
+                                            <>
+                                                <button class="btn btn--sm btn--success" data-action="approve" data-id={app.id}>Approve</button>
+                                                <button class="btn btn--sm btn--danger" data-action="reject" data-id={app.id}>Reject</button>
+                                            </>
+                                        )}
+                                        {app.status === 'APPROVED' && (
+                                            <>
+                                                <button class="btn btn--sm btn--outline" data-action="create-audit" data-id={app.id}>New Audit</button>
+                                                <button class="btn btn--sm btn--danger" data-action="revoke" data-profile-id={app.profile.id}>Revoke</button>
+                                            </>
+                                        )}
+                                        {app.status === 'DRAFT' && (
+                                            <span class="text-muted">Awaiting submission</span>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr><td colspan="6" class="empty-state">No applications found.</td></tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+            </>
+        )}
+
+        {tab === 'audits' && (
+            <>
+            <h2 class="section-title">Pending Audits</h2>
+            <div class="table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Doctor</th>
+                            <th>Audit Type</th>
+                            <th>Status</th>
+                            <th>Due Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {pendingAudits.length > 0 ? (
+                            pendingAudits.map((audit) => {
+                                const overdue = new Date(audit.due_date) < new Date();
+                                return (
+                                    <tr>
+                                        <td>
+                                            <a href={`/${audit.application.profile.slug}`} target="_blank" class="doctor-name">{audit.application.profile.full_name}</a>
+                                        </td>
+                                        <td><span class="audit-type">{audit.audit_type}</span></td>
+                                        <td>
+                                            <span class="status-badge" style={`--status-color: ${statusColors[audit.status]}`}>
+                                                {audit.status}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class={overdue ? 'overdue' : ''}>
+                                                {new Date(audit.due_date).toLocaleDateString()}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            {audit.status === 'SUBMITTED' && (
+                                                <button class="btn btn--sm btn--outline" data-action="review-audit" data-audit-id={audit.id}>Review</button>
+                                            )}
+                                        </td>
+                                    </tr>
+                                );
+                            })
+                        ) : (
+                            <tr><td colspan="5" class="empty-state">No pending audits.</td></tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+            </>
+        )}
+
+        {tab === 'clinics' && (
+            <>
+            <div class="section-header">
+                <h2 class="section-title">Clinic Certifications</h2>
+                <button class="btn btn--sm btn--outline" id="recalculate-all">Recalculate All</button>
+            </div>
+            <div class="table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Hospital</th>
+                            <th>Status</th>
+                            <th>Tier</th>
+                            <th>Certified / Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {clinics.length > 0 ? (
+                            clinics.map((clinic) => (
+                                <tr>
+                                    <td>{clinic.hospital.name}</td>
+                                    <td>
+                                        <span class="status-badge" style={`--status-color: ${
+                                            clinic.status === 'CERTIFIED' ? '#10b981' :
+                                            clinic.status === 'SUSPENDED' ? '#f97316' : '#6b7280'
+                                        }`}>{clinic.status}</span>
+                                    </td>
+                                    <td>
+                                        {clinic.tier ? (
+                                            <span class="tier-pill" style={`--tier-color: ${tierColors[clinic.tier] || '#6b7280'}`}>{clinic.tier}</span>
+                                        ) : <span class="text-muted">--</span>}
+                                    </td>
+                                    <td>{clinic.certified_doctors} / {clinic.total_doctors}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr><td colspan="4" class="empty-state">No clinic certifications yet.</td></tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+            </>
+        )}
+
+        </main>
+    </div>
+</Layout>
+
+<script define:vars={{ adminKey }}>
+    function setLoading(btn, loading, text) {
+        if (!btn) return;
+        btn.disabled = loading;
+        if (loading) {
+            btn.dataset.originalText = btn.textContent;
+            btn.textContent = text || 'Loading...';
+        } else {
+            btn.textContent = btn.dataset.originalText || btn.textContent;
+        }
+    }
+
+    // Application actions
+    document.querySelectorAll('[data-action="approve"]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            if (!confirm('Approve this ethics application?')) return;
+            setLoading(btn, true, 'Approving...');
+            const id = btn.dataset.id;
+            try {
+                const res = await fetch(`/api/admin/ethics/${id}?key=${adminKey}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+                    body: JSON.stringify({ action: 'approve' })
+                });
+                if (res.ok) window.location.reload();
+                else alert('Failed: ' + (await res.json()).error);
+            } finally { setLoading(btn, false); }
+        });
+    });
+
+    document.querySelectorAll('[data-action="reject"]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const reason = prompt('Rejection reason:');
+            if (!reason) return;
+            setLoading(btn, true, 'Rejecting...');
+            const id = btn.dataset.id;
+            try {
+                const res = await fetch(`/api/admin/ethics/${id}?key=${adminKey}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+                    body: JSON.stringify({ action: 'reject', rejection_reason: reason })
+                });
+                if (res.ok) window.location.reload();
+                else alert('Failed: ' + (await res.json()).error);
+            } finally { setLoading(btn, false); }
+        });
+    });
+
+    document.querySelectorAll('[data-action="create-audit"]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const type = prompt('Audit type (INITIAL, QUARTERLY, ANNUAL):', 'QUARTERLY');
+            if (!type) return;
+            setLoading(btn, true, 'Creating...');
+            const id = btn.dataset.id;
+            try {
+                const res = await fetch(`/api/admin/ethics/create-audit?key=${adminKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+                    body: JSON.stringify({ application_id: id, audit_type: type.toUpperCase() })
+                });
+                if (res.ok) { alert('Audit created!'); window.location.reload(); }
+                else alert('Failed: ' + (await res.json()).error);
+            } finally { setLoading(btn, false); }
+        });
+    });
+
+    document.querySelectorAll('[data-action="revoke"]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const reason = prompt('Revocation reason:');
+            if (!reason) return;
+            setLoading(btn, true, 'Revoking...');
+            const profileId = btn.dataset.profileId;
+            try {
+                const res = await fetch(`/api/admin/ethics/revoke?key=${adminKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+                    body: JSON.stringify({ profile_id: profileId, reason })
+                });
+                if (res.ok) window.location.reload();
+                else alert('Failed: ' + (await res.json()).error);
+            } finally { setLoading(btn, false); }
+        });
+    });
+
+    // Review Audit — opens a grading dialog
+    document.querySelectorAll('[data-action="review-audit"]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const auditId = btn.dataset.auditId;
+            setLoading(btn, true, 'Loading...');
+
+            try {
+                // Fetch audit details
+                const res = await fetch(`/api/admin/ethics/audit/${auditId}/review?key=${adminKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+                    body: JSON.stringify({ action: 'fetch_details' })
+                });
+
+                // Since there's no GET for audit details, prompt for grading
+                const action = prompt('Action: "approve" to grade and approve, "request_changes" to send back:', 'approve');
+                if (!action || !['approve', 'request_changes'].includes(action)) return;
+
+                if (action === 'request_changes') {
+                    const notes = prompt('Notes for the doctor:');
+                    const reviewRes = await fetch(`/api/admin/ethics/audit/${auditId}/review?key=${adminKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+                        body: JSON.stringify({ action: 'request_changes', reviewer_notes: notes })
+                    });
+                    if (reviewRes.ok) { alert('Sent back for changes.'); window.location.reload(); }
+                    else alert('Failed: ' + (await reviewRes.json()).error);
+                } else {
+                    // Approve with default full marks (admin can refine via direct API later)
+                    const notes = prompt('Reviewer notes (optional):');
+                    const reviewRes = await fetch(`/api/admin/ethics/audit/${auditId}/review?key=${adminKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+                        body: JSON.stringify({ action: 'approve', reviewer_notes: notes, grades: [] })
+                    });
+                    if (reviewRes.ok) {
+                        const data = await reviewRes.json();
+                        alert(`Audit approved! Score: ${data.score}, Tier: ${data.tier || 'Below threshold'}${data.gating_failed ? ' (GATING FAILED)' : ''}`);
+                        window.location.reload();
+                    } else {
+                        alert('Failed: ' + (await reviewRes.json()).error);
+                    }
+                }
+            } finally { setLoading(btn, false); }
+        });
+    });
+
+    // Recalculate clinics
+    const recalcBtn = document.getElementById('recalculate-all');
+    if (recalcBtn) {
+        recalcBtn.addEventListener('click', async () => {
+            if (!confirm('Recalculate all clinic certifications?')) return;
+            setLoading(recalcBtn, true, 'Recalculating...');
+            try {
+                const res = await fetch(`/api/admin/ethics/clinics?key=${adminKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+                    body: JSON.stringify({ action: 'recalculate' })
+                });
+                if (res.ok) { alert('Recalculation complete'); window.location.reload(); }
+                else alert('Failed');
+            } finally { setLoading(recalcBtn, false); }
+        });
+    }
+</script>
+
+<style>
+    .tab-nav {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 24px;
+        border-bottom: 1px solid var(--rule);
+        padding-bottom: 0;
+    }
+
+    .tab-btn {
+        padding: 10px 20px;
+        text-decoration: none;
+        color: var(--ink-2);
+        font-size: 0.9rem;
+        font-weight: 500;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -1px;
+        transition: all 0.15s;
+    }
+
+    .tab-btn:hover { color: var(--ink); }
+    .tab-btn.active { color: var(--ink-blue); border-bottom-color: var(--ink-blue); }
+
+    .section-title { font-family: var(--font-serif); font-size: 1.4rem; margin: 0 0 20px; }
+    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
+    .stat-card { background: var(--paper-2); border: 1px solid var(--rule); border-radius: var(--r-4); padding: 16px; text-align: center; text-decoration: none; transition: all 0.2s; }
+    .stat-card:hover { border-color: var(--stat-color); }
+    .stat-card.active { border-color: var(--stat-color); box-shadow: var(--shadow-2); }
+    .stat-value { display: block; font-size: 1.8rem; font-weight: 500; color: var(--stat-color); }
+    .stat-label { font-size: 0.7rem; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .filter-bar { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+    .filter-label { font-weight: 500; color: var(--ink-2); }
+    .filter-buttons { display: flex; gap: 8px; }
+    .filter-btn { padding: 6px 14px; border: 1px solid var(--rule); background: transparent; color: var(--ink-2); border-radius: var(--r-3); font-size: 0.85rem; text-decoration: none; transition: all 0.2s; }
+    .filter-btn:hover { border-color: var(--ink-blue); color: var(--ink-blue); }
+    .filter-btn.active { background: var(--ink-blue); border-color: var(--ink-blue); color: white; }
+
+    .table-container { background: var(--paper); border: 1px solid var(--rule); border-radius: var(--r-4); overflow-x: auto; }
+    .admin-table { width: 100%; border-collapse: collapse; }
+    .admin-table th, .admin-table td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--rule); }
+    .admin-table th { background: var(--paper-2); font-weight: 500; color: var(--ink-2); font-size: 0.85rem; }
+
+    .doctor-name { color: var(--ink-blue); text-decoration: none; font-weight: 500; }
+    .doctor-name:hover { text-decoration: underline; }
+    .sub-text { font-size: 0.8rem; color: var(--ink-3); margin: 2px 0 0; }
+    .cert-id { font-family: var(--font-mono); font-size: 0.7rem; color: var(--verdant); margin: 2px 0 0; }
+
+    .tier-pill { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em; background: color-mix(in srgb, var(--tier-color) 15%, transparent); color: var(--tier-color); border: 1px solid color-mix(in srgb, var(--tier-color) 40%, transparent); }
+
+    .status-badge { display: inline-block; padding: 3px 10px; border-radius: var(--r-3); font-size: 0.75rem; font-weight: 500; background: color-mix(in srgb, var(--status-color) 15%, transparent); color: var(--status-color); border: 1px solid color-mix(in srgb, var(--status-color) 40%, transparent); }
+
+    .audit-type { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em; color: var(--ink-3); margin-right: 6px; }
+    .score { font-family: var(--font-mono); font-weight: 600; font-size: 1rem; }
+    .text-muted { color: var(--ink-3); font-size: 0.85rem; }
+    .overdue { color: var(--sanguine); font-weight: 500; }
+    .empty-state { text-align: center; padding: 40px; color: var(--ink-3); }
+
+    .actions-cell { display: flex; gap: 6px; flex-wrap: wrap; }
+    .btn { text-decoration: none; display: inline-flex; align-items: center; justify-content: center; padding: 10px 16px; border-radius: var(--r-3); font-weight: 500; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; border: none; }
+    .btn--outline { background: transparent; border: 1px solid var(--rule); color: var(--ink); }
+    .btn--success { background: var(--verdant-2); color: var(--verdant); border: 1px solid var(--verdant); }
+    .btn--danger { background: var(--sanguine-2); color: var(--sanguine); border: 1px solid var(--sanguine); }
+    .btn--sm { padding: 6px 12px; font-size: 0.8rem; }
+</style>

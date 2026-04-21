@@ -4,8 +4,11 @@
  * Review and manage pending doctor profile submissions
  */
 import Layout from "../../layouts/Layout.astro";
+import AdminSidebar from "../../components/admin/AdminSidebar.astro";
 import { prisma } from "../../lib/prisma";
 import { requireSuperAdmin } from "../../lib/rbac";
+import { slugify } from "../../lib/utils";
+import { logAdminAction } from "../../lib/audit";
 
 export const prerender = false;
 
@@ -39,10 +42,16 @@ if (Astro.request.method === "POST") {
 
                 if (pending) {
                     // Create slug from name
-                    const slug = pending.full_name
-                        .toLowerCase()
-                        .replace(/[^a-z0-9]+/g, "-")
-                        .replace(/(^-|-$)/g, "");
+                    let slug = slugify(pending.full_name);
+                    // Check for duplicate slugs
+                    const existingSlug = await prisma.profile.findUnique({ where: { slug } });
+                    if (existingSlug) {
+                        let suffix = 2;
+                        while (await prisma.profile.findUnique({ where: { slug: `${slug}-${suffix}` } })) {
+                            suffix++;
+                        }
+                        slug = `${slug}-${suffix}`;
+                    }
 
                     // Create geography
                     const geo = await prisma.geography.upsert({
@@ -85,6 +94,7 @@ if (Astro.request.method === "POST") {
                         },
                     });
 
+                    await logAdminAction('APPROVE_SUBMISSION', slug, { fullName: pending.full_name }, Astro.request);
                     successMsg = `Profile "${pending.full_name}" created successfully.`;
                 }
             } else if (action === "reject") {
@@ -96,6 +106,7 @@ if (Astro.request.method === "POST") {
                         reviewed_at: new Date(),
                     },
                 });
+                await logAdminAction('REJECT_SUBMISSION', submissionId, {}, Astro.request);
                 successMsg = "Submission rejected.";
             }
         }
@@ -119,18 +130,9 @@ const reviewedSubmissions = await prisma.pendingProfile.findMany({
 ---
 
 <Layout title="New Submissions — MDRPedia Admin">
-    <div class="container admin-dashboard">
-        <header class="admin-header">
-            <div class="admin-header__top">
-                <span class="badge badge--admin">SUPER ADMIN</span>
-                <h1>New Profile Submissions</h1>
-            </div>
-            <div class="admin-actions">
-                <a href={`/admin?key=${adminKey}`} class="btn btn--outline">
-                    &larr; Dashboard
-                </a>
-            </div>
-        </header>
+    <div class="admin">
+        <AdminSidebar adminKey={adminKey} activePage="submissions" />
+        <main class="main">
 
         {successMsg && <div class="alert success">{successMsg}</div>}
         {errorMsg && <div class="alert error">{errorMsg}</div>}
@@ -242,6 +244,7 @@ const reviewedSubmissions = await prisma.pendingProfile.findMany({
                 </table>
             </div>
         </section>
+        </main>
     </div>
 </Layout>
 
@@ -249,7 +252,7 @@ const reviewedSubmissions = await prisma.pendingProfile.findMany({
     .admin-dashboard {
         padding: 40px 20px;
         max-width: 1400px;
-        color: var(--text-primary);
+        color: var(--ink);
     }
 
     .admin-header {
@@ -266,9 +269,9 @@ const reviewedSubmissions = await prisma.pendingProfile.findMany({
     }
 
     .badge--admin {
-        background: #ffd700;
+        background: var(--aged-gold);
         color: #000;
-        font-weight: 700;
+        font-weight: 500;
         padding: 2px 8px;
         border-radius: 4px;
         font-size: 0.7rem;
@@ -278,13 +281,16 @@ const reviewedSubmissions = await prisma.pendingProfile.findMany({
     h1 {
         font-family: var(--font-serif);
         font-size: 2rem;
+        font-weight: 400;
         margin: 0;
+        color: var(--ink);
     }
 
     h2 {
         font-size: 1.2rem;
+        font-weight: 400;
         margin-bottom: 16px;
-        color: var(--text-secondary);
+        color: var(--ink-2);
     }
 
     .section {
@@ -293,20 +299,20 @@ const reviewedSubmissions = await prisma.pendingProfile.findMany({
 
     .alert {
         padding: 12px 16px;
-        border-radius: 6px;
+        border-radius: var(--r-3);
         margin-bottom: 24px;
     }
 
     .success {
-        background: rgba(16, 185, 129, 0.15);
-        color: #10b981;
-        border: 1px solid #10b981;
+        background: var(--verdant-2);
+        color: var(--verdant);
+        border: 1px solid var(--verdant);
     }
 
     .error {
-        background: rgba(239, 68, 68, 0.15);
-        color: #ef4444;
-        border: 1px solid #ef4444;
+        background: var(--sanguine-2);
+        color: var(--sanguine);
+        border: 1px solid var(--sanguine);
     }
 
     .submissions-grid {
@@ -316,26 +322,27 @@ const reviewedSubmissions = await prisma.pendingProfile.findMany({
     }
 
     .submission-card {
-        background: var(--bg-card, #14142a);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         overflow: hidden;
     }
 
     .card-header {
         padding: 20px;
-        background: rgba(255, 255, 255, 0.02);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper-2);
+        border-bottom: 1px solid var(--rule);
     }
 
     .card-header h3 {
         margin: 0 0 4px 0;
         font-size: 1.25rem;
-        color: white;
+        font-weight: 400;
+        color: var(--ink);
     }
 
     .specialty {
-        color: var(--accent-purple);
+        color: var(--ink-blue);
         font-size: 0.9rem;
     }
 
@@ -351,13 +358,13 @@ const reviewedSubmissions = await prisma.pendingProfile.findMany({
     }
 
     .label {
-        color: var(--text-muted);
+        color: var(--ink-3);
         min-width: 80px;
     }
 
     .mono {
         font-family: monospace;
-        color: var(--text-secondary);
+        color: var(--ink-2);
     }
 
     .bio-preview {
@@ -366,14 +373,14 @@ const reviewedSubmissions = await prisma.pendingProfile.findMany({
 
     .bio-preview p {
         margin: 8px 0 0 0;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         font-size: 0.9rem;
         line-height: 1.5;
     }
 
     .card-meta {
         padding: 12px 20px;
-        background: rgba(0, 0, 0, 0.2);
+        background: var(--paper-3);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -387,16 +394,16 @@ const reviewedSubmissions = await prisma.pendingProfile.findMany({
     }
 
     .contributor small {
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .date {
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .card-actions {
         padding: 20px;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-top: 1px solid var(--rule);
     }
 
     .action-form {
@@ -405,9 +412,9 @@ const reviewedSubmissions = await prisma.pendingProfile.findMany({
     }
 
     .table-container {
-        background: var(--bg-card, #14142a);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         overflow-x: auto;
     }
 
@@ -420,13 +427,13 @@ const reviewedSubmissions = await prisma.pendingProfile.findMany({
     .admin-table td {
         padding: 14px 16px;
         text-align: left;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid var(--rule);
     }
 
     .admin-table th {
-        background: rgba(255, 255, 255, 0.03);
-        font-weight: 600;
-        color: var(--text-secondary);
+        background: var(--paper-2);
+        font-weight: 500;
+        color: var(--ink-2);
         font-size: 0.85rem;
         text-transform: uppercase;
         letter-spacing: 0.05em;
@@ -436,27 +443,27 @@ const reviewedSubmissions = await prisma.pendingProfile.findMany({
         padding: 4px 10px;
         border-radius: 4px;
         font-size: 0.75rem;
-        font-weight: 600;
+        font-weight: 500;
         text-transform: uppercase;
     }
 
     .status-badge.approved {
-        background: rgba(34, 197, 94, 0.15);
-        color: #22c55e;
+        background: var(--verdant-2);
+        color: var(--verdant);
     }
 
     .status-badge.rejected {
-        background: rgba(239, 68, 68, 0.15);
-        color: #ef4444;
+        background: var(--sanguine-2);
+        color: var(--sanguine);
     }
 
     .empty-state {
         text-align: center;
         padding: 40px;
-        color: var(--text-muted);
-        background: var(--bg-card, #14142a);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        color: var(--ink-3);
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
     }
 
     .btn {
@@ -465,8 +472,8 @@ const reviewedSubmissions = await prisma.pendingProfile.findMany({
         align-items: center;
         justify-content: center;
         padding: 10px 16px;
-        border-radius: 6px;
-        font-weight: 600;
+        border-radius: var(--r-3);
+        font-weight: 500;
         font-size: 0.9rem;
         cursor: pointer;
         border: none;
@@ -476,28 +483,28 @@ const reviewedSubmissions = await prisma.pendingProfile.findMany({
 
     .btn--outline {
         background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: var(--text-primary);
+        border: 1px solid var(--rule);
+        color: var(--ink);
     }
 
     .btn--success {
-        background: rgba(34, 197, 94, 0.2);
-        color: #22c55e;
-        border: 1px solid #22c55e;
+        background: var(--verdant-2);
+        color: var(--verdant);
+        border: 1px solid var(--verdant);
     }
 
     .btn--success:hover {
-        background: rgba(34, 197, 94, 0.3);
+        background: color-mix(in oklch, var(--verdant) 25%, transparent);
     }
 
     .btn--danger {
-        background: rgba(239, 68, 68, 0.2);
-        color: #ef4444;
-        border: 1px solid #ef4444;
+        background: var(--sanguine-2);
+        color: var(--sanguine);
+        border: 1px solid var(--sanguine);
     }
 
     .btn--danger:hover {
-        background: rgba(239, 68, 68, 0.3);
+        background: color-mix(in oklch, var(--sanguine) 25%, transparent);
     }
 
     @media (max-width: 500px) {

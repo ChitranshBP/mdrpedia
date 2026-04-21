@@ -1,0 +1,18 @@
+2026-04-20 00:37:40.929 IST [24869] LOG:  starting PostgreSQL 18.3 on x86_64-apple-darwin24.6.0, compiled by Apple clang version 17.0.0 (clang-1700.6.3.2), 64-bit
+2026-04-20 00:37:40.930 IST [24869] LOG:  listening on IPv6 address "::1", port 5433
+2026-04-20 00:37:40.930 IST [24869] LOG:  listening on IPv4 address "127.0.0.1", port 5433
+2026-04-20 00:37:40.931 IST [24869] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5433"
+2026-04-20 00:37:40.934 IST [24875] LOG:  database system was shut down at 2026-04-18 19:08:05 IST
+2026-04-20 00:37:40.938 IST [24869] LOG:  database system is ready to accept connections
+2026-04-20 00:38:57.219 IST [25225] ERROR:  column "admin_logs" does not exist at character 71
+2026-04-20 00:38:57.219 IST [25225] STATEMENT:  SELECT column_name FROM information_schema.columns WHERE table_name = admin_logs ORDER BY ordinal_position
+2026-04-20 00:39:51.620 IST [25518] ERROR:  column "timestamp" does not exist at character 35
+2026-04-20 00:39:51.620 IST [25518] STATEMENT:  SELECT * FROM admin_logs ORDER BY "timestamp" DESC LIMIT 1
+2026-04-20 00:42:40.935 IST [24873] LOG:  checkpoint starting: time
+2026-04-20 00:42:42.214 IST [24873] LOG:  checkpoint complete: wrote 12 buffers (0.1%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=1.219 s, sync=0.001 s, total=1.280 s; sync files=8, longest=0.001 s, average=0.001 s; distance=72 kB, estimate=72 kB; lsn=0/2117F88, redo lsn=0/2117F30
+2026-04-20 10:13:28.970 IST [24869] LOG:  received smart shutdown request
+2026-04-20 10:13:28.975 IST [24869] LOG:  background worker "logical replication launcher" (PID 24878) exited with exit code 1
+2026-04-20 10:13:28.975 IST [24873] LOG:  shutting down
+2026-04-20 10:13:28.976 IST [24873] LOG:  checkpoint starting: shutdown immediate
+2026-04-20 10:13:28.982 IST [24873] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 0 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.001 s, total=0.008 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=65 kB; lsn=0/2118050, redo lsn=0/2118050
+2026-04-20 10:13:28.994 IST [24869] LOG:  database system is shut down

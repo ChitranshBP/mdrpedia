@@ -7,6 +7,7 @@
 import Layout from "../../layouts/Layout.astro";
 import { prisma } from "../../lib/prisma";
 import { generateHospitalPageSchema } from "../../lib/medical-knowledge-graph";
+import { getInstitutionLogo, getInstitutionInitials, getInstitutionColor } from "../../lib/institution-logos";
 
 export const prerender = false;
 
@@ -75,10 +76,10 @@ const sectorLabels: Record<string, string> = {
 };
 
 const tierColors: Record<string, string> = {
-    TITAN: '#ffd700',
-    ELITE: '#00aaff',
-    MASTER: '#00cc66',
-    UNRANKED: '#888'
+    TITAN: 'var(--titan-text)',
+    ELITE: 'var(--elite-text)',
+    MASTER: 'var(--master-text)',
+    UNRANKED: 'var(--ink-3)'
 };
 
 // Generate Hospital Knowledge Graph Schema
@@ -154,13 +155,28 @@ const hospitalDatasetSchema = {
         <header class="inst-hero">
             <div class="hero-content">
                 <div class="hero-logo">
-                    {institution.logo_url ? (
-                        <img src={institution.logo_url} alt={institution.name} />
-                    ) : (
-                        <div class="logo-placeholder">
-                            {institution.name.charAt(0)}
-                        </div>
-                    )}
+                    {(() => {
+                        const logoUrl = institution.logo_url || getInstitutionLogo(institution.name, institution.website);
+                        const initials = getInstitutionInitials(institution.name);
+                        const color = getInstitutionColor(institution.name);
+                        return logoUrl ? (
+                            <>
+                                <img
+                                    src={logoUrl}
+                                    alt={institution.name}
+                                    loading="eager"
+                                    onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`}
+                                />
+                                <div class="logo-placeholder" style={`display:none;background:${color}`}>
+                                    {initials}
+                                </div>
+                            </>
+                        ) : (
+                            <div class="logo-placeholder" style={`background:${color}`}>
+                                {initials}
+                            </div>
+                        );
+                    })()}
                 </div>
                 <div class="hero-text">
                     <h1>{institution.name}</h1>
@@ -237,7 +253,7 @@ const hospitalDatasetSchema = {
                                 <a href={`/doctors/${doctor.slug}`} class="doctor-card">
                                     <div class="doctor-avatar">
                                         {doctor.portrait_url && !doctor.portrait_url.startsWith('data:') ? (
-                                            <img src={doctor.portrait_url} alt={doctor.full_name || ''} />
+                                            <img src={doctor.portrait_url} alt={doctor.full_name || ''} loading="lazy" />
                                         ) : (
                                             <div class="avatar-placeholder" style={`--tier-color: ${tierColors[doctor.tier || 'UNRANKED']}`}>
                                                 {(doctor.full_name || '?').charAt(0)}
@@ -331,14 +347,14 @@ const hospitalDatasetSchema = {
 <style>
     .institution-profile {
         padding: 40px 20px;
-        max-width: 1400px;
+        max-width: var(--max);
     }
 
     /* Hero */
     .inst-hero {
-        background: var(--bg-card, #14142a);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 40px;
         margin-bottom: 32px;
     }
@@ -353,33 +369,35 @@ const hospitalDatasetSchema = {
     .logo-placeholder {
         width: 100px;
         height: 100px;
-        border-radius: 16px;
+        border-radius: var(--r-4);
         object-fit: contain;
     }
 
     .hero-logo img {
-        background: white;
+        background: var(--paper);
         padding: 8px;
     }
 
     .logo-placeholder {
-        background: linear-gradient(135deg, var(--accent-purple), #6366f1);
+        background: var(--ink-blue);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 2.5rem;
-        font-weight: 700;
-        color: white;
+        font-weight: 500;
+        color: var(--paper);
     }
 
     .hero-text h1 {
         font-family: var(--font-serif);
         font-size: 2.2rem;
+        font-weight: 400;
+        color: var(--ink);
         margin: 0 0 8px;
     }
 
     .location {
-        color: var(--text-secondary);
+        color: var(--ink-2);
         font-size: 1.1rem;
         margin: 0 0 16px;
     }
@@ -392,29 +410,29 @@ const hospitalDatasetSchema = {
 
     .sector-badge, .ranking-badge, .coe-badge {
         padding: 6px 14px;
-        border-radius: 20px;
+        border-radius: var(--r-pill);
         font-size: 0.8rem;
         font-weight: 600;
     }
 
     .sector-public {
-        background: rgba(16, 185, 129, 0.15);
-        color: #10b981;
+        background: var(--verdant-2);
+        color: var(--verdant);
     }
 
     .sector-private {
-        background: rgba(139, 92, 246, 0.15);
-        color: var(--accent-purple);
+        background: var(--ink-blue-2);
+        color: var(--ink-blue);
     }
 
     .ranking-badge {
-        background: rgba(255, 215, 0, 0.15);
-        color: #ffd700;
+        background: var(--aged-gold-2);
+        color: var(--titan-text);
     }
 
     .coe-badge {
-        background: rgba(0, 170, 255, 0.15);
-        color: #00aaff;
+        background: var(--ink-blue-2);
+        color: var(--ink-blue);
     }
 
     /* Stats Bar */
@@ -428,9 +446,9 @@ const hospitalDatasetSchema = {
     .stats-bar .stat-item {
         flex: 1;
         min-width: 120px;
-        background: var(--bg-card, #14142a);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 20px;
         text-align: center;
     }
@@ -438,13 +456,13 @@ const hospitalDatasetSchema = {
     .stats-bar .stat-value {
         display: block;
         font-size: 1.8rem;
-        font-weight: 700;
-        color: var(--stat-color, var(--text-primary));
+        font-weight: 500;
+        color: var(--stat-color, var(--ink));
     }
 
     .stats-bar .stat-label {
         font-size: 0.75rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
@@ -458,18 +476,21 @@ const hospitalDatasetSchema = {
     }
 
     .content-section {
-        background: var(--bg-card, #14142a);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 24px;
         margin-bottom: 24px;
     }
 
     .content-section h2 {
+        font-family: var(--font-serif);
         font-size: 1.3rem;
+        font-weight: 400;
+        color: var(--ink);
         margin: 0 0 16px;
         padding-bottom: 12px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid var(--rule);
     }
 
     .section-header {
@@ -478,7 +499,7 @@ const hospitalDatasetSchema = {
         align-items: center;
         margin-bottom: 20px;
         padding-bottom: 12px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid var(--rule);
     }
 
     .section-header h2 {
@@ -488,7 +509,7 @@ const hospitalDatasetSchema = {
     }
 
     .count {
-        color: var(--text-muted);
+        color: var(--ink-3);
         font-size: 0.9rem;
     }
 
@@ -503,17 +524,17 @@ const hospitalDatasetSchema = {
         align-items: center;
         gap: 16px;
         padding: 16px;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.04);
-        border-radius: 10px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         text-decoration: none;
         color: inherit;
         transition: all 0.2s;
     }
 
     .doctor-card:hover {
-        background: rgba(139, 92, 246, 0.08);
-        border-color: var(--accent-purple);
+        background: var(--paper-2);
+        border-color: var(--rule-strong);
     }
 
     .doctor-avatar img,
@@ -525,12 +546,12 @@ const hospitalDatasetSchema = {
     }
 
     .avatar-placeholder {
-        background: linear-gradient(135deg, var(--tier-color), rgba(255,255,255,0.1));
+        background: var(--paper-3);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: 700;
-        color: white;
+        font-weight: 500;
+        color: var(--ink-2);
     }
 
     .doctor-info {
@@ -539,8 +560,9 @@ const hospitalDatasetSchema = {
 
     .doctor-name {
         font-size: 0.95rem;
-        font-weight: 600;
+        font-weight: 500;
         margin: 0 0 2px;
+        color: var(--ink);
         display: flex;
         align-items: center;
         gap: 8px;
@@ -549,20 +571,20 @@ const hospitalDatasetSchema = {
     .primary-badge {
         font-size: 0.65rem;
         padding: 2px 6px;
-        background: rgba(16, 185, 129, 0.2);
-        color: #10b981;
-        border-radius: 4px;
+        background: var(--verdant-2);
+        color: var(--verdant);
+        border-radius: var(--r-2);
     }
 
     .doctor-specialty {
         font-size: 0.8rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         margin: 0;
     }
 
     .doctor-role {
         font-size: 0.75rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin: 2px 0 0;
     }
 
@@ -575,27 +597,27 @@ const hospitalDatasetSchema = {
 
     .tier-badge {
         padding: 3px 10px;
-        border-radius: 4px;
+        border-radius: var(--r-2);
         font-size: 0.7rem;
-        font-weight: 700;
+        font-weight: 500;
     }
 
-    .tier-titan { background: rgba(255, 215, 0, 0.2); color: #ffd700; }
-    .tier-elite { background: rgba(0, 170, 255, 0.2); color: #00aaff; }
-    .tier-master { background: rgba(0, 204, 102, 0.2); color: #00cc66; }
-    .tier-unranked { background: rgba(128, 128, 128, 0.2); color: #888; }
+    .tier-titan { background: var(--titan-bg); color: var(--titan-text); }
+    .tier-elite { background: var(--elite-bg); color: var(--elite-text); }
+    .tier-master { background: var(--master-bg); color: var(--master-text); }
+    .tier-unranked { background: var(--paper-3); color: var(--ink-3); }
 
     .h-index {
-        font-family: monospace;
+        font-family: var(--font-mono);
         font-size: 0.75rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     /* Sidebar */
     .sidebar-card {
-        background: var(--bg-card, #14142a);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 20px;
         margin-bottom: 20px;
     }
@@ -604,7 +626,7 @@ const hospitalDatasetSchema = {
         font-size: 0.85rem;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin: 0 0 16px;
     }
 
@@ -616,7 +638,7 @@ const hospitalDatasetSchema = {
         display: flex;
         justify-content: space-between;
         padding: 8px 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid var(--rule);
     }
 
     .fact-row:last-child {
@@ -624,7 +646,7 @@ const hospitalDatasetSchema = {
     }
 
     .fact-row dt {
-        color: var(--text-muted);
+        color: var(--ink-3);
         font-size: 0.85rem;
     }
 
@@ -634,7 +656,7 @@ const hospitalDatasetSchema = {
     }
 
     .fact-row a {
-        color: var(--accent-purple);
+        color: var(--ink-blue);
         text-decoration: none;
     }
 
@@ -646,33 +668,33 @@ const hospitalDatasetSchema = {
 
     .specialty-tag {
         padding: 4px 12px;
-        background: rgba(139, 92, 246, 0.1);
-        color: var(--accent-purple);
-        border-radius: 16px;
+        background: var(--ink-blue-2);
+        color: var(--ink-blue);
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
         text-decoration: none;
         transition: all 0.2s;
     }
 
     .specialty-tag:hover {
-        background: rgba(139, 92, 246, 0.2);
+        background: var(--paper-3);
     }
 
     .more-specialties {
-        color: var(--text-muted);
+        color: var(--ink-3);
         font-size: 0.75rem;
         padding: 4px;
     }
 
     .back-link {
         display: block;
-        color: var(--accent-purple);
+        color: var(--ink-blue);
         text-decoration: none;
         font-weight: 600;
     }
 
     .empty-message {
-        color: var(--text-muted);
+        color: var(--ink-3);
         text-align: center;
         padding: 40px;
     }

@@ -4,6 +4,7 @@
  * View page views and traffic statistics
  */
 import Layout from "../../layouts/Layout.astro";
+import AdminSidebar from "../../components/admin/AdminSidebar.astro";
 import { prisma } from "../../lib/prisma";
 import { requireSuperAdmin } from "../../lib/rbac";
 
@@ -115,30 +116,10 @@ function formatNumber(num: number): string {
 ---
 
 <Layout title="Analytics — Admin">
-    <div class="admin-page">
-        <aside class="sidebar">
-            <div class="sidebar__brand">
-                <a href={`/admin?key=${adminKey}`} class="brand-link">
-                    <div class="brand-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/>
-                        </svg>
-                    </div>
-                    <span>MDRPedia</span>
-                </a>
-            </div>
-            <nav class="sidebar__nav">
-                <a href={`/admin?key=${adminKey}`} class="nav-item">Dashboard</a>
-                <a href={`/admin/doctors?key=${adminKey}`} class="nav-item">All Doctors</a>
-                <a href={`/admin/audit-log?key=${adminKey}`} class="nav-item">Activity Log</a>
-                <a href={`/admin/data-quality?key=${adminKey}`} class="nav-item">Data Quality</a>
-                <a href={`/admin/bulk-import?key=${adminKey}`} class="nav-item">Bulk Import</a>
-                <a href={`/admin/analytics?key=${adminKey}`} class="nav-item active">Analytics</a>
-                <a href={`/admin/broken-links?key=${adminKey}`} class="nav-item">Broken Links</a>
-            </nav>
-        </aside>
+    <div class="admin">
+        <AdminSidebar adminKey={adminKey} activePage="analytics" />
 
-        <main class="main-content">
+        <main class="main">
             <header class="page-header">
                 <div>
                     <h1>Analytics</h1>
@@ -261,85 +242,6 @@ function formatNumber(num: number): string {
 </Layout>
 
 <style>
-    .admin-page {
-        display: flex;
-        min-height: 100vh;
-        background: #0a0a12;
-    }
-
-    .sidebar {
-        width: 220px;
-        background: rgba(15, 15, 25, 0.95);
-        border-right: 1px solid rgba(255, 255, 255, 0.06);
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        padding: 20px 0;
-    }
-
-    .sidebar__brand {
-        padding: 0 20px 20px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        margin-bottom: 16px;
-    }
-
-    .brand-link {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
-        color: white;
-        font-weight: 700;
-    }
-
-    .brand-icon {
-        width: 32px;
-        height: 32px;
-        background: linear-gradient(135deg, #8b5cf6, #6366f1);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .brand-icon svg {
-        width: 18px;
-        height: 18px;
-    }
-
-    .sidebar__nav {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        padding: 0 12px;
-    }
-
-    .nav-item {
-        padding: 10px 12px;
-        border-radius: 8px;
-        color: var(--text-secondary);
-        text-decoration: none;
-        font-size: 0.875rem;
-        transition: all 0.15s;
-    }
-
-    .nav-item:hover {
-        background: rgba(255, 255, 255, 0.05);
-        color: white;
-    }
-
-    .nav-item.active {
-        background: rgba(139, 92, 246, 0.15);
-        color: #8b5cf6;
-    }
-
-    .main-content {
-        flex: 1;
-        margin-left: 220px;
-        padding: 32px;
-    }
-
     .page-header {
         display: flex;
         justify-content: space-between;
@@ -586,12 +488,6 @@ function formatNumber(num: number): string {
     }
 
     @media (max-width: 1024px) {
-        .sidebar {
-            display: none;
-        }
-        .main-content {
-            margin-left: 0;
-        }
         .two-column {
             grid-template-columns: 1fr;
         }

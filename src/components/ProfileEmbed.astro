@@ -39,6 +39,8 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
     </button>
 
     <div class="embed-panel" id="embed-panel" hidden>
+        <div class="embed-backdrop" id="embed-backdrop"></div>
+        <div class="embed-dialog">
         <div class="embed-header">
             <h4>Share or Embed Profile</h4>
             <button class="close-btn" id="embed-close" aria-label="Close">×</button>
@@ -112,7 +114,7 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
         <div class="embed-section embed-content" id="embed-simple">
             <p class="embed-hint">Minimal link badge for your website</p>
             <div class="input-group">
-                <textarea readonly id="embed-code" rows="2">{embedCode}</textarea>
+                <textarea readonly id="embed-code" rows="3">{embedCode}</textarea>
                 <button class="copy-btn" data-copy="embed-code" title="Copy Embed Code">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="9" y="9" width="13" height="13" rx="2"/>
@@ -133,7 +135,7 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
         <div class="embed-section embed-content" id="embed-rich" hidden>
             <p class="embed-hint">Impact card with key metrics</p>
             <div class="input-group">
-                <textarea readonly id="embed-code-rich" rows="4">{richEmbedCode}</textarea>
+                <textarea readonly id="embed-code-rich" rows="6">{richEmbedCode}</textarea>
                 <button class="copy-btn" data-copy="embed-code-rich" title="Copy Rich Embed">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="9" y="9" width="13" height="13" rx="2"/>
@@ -187,35 +189,46 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
 
         <!-- Copied Toast -->
         <div class="copied-toast" id="copied-toast">Copied!</div>
+        </div><!-- .embed-dialog -->
     </div>
 </div>
 
 <script>
     const toggle = document.getElementById('embed-toggle');
     const panel = document.getElementById('embed-panel');
+    const backdrop = document.getElementById('embed-backdrop');
     const closeBtn = document.getElementById('embed-close');
-    const copyBtns = document.querySelectorAll('.copy-btn');
+    const copyBtns = document.querySelectorAll('.embed-widget .copy-btn');
     const toast = document.getElementById('copied-toast');
     const embedTabs = document.querySelectorAll('.embed-tab');
     const embedSimple = document.getElementById('embed-simple');
     const embedRich = document.getElementById('embed-rich');
 
+    function openPanel() {
+        panel!.hidden = false;
+        toggle!.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closePanel() {
+        panel!.hidden = true;
+        toggle!.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+    }
+
     toggle?.addEventListener('click', () => {
         const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
-        toggle.setAttribute('aria-expanded', (!isExpanded).toString());
-        panel!.hidden = isExpanded;
+        if (isExpanded) closePanel();
+        else openPanel();
     });
 
-    closeBtn?.addEventListener('click', () => {
-        toggle!.setAttribute('aria-expanded', 'false');
-        panel!.hidden = true;
-    });
+    backdrop?.addEventListener('click', closePanel);
+    closeBtn?.addEventListener('click', closePanel);
 
     // Close on escape
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && !panel?.hidden) {
-            toggle!.setAttribute('aria-expanded', 'false');
-            panel!.hidden = true;
+            closePanel();
         }
     });
 
@@ -269,19 +282,19 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
         align-items: center;
         gap: 0.5rem;
         padding: 0.6rem 1rem;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
+        background: var(--paper-3);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         font-size: 0.85rem;
         font-weight: 500;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         cursor: pointer;
         transition: all 0.2s;
     }
 
     .embed-toggle:hover {
-        background: rgba(255, 255, 255, 0.1);
-        color: var(--text-primary);
+        background: var(--paper-3);
+        color: var(--ink);
     }
 
     .embed-toggle svg {
@@ -289,17 +302,48 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
     }
 
     .embed-panel {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 99999;
+        padding: 1rem;
+    }
+
+    .embed-panel[hidden] {
+        display: none;
+    }
+
+    .embed-backdrop {
         position: absolute;
-        top: 100%;
-        right: 0;
-        margin-top: 0.5rem;
-        width: 360px;
-        background: var(--bg-card, #1a1a2e);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        animation: embedFadeIn 0.15s;
+    }
+
+    @keyframes embedFadeIn {
+        from { opacity: 0; }
+    }
+
+    .embed-dialog {
+        position: relative;
+        width: min(440px, calc(100vw - 2rem));
+        max-height: 85vh;
+        overflow-y: auto;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 1.25rem;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-        z-index: 1000;
+        box-shadow: var(--shadow-3);
+        animation: embedSlideIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes embedSlideIn {
+        from {
+            opacity: 0;
+            transform: scale(0.96) translateY(8px);
+        }
     }
 
     .embed-header {
@@ -308,13 +352,13 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
         align-items: center;
         margin-bottom: 1.25rem;
         padding-bottom: 0.75rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid var(--rule);
     }
 
     .embed-header h4 {
         font-size: 0.95rem;
         font-weight: 600;
-        color: var(--text-primary);
+        color: var(--ink);
         margin: 0;
     }
 
@@ -324,18 +368,18 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(255, 255, 255, 0.05);
+        background: var(--paper-3);
         border: none;
         border-radius: 6px;
         font-size: 1.25rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         cursor: pointer;
         transition: all 0.2s;
     }
 
     .close-btn:hover {
-        background: rgba(255, 255, 255, 0.1);
-        color: var(--text-primary);
+        background: var(--paper-3);
+        color: var(--ink);
     }
 
     .embed-section {
@@ -352,13 +396,13 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin-bottom: 0.5rem;
     }
 
     .embed-hint {
         font-size: 0.8rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin: 0 0 0.5rem;
     }
 
@@ -370,19 +414,24 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
     .input-group input,
     .input-group textarea {
         flex: 1;
+        min-width: 0;
         padding: 0.6rem 0.75rem;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         font-size: 0.8rem;
         font-family: var(--font-mono);
-        color: var(--text-secondary);
-        resize: none;
+        color: var(--ink-2);
     }
 
     .input-group textarea {
         font-size: 0.7rem;
         line-height: 1.4;
+        word-break: break-all;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+        resize: vertical;
+        max-height: 200px;
     }
 
     .copy-btn {
@@ -390,16 +439,16 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
         align-items: center;
         justify-content: center;
         width: 36px;
-        background: rgba(139, 92, 246, 0.1);
-        border: 1px solid rgba(139, 92, 246, 0.3);
-        border-radius: 8px;
-        color: #a78bfa;
+        background: var(--paper-3);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
+        color: var(--ink-blue);
         cursor: pointer;
         transition: all 0.2s;
     }
 
     .copy-btn:hover {
-        background: rgba(139, 92, 246, 0.2);
+        background: var(--paper-3);
     }
 
     /* Share Buttons */
@@ -414,12 +463,12 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
+        background: var(--paper-3);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         font-size: 1rem;
-        font-weight: 700;
-        color: var(--text-secondary);
+        font-weight: 500;
+        color: var(--ink-2);
         text-decoration: none;
         transition: all 0.2s;
     }
@@ -431,25 +480,25 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
     .share-btn.twitter:hover {
         background: #1da1f2;
         border-color: #1da1f2;
-        color: white;
+        color: var(--paper);
     }
 
     .share-btn.linkedin:hover {
         background: #0077b5;
         border-color: #0077b5;
-        color: white;
+        color: var(--paper);
     }
 
     .share-btn.email:hover {
-        background: #10b981;
-        border-color: #10b981;
-        color: white;
+        background: var(--verdant);
+        border-color: var(--verdant);
+        color: var(--paper);
     }
 
     .share-btn.whatsapp:hover {
         background: #25d366;
         border-color: #25d366;
-        color: white;
+        color: var(--paper);
     }
 
     /* Embed Tabs */
@@ -461,24 +510,24 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
     .embed-tab {
         flex: 1;
         padding: 0.6rem 1rem;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         font-size: 0.8rem;
         font-weight: 500;
-        color: var(--text-muted);
+        color: var(--ink-3);
         cursor: pointer;
         transition: all 0.2s;
     }
 
     .embed-tab:hover {
-        background: rgba(255, 255, 255, 0.06);
+        background: var(--paper-3);
     }
 
     .embed-tab.active {
-        background: rgba(139, 92, 246, 0.15);
-        border-color: rgba(139, 92, 246, 0.4);
-        color: #a78bfa;
+        background: var(--paper-3);
+        border-color: var(--rule-strong);
+        color: var(--ink-blue);
     }
 
     /* Preview */
@@ -488,7 +537,7 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
 
     .preview-label {
         font-size: 0.7rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         display: block;
         margin-bottom: 0.4rem;
     }
@@ -498,11 +547,11 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
         align-items: center;
         gap: 8px;
         padding: 8px 16px;
-        background: #1a1a2e;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         font-size: 0.85rem;
-        color: white;
+        color: var(--ink);
     }
 
     .badge-dot {
@@ -512,9 +561,9 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
     /* Rich Preview Card */
     .preview-card {
         display: inline-block;
-        background: linear-gradient(135deg, #1a1a2e, #0d0d1a);
+        background: var(--paper-2);
         border: 1px solid color-mix(in srgb, var(--tier-color) 25%, transparent);
-        border-radius: 12px;
+        border-radius: var(--r-4);
         padding: 12px 16px;
         min-width: 220px;
     }
@@ -531,17 +580,16 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
         height: 10px;
         border-radius: 50%;
         background: var(--tier-color);
-        box-shadow: 0 0 8px color-mix(in srgb, var(--tier-color) 60%, transparent);
     }
 
     .preview-card__name {
-        color: #fff;
-        font-weight: 700;
+        color: var(--ink);
+        font-weight: 500;
         font-size: 0.9rem;
     }
 
     .preview-card__specialty {
-        color: #888;
+        color: var(--ink-3);
         font-size: 0.7rem;
         margin-bottom: 10px;
     }
@@ -557,28 +605,28 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
 
     .preview-metric__value {
         display: block;
-        font-weight: 800;
+        font-weight: 500;
         font-size: 1rem;
     }
 
     .preview-metric__label {
         font-size: 0.55rem;
         text-transform: uppercase;
-        color: #666;
+        color: var(--ink-3);
     }
 
     .preview-card__footer {
         margin-top: 10px;
         padding-top: 6px;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-top: 1px solid var(--rule);
         font-size: 0.6rem;
-        color: #666;
+        color: var(--ink-3);
     }
 
     /* Recommend Section */
     .recommend-section {
         padding-top: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-top: 1px solid var(--rule);
     }
 
     .recommend-btn {
@@ -586,32 +634,32 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
         align-items: center;
         gap: 0.5rem;
         padding: 0.6rem 1rem;
-        background: rgba(16, 185, 129, 0.1);
-        border: 1px solid rgba(16, 185, 129, 0.3);
-        border-radius: 8px;
+        background: var(--paper-3);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         font-size: 0.85rem;
         font-weight: 500;
-        color: #10b981;
+        color: var(--verdant);
         text-decoration: none;
         transition: all 0.2s;
     }
 
     .recommend-btn:hover {
-        background: rgba(16, 185, 129, 0.15);
+        background: var(--paper-3);
     }
 
     /* Copied Toast */
     .copied-toast {
-        position: absolute;
-        bottom: -40px;
+        position: fixed;
+        bottom: 2rem;
         left: 50%;
         transform: translateX(-50%);
         padding: 0.5rem 1rem;
-        background: #10b981;
-        border-radius: 8px;
+        background: var(--verdant);
+        border-radius: var(--r-3);
         font-size: 0.8rem;
         font-weight: 600;
-        color: white;
+        color: var(--paper);
         opacity: 0;
         visibility: hidden;
         transition: all 0.2s;
@@ -625,15 +673,14 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
     /* Responsive */
     @media (max-width: 480px) {
         .embed-panel {
-            position: fixed;
-            top: auto;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            align-items: flex-end;
+            padding: 0;
+        }
+
+        .embed-dialog {
             width: 100%;
-            border-radius: 20px 20px 0 0;
-            max-height: 80vh;
-            overflow-y: auto;
+            border-radius: var(--r-4) var(--r-4) 0 0;
+            max-height: 85vh;
         }
     }
 </style>

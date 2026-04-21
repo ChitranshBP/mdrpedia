@@ -1,0 +1,25 @@
+---
+/**
+ * TierPill — Inline pill badge for tier/ethics levels
+ * Uses .tier-pill CSS from global.css design system
+ */
+interface Props {
+  kind: 'titan' | 'elite' | 'master' | 'legend' | 'guardian' | 'advocate';
+  class?: string;
+}
+
+const { kind, class: className } = Astro.props;
+
+const labels: Record<string, string> = {
+  titan: 'Titan',
+  elite: 'Elite',
+  master: 'Master',
+  legend: 'Legend',
+  guardian: 'Guardian',
+  advocate: 'Advocate',
+};
+---
+
+<span class:list={['tier-pill', `tier-pill--${kind}`, className]}>
+  <slot>{labels[kind] || kind}</slot>
+</span>

@@ -18,22 +18,40 @@ const sortedDiseases = rareDiseases.sort((a, b) =>
 // Get unique categories
 const categories = [...new Set(sortedDiseases.map(d => d.data.category))].sort();
 
+// Category SVG icon paths (24x24 viewBox, stroke-based)
+const CATEGORY_ICONS: Record<string, string> = {
+    'GENETIC': 'M2 15c6.667-6 13.333 0 20-6M2 9c6.667 6 13.333 0 20 6M9 3v18m6-18v18',
+    'METABOLIC': 'M9 3h6v2H9V3zm0 4v6l-3 6h12l-3-6V7H9z',
+    'NEUROLOGICAL': 'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
+    'CARDIOVASCULAR': 'M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z',
+    'IMMUNOLOGICAL': 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
+    'ONCOLOGICAL': 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
+    'HEMATOLOGICAL': 'M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z',
+    'MUSCULOSKELETAL': 'M22 12h-4l-3 9L9 3l-3 9H2',
+    'DERMATOLOGICAL': 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
+    'GASTROINTESTINAL': 'M22 12h-4l-3 9L9 3l-3 9H2',
+    'RESPIRATORY': 'M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2',
+    'ENDOCRINE': 'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
+    'OPHTHALMOLOGICAL': 'M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z',
+    'OTHER': 'M9 3h6v2H9V3zm0 4v6l-3 6h12l-3-6V7H9z',
+};
+
 // Category info
 const CATEGORY_INFO: Record<string, { icon: string; color: string; label: string }> = {
-    'GENETIC': { icon: '🧬', color: '#a78bfa', label: 'Genetic' },
-    'METABOLIC': { icon: '⚗️', color: '#fbbf24', label: 'Metabolic' },
-    'NEUROLOGICAL': { icon: '🧠', color: '#f472b6', label: 'Neurological' },
-    'CARDIOVASCULAR': { icon: '❤️', color: '#ef4444', label: 'Cardiovascular' },
-    'IMMUNOLOGICAL': { icon: '🛡️', color: '#10b981', label: 'Immunological' },
-    'ONCOLOGICAL': { icon: '🎗️', color: '#8b5cf6', label: 'Oncological' },
-    'HEMATOLOGICAL': { icon: '🩸', color: '#dc2626', label: 'Hematological' },
-    'MUSCULOSKELETAL': { icon: '🦴', color: '#78716c', label: 'Musculoskeletal' },
-    'DERMATOLOGICAL': { icon: '🩹', color: '#f97316', label: 'Dermatological' },
-    'GASTROINTESTINAL': { icon: '🫁', color: '#84cc16', label: 'Gastrointestinal' },
-    'RESPIRATORY': { icon: '🌬️', color: '#38bdf8', label: 'Respiratory' },
-    'ENDOCRINE': { icon: '⚡', color: '#c084fc', label: 'Endocrine' },
-    'OPHTHALMOLOGICAL': { icon: '👁️', color: '#06b6d4', label: 'Ophthalmological' },
-    'OTHER': { icon: '🔬', color: '#71717a', label: 'Other' }
+    'GENETIC': { icon: CATEGORY_ICONS['GENETIC'], color: '#a78bfa', label: 'Genetic' },
+    'METABOLIC': { icon: CATEGORY_ICONS['METABOLIC'], color: '#fbbf24', label: 'Metabolic' },
+    'NEUROLOGICAL': { icon: CATEGORY_ICONS['NEUROLOGICAL'], color: '#f472b6', label: 'Neurological' },
+    'CARDIOVASCULAR': { icon: CATEGORY_ICONS['CARDIOVASCULAR'], color: '#ef4444', label: 'Cardiovascular' },
+    'IMMUNOLOGICAL': { icon: CATEGORY_ICONS['IMMUNOLOGICAL'], color: '#10b981', label: 'Immunological' },
+    'ONCOLOGICAL': { icon: CATEGORY_ICONS['ONCOLOGICAL'], color: '#8b5cf6', label: 'Oncological' },
+    'HEMATOLOGICAL': { icon: CATEGORY_ICONS['HEMATOLOGICAL'], color: '#dc2626', label: 'Hematological' },
+    'MUSCULOSKELETAL': { icon: CATEGORY_ICONS['MUSCULOSKELETAL'], color: '#78716c', label: 'Musculoskeletal' },
+    'DERMATOLOGICAL': { icon: CATEGORY_ICONS['DERMATOLOGICAL'], color: '#f97316', label: 'Dermatological' },
+    'GASTROINTESTINAL': { icon: CATEGORY_ICONS['GASTROINTESTINAL'], color: '#84cc16', label: 'Gastrointestinal' },
+    'RESPIRATORY': { icon: CATEGORY_ICONS['RESPIRATORY'], color: '#38bdf8', label: 'Respiratory' },
+    'ENDOCRINE': { icon: CATEGORY_ICONS['ENDOCRINE'], color: '#c084fc', label: 'Endocrine' },
+    'OPHTHALMOLOGICAL': { icon: CATEGORY_ICONS['OPHTHALMOLOGICAL'], color: '#06b6d4', label: 'Ophthalmological' },
+    'OTHER': { icon: CATEGORY_ICONS['OTHER'], color: '#71717a', label: 'Other' }
 };
 
 // Count doctors treating each disease
@@ -61,11 +79,6 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
     <div class="rare-diseases-page">
         <!-- Hero Section -->
         <header class="page-hero">
-            <!-- Animated Background -->
-            <div class="hero-bg">
-                <div class="orb orb-1"></div>
-                <div class="orb orb-2"></div>
-            </div>
             <div class="container">
                 <div class="hero-content">
                     <span class="hero-badge">
@@ -130,7 +143,7 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
                                 data-category={cat}
                                 style={`--cat-color: ${info.color}`}
                             >
-                                <span class="pill-icon">{info.icon}</span>
+                                <span class="pill-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={info.icon}/></svg></span>
                                 {info.label}
                                 <span class="pill-count">{count}</span>
                             </button>
@@ -158,7 +171,7 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
                             >
                                 <div class="card-header">
                                     <span class="card-category" style={`--cat-color: ${catInfo.color}`}>
-                                        <span class="cat-icon">{catInfo.icon}</span>
+                                        <span class="cat-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={catInfo.icon}/></svg></span>
                                         {catInfo.label}
                                     </span>
                                     {disease.data.researchStatus === 'ACTIVE_TRIALS' && (
@@ -229,7 +242,7 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
 
                 <!-- Empty State -->
                 <div class="empty-state" id="empty-state" hidden>
-                    <span class="empty-icon">🔍</span>
+                    <span class="empty-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.35-4.35"/></svg></span>
                     <h3>No diseases found</h3>
                     <p>Try adjusting your search or filter criteria</p>
                 </div>
@@ -243,22 +256,22 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
                 <p class="section-subtitle">Trusted organizations and databases for rare disease information</p>
                 <div class="resources-grid">
                     <a href="https://rarediseases.org" target="_blank" rel="noopener" class="resource-card">
-                        <span class="resource-icon">🏛️</span>
+                        <span class="resource-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M4 21V8M20 21V8"/></svg></span>
                         <h4>NORD</h4>
                         <p>National Organization for Rare Disorders</p>
                     </a>
                     <a href="https://www.orpha.net" target="_blank" rel="noopener" class="resource-card">
-                        <span class="resource-icon">🌍</span>
+                        <span class="resource-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zM2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
                         <h4>Orphanet</h4>
                         <p>European rare disease database</p>
                     </a>
                     <a href="https://clinicaltrials.gov" target="_blank" rel="noopener" class="resource-card">
-                        <span class="resource-icon">🔬</span>
+                        <span class="resource-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v2H9V3zm0 4v6l-3 6h12l-3-6V7H9z"/></svg></span>
                         <h4>ClinicalTrials.gov</h4>
                         <p>Find active clinical trials</p>
                     </a>
                     <a href="https://www.omim.org" target="_blank" rel="noopener" class="resource-card">
-                        <span class="resource-icon">🧬</span>
+                        <span class="resource-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 15c6.667-6 13.333 0 20-6M2 9c6.667 6 13.333 0 20 6M9 3v18m6-18v18"/></svg></span>
                         <h4>OMIM</h4>
                         <p>Genetic disorder database</p>
                     </a>
@@ -324,7 +337,7 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
 
 <style>
     .rare-diseases-page {
-        background: var(--bg-primary, #0a0a12);
+        background: var(--paper);
         min-height: 100vh;
     }
 
@@ -337,47 +350,10 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
     /* Hero */
     .page-hero {
         padding: 5rem 0 3rem;
-        background: linear-gradient(180deg, rgba(139, 92, 246, 0.08) 0%, transparent 100%);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper);
+        border-bottom: 1px solid var(--rule);
         position: relative;
         overflow: hidden;
-    }
-
-    .hero-bg {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        overflow: hidden;
-    }
-
-    .orb {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(100px);
-        animation: float 20s ease-in-out infinite;
-    }
-
-    .orb-1 {
-        width: 500px;
-        height: 500px;
-        background: rgba(139, 92, 246, 0.2);
-        top: -200px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    .orb-2 {
-        width: 300px;
-        height: 300px;
-        background: rgba(236, 72, 153, 0.15);
-        bottom: -100px;
-        right: -100px;
-        animation-delay: -10s;
-    }
-
-    @keyframes float {
-        0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.6; }
-        50% { transform: translateX(-50%) scale(1.1); opacity: 0.8; }
     }
 
     .hero-content {
@@ -393,46 +369,31 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
         align-items: center;
         gap: 8px;
         padding: 8px 18px;
-        background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(139, 92, 246, 0.05));
-        border: 1px solid rgba(139, 92, 246, 0.3);
-        border-radius: 100px;
+        background: var(--ink-blue-2);
+        border: 1px solid var(--ink-blue);
+        border-radius: var(--r-pill);
         font-size: 0.7rem;
         font-weight: 700;
         letter-spacing: 0.15em;
-        color: #a78bfa;
+        font-family: var(--font-mono);
+        color: var(--ink-blue);
         margin-bottom: 1.5rem;
-        animation: fade-in-down 0.6s ease-out;
-    }
-
-    @keyframes fade-in-down {
-        from { opacity: 0; transform: translateY(-10px); }
-        to { opacity: 1; transform: translateY(0); }
     }
 
     .page-hero h1 {
         font-family: var(--font-serif);
         font-size: clamp(2.5rem, 5vw, 3.5rem);
-        font-weight: 800;
-        background: linear-gradient(135deg, #fff 0%, #fff 60%, #a78bfa 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        font-weight: 400;
+        color: var(--ink);
         margin: 0 0 1rem;
         letter-spacing: -0.03em;
-        animation: fade-in-up 0.6s ease-out 0.1s both;
-    }
-
-    @keyframes fade-in-up {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
     }
 
     .hero-description {
         font-size: 1.15rem;
-        color: #a1a1aa;
+        color: var(--ink-2);
         line-height: 1.7;
         margin: 0 0 2.5rem;
-        animation: fade-in-up 0.6s ease-out 0.2s both;
     }
 
     .hero-stats {
@@ -440,21 +401,19 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
         justify-content: center;
         gap: 2rem;
         margin-bottom: 2.5rem;
-        animation: fade-in-up 0.6s ease-out 0.3s both;
     }
 
     .stat {
         text-align: center;
         padding: 1rem 1.5rem;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 16px;
-        backdrop-filter: blur(10px);
-        transition: all 0.2s;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
+        transition: all var(--t-fast);
     }
 
     .stat:hover {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+        background: var(--paper-3);
         transform: translateY(-2px);
     }
 
@@ -462,11 +421,8 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
         display: block;
         font-family: var(--font-mono);
         font-size: 2.25rem;
-        font-weight: 800;
-        background: linear-gradient(135deg, #a78bfa, #8b5cf6);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        font-weight: 500;
+        color: var(--ink-blue);
         line-height: 1.2;
     }
 
@@ -474,7 +430,7 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
         font-size: 0.7rem;
         text-transform: uppercase;
         letter-spacing: 0.12em;
-        color: #71717a;
+        color: var(--ink-3);
         font-weight: 600;
     }
 
@@ -482,7 +438,6 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
         position: relative;
         max-width: 540px;
         margin: 0 auto;
-        animation: fade-in-up 0.6s ease-out 0.4s both;
     }
 
     .hero-search svg {
@@ -490,49 +445,45 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
         left: 20px;
         top: 50%;
         transform: translateY(-50%);
-        color: #52525b;
-        transition: color 0.2s;
+        color: var(--ink-3);
+        transition: color var(--t-fast);
     }
 
     .hero-search:focus-within svg {
-        color: #a78bfa;
+        color: var(--ink-blue);
     }
 
     .hero-search input {
         width: 100%;
         height: 60px;
         padding: 0 24px 0 56px;
-        background: rgba(20, 20, 35, 0.8);
-        border: 2px solid rgba(255, 255, 255, 0.08);
-        border-radius: 18px;
+        background: var(--paper);
+        border: 2px solid var(--rule);
+        border-radius: var(--r-4);
         font-size: 1rem;
-        color: #fafafa;
+        color: var(--ink);
         outline: none;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+        transition: all var(--t-base);
+        box-shadow: var(--shadow-2);
     }
 
     .hero-search input::placeholder {
-        color: #52525b;
+        color: var(--ink-3);
     }
 
     .hero-search input:focus {
-        background: rgba(25, 25, 45, 0.95);
-        border-color: rgba(139, 92, 246, 0.5);
-        box-shadow:
-            0 0 0 4px rgba(139, 92, 246, 0.1),
-            0 8px 32px rgba(139, 92, 246, 0.15);
+        border-color: var(--ink-blue);
+        box-shadow: var(--shadow-3);
     }
 
     /* Filter Section */
     .filter-section {
         padding: 1.5rem 0;
-        background: rgba(0, 0, 0, 0.2);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        background: var(--paper-2);
+        border-bottom: 1px solid var(--rule);
         position: sticky;
         top: 0;
         z-index: 20;
-        backdrop-filter: blur(12px);
     }
 
     .category-pills {
@@ -547,26 +498,26 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
         align-items: center;
         gap: 0.5rem;
         padding: 0.5rem 1rem;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 100px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-pill);
         font-size: 0.8rem;
         font-weight: 500;
-        color: #a1a1aa;
+        color: var(--ink-2);
         cursor: pointer;
-        transition: all 0.2s;
+        transition: all var(--t-fast);
     }
 
     .category-pill:hover {
-        background: rgba(255, 255, 255, 0.06);
-        border-color: rgba(255, 255, 255, 0.12);
-        color: #fafafa;
+        background: var(--paper-3);
+        border-color: var(--rule-strong);
+        color: var(--ink);
     }
 
     .category-pill.active {
-        background: linear-gradient(135deg, var(--cat-color, #8b5cf6), rgba(139, 92, 246, 0.8));
-        border-color: transparent;
-        color: white;
+        background: var(--ink-blue);
+        border-color: var(--ink-blue);
+        color: var(--paper);
     }
 
     .pill-icon {
@@ -575,14 +526,16 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
 
     .pill-count {
         padding: 2px 8px;
-        background: rgba(255, 255, 255, 0.15);
-        border-radius: 100px;
+        background: var(--paper-3);
+        border-radius: var(--r-pill);
         font-size: 0.7rem;
         font-weight: 600;
+        font-family: var(--font-mono);
     }
 
     .category-pill.active .pill-count {
-        background: rgba(255, 255, 255, 0.25);
+        background: var(--ink-blue-2);
+        color: var(--paper);
     }
 
     /* Diseases Grid */
@@ -601,38 +554,23 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
         display: flex;
         flex-direction: column;
         padding: 1.75rem;
-        background: linear-gradient(145deg, rgba(30, 30, 50, 0.6), rgba(20, 20, 40, 0.4));
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 20px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         text-decoration: none;
         color: inherit;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all var(--t-base);
         overflow: hidden;
     }
 
     .disease-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, var(--cat-color, rgba(139, 92, 246, 0.4)), transparent);
-        opacity: 0;
-        transition: opacity 0.3s;
-    }
-
-    .disease-card:hover::before {
-        opacity: 1;
+        display: none;
     }
 
     .disease-card:hover {
-        border-color: rgba(139, 92, 246, 0.25);
-        background: linear-gradient(145deg, rgba(35, 35, 55, 0.7), rgba(25, 25, 45, 0.5));
+        border-color: var(--rule-strong);
+        box-shadow: var(--shadow-3);
         transform: translateY(-4px);
-        box-shadow:
-            0 20px 40px -10px rgba(0, 0, 0, 0.4),
-            0 0 40px -10px rgba(139, 92, 246, 0.15);
     }
 
     .card-header {
@@ -648,11 +586,12 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
         align-items: center;
         gap: 0.4rem;
         padding: 5px 12px;
-        background: rgba(255, 255, 255, 0.04);
-        border-radius: 8px;
+        background: var(--paper-2);
+        border-radius: var(--r-3);
         font-size: 0.7rem;
         font-weight: 600;
-        color: var(--cat-color, #a78bfa);
+        font-family: var(--font-mono);
+        color: var(--cat-color, var(--ink-blue));
     }
 
     .cat-icon {
@@ -664,17 +603,17 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
         align-items: center;
         gap: 6px;
         padding: 4px 10px;
-        background: rgba(16, 185, 129, 0.1);
-        border-radius: 100px;
+        background: var(--verdant-2);
+        border-radius: var(--r-pill);
         font-size: 0.65rem;
         font-weight: 600;
-        color: #34d399;
+        color: var(--verdant);
     }
 
     .pulse {
         width: 6px;
         height: 6px;
-        background: #34d399;
+        background: var(--verdant);
         border-radius: 50%;
         animation: pulse 2s infinite;
     }
@@ -685,9 +624,10 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
     }
 
     .card-title {
+        font-family: var(--font-serif);
         font-size: 1.25rem;
-        font-weight: 700;
-        color: #fafafa;
+        font-weight: 500;
+        color: var(--ink);
         margin: 0 0 0.5rem;
         line-height: 1.3;
         letter-spacing: -0.01em;
@@ -695,14 +635,14 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
 
     .card-aliases {
         font-size: 0.75rem;
-        color: #71717a;
+        color: var(--ink-3);
         margin: 0 0 0.75rem;
         font-style: italic;
     }
 
     .card-description {
         font-size: 0.875rem;
-        color: #a1a1aa;
+        color: var(--ink-2);
         line-height: 1.6;
         margin: 0 0 1rem;
         flex: 1;
@@ -714,7 +654,7 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
         gap: 1rem;
         margin-bottom: 1rem;
         padding-top: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        border-top: 1px solid var(--rule);
     }
 
     .meta-item {
@@ -722,7 +662,7 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
         align-items: center;
         gap: 6px;
         font-size: 0.75rem;
-        color: #71717a;
+        color: var(--ink-3);
     }
 
     .meta-item svg {
@@ -730,7 +670,7 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
     }
 
     .meta-item.trials {
-        color: #8b5cf6;
+        color: var(--ink-blue);
     }
 
     .card-footer {
@@ -742,12 +682,12 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
     .specialists-count {
         font-size: 0.8rem;
         font-weight: 600;
-        color: #10b981;
+        color: var(--verdant);
     }
 
     .specialists-types {
         font-size: 0.75rem;
-        color: #71717a;
+        color: var(--ink-3);
     }
 
     .card-arrow {
@@ -756,15 +696,15 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
         justify-content: center;
         width: 32px;
         height: 32px;
-        background: rgba(255, 255, 255, 0.04);
-        border-radius: 8px;
-        color: #52525b;
-        transition: all 0.2s;
+        background: var(--paper-2);
+        border-radius: var(--r-3);
+        color: var(--ink-3);
+        transition: all var(--t-fast);
     }
 
     .disease-card:hover .card-arrow {
-        background: rgba(139, 92, 246, 0.2);
-        color: #a78bfa;
+        background: var(--ink-blue-2);
+        color: var(--ink-blue);
         transform: translateX(3px);
     }
 
@@ -772,7 +712,7 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
     .empty-state {
         text-align: center;
         padding: 4rem 2rem;
-        color: #71717a;
+        color: var(--ink-3);
     }
 
     .empty-icon {
@@ -784,29 +724,30 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
 
     .empty-state h3 {
         font-size: 1.1rem;
-        color: #a1a1aa;
+        color: var(--ink-2);
         margin: 0 0 0.5rem;
     }
 
     /* Resources Section */
     .resources-section {
         padding: 4rem 0 5rem;
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(139, 92, 246, 0.03) 100%);
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper-2);
+        border-top: 1px solid var(--rule);
         position: relative;
     }
 
     .section-title {
+        font-family: var(--font-serif);
         font-size: 1.5rem;
-        font-weight: 700;
-        color: #fafafa;
+        font-weight: 400;
+        color: var(--ink);
         text-align: center;
         margin: 0 0 0.75rem;
     }
 
     .section-subtitle {
         font-size: 0.95rem;
-        color: #71717a;
+        color: var(--ink-3);
         text-align: center;
         margin: 0 0 2.5rem;
     }
@@ -823,60 +764,46 @@ const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTria
         align-items: center;
         text-align: center;
         padding: 2rem 1.5rem;
-        background: linear-gradient(145deg, rgba(30, 30, 50, 0.5), rgba(20, 20, 40, 0.3));
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 18px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         text-decoration: none;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all var(--t-base);
         position: relative;
         overflow: hidden;
     }
 
     .resource-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.5), transparent);
-        opacity: 0;
-        transition: opacity 0.3s;
-    }
-
-    .resource-card:hover::before {
-        opacity: 1;
+        display: none;
     }
 
     .resource-card:hover {
-        background: linear-gradient(145deg, rgba(35, 35, 55, 0.6), rgba(25, 25, 45, 0.4));
-        border-color: rgba(139, 92, 246, 0.2);
+        border-color: var(--rule-strong);
         transform: translateY(-4px);
-        box-shadow: 0 20px 40px -15px rgba(139, 92, 246, 0.2);
+        box-shadow: var(--shadow-3);
     }
 
     .resource-icon {
         font-size: 2.5rem;
         margin-bottom: 1rem;
-        filter: grayscale(20%);
-        transition: filter 0.2s, transform 0.2s;
+        transition: transform var(--t-fast);
     }
 
     .resource-card:hover .resource-icon {
-        filter: grayscale(0%);
         transform: scale(1.1);
     }
 
     .resource-card h4 {
+        font-family: var(--font-serif);
         font-size: 1.1rem;
-        font-weight: 700;
-        color: #fafafa;
+        font-weight: 500;
+        color: var(--ink);
         margin: 0 0 0.5rem;
     }
 
     .resource-card p {
         font-size: 0.85rem;
-        color: #71717a;
+        color: var(--ink-3);
         margin: 0;
         line-height: 1.5;
     }

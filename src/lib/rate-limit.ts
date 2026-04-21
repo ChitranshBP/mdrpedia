@@ -1,6 +1,7 @@
 /**
- * Simple in-memory rate limiter for API endpoints
- * For production, consider using Redis or a dedicated rate limiting service
+ * MDRPedia — In-memory Rate Limiter
+ * With periodic cleanup to prevent memory leaks
+ * For production at scale, consider migrating to Redis
  */
 
 interface RateLimitEntry {
@@ -10,15 +11,41 @@ interface RateLimitEntry {
 
 const rateLimitStore = new Map<string, RateLimitEntry>();
 
-// Clean up expired entries every 5 minutes
-setInterval(() => {
-    const now = Date.now();
-    for (const [key, entry] of rateLimitStore.entries()) {
-        if (entry.resetTime < now) {
-            rateLimitStore.delete(key);
+// ─── Periodic Cleanup ───────────────────────────────────────────────────────
+// Run every 60 seconds to purge expired entries, preventing unbounded growth
+
+const CLEANUP_INTERVAL_MS = 60_000;
+const MAX_STORE_SIZE = 5000; // Hard cap to prevent memory issues
+
+let cleanupTimer: ReturnType<typeof setInterval> | null = null;
+
+function startCleanup() {
+    if (cleanupTimer) return;
+    cleanupTimer = setInterval(() => {
+        const now = Date.now();
+        let purged = 0;
+        for (const [key, entry] of rateLimitStore.entries()) {
+            if (entry.resetTime < now) {
+                rateLimitStore.delete(key);
+                purged++;
+            }
         }
+        // Emergency flush if store is still too large after cleanup
+        if (rateLimitStore.size > MAX_STORE_SIZE) {
+            rateLimitStore.clear();
+        }
+    }, CLEANUP_INTERVAL_MS);
+
+    // Don't block process exit
+    if (cleanupTimer && typeof cleanupTimer === 'object' && 'unref' in cleanupTimer) {
+        cleanupTimer.unref();
     }
-}, 5 * 60 * 1000);
+}
+
+// Start cleanup on module load
+startCleanup();
+
+// ─── Rate Limit Core ────────────────────────────────────────────────────────
 
 interface RateLimitConfig {
     windowMs: number;      // Time window in milliseconds
@@ -36,9 +63,8 @@ export function checkRateLimit(
     config: RateLimitConfig = { windowMs: 60000, maxRequests: 10 }
 ): RateLimitResult {
     const now = Date.now();
-    const key = identifier;
 
-    let entry = rateLimitStore.get(key);
+    let entry = rateLimitStore.get(identifier);
 
     // Create new entry if doesn't exist or window expired
     if (!entry || entry.resetTime < now) {
@@ -46,7 +72,7 @@ export function checkRateLimit(
             count: 0,
             resetTime: now + config.windowMs,
         };
-        rateLimitStore.set(key, entry);
+        rateLimitStore.set(identifier, entry);
     }
 
     entry.count++;
@@ -112,4 +138,13 @@ export const RATE_LIMITS = {
 
     // Form submissions
     submission: { windowMs: 300000, maxRequests: 10 },
+
+    // Ethics application endpoints
+    ethicsApply: { windowMs: 300000, maxRequests: 5 },
+
+    // Ethics public badge/verify (higher throughput)
+    ethicsPublic: { windowMs: 60000, maxRequests: 120 },
+
+    // Ethics check-in submissions
+    ethicsCheckin: { windowMs: 300000, maxRequests: 10 },
 } as const;

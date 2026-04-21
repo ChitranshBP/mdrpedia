@@ -95,12 +95,12 @@ const { eli5Summary, clinicalSummary, title = "Understanding This Profile", tier
 
 <style>
     .eli5-section {
-        background: var(--card-bg, rgba(20, 20, 35, 0.8));
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 2rem;
         margin-bottom: 2rem;
-        backdrop-filter: blur(10px);
+        
     }
 
     .eli5-header {
@@ -110,7 +110,7 @@ const { eli5Summary, clinicalSummary, title = "Understanding This Profile", tier
         gap: 1rem;
         margin-bottom: 1.5rem;
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
+        border-bottom: 1px solid var(--rule);
         flex-wrap: wrap;
     }
 
@@ -121,20 +121,20 @@ const { eli5Summary, clinicalSummary, title = "Understanding This Profile", tier
         font-size: 1.25rem;
         font-weight: 700;
         margin: 0;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .eli5-title svg {
-        color: var(--accent, #8b5cf6);
+        color: var(--ink-blue);
         opacity: 0.8;
     }
 
     /* Toggle Switch */
     .eli5-toggle {
         display: flex;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 10px;
+        background: var(--paper-3);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         padding: 4px;
         gap: 4px;
     }
@@ -149,24 +149,24 @@ const { eli5Summary, clinicalSummary, title = "Understanding This Profile", tier
         border-radius: 8px;
         font-size: 0.85rem;
         font-weight: 500;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         cursor: pointer;
         transition: all 0.25s ease;
     }
 
     .toggle-btn:hover {
-        color: var(--text-secondary, #ccc);
-        background: rgba(255, 255, 255, 0.04);
+        color: var(--ink-2);
+        background: var(--paper-3);
     }
 
     .toggle-btn--active {
-        background: var(--accent, #8b5cf6);
+        background: var(--ink-blue);
         color: white;
         box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
     }
 
     .toggle-btn--active:hover {
-        background: var(--accent, #8b5cf6);
+        background: var(--ink-blue);
         color: white;
     }
 
@@ -203,7 +203,7 @@ const { eli5Summary, clinicalSummary, title = "Understanding This Profile", tier
         align-items: center;
         gap: 0.4rem;
         padding: 4px 12px;
-        border-radius: 100px;
+        border-radius: var(--r-pill);
         font-size: 0.7rem;
         font-weight: 600;
         text-transform: uppercase;
@@ -212,42 +212,42 @@ const { eli5Summary, clinicalSummary, title = "Understanding This Profile", tier
     }
 
     .content-badge--simple {
-        background: rgba(16, 185, 129, 0.1);
-        border: 1px solid rgba(16, 185, 129, 0.2);
-        color: #10b981;
+        background: var(--paper-3);
+        border: 1px solid var(--rule);
+        color: var(--verdant);
     }
 
     .content-badge--clinical {
-        background: rgba(59, 130, 246, 0.1);
-        border: 1px solid rgba(59, 130, 246, 0.2);
-        color: #60a5fa;
+        background: var(--paper-3);
+        border: 1px solid var(--rule);
+        color: var(--ink-blue);
     }
 
     .eli5-text {
         font-size: 1.05rem;
         line-height: 1.8;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         margin: 0;
     }
 
     /* Tier-specific accent colors */
     .tier-titan .toggle-btn--active {
-        background: linear-gradient(135deg, #ffd700, #f59e0b);
+        background: var(--aged-gold);
         box-shadow: 0 2px 12px rgba(255, 215, 0, 0.3);
     }
-    .tier-titan .eli5-title svg { color: #ffd700; }
+    .tier-titan .eli5-title svg { color: var(--aged-gold); }
 
     .tier-elite .toggle-btn--active {
-        background: linear-gradient(135deg, #00aaff, #0070f3);
+        background: var(--ink-blue);
         box-shadow: 0 2px 12px rgba(0, 170, 255, 0.3);
     }
-    .tier-elite .eli5-title svg { color: #00aaff; }
+    .tier-elite .eli5-title svg { color: var(--ink-blue); }
 
     .tier-master .toggle-btn--active {
-        background: linear-gradient(135deg, #00cc66, #10b981);
+        background: var(--verdant);
         box-shadow: 0 2px 12px rgba(0, 204, 102, 0.3);
     }
-    .tier-master .eli5-title svg { color: #00cc66; }
+    .tier-master .eli5-title svg { color: var(--verdant); }
 
     /* Responsive */
     @media (max-width: 640px) {

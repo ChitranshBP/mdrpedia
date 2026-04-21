@@ -74,8 +74,8 @@ const classifiedAwards = awards
         gap: var(--space-sm);
         padding: var(--space-md) 0;
         margin: var(--space-md) 0;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-top: 1px solid var(--rule);
+        border-bottom: 1px solid var(--rule);
     }
 
     .award-badge {
@@ -95,7 +95,7 @@ const classifiedAwards = awards
 
     .award-badge:hover {
         transform: translateY(-1px);
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        box-shadow: var(--shadow-2);
     }
 
     .award-badge__link {
@@ -119,12 +119,12 @@ const classifiedAwards = awards
     @keyframes shimmer {
         0%,
         100% {
-            border-color: #ffd700;
-            box-shadow: 0 0 8px rgba(255, 215, 0, 0.15);
+            border-color: var(--aged-gold);
+            box-shadow: var(--shadow-1);
         }
         50% {
-            border-color: #ffc000;
-            box-shadow: 0 0 16px rgba(255, 215, 0, 0.3);
+            border-color: var(--aged-gold);
+            box-shadow: var(--shadow-2);
         }
     }
 

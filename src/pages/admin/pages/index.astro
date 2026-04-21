@@ -1,5 +1,6 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
+import AdminSidebar from "../../../components/admin/AdminSidebar.astro";
 import { prisma } from "../../../lib/prisma";
 import { requireSuperAdmin } from "../../../lib/rbac";
 
@@ -23,17 +24,15 @@ const editUrl = (slug?: string) =>
 ---
 
 <Layout title="Manage Pages — MDRPedia Admin">
-    <div class="container admin-dashboard">
+    <div class="admin">
+        <AdminSidebar adminKey={adminKey} activePage="pages" />
+        <main class="main">
         <header class="admin-header">
             <div class="admin-header__top">
-                <span class="badge badge--admin">SUPER ADMIN</span>
                 <h1>Content Pages</h1>
             </div>
             <div class="admin-actions">
                 <a href={editUrl()} class="btn btn--primary"> + New Page </a>
-                <a href={`/admin?key=${adminKey}`} class="btn btn--outline">
-                    &larr; Dashboard
-                </a>
             </div>
         </header>
 
@@ -96,6 +95,7 @@ const editUrl = (slug?: string) =>
                 </tbody>
             </table>
         </div>
+        </main>
     </div>
 </Layout>
 

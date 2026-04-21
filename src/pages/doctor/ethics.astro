@@ -1,0 +1,877 @@
+---
+/**
+ * MDRPedia — Doctor Ethics Dashboard
+ * Doctors can view their ethics certification status, score, checklist, and upload evidence
+ * If no profile_id provided, shows a lookup form instead of redirecting (fixes infinite loop)
+ */
+import Layout from "../../layouts/Layout.astro";
+import { prisma } from "../../lib/prisma";
+import { scoreBand } from "../../lib/ethics-score";
+import { isStripeConfigured } from "../../lib/stripe";
+
+export const prerender = false;
+
+const url = new URL(Astro.request.url);
+const profileId = url.searchParams.get("profile_id");
+const paymentStatus = url.searchParams.get("payment");
+
+let profile: any = null;
+let application: any = null;
+let latestAudit: any = null;
+let band: string | null = null;
+let templates: any[] = [];
+let subscription: any = null;
+let lookupMode = false;
+
+if (profileId) {
+    profile = await prisma.profile.findUnique({
+        where: { id: profileId },
+        select: {
+            id: true,
+            full_name: true,
+            slug: true,
+            specialty: true,
+            ethics_tier: true,
+            ethics_cert_id: true,
+            ethics_certified_at: true,
+            ethics_status: true,
+            ethics_score: true,
+            ethics_applications: {
+                orderBy: { createdAt: "desc" },
+                take: 1,
+                include: {
+                    audits: {
+                        orderBy: { createdAt: "desc" },
+                        take: 3,
+                        include: {
+                            items: {
+                                orderBy: { item_key: "asc" },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    });
+
+    if (!profile) {
+        lookupMode = true;
+    } else {
+        application = profile.ethics_applications[0] || null;
+        latestAudit = application?.audits?.[0] || null;
+        band = profile.ethics_score ? scoreBand(profile.ethics_score) : null;
+        templates = await prisma.ethicsChecklistTemplate.findMany({
+            orderBy: { sort_order: "asc" },
+        });
+        // Fetch subscription status
+        subscription = await prisma.ethicsSubscription.findUnique({
+            where: { profile_id: profileId },
+        });
+    }
+} else {
+    lookupMode = true;
+}
+
+const stripeEnabled = isStripeConfigured();
+
+const tierLabel: Record<string, string> = {
+    ADVOCATE: "Advocate",
+    GUARDIAN: "Guardian",
+    LEGEND: "Legend",
+};
+
+const statusLabel: Record<string, string> = {
+    DRAFT: "Draft",
+    SUBMITTED: "Under Review",
+    UNDER_REVIEW: "Under Review",
+    APPROVED: "Approved",
+    SUSPENDED: "Suspended",
+    REVOKED: "Revoked",
+    EXPIRED: "Expired",
+};
+
+const categoryLabels: Record<string, string> = {
+    PATIENT_TRANSPARENCY: "Patient Transparency",
+    PEER_REVIEW_COMPLIANCE: "Peer Review & Compliance",
+    COMMUNITY_PROBONO: "Community & Pro-bono",
+};
+---
+
+<Layout title={profile ? `Ethics Dashboard -- ${profile.full_name} | MDRPedia` : "Ethics Certification | MDRPedia"} description="Manage your MDRPedia ethics certification status, complete audits, and upload evidence." robots="noindex, nofollow">
+    <div class="ethics-dash">
+        <div class="container">
+
+            {/* ── Profile Lookup Mode ─────────────────────── */}
+            {lookupMode && (
+                <div class="lookup-section">
+                    <span class="eyebrow">Ethics Certification</span>
+                    <h1>Find Your Profile</h1>
+                    <p class="lookup-desc">
+                        Enter your name or MDRPedia slug to access your ethics certification dashboard.
+                    </p>
+                    <form id="lookup-form" class="lookup-form">
+                        <input
+                            type="text"
+                            id="lookup-input"
+                            name="query"
+                            placeholder="Search by name or slug..."
+                            required
+                            autocomplete="off"
+                        />
+                        <button type="submit" class="btn btn--primary" id="lookup-btn">Search</button>
+                    </form>
+                    <div id="lookup-results" class="lookup-results" style="display:none;"></div>
+                    <div id="lookup-error" class="lookup-error" style="display:none;"></div>
+
+                    {profileId && !profile && (
+                        <div class="lookup-error" style="display:block;">
+                            Profile not found. Please search for your profile below.
+                        </div>
+                    )}
+                </div>
+            )}
+
+            {/* ── Main Dashboard ─────────────────────── */}
+            {profile && (
+                <>
+                    {/* Payment success/cancelled banner */}
+                    {paymentStatus === 'success' && (
+                        <div class="banner banner--success">
+                            Payment successful! Your subscription is being activated.
+                        </div>
+                    )}
+                    {paymentStatus === 'cancelled' && (
+                        <div class="banner banner--warning">
+                            Payment was cancelled. You can try again below.
+                        </div>
+                    )}
+
+                    {/* Header */}
+                    <div class="dash-header">
+                        <div>
+                            <span class="eyebrow">Ethics Certification</span>
+                            <h1>{profile.full_name}</h1>
+                            <p class="sub">{profile.specialty}</p>
+                        </div>
+                        <div class="status-block">
+                            {profile.ethics_status ? (
+                                <div class={`status-pill status-pill--${profile.ethics_status.toLowerCase()}`}>
+                                    {statusLabel[profile.ethics_status] || profile.ethics_status}
+                                </div>
+                            ) : (
+                                <div class="status-pill status-pill--none">Not Certified</div>
+                            )}
+                            {profile.ethics_tier && (
+                                <div class="tier-display">
+                                    <span class="tier-letter">{profile.ethics_tier.charAt(0)}</span>
+                                    <span class="tier-name">{tierLabel[profile.ethics_tier]}</span>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Suspended / Revoked Warning */}
+                    {profile.ethics_status === 'SUSPENDED' && (
+                        <div class="banner banner--warning">
+                            Your certification is currently <strong>suspended</strong>. Complete your pending audit or contact support.
+                        </div>
+                    )}
+                    {profile.ethics_status === 'REVOKED' && (
+                        <div class="banner banner--danger">
+                            Your certification has been <strong>revoked</strong>. Contact MDRPedia for more information.
+                        </div>
+                    )}
+
+                    {/* Score Card */}
+                    {profile.ethics_score != null && (
+                        <div class="score-card">
+                            <div class="score-card__score">
+                                <span class="score-number">{profile.ethics_score.toFixed(1)}</span>
+                                <span class="score-max">/ 100</span>
+                            </div>
+                            <div class="score-card__details">
+                                <span class="score-band">{band}</span>
+                                {profile.ethics_cert_id && (
+                                    <span class="cert-id">{profile.ethics_cert_id}</span>
+                                )}
+                                {profile.ethics_certified_at && (
+                                    <span class="cert-date">Since {new Date(profile.ethics_certified_at).toLocaleDateString()}</span>
+                                )}
+                            </div>
+                            {profile.ethics_cert_id && (
+                                <div class="score-card__badge">
+                                    <a href={`/api/ethics/badge/${profile.ethics_cert_id}.svg`} target="_blank" class="badge-link">View Badge</a>
+                                    <a href={`/ethical-doctors/verify/${profile.ethics_cert_id}`} class="badge-link">Verification Page</a>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {/* Subscription Management */}
+                    {stripeEnabled && profile.ethics_status === 'APPROVED' && (
+                        <div class="subscription-card">
+                            <h3>Subscription</h3>
+                            {subscription ? (
+                                <div class="sub-details">
+                                    <div class="sub-row">
+                                        <span class="sub-label">Plan:</span>
+                                        <span class="sub-value">{subscription.tier === 'FREE' ? 'Free (Advocate)' : subscription.tier.replace('_TIER', '')}</span>
+                                    </div>
+                                    <div class="sub-row">
+                                        <span class="sub-label">Status:</span>
+                                        <span class={`sub-status sub-status--${subscription.status.toLowerCase()}`}>{subscription.status}</span>
+                                    </div>
+                                    {subscription.current_period_end && (
+                                        <div class="sub-row">
+                                            <span class="sub-label">Renews:</span>
+                                            <span class="sub-value">{new Date(subscription.current_period_end).toLocaleDateString()}</span>
+                                        </div>
+                                    )}
+                                    {subscription.stripe_customer_id && (
+                                        <button class="btn btn--sm btn--outline" id="manage-subscription" data-profile-id={profile.id}>
+                                            Manage Subscription
+                                        </button>
+                                    )}
+                                </div>
+                            ) : (
+                                <div class="sub-details">
+                                    <p class="sub-desc">You're on the free Advocate tier. Upgrade to unlock Guardian or Legend certification.</p>
+                                </div>
+                            )}
+                            {profile.ethics_tier === 'ADVOCATE' && (
+                                <div class="upgrade-buttons">
+                                    <button class="btn btn--sm btn--outline" data-upgrade="GUARDIAN_TIER" data-profile-id={profile.id}>
+                                        Upgrade to Guardian
+                                    </button>
+                                    <button class="btn btn--sm btn--outline" data-upgrade="LEGEND_TIER" data-profile-id={profile.id}>
+                                        Upgrade to Legend
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {/* Application Section */}
+                    {!application && (
+                        <div class="cta-card">
+                            <h2>Start Your Ethics Certification</h2>
+                            <p>Apply for MDRPedia's Ethics Certification to demonstrate your commitment to ethical medical practice.</p>
+                            <form id="apply-form" class="apply-form">
+                                <div class="form-row">
+                                    <label for="apply-email">Contact Email</label>
+                                    <input type="email" id="apply-email" name="email" required placeholder="you@example.com" />
+                                </div>
+                                <div class="form-row">
+                                    <label for="apply-tier">Target Tier</label>
+                                    <select id="apply-tier" name="tier">
+                                        <option value="ADVOCATE">Advocate (Free, Score 60+)</option>
+                                        <option value="GUARDIAN">Guardian (Paid, Score 75+)</option>
+                                        <option value="LEGEND">Legend (Paid, Score 90+)</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn--primary" id="apply-btn" data-profile-id={profile.id}>
+                                    Apply Now
+                                </button>
+                            </form>
+                        </div>
+                    )}
+
+                    {application && application.status === 'DRAFT' && (
+                        <div class="cta-card cta-card--draft">
+                            <h2>Complete Your Application</h2>
+                            <p>Your application is saved as a draft. Review and submit it when you're ready.</p>
+                            <div class="draft-details">
+                                <span>Target: <strong>{tierLabel[application.target_tier]}</strong></span>
+                                <span>Email: <strong>{application.contact_email}</strong></span>
+                            </div>
+                            <label class="terms-check">
+                                <input type="checkbox" id="agree-terms" />
+                                I agree to the MDRPedia Ethics Certification terms and conditions
+                            </label>
+                            <button class="btn btn--primary" id="submit-application" data-app-id={application.id} disabled>
+                                Submit Application
+                            </button>
+                        </div>
+                    )}
+
+                    {application && application.status === 'SUBMITTED' && !latestAudit && (
+                        <div class="cta-card cta-card--submitted">
+                            <h2>Application Under Review</h2>
+                            <p>Your application has been submitted and is being reviewed by the MDRPedia team. You'll be notified once a decision is made.</p>
+                        </div>
+                    )}
+
+                    {/* Latest Audit Checklist */}
+                    {latestAudit && (
+                        <div class="audit-section">
+                            <div class="audit-header">
+                                <h2>{latestAudit.audit_type} Audit</h2>
+                                <span class={`status-pill status-pill--${latestAudit.status.toLowerCase()}`}>
+                                    {statusLabel[latestAudit.status] || latestAudit.status}
+                                </span>
+                                <span class="due-date">Due: {new Date(latestAudit.due_date).toLocaleDateString()}</span>
+                            </div>
+
+                            {/* Group by category */}
+                            {Object.entries(categoryLabels).map(([cat, label]) => {
+                                const catTemplates = templates.filter(t => t.category === cat);
+                                const catItems = latestAudit.items.filter((i: any) => i.category === cat);
+                                // Show all templates for this category, merging with existing items
+                                const itemMap = new Map(catItems.map((i: any) => [i.item_key, i]));
+                                if (catTemplates.length === 0) return null;
+
+                                return (
+                                    <div class="checklist-category">
+                                        <h3>{label}</h3>
+                                        <div class="checklist-items">
+                                            {catTemplates.map(tpl => {
+                                                const item = itemMap.get(tpl.item_key) as any;
+                                                const verdict = item?.reviewer_verdict;
+                                                const isEditable = latestAudit.status === 'DRAFT';
+                                                return (
+                                                    <div class={`checklist-item ${verdict === 'PASS' ? 'pass' : verdict === 'FAIL' ? 'fail' : ''}`} data-item-key={tpl.item_key}>
+                                                        <div class="checklist-item__status">
+                                                            {verdict === 'PASS' ? (
+                                                                <span class="check-icon pass">&#10003;</span>
+                                                            ) : verdict === 'FAIL' ? (
+                                                                <span class="check-icon fail">&#10007;</span>
+                                                            ) : (
+                                                                <span class="check-icon pending">&#9679;</span>
+                                                            )}
+                                                        </div>
+                                                        <div class="checklist-item__info">
+                                                            <h4>
+                                                                {tpl.label}
+                                                                {tpl.is_required && <span class="required-tag">Required</span>}
+                                                            </h4>
+                                                            <p>{tpl.description}</p>
+                                                            {isEditable ? (
+                                                                <div class="item-input">
+                                                                    <textarea
+                                                                        class="item-response"
+                                                                        data-item-key={tpl.item_key}
+                                                                        placeholder="Describe how you meet this criterion..."
+                                                                        rows="2"
+                                                                    >{item?.response || ''}</textarea>
+                                                                    <div class="item-evidence">
+                                                                        {item?.evidence_urls?.length > 0 && (
+                                                                            <div class="existing-evidence">
+                                                                                {item.evidence_urls.map((eUrl: string, i: number) => (
+                                                                                    <a href={eUrl} target="_blank" class="evidence-link">Evidence {i + 1}</a>
+                                                                                ))}
+                                                                            </div>
+                                                                        )}
+                                                                        <label class="upload-label">
+                                                                            <input type="file" class="evidence-upload" data-item-key={tpl.item_key} accept="image/jpeg,image/png,image/webp,application/pdf" />
+                                                                            Upload evidence (JPEG, PNG, WebP, PDF, max 10MB)
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            ) : (
+                                                                <>
+                                                                    {item?.response && <p class="response">Response: {item.response}</p>}
+                                                                    {item?.evidence_urls?.length > 0 && (
+                                                                        <div class="evidence-links">
+                                                                            {item.evidence_urls.map((eUrl: string, i: number) => (
+                                                                                <a href={eUrl} target="_blank" class="evidence-link">Evidence {i + 1}</a>
+                                                                            ))}
+                                                                        </div>
+                                                                    )}
+                                                                    {item?.reviewer_notes && (
+                                                                        <p class="reviewer-note">Reviewer: {item.reviewer_notes}</p>
+                                                                    )}
+                                                                </>
+                                                            )}
+                                                        </div>
+                                                        <div class="checklist-item__points">
+                                                            <span class="points">{item?.points_earned ?? '--'} / {tpl.max_points}</span>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+
+                            {/* Submit check-in buttons if audit is editable */}
+                            {(latestAudit.status === 'DRAFT') && (
+                                <div class="checkin-actions">
+                                    <button class="btn btn--outline" id="save-draft-btn"
+                                        data-audit-id={latestAudit.id} data-profile-id={profile.id}>
+                                        Save Draft
+                                    </button>
+                                    <button class="btn btn--primary" id="submit-checkin-btn"
+                                        data-audit-id={latestAudit.id} data-profile-id={profile.id}>
+                                        Submit Check-in
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {/* Embed Code Section */}
+                    {profile.ethics_cert_id && profile.ethics_status === 'APPROVED' && (
+                        <div class="embed-section">
+                            <h2>Embed Your Badge</h2>
+                            <p>Add your ethics certification badge to your website:</p>
+                            <div class="embed-code">
+                                <h4>Static Badge (SVG)</h4>
+                                <div class="code-block">
+                                    <code id="embed-svg">&lt;a href="https://mdrpedia.com/ethical-doctors/verify/{profile.ethics_cert_id}"&gt;&lt;img src="https://mdrpedia.com/api/ethics/badge/{profile.ethics_cert_id}.svg" alt="MDRPedia Ethics Certified" width="120"&gt;&lt;/a&gt;</code>
+                                    <button class="copy-btn" data-target="embed-svg" title="Copy">Copy</button>
+                                </div>
+                            </div>
+                            <div class="embed-code">
+                                <h4>Dynamic Widget (JS)</h4>
+                                <div class="code-block">
+                                    <code id="embed-js">&lt;script src="https://mdrpedia.com/api/ethics/widget/{profile.ethics_cert_id}.js"&gt;&lt;/script&gt;</code>
+                                    <button class="copy-btn" data-target="embed-js" title="Copy">Copy</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </>
+            )}
+
+        </div>
+    </div>
+</Layout>
+
+<script define:vars={{ profileId }}>
+    // ── Utility: disable/enable button with loading text ──────────
+    function setLoading(btn, loading, text) {
+        if (!btn) return;
+        btn.disabled = loading;
+        if (loading) {
+            btn.dataset.originalText = btn.textContent;
+            btn.textContent = text || 'Loading...';
+        } else {
+            btn.textContent = btn.dataset.originalText || btn.textContent;
+        }
+    }
+
+    // ── Profile Lookup ──────────────────────────────────────────────
+    const lookupForm = document.getElementById('lookup-form');
+    if (lookupForm) {
+        lookupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = document.getElementById('lookup-input');
+            const resultsDiv = document.getElementById('lookup-results');
+            const errorDiv = document.getElementById('lookup-error');
+            const btn = document.getElementById('lookup-btn');
+            const query = input.value.trim();
+            if (!query) return;
+
+            setLoading(btn, true, 'Searching...');
+            errorDiv.style.display = 'none';
+            resultsDiv.style.display = 'none';
+
+            try {
+                const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=5`);
+                const data = await res.json();
+                const results = data.results || data.doctors || [];
+
+                if (results.length === 0) {
+                    errorDiv.textContent = 'No profiles found. Try a different name or slug.';
+                    errorDiv.style.display = 'block';
+                    return;
+                }
+
+                resultsDiv.innerHTML = results.map(r =>
+                    `<a href="/doctor/ethics?profile_id=${r.id}" class="lookup-result">
+                        <strong>${r.full_name || r.fullName}</strong>
+                        <span>${r.specialty || ''}</span>
+                    </a>`
+                ).join('');
+                resultsDiv.style.display = 'block';
+            } catch (err) {
+                errorDiv.textContent = 'Search failed. Please try again.';
+                errorDiv.style.display = 'block';
+            } finally {
+                setLoading(btn, false);
+            }
+        });
+    }
+
+    // ── Apply Form ──────────────────────────────────────────────────
+    const applyForm = document.getElementById('apply-form');
+    if (applyForm) {
+        applyForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('apply-btn');
+            const email = document.getElementById('apply-email').value.trim();
+            const tier = document.getElementById('apply-tier').value;
+            if (!email) return;
+
+            setLoading(btn, true, 'Applying...');
+
+            try {
+                const res = await fetch('/api/ethics/apply', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        profile_id: btn.dataset.profileId,
+                        target_tier: tier,
+                        contact_email: email,
+                    })
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    window.location.reload();
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            } finally {
+                setLoading(btn, false);
+            }
+        });
+    }
+
+    // ── Submit Application ──────────────────────────────────────────
+    const agreeCheck = document.getElementById('agree-terms');
+    const submitAppBtn = document.getElementById('submit-application');
+    if (agreeCheck && submitAppBtn) {
+        agreeCheck.addEventListener('change', () => {
+            submitAppBtn.disabled = !agreeCheck.checked;
+        });
+        submitAppBtn.addEventListener('click', async () => {
+            if (!agreeCheck.checked) return;
+            if (!confirm('Submit your application for review?')) return;
+            setLoading(submitAppBtn, true, 'Submitting...');
+
+            try {
+                const res = await fetch('/api/ethics/submit-application', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        application_id: submitAppBtn.dataset.appId,
+                        agreed_to_terms: true,
+                    })
+                });
+                if (res.ok) {
+                    window.location.reload();
+                } else {
+                    alert('Error: ' + (await res.json()).error);
+                }
+            } finally {
+                setLoading(submitAppBtn, false);
+            }
+        });
+    }
+
+    // ── Check-in: Collect items and submit ──────────────────────────
+    async function collectAndSubmitItems(auditId, profileIdVal, setStatus) {
+        const items = [];
+        const textareas = document.querySelectorAll('.item-response');
+        for (const ta of textareas) {
+            const key = ta.dataset.itemKey;
+            const response = ta.value.trim();
+            if (response) {
+                items.push({ item_key: key, response });
+            }
+        }
+
+        // Upload any pending evidence files first
+        const fileInputs = document.querySelectorAll('.evidence-upload');
+        for (const input of fileInputs) {
+            if (input.files && input.files.length > 0) {
+                const file = input.files[0];
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('profile_id', profileIdVal);
+                formData.append('audit_id', auditId);
+
+                const uploadRes = await fetch('/api/ethics/upload-evidence', {
+                    method: 'POST',
+                    body: formData,
+                });
+                if (uploadRes.ok) {
+                    const uploadData = await uploadRes.json();
+                    // Attach evidence URL to the matching item
+                    const key = input.dataset.itemKey;
+                    let item = items.find(i => i.item_key === key);
+                    if (!item) {
+                        item = { item_key: key };
+                        items.push(item);
+                    }
+                    item.evidence_urls = item.evidence_urls || [];
+                    item.evidence_urls.push(uploadData.url);
+                }
+            }
+        }
+
+        if (items.length === 0) {
+            alert('Please fill in at least one checklist item.');
+            return false;
+        }
+
+        const res = await fetch('/api/ethics/checkin', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                audit_id: auditId,
+                items,
+                save_draft: setStatus === 'draft',
+            }),
+        });
+
+        if (res.ok) return true;
+        const data = await res.json();
+        alert('Error: ' + data.error);
+        return false;
+    }
+
+    const saveDraftBtn = document.getElementById('save-draft-btn');
+    if (saveDraftBtn) {
+        saveDraftBtn.addEventListener('click', async () => {
+            setLoading(saveDraftBtn, true, 'Saving...');
+            try {
+                const ok = await collectAndSubmitItems(
+                    saveDraftBtn.dataset.auditId,
+                    saveDraftBtn.dataset.profileId,
+                    'draft'
+                );
+                if (ok) {
+                    alert('Draft saved!');
+                    window.location.reload();
+                }
+            } finally {
+                setLoading(saveDraftBtn, false);
+            }
+        });
+    }
+
+    const submitCheckinBtn = document.getElementById('submit-checkin-btn');
+    if (submitCheckinBtn) {
+        submitCheckinBtn.addEventListener('click', async () => {
+            if (!confirm('Submit your check-in? You won\'t be able to edit after submission.')) return;
+            setLoading(submitCheckinBtn, true, 'Submitting...');
+            try {
+                const ok = await collectAndSubmitItems(
+                    submitCheckinBtn.dataset.auditId,
+                    submitCheckinBtn.dataset.profileId,
+                    'submit'
+                );
+                if (ok) {
+                    window.location.reload();
+                }
+            } finally {
+                setLoading(submitCheckinBtn, false);
+            }
+        });
+    }
+
+    // ── Subscription Management ────────────────────────────────────
+    const manageSubBtn = document.getElementById('manage-subscription');
+    if (manageSubBtn) {
+        manageSubBtn.addEventListener('click', async () => {
+            setLoading(manageSubBtn, true, 'Loading...');
+            try {
+                const res = await fetch('/api/ethics/portal', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ profile_id: manageSubBtn.dataset.profileId }),
+                });
+                const data = await res.json();
+                if (res.ok && data.url) {
+                    window.location.href = data.url;
+                } else {
+                    alert('Error: ' + (data.error || 'Could not open portal'));
+                }
+            } finally {
+                setLoading(manageSubBtn, false);
+            }
+        });
+    }
+
+    // Upgrade buttons
+    document.querySelectorAll('[data-upgrade]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const tier = btn.dataset.upgrade;
+            setLoading(btn, true, 'Redirecting...');
+            try {
+                const res = await fetch('/api/ethics/checkout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        profile_id: btn.dataset.profileId,
+                        tier,
+                    }),
+                });
+                const data = await res.json();
+                if (res.ok && data.url) {
+                    window.location.href = data.url;
+                } else {
+                    alert('Error: ' + (data.error || 'Checkout not available'));
+                }
+            } finally {
+                setLoading(btn, false);
+            }
+        });
+    });
+
+    // ── Copy Embed Code ────────────────────────────────────────────
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const code = document.getElementById(btn.dataset.target);
+            if (code) {
+                navigator.clipboard.writeText(code.textContent).then(() => {
+                    btn.textContent = 'Copied!';
+                    setTimeout(() => btn.textContent = 'Copy', 2000);
+                });
+            }
+        });
+    });
+</script>
+
+<style>
+    .ethics-dash { padding: var(--s-8) 0 var(--s-9); }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+    /* Lookup */
+    .lookup-section { text-align: center; padding: var(--s-9) 0; }
+    .lookup-section h1 { font-family: var(--font-serif); margin: 12px 0 0; }
+    .lookup-desc { color: var(--ink-2); margin: 12px auto 28px; max-width: 48ch; }
+    .lookup-form { display: flex; gap: 8px; max-width: 500px; margin: 0 auto 20px; }
+    .lookup-form input { flex: 1; padding: 12px 16px; border: 1px solid var(--rule); border-radius: var(--r-2); font-size: 0.95rem; }
+    .lookup-form input:focus { outline: none; border-color: var(--verdant); }
+    .lookup-results { max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 4px; }
+    :global(.lookup-result) { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: var(--paper); border: 1px solid var(--rule); border-radius: var(--r-3); text-decoration: none; color: inherit; transition: border-color 0.15s; }
+    :global(.lookup-result:hover) { border-color: var(--verdant); }
+    :global(.lookup-result span) { color: var(--ink-2); font-size: 0.85rem; }
+    .lookup-error { color: var(--sanguine); font-size: 0.9rem; max-width: 500px; margin: 12px auto 0; }
+
+    /* Banners */
+    .banner { padding: 12px 20px; border-radius: var(--r-3); margin-bottom: 20px; font-size: 0.9rem; }
+    .banner--success { background: var(--verdant-2); color: var(--verdant); border: 1px solid var(--verdant); }
+    .banner--warning { background: #fff7ed; color: #ea580c; border: 1px solid #fdba74; }
+    .banner--danger { background: var(--sanguine-2); color: var(--sanguine); border: 1px solid var(--sanguine); }
+
+    /* Header */
+    .dash-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; gap: 20px; flex-wrap: wrap; }
+    .dash-header h1 { font-family: var(--font-serif); font-size: 2rem; margin: 8px 0 0; }
+    .dash-header .sub { color: var(--ink-2); margin-top: 4px; }
+
+    .status-block { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+    .status-pill { padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.04em; }
+    .status-pill--approved { background: var(--verdant-2); color: var(--verdant); }
+    .status-pill--submitted, .status-pill--under_review { background: #fef3c7; color: #d97706; }
+    .status-pill--draft { background: var(--paper-3); color: var(--ink-3); }
+    .status-pill--suspended { background: #fff7ed; color: #ea580c; }
+    .status-pill--revoked, .status-pill--expired { background: var(--sanguine-2); color: var(--sanguine); }
+    .status-pill--none { background: var(--paper-3); color: var(--ink-3); }
+
+    .tier-display { display: flex; align-items: center; gap: 8px; }
+    .tier-letter { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--verdant); display: flex; align-items: center; justify-content: center; font-family: var(--font-serif); font-size: 1.3rem; color: var(--verdant); }
+    .tier-name { font-weight: 600; color: var(--verdant); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+    /* Score Card */
+    .score-card { background: var(--paper-2); border: 1px solid var(--rule); border-radius: var(--r-4); padding: 28px; display: flex; gap: 28px; align-items: center; margin-bottom: 32px; flex-wrap: wrap; }
+    .score-card__score { display: flex; align-items: baseline; gap: 4px; }
+    .score-number { font-family: var(--font-mono); font-size: 3rem; font-weight: 600; color: var(--verdant); line-height: 1; }
+    .score-max { font-family: var(--font-mono); font-size: 1rem; color: var(--ink-3); }
+    .score-card__details { display: flex; flex-direction: column; gap: 4px; }
+    .score-band { font-weight: 600; color: var(--ink); }
+    .cert-id { font-family: var(--font-mono); font-size: 0.75rem; color: var(--verdant); letter-spacing: 0.08em; }
+    .cert-date { font-size: 0.8rem; color: var(--ink-3); }
+    .score-card__badge { margin-left: auto; display: flex; flex-direction: column; gap: 6px; }
+    .badge-link { font-size: 0.8rem; color: var(--ink-blue); text-decoration: none; }
+    .badge-link:hover { text-decoration: underline; }
+
+    /* Subscription */
+    .subscription-card { background: var(--paper-2); border: 1px solid var(--rule); border-radius: var(--r-4); padding: 24px; margin-bottom: 32px; }
+    .subscription-card h3 { font-family: var(--font-serif); font-size: 1.1rem; margin: 0 0 12px; }
+    .sub-details { display: flex; flex-direction: column; gap: 8px; }
+    .sub-row { display: flex; gap: 8px; font-size: 0.9rem; }
+    .sub-label { color: var(--ink-3); min-width: 80px; }
+    .sub-value { color: var(--ink); }
+    .sub-status { font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .sub-status--active { color: var(--verdant); }
+    .sub-status--past_due { color: #ea580c; }
+    .sub-status--cancelled { color: var(--sanguine); }
+    .sub-status--trialing { color: #3b82f6; }
+    .sub-desc { color: var(--ink-2); margin: 0; font-size: 0.9rem; }
+    .upgrade-buttons { display: flex; gap: 8px; margin-top: 12px; }
+
+    /* CTA / Apply */
+    .cta-card { background: var(--verdant-2); border: 1px solid color-mix(in oklch, var(--verdant) 30%, var(--rule)); border-radius: var(--r-4); padding: 32px; margin-bottom: 32px; text-align: center; }
+    .cta-card--draft { background: #fef3c7; border-color: #fcd34d; }
+    .cta-card--submitted { background: var(--paper-2); border-color: var(--rule); }
+    .cta-card h2 { font-family: var(--font-serif); margin: 0 0 12px; font-size: 1.4rem; }
+    .cta-card p { color: var(--ink-2); margin: 0 auto 20px; max-width: 48ch; }
+    .apply-form { max-width: 400px; margin: 0 auto; text-align: left; }
+    .form-row { margin-bottom: 14px; }
+    .form-row label { display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 4px; color: var(--ink-2); }
+    .form-row input, .form-row select { width: 100%; padding: 10px 12px; border: 1px solid var(--rule); border-radius: var(--r-2); font-size: 0.9rem; }
+    .draft-details { display: flex; gap: 20px; justify-content: center; margin-bottom: 16px; font-size: 0.9rem; color: var(--ink-2); }
+    .terms-check { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--ink-2); margin-bottom: 16px; justify-content: center; cursor: pointer; }
+    .terms-check input { width: auto; }
+
+    /* Buttons */
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; font-weight: 500; font-size: 0.9rem; text-decoration: none; border-radius: var(--r-2); border: none; cursor: pointer; transition: opacity 0.15s; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn--primary { background: var(--ink); color: var(--paper); }
+    .btn--primary:hover:not(:disabled) { opacity: 0.85; }
+    .btn--outline { background: transparent; border: 1px solid var(--rule); color: var(--ink); }
+    .btn--outline:hover:not(:disabled) { border-color: var(--ink); }
+    .btn--sm { padding: 8px 16px; font-size: 0.8rem; }
+
+    /* Audit Section */
+    .audit-section { margin-bottom: 40px; }
+    .audit-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+    .audit-header h2 { font-family: var(--font-serif); font-size: 1.4rem; margin: 0; }
+    .due-date { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-3); }
+
+    .checklist-category { margin-bottom: 24px; }
+    .checklist-category h3 { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 12px; }
+
+    .checklist-items { display: flex; flex-direction: column; }
+    .checklist-item { display: grid; grid-template-columns: 32px 1fr auto; gap: 12px; padding: 14px 0; border-top: 1px solid var(--rule); align-items: start; }
+    .checklist-item:first-child { border-top: 0; }
+
+    .check-icon { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+    .check-icon.pass { background: var(--verdant); color: white; }
+    .check-icon.fail { background: var(--sanguine); color: white; }
+    .check-icon.pending { background: var(--paper-3); color: var(--ink-3); font-size: 8px; }
+
+    .checklist-item__info h4 { font-family: var(--font-serif); font-size: 1rem; font-weight: 500; margin: 0 0 2px; display: flex; align-items: center; gap: 8px; }
+    .required-tag { font-family: var(--font-mono); font-size: 0.6rem; padding: 2px 6px; background: var(--sanguine-2); color: var(--sanguine); border-radius: 4px; font-weight: 600; letter-spacing: 0.06em; }
+    .checklist-item__info p { font-size: 0.85rem; color: var(--ink-2); margin: 0; }
+    .checklist-item__info .response { font-style: italic; margin-top: 4px; }
+    .checklist-item__info .reviewer-note { color: var(--ink-blue); font-size: 0.8rem; margin-top: 4px; }
+
+    .item-input { margin-top: 8px; }
+    .item-input textarea { width: 100%; padding: 8px 10px; border: 1px solid var(--rule); border-radius: var(--r-2); font-size: 0.85rem; font-family: inherit; resize: vertical; }
+    .item-input textarea:focus { outline: none; border-color: var(--verdant); }
+    .item-evidence { margin-top: 6px; }
+    .existing-evidence { display: flex; gap: 6px; margin-bottom: 6px; }
+    .upload-label { display: block; font-size: 0.75rem; color: var(--ink-3); cursor: pointer; }
+    .upload-label input[type="file"] { display: block; margin-top: 4px; font-size: 0.75rem; }
+
+    .evidence-links { display: flex; gap: 8px; margin-top: 6px; }
+    .evidence-link { font-size: 0.75rem; color: var(--ink-blue); text-decoration: none; padding: 2px 8px; background: var(--paper-2); border-radius: 4px; }
+
+    .checklist-item__points { font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-2); white-space: nowrap; }
+
+    .checkin-actions { display: flex; gap: 12px; margin-top: 20px; justify-content: center; }
+
+    /* Embed */
+    .embed-section { background: var(--paper-2); border: 1px solid var(--rule); border-radius: var(--r-4); padding: 28px; }
+    .embed-section h2 { font-family: var(--font-serif); font-size: 1.4rem; margin: 0 0 8px; }
+    .embed-section > p { color: var(--ink-2); margin: 0 0 20px; }
+    .embed-code { margin-bottom: 16px; }
+    .embed-code h4 { font-size: 0.85rem; margin: 0 0 6px; }
+    .code-block { display: flex; gap: 8px; align-items: flex-start; }
+    .code-block code { flex: 1; display: block; background: var(--paper-3); padding: 12px; border-radius: var(--r-3); font-size: 0.75rem; overflow-x: auto; word-break: break-all; }
+    .copy-btn { padding: 8px 12px; background: var(--ink); color: var(--paper); border: none; border-radius: var(--r-2); font-size: 0.75rem; cursor: pointer; white-space: nowrap; }
+
+    @media (max-width: 600px) {
+        .dash-header { flex-direction: column; }
+        .status-block { align-items: flex-start; }
+        .score-card { flex-direction: column; gap: 16px; }
+        .score-card__badge { margin-left: 0; }
+        .lookup-form { flex-direction: column; }
+        .checkin-actions { flex-direction: column; }
+    }
+</style>

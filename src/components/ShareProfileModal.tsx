@@ -137,10 +137,10 @@ export default function ShareProfileModal({ slug, fullName }: Props) {
                     gap: 6px;
                     height: 44px;
                     padding: 0 16px;
-                    background: rgba(255, 255, 255, 0.03);
-                    border: 1px solid rgba(255, 255, 255, 0.08);
-                    border-radius: 12px;
-                    color: #a1a1aa;
+                    background: var(--paper-2);
+                    border: 1px solid var(--rule);
+                    border-radius: var(--r-4);
+                    color: var(--slate);
                     font-size: 14px;
                     font-weight: 500;
                     cursor: pointer;
@@ -148,9 +148,9 @@ export default function ShareProfileModal({ slug, fullName }: Props) {
                 }
 
                 .share-trigger:hover {
-                    background: rgba(255, 255, 255, 0.06);
-                    border-color: rgba(255, 255, 255, 0.12);
-                    color: #fafafa;
+                    background: var(--paper-3);
+                    border-color: var(--rule);
+                    color: var(--ink);
                 }
 
                 .share-modal {
@@ -166,8 +166,7 @@ export default function ShareProfileModal({ slug, fullName }: Props) {
                 .share-backdrop {
                     position: absolute;
                     inset: 0;
-                    background: rgba(0, 0, 0, 0.8);
-                    backdrop-filter: blur(4px);
+                    background: color-mix(in oklch, var(--ink) 85%, transparent);
                     animation: fadeIn 0.15s;
                 }
 
@@ -179,10 +178,10 @@ export default function ShareProfileModal({ slug, fullName }: Props) {
                     position: relative;
                     width: 100%;
                     max-width: 360px;
-                    background: #18181b;
-                    border: 1px solid rgba(255, 255, 255, 0.08);
-                    border-radius: 16px;
-                    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+                    background: var(--paper);
+                    border: 1px solid var(--rule);
+                    border-radius: var(--r-3);
+                    box-shadow: var(--shadow-2);
                     animation: dialogIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
                 }
 
@@ -198,13 +197,13 @@ export default function ShareProfileModal({ slug, fullName }: Props) {
                     align-items: center;
                     justify-content: space-between;
                     padding: 16px 20px;
-                    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+                    border-bottom: 1px solid var(--rule);
                 }
 
                 .share-title {
-                    color: #fafafa;
+                    color: var(--ink);
                     font-size: 15px;
-                    font-weight: 600;
+                    font-weight: 500;
                 }
 
                 .share-close {
@@ -216,14 +215,14 @@ export default function ShareProfileModal({ slug, fullName }: Props) {
                     background: transparent;
                     border: none;
                     border-radius: 8px;
-                    color: #71717a;
+                    color: var(--slate);
                     cursor: pointer;
                     transition: all 0.15s;
                 }
 
                 .share-close:hover {
-                    background: rgba(255, 255, 255, 0.06);
-                    color: #fafafa;
+                    background: var(--paper-3);
+                    color: var(--ink);
                 }
 
                 .share-content {
@@ -242,18 +241,18 @@ export default function ShareProfileModal({ slug, fullName }: Props) {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    background: rgba(255, 255, 255, 0.04);
-                    border: 1px solid rgba(255, 255, 255, 0.08);
-                    border-radius: 14px;
-                    color: #a1a1aa;
+                    background: var(--paper-2);
+                    border: 1px solid var(--rule);
+                    border-radius: var(--r-3);
+                    color: var(--slate);
                     cursor: pointer;
                     transition: all 0.15s;
                 }
 
                 .share-btn:hover {
-                    background: rgba(255, 255, 255, 0.08);
-                    border-color: rgba(255, 255, 255, 0.15);
-                    color: #fafafa;
+                    background: var(--paper-3);
+                    border-color: var(--rule);
+                    color: var(--ink);
                     transform: translateY(-2px);
                 }
 
@@ -262,7 +261,7 @@ export default function ShareProfileModal({ slug, fullName }: Props) {
                     align-items: center;
                     gap: 16px;
                     margin: 20px 0;
-                    color: #52525b;
+                    color: var(--slate);
                     font-size: 12px;
                 }
 
@@ -271,7 +270,7 @@ export default function ShareProfileModal({ slug, fullName }: Props) {
                     content: '';
                     flex: 1;
                     height: 1px;
-                    background: rgba(255, 255, 255, 0.06);
+                    background: var(--rule);
                 }
 
                 .share-copy {
@@ -283,10 +282,10 @@ export default function ShareProfileModal({ slug, fullName }: Props) {
                     flex: 1;
                     height: 44px;
                     padding: 0 14px;
-                    background: rgba(255, 255, 255, 0.04);
-                    border: 1px solid rgba(255, 255, 255, 0.08);
-                    border-radius: 10px;
-                    color: #71717a;
+                    background: var(--paper-2);
+                    border: 1px solid var(--rule);
+                    border-radius: var(--r-3);
+                    color: var(--slate);
                     font-size: 13px;
                     outline: none;
                 }
@@ -297,20 +296,20 @@ export default function ShareProfileModal({ slug, fullName }: Props) {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    background: #8b5cf6;
+                    background: var(--ink-blue);
                     border: none;
-                    border-radius: 10px;
-                    color: white;
+                    border-radius: var(--r-3);
+                    color: var(--paper);
                     cursor: pointer;
                     transition: all 0.15s;
                 }
 
                 .share-copy-btn:hover {
-                    background: #7c3aed;
+                    background: var(--ink-blue);
                 }
 
                 .share-copy-btn.copied {
-                    background: #10b981;
+                    background: var(--verdant);
                 }
             `}</style>
         </div>

@@ -1,5 +1,6 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
+import AdminSidebar from "../../../components/admin/AdminSidebar.astro";
 import { prisma } from "../../../lib/prisma";
 import { requireSuperAdmin } from "../../../lib/rbac";
 
@@ -107,19 +108,12 @@ const initialSeoDesc = page?.seo_desc || "";
 ---
 
 <Layout title={`${page ? "Edit" : "New"} Page — MDRPedia Admin`}>
-    <div class="container admin-dashboard">
+    <div class="admin">
+        <AdminSidebar adminKey={adminKey} activePage="pages" />
+        <main class="main">
         <header class="admin-header">
             <div class="admin-header__top">
-                <span class="badge badge--admin">SUPER ADMIN</span>
                 <h1>{page ? `Edit: ${page.title}` : "Create New Page"}</h1>
-            </div>
-            <div class="admin-actions">
-                <a
-                    href={`/admin/pages?key=${adminKey}`}
-                    class="btn btn--outline"
-                >
-                    Cancel
-                </a>
             </div>
         </header>
 
@@ -222,6 +216,7 @@ const initialSeoDesc = page?.seo_desc || "";
                 </div>
             </div>
         </form>
+        </main>
     </div>
 </Layout>
 

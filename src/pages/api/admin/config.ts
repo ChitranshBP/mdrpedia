@@ -43,7 +43,15 @@ export const POST: APIRoute = async ({ request }) => {
         });
     }
 
-    const body = await request.json();
+    let body;
+    try {
+        body = await request.json();
+    } catch {
+        return new Response(JSON.stringify({ error: "Invalid JSON body" }), {
+            status: 400,
+            headers: { "Content-Type": "application/json" }
+        });
+    }
 
     // Update config
     if (typeof body.ingestionEnabled === 'boolean') {

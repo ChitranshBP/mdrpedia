@@ -9,6 +9,9 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { requireSuperAdmin } from '../../../lib/rbac';
 import { logAdminAction } from '../../../lib/audit';
+import { slugify } from '../../../lib/utils';
+import { checkRateLimit, getClientIdentifier, RATE_LIMITS, rateLimitResponse } from '../../../lib/rate-limit';
+import { apiError } from '../../../lib/api-response';
 
 interface TSVDoctor {
     rank: number;
@@ -46,17 +49,6 @@ async function parseTSV(): Promise<TSVDoctor[]> {
     return doctors;
 }
 
-// Create slug from name
-function createSlug(name: string): string {
-    return name
-        .toLowerCase()
-        .replace(/\./g, '')
-        .replace(/[^a-z0-9\s-]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-')
-        .replace(/^-|-$/g, '');
-}
-
 // Country code mapping
 const COUNTRY_MAP: Record<string, string> = {
     'USA': 'United States',
@@ -89,7 +81,7 @@ const COUNTRY_MAP: Record<string, string> = {
 
 // Fix a single doctor profile
 async function fixDoctorProfile(tsvDoctor: TSVDoctor): Promise<{ success: boolean; message: string }> {
-    const slug = createSlug(tsvDoctor.name);
+    const slug = slugify(tsvDoctor.name);
     const jsonPath = path.join(process.cwd(), 'src/content/doctors', `${slug}.json`);
 
     try {
@@ -150,8 +142,8 @@ async function fixDoctorProfile(tsvDoctor: TSVDoctor): Promise<{ success: boolea
                     city: null
                 },
                 status: 'LIVING',
-                tier: tsvDoctor.hIndex >= 300 ? 'TITAN' :
-                      tsvDoctor.hIndex >= 150 ? 'ELITE' :
+                tier: tsvDoctor.hIndex >= 200 ? 'TITAN' :
+                      tsvDoctor.hIndex >= 100 ? 'ELITE' :
                       tsvDoctor.hIndex >= 50 ? 'MASTER' : 'UNRANKED',
                 rankingScore: Math.min(tsvDoctor.hIndex / 5, 100),
                 hIndex: tsvDoctor.hIndex,
@@ -190,7 +182,7 @@ async function fixDoctorProfile(tsvDoctor: TSVDoctor): Promise<{ success: boolea
 
         return {
             success: false,
-            message: `Error fixing ${tsvDoctor.name}: ${(e as Error).message}`
+            message: `Error fixing ${tsvDoctor.name}: unexpected file error`
         };
     }
 }
@@ -204,7 +196,18 @@ export async function POST({ request }: { request: Request }) {
         });
     }
 
-    const body = await request.json();
+    const rateCheck = checkRateLimit(getClientIdentifier(request), RATE_LIMITS.adminSync);
+    if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime);
+
+    let body;
+    try {
+        body = await request.json();
+    } catch {
+        return new Response(JSON.stringify({ error: "Invalid JSON body" }), {
+            status: 400,
+            headers: { "Content-Type": "application/json" }
+        });
+    }
     const { action, slug } = body;
 
     await logAdminAction('FIX_DATA', slug || 'bulk', { action }, request);
@@ -216,7 +219,7 @@ export async function POST({ request }: { request: Request }) {
 
     // Single fix
     if (action === 'fix_single' && slug) {
-        const tsvDoctor = tsvDoctors.find(d => createSlug(d.name) === slug);
+        const tsvDoctor = tsvDoctors.find(d => slugify(d.name) === slug);
         if (!tsvDoctor) {
             return new Response(JSON.stringify({ success: false, message: "Doctor not found in TSV" }), { status: 404 });
         }
@@ -241,10 +244,10 @@ export async function POST({ request }: { request: Request }) {
                 for (const tsvDoctor of tsvDoctors) {
                     const result = await fixDoctorProfile(tsvDoctor);
                     if (result.success) {
-                        send(`✅ ${result.message}`, 'success');
+                        send(`[OK] ${result.message}`, 'success');
                         successCount++;
                     } else {
-                        send(`❌ ${result.message}`, 'error');
+                        send(`[ERR] ${result.message}`, 'error');
                         failCount++;
                     }
                 }
@@ -268,6 +271,9 @@ export async function GET({ request }: { request: Request }) {
         return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
     }
 
+    const rateCheck = checkRateLimit(getClientIdentifier(request), RATE_LIMITS.adminGeneral);
+    if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime);
+
     try {
         const tsvDoctors = await parseTSV();
 
@@ -279,12 +285,12 @@ export async function GET({ request }: { request: Request }) {
                 affiliation: d.affiliation,
                 country: d.country,
                 hIndex: d.hIndex,
-                slug: createSlug(d.name)
+                slug: slugify(d.name)
             }))
         }), {
             headers: { 'Content-Type': 'application/json' }
         });
     } catch (e) {
-        return new Response(JSON.stringify({ error: (e as Error).message }), { status: 500 });
+        return apiError('Fix-data GET', e, 'Failed to load TSV data');
     }
 }

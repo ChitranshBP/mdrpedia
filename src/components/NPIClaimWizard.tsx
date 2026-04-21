@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useToast } from './Toast';
 
 interface DoctorVerificationData {
@@ -139,7 +139,7 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
     };
 
     const renderStepIcon = (iconName: string, isActive: boolean, isCompleted: boolean) => {
-        const color = isCompleted ? '#10b981' : isActive ? '#a855f7' : '#4b5563';
+        const color = isCompleted ? 'var(--verdant)' : isActive ? 'var(--ink-blue)' : 'var(--ink-3)';
         switch (iconName) {
             case 'globe':
                 return (
@@ -189,15 +189,11 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                 }
 
                 .wizard-card {
-                    background: linear-gradient(145deg, rgba(30, 30, 45, 0.95), rgba(20, 20, 35, 0.98));
-                    border: 1px solid rgba(139, 92, 246, 0.2);
-                    border-radius: 24px;
-                    padding: 2.5rem;
-                    backdrop-filter: blur(20px);
-                    box-shadow:
-                        0 0 0 1px rgba(139, 92, 246, 0.1),
-                        0 25px 50px -12px rgba(0, 0, 0, 0.5),
-                        0 0 100px -20px rgba(139, 92, 246, 0.3);
+                    background: var(--paper);
+                    border: 1px solid var(--rule);
+                    border-radius: var(--r-4);
+                    padding: 2rem;
+                    box-shadow: var(--shadow-3);
                     position: relative;
                     overflow: hidden;
                 }
@@ -208,8 +204,8 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     top: 0;
                     left: 0;
                     right: 0;
-                    height: 1px;
-                    background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.5), transparent);
+                    height: 3px;
+                    background: var(--ink-blue);
                 }
 
                 /* Progress Steps */
@@ -228,7 +224,7 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     left: 2rem;
                     right: 2rem;
                     height: 2px;
-                    background: rgba(75, 85, 99, 0.5);
+                    background: var(--rule);
                     transform: translateY(-50%);
                     z-index: 0;
                 }
@@ -238,11 +234,10 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     top: 50%;
                     left: 2rem;
                     height: 2px;
-                    background: linear-gradient(90deg, #a855f7, #8b5cf6);
+                    background: var(--ink-blue);
                     transform: translateY(-50%);
                     z-index: 1;
-                    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-                    box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+                    transition: width 0.5s var(--ease);
                 }
 
                 .step-item {
@@ -261,23 +256,22 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    transition: all 0.3s var(--ease);
                 }
 
                 .step-circle.inactive {
-                    background: rgba(30, 30, 45, 0.9);
-                    border: 2px solid rgba(75, 85, 99, 0.5);
+                    background: var(--paper);
+                    border: 2px solid var(--rule);
                 }
 
                 .step-circle.active {
-                    background: linear-gradient(135deg, #a855f7, #8b5cf6);
-                    border: 2px solid transparent;
-                    box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+                    background: var(--ink-blue-2);
+                    border: 2px solid var(--ink-blue);
                 }
 
                 .step-circle.completed {
-                    background: linear-gradient(135deg, #10b981, #059669);
-                    border: 2px solid transparent;
+                    background: var(--verdant-2);
+                    border: 2px solid var(--verdant);
                 }
 
                 .step-label {
@@ -285,11 +279,12 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     font-weight: 600;
                     text-transform: uppercase;
                     letter-spacing: 0.05em;
-                    color: #6b7280;
+                    color: var(--ink-3);
+                    font-family: var(--font-sans);
                 }
 
-                .step-label.active { color: #a855f7; }
-                .step-label.completed { color: #10b981; }
+                .step-label.active { color: var(--ink-blue); }
+                .step-label.completed { color: var(--verdant); }
 
                 /* Header */
                 .wizard-header {
@@ -301,24 +296,25 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     width: 56px;
                     height: 56px;
                     margin: 0 auto 1rem;
-                    background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.05));
-                    border-radius: 16px;
+                    background: var(--ink-blue-2);
+                    border-radius: var(--r-4);
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    border: 1px solid rgba(139, 92, 246, 0.3);
+                    border: 1px solid color-mix(in srgb, var(--ink-blue) 25%, transparent);
                 }
 
                 .wizard-title {
                     font-size: 1.5rem;
-                    font-weight: 800;
-                    color: white;
+                    font-weight: 500;
+                    color: var(--ink);
                     margin: 0 0 0.5rem;
+                    font-family: var(--font-serif);
                 }
 
                 .wizard-subtitle {
                     font-size: 0.875rem;
-                    color: #9ca3af;
+                    color: var(--ink-2);
                     margin: 0;
                     line-height: 1.5;
                 }
@@ -327,7 +323,7 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                 .method-grid {
                     display: flex;
                     flex-direction: column;
-                    gap: 0.75rem;
+                    gap: 0.5rem;
                     margin-bottom: 1.5rem;
                 }
 
@@ -335,25 +331,27 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     display: flex;
                     align-items: center;
                     gap: 1rem;
-                    padding: 1rem 1.25rem;
-                    background: rgba(255, 255, 255, 0.02);
-                    border: 1px solid rgba(255, 255, 255, 0.08);
-                    border-radius: 14px;
+                    padding: 0.875rem 1rem;
+                    background: var(--paper);
+                    border: 1px solid var(--rule);
+                    border-radius: var(--r-3);
                     cursor: pointer;
-                    transition: all 0.2s;
+                    transition: all var(--t-base) var(--ease);
                     text-align: left;
+                    font-family: var(--font-sans);
                 }
 
                 .method-btn:hover {
-                    background: rgba(139, 92, 246, 0.1);
-                    border-color: rgba(139, 92, 246, 0.3);
+                    background: var(--ink-blue-2);
+                    border-color: var(--ink-blue);
+                    box-shadow: var(--shadow-2);
                 }
 
                 .method-icon {
                     width: 40px;
                     height: 40px;
-                    background: rgba(139, 92, 246, 0.15);
-                    border-radius: 10px;
+                    background: var(--ink-blue-2);
+                    border-radius: var(--r-3);
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -363,7 +361,7 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                 .method-icon svg {
                     width: 20px;
                     height: 20px;
-                    color: #a855f7;
+                    color: var(--ink-blue);
                 }
 
                 .method-info {
@@ -371,25 +369,25 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                 }
 
                 .method-label {
-                    font-size: 0.95rem;
+                    font-size: 0.9rem;
                     font-weight: 600;
-                    color: white;
+                    color: var(--ink);
                     display: block;
                     margin-bottom: 2px;
                 }
 
                 .method-country {
                     font-size: 0.75rem;
-                    color: #6b7280;
+                    color: var(--ink-3);
                 }
 
                 .method-arrow {
-                    color: #4b5563;
-                    transition: transform 0.2s, color 0.2s;
+                    color: var(--ink-3);
+                    transition: transform var(--t-fast), color var(--t-fast);
                 }
 
                 .method-btn:hover .method-arrow {
-                    color: #a855f7;
+                    color: var(--ink-blue);
                     transform: translateX(4px);
                 }
 
@@ -404,10 +402,15 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     gap: 0.5rem;
                     font-size: 0.7rem;
                     font-weight: 600;
-                    color: #9ca3af;
+                    color: var(--ink-3);
                     text-transform: uppercase;
                     letter-spacing: 0.1em;
                     margin-bottom: 0.625rem;
+                    font-family: var(--font-sans);
+                }
+
+                .input-label svg {
+                    color: var(--ink-3);
                 }
 
                 .input-wrapper {
@@ -417,56 +420,58 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
 
                 .reg-input {
                     width: 100%;
-                    background: rgba(0, 0, 0, 0.3);
-                    border: 2px solid rgba(75, 85, 99, 0.3);
-                    border-radius: 14px;
-                    padding: 1rem 1.25rem 1rem 3.25rem;
-                    font-size: 1.25rem;
-                    font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+                    background: var(--paper);
+                    border: 2px solid var(--rule);
+                    border-radius: var(--r-3);
+                    padding: 0.875rem 1rem 0.875rem 3rem;
+                    font-size: 1.15rem;
+                    font-family: var(--font-mono);
                     font-weight: 600;
                     letter-spacing: 0.1em;
-                    color: white;
+                    color: var(--ink);
                     text-align: center;
-                    transition: all 0.3s;
+                    transition: all var(--t-base) var(--ease);
                     outline: none;
+                    box-sizing: border-box;
                 }
 
                 .reg-input::placeholder {
-                    color: #4b5563;
+                    color: var(--ink-3);
                     font-weight: 400;
                     letter-spacing: 0.02em;
-                    font-size: 1rem;
+                    font-size: 0.95rem;
                 }
 
                 .reg-input:focus {
-                    border-color: rgba(139, 92, 246, 0.5);
-                    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+                    border-color: var(--ink-blue);
+                    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ink-blue) 12%, transparent);
                 }
 
                 .reg-input.valid {
-                    border-color: rgba(16, 185, 129, 0.5);
-                    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+                    border-color: var(--verdant);
+                    box-shadow: 0 0 0 3px color-mix(in srgb, var(--verdant) 12%, transparent);
                 }
 
                 .reg-input.error {
-                    border-color: rgba(239, 68, 68, 0.5);
+                    border-color: var(--sanguine);
+                    box-shadow: 0 0 0 3px color-mix(in srgb, var(--sanguine) 12%, transparent);
                 }
 
                 .input-icon {
                     position: absolute;
-                    left: 1rem;
+                    left: 0.875rem;
                     top: 50%;
                     transform: translateY(-50%);
-                    color: #6b7280;
+                    color: var(--ink-3);
                 }
 
-                .input-icon.focused { color: #a855f7; }
-                .input-icon.valid { color: #10b981; }
+                .input-icon.focused { color: var(--ink-blue); }
+                .input-icon.valid { color: var(--verdant); }
 
                 /* Progress Bar */
                 .progress-bar-container {
-                    height: 4px;
-                    background: rgba(75, 85, 99, 0.3);
+                    height: 3px;
+                    background: var(--rule);
                     border-radius: 2px;
                     overflow: hidden;
                     margin-bottom: 0.625rem;
@@ -474,13 +479,13 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
 
                 .progress-bar-fill {
                     height: 100%;
-                    background: linear-gradient(90deg, #a855f7, #8b5cf6);
+                    background: var(--ink-blue);
                     border-radius: 2px;
                     transition: width 0.2s ease-out;
                 }
 
                 .progress-bar-fill.complete {
-                    background: linear-gradient(90deg, #10b981, #059669);
+                    background: var(--verdant);
                 }
 
                 /* Input Meta */
@@ -489,58 +494,66 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     justify-content: space-between;
                     align-items: center;
                     font-size: 0.7rem;
+                    font-family: var(--font-mono);
                 }
 
                 .valid-badge {
                     display: flex;
                     align-items: center;
                     gap: 0.375rem;
-                    color: #10b981;
+                    color: var(--verdant);
                     font-weight: 600;
+                    font-family: var(--font-sans);
                 }
 
                 .error-message {
                     display: flex;
                     align-items: center;
                     gap: 0.375rem;
-                    color: #ef4444;
+                    color: var(--sanguine);
                     font-size: 0.8rem;
                     margin-top: 0.625rem;
                     padding: 0.625rem 0.875rem;
-                    background: rgba(239, 68, 68, 0.1);
-                    border: 1px solid rgba(239, 68, 68, 0.2);
-                    border-radius: 10px;
+                    background: var(--sanguine-2);
+                    border: 1px solid color-mix(in srgb, var(--sanguine) 25%, transparent);
+                    border-radius: var(--r-3);
+                }
+
+                .error-message svg {
+                    color: var(--sanguine);
+                    flex-shrink: 0;
                 }
 
                 /* Buttons */
                 .submit-btn {
                     width: 100%;
-                    padding: 1rem 1.75rem;
+                    padding: 0.875rem 1.5rem;
                     border: none;
-                    border-radius: 14px;
+                    border-radius: var(--r-3);
                     font-size: 0.875rem;
-                    font-weight: 700;
-                    text-transform: uppercase;
-                    letter-spacing: 0.1em;
+                    font-weight: 600;
+                    letter-spacing: 0.05em;
                     cursor: pointer;
-                    transition: all 0.3s;
+                    transition: all var(--t-base) var(--ease);
+                    font-family: var(--font-sans);
                 }
 
                 .submit-btn.disabled {
-                    background: rgba(75, 85, 99, 0.3);
-                    color: #6b7280;
+                    background: var(--paper-3);
+                    color: var(--ink-3);
                     cursor: not-allowed;
+                    border: 1px solid var(--rule);
                 }
 
                 .submit-btn.active {
-                    background: linear-gradient(135deg, #a855f7, #7c3aed);
-                    color: white;
-                    box-shadow: 0 10px 30px -10px rgba(168, 85, 247, 0.5);
+                    background: var(--ink);
+                    color: var(--paper);
+                    box-shadow: var(--shadow-2);
                 }
 
                 .submit-btn.active:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 15px 40px -10px rgba(168, 85, 247, 0.6);
+                    transform: translateY(-1px);
+                    box-shadow: var(--shadow-3);
                 }
 
                 .btn-content {
@@ -553,8 +566,8 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                 .spinner {
                     width: 18px;
                     height: 18px;
-                    border: 2px solid rgba(255, 255, 255, 0.3);
-                    border-top-color: white;
+                    border: 2px solid color-mix(in srgb, var(--paper) 30%, transparent);
+                    border-top-color: var(--paper);
                     border-radius: 50%;
                     animation: spin 0.8s linear infinite;
                 }
@@ -568,19 +581,21 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     padding: 0.75rem;
                     background: transparent;
                     border: none;
-                    color: #6b7280;
+                    color: var(--ink-3);
                     font-size: 0.8rem;
                     cursor: pointer;
-                    margin-top: 0.625rem;
+                    margin-top: 0.5rem;
+                    font-family: var(--font-sans);
+                    transition: color var(--t-fast);
                 }
 
-                .back-btn:hover { color: white; }
+                .back-btn:hover { color: var(--ink); }
 
                 /* Trust Footer */
                 .trust-footer {
                     margin-top: 1.25rem;
                     padding-top: 1rem;
-                    border-top: 1px solid rgba(75, 85, 99, 0.2);
+                    border-top: 1px solid var(--rule);
                 }
 
                 .trust-badges {
@@ -595,18 +610,19 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     align-items: center;
                     gap: 0.375rem;
                     font-size: 0.65rem;
-                    color: #6b7280;
+                    color: var(--ink-3);
+                    font-family: var(--font-sans);
                 }
 
                 .trust-text {
                     text-align: center;
                     font-size: 0.65rem;
-                    color: #4b5563;
+                    color: var(--ink-3);
                     line-height: 1.5;
                 }
 
                 .trust-link {
-                    color: #8b5cf6;
+                    color: var(--ink-blue);
                     text-decoration: none;
                 }
 
@@ -615,12 +631,12 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     width: 72px;
                     height: 72px;
                     margin: 0 auto 1.25rem;
-                    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.05));
+                    background: var(--verdant-2);
                     border-radius: 50%;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    border: 2px solid rgba(16, 185, 129, 0.3);
+                    border: 2px solid color-mix(in srgb, var(--verdant) 30%, transparent);
                     animation: scale-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
                 }
 
@@ -630,9 +646,9 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                 }
 
                 .doctor-card {
-                    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.02));
-                    border: 1px solid rgba(139, 92, 246, 0.2);
-                    border-radius: 14px;
+                    background: var(--ink-blue-2);
+                    border: 1px solid color-mix(in srgb, var(--ink-blue) 25%, transparent);
+                    border-radius: var(--r-4);
                     padding: 1rem;
                     margin: 1.25rem 0;
                 }
@@ -646,21 +662,23 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                 .doctor-avatar {
                     width: 48px;
                     height: 48px;
-                    background: linear-gradient(135deg, #a855f7, #7c3aed);
-                    border-radius: 12px;
+                    background: var(--ink-blue);
+                    border-radius: var(--r-3);
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     font-size: 1.25rem;
-                    font-weight: 700;
-                    color: white;
+                    font-weight: 600;
+                    color: var(--paper);
+                    font-family: var(--font-serif);
                 }
 
                 .doctor-details h3 {
                     margin: 0 0 0.25rem;
                     font-size: 1rem;
-                    font-weight: 700;
-                    color: white;
+                    font-weight: 600;
+                    color: var(--ink);
+                    font-family: var(--font-sans);
                 }
 
                 .doctor-status {
@@ -668,35 +686,35 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     align-items: center;
                     gap: 0.5rem;
                     font-size: 0.75rem;
-                    color: #10b981;
+                    color: var(--verdant);
                 }
 
                 .status-dot {
                     width: 6px;
                     height: 6px;
-                    background: #10b981;
+                    background: var(--verdant);
                     border-radius: 50%;
                 }
 
                 .confirm-btn {
                     width: 100%;
-                    padding: 1rem 1.75rem;
-                    background: linear-gradient(135deg, #10b981, #059669);
+                    padding: 0.875rem 1.5rem;
+                    background: var(--verdant);
                     border: none;
-                    border-radius: 14px;
-                    color: white;
+                    border-radius: var(--r-3);
+                    color: var(--paper);
                     font-size: 0.875rem;
-                    font-weight: 700;
-                    text-transform: uppercase;
-                    letter-spacing: 0.1em;
+                    font-weight: 600;
+                    letter-spacing: 0.05em;
                     cursor: pointer;
-                    box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.5);
-                    transition: all 0.3s;
+                    box-shadow: var(--shadow-2);
+                    transition: all var(--t-base) var(--ease);
+                    font-family: var(--font-sans);
                 }
 
                 .confirm-btn:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 15px 40px -10px rgba(16, 185, 129, 0.6);
+                    transform: translateY(-1px);
+                    box-shadow: var(--shadow-3);
                 }
 
                 .animate-in {
@@ -737,7 +755,7 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     <div className="animate-in">
                         <div className="wizard-header">
                             <div className="wizard-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a855f7" strokeWidth="2">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink-blue)" strokeWidth="2">
                                     <circle cx="12" cy="12" r="10" />
                                     <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                                 </svg>
@@ -789,7 +807,7 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     <form onSubmit={handleVerifySubmit} className="animate-in">
                         <div className="wizard-header">
                             <div className="wizard-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a855f7" strokeWidth="2">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink-blue)" strokeWidth="2">
                                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                                     <path d="M9 12l2 2 4-4" />
                                 </svg>
@@ -836,7 +854,7 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                             </div>
 
                             <div className="input-meta">
-                                <span style={{ color: '#6b7280' }}>
+                                <span style={{ color: 'var(--ink-3)' }}>
                                     {registrationNumber.length} / {selectedMethod.maxLength}
                                 </span>
                                 {isInputValid && (
@@ -890,20 +908,20 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                         <div className="trust-footer">
                             <div className="trust-badges">
                                 <span className="trust-badge">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--verdant)" strokeWidth="2">
                                         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                                     </svg>
                                     256-bit SSL
                                 </span>
                                 <span className="trust-badge">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--verdant)" strokeWidth="2">
                                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                                         <path d="M7 11V7a5 5 0 0110 0v4" />
                                     </svg>
                                     Encrypted
                                 </span>
                                 <span className="trust-badge">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--verdant)" strokeWidth="2">
                                         <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
                                         <polyline points="22 4 12 14.01 9 11.01" />
                                     </svg>
@@ -919,7 +937,7 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     <div className="animate-in">
                         <div className="wizard-header">
                             <div className="success-icon">
-                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--verdant)" strokeWidth="2.5">
                                     <polyline points="20 6 9 17 4 12" />
                                 </svg>
                             </div>

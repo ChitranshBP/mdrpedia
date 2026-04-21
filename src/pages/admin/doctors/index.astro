@@ -1,5 +1,6 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
+import AdminSidebar from "../../../components/admin/AdminSidebar.astro";
 import { ProfileStatus, Tier } from "@prisma/client";
 import { prisma } from "../../../lib/prisma";
 import { getCollection } from "astro:content";
@@ -183,18 +184,9 @@ const unimported = staticProfiles.filter((p) => !dbSlugs.has(p.id));
 ---
 
 <Layout title="Manage Doctors — MDRPedia">
-    <div class="container admin-dashboard">
-        <header class="admin-header">
-            <div>
-                <span class="badge badge--admin">SUPER ADMIN</span>
-                <h1>Doctor Database</h1>
-            </div>
-            <div class="actions">
-                <a href={`/admin?key=${adminKey}`} class="btn btn--outline"
-                    >&larr; Dashboard</a
-                >
-            </div>
-        </header>
+    <div class="admin">
+        <AdminSidebar adminKey={adminKey} activePage="doctors" />
+        <main class="main">
 
         {successMsg && <div class="alert success">{successMsg}</div>}
         {errorMsg && <div class="alert error">{errorMsg}</div>}
@@ -304,6 +296,7 @@ const unimported = staticProfiles.filter((p) => !dbSlugs.has(p.id));
                 </div>
             </div>
         </div>
+        </main>
     </div>
 </Layout>
 

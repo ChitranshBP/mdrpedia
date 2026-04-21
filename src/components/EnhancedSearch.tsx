@@ -2,7 +2,7 @@
  * EnhancedSearch - Premium autocomplete search with rich results
  * Matches the GlobalSearchModal design language
  */
-import { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 interface SearchResult {
     slug: string;
@@ -20,6 +20,7 @@ interface EnhancedSearchProps {
     initialQuery?: string;
     placeholder?: string;
     autoFocus?: boolean;
+    showFilters?: boolean;
     onResultClick?: (result: SearchResult) => void;
     maxResults?: number;
 }
@@ -29,11 +30,11 @@ const MAX_RECENT_SEARCHES = 5;
 const DEBOUNCE_MS = 200;
 
 // Tier configurations
-const tierConfig: Record<string, { color: string; bg: string; icon: string }> = {
-    TITAN: { color: '#fbbf24', bg: 'rgba(251, 191, 36, 0.15)', icon: '👑' },
-    ELITE: { color: '#3b82f6', bg: 'rgba(59, 130, 246, 0.15)', icon: '⭐' },
-    MASTER: { color: '#10b981', bg: 'rgba(16, 185, 129, 0.15)', icon: '✦' },
-    UNRANKED: { color: '#94a3b8', bg: 'rgba(148, 163, 184, 0.1)', icon: '○' },
+const tierConfig: Record<string, { color: string; bg: string; icon: React.ReactNode }> = {
+    TITAN: { color: 'var(--aged-gold)', bg: 'var(--aged-gold-2)', icon: <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> },
+    ELITE: { color: 'var(--ink-blue)', bg: 'var(--ink-blue-2)', icon: <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg> },
+    MASTER: { color: 'var(--slate)', bg: 'var(--paper-3)', icon: <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> },
+    UNRANKED: { color: 'var(--slate)', bg: 'var(--paper-2)', icon: <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/></svg> },
 };
 
 export default function EnhancedSearch({
@@ -52,7 +53,7 @@ export default function EnhancedSearch({
 
     const inputRef = useRef<HTMLInputElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
-    const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+    const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
     // Load recent searches
     useEffect(() => {
@@ -176,7 +177,7 @@ export default function EnhancedSearch({
         const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
         const parts = text.split(regex);
         return parts.map((part, i) =>
-            regex.test(part) ? <mark key={i} style={{ background: 'rgba(139, 92, 246, 0.3)', color: 'white', borderRadius: '2px', padding: '0 2px' }}>{part}</mark> : part
+            regex.test(part) ? <mark key={i} style={{ background: 'var(--ink-blue-2)', color: 'var(--ink)', borderRadius: '2px', padding: '0 2px' }}>{part}</mark> : part
         );
     };
 
@@ -188,20 +189,20 @@ export default function EnhancedSearch({
                 alignItems: 'center',
                 gap: '12px',
                 padding: '14px 18px',
-                background: isOpen ? 'rgba(255, 255, 255, 0.08)' : 'rgba(255, 255, 255, 0.04)',
-                border: `1px solid ${isOpen ? 'rgba(139, 92, 246, 0.5)' : 'rgba(255, 255, 255, 0.1)'}`,
-                borderRadius: '14px',
+                background: isOpen ? 'var(--paper-3)' : 'var(--paper-2)',
+                border: `1px solid ${isOpen ? 'var(--ink-blue)' : 'var(--rule)'}`,
+                borderRadius: 'var(--r-3)',
                 transition: 'all 0.2s ease',
-                boxShadow: isOpen ? '0 0 0 3px rgba(139, 92, 246, 0.1)' : 'none',
+                boxShadow: isOpen ? '0 0 0 3px var(--ink-blue-2)' : 'none',
             }}>
                 {/* Search Icon / Loading */}
                 {isLoading ? (
-                    <svg style={{ width: 20, height: 20, color: '#8b5cf6', animation: 'spin 1s linear infinite' }} viewBox="0 0 24 24" fill="none">
+                    <svg style={{ width: 20, height: 20, color: 'var(--ink-blue)', animation: 'spin 1s linear infinite' }} viewBox="0 0 24 24" fill="none">
                         <circle style={{ opacity: 0.25 }} cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                         <path style={{ opacity: 0.75 }} fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                     </svg>
                 ) : (
-                    <svg style={{ width: 20, height: 20, color: '#94a3b8', flexShrink: 0 }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <svg style={{ width: 20, height: 20, color: 'var(--slate)', flexShrink: 0 }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <circle cx="11" cy="11" r="8" />
                         <path d="m21 21-4.3-4.3" />
                     </svg>
@@ -222,7 +223,7 @@ export default function EnhancedSearch({
                         background: 'transparent',
                         border: 'none',
                         outline: 'none',
-                        color: 'white',
+                        color: 'var(--ink)',
                         fontSize: '0.95rem',
                         fontFamily: 'inherit',
                     }}
@@ -236,13 +237,13 @@ export default function EnhancedSearch({
                             padding: '4px',
                             background: 'transparent',
                             border: 'none',
-                            color: '#64748b',
+                            color: 'var(--slate)',
                             cursor: 'pointer',
                             display: 'flex',
                             transition: 'color 0.15s',
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.color = 'white'}
-                        onMouseLeave={(e) => e.currentTarget.style.color = '#64748b'}
+                        onMouseEnter={(e) => e.currentTarget.style.color = 'var(--ink)'}
+                        onMouseLeave={(e) => e.currentTarget.style.color = 'var(--slate)'}
                     >
                         <svg style={{ width: 16, height: 16 }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <path d="M18 6L6 18M6 6l12 12" />
@@ -255,10 +256,10 @@ export default function EnhancedSearch({
                     padding: '4px 8px',
                     fontSize: '0.7rem',
                     fontFamily: 'monospace',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: 'var(--paper-2)',
+                    border: '1px solid var(--rule)',
                     borderRadius: '6px',
-                    color: '#64748b',
+                    color: 'var(--slate)',
                 }}>↵</kbd>
             </div>
 
@@ -269,11 +270,10 @@ export default function EnhancedSearch({
                     top: 'calc(100% + 8px)',
                     left: 0,
                     right: 0,
-                    background: 'rgba(17, 17, 27, 0.98)',
-                    backdropFilter: 'blur(20px)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    borderRadius: '16px',
-                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+                    background: 'var(--paper)',
+                    border: '1px solid var(--rule)',
+                    borderRadius: 'var(--r-3)',
+                    boxShadow: 'var(--shadow-2)',
                     overflow: 'hidden',
                     zIndex: 100,
                     maxHeight: '400px',
@@ -282,7 +282,7 @@ export default function EnhancedSearch({
                     {/* Results */}
                     {results.length > 0 && (
                         <div style={{ padding: '8px 0' }}>
-                            <div style={{ padding: '8px 16px', fontSize: '0.7rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                            <div style={{ padding: '8px 16px', fontSize: '0.7rem', color: 'var(--slate)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                                 Results
                             </div>
                             {results.map((result, index) => {
@@ -300,14 +300,14 @@ export default function EnhancedSearch({
                                             alignItems: 'center',
                                             gap: '12px',
                                             padding: '12px 16px',
-                                            background: isSelected ? 'rgba(255, 255, 255, 0.08)' : 'transparent',
+                                            background: isSelected ? 'var(--paper-3)' : 'transparent',
                                             border: 'none',
                                             cursor: 'pointer',
                                             textAlign: 'left',
                                             transition: 'background 0.15s',
                                         }}
-                                        onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'; setSelectedIndex(index); }}
-                                        onMouseLeave={(e) => { e.currentTarget.style.background = isSelected ? 'rgba(255, 255, 255, 0.08)' : 'transparent'; }}
+                                        onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--paper-2)'; setSelectedIndex(index); }}
+                                        onMouseLeave={(e) => { e.currentTarget.style.background = isSelected ? 'var(--paper-3)' : 'transparent'; }}
                                     >
                                         {/* Avatar */}
                                         <div style={{
@@ -325,19 +325,19 @@ export default function EnhancedSearch({
                                             {result.portraitUrl && !result.portraitUrl.startsWith('data:') ? (
                                                 <img src={result.portraitUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                             ) : (
-                                                <span style={{ fontSize: '0.9rem', fontWeight: 700, color: tier.color }}>{getInitials(result.fullName)}</span>
+                                                <span style={{ fontSize: '0.9rem', fontWeight: 500, color: tier.color }}>{getInitials(result.fullName)}</span>
                                             )}
                                         </div>
 
                                         {/* Info */}
                                         <div style={{ flex: 1, minWidth: 0 }}>
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '2px' }}>
-                                                <span style={{ fontWeight: 600, color: result.tier === 'TITAN' ? '#fbbf24' : 'white', fontSize: '0.95rem' }}>
+                                                <span style={{ fontWeight: 500, color: result.tier === 'TITAN' ? 'var(--titan-text)' : 'var(--ink)', fontSize: '0.95rem' }}>
                                                     {highlight(result.fullName)}
                                                 </span>
                                                 <span style={{
                                                     fontSize: '0.65rem',
-                                                    fontWeight: 700,
+                                                    fontWeight: 500,
                                                     padding: '2px 6px',
                                                     borderRadius: '4px',
                                                     background: tier.bg,
@@ -346,12 +346,12 @@ export default function EnhancedSearch({
                                                     {tier.icon} {result.tier}
                                                 </span>
                                             </div>
-                                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', color: '#94a3b8' }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', color: 'var(--slate)' }}>
                                                 <span>{highlight(result.specialty)}</span>
                                                 {location && (
                                                     <>
-                                                        <span style={{ color: '#475569' }}>•</span>
-                                                        <span style={{ color: '#64748b' }}>{location}</span>
+                                                        <span style={{ color: 'var(--slate)' }}>•</span>
+                                                        <span style={{ color: 'var(--slate)' }}>{location}</span>
                                                     </>
                                                 )}
                                             </div>
@@ -360,13 +360,13 @@ export default function EnhancedSearch({
                                         {/* H-Index */}
                                         {result.hIndex && result.hIndex > 0 && (
                                             <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                                                <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'white', fontFamily: 'monospace' }}>{result.hIndex}</div>
-                                                <div style={{ fontSize: '0.7rem', color: '#64748b' }}>H-Index</div>
+                                                <div style={{ fontSize: '0.95rem', fontWeight: 500, color: 'var(--ink)', fontFamily: 'monospace' }}>{result.hIndex}</div>
+                                                <div style={{ fontSize: '0.7rem', color: 'var(--slate)' }}>H-Index</div>
                                             </div>
                                         )}
 
                                         {/* Arrow */}
-                                        <svg style={{ width: 16, height: 16, color: '#475569', flexShrink: 0 }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <svg style={{ width: 16, height: 16, color: 'var(--slate)', flexShrink: 0 }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                             <path d="M9 18l6-6-6-6" />
                                         </svg>
                                     </button>
@@ -382,12 +382,12 @@ export default function EnhancedSearch({
                                         padding: '12px 16px',
                                         textAlign: 'center',
                                         fontSize: '0.85rem',
-                                        color: '#8b5cf6',
+                                        color: 'var(--ink-blue)',
                                         textDecoration: 'none',
-                                        borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+                                        borderTop: '1px solid var(--rule)',
                                         transition: 'background 0.15s',
                                     }}
-                                    onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)'}
+                                    onMouseEnter={(e) => e.currentTarget.style.background = 'var(--paper-2)'}
                                     onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                                 >
                                     View all results →
@@ -405,10 +405,10 @@ export default function EnhancedSearch({
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
                             }}>
-                                <span style={{ fontSize: '0.7rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Recent Searches</span>
+                                <span style={{ fontSize: '0.7rem', color: 'var(--slate)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Recent Searches</span>
                                 <button
                                     onClick={() => { setRecentSearches([]); localStorage.removeItem(RECENT_SEARCHES_KEY); }}
-                                    style={{ fontSize: '0.7rem', color: '#475569', background: 'none', border: 'none', cursor: 'pointer' }}
+                                    style={{ fontSize: '0.7rem', color: 'var(--slate)', background: 'none', border: 'none', cursor: 'pointer' }}
                                 >
                                     Clear
                                 </button>
@@ -423,19 +423,19 @@ export default function EnhancedSearch({
                                         alignItems: 'center',
                                         gap: '12px',
                                         padding: '10px 16px',
-                                        background: selectedIndex === index ? 'rgba(255, 255, 255, 0.05)' : 'transparent',
+                                        background: selectedIndex === index ? 'var(--paper-2)' : 'transparent',
                                         border: 'none',
                                         cursor: 'pointer',
                                         textAlign: 'left',
                                         transition: 'background 0.15s',
                                     }}
-                                    onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'}
+                                    onMouseEnter={(e) => e.currentTarget.style.background = 'var(--paper-2)'}
                                     onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                                 >
-                                    <svg style={{ width: 16, height: 16, color: '#64748b' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <svg style={{ width: 16, height: 16, color: 'var(--slate)' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                         <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
-                                    <span style={{ flex: 1, color: '#cbd5e1' }}>{search}</span>
+                                    <span style={{ flex: 1, color: 'var(--ink)' }}>{search}</span>
                                 </button>
                             ))}
                         </div>
@@ -444,34 +444,34 @@ export default function EnhancedSearch({
                     {/* No Results */}
                     {query.length >= 2 && results.length === 0 && !isLoading && (
                         <div style={{ padding: '32px 16px', textAlign: 'center' }}>
-                            <svg style={{ width: 48, height: 48, margin: '0 auto 12px', color: '#475569' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                            <svg style={{ width: 48, height: 48, margin: '0 auto 12px', color: 'var(--slate)' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                                 <circle cx="11" cy="11" r="8" />
                                 <path d="m21 21-4.3-4.3" />
                             </svg>
-                            <p style={{ color: '#94a3b8', marginBottom: '4px' }}>No results for "{query}"</p>
-                            <p style={{ fontSize: '0.85rem', color: '#64748b' }}>Try a different search term</p>
+                            <p style={{ color: 'var(--slate)', marginBottom: '4px' }}>No results for "{query}"</p>
+                            <p style={{ fontSize: '0.85rem', color: 'var(--slate)' }}>Try a different search term</p>
                         </div>
                     )}
 
                     {/* Keyboard hints */}
                     <div style={{
                         padding: '10px 16px',
-                        borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+                        borderTop: '1px solid var(--rule)',
                         display: 'flex',
                         gap: '16px',
                         fontSize: '0.7rem',
-                        color: '#475569',
+                        color: 'var(--slate)',
                     }}>
                         <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                            <kbd style={{ padding: '2px 6px', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '4px' }}>↑↓</kbd>
+                            <kbd style={{ padding: '2px 6px', background: 'var(--paper-2)', borderRadius: '4px' }}>↑↓</kbd>
                             Navigate
                         </span>
                         <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                            <kbd style={{ padding: '2px 6px', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '4px' }}>↵</kbd>
+                            <kbd style={{ padding: '2px 6px', background: 'var(--paper-2)', borderRadius: '4px' }}>↵</kbd>
                             Select
                         </span>
                         <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                            <kbd style={{ padding: '2px 6px', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '4px' }}>Esc</kbd>
+                            <kbd style={{ padding: '2px 6px', background: 'var(--paper-2)', borderRadius: '4px' }}>Esc</kbd>
                             Close
                         </span>
                     </div>

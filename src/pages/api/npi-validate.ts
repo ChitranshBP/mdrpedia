@@ -25,13 +25,9 @@ export const GET: APIRoute = async ({ request }) => {
         }));
     }
 
-    // Default valid response for random NPIs (Demo Mode)
-    // In production, this would return 404
+    // NPI not found in database
     return new Response(JSON.stringify({
-        valid: true,
-        doctor: {
-            fullName: 'Dr. Verified Physician',
-            specialty: 'General Practice'
-        }
-    }));
+        valid: false,
+        message: 'NPI number not found'
+    }), { status: 404 });
 }

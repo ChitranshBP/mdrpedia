@@ -1,12 +1,52 @@
 ---
-export const prerender = true;
+export const prerender = false;
 import Layout from "../../layouts/Layout.astro";
+import { getSession } from "../../lib/auth";
+import { prisma } from "../../lib/prisma";
 
-// Mock Authentication Check
-// In production, this would use cookies/session
-const isVerified = true;
-const doctorName = "Dr. Siddhartha Mukherjee";
-const tier = "TITAN";
+// Read session from cookie
+const session = await getSession(Astro.request);
+
+if (!session) {
+    return Astro.redirect('/login?error=not_authenticated');
+}
+
+// Fetch real profile data
+const profile = await prisma.profile.findUnique({
+    where: { id: session.profileId },
+    select: {
+        id: true,
+        slug: true,
+        full_name: true,
+        tier: true,
+        specialty: true,
+        h_index: true,
+        ranking_score: true,
+        claim_status: true,
+    },
+});
+
+if (!profile) {
+    return Astro.redirect('/login?error=profile_not_found');
+}
+
+const doctorName = profile.full_name;
+const tier = profile.tier || 'STANDARD';
+const slug = profile.slug;
+
+// Fetch real view count
+let viewCount = 0;
+try {
+    viewCount = await prisma.profileView.count({ where: { profile_id: profile.id } });
+} catch { /* table may not exist yet */ }
+
+// Fetch search appearance count (searches that led to clicking this profile)
+let searchCount = 0;
+try {
+    searchCount = await prisma.searchLog.count({ where: { clickedSlug: profile.slug } });
+} catch { /* optional */ }
+
+const score = profile.ranking_score ? Number(profile.ranking_score).toFixed(1) : '—';
 ---
 
 <Layout title="Doctor Portal — MDRPedia">
@@ -38,6 +78,7 @@ const tier = "TITAN";
                         </div>
                     )
                 }
+                <a href="/api/auth/logout" class="portal-logout-btn">Sign Out</a>
             </div>
         </header>
 
@@ -45,24 +86,24 @@ const tier = "TITAN";
             <!-- Sidebar -->
             <div class="space-y-2">
                 <a
-                    href="#"
+                    href="/doctor/portal"
                     class="block px-4 py-3 bg-white/10 text-white rounded-lg font-medium"
                     >Overview</a
                 >
                 <a
-                    href="#"
+                    href={`/doctors/${slug}`}
                     class="block px-4 py-3 text-gray-400 hover:bg-white/5 rounded-lg transition-colors"
-                    >Edit Profile</a
+                    >View Profile</a
+                >
+                <a
+                    href="/suggest-edit"
+                    class="block px-4 py-3 text-gray-400 hover:bg-white/5 rounded-lg transition-colors"
+                    >Suggest Edit</a
                 >
                 <a
                     href="#"
                     class="block px-4 py-3 text-gray-400 hover:bg-white/5 rounded-lg transition-colors"
                     >Analytics</a
-                >
-                <a
-                    href="#"
-                    class="block px-4 py-3 text-gray-400 hover:bg-white/5 rounded-lg transition-colors"
-                    >Lineage Graph</a
                 >
                 <a
                     href="#"
@@ -83,10 +124,7 @@ const tier = "TITAN";
                         >
                             Profile Views
                         </div>
-                        <div class="text-4xl font-bold text-white">24.5K</div>
-                        <div class="text-xs text-green-400 mt-2">
-                            ↑ 12% this week
-                        </div>
+                        <div class="text-4xl font-bold text-white">{viewCount.toLocaleString()}</div>
                     </div>
                     <div
                         class="p-6 bg-white/5 border border-white/10 rounded-2xl"
@@ -96,10 +134,7 @@ const tier = "TITAN";
                         >
                             Search Appearances
                         </div>
-                        <div class="text-4xl font-bold text-white">8,201</div>
-                        <div class="text-xs text-green-400 mt-2">
-                            ↑ 5% from "Oncology"
-                        </div>
+                        <div class="text-4xl font-bold text-white">{searchCount.toLocaleString()}</div>
                     </div>
                     <div
                         class="p-6 bg-white/5 border border-white/10 rounded-2xl"
@@ -109,10 +144,12 @@ const tier = "TITAN";
                         >
                             MDR Score
                         </div>
-                        <div class="text-4xl font-bold text-white">98.2</div>
-                        <div class="text-xs text-gray-500 mt-2">
-                            Top 0.1% Global
-                        </div>
+                        <div class="text-4xl font-bold text-white">{score}</div>
+                        {profile.h_index && (
+                            <div class="text-xs text-gray-500 mt-2">
+                                h-index: {profile.h_index}
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -121,7 +158,7 @@ const tier = "TITAN";
                     <div class="flex justify-between items-start mb-6">
                         <div>
                             <h2 class="text-xl font-bold text-white mb-2">
-                                Content Lock™
+                                Content Lock
                             </h2>
                             <p class="text-gray-400 text-sm max-w-lg">
                                 When enabled, your Biography, Education, and
@@ -150,11 +187,6 @@ const tier = "TITAN";
                         >
                             STATUS: ACTIVE
                         </div>
-                        <div
-                            class="px-4 py-2 bg-white/5 border border-white/10 rounded text-gray-400 text-xs font-mono"
-                        >
-                            LAST LOCKED: 2 HRS AGO
-                        </div>
                     </div>
                 </div>
 
@@ -162,40 +194,237 @@ const tier = "TITAN";
                 <div class="space-y-4">
                     <h3 class="text-lg font-bold text-white">Recent Alerts</h3>
                     <div
-                        class="p-4 bg-white/5 border border-white/10 rounded-xl flex items-start gap-4"
+                        class="p-4 bg-white/5 border border-white/10 rounded-xl flex items-center gap-4"
                     >
-                        <div class="w-2 h-2 bg-blue-500 rounded-full mt-2">
-                        </div>
-                        <div>
-                            <p class="text-sm text-white">
-                                New citation detected in <em
-                                    class="text-gray-400">Nature Medicine</em
-                                >.
-                            </p>
-                            <span class="text-xs text-gray-500"
-                                >2 hours ago</span
-                            >
-                        </div>
-                    </div>
-                    <div
-                        class="p-4 bg-white/5 border border-white/10 rounded-xl flex items-start gap-4"
-                    >
-                        <div class="w-2 h-2 bg-purple-500 rounded-full mt-2">
-                        </div>
-                        <div>
-                            <p class="text-sm text-white">
-                                Surgical Pedigree update: Dr. J. Smith added you
-                                as Mentor.
-                            </p>
-                            <span class="text-xs text-gray-500">Yesterday</span>
-                        </div>
-                        <button
-                            class="ml-auto text-xs bg-white/10 px-3 py-1 rounded hover:bg-white/20 text-white"
-                            >Review</button
-                        >
+                        <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                        <p class="text-sm text-white">
+                            No new alerts. Your profile is up to date.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </Layout>
+
+<style>
+    /* ─── Portal Page — Editorial Design System Overrides ─────────────────── */
+
+    /* ── Page wrapper ── */
+    .min-h-screen {
+        background: var(--paper);
+        color: var(--ink);
+    }
+
+    /* ── Header ── */
+    header.border-b {
+        border-bottom-color: var(--rule) !important;
+    }
+
+    header h1 {
+        color: var(--ink) !important;
+        font-family: var(--font-serif);
+        font-weight: 400 !important;
+    }
+
+    header p {
+        color: var(--ink-3) !important;
+    }
+
+    header p span {
+        color: var(--ink) !important;
+    }
+
+    /* ── Verified / Tier badges in header ── */
+    .bg-green-500\/10 {
+        background: var(--verdant-2) !important;
+        border-color: var(--verdant) !important;
+    }
+
+    .text-green-400 {
+        color: var(--verdant) !important;
+    }
+
+    .bg-green-500 {
+        background: var(--verdant) !important;
+    }
+
+    .bg-yellow-500\/10 {
+        background: var(--aged-gold-2) !important;
+        border-color: var(--aged-gold) !important;
+    }
+
+    .border-yellow-500\/20 {
+        border-color: var(--aged-gold) !important;
+    }
+
+    .text-yellow-400 {
+        color: var(--titan-text) !important;
+    }
+
+    /* ── Logout button ── */
+    .portal-logout-btn {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.75rem;
+        border: 1px solid var(--rule);
+        border-radius: var(--r-pill);
+        color: var(--ink-3);
+        text-decoration: none;
+        transition: all var(--t-fast) var(--ease);
+    }
+
+    .portal-logout-btn:hover {
+        color: var(--sanguine);
+        border-color: var(--sanguine);
+    }
+
+    /* ── Sidebar links ── */
+    .bg-white\/10 {
+        background: var(--paper-3) !important;
+    }
+
+    .text-white {
+        color: var(--ink) !important;
+    }
+
+    .text-gray-400 {
+        color: var(--ink-3) !important;
+    }
+
+    .text-gray-500 {
+        color: var(--ink-3) !important;
+    }
+
+    a.hover\:bg-white\/5:hover {
+        background: var(--paper-2) !important;
+    }
+
+    /* ── Analytics Cards ── */
+    .bg-\[\#1a052e\] {
+        background: var(--ink-blue-2) !important;
+        border-color: var(--ink-blue) !important;
+    }
+
+    .border-purple-500\/30 {
+        border-color: var(--ink-blue) !important;
+    }
+
+    .text-purple-400 {
+        color: var(--ink-blue) !important;
+    }
+
+    .bg-white\/5 {
+        background: var(--paper-2) !important;
+    }
+
+    .border-white\/10 {
+        border-color: var(--rule) !important;
+    }
+
+    .text-4xl.font-bold {
+        color: var(--ink) !important;
+        font-weight: 500 !important;
+        font-family: var(--font-mono);
+    }
+
+    /* ── Content Lock section ── */
+    h2.text-xl {
+        color: var(--ink) !important;
+        font-family: var(--font-serif);
+        font-weight: 400 !important;
+    }
+
+    /* ── Toggle switch ── */
+    .bg-gray-700 {
+        background: var(--rule-strong) !important;
+    }
+
+    .peer-checked\:bg-green-500:is(:has(~ :checked), .peer:checked ~ &) {
+        background: var(--verdant) !important;
+    }
+
+    /* ── Status badges ── */
+    .bg-green-500\/20 {
+        background: var(--verdant-2) !important;
+    }
+
+    .border-green-500\/30 {
+        border-color: var(--verdant) !important;
+    }
+
+    .border-green-500\/20 {
+        border-color: var(--verdant) !important;
+    }
+
+    /* ── Recent Alerts ── */
+    h3.text-lg {
+        color: var(--ink) !important;
+        font-family: var(--font-serif);
+        font-weight: 400 !important;
+    }
+
+    .bg-blue-500 {
+        background: var(--ink-blue) !important;
+    }
+
+    .text-sm.text-white {
+        color: var(--ink) !important;
+    }
+
+    /* ── Card border-radius normalization ── */
+    .rounded-2xl {
+        border-radius: var(--r-4) !important;
+    }
+
+    .rounded-xl {
+        border-radius: var(--r-4) !important;
+    }
+
+    .rounded-lg {
+        border-radius: var(--r-3) !important;
+    }
+
+    .rounded-full {
+        border-radius: var(--r-pill) !important;
+    }
+
+    /* ── Font-weight normalization ── */
+    .font-bold {
+        font-weight: 500 !important;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+        header.flex {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .md\:grid-cols-4 {
+            grid-template-columns: 1fr !important;
+        }
+
+        .md\:grid-cols-3 {
+            grid-template-columns: 1fr !important;
+        }
+
+        .md\:col-span-3 {
+            grid-column: span 1 !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        header h1 {
+            font-size: 1.5rem !important;
+        }
+
+        .text-4xl {
+            font-size: 2rem !important;
+        }
+
+        .flex.gap-4 {
+            flex-wrap: wrap;
+        }
+    }
+</style>

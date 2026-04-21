@@ -101,6 +101,51 @@ import Layout from "../layouts/Layout.astro";
                 </div>
             </div>
 
+            <!-- Doctor Portal Login -->
+            <div class="login-card doctor-login-card">
+                <div class="login-card__header">
+                    <div class="header-icon" style="background: var(--verdant-2); border-color: var(--verdant); color: var(--verdant);">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
+                    <h1>Doctor Portal</h1>
+                    <p>Sign in with your verified email to manage your profile</p>
+                </div>
+
+                <form id="doctorLoginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="doctor-email">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                            Email Address
+                        </label>
+                        <div class="input-wrapper">
+                            <input
+                                type="email"
+                                id="doctor-email"
+                                name="email"
+                                placeholder="Your verified email"
+                                autocomplete="email"
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <button type="submit" class="login-btn" style="background: var(--verdant);">
+                        <span>Send Magic Link</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+
+                    <p class="doctor-login-status" aria-live="polite" style="font-size: 13px; text-align: center; min-height: 20px; margin: 0;"></p>
+                </form>
+            </div>
+
             <!-- Back to Home -->
             <a href="/" class="back-link">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -120,10 +165,10 @@ import Layout from "../layouts/Layout.astro";
         justify-content: center;
         padding: 2rem;
         position: relative;
-        overflow: hidden;
+        background: var(--paper);
     }
 
-    /* Background */
+    /* Background — simplified, no glassmorphism */
     .login-bg {
         position: absolute;
         inset: 0;
@@ -131,53 +176,23 @@ import Layout from "../layouts/Layout.astro";
     }
 
     .bg-gradient {
-        position: absolute;
-        top: -200px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 800px;
-        height: 600px;
-        background: radial-gradient(ellipse, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
-        filter: blur(80px);
+        display: none;
     }
 
     .bg-grid {
-        position: absolute;
-        inset: 0;
-        background-image:
-            linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-        background-size: 50px 50px;
-        mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, black 40%, transparent 100%);
+        display: none;
     }
 
     .bg-orb {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(100px);
-        animation: float 15s ease-in-out infinite;
+        display: none;
     }
 
     .bg-orb--1 {
-        width: 300px;
-        height: 300px;
-        background: rgba(139, 92, 246, 0.1);
-        top: 10%;
-        right: 15%;
+        display: none;
     }
 
     .bg-orb--2 {
-        width: 250px;
-        height: 250px;
-        background: rgba(16, 185, 129, 0.08);
-        bottom: 15%;
-        left: 10%;
-        animation-delay: -7s;
-    }
-
-    @keyframes float {
-        0%, 100% { transform: translateY(0) rotate(0deg); }
-        50% { transform: translateY(-25px) rotate(3deg); }
+        display: none;
     }
 
     /* Container */
@@ -202,28 +217,27 @@ import Layout from "../layouts/Layout.astro";
         align-items: center;
         gap: 12px;
         text-decoration: none;
-        color: var(--text-primary);
+        color: var(--ink);
         font-size: 1.5rem;
         font-weight: 500;
     }
 
     .logo-link svg {
-        color: #8b5cf6;
+        color: var(--ink-blue);
     }
 
     .logo-link strong {
-        font-weight: 800;
+        font-weight: 700;
     }
 
     /* Card */
     .login-card {
         width: 100%;
-        background: rgba(20, 20, 35, 0.9);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 24px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 2.5rem;
-        backdrop-filter: blur(20px);
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        box-shadow: var(--shadow-3);
     }
 
     .login-card__header {
@@ -238,22 +252,23 @@ import Layout from "../layouts/Layout.astro";
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(16, 185, 129, 0.1));
-        border: 1px solid rgba(139, 92, 246, 0.3);
-        border-radius: 16px;
-        color: #a78bfa;
+        background: var(--ink-blue-2);
+        border: 1px solid var(--ink-blue);
+        border-radius: var(--r-4);
+        color: var(--ink-blue);
     }
 
     .login-card__header h1 {
         font-size: 1.75rem;
-        font-weight: 700;
-        color: var(--text-primary);
+        font-weight: 500;
+        font-family: var(--font-serif);
+        color: var(--ink);
         margin: 0 0 0.5rem;
     }
 
     .login-card__header p {
         font-size: 0.9rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin: 0;
     }
 
@@ -275,12 +290,12 @@ import Layout from "../layouts/Layout.astro";
         align-items: center;
         gap: 0.5rem;
         font-size: 0.85rem;
-        font-weight: 600;
-        color: var(--text-secondary);
+        font-weight: 500;
+        color: var(--ink-2);
     }
 
     .form-group label svg {
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .input-wrapper {
@@ -290,23 +305,22 @@ import Layout from "../layouts/Layout.astro";
     .input-wrapper input {
         width: 100%;
         padding: 1rem 3rem 1rem 1.25rem;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         font-size: 1rem;
-        color: var(--text-primary);
-        transition: all 0.2s;
+        color: var(--ink);
+        transition: border-color var(--t-fast) var(--ease);
     }
 
     .input-wrapper input::placeholder {
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .input-wrapper input:focus {
         outline: none;
-        border-color: #8b5cf6;
-        background: rgba(139, 92, 246, 0.05);
-        box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+        border-color: var(--ink-blue);
+        box-shadow: 0 0 0 3px color-mix(in oklch, var(--ink-blue) 12%, transparent);
     }
 
     .toggle-visibility {
@@ -317,13 +331,13 @@ import Layout from "../layouts/Layout.astro";
         background: none;
         border: none;
         padding: 4px;
-        color: var(--text-muted);
+        color: var(--ink-3);
         cursor: pointer;
-        transition: color 0.2s;
+        transition: color var(--t-fast) var(--ease);
     }
 
     .toggle-visibility:hover {
-        color: var(--text-secondary);
+        color: var(--ink-2);
     }
 
     .login-btn {
@@ -333,32 +347,29 @@ import Layout from "../layouts/Layout.astro";
         gap: 0.75rem;
         width: 100%;
         padding: 1rem 1.5rem;
-        background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        background: var(--ink);
         border: none;
-        border-radius: 12px;
+        border-radius: var(--r-3);
         font-size: 1rem;
-        font-weight: 600;
-        color: white;
+        font-weight: 500;
+        color: var(--paper);
         cursor: pointer;
-        transition: all 0.3s;
-        box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        transition: opacity var(--t-fast) var(--ease);
     }
 
     .login-btn:hover {
-        background: linear-gradient(135deg, #7c3aed, #6d28d9);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+        opacity: 0.85;
     }
 
     .login-btn:active {
-        transform: translateY(0);
+        opacity: 0.75;
     }
 
     /* Footer */
     .login-footer {
         margin-top: 2rem;
         padding-top: 1.5rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-top: 1px solid var(--rule);
     }
 
     .security-badges {
@@ -373,22 +384,22 @@ import Layout from "../layouts/Layout.astro";
         align-items: center;
         gap: 0.4rem;
         font-size: 0.75rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .badge svg {
-        color: #10b981;
+        color: var(--verdant);
     }
 
     .help-text {
         font-size: 0.8rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         text-align: center;
         margin: 0;
     }
 
     .help-text a {
-        color: #8b5cf6;
+        color: var(--ink-blue);
         text-decoration: none;
     }
 
@@ -402,16 +413,22 @@ import Layout from "../layouts/Layout.astro";
         align-items: center;
         gap: 0.5rem;
         font-size: 0.9rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         text-decoration: none;
-        transition: color 0.2s;
+        transition: color var(--t-fast) var(--ease);
     }
 
     .back-link:hover {
-        color: var(--text-secondary);
+        color: var(--ink-2);
     }
 
     /* Responsive */
+    @media (max-width: 768px) {
+        .login-page {
+            padding: 1.5rem;
+        }
+    }
+
     @media (max-width: 480px) {
         .login-card {
             padding: 2rem 1.5rem;
@@ -444,13 +461,57 @@ import Layout from "../layouts/Layout.astro";
         }
     });
 
-    // Form submission
+    // Admin form submission
     const form = document.getElementById("loginForm");
     form?.addEventListener("submit", (e) => {
         e.preventDefault();
         const input = document.getElementById("key") as HTMLInputElement;
         if (input && input.value) {
             window.location.href = `/admin?key=${encodeURIComponent(input.value)}`;
+        }
+    });
+
+    // Doctor portal magic link form
+    const doctorForm = document.getElementById("doctorLoginForm");
+    const statusEl = document.querySelector('.doctor-login-status') as HTMLElement;
+
+    doctorForm?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const emailInput = document.getElementById("doctor-email") as HTMLInputElement;
+        const submitBtn = doctorForm.querySelector('.login-btn') as HTMLButtonElement;
+        const email = emailInput?.value?.trim();
+
+        if (!email) return;
+
+        // Disable form while submitting
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.6';
+        statusEl.textContent = 'Sending magic link...';
+        statusEl.style.color = 'var(--ink-3)';
+
+        try {
+            const res = await fetch('/api/auth/magic-link', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email }),
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                statusEl.textContent = 'Check your email for a magic link to sign in.';
+                statusEl.style.color = 'var(--verdant)';
+                emailInput.value = '';
+            } else {
+                statusEl.textContent = data.error || 'Something went wrong. Please try again.';
+                statusEl.style.color = 'var(--sanguine)';
+            }
+        } catch {
+            statusEl.textContent = 'Network error. Please try again.';
+            statusEl.style.color = 'var(--sanguine)';
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
         }
     });
 </script>

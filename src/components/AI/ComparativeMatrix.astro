@@ -15,10 +15,10 @@ const { matrix, tier = 'UNRANKED' } = Astro.props;
 
 // Type icons
 const typeIcons: Record<ComparativeMatrix['comparisonType'], string> = {
-    DOCTORS: '👨‍⚕️',
-    TECHNIQUES: '🔧',
-    INSTITUTIONS: '🏥',
-    OUTCOMES: '📊',
+    DOCTORS: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>',
+    TECHNIQUES: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+    INSTITUTIONS: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-4h6v4M12 7v4M10 9h4"/></svg>',
+    OUTCOMES: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>',
 };
 
 // Format cell value
@@ -62,7 +62,7 @@ function isBestValue(
             {matrix.title}
         </h2>
         <span class="type-badge">
-            <span class="type-icon">{typeIcons[matrix.comparisonType]}</span>
+            <span class="type-icon" set:html={typeIcons[matrix.comparisonType]}></span>
             {matrix.comparisonType.replace('_', ' ')} Comparison
         </span>
     </div>
@@ -163,12 +163,12 @@ function isBestValue(
 
 <style>
     .matrix-section {
-        background: var(--card-bg, rgba(20, 20, 35, 0.8));
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 2rem;
         margin-bottom: 2rem;
-        backdrop-filter: blur(10px);
+        
     }
 
     .section-header {
@@ -178,7 +178,7 @@ function isBestValue(
         gap: 1rem;
         margin-bottom: 1.5rem;
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
+        border-bottom: 1px solid var(--rule);
     }
 
     .section-title {
@@ -186,13 +186,13 @@ function isBestValue(
         align-items: center;
         gap: 0.75rem;
         font-size: 1.25rem;
-        font-weight: 700;
+        font-weight: 500;
         margin: 0;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .section-title svg {
-        color: #3b82f6;
+        color: var(--ink-blue);
         opacity: 0.9;
     }
 
@@ -202,10 +202,10 @@ function isBestValue(
         gap: 0.35rem;
         padding: 4px 12px;
         background: rgba(59, 130, 246, 0.15);
-        border-radius: 100px;
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
         font-weight: 600;
-        color: #60a5fa;
+        color: var(--ink-blue);
         text-transform: uppercase;
     }
 
@@ -233,22 +233,22 @@ function isBestValue(
     }
 
     .comparison-table th {
-        background: rgba(255, 255, 255, 0.03);
+        background: var(--paper-3);
         padding: 1rem 0.75rem;
         text-align: left;
         font-weight: 600;
-        color: var(--text-primary, #fff);
-        border-bottom: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
+        color: var(--ink);
+        border-bottom: 1px solid var(--rule);
     }
 
     .comparison-table td {
         padding: 0.875rem 0.75rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-        color: var(--text-secondary, #ccc);
+        border-bottom: 1px solid var(--rule);
+        color: var(--ink-2);
     }
 
     .comparison-table tbody tr:hover {
-        background: rgba(255, 255, 255, 0.02);
+        background: var(--paper-2);
     }
 
     .comparison-table tbody tr.subject-row {
@@ -272,11 +272,11 @@ function isBestValue(
 
     .entry-name {
         font-weight: 600;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .entry-name.linked {
-        color: #60a5fa;
+        color: var(--ink-blue);
         text-decoration: none;
     }
 
@@ -290,7 +290,7 @@ function isBestValue(
         border-radius: 4px;
         font-size: 0.6rem;
         font-weight: 600;
-        color: #60a5fa;
+        color: var(--ink-blue);
         text-transform: uppercase;
     }
 
@@ -308,12 +308,12 @@ function isBestValue(
     .metric-unit {
         font-size: 0.7rem;
         font-weight: 400;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .sort-indicator {
         font-size: 0.75rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         cursor: help;
     }
 
@@ -329,7 +329,7 @@ function isBestValue(
     }
 
     .value-cell.best-value {
-        color: #10b981;
+        color: var(--verdant);
         font-weight: 600;
     }
 
@@ -340,7 +340,7 @@ function isBestValue(
     }
 
     .best-indicator {
-        color: #ffd700;
+        color: var(--aged-gold);
         font-size: 0.75rem;
     }
 
@@ -348,12 +348,12 @@ function isBestValue(
     .table-footer {
         margin-top: 1rem;
         padding-top: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        border-top: 1px solid var(--rule);
     }
 
     .table-notes {
         font-size: 0.8rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         line-height: 1.5;
         margin: 0 0 0.5rem;
     }
@@ -367,13 +367,13 @@ function isBestValue(
     .data-source,
     .last-updated {
         font-size: 0.7rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     /* Tier colors */
-    .tier-titan .section-title svg { color: #ffd700; }
-    .tier-elite .section-title svg { color: #00aaff; }
-    .tier-master .section-title svg { color: #00cc66; }
+    .tier-titan .section-title svg { color: var(--aged-gold); }
+    .tier-elite .section-title svg { color: var(--ink-blue); }
+    .tier-master .section-title svg { color: var(--verdant); }
 
     @media (max-width: 768px) {
         .matrix-section {

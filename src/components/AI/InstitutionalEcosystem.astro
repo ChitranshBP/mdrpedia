@@ -16,12 +16,12 @@ const { ecosystem, doctorName, tier = 'UNRANKED' } = Astro.props;
 
 // Institution type configuration
 const institutionConfig: Record<InstitutionalConnection['institutionType'], { icon: string; color: string }> = {
-    HOSPITAL: { icon: '🏥', color: '#ef4444' },
-    UNIVERSITY: { icon: '🎓', color: '#3b82f6' },
-    RESEARCH_CENTER: { icon: '🔬', color: '#8b5cf6' },
-    GOVERNMENT: { icon: '🏛️', color: '#6b7280' },
-    NONPROFIT: { icon: '💚', color: '#10b981' },
-    COMPANY: { icon: '🏢', color: '#f59e0b' },
+    HOSPITAL: { icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-4h6v4M12 7v4M10 9h4"/></svg>', color: '#ef4444' },
+    UNIVERSITY: { icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>', color: '#3b82f6' },
+    RESEARCH_CENTER: { icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 3h6v2H9V3zm0 4v6l-3 6h12l-3-6V7H9z"/></svg>', color: '#8b5cf6' },
+    GOVERNMENT: { icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>', color: '#6b7280' },
+    NONPROFIT: { icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>', color: '#10b981' },
+    COMPANY: { icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-4h6v4M12 7v4M10 9h4"/></svg>', color: '#f59e0b' },
 };
 
 // Impact level configuration
@@ -83,7 +83,7 @@ const impactConfig: Record<GeographicInfluence['impactLevel'], { label: string; 
                 {ecosystem.currentAffiliations.map(affiliation => (
                     <div class="affiliation-card" style={`--inst-color: ${institutionConfig[affiliation.institutionType].color};`}>
                         <div class="affiliation-header">
-                            <span class="inst-icon">{institutionConfig[affiliation.institutionType].icon}</span>
+                            <span class="inst-icon" set:html={institutionConfig[affiliation.institutionType].icon}></span>
                             <div class="inst-info">
                                 {affiliation.institutionSlug ? (
                                     <a href={`/hospital/${affiliation.institutionSlug}`} class="inst-name linked">
@@ -97,7 +97,7 @@ const impactConfig: Record<GeographicInfluence['impactLevel'], { label: string; 
                         </div>
                         <div class="affiliation-role">{affiliation.role}</div>
                         <div class="affiliation-location">
-                            📍 {affiliation.location.city ? `${affiliation.location.city}, ` : ''}{affiliation.location.country}
+                            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> {affiliation.location.city ? `${affiliation.location.city}, ` : ''}{affiliation.location.country}
                         </div>
                         {affiliation.period && (
                             <div class="affiliation-period">{affiliation.period}</div>
@@ -127,7 +127,7 @@ const impactConfig: Record<GeographicInfluence['impactLevel'], { label: string; 
             <div class="past-affiliations-list">
                 {ecosystem.pastAffiliations.slice(0, 6).map(affiliation => (
                     <div class="past-affiliation-item">
-                        <span class="past-icon">{institutionConfig[affiliation.institutionType].icon}</span>
+                        <span class="past-icon" set:html={institutionConfig[affiliation.institutionType].icon}></span>
                         <div class="past-info">
                             <span class="past-name">{affiliation.institutionName}</span>
                             <span class="past-role">{affiliation.role}</span>
@@ -218,18 +218,17 @@ const impactConfig: Record<GeographicInfluence['impactLevel'], { label: string; 
 
 <style>
     .ecosystem-section {
-        background: var(--card-bg, rgba(20, 20, 35, 0.8));
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 2rem;
         margin-bottom: 2rem;
-        backdrop-filter: blur(10px);
     }
 
     .section-header {
         margin-bottom: 1.5rem;
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
+        border-bottom: 1px solid var(--rule);
     }
 
     .section-title {
@@ -237,13 +236,13 @@ const impactConfig: Record<GeographicInfluence['impactLevel'], { label: string; 
         align-items: center;
         gap: 0.75rem;
         font-size: 1.25rem;
-        font-weight: 700;
+        font-weight: 500;
         margin: 0;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .section-title svg {
-        color: #3b82f6;
+        color: var(--ink-blue);
         opacity: 0.9;
     }
 
@@ -253,9 +252,9 @@ const impactConfig: Record<GeographicInfluence['impactLevel'], { label: string; 
         align-items: center;
         gap: 1.5rem;
         padding: 1.25rem;
-        background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.1));
-        border: 1px solid rgba(59, 130, 246, 0.15);
-        border-radius: 12px;
+        background: var(--paper-3);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         margin-bottom: 2rem;
         flex-wrap: wrap;
     }
@@ -269,13 +268,13 @@ const impactConfig: Record<GeographicInfluence['impactLevel'], { label: string; 
 
     .reach-value {
         font-size: 1.75rem;
-        font-weight: 700;
-        color: var(--text-primary, #fff);
+        font-weight: 500;
+        color: var(--ink);
     }
 
     .reach-label {
         font-size: 0.7rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         text-transform: uppercase;
         letter-spacing: 0.03em;
     }
@@ -283,7 +282,7 @@ const impactConfig: Record<GeographicInfluence['impactLevel'], { label: string; 
     .reach-divider {
         width: 1px;
         height: 40px;
-        background: rgba(255, 255, 255, 0.1);
+        background: var(--rule);
     }
 
     .continents-list {
@@ -295,10 +294,10 @@ const impactConfig: Record<GeographicInfluence['impactLevel'], { label: string; 
 
     .continent-badge {
         padding: 4px 10px;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 100px;
+        background: var(--paper-3);
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
     }
 
     /* Subsection Title */
@@ -309,11 +308,11 @@ const impactConfig: Record<GeographicInfluence['impactLevel'], { label: string; 
         font-size: 1rem;
         font-weight: 600;
         margin: 0 0 1rem;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .subsection-title svg {
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .title-dot {
@@ -323,21 +322,21 @@ const impactConfig: Record<GeographicInfluence['impactLevel'], { label: string; 
     }
 
     .title-dot.current {
-        background: #10b981;
+        background: var(--verdant);
     }
 
     .title-dot.past {
-        background: #6b7280;
+        background: var(--ink-3);
     }
 
     .count-badge {
         margin-left: auto;
         padding: 2px 8px;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 100px;
+        background: var(--paper-3);
+        border-radius: var(--r-pill);
         font-size: 0.7rem;
         font-weight: 400;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     /* Affiliations Grid */
@@ -353,16 +352,16 @@ const impactConfig: Record<GeographicInfluence['impactLevel'], { label: string; 
 
     .affiliation-card {
         padding: 1.25rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
         border-left: 3px solid var(--inst-color);
-        border-radius: 10px;
+        border-radius: var(--r-3);
         transition: all 0.2s ease;
     }
 
     .affiliation-card:hover {
-        background: rgba(255, 255, 255, 0.03);
-        border-color: rgba(255, 255, 255, 0.1);
+        background: var(--paper-3);
+        border-color: var(--rule-strong);
     }
 
     .affiliation-header {
@@ -385,12 +384,12 @@ const impactConfig: Record<GeographicInfluence['impactLevel'], { label: string; 
 
     .inst-name {
         font-weight: 600;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
         font-size: 0.95rem;
     }
 
     .inst-name.linked {
-        color: #60a5fa;
+        color: var(--ink-blue);
         text-decoration: none;
     }
 
@@ -406,19 +405,19 @@ const impactConfig: Record<GeographicInfluence['impactLevel'], { label: string; 
 
     .affiliation-role {
         font-size: 0.9rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         margin-bottom: 0.5rem;
     }
 
     .affiliation-location {
         font-size: 0.8rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         margin-bottom: 0.35rem;
     }
 
     .affiliation-period {
         font-size: 0.75rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .notable-projects {
@@ -428,27 +427,27 @@ const impactConfig: Record<GeographicInfluence['impactLevel'], { label: string; 
         gap: 0.35rem;
         margin-top: 0.75rem;
         padding-top: 0.75rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        border-top: 1px solid var(--rule);
     }
 
     .projects-label {
         font-size: 0.7rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .project-tag {
         padding: 2px 8px;
-        background: rgba(139, 92, 246, 0.1);
+        background: var(--paper-3);
         border-radius: 4px;
         font-size: 0.7rem;
-        color: #a78bfa;
+        color: var(--ink-blue);
     }
 
     /* Past Affiliations */
     .affiliations-section.past {
         padding: 1.25rem;
-        background: rgba(255, 255, 255, 0.02);
-        border-radius: 12px;
+        background: var(--paper-2);
+        border-radius: var(--r-4);
     }
 
     .past-affiliations-list {
@@ -462,8 +461,8 @@ const impactConfig: Record<GeographicInfluence['impactLevel'], { label: string; 
         align-items: center;
         gap: 0.75rem;
         padding: 0.75rem;
-        background: rgba(255, 255, 255, 0.02);
-        border-radius: 8px;
+        background: var(--paper-2);
+        border-radius: var(--r-3);
     }
 
     .past-icon {
@@ -481,27 +480,27 @@ const impactConfig: Record<GeographicInfluence['impactLevel'], { label: string; 
     .past-name {
         font-size: 0.85rem;
         font-weight: 600;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .past-role {
         font-size: 0.75rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .past-location {
         font-size: 0.75rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .past-period {
         font-size: 0.7rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .more-affiliations {
         font-size: 0.8rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         text-align: center;
         margin: 0.5rem 0 0;
     }
@@ -519,9 +518,9 @@ const impactConfig: Record<GeographicInfluence['impactLevel'], { label: string; 
 
     .influence-card {
         padding: 1.25rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 10px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
     }
 
     .influence-header {
@@ -535,13 +534,13 @@ const impactConfig: Record<GeographicInfluence['impactLevel'], { label: string; 
     .region-name {
         font-size: 1rem;
         font-weight: 600;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .impact-badge {
         padding: 3px 8px;
         background: color-mix(in srgb, var(--impact-color) 15%, transparent);
-        border-radius: 100px;
+        border-radius: var(--r-pill);
         font-size: 0.65rem;
         font-weight: 600;
         color: var(--impact-color);
@@ -550,14 +549,14 @@ const impactConfig: Record<GeographicInfluence['impactLevel'], { label: string; 
 
     .influence-type {
         font-size: 0.8rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         text-transform: capitalize;
         margin-bottom: 0.5rem;
     }
 
     .influence-desc {
         font-size: 0.85rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         line-height: 1.5;
         margin: 0 0 0.75rem;
     }
@@ -575,34 +574,34 @@ const impactConfig: Record<GeographicInfluence['impactLevel'], { label: string; 
 
     .influence-metric .metric-value {
         font-size: 1.1rem;
-        font-weight: 700;
+        font-weight: 500;
         color: var(--impact-color);
     }
 
     .influence-metric .metric-label {
         font-size: 0.65rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     /* Legacy */
     .legacy-section {
         padding: 1.25rem;
-        background: rgba(255, 215, 0, 0.05);
-        border: 1px solid rgba(255, 215, 0, 0.1);
-        border-radius: 12px;
+        background: var(--paper-3);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
     }
 
     .legacy-text {
         font-size: 0.95rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         line-height: 1.7;
         margin: 0;
     }
 
     /* Tier colors */
-    .tier-titan .section-title svg { color: #ffd700; }
-    .tier-elite .section-title svg { color: #00aaff; }
-    .tier-master .section-title svg { color: #00cc66; }
+    .tier-titan .section-title svg { color: var(--aged-gold); }
+    .tier-elite .section-title svg { color: var(--ink-blue); }
+    .tier-master .section-title svg { color: var(--verdant); }
 
     @media (max-width: 768px) {
         .ecosystem-section {

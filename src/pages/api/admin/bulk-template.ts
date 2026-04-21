@@ -5,22 +5,19 @@
 
 export const prerender = false;
 
-// Validate admin key
-function validateAdminKey(request: Request): boolean {
-    const adminKey = import.meta.env.ADMIN_ACCESS_KEY;
-    if (!adminKey) return false;
-
-    const providedKey = request.headers.get('x-admin-key');
-    return providedKey === adminKey;
-}
+import { requireSuperAdmin } from '../../../lib/rbac';
+import { checkRateLimit, getClientIdentifier, RATE_LIMITS, rateLimitResponse } from '../../../lib/rate-limit';
 
 export async function GET({ request }: { request: Request }) {
-    if (!validateAdminKey(request)) {
+    if (!requireSuperAdmin(request)) {
         return new Response(JSON.stringify({ error: 'Unauthorized' }), {
             status: 401,
             headers: { 'Content-Type': 'application/json' }
         });
     }
+
+    const rateCheck = checkRateLimit(getClientIdentifier(request), RATE_LIMITS.adminGeneral);
+    if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime);
 
     // CSV template with headers and example rows
     const csvContent = `fullName,specialty,subSpecialty,tier,status,hIndex,yearsActive,rankingScore,title,biography,country,region,city,npiNumber,orcidId,portraitUrl,medicalSpecialty,knowsAbout

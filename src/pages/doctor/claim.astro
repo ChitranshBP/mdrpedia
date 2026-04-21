@@ -411,12 +411,10 @@ const testimonials = [
 </Layout>
 
 <style>
-    /* ─── Claim Page Styles ─────────────────────────────────────────────────── */
+    /* ─── Claim Page Styles — Editorial Design System ──────────────────────── */
 
     .claim-page {
-        --claim-purple: #8b5cf6;
-        --claim-pink: #ec4899;
-        --claim-blue: #3b82f6;
+        /* No custom purple/pink properties — using design-system tokens */
     }
 
     /* ─── Hero Section ──────────────────────────────────────────────────────── */
@@ -440,41 +438,42 @@ const testimonials = [
         transform: translateX(-50%);
         width: 1200px;
         height: 600px;
-        background: radial-gradient(ellipse, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
-        filter: blur(60px);
+        background: radial-gradient(ellipse, var(--ink-blue-2) 0%, transparent 70%);
     }
 
     .hero-grid {
         position: absolute;
         inset: 0;
         background-image:
-            linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            linear-gradient(var(--rule) 1px, transparent 1px),
+            linear-gradient(90deg, var(--rule) 1px, transparent 1px);
         background-size: 60px 60px;
+        opacity: 0.25;
         mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
     }
 
     .hero-orb {
         position: absolute;
         border-radius: 50%;
-        filter: blur(80px);
         animation: float 20s ease-in-out infinite;
     }
 
     .hero-orb--1 {
         width: 400px;
         height: 400px;
-        background: rgba(139, 92, 246, 0.1);
+        background: var(--ink-blue-2);
         top: 10%;
         right: 10%;
+        opacity: 0.5;
     }
 
     .hero-orb--2 {
         width: 300px;
         height: 300px;
-        background: rgba(236, 72, 153, 0.08);
+        background: var(--sanguine-2);
         bottom: 20%;
         left: 5%;
+        opacity: 0.4;
         animation-delay: -10s;
     }
 
@@ -496,9 +495,9 @@ const testimonials = [
         align-items: center;
         gap: 8px;
         padding: 8px 16px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 100px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-pill);
         font-size: 0.85rem;
         color: var(--text-secondary);
         margin-bottom: 24px;
@@ -507,22 +506,21 @@ const testimonials = [
     .badge-icon-svg {
         width: 16px;
         height: 16px;
-        color: #10b981;
+        color: var(--verdant);
     }
 
     .hero-title {
         font-size: clamp(2.5rem, 6vw, 4rem);
-        font-weight: 800;
+        font-weight: 500;
         line-height: 1.1;
         margin-bottom: 20px;
-        color: var(--text-primary);
+        color: var(--ink);
+        font-family: var(--font-serif);
     }
 
     .gradient-text {
-        background: linear-gradient(135deg, var(--claim-purple) 0%, var(--claim-pink) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        color: var(--ink-blue);
+        -webkit-text-fill-color: var(--ink-blue);
     }
 
     .hero-subtitle {
@@ -534,7 +532,7 @@ const testimonials = [
     }
 
     .hero-subtitle strong {
-        color: var(--text-primary);
+        color: var(--ink);
     }
 
     /* Trust Indicators */
@@ -556,7 +554,7 @@ const testimonials = [
     .trust-item svg {
         width: 18px;
         height: 18px;
-        color: var(--accent-emerald);
+        color: var(--verdant);
     }
 
     /* Wizard Container */
@@ -574,9 +572,9 @@ const testimonials = [
         align-items: center;
         gap: 40px;
         padding: 32px;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         max-width: 800px;
         margin: 0 auto;
     }
@@ -588,8 +586,8 @@ const testimonials = [
     .stat-value {
         display: block;
         font-size: 1.75rem;
-        font-weight: 700;
-        color: var(--text-primary);
+        font-weight: 500;
+        color: var(--ink);
         font-family: var(--font-mono);
         line-height: 1;
     }
@@ -605,7 +603,7 @@ const testimonials = [
     .stat-divider {
         width: 1px;
         height: 40px;
-        background: rgba(255, 255, 255, 0.1);
+        background: var(--rule);
     }
 
     /* ─── Section Styles ────────────────────────────────────────────────────── */
@@ -617,9 +615,10 @@ const testimonials = [
 
     .section-header h2 {
         font-size: clamp(1.75rem, 4vw, 2.5rem);
-        font-weight: 700;
-        color: var(--text-primary);
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 12px;
+        font-family: var(--font-serif);
     }
 
     .section-header p {
@@ -633,7 +632,7 @@ const testimonials = [
 
     .benefits-section {
         padding: 100px 0;
-        background: linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.03) 50%, transparent 100%);
+        background: var(--paper-2);
     }
 
     .benefits-grid {
@@ -648,15 +647,15 @@ const testimonials = [
         display: flex;
         gap: 16px;
         padding: 24px;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 16px;
-        transition: all 0.3s ease;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
+        transition: all var(--t-base) var(--ease);
     }
 
     .benefit-card:hover {
-        background: rgba(255, 255, 255, 0.04);
-        border-color: rgba(139, 92, 246, 0.3);
+        border-color: var(--ink-blue);
+        box-shadow: var(--shadow-2);
         transform: translateY(-2px);
     }
 
@@ -667,20 +666,20 @@ const testimonials = [
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(236, 72, 153, 0.1) 100%);
-        border-radius: 12px;
+        background: var(--ink-blue-2);
+        border-radius: var(--r-3);
     }
 
     .benefit-icon svg {
         width: 24px;
         height: 24px;
-        color: var(--claim-purple);
+        color: var(--ink-blue);
     }
 
     .benefit-content h3 {
         font-size: 1.1rem;
-        font-weight: 600;
-        color: var(--text-primary);
+        font-weight: 500;
+        color: var(--ink);
         margin-bottom: 8px;
         font-family: var(--font-sans);
     }
@@ -695,12 +694,12 @@ const testimonials = [
     .benefit-highlight {
         display: inline-block;
         padding: 4px 12px;
-        background: rgba(139, 92, 246, 0.1);
-        border: 1px solid rgba(139, 92, 246, 0.2);
-        border-radius: 100px;
+        background: var(--ink-blue-2);
+        border: 1px solid var(--ink-blue);
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
-        font-weight: 600;
-        color: var(--accent-purple-light);
+        font-weight: 500;
+        color: var(--ink-blue);
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
@@ -726,9 +725,9 @@ const testimonials = [
         min-width: 280px;
         max-width: 320px;
         padding: 32px 24px;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 20px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         text-align: center;
         position: relative;
     }
@@ -740,21 +739,21 @@ const testimonials = [
         transform: translateX(-50%);
         width: 32px;
         height: 32px;
-        background: linear-gradient(135deg, var(--claim-purple) 0%, var(--claim-pink) 100%);
+        background: var(--ink-blue);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 0.9rem;
-        font-weight: 700;
-        color: white;
-        box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        font-weight: 500;
+        color: var(--paper);
+        box-shadow: var(--shadow-2);
     }
 
     .step-content h3 {
         font-size: 1.2rem;
-        font-weight: 600;
-        color: var(--text-primary);
+        font-weight: 500;
+        color: var(--ink);
         margin: 16px 0 8px;
         font-family: var(--font-sans);
     }
@@ -793,7 +792,7 @@ const testimonials = [
 
     .npi-label {
         font-size: 0.7rem;
-        font-weight: 600;
+        font-weight: 500;
         color: var(--text-muted);
         text-transform: uppercase;
         letter-spacing: 0.1em;
@@ -802,7 +801,7 @@ const testimonials = [
     .npi-number {
         font-family: var(--font-mono);
         font-size: 1.5rem;
-        color: var(--claim-purple);
+        color: var(--ink-blue);
         letter-spacing: 0.15em;
     }
 
@@ -811,15 +810,15 @@ const testimonials = [
         align-items: center;
         gap: 12px;
         padding: 12px 20px;
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 12px;
+        background: var(--paper-2);
+        border-radius: var(--r-3);
         position: relative;
     }
 
     .profile-avatar {
         width: 40px;
         height: 40px;
-        background: linear-gradient(135deg, var(--claim-purple) 0%, var(--claim-pink) 100%);
+        background: var(--ink-blue);
         border-radius: 50%;
     }
 
@@ -831,8 +830,8 @@ const testimonials = [
 
     .line {
         height: 8px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 4px;
+        background: var(--rule);
+        border-radius: var(--r-1);
     }
 
     .line--name { width: 80px; }
@@ -844,36 +843,36 @@ const testimonials = [
         right: -6px;
         width: 24px;
         height: 24px;
-        background: var(--accent-emerald);
+        background: var(--verdant);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 0.75rem;
-        color: white;
-        font-weight: bold;
+        color: var(--paper);
+        font-weight: 500;
     }
 
     .visual-dashboard {
         width: 120px;
         padding: 12px;
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 12px;
+        background: var(--paper-2);
+        border-radius: var(--r-3);
         position: relative;
     }
 
     .dash-header {
         height: 8px;
         width: 60%;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 4px;
+        background: var(--rule);
+        border-radius: var(--r-1);
         margin-bottom: 12px;
     }
 
     .dash-chart {
         height: 40px;
-        background: linear-gradient(to top, rgba(139, 92, 246, 0.2) 0%, transparent 100%);
-        border-radius: 4px;
+        background: linear-gradient(to top, var(--ink-blue-2) 0%, transparent 100%);
+        border-radius: var(--r-1);
     }
 
     .dash-badge {
@@ -882,25 +881,25 @@ const testimonials = [
         right: -8px;
         width: 28px;
         height: 28px;
-        background: var(--claim-purple);
+        background: var(--ink-blue);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        box-shadow: var(--shadow-2);
     }
 
     .dash-badge svg {
         width: 14px;
         height: 14px;
-        color: white;
+        color: var(--paper);
     }
 
     /* ─── Testimonials Section ──────────────────────────────────────────────── */
 
     .testimonials-section {
         padding: 100px 0;
-        background: linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.03) 50%, transparent 100%);
+        background: var(--paper-2);
     }
 
     .testimonials-grid {
@@ -913,25 +912,26 @@ const testimonials = [
 
     .testimonial-card {
         padding: 28px;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 20px;
-        transition: all 0.3s ease;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
+        transition: all var(--t-base) var(--ease);
     }
 
     .testimonial-card:hover {
-        border-color: rgba(139, 92, 246, 0.3);
+        border-color: var(--ink-blue);
         transform: translateY(-4px);
+        box-shadow: var(--shadow-2);
     }
 
     .testimonial-card.tier-titan {
-        background: linear-gradient(135deg, rgba(255, 215, 0, 0.03) 0%, rgba(255, 215, 0, 0.01) 100%);
-        border-color: rgba(255, 215, 0, 0.15);
+        background: var(--titan-bg);
+        border-color: var(--titan-border);
     }
 
     .testimonial-card.tier-elite {
-        background: linear-gradient(135deg, rgba(0, 170, 255, 0.03) 0%, rgba(0, 170, 255, 0.01) 100%);
-        border-color: rgba(0, 170, 255, 0.15);
+        background: var(--elite-bg);
+        border-color: var(--elite-border);
     }
 
     .testimonial-quote {
@@ -945,7 +945,7 @@ const testimonials = [
         left: -8px;
         width: 32px;
         height: 32px;
-        color: rgba(139, 92, 246, 0.3);
+        color: var(--ink-blue-2);
     }
 
     .testimonial-quote p {
@@ -954,6 +954,7 @@ const testimonials = [
         line-height: 1.6;
         padding-left: 24px;
         font-style: italic;
+        font-family: var(--font-serif);
     }
 
     .testimonial-author {
@@ -965,14 +966,14 @@ const testimonials = [
     .author-avatar {
         width: 48px;
         height: 48px;
-        background: linear-gradient(135deg, var(--claim-purple) 0%, var(--claim-pink) 100%);
+        background: var(--ink-blue);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 1.1rem;
-        font-weight: 600;
-        color: white;
+        font-weight: 500;
+        color: var(--paper);
     }
 
     .author-name {
@@ -980,27 +981,27 @@ const testimonials = [
         align-items: center;
         gap: 8px;
         font-size: 0.95rem;
-        font-weight: 600;
-        color: var(--text-primary);
+        font-weight: 500;
+        color: var(--ink);
     }
 
     .tier-badge {
         padding: 2px 8px;
-        border-radius: 4px;
+        border-radius: var(--r-2);
         font-size: 0.65rem;
-        font-weight: 700;
+        font-weight: 500;
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
 
     .tier-badge.tier-titan {
-        background: rgba(255, 215, 0, 0.15);
-        color: #FFD700;
+        background: var(--aged-gold-2);
+        color: var(--titan-text);
     }
 
     .tier-badge.tier-elite {
-        background: rgba(0, 170, 255, 0.15);
-        color: #00aaff;
+        background: var(--ink-blue-2);
+        color: var(--ink-blue);
     }
 
     .author-title {
@@ -1028,20 +1029,20 @@ const testimonials = [
     }
 
     .faq-item {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         overflow: hidden;
-        transition: all 0.3s ease;
+        transition: all var(--t-base) var(--ease);
     }
 
     .faq-item:hover {
-        border-color: rgba(139, 92, 246, 0.3);
+        border-color: var(--ink-blue);
     }
 
     .faq-item[open] {
-        background: rgba(139, 92, 246, 0.05);
-        border-color: rgba(139, 92, 246, 0.3);
+        background: var(--ink-blue-2);
+        border-color: var(--ink-blue);
     }
 
     .faq-question {
@@ -1060,22 +1061,22 @@ const testimonials = [
     .faq-number {
         font-family: var(--font-mono);
         font-size: 0.85rem;
-        color: var(--claim-purple);
-        font-weight: 600;
+        color: var(--ink-blue);
+        font-weight: 500;
     }
 
     .faq-text {
         flex: 1;
         font-size: 1rem;
         font-weight: 500;
-        color: var(--text-primary);
+        color: var(--ink);
     }
 
     .faq-chevron {
         width: 20px;
         height: 20px;
         color: var(--text-muted);
-        transition: transform 0.3s ease;
+        transition: transform var(--t-base) var(--ease);
     }
 
     .faq-item[open] .faq-chevron {
@@ -1096,7 +1097,8 @@ const testimonials = [
 
     .final-cta {
         padding: 100px 0;
-        background: linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.08) 100%);
+        background: var(--paper-2);
+        border-top: 1px solid var(--rule);
     }
 
     .cta-content {
@@ -1107,9 +1109,10 @@ const testimonials = [
 
     .cta-content h2 {
         font-size: clamp(1.75rem, 4vw, 2.5rem);
-        font-weight: 700;
-        color: var(--text-primary);
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 16px;
+        font-family: var(--font-serif);
     }
 
     .cta-content p {
@@ -1123,19 +1126,19 @@ const testimonials = [
         align-items: center;
         gap: 10px;
         padding: 16px 32px;
-        background: linear-gradient(135deg, var(--claim-purple) 0%, var(--claim-pink) 100%);
-        color: white;
+        background: var(--ink);
+        color: var(--paper);
         font-size: 1rem;
-        font-weight: 600;
-        border-radius: 100px;
+        font-weight: 500;
+        border-radius: var(--r-pill);
         text-decoration: none;
-        transition: all 0.3s ease;
-        box-shadow: 0 8px 30px rgba(139, 92, 246, 0.3);
+        transition: all var(--t-base) var(--ease);
+        box-shadow: var(--shadow-2);
     }
 
     .cta-button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 12px 40px rgba(139, 92, 246, 0.4);
+        box-shadow: var(--shadow-3);
     }
 
     .cta-button svg {

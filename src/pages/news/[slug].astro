@@ -17,25 +17,42 @@ const { title, summary, date, category, source, url, content } = entry.data;
 
 // Get all news for related articles
 const allNews = await getCollection("news");
-const relatedArticles = allNews
-    .filter(n => n.id !== entry.id)
-    .filter(n => n.data.category === category || Math.random() > 0.5)
-    .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
-    .slice(0, 3);
+// Prefer same-category articles, then fill with recent ones
+const sameCategoryArticles = allNews
+    .filter(n => n.id !== entry.id && n.data.category === category)
+    .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+const otherArticles = allNews
+    .filter(n => n.id !== entry.id && n.data.category !== category)
+    .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+const relatedArticles = [...sameCategoryArticles, ...otherArticles].slice(0, 3);
+
+// SVG icon paths (matching news.astro design language)
+const ICON_PATHS: Record<string, string> = {
+    'flask': 'M9 3h6v2H9V3zm0 4v6l-3 6h12l-3-6V7H9z',
+    'pill': 'M10.5 1.5a4.5 4.5 0 0 0-4.5 4.5v12a4.5 4.5 0 0 0 9 0V6a4.5 4.5 0 0 0-4.5-4.5zM8 12h5',
+    'trophy': 'M6 9H4.5a2.5 2.5 0 0 1 0-5H6m12 5h1.5a2.5 2.5 0 0 0 0-5H18M6 9a6 6 0 0 0 12 0V4H6v5zm3 12h6m-3-3v3',
+    'lightbulb': 'M9 21h6m-3-3v3M12 3a6 6 0 0 0-4 10.5V17h8v-3.5A6 6 0 0 0 12 3z',
+    'clipboard': 'M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5h6',
+    'tool': 'M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z',
+    'globe': 'M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zM2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z',
+    'dna': 'M2 15c6.667-6 13.333 0 20-6M2 9c6.667 6 13.333 0 20 6M9 3v18m6-18v18',
+    'zap': 'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
+    'file': 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8',
+};
 
 // Category definitions
 const CATEGORIES: Record<string, { icon: string; color: string; label: string }> = {
-    'breakthrough': { icon: '🔬', color: '#ffd700', label: 'Research Breakthrough' },
-    'clinical-trial': { icon: '💊', color: '#00aaff', label: 'Clinical Trial' },
-    'award': { icon: '🏆', color: '#a78bfa', label: 'Award & Recognition' },
-    'achievement': { icon: '🏆', color: '#a78bfa', label: 'Achievement' },
-    'impact': { icon: '💡', color: '#10b981', label: 'Impact Story' },
-    'registry': { icon: '📋', color: '#f59e0b', label: 'Registry Update' },
-    'technique': { icon: '🔧', color: '#ec4899', label: 'New Technique' },
-    'global-health': { icon: '🌍', color: '#06b6d4', label: 'Global Health' },
-    'research': { icon: '🧬', color: '#8b5cf6', label: 'Research' },
-    'innovation': { icon: '💡', color: '#22d3ee', label: 'Innovation' },
-    'default': { icon: '📰', color: '#888', label: 'News' }
+    'breakthrough': { icon: 'flask', color: '#ffd700', label: 'Research Breakthrough' },
+    'clinical-trial': { icon: 'pill', color: '#00aaff', label: 'Clinical Trial' },
+    'award': { icon: 'trophy', color: '#a78bfa', label: 'Award & Recognition' },
+    'achievement': { icon: 'trophy', color: '#a78bfa', label: 'Achievement' },
+    'impact': { icon: 'lightbulb', color: '#10b981', label: 'Impact Story' },
+    'registry': { icon: 'clipboard', color: '#f59e0b', label: 'Registry Update' },
+    'technique': { icon: 'tool', color: '#ec4899', label: 'New Technique' },
+    'global-health': { icon: 'globe', color: '#06b6d4', label: 'Global Health' },
+    'research': { icon: 'dna', color: '#8b5cf6', label: 'Research' },
+    'innovation': { icon: 'zap', color: '#22d3ee', label: 'Innovation' },
+    'default': { icon: 'file', color: '#888', label: 'News' }
 };
 
 function getCategoryInfo(category: string) {
@@ -67,7 +84,7 @@ function getReadingTime(text: string) {
     return minutes < 1 ? '1 min read' : `${minutes} min read`;
 }
 
-function getRelativeTime(dateStr: string) {
+function _getRelativeTime(dateStr: string) {
     const date = new Date(dateStr);
     const now = new Date();
     const diffMs = now.getTime() - date.getTime();
@@ -82,17 +99,54 @@ function getRelativeTime(dateStr: string) {
 
 const shareUrl = `https://mdrpedia.com/news/${entry.id}`;
 const shareText = encodeURIComponent(title);
+
+// NewsArticle JSON-LD for SEO
+const newsArticleSchema = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": title,
+    "description": summary,
+    "datePublished": date,
+    "dateModified": date,
+    "author": {
+        "@type": "Organization",
+        "name": "MDRPedia Editorial",
+        "url": "https://mdrpedia.com"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MDRPedia",
+        "url": "https://mdrpedia.com",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://mdrpedia.com/og-default.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": shareUrl
+    },
+    "image": "https://mdrpedia.com/og-default.png",
+    "articleSection": category,
+    "wordCount": ((content || '').split(/\s+/).length + (summary || '').split(/\s+/).length),
+    ...(source && { "citation": { "@type": "CreativeWork", "name": source, ...(url && { "url": url }) } })
+};
+
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mdrpedia.com" },
+        { "@type": "ListItem", "position": 2, "name": "News", "item": "https://mdrpedia.com/news" },
+        { "@type": "ListItem", "position": 3, "name": title }
+    ]
+};
 ---
 
 <Layout title={`${title} — MDRPedia News`} description={summary}>
+    <script type="application/ld+json" set:html={JSON.stringify(newsArticleSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
     <div class="article-page">
-        <!-- Animated Background -->
-        <div class="page-bg">
-            <div class="orb orb-1"></div>
-            <div class="orb orb-2"></div>
-            <div class="grid-overlay"></div>
-        </div>
-
         <div class="container">
             <!-- Breadcrumb -->
             <nav class="breadcrumb">
@@ -111,7 +165,9 @@ const shareText = encodeURIComponent(title);
 
                     <div class="article-meta">
                         <div class="category-badge" style={`--cat-color: ${catInfo.color}`}>
-                            <span class="badge-icon">{catInfo.icon}</span>
+                            <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d={ICON_PATHS[catInfo.icon]} />
+                            </svg>
                             {catInfo.label}
                         </div>
                         <span class="meta-divider">•</span>
@@ -160,7 +216,9 @@ const shareText = encodeURIComponent(title);
                 <div class="article-hero" style={`--cat-color: ${catInfo.color}`}>
                     <div class="hero-content">
                         <div class="hero-icon">
-                            <span>{catInfo.icon}</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d={ICON_PATHS[catInfo.icon]} />
+                            </svg>
                         </div>
                         <div class="hero-label">{catInfo.label}</div>
                     </div>
@@ -278,7 +336,9 @@ const shareText = encodeURIComponent(title);
                                 <a href={`/news/${article.id}`} class="related-card" style={`--cat-color: ${relCatInfo.color}`}>
                                     <div class="related-highlight"></div>
                                     <div class="related-category">
-                                        <span>{relCatInfo.icon}</span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d={ICON_PATHS[relCatInfo.icon]} />
+                                        </svg>
                                         {relCatInfo.label}
                                     </div>
                                     <h3 class="related-card-title">{article.data.title}</h3>
@@ -326,73 +386,17 @@ const shareText = encodeURIComponent(title);
 <style>
     .article-page {
         min-height: 100vh;
-        position: relative;
-        overflow: hidden;
-    }
-
-    /* Animated Background */
-    .page-bg {
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        z-index: 0;
-    }
-
-    .orb {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(100px);
-        opacity: 0.3;
-        animation: float 25s ease-in-out infinite;
-    }
-
-    .orb-1 {
-        width: 500px;
-        height: 500px;
-        background: rgba(139, 92, 246, 0.2);
-        top: -150px;
-        left: -100px;
-        animation-delay: 0s;
-    }
-
-    .orb-2 {
-        width: 400px;
-        height: 400px;
-        background: rgba(59, 130, 246, 0.15);
-        bottom: 20%;
-        right: -100px;
-        animation-delay: -10s;
-    }
-
-    @keyframes float {
-        0%, 100% { transform: translate(0, 0) scale(1); }
-        25% { transform: translate(30px, -30px) scale(1.05); }
-        50% { transform: translate(-20px, 20px) scale(0.95); }
-        75% { transform: translate(20px, 30px) scale(1.02); }
-    }
-
-    .grid-overlay {
-        position: absolute;
-        inset: 0;
-        background-image:
-            linear-gradient(rgba(139, 92, 246, 0.02) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(139, 92, 246, 0.02) 1px, transparent 1px);
-        background-size: 60px 60px;
-        mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
     }
 
     .container {
         max-width: 800px;
         margin: 0 auto;
         padding: 40px 20px 100px;
-        position: relative;
-        z-index: 1;
     }
 
     /* Breadcrumb */
     .breadcrumb {
         margin-bottom: 32px;
-        animation: fade-in-down 0.5s ease-out;
     }
 
     .breadcrumb-link {
@@ -400,26 +404,26 @@ const shareText = encodeURIComponent(title);
         align-items: center;
         gap: 8px;
         padding: 10px 18px;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 100px;
-        color: var(--text-secondary);
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-pill);
+        color: var(--ink-2);
         text-decoration: none;
         font-size: 0.9rem;
         font-weight: 500;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all var(--t-fast) var(--ease);
     }
 
     .breadcrumb-link svg {
         width: 16px;
         height: 16px;
-        transition: transform 0.3s;
+        transition: transform var(--t-fast);
     }
 
     .breadcrumb-link:hover {
-        background: rgba(139, 92, 246, 0.1);
-        border-color: rgba(139, 92, 246, 0.3);
-        color: #a78bfa;
+        background: var(--ink-blue-2);
+        border-color: var(--ink-blue);
+        color: var(--ink-blue);
     }
 
     .breadcrumb-link:hover svg {
@@ -428,31 +432,21 @@ const shareText = encodeURIComponent(title);
 
     /* Article Container */
     .article-container {
-        background: linear-gradient(145deg, rgba(30, 30, 50, 0.8), rgba(20, 20, 40, 0.6));
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 24px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         overflow: hidden;
-        box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(10px);
-        animation: fade-in-up 0.6s ease-out;
+        box-shadow: var(--shadow-3);
     }
 
     /* Article Header */
     .article-header {
         padding: 48px 48px 32px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid var(--rule);
         position: relative;
     }
 
-    .header-glow {
-        position: absolute;
-        top: -100px;
-        right: -100px;
-        width: 300px;
-        height: 300px;
-        background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
-        pointer-events: none;
-    }
+    .header-glow { display: none; }
 
     .article-meta {
         display: flex;
@@ -467,22 +461,25 @@ const shareText = encodeURIComponent(title);
         align-items: center;
         gap: 6px;
         padding: 6px 14px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid var(--cat-color, rgba(255, 255, 255, 0.1));
-        border-radius: 100px;
-        font-size: 0.75rem;
-        font-weight: 700;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-pill);
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        font-weight: 500;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        color: var(--cat-color, #a78bfa);
+        color: var(--ink-2);
     }
 
     .badge-icon {
-        font-size: 0.9rem;
+        width: 14px;
+        height: 14px;
+        color: var(--cat-color);
     }
 
     .meta-divider {
-        color: rgba(255, 255, 255, 0.15);
+        color: var(--rule);
         font-size: 0.8rem;
     }
 
@@ -491,7 +488,7 @@ const shareText = encodeURIComponent(title);
         align-items: center;
         gap: 6px;
         font-size: 0.85rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .meta-item svg {
@@ -501,10 +498,11 @@ const shareText = encodeURIComponent(title);
     }
 
     .article-title {
+        font-family: var(--font-serif);
         font-size: clamp(1.75rem, 4vw, 2.5rem);
-        font-weight: 800;
+        font-weight: 500;
         line-height: 1.2;
-        color: var(--text-primary);
+        color: var(--ink);
         margin-bottom: 24px;
         letter-spacing: -0.02em;
     }
@@ -514,7 +512,7 @@ const shareText = encodeURIComponent(title);
         align-items: center;
         flex-wrap: wrap;
         gap: 8px;
-        color: var(--text-muted);
+        color: var(--ink-3);
         font-size: 0.95rem;
     }
 
@@ -525,7 +523,7 @@ const shareText = encodeURIComponent(title);
     }
 
     .article-source strong {
-        color: var(--text-secondary);
+        color: var(--ink-2);
     }
 
     .source-link {
@@ -533,14 +531,14 @@ const shareText = encodeURIComponent(title);
         align-items: center;
         gap: 4px;
         padding: 4px 12px;
-        background: rgba(139, 92, 246, 0.1);
-        border: 1px solid rgba(139, 92, 246, 0.3);
-        border-radius: 100px;
+        background: var(--ink-blue-2);
+        border: 1px solid var(--ink-blue);
+        border-radius: var(--r-pill);
         font-size: 0.8rem;
         font-weight: 600;
-        color: #a78bfa;
+        color: var(--ink-blue);
         text-decoration: none;
-        transition: all 0.2s;
+        transition: all var(--t-fast);
         margin-left: 8px;
     }
 
@@ -551,18 +549,14 @@ const shareText = encodeURIComponent(title);
     }
 
     .source-link:hover {
-        background: rgba(139, 92, 246, 0.2);
-        transform: translateY(-1px);
+        background: color-mix(in oklch, var(--ink-blue) 20%, transparent);
     }
 
     /* Article Hero */
     .article-hero {
         width: 100%;
         height: 280px;
-        background: linear-gradient(135deg,
-            rgba(var(--cat-color-rgb, 139, 92, 246), 0.1) 0%,
-            rgba(15, 23, 42, 0.9) 100%
-        );
+        background: var(--paper-2);
         position: relative;
         overflow: hidden;
         display: flex;
@@ -576,52 +570,27 @@ const shareText = encodeURIComponent(title);
     }
 
     .hero-icon {
-        font-size: 4rem;
         margin-bottom: 1rem;
-        opacity: 0.6;
-        animation: pulse-icon 3s ease-in-out infinite;
+        opacity: 0.5;
     }
 
-    @keyframes pulse-icon {
-        0%, 100% { transform: scale(1); opacity: 0.6; }
-        50% { transform: scale(1.1); opacity: 0.8; }
+    .hero-icon svg {
+        width: 64px;
+        height: 64px;
+        color: var(--cat-color);
     }
 
     .hero-label {
-        font-size: 0.85rem;
-        font-weight: 700;
-        letter-spacing: 0.2em;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.15em;
         text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.3);
+        color: var(--ink-3);
     }
 
-    .hero-pattern {
-        position: absolute;
-        inset: 0;
-        background-image:
-            radial-gradient(circle at 20% 30%, var(--cat-color, rgba(139, 92, 246, 0.15)) 0%, transparent 50%),
-            radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
-    }
-
-    .hero-shimmer {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0) 0%,
-            rgba(255, 255, 255, 0.03) 50%,
-            rgba(255, 255, 255, 0) 100%
-        );
-        animation: shimmer 4s infinite linear;
-    }
-
-    @keyframes shimmer {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(100%); }
-    }
+    .hero-pattern,
+    .hero-shimmer { display: none; }
 
     /* Article Content */
     .article-content {
@@ -629,10 +598,11 @@ const shareText = encodeURIComponent(title);
     }
 
     .lead-text {
+        font-family: var(--font-serif);
         font-size: 1.3rem;
         line-height: 1.7;
-        color: var(--text-secondary);
-        font-weight: 500;
+        color: var(--ink-2);
+        font-weight: 400;
         margin-bottom: 32px;
     }
 
@@ -646,19 +616,20 @@ const shareText = encodeURIComponent(title);
     .content-divider span {
         flex: 1;
         height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+        background: var(--rule);
     }
 
     .content-divider svg {
         width: 20px;
         height: 20px;
-        color: rgba(139, 92, 246, 0.4);
+        color: var(--ink-3);
+        opacity: 0.4;
     }
 
     .body-text {
         font-size: 1.1rem;
         line-height: 1.85;
-        color: var(--text-muted);
+        color: var(--ink-2);
     }
 
     .body-text p {
@@ -673,9 +644,9 @@ const shareText = encodeURIComponent(title);
     .pending-content {
         text-align: center;
         padding: 3rem 2rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px dashed rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px dashed var(--rule);
+        border-radius: var(--r-4);
     }
 
     .pending-icon {
@@ -685,25 +656,27 @@ const shareText = encodeURIComponent(title);
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(139, 92, 246, 0.1);
-        border: 1px solid rgba(139, 92, 246, 0.2);
-        border-radius: 16px;
+        background: var(--ink-blue-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
     }
 
     .pending-icon svg {
         width: 28px;
         height: 28px;
-        color: #a78bfa;
+        color: var(--ink-blue);
     }
 
     .pending-content h4 {
+        font-family: var(--font-serif);
         font-size: 1.1rem;
-        color: var(--text-primary);
+        font-weight: 500;
+        color: var(--ink);
         margin-bottom: 0.5rem;
     }
 
     .pending-content p {
-        color: var(--text-muted);
+        color: var(--ink-3);
         font-size: 0.95rem;
         margin: 0;
     }
@@ -714,8 +687,8 @@ const shareText = encodeURIComponent(title);
         align-items: center;
         justify-content: space-between;
         padding: 24px 48px;
-        background: rgba(0, 0, 0, 0.2);
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        background: var(--paper-2);
+        border-top: 1px solid var(--rule);
     }
 
     .share-label {
@@ -724,13 +697,13 @@ const shareText = encodeURIComponent(title);
         gap: 10px;
         font-size: 0.9rem;
         font-weight: 600;
-        color: var(--text-secondary);
+        color: var(--ink-2);
     }
 
     .share-label svg {
         width: 18px;
         height: 18px;
-        color: #a78bfa;
+        color: var(--ink-blue);
     }
 
     .share-buttons {
@@ -744,13 +717,13 @@ const shareText = encodeURIComponent(title);
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        color: var(--text-secondary);
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
+        color: var(--ink-2);
         text-decoration: none;
         cursor: pointer;
-        transition: all 0.2s;
+        transition: all var(--t-fast);
     }
 
     .share-btn svg {
@@ -759,38 +732,21 @@ const shareText = encodeURIComponent(title);
     }
 
     .share-btn:hover {
-        transform: translateY(-2px);
-    }
-
-    .share-btn.twitter:hover {
-        background: rgba(29, 161, 242, 0.15);
-        border-color: rgba(29, 161, 242, 0.3);
-        color: #1da1f2;
-    }
-
-    .share-btn.linkedin:hover {
-        background: rgba(0, 119, 181, 0.15);
-        border-color: rgba(0, 119, 181, 0.3);
-        color: #0077b5;
-    }
-
-    .share-btn.copy:hover {
-        background: rgba(139, 92, 246, 0.15);
-        border-color: rgba(139, 92, 246, 0.3);
-        color: #a78bfa;
+        border-color: var(--rule-strong);
+        box-shadow: var(--shadow-2);
     }
 
     .share-btn.copy.copied {
-        background: rgba(16, 185, 129, 0.15);
-        border-color: rgba(16, 185, 129, 0.3);
-        color: #10b981;
+        background: var(--verdant-2);
+        border-color: var(--verdant);
+        color: var(--verdant);
     }
 
     /* Article Footer */
     .article-footer {
         padding: 32px 48px;
-        background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(16, 185, 129, 0.05) 100%);
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        background: var(--paper-2);
+        border-top: 1px solid var(--rule);
         text-align: center;
     }
 
@@ -799,12 +755,13 @@ const shareText = encodeURIComponent(title);
         align-items: center;
         gap: 8px;
         padding: 8px 16px;
-        background: rgba(16, 185, 129, 0.1);
-        border: 1px solid rgba(16, 185, 129, 0.3);
-        border-radius: 100px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        color: #10b981;
+        background: var(--verdant-2);
+        border: 1px solid var(--verdant);
+        border-radius: var(--r-pill);
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--verdant);
         margin-bottom: 12px;
     }
 
@@ -815,7 +772,7 @@ const shareText = encodeURIComponent(title);
 
     .footer-text {
         font-size: 0.9rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin: 0;
         max-width: 500px;
         margin: 0 auto;
@@ -825,23 +782,23 @@ const shareText = encodeURIComponent(title);
     /* Related Section */
     .related-section {
         margin-top: 48px;
-        animation: fade-in-up 0.6s ease-out 0.2s both;
     }
 
     .related-title {
         display: flex;
         align-items: center;
         gap: 12px;
+        font-family: var(--font-serif);
         font-size: 1.25rem;
-        font-weight: 700;
-        color: var(--text-primary);
+        font-weight: 500;
+        color: var(--ink);
         margin-bottom: 24px;
     }
 
     .related-title svg {
         width: 22px;
         height: 22px;
-        color: #a78bfa;
+        color: var(--ink-blue);
     }
 
     .related-grid {
@@ -853,11 +810,11 @@ const shareText = encodeURIComponent(title);
     .related-card {
         position: relative;
         padding: 1.5rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 16px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         text-decoration: none;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all var(--t-fast) var(--ease);
         overflow: hidden;
     }
 
@@ -867,15 +824,14 @@ const shareText = encodeURIComponent(title);
         left: 0;
         right: 0;
         height: 3px;
-        background: var(--cat-color, #a78bfa);
+        background: var(--ink-blue);
         transform: scaleX(0);
-        transition: transform 0.3s;
+        transition: transform var(--t-fast);
     }
 
     .related-card:hover {
-        border-color: rgba(139, 92, 246, 0.3);
-        background: rgba(139, 92, 246, 0.05);
-        transform: translateY(-4px);
+        border-color: var(--rule-strong);
+        box-shadow: var(--shadow-3);
     }
 
     .related-card:hover .related-highlight {
@@ -886,16 +842,24 @@ const shareText = encodeURIComponent(title);
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        font-size: 0.7rem;
-        font-weight: 600;
-        color: var(--cat-color, var(--text-muted));
+        font-family: var(--font-mono);
+        font-size: 0.65rem;
+        font-weight: 500;
+        color: var(--ink-3);
         margin-bottom: 10px;
     }
 
+    .related-category svg {
+        width: 12px;
+        height: 12px;
+        color: var(--cat-color);
+    }
+
     .related-card-title {
+        font-family: var(--font-serif);
         font-size: 0.95rem;
-        font-weight: 600;
-        color: var(--text-primary);
+        font-weight: 500;
+        color: var(--ink);
         line-height: 1.4;
         margin-bottom: 12px;
         display: -webkit-box;
@@ -905,26 +869,25 @@ const shareText = encodeURIComponent(title);
     }
 
     .related-card:hover .related-card-title {
-        color: #a78bfa;
+        color: var(--ink-blue);
     }
 
     .related-meta {
         display: flex;
         justify-content: space-between;
         font-size: 0.75rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .related-source {
         font-weight: 600;
-        color: var(--text-secondary);
+        color: var(--ink-2);
     }
 
     /* Back CTA */
     .back-cta {
         margin-top: 48px;
         text-align: center;
-        animation: fade-in-up 0.6s ease-out 0.3s both;
     }
 
     .back-btn {
@@ -932,14 +895,14 @@ const shareText = encodeURIComponent(title);
         align-items: center;
         gap: 10px;
         padding: 14px 28px;
-        background: linear-gradient(135deg, #a855f7, #7c3aed);
-        border-radius: 14px;
+        background: var(--ink-blue);
+        border-radius: var(--r-3);
         font-size: 0.95rem;
         font-weight: 600;
-        color: white;
+        color: var(--paper);
         text-decoration: none;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 8px 25px -8px rgba(139, 92, 246, 0.5);
+        transition: all var(--t-fast) var(--ease);
+        box-shadow: var(--shadow-2);
     }
 
     .back-btn svg {
@@ -948,35 +911,11 @@ const shareText = encodeURIComponent(title);
     }
 
     .back-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 30px -8px rgba(139, 92, 246, 0.6);
-    }
-
-    /* Animations */
-    @keyframes fade-in-up {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes fade-in-down {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        box-shadow: var(--shadow-3);
     }
 
     /* Responsive */
-    @media (max-width: 640px) {
+    @media (max-width: 768px) {
         .container {
             padding: 30px 16px 80px;
         }
@@ -1010,8 +949,9 @@ const shareText = encodeURIComponent(title);
             height: 200px;
         }
 
-        .hero-icon {
-            font-size: 3rem;
+        .hero-icon svg {
+            width: 48px;
+            height: 48px;
         }
 
         .lead-text {

@@ -212,18 +212,18 @@ const complexityInfo = complexityConfig[scenario.complexity];
 
 <style>
     .scenario-section {
-        background: var(--card-bg, rgba(20, 20, 35, 0.8));
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 2rem;
         margin-bottom: 2rem;
-        backdrop-filter: blur(10px);
+        
     }
 
     .scenario-header {
         margin-bottom: 1.5rem;
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
+        border-bottom: 1px solid var(--rule);
     }
 
     .scenario-title {
@@ -233,11 +233,11 @@ const complexityInfo = complexityConfig[scenario.complexity];
         font-size: 1.25rem;
         font-weight: 700;
         margin: 0 0 0.75rem;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .scenario-title svg {
-        color: var(--accent, #8b5cf6);
+        color: var(--ink-blue);
         opacity: 0.9;
     }
 
@@ -251,7 +251,7 @@ const complexityInfo = complexityConfig[scenario.complexity];
         padding: 4px 12px;
         background: color-mix(in srgb, var(--badge-color) 15%, transparent);
         border: 1px solid color-mix(in srgb, var(--badge-color) 30%, transparent);
-        border-radius: 100px;
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
         font-weight: 600;
         color: var(--badge-color);
@@ -263,16 +263,16 @@ const complexityInfo = complexityConfig[scenario.complexity];
         padding: 4px 12px;
         background: rgba(236, 72, 153, 0.1);
         border: 1px solid rgba(236, 72, 153, 0.2);
-        border-radius: 100px;
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
-        color: #f472b6;
+        color: var(--sanguine);
     }
 
     /* Presentation Card */
     .presentation-card {
         background: rgba(139, 92, 246, 0.08);
-        border: 1px solid rgba(139, 92, 246, 0.2);
-        border-radius: 12px;
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 1.25rem;
         margin-bottom: 1.5rem;
     }
@@ -283,14 +283,14 @@ const complexityInfo = complexityConfig[scenario.complexity];
         gap: 0.5rem;
         font-size: 0.85rem;
         font-weight: 700;
-        color: #a78bfa;
+        color: var(--ink-blue);
         margin: 0 0 0.75rem;
     }
 
     .presentation-text {
         font-size: 0.95rem;
         line-height: 1.7;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         margin: 0;
     }
 
@@ -307,7 +307,7 @@ const complexityInfo = complexityConfig[scenario.complexity];
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         margin: 0 0 1rem;
     }
 
@@ -318,9 +318,9 @@ const complexityInfo = complexityConfig[scenario.complexity];
     }
 
     .step-block {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 12px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 1.25rem;
     }
 
@@ -338,7 +338,7 @@ const complexityInfo = complexityConfig[scenario.complexity];
         display: flex;
         align-items: center;
         justify-content: center;
-        background: var(--accent, #8b5cf6);
+        background: var(--ink-blue);
         border-radius: 50%;
         font-size: 0.9rem;
         font-weight: 700;
@@ -348,7 +348,7 @@ const complexityInfo = complexityConfig[scenario.complexity];
     .step-situation {
         font-size: 1rem;
         font-weight: 600;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
         line-height: 1.5;
         padding-top: 0.25rem;
     }
@@ -363,17 +363,17 @@ const complexityInfo = complexityConfig[scenario.complexity];
     .option-card {
         position: relative;
         padding: 1rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 10px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         text-align: left;
         cursor: pointer;
         transition: all 0.2s ease;
     }
 
     .option-card:hover {
-        background: rgba(255, 255, 255, 0.04);
-        border-color: rgba(255, 255, 255, 0.15);
+        background: var(--paper-3);
+        border-color: var(--rule-strong);
     }
 
     .option-card--optimal {
@@ -397,11 +397,11 @@ const complexityInfo = complexityConfig[scenario.complexity];
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(255, 255, 255, 0.1);
+        background: var(--paper-3);
         border-radius: 6px;
         font-size: 0.75rem;
         font-weight: 700;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
     }
 
     .optimal-badge {
@@ -410,17 +410,17 @@ const complexityInfo = complexityConfig[scenario.complexity];
         gap: 0.25rem;
         padding: 2px 8px;
         background: rgba(16, 185, 129, 0.15);
-        border-radius: 100px;
+        border-radius: var(--r-pill);
         font-size: 0.65rem;
         font-weight: 600;
-        color: #10b981;
+        color: var(--verdant);
         text-transform: uppercase;
     }
 
     .option-choice {
         font-size: 0.9rem;
         line-height: 1.5;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         margin: 0;
     }
 
@@ -428,7 +428,7 @@ const complexityInfo = complexityConfig[scenario.complexity];
         display: none;
         margin-top: 1rem;
         padding-top: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-top: 1px solid var(--rule);
     }
 
     .option-card.revealed .option-reveal {
@@ -447,7 +447,7 @@ const complexityInfo = complexityConfig[scenario.complexity];
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         margin-bottom: 0.25rem;
     }
 
@@ -455,7 +455,7 @@ const complexityInfo = complexityConfig[scenario.complexity];
     .reasoning-text {
         font-size: 0.85rem;
         line-height: 1.5;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         margin: 0;
     }
 
@@ -468,33 +468,33 @@ const complexityInfo = complexityConfig[scenario.complexity];
         margin-top: 1rem;
         padding: 1rem;
         background: rgba(245, 158, 11, 0.08);
-        border-radius: 10px;
+        border-radius: var(--r-3);
     }
 
     .expert-insight svg {
-        color: #f59e0b;
+        color: var(--aged-gold);
         flex-shrink: 0;
     }
 
     .insight-label {
         font-size: 0.75rem;
         font-weight: 600;
-        color: #f59e0b;
+        color: var(--aged-gold);
     }
 
     .insight-text {
         flex: 1 1 100%;
         font-size: 0.9rem;
         line-height: 1.6;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         margin: 0.25rem 0 0;
     }
 
     /* Expert Summary */
     .expert-summary {
         background: rgba(16, 185, 129, 0.08);
-        border: 1px solid rgba(16, 185, 129, 0.2);
-        border-radius: 12px;
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 1.25rem;
         margin-bottom: 1.5rem;
     }
@@ -505,14 +505,14 @@ const complexityInfo = complexityConfig[scenario.complexity];
         gap: 0.5rem;
         font-size: 0.9rem;
         font-weight: 700;
-        color: #10b981;
+        color: var(--verdant);
         margin: 0 0 0.75rem;
     }
 
     .expert-text {
         font-size: 0.95rem;
         line-height: 1.7;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         margin: 0;
     }
 
@@ -527,7 +527,7 @@ const complexityInfo = complexityConfig[scenario.complexity];
         gap: 0.5rem;
         font-size: 0.9rem;
         font-weight: 700;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         margin: 0 0 1rem;
     }
 
@@ -543,8 +543,8 @@ const complexityInfo = complexityConfig[scenario.complexity];
         gap: 0.75rem;
         padding: 0.6rem 0;
         font-size: 0.9rem;
-        color: var(--text-secondary, #ccc);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        color: var(--ink-2);
+        border-bottom: 1px solid var(--rule);
     }
 
     .learning-item:last-child {
@@ -553,7 +553,7 @@ const complexityInfo = complexityConfig[scenario.complexity];
 
     .learning-item svg {
         flex-shrink: 0;
-        color: #10b981;
+        color: var(--verdant);
         margin-top: 0.15rem;
     }
 
@@ -569,7 +569,7 @@ const complexityInfo = complexityConfig[scenario.complexity];
     .related-label {
         font-size: 0.75rem;
         font-weight: 600;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .related-tags {
@@ -580,18 +580,18 @@ const complexityInfo = complexityConfig[scenario.complexity];
 
     .technique-tag {
         padding: 4px 12px;
-        background: rgba(139, 92, 246, 0.1);
-        border-radius: 100px;
+        background: var(--paper-3);
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
-        color: #a78bfa;
+        color: var(--ink-blue);
     }
 
     /* Disclaimers */
     .disclaimers {
         padding: 1rem;
-        background: rgba(255, 255, 255, 0.02);
-        border-radius: 10px;
-        border: 1px dashed rgba(255, 255, 255, 0.1);
+        background: var(--paper-2);
+        border-radius: var(--r-3);
+        border: 1px dashed var(--rule);
     }
 
     .disclaimer-text {
@@ -599,7 +599,7 @@ const complexityInfo = complexityConfig[scenario.complexity];
         align-items: flex-start;
         gap: 0.5rem;
         font-size: 0.8rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         margin: 0 0 0.5rem;
         line-height: 1.5;
     }
@@ -611,16 +611,16 @@ const complexityInfo = complexityConfig[scenario.complexity];
     .disclaimer-text svg {
         flex-shrink: 0;
         margin-top: 0.1rem;
-        color: #f59e0b;
+        color: var(--aged-gold);
     }
 
     /* Tier colors */
-    .tier-titan .scenario-title svg { color: #ffd700; }
-    .tier-titan .step-number { background: linear-gradient(135deg, #ffd700, #f59e0b); }
-    .tier-elite .scenario-title svg { color: #00aaff; }
-    .tier-elite .step-number { background: linear-gradient(135deg, #00aaff, #0070f3); }
-    .tier-master .scenario-title svg { color: #00cc66; }
-    .tier-master .step-number { background: linear-gradient(135deg, #00cc66, #10b981); }
+    .tier-titan .scenario-title svg { color: var(--aged-gold); }
+    .tier-titan .step-number { background: var(--aged-gold); }
+    .tier-elite .scenario-title svg { color: var(--ink-blue); }
+    .tier-elite .step-number { background: var(--ink-blue); }
+    .tier-master .scenario-title svg { color: var(--verdant); }
+    .tier-master .step-number { background: var(--verdant); }
 
     /* Responsive */
     @media (max-width: 640px) {

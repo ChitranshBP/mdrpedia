@@ -271,7 +271,7 @@ const entityList = {
         <section data-entity="hospitals">
             <h2>Hospital Affiliations</h2>
             <ul>
-                {props.affiliations.map(a => (
+                {props.affiliations.map((a: any) => (
                     <li data-hospital={a.hospitalName}>
                         {a.hospitalName}{a.role ? ` - ${a.role}` : ''}
                         {a.department ? ` (${a.department})` : ''}
@@ -285,7 +285,7 @@ const entityList = {
         <section data-entity="techniques">
             <h2>Techniques Invented</h2>
             <ul>
-                {props.techniques.map(t => (
+                {props.techniques.map((t: any) => (
                     <li data-technique={t.name}>
                         {t.name}
                         {t.yearInvented ? ` (${t.yearInvented})` : ''}
@@ -301,7 +301,7 @@ const entityList = {
         <section data-entity="citations">
             <h2>Key Publications</h2>
             <ol>
-                {props.citations.slice(0, 15).map(c => (
+                {props.citations.slice(0, 15).map((c: any) => (
                     <li data-doi={c.doi} data-pmid={c.pubmedId}>
                         "{c.title}"
                         {c.journal ? ` - ${c.journal}` : ''}
@@ -317,7 +317,7 @@ const entityList = {
         <section data-entity="conditions">
             <h2>Conditions Treated</h2>
             <ul>
-                {props.conditionsTreated.map(c => (
+                {props.conditionsTreated.map((c: string) => (
                     <li data-condition={c}>{c}</li>
                 ))}
             </ul>
@@ -327,9 +327,9 @@ const entityList = {
     {props.mentors && props.mentors.length > 0 && (
         <section data-entity="lineage">
             <h2>Medical Lineage</h2>
-            <p>Mentors: {props.mentors.map(m => m.name).join(', ')}</p>
+            <p>Mentors: {props.mentors.map((m: any) => m.name).join(', ')}</p>
             {props.students && props.students.length > 0 && (
-                <p>Students: {props.students.map(s => s.name).join(', ')}</p>
+                <p>Students: {props.students.map((s: any) => s.name).join(', ')}</p>
             )}
         </section>
     )}
@@ -339,10 +339,10 @@ const entityList = {
         <p>
             {props.fullName} is a {props.specialty} specialist
             {props.affiliations && props.affiliations.length > 0
-                ? ` affiliated with ${props.affiliations.map(a => a.hospitalName).join(', ')}`
+                ? ` affiliated with ${props.affiliations.map((a: any) => a.hospitalName).join(', ')}`
                 : ''}.
             {props.techniques && props.techniques.length > 0
-                ? ` Invented techniques: ${props.techniques.map(t => t.name).join(', ')}.`
+                ? ` Invented techniques: ${props.techniques.map((t: any) => t.name).join(', ')}.`
                 : ''}
             {props.citations && props.citations.length > 0
                 ? ` Authored ${props.citations.length} scholarly articles.`

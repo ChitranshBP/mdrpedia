@@ -37,11 +37,25 @@ import Layout from "../layouts/Layout.astro";
                         technique to the physician serving in a crisis zone, we honor
                         those who enrich the world, not just themselves.
                     </p>
-                    <p class="branding-note">
-                        *Sometimes referred to as <strong>MDpedia</strong> or <strong
-                            >DrPedia</strong
-                        > in medical journals and press.
-                    </p>
+                    <div class="regional-names">
+                        <h3>One Register, Two Names</h3>
+                        <p>
+                            Around the world, MDRPedia has earned two colloquial names.
+                            In <strong>Western medical communities</strong> — the Americas, Europe,
+                            and Australasia — physicians and press commonly refer to the register as
+                            <a href="/about/mdpedia"><strong>MDpedia</strong></a>, a shorthand rooted
+                            in the "MD" (Doctor of Medicine) credential.
+                        </p>
+                        <p>
+                            In <strong>Eastern medical communities</strong> — the Middle East, South Asia,
+                            East Asia, and Africa — the platform is known as
+                            <a href="/about/drpedia"><strong>DRpedia</strong></a>, reflecting the
+                            universal "Dr." honorific used across these regions.
+                        </p>
+                        <p class="branding-note">
+                            Both names refer to this same register. <a href="/brand">Read more about our brand system</a>.
+                        </p>
+                    </div>
                 </div>
                 <div class="stat-box">
                     <div class="stat">
@@ -65,7 +79,7 @@ import Layout from "../layouts/Layout.astro";
 
             <div class="pillars">
                 <div class="pillar">
-                    <div class="icon">🔬</div>
+                    <div class="icon"><svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6v2H9V3zm0 4v6l-3 6h12l-3-6V7H9z"/></svg></div>
                     <h3>Intellectual Legacy</h3>
                     <p>
                         Research, citations, and inventions that changed medical
@@ -73,7 +87,7 @@ import Layout from "../layouts/Layout.astro";
                     </p>
                 </div>
                 <div class="pillar">
-                    <div class="icon">🩺</div>
+                    <div class="icon"><svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
                     <h3>Clinical Mastery</h3>
                     <p>
                         Verified surgeries, years of service, and patient
@@ -81,7 +95,7 @@ import Layout from "../layouts/Layout.astro";
                     </p>
                 </div>
                 <div class="pillar">
-                    <div class="icon">🌍</div>
+                    <div class="icon"><svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
                     <h3>Humanitarian Impact</h3>
                     <p>
                         Lives saved, crisis response, and service to the
@@ -89,7 +103,7 @@ import Layout from "../layouts/Layout.astro";
                     </p>
                 </div>
                 <div class="pillar">
-                    <div class="icon">🎓</div>
+                    <div class="icon"><svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
                     <h3>Global Mentorship</h3>
                     <p>
                         The lineage of students trained and institutions built.
@@ -270,43 +284,36 @@ import Layout from "../layouts/Layout.astro";
 
 <style>
     .about-container {
-        max-width: 1200px;
+        max-width: var(--max);
         margin: 0 auto;
         padding: 0 20px 100px;
-        color: var(--text-primary);
+        color: var(--ink);
     }
 
     /* Hero */
     .hero {
         padding: 100px 0;
         text-align: center;
-        background: radial-gradient(
-            circle at center,
-            rgba(124, 58, 237, 0.1) 0%,
-            transparent 70%
-        );
     }
 
     h1 {
-        font-size: 4rem;
+        font-size: 3.5rem;
         font-family: var(--font-serif);
+        font-weight: 400;
         margin-bottom: 1rem;
-        background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: var(--ink);
     }
 
     .hero-subtitle {
         font-size: 1.5rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         max-width: 600px;
         margin: 0 auto;
     }
 
     .highlight {
-        color: var(--accent-purple);
-        font-weight: 700;
-        text-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+        color: var(--ink-blue);
+        font-weight: 500;
     }
 
     /* Grid Layouts */
@@ -318,39 +325,31 @@ import Layout from "../layouts/Layout.astro";
         margin: 80px 0;
     }
 
-    @media (max-width: 768px) {
-        .grid-2 {
-            grid-template-columns: 1fr;
-        }
-        h1 {
-            font-size: 2.5rem;
-        }
-    }
-
     /* Sections */
     section {
         margin-bottom: 80px;
     }
 
     h2 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
         font-family: var(--font-serif);
+        font-weight: 400;
         margin-bottom: 1.5rem;
-        color: #fff;
+        color: var(--ink);
     }
 
     p {
         font-size: 1.1rem;
         line-height: 1.8;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         margin-bottom: 1.5rem;
     }
 
     /* Stat Box */
     .stat-box {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 40px;
         display: flex;
         justify-content: space-around;
@@ -360,15 +359,15 @@ import Layout from "../layouts/Layout.astro";
     .stat .number {
         display: block;
         font-size: 3rem;
-        font-weight: 700;
-        color: var(--accent-purple);
+        font-weight: 500;
+        color: var(--ink-blue);
     }
 
     .stat .label {
         font-size: 0.9rem;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     /* Pillars */
@@ -380,27 +379,37 @@ import Layout from "../layouts/Layout.astro";
     }
 
     .pillar {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
         padding: 30px;
-        border-radius: 12px;
+        border-radius: var(--r-4);
         text-align: center;
-        transition: transform 0.2s;
+        transition: transform var(--t-fast) var(--ease);
     }
 
     .pillar:hover {
-        transform: translateY(-5px);
-        background: rgba(255, 255, 255, 0.04);
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-2);
     }
 
     .pillar .icon {
         font-size: 3rem;
         margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .value-icon {
+        width: 48px;
+        height: 48px;
+        color: var(--ink-blue);
     }
 
     .pillar h3 {
-        color: #fff;
+        color: var(--ink);
         margin-bottom: 10px;
+        font-weight: 500;
     }
 
     /* Ranking Explainer */
@@ -408,35 +417,55 @@ import Layout from "../layouts/Layout.astro";
         display: flex;
         align-items: center;
         gap: 60px;
-        background: linear-gradient(
-            90deg,
-            rgba(253, 185, 49, 0.05) 0%,
-            transparent 100%
-        );
+        background: var(--aged-gold-2);
         padding: 60px;
-        border-radius: 20px;
-        border-left: 4px solid #fdb931;
+        border-radius: var(--r-4);
+        border-left: 4px solid var(--aged-gold);
     }
 
     .dummy-badge {
-        background: linear-gradient(135deg, #ffd700 0%, #fdb931 100%);
-        color: #1a1a1a;
+        background: var(--aged-gold);
+        color: var(--paper);
         padding: 20px 40px;
-        border-radius: 12px;
-        font-weight: 700;
+        border-radius: var(--r-4);
+        font-weight: 500;
         font-size: 1.5rem;
         font-family: var(--font-serif);
-        box-shadow: 0 10px 30px rgba(253, 185, 49, 0.2);
+        box-shadow: var(--shadow-2);
     }
 
     .dummy-badge span {
         font-size: 2.5rem;
-        font-weight: 900;
+        font-weight: 500;
     }
 
+    .regional-names {
+        margin-top: 2rem;
+        padding: 24px 28px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
+    }
+    .regional-names h3 {
+        font-family: var(--font-serif);
+        font-size: 1.3rem;
+        font-weight: 500;
+        color: var(--ink);
+        margin-bottom: 12px;
+    }
+    .regional-names p {
+        font-size: 1rem;
+        margin-bottom: 0.8rem;
+    }
+    .regional-names a {
+        color: var(--ink-blue);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+    }
+    .regional-names a:hover { color: var(--ink); }
     .branding-note {
         font-size: 0.9rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         font-style: italic;
         margin-top: 1rem;
     }
@@ -447,17 +476,18 @@ import Layout from "../layouts/Layout.astro";
     }
 
     .content-block.alt-bg {
-        background: rgba(255, 255, 255, 0.02);
+        background: var(--paper-2);
         padding: 60px;
-        border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: var(--r-4);
+        border: 1px solid var(--rule);
     }
 
     .section-title {
-        font-size: 2.2rem;
+        font-size: 2rem;
         font-family: var(--font-serif);
+        font-weight: 400;
         margin-bottom: 40px;
-        color: #fff;
+        color: var(--ink);
         text-align: center;
     }
 
@@ -466,7 +496,7 @@ import Layout from "../layouts/Layout.astro";
         max-width: 700px;
         margin: 0 auto 40px;
         font-size: 1.1rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
     }
 
     /* Timeline */
@@ -475,7 +505,7 @@ import Layout from "../layouts/Layout.astro";
         max-width: 800px;
         margin: 0 auto;
         padding-left: 20px;
-        border-left: 2px solid rgba(139, 92, 246, 0.3);
+        border-left: 2px solid var(--rule-strong);
     }
 
     .timeline-item {
@@ -491,22 +521,23 @@ import Layout from "../layouts/Layout.astro";
         top: 0;
         width: 10px;
         height: 10px;
-        background: var(--accent-purple);
+        background: var(--ink-blue);
         border-radius: 50%;
-        box-shadow: 0 0 10px var(--accent-purple);
     }
 
     .timeline-item .year {
         display: block;
         font-size: 0.9rem;
-        font-weight: 700;
-        color: var(--accent-purple);
+        font-weight: 600;
+        color: var(--ink-blue);
         margin-bottom: 8px;
+        font-family: var(--font-mono);
     }
 
     .timeline-content h4 {
         font-size: 1.3rem;
-        color: #fff;
+        color: var(--ink);
+        font-weight: 500;
         margin-bottom: 8px;
     }
 
@@ -518,23 +549,25 @@ import Layout from "../layouts/Layout.astro";
     }
 
     .board-member {
-        background: rgba(255, 255, 255, 0.03);
+        background: var(--paper-2);
         padding: 30px;
-        border-radius: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: var(--r-4);
+        border: 1px solid var(--rule);
     }
 
     .member-role {
         font-size: 0.8rem;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: var(--accent-purple);
+        color: var(--ink-blue);
         margin-bottom: 8px;
+        font-family: var(--font-mono);
     }
 
     .board-member h4 {
         font-size: 1.2rem;
-        color: #fff;
+        color: var(--ink);
+        font-weight: 500;
         margin-bottom: 12px;
     }
 
@@ -551,26 +584,28 @@ import Layout from "../layouts/Layout.astro";
     }
 
     .step-num {
-        display: bock;
+        display: block;
         font-size: 3rem;
-        font-weight: 900;
-        color: rgba(255, 255, 255, 0.1);
+        font-weight: 400;
+        color: var(--rule);
         margin-bottom: 10px;
+        font-family: var(--font-mono);
     }
 
     .step h4 {
         font-size: 1.2rem;
-        color: #fff;
+        color: var(--ink);
+        font-weight: 500;
         margin-bottom: 10px;
     }
 
     .integrity-note {
-        background: rgba(220, 38, 38, 0.1);
-        border: 1px solid rgba(220, 38, 38, 0.2);
+        background: var(--sanguine-2);
+        border: 1px solid var(--sanguine);
         padding: 20px;
-        border-radius: 8px;
+        border-radius: var(--r-3);
         text-align: center;
-        color: #fca5a5;
+        color: var(--sanguine);
         font-size: 1rem;
     }
 
@@ -583,12 +618,12 @@ import Layout from "../layouts/Layout.astro";
 
     .partners-list li {
         padding: 16px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        color: var(--text-secondary);
+        border-bottom: 1px solid var(--rule);
+        color: var(--ink-2);
     }
 
     .partners-list strong {
-        color: #fff;
+        color: var(--ink);
         margin-right: 8px;
     }
 
@@ -603,6 +638,7 @@ import Layout from "../layouts/Layout.astro";
             padding: 60px 0;
         }
         .grid-2 {
+            grid-template-columns: 1fr;
             gap: 40px;
         }
         .stat-box {
@@ -613,6 +649,24 @@ import Layout from "../layouts/Layout.astro";
             flex-direction: column;
             padding: 30px;
             text-align: center;
+        }
+        .content-block.alt-bg {
+            padding: 30px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 2rem;
+        }
+        h2 {
+            font-size: 1.6rem;
+        }
+        .section-title {
+            font-size: 1.5rem;
+        }
+        .stat .number {
+            font-size: 2.2rem;
         }
     }
 </style>

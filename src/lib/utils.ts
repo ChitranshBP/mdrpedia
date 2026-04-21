@@ -11,10 +11,13 @@
 export function slugify(text: string): string {
     return text
         .toLowerCase()
-        .trim()
-        .replace(/[^\w\s-]/g, '') // Remove special characters
-        .replace(/\s+/g, '-')      // Replace spaces with hyphens
-        .replace(/-+/g, '-');      // Remove consecutive hyphens
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
+        .replace(/[^a-z0-9\s-]/g, '')    // Remove special chars
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '')
+        .slice(0, 80);
 }
 
 /**

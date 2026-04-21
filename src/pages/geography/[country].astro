@@ -1,0 +1,883 @@
+---
+/**
+ * MDRPedia — Country Detail Page
+ * Dynamic pages for each country showing physicians grouped by specialty
+ * Optimized for SEO with rich structured data
+ */
+import Layout from "../../layouts/Layout.astro";
+import TierBadge from "../../components/TierBadge.astro";
+import OptimizedImage from "../../components/OptimizedImage.astro";
+import { prisma } from "../../lib/prisma";
+import { slugify } from "../../lib/utils";
+
+export const prerender = false;
+
+// Set cache headers
+Astro.response.headers.set('Cache-Control', 'public, max-age=120, s-maxage=300');
+
+// Get the country slug from URL params
+const { country: countrySlug } = Astro.params;
+
+// Fetch all geographies to find the matching country by slug
+const allGeographies = await prisma.geography.findMany({
+    where: {
+        profiles: {
+            some: {}
+        }
+    },
+    select: {
+        country: true
+    },
+    distinct: ['country']
+});
+
+// Find the country whose slugified name matches the URL param
+const matchedCountry = allGeographies.find(
+    geo => slugify(geo.country) === countrySlug
+);
+
+if (!matchedCountry) {
+    return Astro.redirect('/404');
+}
+
+const countryName = matchedCountry.country;
+
+// Query all doctors in this country
+const doctors = await prisma.profile.findMany({
+    where: {
+        geography: {
+            country: {
+                equals: countryName,
+                mode: 'insensitive'
+            }
+        }
+    },
+    select: {
+        slug: true,
+        full_name: true,
+        title: true,
+        specialty: true,
+        tier: true,
+        status: true,
+        ranking_score: true,
+        h_index: true,
+        portrait_url: true,
+        geography: {
+            select: {
+                country: true,
+                city: true
+            }
+        }
+    },
+    orderBy: [
+        { tier: 'asc' },
+        { ranking_score: 'desc' },
+        { h_index: 'desc' }
+    ]
+});
+
+// Sort by tier properly (TITAN > ELITE > MASTER > UNRANKED)
+const tierOrder: Record<string, number> = {
+    TITAN: 0,
+    ELITE: 1,
+    MASTER: 2,
+    UNRANKED: 3
+};
+
+const sortedDoctors = [...doctors].sort((a, b) => {
+    const tierDiff = (tierOrder[a.tier] ?? 3) - (tierOrder[b.tier] ?? 3);
+    if (tierDiff !== 0) return tierDiff;
+    const rankA = a.ranking_score ?? 0;
+    const rankB = b.ranking_score ?? 0;
+    if (rankB !== rankA) return rankB - rankA;
+    return (b.h_index ?? 0) - (a.h_index ?? 0);
+});
+
+// Group doctors by specialty
+const specialtyGroups = new Map<string, typeof sortedDoctors>();
+for (const doc of sortedDoctors) {
+    const specialty = doc.specialty || 'General';
+    const group = specialtyGroups.get(specialty) || [];
+    group.push(doc);
+    specialtyGroups.set(specialty, group);
+}
+
+// Sort specialty groups by count descending
+const sortedSpecialtyGroups = Array.from(specialtyGroups.entries())
+    .sort((a, b) => b[1].length - a[1].length);
+
+// Calculate stats
+const totalDoctors = sortedDoctors.length;
+const titanCount = sortedDoctors.filter(d => d.tier === 'TITAN').length;
+const eliteCount = sortedDoctors.filter(d => d.tier === 'ELITE').length;
+const masterCount = sortedDoctors.filter(d => d.tier === 'MASTER').length;
+const specialtyCount = specialtyGroups.size;
+
+// Page metadata
+const pageTitle = `Physicians in ${countryName} — MDRPedia`;
+const pageDescription = `Browse ${totalDoctors} verified physicians in ${countryName}. Discover top doctors by specialty, impact rankings, and verified credentials on MDRPedia.`;
+const canonicalUrl = new URL(`/geography/${countrySlug}`, Astro.site ?? 'https://mdrpedia.com').href;
+
+// Structured Data: CollectionPage
+const collectionPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": `Physicians in ${countryName}`,
+    "description": pageDescription,
+    "url": canonicalUrl,
+    "mainEntity": {
+        "@type": "ItemList",
+        "name": `Top Physicians in ${countryName}`,
+        "numberOfItems": totalDoctors,
+        "itemListElement": sortedDoctors.slice(0, 50).map((doc, index) => ({
+            "@type": "ListItem",
+            "position": index + 1,
+            "item": {
+                "@type": "Physician",
+                "name": doc.full_name,
+                "medicalSpecialty": doc.specialty,
+                "url": new URL(`/doctors/${doc.slug}`, Astro.site ?? 'https://mdrpedia.com').href,
+                "workLocation": {
+                    "@type": "Place",
+                    "name": countryName
+                }
+            }
+        }))
+    },
+    "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": Astro.site ?? "https://mdrpedia.com" },
+            { "@type": "ListItem", "position": 2, "name": "Geography", "item": `${Astro.site ?? 'https://mdrpedia.com'}/geography` },
+            { "@type": "ListItem", "position": 3, "name": countryName, "item": canonicalUrl }
+        ]
+    }
+};
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+    <!-- Structured Data: Collection Page -->
+    <script type="application/ld+json" set:html={JSON.stringify(collectionPageSchema)} />
+
+    <div class="country-page">
+        <!-- Hero Section -->
+        <header class="country-hero">
+            <div class="container">
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <a href="/">Home</a>
+                    <span class="breadcrumb-sep">/</span>
+                    <a href="/geography">Geography</a>
+                    <span class="breadcrumb-sep">/</span>
+                    <span class="breadcrumb-current">{countryName}</span>
+                </nav>
+
+                <div class="hero-content">
+                    <h1>{countryName}</h1>
+                    <p class="hero-description">
+                        Discover {totalDoctors.toLocaleString()} verified physician{totalDoctors !== 1 ? 's' : ''} in {countryName},
+                        spanning {specialtyCount} medical specialt{specialtyCount !== 1 ? 'ies' : 'y'}.
+                    </p>
+                </div>
+
+                <!-- Stats Bar -->
+                <div class="stats-bar">
+                    <div class="stat">
+                        <span class="stat-value">{totalDoctors.toLocaleString()}</span>
+                        <span class="stat-label">Physicians</span>
+                    </div>
+                    <div class="stat stat--titan">
+                        <span class="stat-value">{titanCount}</span>
+                        <span class="stat-label">Titans</span>
+                    </div>
+                    <div class="stat stat--elite">
+                        <span class="stat-value">{eliteCount}</span>
+                        <span class="stat-label">Elite</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">{specialtyCount}</span>
+                        <span class="stat-label">Specialties</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tier Distribution -->
+        {(titanCount > 0 || eliteCount > 0 || masterCount > 0) && (
+            <section class="tier-distribution">
+                <div class="container">
+                    <h2 class="section-title">Tier Distribution</h2>
+                    <div class="tier-bar">
+                        {titanCount > 0 && (
+                            <div class="tier-segment tier-segment--titan" style={`flex: ${titanCount}`}>
+                                <span class="tier-segment__label">Titan</span>
+                                <span class="tier-segment__count">{titanCount}</span>
+                            </div>
+                        )}
+                        {eliteCount > 0 && (
+                            <div class="tier-segment tier-segment--elite" style={`flex: ${eliteCount}`}>
+                                <span class="tier-segment__label">Elite</span>
+                                <span class="tier-segment__count">{eliteCount}</span>
+                            </div>
+                        )}
+                        {masterCount > 0 && (
+                            <div class="tier-segment tier-segment--master" style={`flex: ${masterCount}`}>
+                                <span class="tier-segment__label">Master</span>
+                                <span class="tier-segment__count">{masterCount}</span>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </section>
+        )}
+
+        <!-- Doctors by Specialty -->
+        <section class="doctors-section">
+            <div class="container">
+                {sortedSpecialtyGroups.length > 0 ? (
+                    sortedSpecialtyGroups.map(([specialty, docs]) => (
+                        <div class="specialty-group">
+                            <div class="specialty-group__header">
+                                <h2 class="specialty-group__title">{specialty}</h2>
+                                <span class="specialty-group__count">{docs.length} physician{docs.length !== 1 ? 's' : ''}</span>
+                            </div>
+
+                            <div class="doctors-grid">
+                                {docs.map(doc => {
+                                    const location = doc.geography?.city || '';
+                                    const initials = doc.full_name
+                                        .split(' ')
+                                        .map((w: string) => w[0])
+                                        .filter((_: string, i: number) => i < 2)
+                                        .join('')
+                                        .toUpperCase();
+
+                                    return (
+                                        <a
+                                            href={`/doctors/${doc.slug}`}
+                                            class={`doctor-card doctor-card--${doc.tier.toLowerCase()}`}
+                                        >
+                                            <div class="doctor-card__header">
+                                                <div class={`doctor-card__avatar avatar--${doc.tier.toLowerCase()}`}>
+                                                    <OptimizedImage
+                                                        src={doc.portrait_url}
+                                                        alt={doc.full_name}
+                                                        width={64}
+                                                        height={64}
+                                                        fallbackInitials={initials}
+                                                        tier={doc.tier as 'TITAN' | 'ELITE' | 'MASTER' | 'UNRANKED'}
+                                                    />
+                                                </div>
+                                                <div class="doctor-card__badges">
+                                                    <TierBadge
+                                                        tier={doc.tier as 'TITAN' | 'ELITE' | 'MASTER' | 'UNRANKED'}
+                                                        size="sm"
+                                                    />
+                                                    {doc.status === 'HISTORICAL' && (
+                                                        <span class="legacy-badge">Legacy</span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <h3 class="doctor-card__name">{doc.full_name}</h3>
+                                            <p class="doctor-card__specialty">{doc.specialty}</p>
+                                            {location && (
+                                                <p class="doctor-card__location">{location}</p>
+                                            )}
+                                            <div class="doctor-card__stats">
+                                                <span class="stat">
+                                                    <strong>{doc.h_index || '-'}</strong> H-index
+                                                </span>
+                                            </div>
+                                        </a>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <div class="empty-state">
+                        <h3>No physicians found</h3>
+                        <p>We are actively building our database. Check back soon for physicians in {countryName}.</p>
+                    </div>
+                )}
+            </div>
+        </section>
+
+        <!-- Related: Back to Geography -->
+        <section class="related-section">
+            <div class="container">
+                <h2 class="section-title">Explore More</h2>
+                <div class="related-grid">
+                    <a href="/geography" class="related-card">
+                        <div class="related-content">
+                            <h3 class="related-name">All Countries</h3>
+                            <p class="related-desc">Browse physicians across all countries</p>
+                        </div>
+                        <span class="related-arrow">&#8594;</span>
+                    </a>
+                    <a href="/specialty" class="related-card">
+                        <div class="related-content">
+                            <h3 class="related-name">By Specialty</h3>
+                            <p class="related-desc">Explore physicians by medical specialty</p>
+                        </div>
+                        <span class="related-arrow">&#8594;</span>
+                    </a>
+                    <a href="/rankings" class="related-card">
+                        <div class="related-content">
+                            <h3 class="related-name">Rankings</h3>
+                            <p class="related-desc">View global physician rankings</p>
+                        </div>
+                        <span class="related-arrow">&#8594;</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+</Layout>
+
+<style>
+    .country-page {
+        background: var(--paper);
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        margin-bottom: 2rem;
+    }
+
+    .breadcrumb a {
+        color: var(--ink-3);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .breadcrumb a:hover {
+        color: var(--ink-blue);
+    }
+
+    .breadcrumb-sep {
+        color: var(--ink-3);
+        opacity: 0.5;
+    }
+
+    .breadcrumb-current {
+        color: var(--ink-2);
+    }
+
+    /* Hero Section */
+    .country-hero {
+        padding: 4rem 0 3rem;
+        background: var(--paper);
+        border-bottom: 1px solid var(--rule);
+    }
+
+    .hero-content {
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
+
+    .country-hero h1 {
+        font-family: var(--font-serif);
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        font-weight: 400;
+        color: var(--ink);
+        margin-bottom: 1rem;
+    }
+
+    .hero-description {
+        font-size: 1.15rem;
+        color: var(--ink-2);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .stat {
+        text-align: center;
+        padding: 1rem 1.5rem;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
+        min-width: 110px;
+    }
+
+    .stat-value {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 1.75rem;
+        font-weight: 500;
+        color: var(--ink);
+    }
+
+    .stat-label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--ink-3);
+    }
+
+    .stat--titan .stat-value { color: var(--titan-text); }
+    .stat--elite .stat-value { color: var(--elite-text); }
+
+    /* Tier Distribution */
+    .tier-distribution {
+        padding: 2.5rem 0;
+        background: var(--paper-2);
+        border-bottom: 1px solid var(--rule);
+    }
+
+    .tier-bar {
+        display: flex;
+        border-radius: var(--r-4);
+        overflow: hidden;
+        height: 48px;
+        gap: 2px;
+    }
+
+    .tier-segment {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        min-width: 60px;
+        padding: 0 0.75rem;
+        transition: all 0.3s;
+    }
+
+    .tier-segment--titan {
+        background: var(--titan-bg);
+        border: 1px solid var(--titan-border);
+    }
+
+    .tier-segment--elite {
+        background: var(--elite-bg);
+        border: 1px solid var(--elite-border);
+    }
+
+    .tier-segment--master {
+        background: var(--master-bg);
+        border: 1px solid var(--master-border);
+    }
+
+    .tier-segment__label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .tier-segment--titan .tier-segment__label { color: var(--titan-text); }
+    .tier-segment--elite .tier-segment__label { color: var(--elite-text); }
+    .tier-segment--master .tier-segment__label { color: var(--master-text); }
+
+    .tier-segment__count {
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    .tier-segment--titan .tier-segment__count { color: var(--titan-text); }
+    .tier-segment--elite .tier-segment__count { color: var(--elite-text); }
+    .tier-segment--master .tier-segment__count { color: var(--master-text); }
+
+    /* Section Title */
+    .section-title {
+        font-family: var(--font-serif);
+        font-size: 1.5rem;
+        font-weight: 400;
+        color: var(--ink);
+        margin-bottom: 1.5rem;
+    }
+
+    /* Doctors Section */
+    .doctors-section {
+        padding: 3rem 0 4rem;
+    }
+
+    .specialty-group {
+        margin-bottom: 3rem;
+    }
+
+    .specialty-group:last-child {
+        margin-bottom: 0;
+    }
+
+    .specialty-group__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--rule);
+    }
+
+    .specialty-group__title {
+        font-family: var(--font-serif);
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: var(--ink);
+    }
+
+    .specialty-group__count {
+        font-size: 0.85rem;
+        color: var(--ink-3);
+    }
+
+    .doctors-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 1.5rem;
+    }
+
+    /* Doctor Card */
+    .doctor-card {
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
+        text-decoration: none;
+        color: inherit;
+        transition: all var(--t-base) var(--ease);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .doctor-card::before {
+        display: none;
+    }
+
+    .doctor-card:hover {
+        transform: translateY(-3px);
+        border-color: var(--rule-strong);
+        box-shadow: var(--shadow-3);
+    }
+
+    /* Tier-specific styling */
+    .doctor-card--titan {
+        background: var(--titan-bg);
+        border-color: var(--titan-border);
+    }
+
+    .doctor-card--titan:hover {
+        border-color: var(--titan-border);
+        box-shadow: var(--shadow-glow-titan);
+    }
+
+    .doctor-card--elite {
+        background: var(--elite-bg);
+        border-color: var(--elite-border);
+    }
+
+    .doctor-card--elite:hover {
+        border-color: var(--elite-border);
+        box-shadow: var(--shadow-glow-elite);
+    }
+
+    .doctor-card--master {
+        background: var(--master-bg);
+        border-color: var(--master-border);
+    }
+
+    .doctor-card--master:hover {
+        border-color: var(--master-border);
+        box-shadow: var(--shadow-glow-master);
+    }
+
+    .doctor-card__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+    }
+
+    .doctor-card__avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: var(--r-4);
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--paper-2);
+        border: 2px solid var(--rule);
+        box-shadow: var(--shadow-2);
+    }
+
+    .avatar--titan {
+        border-color: var(--titan-border);
+        background: var(--titan-bg);
+    }
+
+    .avatar--elite {
+        border-color: var(--elite-border);
+        background: var(--elite-bg);
+    }
+
+    .avatar--master {
+        border-color: var(--master-border);
+        background: var(--master-bg);
+    }
+
+    .doctor-card__avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .avatar-initials {
+        font-weight: 500;
+        font-size: 0.85rem;
+        color: var(--ink-3);
+    }
+
+    .avatar--titan .avatar-initials { color: var(--titan-text); }
+    .avatar--elite .avatar-initials { color: var(--elite-text); }
+    .avatar--master .avatar-initials { color: var(--master-text); }
+
+    .doctor-card__badges {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .legacy-badge {
+        font-size: 0.65rem;
+        font-weight: 500;
+        padding: 2px 6px;
+        border-radius: var(--r-2);
+        background: var(--paper-3);
+        color: var(--ink-3);
+    }
+
+    .doctor-card__name {
+        font-family: var(--font-serif);
+        font-size: 1.15rem;
+        font-weight: 500;
+        color: var(--ink);
+        margin-bottom: 0.25rem;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+    }
+
+    .doctor-card--titan .doctor-card__name {
+        color: var(--titan-text);
+    }
+
+    .doctor-card__specialty {
+        font-size: 0.85rem;
+        color: var(--ink-2);
+        font-weight: 500;
+        margin-bottom: 0.25rem;
+    }
+
+    .doctor-card__location {
+        font-size: 0.8rem;
+        color: var(--ink-3);
+        margin-bottom: 1rem;
+    }
+
+    .doctor-card__stats {
+        display: flex;
+        gap: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--rule);
+        margin-top: auto;
+    }
+
+    .doctor-card__stats .stat {
+        font-size: 0.75rem;
+        color: var(--ink-3);
+        background: none;
+        border: none;
+        padding: 0;
+        min-width: auto;
+    }
+
+    .doctor-card__stats .stat strong {
+        color: var(--ink);
+        font-weight: 500;
+        font-size: 1rem;
+        font-family: var(--font-mono);
+    }
+
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
+    }
+
+    .empty-state h3 {
+        font-size: 1.25rem;
+        color: var(--ink-2);
+        margin-bottom: 0.5rem;
+    }
+
+    .empty-state p {
+        font-size: 0.95rem;
+        color: var(--ink-3);
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    /* Related Section */
+    .related-section {
+        padding: 4rem 0;
+        background: var(--paper-2);
+        border-top: 1px solid var(--rule);
+    }
+
+    .related-section .section-title {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .related-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1rem;
+    }
+
+    .related-card {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.25rem 1.5rem;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.2s;
+    }
+
+    .related-card:hover {
+        background: var(--paper-3);
+        border-color: var(--rule-strong);
+        transform: translateX(4px);
+    }
+
+    .related-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .related-name {
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--ink);
+        margin-bottom: 0.25rem;
+    }
+
+    .related-desc {
+        font-size: 0.8rem;
+        color: var(--ink-3);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .related-arrow {
+        font-size: 1.25rem;
+        color: var(--ink-3);
+        opacity: 0;
+        transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .related-card:hover .related-arrow {
+        opacity: 1;
+        transform: translateX(4px);
+        color: var(--ink-blue);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .country-hero {
+            padding: 3rem 0 2rem;
+        }
+
+        .stats-bar {
+            gap: 0.75rem;
+        }
+
+        .stat {
+            min-width: 80px;
+            padding: 0.75rem 1rem;
+        }
+
+        .stat-value {
+            font-size: 1.25rem;
+        }
+
+        .tier-bar {
+            height: 40px;
+        }
+
+        .tier-segment__label {
+            font-size: 0.6rem;
+        }
+
+        .tier-segment__count {
+            font-size: 0.75rem;
+        }
+
+        .doctors-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .related-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .specialty-group__header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .stats-bar {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .stat {
+            min-width: auto;
+        }
+
+        .tier-bar {
+            flex-direction: column;
+            height: auto;
+        }
+
+        .tier-segment {
+            min-width: auto;
+            padding: 0.5rem 0.75rem;
+        }
+    }
+</style>

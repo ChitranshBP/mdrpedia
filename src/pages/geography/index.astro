@@ -1,0 +1,619 @@
+---
+/**
+ * MDRPedia — Physicians by Country
+ * Browse all countries with verified doctor counts and tier distributions
+ * Optimized for SEO with structured data
+ */
+import Layout from "../../layouts/Layout.astro";
+import { prisma } from "../../lib/prisma";
+import { slugify } from "../../lib/utils";
+
+export const prerender = false;
+
+// Set cache headers
+Astro.response.headers.set('Cache-Control', 'public, max-age=120, s-maxage=300');
+
+// Fetch all geographies with profile tier info
+const geographies = await prisma.geography.findMany({
+    where: {
+        profiles: {
+            some: {}
+        }
+    },
+    include: {
+        profiles: {
+            select: {
+                tier: true
+            }
+        }
+    }
+});
+
+// Group by country, aggregate counts
+interface CountryData {
+    name: string;
+    slug: string;
+    totalDoctors: number;
+    titanCount: number;
+    eliteCount: number;
+    masterCount: number;
+}
+
+const countryMap = new Map<string, CountryData>();
+
+for (const geo of geographies) {
+    const country = geo.country;
+    if (!country) continue;
+
+    const existing = countryMap.get(country) || {
+        name: country,
+        slug: slugify(country),
+        totalDoctors: 0,
+        titanCount: 0,
+        eliteCount: 0,
+        masterCount: 0,
+    };
+
+    for (const profile of geo.profiles) {
+        existing.totalDoctors++;
+        if (profile.tier === 'TITAN') existing.titanCount++;
+        else if (profile.tier === 'ELITE') existing.eliteCount++;
+        else if (profile.tier === 'MASTER') existing.masterCount++;
+    }
+
+    countryMap.set(country, existing);
+}
+
+// Sort by doctor count descending
+const countries = Array.from(countryMap.values()).sort((a, b) => b.totalDoctors - a.totalDoctors);
+
+// Calculate totals
+const totalDoctors = countries.reduce((sum, c) => sum + c.totalDoctors, 0);
+const totalCountries = countries.length;
+const totalTitans = countries.reduce((sum, c) => sum + c.titanCount, 0);
+
+// Page metadata
+const pageTitle = "Physicians by Country — MDRPedia";
+const pageDescription = `Explore ${totalDoctors.toLocaleString()} verified physicians across ${totalCountries} countries. Discover top medical professionals by country, tier, and specialty on MDRPedia.`;
+const canonicalUrl = new URL('/geography', Astro.site ?? 'https://mdrpedia.com').href;
+
+// Structured Data: CollectionPage with ItemList
+const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Physicians by Country",
+    "description": pageDescription,
+    "url": canonicalUrl,
+    "publisher": {
+        "@type": "Organization",
+        "name": "MDRPedia",
+        "url": Astro.site ?? "https://mdrpedia.com"
+    },
+    "mainEntity": {
+        "@type": "ItemList",
+        "name": "Countries with Verified Physicians",
+        "numberOfItems": totalCountries,
+        "itemListElement": countries.map((country, index) => ({
+            "@type": "ListItem",
+            "position": index + 1,
+            "item": {
+                "@type": "Place",
+                "name": country.name,
+                "url": new URL(`/geography/${country.slug}`, Astro.site ?? 'https://mdrpedia.com').href
+            }
+        }))
+    },
+    "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": Astro.site ?? "https://mdrpedia.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Geography",
+                "item": canonicalUrl
+            }
+        ]
+    }
+};
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+    <div class="geography-page">
+        <!-- Hero Section -->
+        <header class="geography-hero">
+            <div class="container">
+                <!-- Breadcrumbs -->
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <a href="/">Home</a>
+                    <span class="breadcrumb-sep">/</span>
+                    <span class="breadcrumb-current">Geography</span>
+                </nav>
+
+                <div class="hero-content">
+                    <h1>Physicians by Country</h1>
+                    <p class="hero-description">
+                        Explore the world's leading medical professionals across {totalCountries} countries.
+                        From pioneering surgeons to groundbreaking researchers, discover verified physician
+                        profiles organized by geography.
+                    </p>
+                </div>
+
+                <!-- Stats Summary -->
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="hero-stat__value">{totalCountries}</span>
+                        <span class="hero-stat__label">Countries</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat__value">{totalDoctors.toLocaleString()}</span>
+                        <span class="hero-stat__label">Verified Physicians</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat__value">{totalTitans}</span>
+                        <span class="hero-stat__label">Titans</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Country Cards Grid -->
+        <section class="countries-grid-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Browse by Country</h2>
+                    <p class="section-subtitle">Select a country to explore its top physicians</p>
+                </div>
+
+                <div class="countries-grid">
+                    {countries.map((country, index) => (
+                        <a
+                            href={`/geography/${country.slug}`}
+                            class="country-card"
+                            style={`animation-delay: ${index * 50}ms`}
+                        >
+                            <div class="country-card__content">
+                                <h3 class="country-card__name">{country.name}</h3>
+                                <div class="country-card__tiers">
+                                    {country.titanCount > 0 && (
+                                        <span class="tier-chip tier-chip--titan">{country.titanCount} Titan{country.titanCount !== 1 ? 's' : ''}</span>
+                                    )}
+                                    {country.eliteCount > 0 && (
+                                        <span class="tier-chip tier-chip--elite">{country.eliteCount} Elite</span>
+                                    )}
+                                    {country.masterCount > 0 && (
+                                        <span class="tier-chip tier-chip--master">{country.masterCount} Master{country.masterCount !== 1 ? 's' : ''}</span>
+                                    )}
+                                </div>
+                                <div class="country-card__footer">
+                                    <span class="country-card__count">
+                                        <strong>{country.totalDoctors.toLocaleString()}</strong> physician{country.totalDoctors !== 1 ? 's' : ''}
+                                    </span>
+                                    <span class="country-card__arrow">&#8594;</span>
+                                </div>
+                            </div>
+                        </a>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Are you a medical professional?</h2>
+                    <p>Claim your verified profile and join the world's most comprehensive physician directory.</p>
+                    <div class="cta-buttons">
+                        <a href="/doctor/claim" class="btn btn--primary">Claim Your Profile</a>
+                        <a href="/doctor/add-profile" class="btn btn--secondary">Add New Profile</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</Layout>
+
+<style>
+    .geography-page {
+        background: var(--paper);
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        margin-bottom: 2rem;
+    }
+
+    .breadcrumb a {
+        color: var(--ink-3);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .breadcrumb a:hover {
+        color: var(--ink-blue);
+    }
+
+    .breadcrumb-sep {
+        color: var(--ink-3);
+        opacity: 0.5;
+    }
+
+    .breadcrumb-current {
+        color: var(--ink-2);
+    }
+
+    /* Hero Section */
+    .geography-hero {
+        padding: 4rem 0 3rem;
+        background: var(--paper);
+        border-bottom: 1px solid var(--rule);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .geography-hero::before {
+        display: none;
+    }
+
+    .hero-content {
+        text-align: center;
+        position: relative;
+        z-index: 1;
+        margin-bottom: 2.5rem;
+    }
+
+    .geography-hero h1 {
+        font-family: var(--font-serif);
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 400;
+        color: var(--ink);
+        margin-bottom: 1.25rem;
+        letter-spacing: -0.02em;
+    }
+
+    .hero-description {
+        font-size: 1.15rem;
+        color: var(--ink-2);
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.7;
+    }
+
+    /* Hero Stats */
+    .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero-stat {
+        text-align: center;
+        padding: 1.25rem 2rem;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
+        min-width: 150px;
+    }
+
+    .hero-stat__value {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--ink-blue);
+        letter-spacing: -0.02em;
+    }
+
+    .hero-stat__label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--ink-3);
+        margin-top: 0.25rem;
+    }
+
+    /* Grid Section */
+    .countries-grid-section {
+        padding: 4rem 0;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .section-header h2 {
+        font-family: var(--font-serif);
+        font-size: 1.75rem;
+        font-weight: 400;
+        color: var(--ink);
+        margin-bottom: 0.5rem;
+    }
+
+    .section-subtitle {
+        font-size: 1rem;
+        color: var(--ink-3);
+    }
+
+    .countries-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 1.5rem;
+    }
+
+    /* Country Card */
+    .country-card {
+        display: flex;
+        gap: 1.25rem;
+        padding: 1.5rem;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
+        text-decoration: none;
+        color: inherit;
+        transition: all var(--t-base) var(--ease);
+        position: relative;
+        overflow: hidden;
+        animation: fadeInCard 0.5s ease-out forwards;
+        opacity: 0;
+    }
+
+    @keyframes fadeInCard {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .country-card::before {
+        display: none;
+    }
+
+    .country-card:hover {
+        border-color: var(--rule-strong);
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-3);
+    }
+
+    .country-card__content {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .country-card__name {
+        font-family: var(--font-serif);
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: var(--ink);
+        margin-bottom: 0.75rem;
+        transition: color 0.2s;
+    }
+
+    .country-card:hover .country-card__name {
+        color: var(--ink-blue);
+    }
+
+    .country-card__tiers {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        flex: 1;
+    }
+
+    .tier-chip {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.625rem;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        border-radius: var(--r-pill);
+        text-transform: uppercase;
+    }
+
+    .tier-chip--titan {
+        background: var(--titan-bg);
+        color: var(--titan-text);
+        border: 1px solid var(--titan-border);
+    }
+
+    .tier-chip--elite {
+        background: var(--elite-bg);
+        color: var(--elite-text);
+        border: 1px solid var(--elite-border);
+    }
+
+    .tier-chip--master {
+        background: var(--master-bg);
+        color: var(--master-text);
+        border: 1px solid var(--master-border);
+    }
+
+    .country-card__footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 0.75rem;
+        border-top: 1px solid var(--rule);
+    }
+
+    .country-card__count {
+        font-size: 0.85rem;
+        color: var(--ink-2);
+    }
+
+    .country-card__count strong {
+        color: var(--ink-blue);
+        font-family: var(--font-mono);
+        font-weight: 500;
+    }
+
+    .country-card__arrow {
+        font-size: 1.25rem;
+        color: var(--ink-3);
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: all 0.3s;
+    }
+
+    .country-card:hover .country-card__arrow {
+        opacity: 1;
+        transform: translateX(0);
+        color: var(--ink-blue);
+    }
+
+    /* CTA Section */
+    .cta-section {
+        padding: 4rem 0;
+        background: var(--paper-2);
+        border-top: 1px solid var(--rule);
+    }
+
+    .cta-content {
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .cta-content h2 {
+        font-family: var(--font-serif);
+        font-size: 1.75rem;
+        font-weight: 400;
+        color: var(--ink);
+        margin-bottom: 0.75rem;
+    }
+
+    .cta-content p {
+        font-size: 1rem;
+        color: var(--ink-2);
+        margin-bottom: 1.5rem;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.875rem 1.75rem;
+        font-family: var(--font-sans);
+        font-size: 0.95rem;
+        font-weight: 600;
+        border-radius: var(--r-3);
+        text-decoration: none;
+        transition: all 0.2s;
+        cursor: pointer;
+    }
+
+    .btn--primary {
+        background: var(--ink-blue);
+        color: var(--paper);
+        border: none;
+    }
+
+    .btn--primary:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-3);
+    }
+
+    .btn--secondary {
+        background: transparent;
+        color: var(--ink-2);
+        border: 1px solid var(--rule);
+    }
+
+    .btn--secondary:hover {
+        background: var(--paper-3);
+        border-color: var(--rule-strong);
+        color: var(--ink);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .geography-hero {
+            padding: 3rem 0 2rem;
+        }
+
+        .geography-hero h1 {
+            font-size: 2rem;
+        }
+
+        .hero-description {
+            font-size: 1rem;
+        }
+
+        .hero-stats {
+            gap: 1rem;
+        }
+
+        .hero-stat {
+            padding: 1rem 1.25rem;
+            min-width: 120px;
+        }
+
+        .hero-stat__value {
+            font-size: 1.5rem;
+        }
+
+        .countries-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .cta-buttons {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero-stats {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-stat {
+            width: 100%;
+            max-width: 280px;
+        }
+    }
+</style>

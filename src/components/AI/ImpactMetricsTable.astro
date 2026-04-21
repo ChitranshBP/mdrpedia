@@ -233,12 +233,12 @@ const yearRange = data.length > 0
 
 <style>
     .impact-table-section {
-        background: var(--card-bg, rgba(20, 20, 35, 0.8));
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 2rem;
         margin-bottom: 2rem;
-        backdrop-filter: blur(10px);
+        
     }
 
     .impact-header {
@@ -248,7 +248,7 @@ const yearRange = data.length > 0
         gap: 1rem;
         margin-bottom: 1.5rem;
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
+        border-bottom: 1px solid var(--rule);
     }
 
     .impact-title {
@@ -258,20 +258,20 @@ const yearRange = data.length > 0
         font-size: 1.25rem;
         font-weight: 700;
         margin: 0;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .impact-title svg {
-        color: var(--accent, #8b5cf6);
+        color: var(--ink-blue);
         opacity: 0.8;
     }
 
     .year-range {
         font-size: 0.85rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         padding: 4px 12px;
-        background: rgba(255, 255, 255, 0.04);
-        border-radius: 100px;
+        background: var(--paper-3);
+        border-radius: var(--r-pill);
     }
 
     /* Summary Cards */
@@ -287,9 +287,9 @@ const yearRange = data.length > 0
         flex: 1;
         min-width: 100px;
         padding: 1rem;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper-3);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         text-align: center;
     }
 
@@ -303,18 +303,18 @@ const yearRange = data.length > 0
         font-family: var(--font-mono);
         font-size: 1.5rem;
         font-weight: 700;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .summary-card--lives .summary-value {
-        color: #10b981;
+        color: var(--verdant);
     }
 
     .summary-label {
         font-size: 0.7rem;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     /* Table */
@@ -331,7 +331,7 @@ const yearRange = data.length > 0
     .impact-table td {
         padding: 0.75rem 1rem;
         text-align: left;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid var(--rule);
     }
 
     .impact-table th {
@@ -339,7 +339,7 @@ const yearRange = data.length > 0
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .col-year {
@@ -349,7 +349,7 @@ const yearRange = data.length > 0
     .year-value {
         font-family: var(--font-mono);
         font-weight: 600;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .data-cell {
@@ -361,11 +361,11 @@ const yearRange = data.length > 0
     .data-value {
         font-family: var(--font-mono);
         font-size: 0.9rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
     }
 
     .data-empty {
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     /* Mini sparkline bars */
@@ -373,7 +373,7 @@ const yearRange = data.length > 0
         width: 100%;
         max-width: 80px;
         height: 4px;
-        background: rgba(255, 255, 255, 0.1);
+        background: var(--paper-3);
         border-radius: 2px;
         overflow: hidden;
     }
@@ -384,25 +384,25 @@ const yearRange = data.length > 0
         transition: width 0.5s ease;
     }
 
-    .mini-bar-fill--lives { background: #10b981; }
-    .mini-bar-fill--procedures { background: #3b82f6; }
-    .mini-bar-fill--citations { background: #8b5cf6; }
+    .mini-bar-fill--lives { background: var(--verdant); }
+    .mini-bar-fill--procedures { background: var(--ink-blue); }
+    .mini-bar-fill--citations { background: var(--ink-blue); }
     .mini-bar-fill--patients { background: #f59e0b; }
-    .mini-bar-fill--students { background: #ec4899; }
+    .mini-bar-fill--students { background: var(--sanguine); }
 
     .totals-row {
-        background: rgba(255, 255, 255, 0.03);
+        background: var(--paper-3);
     }
 
     .totals-row td {
         border-bottom: none;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     /* Tier colors */
-    .tier-titan .impact-title svg { color: #ffd700; }
-    .tier-elite .impact-title svg { color: #00aaff; }
-    .tier-master .impact-title svg { color: #00cc66; }
+    .tier-titan .impact-title svg { color: var(--aged-gold); }
+    .tier-elite .impact-title svg { color: var(--ink-blue); }
+    .tier-master .impact-title svg { color: var(--verdant); }
 
     /* Responsive */
     @media (max-width: 640px) {

@@ -252,6 +252,21 @@ export interface ProfileData {
   /** Computed display flags */
   hasVerifiedCredentials?: boolean;  // NPI or ORCID present
   hasSignificantCitations?: boolean; // citations > 1000
+  createdAt?: string | null;
+  updatedAt?: string | null;
+
+  // ═══════════════════ DOCTOR PORTAL FIELDS ═══════════════════
+  languagesSpoken?: string[];
+  acceptedInsurance?: string[];
+  patientPhilosophy?: string | null;
+  bookingUrl?: string | null;
+  consultationFee?: string | null;
+
+  // ═══════════════════ FOUR PILLARS SCORE BREAKDOWN ═══════════════════
+  clinicalMasteryIndex?: number | null;
+  intellectualLegacy?: number | null;
+  globalMentorshipScore?: number | null;
+  humanitarianImpact?: number | null;
 
   // ═══════════════════ AI-OPTIMIZED CONTENT FIELDS ═══════════════════
 

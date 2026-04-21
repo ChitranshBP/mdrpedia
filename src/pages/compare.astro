@@ -1,0 +1,960 @@
+---
+/**
+ * MDRPedia -- Doctor Comparison Tool
+ * Side-by-side comparison of up to 3 physician profiles.
+ * Database-first, SSR-only.
+ */
+import Layout from "../layouts/Layout.astro";
+import CompareSearch from "../components/CompareSearch";
+import { prisma } from "../lib/prisma";
+
+export const prerender = false;
+
+// Parse query params
+const url = new URL(Astro.request.url);
+const slugsParam = url.searchParams.get("doctors") || "";
+const slugs = slugsParam
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .slice(0, 3);
+
+// Fetch doctors if slugs are provided
+interface CompareDoctor {
+    slug: string;
+    full_name: string;
+    portrait_url: string | null;
+    tier: string;
+    specialty: string;
+    sub_specialty: string | null;
+    h_index: number;
+    ranking_score: number | null;
+    years_active: number;
+    ethics_tier: string | null;
+    geography: { country: string; city: string | null } | null;
+    _count: { citations: number; awards: number };
+}
+
+let doctors: CompareDoctor[] = [];
+let error: string | null = null;
+
+if (slugs.length > 0) {
+    try {
+        const results = await prisma.profile.findMany({
+            where: { slug: { in: slugs } },
+            select: {
+                slug: true,
+                full_name: true,
+                portrait_url: true,
+                tier: true,
+                specialty: true,
+                sub_specialty: true,
+                h_index: true,
+                ranking_score: true,
+                years_active: true,
+                ethics_tier: true,
+                geography: { select: { country: true, city: true } },
+                _count: { select: { citations: true, awards: true } },
+            },
+        });
+
+        // Preserve the order from URL params
+        doctors = slugs
+            .map((s) => results.find((r) => r.slug === s))
+            .filter(Boolean) as CompareDoctor[];
+
+        if (doctors.length === 0) {
+            error = "None of the requested profiles were found.";
+        }
+    } catch (e) {
+        error = "Unable to load profiles. Please try again later.";
+    }
+}
+
+const hasDoctors = doctors.length > 0;
+const pageTitle = hasDoctors
+    ? `Compare: ${doctors.map((d) => d.full_name).join(" vs ")} -- MDRPedia`
+    : "Compare Physicians -- MDRPedia";
+
+function getInitials(name: string): string {
+    return name
+        .split(" ")
+        .filter(Boolean)
+        .map((n) => n[0])
+        .join("")
+        .slice(0, 2)
+        .toUpperCase();
+}
+
+function tierLabel(tier: string): string {
+    const map: Record<string, string> = {
+        TITAN: "Titan",
+        ELITE: "Elite",
+        MASTER: "Master",
+        UNRANKED: "Unranked",
+    };
+    return map[tier] || tier;
+}
+
+function ethicsLabel(tier: string | null): string {
+    if (!tier) return "--";
+    const map: Record<string, string> = {
+        LEGEND: "Legend",
+        GUARDIAN: "Guardian",
+        ADVOCATE: "Advocate",
+    };
+    return map[tier] || tier;
+}
+
+// JSON-LD
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Physician Comparison",
+    description: hasDoctors
+        ? `Side-by-side comparison of ${doctors.map((d) => d.full_name).join(", ")}`
+        : "Compare physician profiles on MDRPedia",
+    numberOfItems: doctors.length,
+    itemListElement: doctors.map((d, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        item: {
+            "@type": "Physician",
+            name: d.full_name,
+            url: `https://mdrpedia.com/doctors/${d.slug}`,
+            medicalSpecialty: d.specialty,
+            ...(d.geography?.country
+                ? {
+                      address: {
+                          "@type": "PostalAddress",
+                          addressCountry: d.geography.country,
+                          ...(d.geography.city
+                              ? { addressLocality: d.geography.city }
+                              : {}),
+                      },
+                  }
+                : {}),
+        },
+    })),
+};
+
+Astro.response.headers.set(
+    "Cache-Control",
+    "public, max-age=60, s-maxage=120",
+);
+---
+
+<Layout
+    title={pageTitle}
+    description="Compare physician profiles side-by-side on MDRPedia. Evaluate h-index, ranking score, specialties, and more."
+>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <div class="compare-page">
+        <!-- Hero -->
+        <header class="compare-hero">
+            <div class="container">
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <a href="/">Home</a>
+                    <span class="sep">/</span>
+                    <span>Compare</span>
+                </nav>
+                <span class="hero-badge">COMPARISON TOOL</span>
+                <h1>Compare Physicians</h1>
+                <p class="hero-desc">
+                    Select two or three physicians to compare their credentials,
+                    impact, and rankings side by side.
+                </p>
+            </div>
+        </header>
+
+        <!-- Search Panel -->
+        <section class="search-panel">
+            <div class="container">
+                <CompareSearch client:load selectedSlugs={slugs} maxDoctors={3} />
+            </div>
+        </section>
+
+        {
+            error && (
+                <div class="container">
+                    <div class="error-box">{error}</div>
+                </div>
+            )
+        }
+
+        {
+            !hasDoctors && !error && (
+                <section class="empty-state">
+                    <div class="container">
+                        <div class="empty-card">
+                            <svg
+                                width="64"
+                                height="64"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="var(--ink-3)"
+                                stroke-width="1"
+                            >
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                            </svg>
+                            <h2>Start a Comparison</h2>
+                            <p>
+                                Use the search bar above to find physicians by
+                                name, specialty, or institution. You can compare
+                                up to three profiles simultaneously.
+                            </p>
+                            <div class="empty-hints">
+                                <span class="hint">
+                                    Try: "cardiology"
+                                </span>
+                                <span class="hint">
+                                    Try: "neurosurgery"
+                                </span>
+                                <span class="hint">
+                                    Try: "United States"
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            )
+        }
+
+        {
+            hasDoctors && (
+                <main class="compare-content">
+                    <div class="container">
+                        {/* Card header row */}
+                        <div
+                            class="compare-grid"
+                            style={`--cols: ${doctors.length}`}
+                        >
+                            {doctors.map((doc) => (
+                                <div
+                                    class={`profile-card tier-${doc.tier.toLowerCase()}`}
+                                >
+                                    <a
+                                        href={`/doctors/${doc.slug}`}
+                                        class="card-link"
+                                    >
+                                        <div class="card-portrait">
+                                            {doc.portrait_url ? (
+                                                <img
+                                                    src={doc.portrait_url}
+                                                    alt={doc.full_name}
+                                                    width="88"
+                                                    height="88"
+                                                    loading="lazy"
+                                                />
+                                            ) : (
+                                                <div class="initials">
+                                                    {getInitials(
+                                                        doc.full_name,
+                                                    )}
+                                                </div>
+                                            )}
+                                        </div>
+                                        <h2 class="card-name">
+                                            {doc.full_name}
+                                        </h2>
+                                        <span
+                                            class={`tier-pill tier-${doc.tier.toLowerCase()}`}
+                                        >
+                                            {tierLabel(doc.tier)}
+                                        </span>
+                                    </a>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Comparison table */}
+                        <div class="compare-table">
+                            {/* Specialty */}
+                            <div class="table-row">
+                                <div class="row-label">Specialty</div>
+                                <div
+                                    class="row-values"
+                                    style={`--cols: ${doctors.length}`}
+                                >
+                                    {doctors.map((d) => (
+                                        <div class="row-cell">
+                                            <span class="cell-primary">
+                                                {d.specialty}
+                                            </span>
+                                            {d.sub_specialty && (
+                                                <span class="cell-secondary">
+                                                    {d.sub_specialty}
+                                                </span>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* h-index */}
+                            <div class="table-row">
+                                <div class="row-label">h-index</div>
+                                <div
+                                    class="row-values"
+                                    style={`--cols: ${doctors.length}`}
+                                >
+                                    {doctors.map((d) => {
+                                        const maxH = Math.max(
+                                            ...doctors.map((x) => x.h_index),
+                                        );
+                                        const isHighest =
+                                            d.h_index === maxH &&
+                                            d.h_index > 0;
+                                        return (
+                                            <div
+                                                class={`row-cell ${isHighest ? "cell-best" : ""}`}
+                                            >
+                                                <span class="cell-number">
+                                                    {d.h_index || "--"}
+                                                </span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
+                            {/* Ranking Score */}
+                            <div class="table-row">
+                                <div class="row-label">Ranking Score</div>
+                                <div
+                                    class="row-values"
+                                    style={`--cols: ${doctors.length}`}
+                                >
+                                    {doctors.map((d) => {
+                                        const scores = doctors
+                                            .map((x) => x.ranking_score ?? 0)
+                                            .filter((s) => s > 0);
+                                        const maxS =
+                                            scores.length > 0
+                                                ? Math.max(...scores)
+                                                : 0;
+                                        const isHighest =
+                                            (d.ranking_score ?? 0) === maxS &&
+                                            maxS > 0;
+                                        return (
+                                            <div
+                                                class={`row-cell ${isHighest ? "cell-best" : ""}`}
+                                            >
+                                                <span class="cell-number">
+                                                    {d.ranking_score?.toFixed(
+                                                        1,
+                                                    ) || "--"}
+                                                </span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
+                            {/* Country / City */}
+                            <div class="table-row">
+                                <div class="row-label">Location</div>
+                                <div
+                                    class="row-values"
+                                    style={`--cols: ${doctors.length}`}
+                                >
+                                    {doctors.map((d) => (
+                                        <div class="row-cell">
+                                            <span class="cell-primary">
+                                                {d.geography?.country ||
+                                                    "Unknown"}
+                                            </span>
+                                            {d.geography?.city && (
+                                                <span class="cell-secondary">
+                                                    {d.geography.city}
+                                                </span>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Years Active */}
+                            <div class="table-row">
+                                <div class="row-label">Years Active</div>
+                                <div
+                                    class="row-values"
+                                    style={`--cols: ${doctors.length}`}
+                                >
+                                    {doctors.map((d) => {
+                                        const maxY = Math.max(
+                                            ...doctors.map(
+                                                (x) => x.years_active,
+                                            ),
+                                        );
+                                        const isHighest =
+                                            d.years_active === maxY &&
+                                            d.years_active > 0;
+                                        return (
+                                            <div
+                                                class={`row-cell ${isHighest ? "cell-best" : ""}`}
+                                            >
+                                                <span class="cell-number">
+                                                    {d.years_active || "--"}
+                                                </span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
+                            {/* Ethics Tier */}
+                            <div class="table-row">
+                                <div class="row-label">Ethics Tier</div>
+                                <div
+                                    class="row-values"
+                                    style={`--cols: ${doctors.length}`}
+                                >
+                                    {doctors.map((d) => (
+                                        <div class="row-cell">
+                                            <span
+                                                class={`cell-primary ${d.ethics_tier ? "cell-ethics" : ""}`}
+                                            >
+                                                {ethicsLabel(d.ethics_tier)}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Citations */}
+                            <div class="table-row">
+                                <div class="row-label">Citations</div>
+                                <div
+                                    class="row-values"
+                                    style={`--cols: ${doctors.length}`}
+                                >
+                                    {doctors.map((d) => {
+                                        const maxC = Math.max(
+                                            ...doctors.map(
+                                                (x) => x._count.citations,
+                                            ),
+                                        );
+                                        const isHighest =
+                                            d._count.citations === maxC &&
+                                            d._count.citations > 0;
+                                        return (
+                                            <div
+                                                class={`row-cell ${isHighest ? "cell-best" : ""}`}
+                                            >
+                                                <span class="cell-number">
+                                                    {d._count.citations.toLocaleString() ||
+                                                        "--"}
+                                                </span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
+                            {/* Awards */}
+                            <div class="table-row">
+                                <div class="row-label">Awards</div>
+                                <div
+                                    class="row-values"
+                                    style={`--cols: ${doctors.length}`}
+                                >
+                                    {doctors.map((d) => {
+                                        const maxA = Math.max(
+                                            ...doctors.map(
+                                                (x) => x._count.awards,
+                                            ),
+                                        );
+                                        const isHighest =
+                                            d._count.awards === maxA &&
+                                            d._count.awards > 0;
+                                        return (
+                                            <div
+                                                class={`row-cell ${isHighest ? "cell-best" : ""}`}
+                                            >
+                                                <span class="cell-number">
+                                                    {d._count.awards || "--"}
+                                                </span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* View full profiles */}
+                        <div class="compare-actions">
+                            {doctors.map((d) => (
+                                <a
+                                    href={`/doctors/${d.slug}`}
+                                    class="action-link"
+                                >
+                                    View {d.full_name}'s full profile
+                                    <span>&rarr;</span>
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+                </main>
+            )
+        }
+    </div>
+</Layout>
+
+<style>
+    .compare-page {
+        background: var(--paper);
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        margin-bottom: 1.5rem;
+    }
+    .breadcrumb a {
+        color: var(--ink-3);
+        text-decoration: none;
+    }
+    .breadcrumb a:hover {
+        color: var(--ink);
+        text-decoration: underline;
+    }
+    .breadcrumb .sep {
+        margin: 0 8px;
+        opacity: 0.4;
+    }
+
+    /* Hero */
+    .compare-hero {
+        padding: 5rem 0 2.5rem;
+        text-align: center;
+        border-bottom: 1px solid var(--rule);
+    }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 18px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: 999px;
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        color: var(--ink-3);
+        margin-bottom: 1.5rem;
+    }
+
+    .compare-hero h1 {
+        font-family: var(--font-serif);
+        font-size: clamp(2rem, 4vw, 3.5rem);
+        font-weight: 400;
+        color: var(--ink);
+        letter-spacing: -0.03em;
+        margin-bottom: 0.75rem;
+    }
+
+    .hero-desc {
+        font-size: 1.1rem;
+        color: var(--ink-2);
+        max-width: 540px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    /* Search */
+    .search-panel {
+        padding: 2rem 0;
+        border-bottom: 1px solid var(--rule);
+        background: var(--paper-2);
+    }
+
+    /* Error */
+    .error-box {
+        margin: 2rem 0;
+        padding: 1rem 1.5rem;
+        background: color-mix(in oklch, var(--sanguine, #c53030) 8%, var(--paper));
+        border: 1px solid color-mix(in oklch, var(--sanguine, #c53030) 30%, var(--rule));
+        border-radius: 8px;
+        font-size: 0.95rem;
+        color: var(--ink);
+    }
+
+    /* Empty state */
+    .empty-state {
+        padding: 5rem 0;
+    }
+
+    .empty-card {
+        max-width: 480px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 3rem 2rem;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: 12px;
+    }
+
+    .empty-card svg {
+        margin-bottom: 1.5rem;
+        opacity: 0.5;
+    }
+
+    .empty-card h2 {
+        font-family: var(--font-serif);
+        font-size: 1.5rem;
+        font-weight: 400;
+        color: var(--ink);
+        margin-bottom: 0.75rem;
+    }
+
+    .empty-card p {
+        font-size: 0.95rem;
+        color: var(--ink-2);
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+
+    .empty-hints {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    .hint {
+        padding: 4px 12px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 999px;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--ink-3);
+    }
+
+    /* Comparison content */
+    .compare-content {
+        padding: 3rem 0 5rem;
+    }
+
+    /* Grid of profile cards at top */
+    .compare-grid {
+        display: grid;
+        grid-template-columns: repeat(var(--cols, 2), 1fr);
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .profile-card {
+        text-align: center;
+        padding: 2rem 1.5rem;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 12px;
+        transition: all 0.2s ease;
+    }
+
+    .profile-card:hover {
+        border-color: var(--rule-strong, var(--ink-3));
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    .profile-card.tier-titan {
+        background: var(--titan-bg);
+        border-color: var(--titan-border);
+    }
+
+    .profile-card.tier-elite {
+        background: var(--elite-bg);
+        border-color: var(--elite-border);
+    }
+
+    .card-link {
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .card-portrait {
+        width: 88px;
+        height: 88px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid var(--rule);
+        flex-shrink: 0;
+    }
+
+    .card-portrait img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .initials {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-serif);
+        font-size: 28px;
+        font-weight: 400;
+        color: var(--ink-3);
+        background: var(--paper-2);
+    }
+
+    .card-name {
+        font-family: var(--font-serif);
+        font-size: 1.15rem;
+        font-weight: 500;
+        color: var(--ink);
+        margin: 0;
+    }
+
+    .tier-pill {
+        display: inline-block;
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        padding: 3px 10px;
+        border-radius: 4px;
+        text-transform: uppercase;
+    }
+
+    .tier-pill.tier-titan {
+        background: var(--titan-bg);
+        color: var(--titan-text);
+        border: 1px solid var(--titan-border);
+    }
+
+    .tier-pill.tier-elite {
+        background: var(--elite-bg);
+        color: var(--elite-text);
+        border: 1px solid var(--elite-border);
+    }
+
+    .tier-pill.tier-master {
+        background: var(--master-bg, var(--paper-3));
+        color: var(--master-text, var(--ink-2));
+        border: 1px solid var(--master-border, var(--rule));
+    }
+
+    .tier-pill.tier-unranked {
+        background: var(--paper-3);
+        color: var(--ink-3);
+        border: 1px solid var(--rule);
+    }
+
+    /* Comparison table */
+    .compare-table {
+        border: 1px solid var(--rule);
+        border-radius: 12px;
+        overflow: hidden;
+        background: var(--paper);
+    }
+
+    .table-row {
+        display: flex;
+        border-bottom: 1px solid var(--rule);
+    }
+
+    .table-row:last-child {
+        border-bottom: none;
+    }
+
+    .row-label {
+        width: 160px;
+        flex-shrink: 0;
+        padding: 1rem 1.25rem;
+        background: var(--paper-2);
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        display: flex;
+        align-items: center;
+        border-right: 1px solid var(--rule);
+    }
+
+    .row-values {
+        flex: 1;
+        display: grid;
+        grid-template-columns: repeat(var(--cols, 2), 1fr);
+    }
+
+    .row-cell {
+        padding: 1rem 1.25rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-right: 1px solid var(--rule);
+    }
+
+    .row-cell:last-child {
+        border-right: none;
+    }
+
+    .cell-primary {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--ink);
+    }
+
+    .cell-secondary {
+        font-size: 0.8rem;
+        color: var(--ink-3);
+        margin-top: 2px;
+    }
+
+    .cell-number {
+        font-family: var(--font-mono);
+        font-size: 1.15rem;
+        font-weight: 500;
+        color: var(--ink);
+        font-variant-numeric: tabular-nums;
+    }
+
+    .cell-best {
+        position: relative;
+    }
+
+    .cell-best .cell-number {
+        color: var(--ink-blue, #2563eb);
+    }
+
+    .cell-best::after {
+        content: "Highest";
+        position: absolute;
+        top: 6px;
+        right: 8px;
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ink-blue, #2563eb);
+        opacity: 0.7;
+    }
+
+    .cell-ethics {
+        color: var(--verdant, #16a34a);
+        font-weight: 600;
+    }
+
+    /* Actions */
+    .compare-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 2rem;
+        justify-content: center;
+    }
+
+    .action-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 20px;
+        border: 1px solid var(--rule);
+        border-radius: 8px;
+        background: var(--paper);
+        font-size: 0.9rem;
+        color: var(--ink);
+        text-decoration: none;
+        font-family: var(--font-sans);
+        transition: all 0.15s ease;
+    }
+
+    .action-link:hover {
+        background: var(--ink);
+        color: var(--paper);
+        border-color: var(--ink);
+    }
+
+    .action-link span {
+        transition: transform 0.15s ease;
+    }
+
+    .action-link:hover span {
+        transform: translateX(3px);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .compare-hero {
+            padding: 3rem 0 2rem;
+        }
+
+        .compare-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .table-row {
+            flex-direction: column;
+        }
+
+        .row-label {
+            width: 100%;
+            border-right: none;
+            border-bottom: 1px solid var(--rule);
+            padding: 0.75rem 1rem;
+        }
+
+        .row-values {
+            grid-template-columns: repeat(var(--cols, 2), 1fr);
+        }
+
+        .row-cell {
+            padding: 0.75rem 1rem;
+        }
+
+        .cell-best::after {
+            display: none;
+        }
+
+        .compare-actions {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .action-link {
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .row-values {
+            grid-template-columns: 1fr;
+        }
+
+        .row-cell {
+            border-right: none;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .row-cell:last-child {
+            border-bottom: none;
+        }
+    }
+</style>

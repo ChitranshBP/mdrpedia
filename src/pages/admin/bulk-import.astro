@@ -4,6 +4,7 @@
  * Upload CSV to import multiple doctors at once
  */
 import Layout from "../../layouts/Layout.astro";
+import AdminSidebar from "../../components/admin/AdminSidebar.astro";
 import { prisma } from "../../lib/prisma";
 import { requireSuperAdmin } from "../../lib/rbac";
 
@@ -29,30 +30,10 @@ try {
 ---
 
 <Layout title="Bulk Import — Admin">
-    <div class="admin-page">
-        <aside class="sidebar">
-            <div class="sidebar__brand">
-                <a href={`/admin?key=${adminKey}`} class="brand-link">
-                    <div class="brand-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/>
-                        </svg>
-                    </div>
-                    <span>MDRPedia</span>
-                </a>
-            </div>
-            <nav class="sidebar__nav">
-                <a href={`/admin?key=${adminKey}`} class="nav-item">Dashboard</a>
-                <a href={`/admin/doctors?key=${adminKey}`} class="nav-item">All Doctors</a>
-                <a href={`/admin/news?key=${adminKey}`} class="nav-item">News</a>
-                <a href={`/admin/claims?key=${adminKey}`} class="nav-item">Claims</a>
-                <a href={`/admin/audit-log?key=${adminKey}`} class="nav-item">Activity Log</a>
-                <a href={`/admin/data-quality?key=${adminKey}`} class="nav-item">Data Quality</a>
-                <a href={`/admin/bulk-import?key=${adminKey}`} class="nav-item active">Bulk Import</a>
-            </nav>
-        </aside>
+    <div class="admin">
+        <AdminSidebar adminKey={adminKey} activePage="bulk-import" />
 
-        <main class="main-content">
+        <main class="main">
             <header class="page-header">
                 <div>
                     <h1>Bulk Import Doctors</h1>
@@ -329,6 +310,12 @@ try {
         return result;
     }
 
+    function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.appendChild(document.createTextNode(String(str)));
+        return div.innerHTML;
+    }
+
     function showPreview() {
         previewSection.hidden = false;
 
@@ -336,11 +323,11 @@ try {
         const tbody = document.querySelector('#previewTable tbody');
 
         // Headers
-        thead.innerHTML = '<tr>' + headers.map(h => `<th>${h}</th>`).join('') + '</tr>';
+        thead.innerHTML = '<tr>' + headers.map(h => `<th>${escapeHtml(h)}</th>`).join('') + '</tr>';
 
         // First 5 rows
         tbody.innerHTML = csvData.slice(0, 5).map(row =>
-            '<tr>' + headers.map(h => `<td>${row[h] || '-'}</td>`).join('') + '</tr>'
+            '<tr>' + headers.map(h => `<td>${escapeHtml(row[h] || '-')}</td>`).join('') + '</tr>'
         ).join('');
 
         document.getElementById('importCount').textContent = `${csvData.length} rows to import`;
@@ -394,14 +381,14 @@ try {
                 const data = await res.json();
                 if (data.success) {
                     success++;
-                    importLog.innerHTML += `<div class="log-line log-line--success">✓ ${row.fullName}</div>`;
+                    importLog.innerHTML += `<div class="log-line log-line--success">✓ ${escapeHtml(row.fullName)}</div>`;
                 } else {
                     errors++;
-                    importLog.innerHTML += `<div class="log-line log-line--error">✗ ${row.fullName}: ${data.error}</div>`;
+                    importLog.innerHTML += `<div class="log-line log-line--error">✗ ${escapeHtml(row.fullName)}: ${escapeHtml(data.error)}</div>`;
                 }
             } catch (e) {
                 errors++;
-                importLog.innerHTML += `<div class="log-line log-line--error">✗ ${row.fullName}: ${e.message}</div>`;
+                importLog.innerHTML += `<div class="log-line log-line--error">✗ ${escapeHtml(row.fullName)}: ${escapeHtml(e.message)}</div>`;
             }
 
             importLog.scrollTop = importLog.scrollHeight;
@@ -447,98 +434,19 @@ try {
 </script>
 
 <style>
-    .admin-page {
-        display: flex;
-        min-height: 100vh;
-        background: #0a0a12;
-    }
-
-    .sidebar {
-        width: 220px;
-        background: rgba(15, 15, 25, 0.95);
-        border-right: 1px solid rgba(255, 255, 255, 0.06);
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        padding: 20px 0;
-    }
-
-    .sidebar__brand {
-        padding: 0 20px 20px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        margin-bottom: 16px;
-    }
-
-    .brand-link {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
-        color: white;
-        font-weight: 700;
-    }
-
-    .brand-icon {
-        width: 32px;
-        height: 32px;
-        background: linear-gradient(135deg, #8b5cf6, #6366f1);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .brand-icon svg {
-        width: 18px;
-        height: 18px;
-    }
-
-    .sidebar__nav {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        padding: 0 12px;
-    }
-
-    .nav-item {
-        padding: 10px 12px;
-        border-radius: 8px;
-        color: var(--text-secondary);
-        text-decoration: none;
-        font-size: 0.875rem;
-        transition: all 0.15s;
-    }
-
-    .nav-item:hover {
-        background: rgba(255, 255, 255, 0.05);
-        color: white;
-    }
-
-    .nav-item.active {
-        background: rgba(139, 92, 246, 0.15);
-        color: #8b5cf6;
-    }
-
-    .main-content {
-        flex: 1;
-        margin-left: 220px;
-        padding: 32px;
-    }
-
     .page-header {
         margin-bottom: 32px;
     }
 
     .page-header h1 {
         font-size: 1.75rem;
-        font-weight: 700;
-        color: white;
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 4px;
     }
 
     .page-header p {
-        color: var(--text-muted);
+        color: var(--ink-3);
         font-size: 0.9rem;
     }
 
@@ -549,30 +457,30 @@ try {
     }
 
     .card {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 24px;
     }
 
     .card h2 {
         font-size: 1.1rem;
-        font-weight: 600;
-        color: white;
+        font-weight: 500;
+        color: var(--ink);
         margin-bottom: 16px;
     }
 
     .card h3 {
         font-size: 0.95rem;
-        font-weight: 600;
-        color: var(--text-secondary);
+        font-weight: 500;
+        color: var(--ink-2);
         margin: 24px 0 12px;
     }
 
     /* Upload Zone */
     .upload-zone {
-        border: 2px dashed rgba(255, 255, 255, 0.15);
-        border-radius: 12px;
+        border: 2px dashed var(--rule);
+        border-radius: var(--r-4);
         padding: 48px;
         text-align: center;
         transition: all 0.2s;
@@ -581,20 +489,20 @@ try {
 
     .upload-zone:hover,
     .upload-zone.dragover {
-        border-color: #8b5cf6;
-        background: rgba(139, 92, 246, 0.05);
+        border-color: var(--ink-blue);
+        background: var(--ink-blue-2);
     }
 
     .upload-icon {
         width: 64px;
         height: 64px;
         margin: 0 auto 16px;
-        background: rgba(139, 92, 246, 0.1);
+        background: var(--ink-blue-2);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #8b5cf6;
+        color: var(--ink-blue);
     }
 
     .upload-icon svg {
@@ -603,12 +511,12 @@ try {
     }
 
     .upload-zone p {
-        color: var(--text-secondary);
+        color: var(--ink-2);
         margin-bottom: 8px;
     }
 
     .upload-zone span {
-        color: var(--text-muted);
+        color: var(--ink-3);
         font-size: 0.85rem;
         display: block;
         margin-bottom: 16px;
@@ -620,27 +528,27 @@ try {
         align-items: center;
         gap: 16px;
         padding: 16px;
-        background: rgba(139, 92, 246, 0.1);
-        border-radius: 8px;
+        background: var(--ink-blue-2);
+        border-radius: var(--r-3);
         margin-bottom: 16px;
     }
 
     .file-info__name {
         flex: 1;
-        font-weight: 600;
-        color: white;
+        font-weight: 500;
+        color: var(--ink);
     }
 
     .file-info__size {
-        color: var(--text-muted);
+        color: var(--ink-3);
         font-size: 0.85rem;
     }
 
     /* Preview Table */
     .preview-table-container {
         overflow-x: auto;
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 8px;
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
     }
 
     .preview-table {
@@ -652,9 +560,9 @@ try {
     .preview-table th {
         text-align: left;
         padding: 10px 12px;
-        background: rgba(0, 0, 0, 0.2);
-        color: var(--text-muted);
-        font-weight: 600;
+        background: var(--paper-2);
+        color: var(--ink-3);
+        font-weight: 500;
         font-size: 0.75rem;
         text-transform: uppercase;
         white-space: nowrap;
@@ -662,8 +570,8 @@ try {
 
     .preview-table td {
         padding: 10px 12px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-        color: var(--text-secondary);
+        border-bottom: 1px solid var(--rule);
+        color: var(--ink-2);
         max-width: 200px;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -681,7 +589,7 @@ try {
         display: flex;
         align-items: center;
         gap: 8px;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         font-size: 0.9rem;
         cursor: pointer;
     }
@@ -694,20 +602,20 @@ try {
     }
 
     .import-count {
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     /* Progress */
     .progress-bar {
         height: 8px;
-        background: rgba(255, 255, 255, 0.1);
+        background: var(--paper-3);
         border-radius: 4px;
         overflow: hidden;
     }
 
     .progress-fill {
         height: 100%;
-        background: linear-gradient(90deg, #8b5cf6, #22c55e);
+        background: linear-gradient(90deg, var(--ink-blue), var(--verdant));
         border-radius: 4px;
         transition: width 0.3s ease;
         width: 0%;
@@ -718,7 +626,7 @@ try {
         justify-content: space-between;
         margin-top: 8px;
         font-size: 0.9rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
     }
 
     .import-log {
@@ -727,9 +635,9 @@ try {
         overflow-y: auto;
         font-family: monospace;
         font-size: 0.8rem;
-        background: rgba(0, 0, 0, 0.2);
+        background: var(--paper-3);
         padding: 12px;
-        border-radius: 8px;
+        border-radius: var(--r-3);
     }
 
     .log-line {
@@ -737,16 +645,16 @@ try {
     }
 
     .log-line--success {
-        color: #22c55e;
+        color: var(--verdant);
     }
 
     .log-line--error {
-        color: #ef4444;
+        color: var(--sanguine);
     }
 
     /* Column List */
     .help-text {
-        color: var(--text-muted);
+        color: var(--ink-3);
         font-size: 0.9rem;
         margin-bottom: 16px;
     }
@@ -762,39 +670,39 @@ try {
         align-items: center;
         gap: 8px;
         padding: 8px 12px;
-        background: rgba(255, 255, 255, 0.02);
-        border-radius: 6px;
+        background: var(--paper);
+        border-radius: var(--r-2);
     }
 
     .column-item--required {
-        background: rgba(139, 92, 246, 0.1);
+        background: var(--ink-blue-2);
     }
 
     .column-name {
         font-family: monospace;
-        color: white;
-        font-weight: 600;
+        color: var(--ink);
+        font-weight: 500;
     }
 
     .column-badge {
         font-size: 0.65rem;
         padding: 2px 6px;
-        background: #8b5cf6;
+        background: var(--ink-blue);
         color: white;
         border-radius: 4px;
-        font-weight: 600;
+        font-weight: 500;
     }
 
     .column-desc {
         font-size: 0.8rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin-left: auto;
     }
 
     .download-template {
         margin-top: 24px;
         padding-top: 24px;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-top: 1px solid var(--rule);
     }
 
     /* Jobs Table */
@@ -807,16 +715,16 @@ try {
         text-align: left;
         padding: 10px 12px;
         font-size: 0.75rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         text-transform: uppercase;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid var(--rule);
     }
 
     .jobs-table td {
         padding: 10px 12px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid var(--rule);
         font-size: 0.9rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
     }
 
     .status-badge {
@@ -824,17 +732,17 @@ try {
         padding: 2px 8px;
         border-radius: 4px;
         font-size: 0.7rem;
-        font-weight: 600;
+        font-weight: 500;
     }
 
-    .status-badge--completed { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
-    .status-badge--processing { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
-    .status-badge--failed { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
-    .status-badge--pending { background: rgba(156, 163, 175, 0.15); color: #9ca3af; }
+    .status-badge--completed { background: var(--verdant-2); color: var(--verdant); }
+    .status-badge--processing { background: var(--ink-blue-2); color: var(--ink-blue); }
+    .status-badge--failed { background: var(--sanguine-2); color: var(--sanguine); }
+    .status-badge--pending { background: var(--paper-3); color: var(--ink-3); }
 
-    .text-green { color: #22c55e; }
-    .text-red { color: #ef4444; }
-    .text-muted { color: var(--text-muted); }
+    .text-green { color: var(--verdant); }
+    .text-red { color: var(--sanguine); }
+    .text-muted { color: var(--ink-3); }
 
     /* Buttons */
     .btn {
@@ -842,9 +750,9 @@ try {
         align-items: center;
         gap: 8px;
         padding: 10px 20px;
-        border-radius: 8px;
+        border-radius: var(--r-3);
         font-size: 0.9rem;
-        font-weight: 600;
+        font-weight: 500;
         border: none;
         cursor: pointer;
         text-decoration: none;
@@ -852,19 +760,19 @@ try {
     }
 
     .btn--primary {
-        background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        background: var(--ink-blue);
         color: white;
     }
 
     .btn--primary:hover {
         transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        box-shadow: var(--shadow-2);
     }
 
     .btn--outline {
         background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: var(--text-secondary);
+        border: 1px solid var(--rule);
+        color: var(--ink-2);
     }
 
     .btn--sm {
@@ -878,12 +786,6 @@ try {
     }
 
     @media (max-width: 1024px) {
-        .sidebar {
-            display: none;
-        }
-        .main-content {
-            margin-left: 0;
-        }
         .content-grid {
             grid-template-columns: 1fr;
         }

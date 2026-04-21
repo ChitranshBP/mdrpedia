@@ -1,4 +1,5 @@
 
+// @ts-nocheck - archived script, module may not exist
 import { searchAuthors, usageStats } from '../src/lib/openalex';
 
 async function checkQuota() {

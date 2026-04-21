@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import type { Profile, Geography, Award, Citation, Technique, Affiliation, Hospital } from "@prisma/client";
+import type { Profile, Geography, Award, Citation, Technique, DoctorHospitalAffiliation, Hospital } from "@prisma/client";
 
 // Prisma profile with relations
 type DbProfileFull = Profile & {
@@ -8,7 +8,7 @@ type DbProfileFull = Profile & {
     awards: Award[];
     citations: Citation[];
     techniques: Technique[];
-    affiliations: (Affiliation & { hospital: Hospital })[];
+    affiliations: (DoctorHospitalAffiliation & { hospital: Hospital })[];
 };
 
 // Doctor source can be either a static collection entry or a DB profile
@@ -31,16 +31,16 @@ const d = isStatic
     : doctor as DbProfileFull;
 
 // Get values with fallbacks based on source type
-const fullName = isStatic ? d.fullName : (d as DbProfileFull).full_name;
+const fullName = isStatic ? (d as any).fullName : (d as DbProfileFull).full_name;
 const specialty = isStatic ? d.specialty : (d as DbProfileFull).specialty;
-const subSpecialty = isStatic ? d.subSpecialty : (d as DbProfileFull).sub_specialty;
+const subSpecialty = isStatic ? (d as any).subSpecialty : (d as DbProfileFull).sub_specialty;
 const tier = isStatic ? d.tier : (d as DbProfileFull).tier;
-const hIndex = isStatic ? d.hIndex : (d as DbProfileFull).h_index;
+const hIndex = isStatic ? (d as any).hIndex : (d as DbProfileFull).h_index;
 const geography = isStatic ? d.geography : (d as DbProfileFull).geography;
 const techniquesInvented = isStatic
-    ? d.techniquesInvented
+    ? (d as any).techniquesInvented
     : (d as DbProfileFull).techniques?.map(t => t?.name).filter(Boolean) || [];
-const verifiedSurgeries = isStatic ? d.verifiedSurgeries : (d as DbProfileFull).verified_surgeries;
+const verifiedSurgeries = isStatic ? (d as any).verifiedSurgeries : (d as DbProfileFull).verified_surgeries;
 const citations = isStatic ? d.citations : (d as DbProfileFull).citations;
 const affiliations = isStatic
     ? d.affiliations

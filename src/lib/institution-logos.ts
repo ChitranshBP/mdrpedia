@@ -104,10 +104,22 @@ const KNOWN_INSTITUTION_LOGOS: Record<string, string> = {
 };
 
 /**
- * Get institution logo URL from name
- * Uses known logos database or tries Clearbit as fallback
+ * Extract domain from a URL string
  */
-export function getInstitutionLogo(name: string, fallbackToPlaceholder = true): string | null {
+function extractDomain(url: string): string | null {
+    try {
+        const u = new URL(url.startsWith('http') ? url : `https://${url}`);
+        return u.hostname.replace(/^www\./, '');
+    } catch {
+        return null;
+    }
+}
+
+/**
+ * Get institution logo URL from name
+ * Uses known logos database, website domain, or tries Clearbit as fallback
+ */
+export function getInstitutionLogo(name: string, website?: string | null): string | null {
     const normalizedName = name.toLowerCase().trim();
 
     // Check for exact or partial match in known logos
@@ -117,11 +129,18 @@ export function getInstitutionLogo(name: string, fallbackToPlaceholder = true): 
         }
     }
 
+    // If a website URL is provided, use its domain for Clearbit
+    if (website) {
+        const domain = extractDomain(website);
+        if (domain) {
+            return `https://logo.clearbit.com/${domain}`;
+        }
+    }
+
     // Try to extract domain from name for Clearbit
     // Common patterns: "Name Hospital", "Name University", "Name Medical Center"
     const words = normalizedName.split(/\s+/);
     if (words.length >= 2) {
-        // Try common domain patterns
         const firstWord = words[0];
         const possibleDomains = [
             `${firstWord}.edu`,
@@ -129,15 +148,9 @@ export function getInstitutionLogo(name: string, fallbackToPlaceholder = true): 
             `${firstWord}hospital.org`,
             `${firstWord}healthcare.org`,
         ];
-
-        // Return the first one as a best guess
         return `https://logo.clearbit.com/${possibleDomains[0]}`;
     }
 
-    // Return placeholder or null
-    if (fallbackToPlaceholder) {
-        return null; // Will use first letter fallback in UI
-    }
     return null;
 }
 

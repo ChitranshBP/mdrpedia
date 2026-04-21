@@ -29,11 +29,20 @@ export async function POST({ request }: { request: Request }) {
         });
     }
 
-    const { action, slug } = await request.json();
+    let body;
+    try {
+        body = await request.json();
+    } catch {
+        return new Response(JSON.stringify({ error: "Invalid JSON body" }), {
+            status: 400,
+            headers: { "Content-Type": "application/json" }
+        });
+    }
+    const { action, slug } = body;
 
     await logAdminAction(action.toUpperCase(), slug || "bulk", { action }, request);
 
-    // 🔒 System Sovereignty Check
+    // System Sovereignty Check
     if (!systemConfig.ingestionEnabled) {
         return new Response(JSON.stringify({
             success: false,
@@ -56,7 +65,7 @@ export async function POST({ request }: { request: Request }) {
             const result = await performSync(doc);
             return new Response(JSON.stringify({ success: true, message: `Synced ${doc.data.fullName}: ${result.papersFound} papers found, new H-Index: ${result.hIndex}` }), { status: 200 });
         } catch (e) {
-            return new Response(JSON.stringify({ success: false, message: (e as Error).message }), { status: 500 });
+            return new Response(JSON.stringify({ success: false, message: 'Sync failed' }), { status: 500 });
         }
     }
 
@@ -75,9 +84,9 @@ export async function POST({ request }: { request: Request }) {
                     try {
                         send(`Syncing ${doc.data.fullName}...`);
                         const result = await performSync(doc);
-                        send(`✅ ${doc.data.fullName}: ${result.papersFound} papers, H-Index ${result.hIndex}`, 'success');
+                        send(`[OK] ${doc.data.fullName}: ${result.papersFound} papers, H-Index ${result.hIndex}`, 'success');
                     } catch (e) {
-                        send(`❌ Failed ${doc.data.fullName}: ${(e as Error).message}`, 'error');
+                        send(`[ERR] Failed ${doc.data.fullName}: sync error`, 'error');
                     }
                 }
 
@@ -96,7 +105,7 @@ export async function POST({ request }: { request: Request }) {
 
 // ─── Helper: Perform Sync & Update File ─────────────────────────────────────
 
-async function performSync(docEntry: { id: string; data: { fullName: string; orcidId?: string; specialty?: string } }) {
+async function performSync(docEntry: { id: string; data: { fullName: string; orcidId?: string | null; specialty?: string } }) {
     const doc = docEntry.data;
     // Map 'id' to filename (e.g. 'anthony-fauci')
     const jsonPath = path.join(process.cwd(), 'src/content/doctors', `${docEntry.id}.json`);
@@ -104,7 +113,7 @@ async function performSync(docEntry: { id: string; data: { fullName: string; orc
     // Run PubMed Sync
     const syncResult = await syncDoctorPapers({
         doctorName: doc.fullName,
-        orcid: doc.orcidId,
+        orcid: doc.orcidId || undefined,
         ncbiApiKey: import.meta.env.NCBI_API_KEY,
         crossrefMailto: import.meta.env.CROSSREF_MAILTO,
         maxPapers: 200 // Cap for performance

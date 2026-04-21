@@ -5,6 +5,7 @@ import { prisma } from '../../lib/prisma';
 import { searchCache, searchCacheKey } from '../../lib/cache';
 import { API_CONFIG } from '../../lib/config';
 import { fuzzyMatch } from '../../lib/fuzzy-search';
+import { hashIP, getClientIP } from '../../lib/bot-detector';
 
 export const prerender = false; // Server-side only
 
@@ -37,7 +38,7 @@ interface SearchableDoctor {
 
 let searchIndex: SearchableDoctor[] | null = null;
 let searchIndexTimestamp = 0;
-const SEARCH_INDEX_TTL = 300_000; // 5 minutes
+const SEARCH_INDEX_TTL = 1_800_000; // 30 minutes — data only changes on admin sync
 
 async function getSearchIndex(): Promise<SearchableDoctor[]> {
     const now = Date.now();
@@ -47,49 +48,103 @@ async function getSearchIndex(): Promise<SearchableDoctor[]> {
         return searchIndex;
     }
 
-    // Build new index
-    const doctors = await getCollection('doctors');
+    // Try DB first, fall back to static content
+    let newIndex: SearchableDoctor[] = [];
 
-    const newIndex: SearchableDoctor[] = doctors.map(doc => {
-        const d = doc.data;
-        const specialtyLower = d.specialty.toLowerCase();
-        const isSurgeon = specialtyLower.includes('surgery') ||
-            specialtyLower.includes('surgeon') ||
-            specialtyLower.includes('transplant');
-        const isResearcher = d.title?.includes('PhD') ||
-            d.affiliations?.some(a =>
-                a.role?.toLowerCase().includes('research') ||
-                a.role?.toLowerCase().includes('scientist')
-            );
+    try {
+        const dbDoctors = await prisma.profile.findMany({
+            select: {
+                slug: true,
+                full_name: true,
+                specialty: true,
+                sub_specialty: true,
+                tier: true,
+                h_index: true,
+                portrait_url: true,
+                title: true,
+                geography: { select: { country: true, city: true } },
+            },
+        });
 
-        // Pre-compute name parts for better matching
-        const nameParts = d.fullName.toLowerCase().split(/\s+/);
-        const firstNameLower = nameParts[0] || '';
-        const lastNameLower = nameParts[nameParts.length - 1] || '';
+        if (dbDoctors.length > 0) {
+            newIndex = dbDoctors.map(d => {
+                const specialtyLower = d.specialty.toLowerCase();
+                const isSurgeon = specialtyLower.includes('surgery') ||
+                    specialtyLower.includes('surgeon') ||
+                    specialtyLower.includes('transplant');
+                const isResearcher = !!(d.title?.includes('PhD'));
+                const nameParts = d.full_name.toLowerCase().split(/\s+/);
+                const firstNameLower = nameParts[0] || '';
+                const lastNameLower = nameParts[nameParts.length - 1] || '';
 
-        return {
-            id: doc.id,
-            fullName: d.fullName,
-            fullNameLower: d.fullName.toLowerCase(),
-            specialty: d.specialty,
-            subSpecialty: d.subSpecialty,
-            tier: d.tier,
-            hIndex: d.hIndex || 0,
-            portraitUrl: d.portraitUrl,
-            city: d.geography.city,
-            country: d.geography.country,
-            countryLower: d.geography.country.toLowerCase(),
-            title: d.title,
-            // Pre-computed for faster search
-            searchText: `${d.fullName} ${d.specialty} ${d.subSpecialty || ''} ${d.geography.city || ''} ${d.geography.country}`.toLowerCase(),
-            specialtyLower,
-            isSurgeon,
-            isResearcher,
-            nameParts,
-            firstNameLower,
-            lastNameLower,
-        };
-    });
+                return {
+                    id: d.slug,
+                    fullName: d.full_name,
+                    fullNameLower: d.full_name.toLowerCase(),
+                    specialty: d.specialty,
+                    subSpecialty: d.sub_specialty,
+                    tier: d.tier,
+                    hIndex: d.h_index || 0,
+                    portraitUrl: d.portrait_url,
+                    city: d.geography?.city,
+                    country: d.geography?.country || 'Unknown',
+                    countryLower: (d.geography?.country || 'unknown').toLowerCase(),
+                    title: d.title,
+                    searchText: `${d.full_name} ${d.specialty} ${d.sub_specialty || ''} ${d.geography?.city || ''} ${d.geography?.country || ''}`.toLowerCase(),
+                    specialtyLower,
+                    isSurgeon,
+                    isResearcher,
+                    nameParts,
+                    firstNameLower,
+                    lastNameLower,
+                };
+            });
+        }
+    } catch {
+        // DB unavailable, fall through to static
+    }
+
+    // Fallback to static content if DB returned nothing
+    if (newIndex.length === 0) {
+        const doctors = await getCollection('doctors');
+        newIndex = doctors.map(doc => {
+            const d = doc.data;
+            const specialtyLower = d.specialty.toLowerCase();
+            const isSurgeon = specialtyLower.includes('surgery') ||
+                specialtyLower.includes('surgeon') ||
+                specialtyLower.includes('transplant');
+            const isResearcher = !!(d.title?.includes('PhD') ||
+                d.affiliations?.some(a =>
+                    a.role?.toLowerCase().includes('research') ||
+                    a.role?.toLowerCase().includes('scientist')
+                ));
+            const nameParts = d.fullName.toLowerCase().split(/\s+/);
+            const firstNameLower = nameParts[0] || '';
+            const lastNameLower = nameParts[nameParts.length - 1] || '';
+
+            return {
+                id: doc.id,
+                fullName: d.fullName,
+                fullNameLower: d.fullName.toLowerCase(),
+                specialty: d.specialty,
+                subSpecialty: d.subSpecialty,
+                tier: d.tier,
+                hIndex: d.hIndex || 0,
+                portraitUrl: d.portraitUrl,
+                city: d.geography.city,
+                country: d.geography.country,
+                countryLower: d.geography.country.toLowerCase(),
+                title: d.title,
+                searchText: `${d.fullName} ${d.specialty} ${d.subSpecialty || ''} ${d.geography.city || ''} ${d.geography.country}`.toLowerCase(),
+                specialtyLower,
+                isSurgeon,
+                isResearcher,
+                nameParts,
+                firstNameLower,
+                lastNameLower,
+            };
+        });
+    }
 
     // Pre-sort by tier and h-index for faster slicing
     newIndex.sort((a, b) => {
@@ -175,7 +230,8 @@ export const GET: APIRoute = async ({ request, clientAddress }) => {
                 status: 200,
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-Cache': 'HIT'
+                    'X-Cache': 'HIT',
+                    'Cache-Control': 'public, max-age=30, s-maxage=60',
                 }
             });
         }
@@ -235,15 +291,22 @@ export const GET: APIRoute = async ({ request, clientAddress }) => {
         scoredResults.sort((a, b) => b.score - a.score);
         const topResults = scoredResults.slice(0, API_CONFIG.search.maxResults);
 
-        // Log to Database (Fire & Forget - non-blocking)
+        // Log to Database (Fire & Forget - non-blocking, with error logging)
         if (query.length > 2) {
-            prisma.searchLog.create({
-                data: {
-                    queryText: query,
-                    resultsCount: topResults.length,
-                    ipAddress: clientAddress || 'unknown',
-                }
-            }).catch(() => { /* Silent fail for analytics */ });
+            const clientIP = getClientIP(request);
+            hashIP(clientIP).then(ipHash => {
+                prisma.searchLog.create({
+                    data: {
+                        queryText: query,
+                        resultsCount: topResults.length,
+                        ipAddress: ipHash,
+                    }
+                }).catch((err) => {
+                    if (import.meta.env.DEV) console.error('Search log write failed:', err?.message);
+                });
+            }).catch((err) => {
+                if (import.meta.env.DEV) console.error('IP hash failed:', err?.message);
+            });
         }
 
         // Return results with match info for highlighting
@@ -270,7 +333,8 @@ export const GET: APIRoute = async ({ request, clientAddress }) => {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Cache': 'MISS',
-                'X-Results-Count': String(responseData.length)
+                'X-Results-Count': String(responseData.length),
+                'Cache-Control': 'public, max-age=30, s-maxage=60',
             }
         });
 

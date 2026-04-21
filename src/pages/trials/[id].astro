@@ -25,7 +25,6 @@ export function getStaticPaths() {
     return paths;
 }
 
-const { id } = Astro.params;
 const { trial, company, category } = Astro.props;
 
 // Format date helper
@@ -89,7 +88,7 @@ function getPhaseColor(phase: string): string {
                 <p class="indication">{trial.indication}</p>
 
                 <div class="sponsor">
-                    <img src={company.logo} alt={company.name} class="sponsor-logo" />
+                    <img src={company.logo} alt={company.name} class="sponsor-logo" loading="lazy" />
                     <div class="sponsor-info">
                         <span class="sponsor-label">Sponsor</span>
                         <span class="sponsor-name">{company.name}</span>
@@ -260,12 +259,12 @@ function getPhaseColor(phase: string): string {
                     <div class="sidebar-card">
                         <h3>Sponsor</h3>
                         <div class="sponsor-card">
-                            <img src={company.logo} alt={company.name} class="sponsor-logo-sm" />
+                            <img src={company.logo} alt={company.name} class="sponsor-logo-sm" loading="lazy" />
                             <div class="sponsor-details">
                                 <span class="sponsor-name-sm">{company.name}</span>
                                 <span class="sponsor-hq">{company.headquarters}</span>
                                 {company.website && (
-                                    <a href={company.website} target="_blank" rel="noopener" class="sponsor-link">
+                                    <a href={company.website} target="_blank" rel="noopener noreferrer" class="sponsor-link">
                                         Visit Website
                                     </a>
                                 )}
@@ -289,6 +288,7 @@ function getPhaseColor(phase: string): string {
 <style>
     .trial-page {
         padding: 40px 0 80px;
+        background: var(--paper);
     }
 
     .container {
@@ -307,20 +307,20 @@ function getPhaseColor(phase: string): string {
     }
 
     .breadcrumb a {
-        color: var(--text-muted, #64748b);
+        color: var(--ink-3);
         text-decoration: none;
     }
 
     .breadcrumb a:hover {
-        color: var(--accent-purple, #8b5cf6);
+        color: var(--ink-blue);
     }
 
     .breadcrumb span {
-        color: var(--text-secondary, #94a3b8);
+        color: var(--ink-2);
     }
 
     .breadcrumb svg {
-        color: var(--text-muted, #64748b);
+        color: var(--ink-3);
     }
 
     /* Header */
@@ -337,9 +337,10 @@ function getPhaseColor(phase: string): string {
 
     .phase-badge, .status-badge, .category-badge {
         padding: 6px 14px;
-        border-radius: 20px;
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
         font-weight: 600;
+        font-family: var(--font-mono);
         text-transform: uppercase;
         letter-spacing: 0.03em;
     }
@@ -355,20 +356,22 @@ function getPhaseColor(phase: string): string {
     }
 
     .category-badge {
-        background: rgba(139, 92, 246, 0.15);
-        color: var(--accent-purple, #8b5cf6);
+        background: var(--ink-blue-2);
+        color: var(--ink-blue);
     }
 
     .trial-header h1 {
+        font-family: var(--font-serif);
         font-size: 2.2rem;
-        font-weight: 700;
+        font-weight: 400;
+        color: var(--ink);
         margin: 0 0 12px;
         line-height: 1.2;
     }
 
     .indication {
         font-size: 1.2rem;
-        color: var(--text-secondary, #94a3b8);
+        color: var(--ink-2);
         margin: 0 0 24px;
     }
 
@@ -381,8 +384,9 @@ function getPhaseColor(phase: string): string {
     .sponsor-logo {
         width: 48px;
         height: 48px;
-        border-radius: 10px;
-        background: white;
+        border-radius: var(--r-3);
+        background: var(--paper);
+        border: 1px solid var(--rule);
         padding: 6px;
         object-fit: contain;
     }
@@ -394,14 +398,14 @@ function getPhaseColor(phase: string): string {
 
     .sponsor-label {
         font-size: 0.7rem;
-        color: var(--text-muted, #64748b);
+        color: var(--ink-3);
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
 
     .sponsor-name {
-        font-weight: 600;
-        color: var(--text-primary, white);
+        font-weight: 500;
+        color: var(--ink);
     }
 
     /* Stats Grid */
@@ -413,9 +417,9 @@ function getPhaseColor(phase: string): string {
     }
 
     .stat-card {
-        background: var(--bg-card, #14142a);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 20px;
         text-align: center;
         display: flex;
@@ -425,18 +429,19 @@ function getPhaseColor(phase: string): string {
     }
 
     .stat-card svg {
-        color: var(--accent-purple, #8b5cf6);
+        color: var(--ink-blue);
     }
 
     .stat-value {
         font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--text-primary, white);
+        font-weight: 500;
+        font-family: var(--font-mono);
+        color: var(--ink);
     }
 
     .stat-label {
         font-size: 0.75rem;
-        color: var(--text-muted, #64748b);
+        color: var(--ink-3);
         text-transform: uppercase;
         letter-spacing: 0.03em;
     }
@@ -451,23 +456,25 @@ function getPhaseColor(phase: string): string {
 
     /* Content Sections */
     .content-section {
-        background: var(--bg-card, #14142a);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 24px;
         margin-bottom: 24px;
     }
 
     .content-section h2 {
+        font-family: var(--font-serif);
         font-size: 1.1rem;
-        font-weight: 600;
+        font-weight: 500;
+        color: var(--ink);
         margin: 0 0 16px;
         padding-bottom: 12px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid var(--rule);
     }
 
     .content-section p {
-        color: var(--text-secondary, #94a3b8);
+        color: var(--ink-2);
         line-height: 1.7;
         margin: 0;
     }
@@ -486,32 +493,32 @@ function getPhaseColor(phase: string): string {
         display: flex;
         align-items: center;
         gap: 12px;
-        color: var(--text-secondary, #94a3b8);
+        color: var(--ink-2);
     }
 
     .endpoints-list svg {
-        color: #10b981;
+        color: var(--verdant);
         flex-shrink: 0;
     }
 
     /* Update Section */
     .update-card {
-        background: rgba(16, 185, 129, 0.08);
-        border: 1px solid rgba(16, 185, 129, 0.2);
-        border-radius: 10px;
+        background: var(--verdant-2);
+        border: 1px solid var(--verdant);
+        border-radius: var(--r-3);
         padding: 16px;
     }
 
     .update-date {
         display: block;
         font-size: 0.75rem;
-        color: #10b981;
+        color: var(--verdant);
         font-weight: 600;
         margin-bottom: 8px;
     }
 
     .update-card p {
-        color: var(--text-primary, white);
+        color: var(--ink);
     }
 
     /* Investigators */
@@ -522,9 +529,9 @@ function getPhaseColor(phase: string): string {
     }
 
     .investigator-card {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.04);
-        border-radius: 10px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         overflow: hidden;
     }
 
@@ -535,24 +542,24 @@ function getPhaseColor(phase: string): string {
         padding: 14px;
         text-decoration: none;
         color: inherit;
-        transition: background 0.2s;
+        transition: background var(--t-fast);
     }
 
     .investigator-link:hover {
-        background: rgba(139, 92, 246, 0.08);
+        background: var(--paper-3);
     }
 
     .investigator-avatar {
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        background: linear-gradient(135deg, var(--accent-purple, #8b5cf6), #6366f1);
+        background: var(--ink-blue-2);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: 700;
+        font-weight: 600;
         font-size: 0.85rem;
-        color: white;
+        color: var(--ink-blue);
         flex-shrink: 0;
     }
 
@@ -563,24 +570,24 @@ function getPhaseColor(phase: string): string {
     }
 
     .investigator-name {
-        font-weight: 600;
-        color: var(--text-primary, white);
+        font-weight: 500;
+        color: var(--ink);
     }
 
     .investigator-role {
         font-size: 0.8rem;
-        color: var(--text-muted, #64748b);
+        color: var(--ink-3);
     }
 
     .investigator-link svg {
-        color: var(--accent-purple, #8b5cf6);
+        color: var(--ink-blue);
     }
 
     /* Sidebar */
     .sidebar-card {
-        background: var(--bg-card, #14142a);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 20px;
         margin-bottom: 20px;
     }
@@ -589,7 +596,7 @@ function getPhaseColor(phase: string): string {
         font-size: 0.8rem;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        color: var(--text-muted, #64748b);
+        color: var(--ink-3);
         margin: 0 0 16px;
     }
 
@@ -601,7 +608,7 @@ function getPhaseColor(phase: string): string {
         display: flex;
         justify-content: space-between;
         padding: 8px 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid var(--rule);
     }
 
     .detail-row:last-child {
@@ -609,7 +616,7 @@ function getPhaseColor(phase: string): string {
     }
 
     .detail-row dt {
-        color: var(--text-muted, #64748b);
+        color: var(--ink-3);
         font-size: 0.85rem;
     }
 
@@ -617,6 +624,7 @@ function getPhaseColor(phase: string): string {
         margin: 0;
         font-size: 0.85rem;
         font-weight: 500;
+        color: var(--ink);
     }
 
     /* Countries */
@@ -628,10 +636,11 @@ function getPhaseColor(phase: string): string {
 
     .country-tag {
         padding: 4px 12px;
-        background: rgba(139, 92, 246, 0.1);
-        color: var(--accent-purple, #8b5cf6);
-        border-radius: 16px;
+        background: var(--ink-blue-2);
+        color: var(--ink-blue);
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
+        font-family: var(--font-mono);
     }
 
     /* Sponsor Card */
@@ -644,8 +653,9 @@ function getPhaseColor(phase: string): string {
     .sponsor-logo-sm {
         width: 40px;
         height: 40px;
-        border-radius: 8px;
-        background: white;
+        border-radius: var(--r-3);
+        background: var(--paper);
+        border: 1px solid var(--rule);
         padding: 4px;
         object-fit: contain;
     }
@@ -657,18 +667,19 @@ function getPhaseColor(phase: string): string {
     }
 
     .sponsor-name-sm {
-        font-weight: 600;
+        font-weight: 500;
         font-size: 0.9rem;
+        color: var(--ink);
     }
 
     .sponsor-hq {
         font-size: 0.75rem;
-        color: var(--text-muted, #64748b);
+        color: var(--ink-3);
     }
 
     .sponsor-link {
         font-size: 0.75rem;
-        color: var(--accent-purple, #8b5cf6);
+        color: var(--ink-blue);
         text-decoration: none;
     }
 
@@ -681,9 +692,9 @@ function getPhaseColor(phase: string): string {
         display: flex;
         align-items: center;
         gap: 8px;
-        color: var(--accent-purple, #8b5cf6);
+        color: var(--ink-blue);
         text-decoration: none;
-        font-weight: 600;
+        font-weight: 500;
         font-size: 0.9rem;
     }
 

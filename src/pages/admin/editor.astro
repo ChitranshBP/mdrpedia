@@ -4,6 +4,7 @@
  * Visual interface for managing medical knowledge relationships
  */
 import Layout from "../../layouts/Layout.astro";
+import AdminSidebar from "../../components/admin/AdminSidebar.astro";
 import LineageMapper from "../../components/LineageMapper";
 import { requireSuperAdmin } from "../../lib/rbac";
 import { prisma } from "../../lib/prisma";
@@ -22,23 +23,20 @@ let mentorCount = 0;
 let studentCount = 0;
 
 try {
-    // Count lineage relationships
-    const lineages = await prisma.mentorship.count();
-    lineageCount = lineages;
-
-    // Count unique mentors
-    const mentors = await prisma.mentorship.groupBy({
-        by: ['mentor_id'],
-        _count: true
+    // Count lineage relationships (mentored_by_id is not null)
+    lineageCount = await prisma.profile.count({
+        where: { mentored_by_id: { not: null } }
     });
-    mentorCount = mentors.length;
 
-    // Count unique students
-    const students = await prisma.mentorship.groupBy({
-        by: ['student_id'],
-        _count: true
+    // Count unique mentors (profiles that have mentees)
+    const mentorIds = await prisma.profile.findMany({
+        where: { mentees: { some: {} } },
+        select: { id: true }
     });
-    studentCount = students.length;
+    mentorCount = mentorIds.length;
+
+    // Count unique students (profiles that have a mentor)
+    studentCount = lineageCount;
 } catch (e) {
     console.error('Failed to fetch lineage stats:', e);
 }
@@ -46,34 +44,38 @@ try {
 // Get recent lineages
 let recentLineages: any[] = [];
 try {
-    recentLineages = await prisma.mentorship.findMany({
+    // Get profiles that have a mentor, acting as "lineage" records
+    const mentees = await prisma.profile.findMany({
+        where: { mentored_by_id: { not: null } },
         take: 10,
         orderBy: { createdAt: 'desc' },
-        include: {
-            mentor: {
-                select: { full_name: true, slug: true, specialty: true }
-            },
-            student: {
+        select: {
+            full_name: true,
+            slug: true,
+            specialty: true,
+            createdAt: true,
+            mentored_by: {
                 select: { full_name: true, slug: true, specialty: true }
             }
         }
     });
+    recentLineages = mentees.map(m => ({
+        mentor: m.mentored_by,
+        student: { full_name: m.full_name, slug: m.slug, specialty: m.specialty },
+        createdAt: m.createdAt
+    }));
 } catch (e) {
     console.error('Failed to fetch recent lineages:', e);
 }
 ---
 
 <Layout title="Knowledge Graph Editor — MDRPedia">
-    <div class="editor-page">
+    <div class="admin">
+        <AdminSidebar adminKey={adminKey} activePage="editor" />
+        <main class="main">
         <!-- Header -->
         <header class="editor-header">
             <div class="editor-header__left">
-                <a href={`/admin?key=${adminKey}`} class="back-link">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-                        <path d="M19 12H5M12 19l-7-7 7-7"/>
-                    </svg>
-                    Back to Dashboard
-                </a>
                 <h1>Knowledge Graph Editor</h1>
                 <p class="subtitle">Manage mentorship lineages and academic relationships</p>
             </div>
@@ -243,6 +245,7 @@ try {
                 )}
             </div>
         </section>
+        </main>
     </div>
 </Layout>
 
@@ -262,7 +265,7 @@ try {
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        color: var(--text-muted);
+        color: var(--ink-3);
         text-decoration: none;
         font-size: 0.85rem;
         margin-bottom: 12px;
@@ -270,18 +273,18 @@ try {
     }
 
     .back-link:hover {
-        color: var(--accent-purple);
+        color: var(--ink-blue);
     }
 
     .editor-header h1 {
         font-size: 2rem;
-        font-weight: 700;
-        color: white;
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 8px;
     }
 
     .subtitle {
-        color: var(--text-muted);
+        color: var(--ink-3);
         font-size: 1rem;
     }
 
@@ -294,9 +297,9 @@ try {
     }
 
     .stat-card {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 20px;
         display: flex;
         align-items: center;
@@ -306,12 +309,12 @@ try {
     .stat-card__icon {
         width: 48px;
         height: 48px;
-        border-radius: 12px;
-        background: rgba(255, 255, 255, 0.05);
+        border-radius: var(--r-4);
+        background: var(--paper-3);
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .stat-card__icon svg {
@@ -320,18 +323,18 @@ try {
     }
 
     .stat-card__icon--purple {
-        background: rgba(139, 92, 246, 0.15);
-        color: var(--accent-purple);
+        background: var(--ink-blue-2);
+        color: var(--ink-blue);
     }
 
     .stat-card__icon--blue {
-        background: rgba(59, 130, 246, 0.15);
-        color: #3b82f6;
+        background: var(--ink-blue-2);
+        color: var(--ink-blue);
     }
 
     .stat-card__icon--green {
-        background: rgba(16, 185, 129, 0.15);
-        color: #10b981;
+        background: var(--verdant-2);
+        color: var(--verdant);
     }
 
     .stat-card__content {
@@ -341,13 +344,13 @@ try {
 
     .stat-card__value {
         font-size: 1.5rem;
-        font-weight: 700;
-        color: white;
+        font-weight: 500;
+        color: var(--ink);
     }
 
     .stat-card__label {
         font-size: 0.75rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
@@ -362,9 +365,9 @@ try {
 
     /* Editor Sections */
     .editor-section {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         overflow: hidden;
     }
 
@@ -377,13 +380,13 @@ try {
         justify-content: space-between;
         align-items: center;
         padding: 16px 20px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid var(--rule);
     }
 
     .section-header h2 {
         font-size: 1rem;
-        font-weight: 600;
-        color: white;
+        font-weight: 500;
+        color: var(--ink);
     }
 
     .section-content {
@@ -394,21 +397,21 @@ try {
     .badge {
         display: inline-block;
         padding: 4px 10px;
-        border-radius: 20px;
+        border-radius: var(--r-3);
         font-size: 0.7rem;
-        font-weight: 600;
+        font-weight: 500;
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
 
     .badge--info {
-        background: rgba(59, 130, 246, 0.15);
-        color: #3b82f6;
+        background: var(--ink-blue-2);
+        color: var(--ink-blue);
     }
 
     .badge--neutral {
-        background: rgba(255, 255, 255, 0.08);
-        color: var(--text-muted);
+        background: var(--paper-3);
+        color: var(--ink-3);
     }
 
     /* Quick Actions */
@@ -423,10 +426,10 @@ try {
         align-items: center;
         gap: 12px;
         padding: 14px 16px;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 10px;
-        color: var(--text-secondary);
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
+        color: var(--ink-2);
         text-decoration: none;
         font-size: 0.9rem;
         font-weight: 500;
@@ -440,9 +443,9 @@ try {
     }
 
     .action-btn:hover {
-        background: rgba(139, 92, 246, 0.1);
-        border-color: rgba(139, 92, 246, 0.3);
-        color: var(--accent-purple);
+        background: var(--ink-blue-2);
+        border-color: var(--ink-blue);
+        color: var(--ink-blue);
     }
 
     /* Table */
@@ -455,16 +458,16 @@ try {
         text-align: left;
         padding: 12px 16px;
         font-size: 0.7rem;
-        font-weight: 600;
-        color: var(--text-muted);
+        font-weight: 500;
+        color: var(--ink-3);
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        background: rgba(0, 0, 0, 0.2);
+        background: var(--paper-2);
     }
 
     .data-table td {
         padding: 14px 16px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid var(--rule);
         vertical-align: middle;
     }
 
@@ -476,37 +479,37 @@ try {
     }
 
     .doctor-name {
-        font-weight: 600;
-        color: white;
+        font-weight: 500;
+        color: var(--ink);
         font-size: 0.9rem;
     }
 
     .doctor-link:hover .doctor-name {
-        color: var(--accent-purple);
+        color: var(--ink-blue);
     }
 
     .doctor-specialty {
         font-size: 0.75rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .relationship-arrow {
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--accent-purple);
+        color: var(--ink-blue);
     }
 
     .cell-date {
         font-size: 0.85rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     /* Empty State */
     .empty-state {
         text-align: center;
         padding: 48px 20px;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .empty-state svg {
@@ -516,7 +519,8 @@ try {
 
     .empty-state h3 {
         font-size: 1.1rem;
-        color: white;
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 8px;
     }
 

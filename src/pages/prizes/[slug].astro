@@ -6,7 +6,7 @@
 import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import TierBadge from "../../components/TierBadge.astro";
-import { HonorTier, classifyAward, getHonorStyle, GLOBAL_HONORS_DB } from "../../lib/global-honors";
+import { HonorTier, classifyAward, getHonorStyle } from "../../lib/global-honors";
 
 export const prerender = true;
 
@@ -23,17 +23,34 @@ const allDoctors = await getCollection("doctors");
 
 // Classify this award
 const classification = classifyAward(prize.data.name);
-const honorStyle = getHonorStyle(classification.tier);
-
 // Tier display config
+const TIER_ICON_PATHS: Record<HonorTier, string> = {
+    [HonorTier.GLOBAL_LANDMARK]: 'M6 9H4.5a2.5 2.5 0 0 1 0-5H6m12 5h1.5a2.5 2.5 0 0 0 0-5H18M6 9a6 6 0 0 0 12 0V4H6v5zm3 12h6m-3-3v3',
+    [HonorTier.NATIONAL_HONOR]: 'M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM8.21 13.89L7 23l5-3 5 3-1.21-9.12',
+    [HonorTier.PROFESSIONAL_EXCELLENCE]: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z',
+    [HonorTier.UNCLASSIFIED]: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
+};
+
 const TIER_CONFIG: Record<HonorTier, { label: string; color: string; icon: string; points: number }> = {
-    [HonorTier.GLOBAL_LANDMARK]: { label: 'Global Landmark', color: '#ffd700', icon: '🏆', points: 100 },
-    [HonorTier.NATIONAL_HONOR]: { label: 'National Honor', color: '#c0c0c0', icon: '🎖️', points: 75 },
-    [HonorTier.PROFESSIONAL_EXCELLENCE]: { label: 'Professional Excellence', color: '#cd7f32', icon: '⭐', points: 50 },
-    [HonorTier.UNCLASSIFIED]: { label: 'Award', color: '#888', icon: '🎗️', points: 0 },
+    [HonorTier.GLOBAL_LANDMARK]: { label: 'Global Landmark', color: '#ffd700', icon: TIER_ICON_PATHS[HonorTier.GLOBAL_LANDMARK], points: 100 },
+    [HonorTier.NATIONAL_HONOR]: { label: 'National Honor', color: '#c0c0c0', icon: TIER_ICON_PATHS[HonorTier.NATIONAL_HONOR], points: 75 },
+    [HonorTier.PROFESSIONAL_EXCELLENCE]: { label: 'Professional Excellence', color: '#cd7f32', icon: TIER_ICON_PATHS[HonorTier.PROFESSIONAL_EXCELLENCE], points: 50 },
+    [HonorTier.UNCLASSIFIED]: { label: 'Award', color: '#888', icon: TIER_ICON_PATHS[HonorTier.UNCLASSIFIED], points: 0 },
 };
 
 const tierConfig = TIER_CONFIG[classification.tier];
+
+// Helper to safely extract award name from either string or object entries
+type AwardEntry = { name: string; year?: number; contribution?: string; issuingBody?: string } | string;
+function getAwardName(award: AwardEntry): string {
+    return typeof award === 'string' ? award : award.name;
+}
+function getAwardYear(award: AwardEntry): number {
+    return typeof award === 'object' ? (award.year || 0) : 0;
+}
+function getAwardContribution(award: AwardEntry): string | undefined {
+    return typeof award === 'object' ? award.contribution : undefined;
+}
 
 // Find winners
 const winners = allDoctors.filter((doctor) => {
@@ -41,19 +58,20 @@ const winners = allDoctors.filter((doctor) => {
     if (prize.data.winners.includes(doctor.id)) return true;
 
     // Check awards array in doctor profile
-    return doctor.data.awards?.some((award) => {
-        const awardName = (award as any).name || award;
-        return awardName?.toLowerCase().includes(prize.data.name.toLowerCase());
+    const awards = (doctor.data.awards || []) as AwardEntry[];
+    return awards.some((award) => {
+        return getAwardName(award)?.toLowerCase().includes(prize.data.name.toLowerCase());
     });
 });
 
 // Sort winners by year (if available) or ranking score
 const sortedWinners = winners.sort((a, b) => {
     const getYear = (d: typeof winners[0]) => {
-        const award = d.data.awards?.find((a) =>
-            ((a as any).name || a)?.toLowerCase().includes(prize.data.name.toLowerCase())
+        const awards = (d.data.awards || []) as AwardEntry[];
+        const award = awards.find((a) =>
+            getAwardName(a)?.toLowerCase().includes(prize.data.name.toLowerCase())
         );
-        return (award as any)?.year || 0;
+        return award ? getAwardYear(award) : 0;
     };
 
     const yearA = getYear(a);
@@ -65,10 +83,11 @@ const sortedWinners = winners.sort((a, b) => {
 
 // Get years range
 const years = sortedWinners.map(w => {
-    const award = w.data.awards?.find(a =>
-        ((a as any).name || a)?.toLowerCase().includes(prize.data.name.toLowerCase())
+    const awards = (w.data.awards || []) as AwardEntry[];
+    const award = awards.find((a) =>
+        getAwardName(a)?.toLowerCase().includes(prize.data.name.toLowerCase())
     );
-    return (award as any)?.year;
+    return award ? getAwardYear(award) : 0;
 }).filter(Boolean);
 
 const earliestYear = years.length > 0 ? Math.min(...years) : null;
@@ -102,13 +121,13 @@ const relatedPrizes = allPrizes
                     <div class="prize-image-container">
                         <div class="prize-image">
                             {prize.data.image ? (
-                                <img src={prize.data.image} alt={prize.data.name} />
+                                <img src={prize.data.image} alt={prize.data.name} loading="lazy" />
                             ) : (
-                                <span class="prize-emoji">{tierConfig.icon}</span>
+                                <span class="prize-emoji"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={tierConfig.icon}/></svg></span>
                             )}
                         </div>
                         <div class="tier-ribbon">
-                            <span class="tier-icon">{tierConfig.icon}</span>
+                            <span class="tier-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={tierConfig.icon}/></svg></span>
                             {tierConfig.label}
                         </div>
                     </div>
@@ -158,11 +177,12 @@ const relatedPrizes = allPrizes
                 {sortedWinners.length > 0 ? (
                     <div class="recipients-grid">
                         {sortedWinners.map((doctor) => {
-                            const award = doctor.data.awards?.find((a) =>
-                                ((a as any).name || a)?.toLowerCase().includes(prize.data.name.toLowerCase())
+                            const awards = (doctor.data.awards || []) as AwardEntry[];
+                            const award = awards.find((a) =>
+                                getAwardName(a)?.toLowerCase().includes(prize.data.name.toLowerCase())
                             );
-                            const year = (award as any)?.year;
-                            const contribution = (award as any)?.contribution;
+                            const year = award ? getAwardYear(award) : undefined;
+                            const contribution = award ? getAwardContribution(award) : undefined;
 
                             return (
                                 <a href={`/doctors/${doctor.id}`} class="recipient-card">
@@ -226,7 +246,7 @@ const relatedPrizes = allPrizes
                     </div>
                 ) : (
                     <div class="empty-recipients">
-                        <div class="empty-icon">🔍</div>
+                        <div class="empty-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.35-4.35"/></svg></div>
                         <h3>No recipients found in registry</h3>
                         <p>We are continuously updating our database. Know someone who received this award?</p>
                         <a href="/contact?subject=suggest-recipient" class="suggest-link">
@@ -248,7 +268,7 @@ const relatedPrizes = allPrizes
                             const rpConfig = TIER_CONFIG[rpClassification.tier];
                             return (
                                 <a href={`/prizes/${rp.id}`} class="related-card">
-                                    <span class="related-icon">{rpConfig.icon}</span>
+                                    <span class="related-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={rpConfig.icon}/></svg></span>
                                     <div>
                                         <h4>{rp.data.name}</h4>
                                         <p>{rp.data.category}</p>
@@ -280,7 +300,7 @@ const relatedPrizes = allPrizes
 
 <style>
     .prize-page {
-        background: var(--bg-main);
+        background: var(--paper);
         min-height: 100vh;
     }
 
@@ -294,33 +314,33 @@ const relatedPrizes = allPrizes
     .breadcrumb {
         padding: 1rem 0;
         font-size: 0.85rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid var(--rule);
     }
 
     .breadcrumb a {
-        color: var(--text-muted);
+        color: var(--ink-3);
         text-decoration: none;
-        transition: color 0.2s;
+        transition: color var(--t-fast);
     }
 
     .breadcrumb a:hover {
-        color: var(--accent-purple);
+        color: var(--ink-blue);
     }
 
     .separator {
         margin: 0 0.5rem;
-        color: rgba(255, 255, 255, 0.2);
+        color: var(--rule-strong);
     }
 
     .current {
-        color: var(--text-secondary);
+        color: var(--ink-2);
     }
 
     /* Hero */
     .prize-hero {
         padding: 3rem 0 4rem;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, transparent 100%);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper);
+        border-bottom: 1px solid var(--rule);
     }
 
     .hero-content {
@@ -340,11 +360,10 @@ const relatedPrizes = allPrizes
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(255, 255, 255, 0.05);
-        border: 2px solid var(--tier-color, rgba(255, 255, 255, 0.1));
-        border-radius: 20px;
+        background: var(--paper-2);
+        border: 2px solid var(--tier-color, var(--rule));
+        border-radius: var(--r-4);
         padding: 1.5rem;
-        box-shadow: 0 0 40px color-mix(in srgb, var(--tier-color) 20%, transparent);
     }
 
     .prize-image img {
@@ -366,12 +385,13 @@ const relatedPrizes = allPrizes
         align-items: center;
         gap: 0.4rem;
         padding: 6px 14px;
-        background: var(--bg-card);
-        border: 1px solid var(--tier-color, rgba(255, 255, 255, 0.1));
-        border-radius: 100px;
+        background: var(--paper);
+        border: 1px solid var(--tier-color, var(--rule));
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
         font-weight: 600;
-        color: var(--tier-color, var(--text-secondary));
+        font-family: var(--font-mono);
+        color: var(--tier-color, var(--ink-2));
         white-space: nowrap;
     }
 
@@ -392,19 +412,20 @@ const relatedPrizes = allPrizes
 
     .category-badge {
         padding: 4px 12px;
-        background: rgba(139, 92, 246, 0.1);
-        border: 1px solid rgba(139, 92, 246, 0.3);
-        border-radius: 100px;
+        background: var(--ink-blue-2);
+        border: 1px solid var(--ink-blue);
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
         font-weight: 600;
-        color: #a78bfa;
+        font-family: var(--font-mono);
+        color: var(--ink-blue);
     }
 
     .points-badge {
         padding: 4px 12px;
         background: color-mix(in srgb, var(--tier-color) 10%, transparent);
         border: 1px solid color-mix(in srgb, var(--tier-color) 30%, transparent);
-        border-radius: 100px;
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
         font-weight: 600;
         font-family: var(--font-mono);
@@ -414,15 +435,15 @@ const relatedPrizes = allPrizes
     .prize-hero h1 {
         font-family: var(--font-serif);
         font-size: clamp(1.75rem, 4vw, 2.5rem);
-        font-weight: 700;
-        color: var(--text-primary);
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 1rem;
         line-height: 1.2;
     }
 
     .prize-description {
         font-size: 1.05rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         line-height: 1.7;
         margin-bottom: 2rem;
     }
@@ -440,16 +461,16 @@ const relatedPrizes = allPrizes
 
     .stat-value {
         font-size: 1.5rem;
-        font-weight: 700;
+        font-weight: 500;
         font-family: var(--font-mono);
-        color: var(--tier-color, var(--text-primary));
+        color: var(--tier-color, var(--ink));
     }
 
     .stat-label {
         font-size: 0.75rem;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     /* Recipients Section */
@@ -467,16 +488,18 @@ const relatedPrizes = allPrizes
     .section-header h2 {
         font-family: var(--font-serif);
         font-size: 1.5rem;
-        color: var(--text-primary);
+        font-weight: 400;
+        color: var(--ink);
         margin: 0;
     }
 
     .count-badge {
         padding: 4px 12px;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 100px;
+        background: var(--paper-2);
+        border-radius: var(--r-pill);
         font-size: 0.8rem;
-        color: var(--text-muted);
+        font-family: var(--font-mono);
+        color: var(--ink-3);
     }
 
     .recipients-grid {
@@ -491,16 +514,16 @@ const relatedPrizes = allPrizes
         align-items: center;
         gap: 1.25rem;
         padding: 1.5rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 16px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         text-decoration: none;
-        transition: all 0.25s;
+        transition: all var(--t-base);
     }
 
     .recipient-card:hover {
-        background: rgba(255, 255, 255, 0.05);
-        border-color: rgba(139, 92, 246, 0.3);
+        background: var(--paper-2);
+        border-color: var(--ink-blue);
         transform: translateX(4px);
     }
 
@@ -509,22 +532,22 @@ const relatedPrizes = allPrizes
         top: -8px;
         right: 1.5rem;
         padding: 4px 12px;
-        background: var(--bg-card);
-        border: 1px solid var(--tier-color, rgba(255, 255, 255, 0.1));
-        border-radius: 100px;
+        background: var(--paper);
+        border: 1px solid var(--tier-color, var(--rule));
+        border-radius: var(--r-pill);
         font-size: 0.8rem;
-        font-weight: 700;
+        font-weight: 600;
         font-family: var(--font-mono);
-        color: var(--tier-color, var(--text-secondary));
+        color: var(--tier-color, var(--ink-2));
     }
 
     .recipient-avatar {
         flex-shrink: 0;
         width: 72px;
         height: 72px;
-        border-radius: 12px;
+        border-radius: var(--r-3);
         overflow: hidden;
-        border: 2px solid rgba(255, 255, 255, 0.1);
+        border: 2px solid var(--rule);
     }
 
     .recipient-avatar img {
@@ -539,10 +562,10 @@ const relatedPrizes = allPrizes
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(139, 92, 246, 0.1);
+        background: var(--ink-blue-2);
         font-size: 1.5rem;
-        font-weight: 700;
-        color: #a78bfa;
+        font-weight: 600;
+        color: var(--ink-blue);
     }
 
     .recipient-info {
@@ -558,30 +581,31 @@ const relatedPrizes = allPrizes
     }
 
     .recipient-name h3 {
+        font-family: var(--font-serif);
         font-size: 1.1rem;
-        font-weight: 600;
-        color: var(--text-primary);
+        font-weight: 500;
+        color: var(--ink);
         margin: 0;
     }
 
     .recipient-specialty {
         font-size: 0.85rem;
-        color: var(--accent-purple);
+        color: var(--ink-blue);
         margin: 0 0 0.5rem;
     }
 
     .contribution {
         font-size: 0.9rem;
         font-style: italic;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         padding-left: 0.75rem;
-        border-left: 2px solid var(--tier-color, rgba(255, 255, 255, 0.2));
+        border-left: 2px solid var(--tier-color, var(--rule-strong));
         margin: 0 0 0.75rem;
     }
 
     .bio-snippet {
         font-size: 0.85rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         line-height: 1.5;
         margin: 0 0 0.75rem;
     }
@@ -597,7 +621,7 @@ const relatedPrizes = allPrizes
         align-items: center;
         gap: 0.4rem;
         font-size: 0.8rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .meta-item svg {
@@ -606,10 +630,10 @@ const relatedPrizes = allPrizes
 
     .card-arrow {
         flex-shrink: 0;
-        color: var(--text-muted);
+        color: var(--ink-3);
         opacity: 0;
         transform: translateX(-8px);
-        transition: all 0.2s;
+        transition: all var(--t-fast);
     }
 
     .recipient-card:hover .card-arrow {
@@ -621,9 +645,9 @@ const relatedPrizes = allPrizes
     .empty-recipients {
         text-align: center;
         padding: 4rem 2rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px dashed rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px dashed var(--rule-strong);
+        border-radius: var(--r-4);
     }
 
     .empty-icon {
@@ -634,42 +658,43 @@ const relatedPrizes = allPrizes
 
     .empty-recipients h3 {
         font-size: 1.1rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         margin-bottom: 0.5rem;
     }
 
     .empty-recipients p {
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin-bottom: 1.5rem;
     }
 
     .suggest-link {
         display: inline-flex;
         padding: 0.6rem 1.25rem;
-        background: var(--accent-purple);
-        border-radius: 8px;
+        background: var(--ink-blue);
+        border-radius: var(--r-3);
         font-size: 0.9rem;
         font-weight: 500;
-        color: white;
+        color: var(--paper);
         text-decoration: none;
-        transition: background 0.2s;
+        transition: background var(--t-fast);
     }
 
     .suggest-link:hover {
-        background: #7c3aed;
+        filter: brightness(1.1);
     }
 
     /* Related Awards */
     .related-section {
         padding: 3rem 0;
-        background: rgba(0, 0, 0, 0.2);
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper-2);
+        border-top: 1px solid var(--rule);
     }
 
     .related-section h2 {
         font-family: var(--font-serif);
         font-size: 1.25rem;
-        color: var(--text-primary);
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 1.5rem;
     }
 
@@ -684,16 +709,16 @@ const relatedPrizes = allPrizes
         align-items: center;
         gap: 1rem;
         padding: 1rem 1.25rem;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         text-decoration: none;
-        transition: all 0.2s;
+        transition: all var(--t-fast);
     }
 
     .related-card:hover {
-        background: rgba(255, 255, 255, 0.06);
-        border-color: rgba(139, 92, 246, 0.3);
+        background: var(--paper-2);
+        border-color: var(--ink-blue);
     }
 
     .related-icon {
@@ -702,13 +727,14 @@ const relatedPrizes = allPrizes
 
     .related-card h4 {
         font-size: 0.95rem;
-        color: var(--text-primary);
+        font-weight: 500;
+        color: var(--ink);
         margin: 0 0 0.2rem;
     }
 
     .related-card p {
         font-size: 0.8rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin: 0;
     }
 
@@ -723,33 +749,35 @@ const relatedPrizes = allPrizes
         justify-content: space-between;
         gap: 2rem;
         padding: 2rem 2.5rem;
-        background: linear-gradient(135deg, color-mix(in srgb, var(--tier-color) 5%, transparent) 0%, rgba(139, 92, 246, 0.05) 100%);
-        border: 1px solid color-mix(in srgb, var(--tier-color) 30%, transparent);
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
     }
 
     .cta-content h3 {
+        font-family: var(--font-serif);
         font-size: 1.25rem;
-        color: var(--text-primary);
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 0.4rem;
     }
 
     .cta-content p {
         font-size: 0.9rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin: 0;
     }
 
     .cta-btn {
         padding: 0.75rem 1.5rem;
-        background: var(--tier-color, var(--accent-purple));
-        border-radius: 10px;
+        background: var(--ink-blue);
+        border-radius: var(--r-3);
         font-size: 0.9rem;
         font-weight: 600;
-        color: #000;
+        color: var(--paper);
         text-decoration: none;
         white-space: nowrap;
-        transition: all 0.2s;
+        transition: all var(--t-fast);
     }
 
     .cta-btn:hover {

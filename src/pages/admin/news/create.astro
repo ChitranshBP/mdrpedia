@@ -3,6 +3,7 @@
  * MDRPedia — Create News Article
  */
 import Layout from "../../../layouts/Layout.astro";
+import AdminSidebar from "../../../components/admin/AdminSidebar.astro";
 import { requireSuperAdmin } from "../../../lib/rbac";
 
 export const prerender = false;
@@ -26,18 +27,9 @@ const categories = [
 ---
 
 <Layout title="Create News Article — MDRPedia Admin">
-    <div class="container admin-dashboard">
-        <header class="admin-header">
-            <div class="admin-header__top">
-                <span class="badge badge--admin">SUPER ADMIN</span>
-                <h1>Create News Article</h1>
-            </div>
-            <div class="admin-actions">
-                <a href={`/admin/news?key=${adminKey}`} class="btn btn--outline">
-                    &larr; Back to News
-                </a>
-            </div>
-        </header>
+    <div class="admin">
+        <AdminSidebar adminKey={adminKey} activePage="news" />
+        <main class="main">
 
         <form id="newsForm" class="editor-form">
             <div class="form-grid">
@@ -104,6 +96,7 @@ const categories = [
                 </div>
             </div>
         </div>
+        </main>
     </div>
 </Layout>
 

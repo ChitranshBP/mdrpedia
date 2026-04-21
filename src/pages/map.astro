@@ -48,7 +48,7 @@ try {
 } catch (e) {
     // Fallback to content collection
     dataSource = 'static';
-    console.log('Map page falling back to static content:', e);
+    // Fallback to static content when DB is unavailable
     const contentDoctors = await getCollection("doctors");
     doctors = contentDoctors.map(d => ({
         slug: d.id,
@@ -178,7 +178,7 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
                                 {stats.doctors.slice(0, 4).map((doc, i) => (
                                     <div class="preview-avatar" style={`z-index: ${4 - i}`}>
                                         {doc.portraitUrl ? (
-                                            <img src={doc.portraitUrl} alt="" loading="lazy" />
+                                            <img src={doc.portraitUrl} alt={doc.fullName || 'Doctor portrait'} loading="lazy" />
                                         ) : (
                                             <span>{doc.fullName?.[0] || '?'}</span>
                                         )}
@@ -204,12 +204,12 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
 
 <style>
     .map-page {
-        background: var(--bg-main);
+        background: var(--paper);
         min-height: 100vh;
     }
 
     .container {
-        max-width: 1200px;
+        max-width: var(--max);
         margin: 0 auto;
         padding: 0 1.5rem;
     }
@@ -218,34 +218,34 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
     .page-hero {
         padding: 4rem 0 3rem;
         text-align: center;
-        background: linear-gradient(180deg, rgba(16, 185, 129, 0.03) 0%, transparent 100%);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper);
+        border-bottom: 1px solid var(--rule);
     }
 
     .hero-badge {
         display: inline-block;
         padding: 6px 16px;
-        background: rgba(16, 185, 129, 0.1);
-        border: 1px solid rgba(16, 185, 129, 0.3);
-        border-radius: 100px;
+        background: var(--verdant-2);
+        border: 1px solid var(--verdant);
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
         font-weight: 700;
         letter-spacing: 0.15em;
-        color: #10b981;
+        color: var(--verdant);
         margin-bottom: 1.5rem;
     }
 
     .page-hero h1 {
         font-family: var(--font-serif);
         font-size: clamp(2rem, 5vw, 3rem);
-        font-weight: 800;
-        color: var(--text-primary);
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 1rem;
     }
 
     .hero-description {
         font-size: 1.1rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         max-width: 600px;
         margin: 0 auto 2.5rem;
     }
@@ -265,26 +265,26 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
     .stat-value {
         display: block;
         font-size: 2rem;
-        font-weight: 700;
+        font-weight: 500;
         font-family: var(--font-mono);
-        color: var(--text-primary);
+        color: var(--ink);
     }
 
     .stat-value.stat-titan {
-        color: #ffd700;
+        color: var(--titan-text);
     }
 
     .stat-label {
         font-size: 0.75rem;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .stat-divider {
         width: 1px;
         height: 40px;
-        background: rgba(255, 255, 255, 0.1);
+        background: var(--rule);
     }
 
     /* Map Section */
@@ -294,9 +294,9 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
 
     .map-container {
         height: 500px;
-        background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         overflow: hidden;
         position: relative;
     }
@@ -309,14 +309,14 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
         align-items: center;
         justify-content: center;
         gap: 1rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .loading-spinner {
         width: 40px;
         height: 40px;
-        border: 3px solid rgba(139, 92, 246, 0.2);
-        border-top-color: #8b5cf6;
+        border: 3px solid var(--rule);
+        border-top-color: var(--ink-blue);
         border-radius: 50%;
         animation: spin 1s linear infinite;
     }
@@ -333,7 +333,8 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
     .countries-section h2 {
         font-family: var(--font-serif);
         font-size: 1.75rem;
-        color: var(--text-primary);
+        font-weight: 400;
+        color: var(--ink);
         text-align: center;
         margin-bottom: 2rem;
     }
@@ -346,17 +347,18 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
 
     .country-card {
         padding: 1.25rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         text-decoration: none;
         transition: all 0.25s;
     }
 
     .country-card:hover {
-        background: rgba(255, 255, 255, 0.05);
-        border-color: rgba(139, 92, 246, 0.3);
+        background: var(--paper-2);
+        border-color: var(--rule-strong);
         transform: translateY(-2px);
+        box-shadow: var(--shadow-2);
     }
 
     .country-header {
@@ -368,18 +370,18 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
 
     .country-header h3 {
         font-size: 1rem;
-        font-weight: 600;
-        color: var(--text-primary);
+        font-weight: 500;
+        color: var(--ink);
         margin: 0;
     }
 
     .titan-badge {
         padding: 2px 8px;
-        background: rgba(255, 215, 0, 0.15);
-        border-radius: 100px;
+        background: var(--titan-bg);
+        border-radius: var(--r-pill);
         font-size: 0.7rem;
         font-weight: 600;
-        color: #ffd700;
+        color: var(--titan-text);
     }
 
     .country-stats {
@@ -395,20 +397,20 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
 
     .country-stat .value {
         font-size: 1.25rem;
-        font-weight: 700;
+        font-weight: 500;
         font-family: var(--font-mono);
-        color: var(--text-primary);
+        color: var(--ink);
     }
 
     .country-stat.elite .value {
-        color: #00aaff;
+        color: var(--elite-text);
     }
 
     .country-stat .label {
         font-size: 0.65rem;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .country-preview {
@@ -420,16 +422,16 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
         width: 28px;
         height: 28px;
         border-radius: 50%;
-        border: 2px solid var(--bg-card);
+        border: 2px solid var(--paper);
         overflow: hidden;
         margin-left: -8px;
-        background: rgba(139, 92, 246, 0.2);
+        background: var(--ink-blue-2);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 0.65rem;
-        font-weight: 600;
-        color: #a78bfa;
+        font-weight: 500;
+        color: var(--ink-blue);
     }
 
     .preview-avatar:first-child {
@@ -444,10 +446,10 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
 
     .preview-more {
         padding: 4px 8px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 100px;
+        background: var(--paper-3);
+        border-radius: var(--r-pill);
         font-size: 0.7rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin-left: 4px;
     }
 
@@ -459,18 +461,19 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
     .view-all-btn {
         display: inline-flex;
         padding: 0.75rem 1.5rem;
-        background: rgba(139, 92, 246, 0.1);
-        border: 1px solid rgba(139, 92, 246, 0.3);
-        border-radius: 10px;
+        background: var(--ink-blue-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         font-size: 0.9rem;
         font-weight: 500;
-        color: #a78bfa;
+        color: var(--ink-blue);
         text-decoration: none;
         transition: all 0.2s;
     }
 
     .view-all-btn:hover {
-        background: rgba(139, 92, 246, 0.2);
+        background: var(--paper-3);
+        border-color: var(--rule-strong);
     }
 
     @media (max-width: 768px) {
@@ -502,12 +505,12 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
         const mapHTML = `
             <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 2rem;">
                 <svg viewBox="0 0 1000 500" style="max-width: 100%; height: auto; opacity: 0.3;">
-                    <path d="M100,200 Q200,100 400,150 T600,200 T800,150 T900,200" stroke="#8b5cf6" fill="none" stroke-width="2"/>
-                    <path d="M100,250 Q250,150 450,200 T650,250 T850,200 T950,250" stroke="#10b981" fill="none" stroke-width="2"/>
-                    <path d="M50,300 Q200,200 400,250 T600,300 T800,250 T950,300" stroke="#8b5cf6" fill="none" stroke-width="2"/>
+                    <path d="M100,200 Q200,100 400,150 T600,200 T800,150 T900,200" stroke="var(--ink-blue)" fill="none" stroke-width="2"/>
+                    <path d="M100,250 Q250,150 450,200 T650,250 T850,200 T950,250" stroke="var(--verdant)" fill="none" stroke-width="2"/>
+                    <path d="M50,300 Q200,200 400,250 T600,300 T800,250 T950,300" stroke="var(--ink-blue)" fill="none" stroke-width="2"/>
                 </svg>
-                <p style="color: var(--text-muted); margin-top: 1rem; font-size: 0.9rem;">Interactive map coming soon</p>
-                <p style="color: var(--text-muted); font-size: 0.8rem;">Browse doctors by country below</p>
+                <p style="color: var(--ink-3); margin-top: 1rem; font-size: 0.9rem;">Interactive map coming soon</p>
+                <p style="color: var(--ink-3); font-size: 0.8rem;">Browse doctors by country below</p>
             </div>
         `;
         mapContainer.innerHTML = mapHTML;

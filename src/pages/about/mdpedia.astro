@@ -1,0 +1,275 @@
+---
+export const prerender = true;
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+    title="MDpedia — What Is MDpedia? | MDRPedia"
+    description="MDpedia is the colloquial name for MDRPedia in Western medical communities. Learn about the world's leading physician encyclopedia, also known as MDpedia in the Americas, Europe, and Australasia."
+>
+    <article class="disambig-page">
+        <div class="container">
+            <!-- Breadcrumb -->
+            <nav class="disambig-breadcrumb" aria-label="Breadcrumb">
+                <a href="/">MDRPedia</a> <span>/</span>
+                <a href="/about">About</a> <span>/</span>
+                <span aria-current="page">MDpedia</span>
+            </nav>
+
+            <!-- Hero -->
+            <header class="disambig-hero">
+                <span class="disambig-badge">Disambiguation</span>
+                <h1>MDpedia</h1>
+                <p class="disambig-subtitle">
+                    The Western colloquial name for <strong>MDRPedia</strong> — The Physicians' Register.
+                </p>
+            </header>
+
+            <!-- Infobox -->
+            <aside class="disambig-infobox">
+                <h4>At a Glance</h4>
+                <dl>
+                    <dt>Official Name</dt>
+                    <dd><a href="/">MDRPedia</a></dd>
+                    <dt>Colloquial Name</dt>
+                    <dd>MDpedia</dd>
+                    <dt>Used In</dt>
+                    <dd>Americas, Europe, Australasia</dd>
+                    <dt>Origin</dt>
+                    <dd>"MD" (Doctor of Medicine) + "pedia" (encyclopedia)</dd>
+                    <dt>Eastern Equivalent</dt>
+                    <dd><a href="/about/drpedia">DRpedia</a></dd>
+                    <dt>Website</dt>
+                    <dd><a href="/">mdrpedia.com</a></dd>
+                </dl>
+            </aside>
+
+            <!-- Main Content -->
+            <section class="disambig-content">
+                <h2>What is MDpedia?</h2>
+                <p>
+                    <strong>MDpedia</strong> is the informal name by which <a href="/">MDRPedia</a> is widely known
+                    in Western medical circles. The name derives from <strong>MD</strong> (Doctor of Medicine),
+                    the primary medical degree in the United States, Canada, and many European countries,
+                    combined with <strong>-pedia</strong> (from "encyclopedia").
+                </p>
+                <p>
+                    While the official platform name is MDRPedia, physicians, medical journalists, and
+                    academic institutions across the West frequently use "MDpedia" as shorthand when
+                    referencing the register in publications, conference proceedings, and clinical settings.
+                </p>
+
+                <h2>Why "MD" in the West?</h2>
+                <p>
+                    In Western medical systems, the <strong>MD (Medicinae Doctor)</strong> credential is the
+                    standard qualification for physicians. Countries including the United States, Canada,
+                    United Kingdom, Germany, France, and Australia use the MD designation as the primary
+                    medical degree. This made "MDpedia" a natural shorthand — physicians see the "MD" prefix
+                    and immediately associate it with their professional identity.
+                </p>
+
+                <h2>MDpedia and DRpedia: Same Register</h2>
+                <p>
+                    It is important to note that MDpedia and <a href="/about/drpedia">DRpedia</a> refer to
+                    the same platform: <strong>MDRPedia</strong>. In Eastern medical communities — the Middle East,
+                    South Asia, East Asia, and Africa — the platform is known as DRpedia, using the universal
+                    "Dr." honorific. Both names are recognized and direct to the same verified physician database.
+                </p>
+
+                <h2>What MDRPedia Offers</h2>
+                <ul class="feature-list">
+                    <li><a href="/doctors">Verified physician profiles</a> across 85+ countries</li>
+                    <li><a href="/rankings">Impact-based rankings</a> using the proprietary MDR Score</li>
+                    <li><a href="/specialty">Specialty directories</a> covering every medical discipline</li>
+                    <li><a href="/institutions">Institutional profiles</a> for hospitals and research centers</li>
+                    <li><a href="/ethical-doctors">Ethics verification</a> with a transparent seal system</li>
+                    <li><a href="/clinical-trials">Clinical trial tracking</a> linked to physician profiles</li>
+                </ul>
+
+                <h2>How to Access</h2>
+                <p>
+                    Whether you search for "MDpedia," "MDRPedia," or "DRpedia," you will find the same register
+                    at <a href="/">mdrpedia.com</a>. The platform is free, open-access, and licensed under
+                    Creative Commons (CC BY-SA 4.0).
+                </p>
+            </section>
+
+            <!-- Related Links -->
+            <nav class="disambig-related">
+                <h3>Related Pages</h3>
+                <div class="related-grid">
+                    <a href="/about/drpedia" class="related-card">
+                        <span class="related-label">Eastern Name</span>
+                        <strong>DRpedia</strong>
+                        <p>The colloquial name used in the Middle East, Asia, and Africa</p>
+                    </a>
+                    <a href="/about" class="related-card">
+                        <span class="related-label">About</span>
+                        <strong>About MDRPedia</strong>
+                        <p>Our methodology, history, and the Impact Quotient system</p>
+                    </a>
+                    <a href="/brand" class="related-card">
+                        <span class="related-label">Design</span>
+                        <strong>Brand System</strong>
+                        <p>Logo, typography, tier seals, and editorial principles</p>
+                    </a>
+                    <a href="/doctors" class="related-card">
+                        <span class="related-label">Register</span>
+                        <strong>Browse Profiles</strong>
+                        <p>Search the verified register of physicians worldwide</p>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </article>
+
+    <!-- FAQ Schema for SEO -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is MDpedia?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "MDpedia is the colloquial name for MDRPedia, the world's first independently-verified encyclopedia of physicians. The name is widely used in Western medical communities across the Americas, Europe, and Australasia."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is MDpedia the same as DRpedia?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. MDpedia and DRpedia both refer to MDRPedia (mdrpedia.com). MDpedia is the Western name (from 'MD'), while DRpedia is used in Eastern medical communities (from 'Dr.')."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is MDpedia the same as MDRPedia?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. MDpedia is the informal Western name for MDRPedia — The Physicians' Register. The official platform is MDRPedia at mdrpedia.com."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why is it called MDpedia?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The name MDpedia comes from 'MD' (Doctor of Medicine), the primary medical degree in Western countries, combined with '-pedia' (encyclopedia). Western physicians naturally shortened MDRPedia to MDpedia."
+                }
+            }
+        ]
+    })} />
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "MDRPedia", "item": "https://mdrpedia.com" },
+            { "@type": "ListItem", "position": 2, "name": "About", "item": "https://mdrpedia.com/about" },
+            { "@type": "ListItem", "position": 3, "name": "MDpedia", "item": "https://mdrpedia.com/about/mdpedia" }
+        ]
+    })} />
+</Layout>
+
+<style>
+    .disambig-page { max-width: 860px; margin: 0 auto; padding: 0 20px 100px; }
+
+    .disambig-breadcrumb {
+        padding: 20px 0; font-family: var(--font-mono); font-size: 12px;
+        color: var(--ink-3); letter-spacing: 0.04em;
+    }
+    .disambig-breadcrumb a { color: var(--ink-2); text-decoration: none; }
+    .disambig-breadcrumb a:hover { text-decoration: underline; }
+    .disambig-breadcrumb span { margin: 0 6px; }
+
+    .disambig-badge {
+        display: inline-block; font-family: var(--font-mono); font-size: 10px;
+        letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-blue);
+        border: 1px solid var(--ink-blue); padding: 4px 10px; border-radius: var(--r-2);
+        margin-bottom: 16px;
+    }
+
+    .disambig-hero { padding: 40px 0 32px; border-bottom: 1px solid var(--rule); }
+    .disambig-hero h1 {
+        font-family: var(--font-serif); font-size: 3.2rem; font-weight: 400;
+        color: var(--ink); margin-bottom: 12px;
+    }
+    .disambig-subtitle { font-size: 1.2rem; color: var(--ink-2); max-width: 50ch; }
+
+    .disambig-infobox {
+        float: right; width: 260px; margin: 32px 0 24px 32px;
+        background: var(--paper-2); border: 1px solid var(--rule);
+        border-radius: var(--r-3); padding: 20px;
+    }
+    .disambig-infobox h4 {
+        font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em;
+        text-transform: uppercase; color: var(--ink-3); margin-bottom: 16px;
+        padding-bottom: 8px; border-bottom: 1px solid var(--rule);
+    }
+    .disambig-infobox dl { display: grid; gap: 8px; }
+    .disambig-infobox dt {
+        font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
+        text-transform: uppercase; color: var(--ink-3);
+    }
+    .disambig-infobox dd {
+        font-size: 14px; color: var(--ink); margin: 0 0 8px;
+        padding-bottom: 8px; border-bottom: 1px solid var(--rule);
+    }
+    .disambig-infobox dd:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+    .disambig-infobox a { color: var(--ink-blue); text-decoration: underline; }
+
+    .disambig-content { padding-top: 32px; }
+    .disambig-content h2 {
+        font-family: var(--font-serif); font-size: 1.6rem; font-weight: 400;
+        color: var(--ink); margin: 2rem 0 0.8rem; padding-top: 1rem;
+        border-top: 1px solid var(--rule);
+    }
+    .disambig-content h2:first-child { border-top: none; margin-top: 0; padding-top: 0; }
+    .disambig-content p { font-size: 1.05rem; line-height: 1.8; color: var(--ink-2); margin-bottom: 1rem; }
+    .disambig-content a { color: var(--ink-blue); text-decoration: underline; text-underline-offset: 2px; }
+
+    .feature-list {
+        list-style: none; padding: 0; margin: 1rem 0;
+        display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    }
+    .feature-list li {
+        padding: 10px 14px; background: var(--paper-2); border: 1px solid var(--rule);
+        border-radius: var(--r-2); font-size: 14px;
+    }
+    .feature-list li a { color: var(--ink-blue); text-decoration: none; }
+    .feature-list li a:hover { text-decoration: underline; }
+
+    .disambig-related {
+        margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--rule);
+        clear: both;
+    }
+    .disambig-related h3 {
+        font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em;
+        text-transform: uppercase; color: var(--ink-3); margin-bottom: 16px;
+    }
+    .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .related-card {
+        padding: 20px; background: var(--paper-2); border: 1px solid var(--rule);
+        border-radius: var(--r-3); text-decoration: none; color: var(--ink);
+        transition: border-color var(--t-fast) var(--ease);
+    }
+    .related-card:hover { border-color: var(--ink-blue); }
+    .related-label {
+        display: block; font-family: var(--font-mono); font-size: 10px;
+        letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3);
+        margin-bottom: 4px;
+    }
+    .related-card strong { font-size: 15px; display: block; margin-bottom: 4px; }
+    .related-card p { font-size: 12px; color: var(--ink-3); margin: 0; }
+
+    @media (max-width: 768px) {
+        .disambig-hero h1 { font-size: 2.2rem; }
+        .disambig-infobox { float: none; width: 100%; margin: 24px 0; }
+        .feature-list { grid-template-columns: 1fr; }
+        .related-grid { grid-template-columns: 1fr; }
+    }
+</style>

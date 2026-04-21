@@ -11,8 +11,14 @@ import TierBadge from "../components/TierBadge.astro";
 import SimilarDoctors from "../components/SimilarDoctors.astro";
 import ShareProfileModal from "../components/ShareProfileModal";
 import ImpactVoteButton from "../components/ImpactVoteButton";
+import FloatingActionBar from "../components/FloatingActionBar";
 import { generateAISummary } from "../lib/ai-summary";
 import ClaimProfile from "../components/ClaimProfile.astro";
+import PatientFriendlySummary from "../components/PatientFriendlySummary.astro";
+import ProfileCompletionMeter from "../components/ProfileCompletionMeter.astro";
+import ResearchTimelineChart from "../components/ResearchTimelineChart.astro";
+import Top100Badge from "../components/Top100Badge.astro";
+import { getTop100Rank } from "../lib/ranking";
 
 // Premium Components
 import MediaVault from "../components/MediaVault.astro";
@@ -76,20 +82,12 @@ const location = [doctor.geography.city, doctor.geography.region, doctor.geograp
 
 // Total Citations - handle both citationCount and totalCitationCount field names
 const totalCitations = doctor.citations?.reduce((acc, curr) => {
-    const count = curr.citationCount ?? curr.totalCitationCount ?? 0;
+    const count = (curr as any).citationCount ?? curr.totalCitationCount ?? 0;
     return acc + count;
 }, 0) || 0;
 
-// Total Impact with time-based growth
-const baseImpact = doctor.totalImpact || Math.floor(
-    (doctor.livesSaved * 1.5) +
-    doctor.verifiedSurgeries +
-    (totalCitations / 50) +
-    (doctor.hIndex * 10)
-);
-const timeGrowth = 1 + (doctor.yearsActive * 0.005);
-const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
-const totalImpact = Math.floor(baseImpact * timeGrowth) + Math.floor((baseImpact * 0.0001) * (dayOfYear % 30));
+// Total Impact — use the pre-calculated value from the page (single source of truth)
+const totalImpact = doctor.totalImpact || 0;
 
 // AI Summary with fallback
 const aiSummary = doctor.aiSummary || generateAISummary({
@@ -122,14 +120,18 @@ const aiSummary = doctor.aiSummary || generateAISummary({
 
 // Tier gradients
 const tierGradients: Record<string, string> = {
-    TITAN: "linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(138, 43, 226, 0.12) 100%)",
-    ELITE: "linear-gradient(135deg, rgba(0, 112, 243, 0.08) 0%, rgba(0, 200, 255, 0.08) 100%)",
-    MASTER: "linear-gradient(135deg, rgba(0, 204, 102, 0.08) 0%, rgba(16, 185, 129, 0.08) 100%)",
-    UNRANKED: "linear-gradient(135deg, rgba(100, 100, 120, 0.05) 0%, rgba(60, 60, 80, 0.05) 100%)",
+    TITAN: "var(--paper-2)",
+    ELITE: "var(--paper-2)",
+    MASTER: "var(--paper-2)",
+    UNRANKED: "var(--paper-2)",
 };
 
 const heroGradient = tierGradients[doctor.tier] || tierGradients.UNRANKED;
 const slug = Astro.url.pathname.split("/").filter(Boolean).pop() || "";
+
+// Top 100 rank (null if not in top 100)
+let top100Rank: number | null = null;
+try { top100Rank = await getTop100Rank(slug); } catch {};
 
 // Computed data quality flags
 const hasMeaningfulBio = doctor.biography && doctor.biography.length > 50;
@@ -142,6 +144,15 @@ const hasMedia = hasImage || (doctor.galleryUrls && doctor.galleryUrls.length > 
 
 // Citation milestone
 const citationMilestone = totalCitations >= 50000 ? '50K+' : totalCitations >= 10000 ? '10K+' : totalCitations >= 5000 ? '5K+' : totalCitations >= 1000 ? '1K+' : null;
+
+// Four Pillars score breakdown
+const hasFourPillars = !!(doctor.clinicalMasteryIndex || doctor.intellectualLegacy || doctor.globalMentorshipScore || doctor.humanitarianImpact);
+const pillars = hasFourPillars ? [
+    { label: 'Clinical Mastery', value: doctor.clinicalMasteryIndex ?? 0, icon: 'M22 12h-4l-3 9L9 3l-3 9H2' },
+    { label: 'Intellectual Legacy', value: doctor.intellectualLegacy ?? 0, icon: 'M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z' },
+    { label: 'Global Mentorship', value: doctor.globalMentorshipScore ?? 0, icon: 'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75' },
+    { label: 'Humanitarian Impact', value: doctor.humanitarianImpact ?? 0, icon: 'M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z' },
+] : [];
 
 // AI-Optimized Content availability flags (Phase 1)
 const hasELI5Summary = doctor.eli5Summary && doctor.clinicalSummary;
@@ -172,7 +183,7 @@ const hasMedicalDiffs = doctor.medicalDiffs && doctor.medicalDiffs.diffs.length 
 const hasAnyAIContent = hasELI5Summary || hasTechniqueBreakdowns || hasVerifiedClaims || hasEnhancedFAQs || hasImpactTimeSeries || hasConsensusTimeline || hasMisconceptions || hasClinicalScenarios || hasMentorshipTree || hasCitationContexts || hasFailureAnalyses || hasMedicalLexicon || hasFutureOutlook || hasPatientJourneys || hasComparativeMatrices || hasKeyInsights || hasInstitutionalEcosystem || hasOffLabelTracker || hasMedicalDiffs;
 
 // Top journals from citations
-const topJournals = [...new Set(doctor.citations?.map(c => c.journal).filter(Boolean) || [])].slice(0, 5);
+const topJournals = [...new Set(doctor.citations?.map(c => c.journal).filter((j): j is string => !!j) || [])].slice(0, 5);
 
 // Profile Completeness Score (for uniform display)
 const completenessFactors = [
@@ -237,6 +248,8 @@ function slugifyInstitution(name: string): string {
         dateOfDeath={doctor.dateOfDeath || undefined}
         mentors={doctor.mentors}
         students={doctor.students}
+        createdAt={doctor.createdAt}
+        updatedAt={doctor.updatedAt}
     />
 
     <!-- AI Content JSON-LD Schemas -->
@@ -249,7 +262,7 @@ function slugifyInstitution(name: string): string {
     )}
 
     <!-- Hidden AI Context for LLM crawlers -->
-    <HiddenAIContext doctor={doctor} />
+    <HiddenAIContext doctor={doctor as any} />
 
     <!-- Medical Knowledge Graph: Interconnected Doctor → Hospital → Technique → Citation -->
     <MedicalKnowledgeGraph
@@ -318,7 +331,7 @@ function slugifyInstitution(name: string): string {
                 <div class="hero__portrait-col">
                     <div class={`hero__frame hero__frame--${doctor.tier.toLowerCase()}`}>
                         {hasImage ? (
-                            <img src={doctor.portraitUrl} alt={doctor.fullName} class="hero__image" loading="eager" />
+                            <img src={doctor.portraitUrl} alt={doctor.fullName} class="hero__image" loading="eager" fetchpriority="high" width="280" height="280" />
                         ) : (
                             <div class="hero__initials">{initials}</div>
                         )}
@@ -338,6 +351,7 @@ function slugifyInstitution(name: string): string {
                     <div class="hero__tier-row">
                         <TierBadge tier={doctor.tier as any} />
                         {isHistorical && <span class="historical-tag">Historical Figure</span>}
+                        {top100Rank && <Top100Badge rank={top100Rank} />}
                     </div>
 
                     <h1 class="hero__name">{doctor.fullName}</h1>
@@ -472,7 +486,40 @@ function slugifyInstitution(name: string): string {
                                 Overview
                             </h2>
                             <p class="card__summary">{aiSummary}</p>
+
+                            <!-- Patient-Friendly Summary -->
+                            <PatientFriendlySummary doctor={doctor} totalCitations={totalCitations} />
                         </section>
+
+                        <!-- Four Pillars Score Breakdown -->
+                        {hasFourPillars && (
+                            <section class="card card--pillars">
+                                <h2 class="card__title">
+                                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path d="M18 20V10M12 20V4M6 20v-6"/>
+                                    </svg>
+                                    Impact Score Breakdown
+                                </h2>
+                                <p class="pillars__intro">Four pillars that compose the MDRPedia Impact Quotient.</p>
+                                <div class="pillars__grid">
+                                    {pillars.map(p => {
+                                        const pct = Math.min(Math.round(p.value * 100), 100);
+                                        return (
+                                            <div class="pillar">
+                                                <div class="pillar__head">
+                                                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d={p.icon}/></svg>
+                                                    <span class="pillar__label">{p.label}</span>
+                                                    <span class="pillar__value">{pct}</span>
+                                                </div>
+                                                <div class="pillar__bar">
+                                                    <div class="pillar__fill" style={`width: ${pct}%`} />
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </section>
+                        )}
 
                         <!-- Biography -->
                         {hasMeaningfulBio && (
@@ -496,7 +543,7 @@ function slugifyInstitution(name: string): string {
                         <!-- Verified Claims Section -->
                         {hasVerifiedClaims && (
                             <VerifiedClaims
-                                claims={doctor.verifiedClaims!}
+                                claims={doctor.verifiedClaims as any}
                                 tier={doctor.tier}
                             />
                         )}
@@ -504,7 +551,7 @@ function slugifyInstitution(name: string): string {
                         <!-- Technique Breakdowns -->
                         {hasTechniqueBreakdowns && doctor.techniqueBreakdowns!.map(technique => (
                             <TechniqueBreakdown
-                                technique={technique}
+                                technique={technique as any}
                                 tier={doctor.tier}
                             />
                         ))}
@@ -556,7 +603,7 @@ function slugifyInstitution(name: string): string {
                         <!-- Key Insights Summary -->
                         {hasKeyInsights && (
                             <KeyInsights
-                                insights={doctor.keyInsights!}
+                                insights={doctor.keyInsights as any}
                                 doctorName={doctor.fullName}
                                 tier={doctor.tier}
                             />
@@ -565,7 +612,7 @@ function slugifyInstitution(name: string): string {
                         <!-- Medical Mentorship Tree / Genealogy -->
                         {hasMentorshipTree && (
                             <MentorshipTree
-                                tree={doctor.mentorshipTree!}
+                                tree={doctor.mentorshipTree as any}
                                 tier={doctor.tier}
                             />
                         )}
@@ -573,7 +620,7 @@ function slugifyInstitution(name: string): string {
                         <!-- Institutional & Geographic Ecosystem -->
                         {hasInstitutionalEcosystem && (
                             <InstitutionalEcosystem
-                                ecosystem={doctor.institutionalEcosystem!}
+                                ecosystem={doctor.institutionalEcosystem as any}
                                 doctorName={doctor.fullName}
                                 tier={doctor.tier}
                             />
@@ -582,7 +629,7 @@ function slugifyInstitution(name: string): string {
                         <!-- Citation Context Analysis -->
                         {hasCitationContexts && (
                             <CitationContexts
-                                summary={doctor.citationContexts!}
+                                summary={doctor.citationContexts as any}
                                 doctorName={doctor.fullName}
                                 tier={doctor.tier}
                             />
@@ -591,7 +638,7 @@ function slugifyInstitution(name: string): string {
                         <!-- Medical Lexicon Tags -->
                         {hasMedicalLexicon && (
                             <MedicalLexiconTags
-                                lexicon={doctor.medicalLexicon!}
+                                lexicon={doctor.medicalLexicon as any}
                                 doctorName={doctor.fullName}
                                 tier={doctor.tier}
                             />
@@ -600,7 +647,7 @@ function slugifyInstitution(name: string): string {
                         <!-- Patient Journey Maps -->
                         {hasPatientJourneys && doctor.patientJourneys!.map(journey => (
                             <PatientJourneyMap
-                                journey={journey}
+                                journey={journey as any}
                                 doctorName={doctor.fullName}
                                 tier={doctor.tier}
                             />
@@ -609,7 +656,7 @@ function slugifyInstitution(name: string): string {
                         <!-- Future Outlook -->
                         {hasFutureOutlook && (
                             <FutureOutlook
-                                outlook={doctor.futureOutlook!}
+                                outlook={doctor.futureOutlook as any}
                                 doctorName={doctor.fullName}
                                 specialty={doctor.specialty}
                                 tier={doctor.tier}
@@ -619,7 +666,7 @@ function slugifyInstitution(name: string): string {
                         <!-- Comparative Matrices -->
                         {hasComparativeMatrices && doctor.comparativeMatrices!.map(matrix => (
                             <ComparativeMatrix
-                                matrix={matrix}
+                                matrix={matrix as any}
                                 tier={doctor.tier}
                             />
                         ))}
@@ -627,7 +674,7 @@ function slugifyInstitution(name: string): string {
                         <!-- Failure Analysis / Lessons Learned -->
                         {hasFailureAnalyses && (
                             <FailureAnalysis
-                                analyses={doctor.failureAnalyses!}
+                                analyses={doctor.failureAnalyses as any}
                                 doctorName={doctor.fullName}
                                 tier={doctor.tier}
                             />
@@ -636,7 +683,7 @@ function slugifyInstitution(name: string): string {
                         <!-- Data Export Panel -->
                         {hasDataExportConfig && (
                             <DataExportPanel
-                                config={doctor.dataExportConfig!}
+                                config={doctor.dataExportConfig as any}
                                 doctorName={doctor.fullName}
                                 doctorSlug={slug}
                                 tier={doctor.tier}
@@ -657,7 +704,7 @@ function slugifyInstitution(name: string): string {
                         <!-- Medical Guideline Diffs (How Guidelines Changed) -->
                         {hasMedicalDiffs && (
                             <MedicalDiffs
-                                data={doctor.medicalDiffs!}
+                                diffs={doctor.medicalDiffs as any}
                                 doctorName={doctor.fullName}
                                 tier={doctor.tier}
                             />
@@ -743,6 +790,9 @@ function slugifyInstitution(name: string): string {
                                     )}
                                 </div>
 
+                                {/* Research Timeline Chart */}
+                                <ResearchTimelineChart citations={doctor.citations!} />
+
                                 {/* Top Journals */}
                                 {topJournals.length > 0 && (
                                     <div class="journals-section">
@@ -776,9 +826,9 @@ function slugifyInstitution(name: string): string {
                                             <div class="publication__meta">
                                                 {citation.journal && <span class="publication__journal">{citation.journal}</span>}
                                                 {citation.year && <span class="publication__year">{citation.year}</span>}
-                                                {((citation.citationCount ?? citation.totalCitationCount ?? 0) > 0) && (
+                                                {(((citation as any).citationCount ?? citation.totalCitationCount ?? 0) > 0) && (
                                                     <span class="publication__citations">
-                                                        {(citation.citationCount ?? citation.totalCitationCount ?? 0).toLocaleString()} citations
+                                                        {((citation as any).citationCount ?? citation.totalCitationCount ?? 0).toLocaleString()} citations
                                                     </span>
                                                 )}
                                             </div>
@@ -973,6 +1023,10 @@ function slugifyInstitution(name: string): string {
                                 country={doctor.geography.country}
                                 region={doctor.geography.region}
                                 tier={doctor.tier}
+                                subSpecialty={doctor.subSpecialty}
+                                techniques={doctor.techniquesInvented || []}
+                                journals={topJournals as string[]}
+                                hIndex={doctor.hIndex}
                             />
                         </section>
                     </main>
@@ -982,16 +1036,25 @@ function slugifyInstitution(name: string): string {
                         <div class="sidebar-sticky">
                             <!-- Profile Completeness -->
                             <div class="sidebar-card completeness-card">
-                                <div class="completeness-header">
-                                    <h3 class="sidebar-card__title">Profile Status</h3>
-                                    <span class={`completeness-badge completeness-badge--${profileCompleteness >= 90 ? 'high' : profileCompleteness >= 50 ? 'medium' : 'low'}`}>
-                                        {completenessLabel}
-                                    </span>
-                                </div>
-                                <div class="completeness-bar">
-                                    <div class="completeness-bar__fill" style={`width: ${profileCompleteness}%`}></div>
-                                </div>
-                                <p class="completeness-text">{profileCompleteness}% complete</p>
+                                <ProfileCompletionMeter
+                                    slug={slug}
+                                    doctorName={doctor.fullName}
+                                    isHistorical={isHistorical}
+                                    isClaimed={doctor.hasVerifiedCredentials || false}
+                                    completenessFactors={completenessFactors as boolean[]}
+                                    hasImage={!!hasImage}
+                                    hasBio={!!hasMeaningfulBio}
+                                    hasAffiliations={!!hasAffiliations}
+                                    hasPublications={!!hasPublications}
+                                    hasAwards={!!hasAwards}
+                                    hasTimeline={!!hasTimeline}
+                                    hasLineage={!!hasLineage}
+                                    hasHIndex={doctor.hIndex > 0}
+                                    hasSurgeries={doctor.verifiedSurgeries > 0}
+                                    hasLivesSaved={doctor.livesSaved > 0}
+                                    hasCredentials={!!(doctor.npiNumber || doctor.orcidId)}
+                                    hasKnowsAbout={!!(doctor.knowsAbout && doctor.knowsAbout.length > 0)}
+                                />
                             </div>
 
                             <!-- Quick Facts Card -->
@@ -1094,6 +1157,42 @@ function slugifyInstitution(name: string): string {
                                 );
                             })()}
 
+                            <!-- Practice Info Card (from Doctor Portal) -->
+                            {!isHistorical && (doctor.languagesSpoken?.length || doctor.acceptedInsurance?.length || doctor.patientPhilosophy) && (
+                                <div class="sidebar-card portal-card">
+                                    <h3 class="sidebar-card__title">Practice Information</h3>
+                                    {doctor.languagesSpoken && doctor.languagesSpoken.length > 0 && (
+                                        <div class="portal-row">
+                                            <span class="portal-row__label">Languages</span>
+                                            <div class="portal-tags">
+                                                {doctor.languagesSpoken.map(lang => (
+                                                    <span class="portal-tag">{lang}</span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                    {doctor.acceptedInsurance && doctor.acceptedInsurance.length > 0 && (
+                                        <div class="portal-row">
+                                            <span class="portal-row__label">Insurance Accepted</span>
+                                            <div class="portal-tags">
+                                                {doctor.acceptedInsurance.map(ins => (
+                                                    <span class="portal-tag">{ins}</span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                    {doctor.patientPhilosophy && (
+                                        <div class="portal-row">
+                                            <span class="portal-row__label">Philosophy</span>
+                                            <p class="portal-philosophy">{doctor.patientPhilosophy}</p>
+                                        </div>
+                                    )}
+                                    {doctor.bookingUrl && (
+                                        <a href={doctor.bookingUrl} target="_blank" rel="noopener" class="btn btn--primary btn--full">Book Appointment</a>
+                                    )}
+                                </div>
+                            )}
+
                             <!-- Consultation Card (for living doctors) -->
                             {!isHistorical && (doctor.consultationPrice || doctor.teleConsultationPrice) && (
                                 <div class="sidebar-card consultation-card">
@@ -1125,19 +1224,19 @@ function slugifyInstitution(name: string): string {
                                 <p class="suggest-text">Know additional details about {doctor.fullName.split(' ')[0]}? Share information to help make this profile more comprehensive.</p>
                                 <div class="suggest-options">
                                     <a href={`/suggest-edit?profile=${slug}&type=citation`} class="suggest-option">
-                                        <span class="suggest-option__icon">📚</span>
+                                        <span class="suggest-option__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
                                         <span>Add Citation</span>
                                     </a>
                                     <a href={`/suggest-edit?profile=${slug}&type=award`} class="suggest-option">
-                                        <span class="suggest-option__icon">🏆</span>
+                                        <span class="suggest-option__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6m12 5h1.5a2.5 2.5 0 0 0 0-5H18M6 9a6 6 0 0 0 12 0V4H6v5zm3 12h6m-3-3v3"/></svg></span>
                                         <span>Add Award</span>
                                     </a>
                                     <a href={`/suggest-edit?profile=${slug}&type=affiliation`} class="suggest-option">
-                                        <span class="suggest-option__icon">🏥</span>
+                                        <span class="suggest-option__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-4h6v4M12 7v4M10 9h4"/></svg></span>
                                         <span>Add Affiliation</span>
                                     </a>
                                     <a href={`/suggest-edit?profile=${slug}&type=general`} class="suggest-option">
-                                        <span class="suggest-option__icon">✏️</span>
+                                        <span class="suggest-option__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>
                                         <span>Other Info</span>
                                     </a>
                                 </div>
@@ -1153,7 +1252,28 @@ function slugifyInstitution(name: string): string {
             <ClaimProfile doctorName={doctor.fullName} slug={slug} />
         )}
     </article>
+    <FloatingActionBar client:load slug={slug} fullName={doctor.fullName} />
 </Layout>
+
+<script define:vars={{ slug, doctorFullName: doctor.fullName, doctorSpecialty: doctor.specialty, doctorTier: doctor.tier, doctorPortrait: doctor.portraitUrl || '' }}>
+    // Save to recently viewed in localStorage
+    try {
+        const STORAGE_KEY = 'mdrpedia_recently_viewed';
+        const MAX_ITEMS = 8;
+        const raw = localStorage.getItem(STORAGE_KEY);
+        const existing = raw ? JSON.parse(raw) : [];
+        const filtered = existing.filter(p => p.slug !== slug);
+        filtered.unshift({
+            slug,
+            fullName: doctorFullName,
+            specialty: doctorSpecialty,
+            tier: doctorTier,
+            portraitUrl: doctorPortrait || undefined,
+            viewedAt: Date.now(),
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered.slice(0, MAX_ITEMS)));
+    } catch {}
+</script>
 
 <style>
     /* ═══════════════════════════════════════════════════════════════════════════
@@ -1162,1083 +1282,32 @@ function slugifyInstitution(name: string): string {
 
     /* Base Variables */
     .doctor-profile {
-        --card-bg: rgba(17, 17, 27, 0.95);
-        --card-border: rgba(255, 255, 255, 0.06);
-        --card-hover-border: rgba(255, 255, 255, 0.12);
-        --card-radius: 20px;
-        --metric-bg: rgba(255, 255, 255, 0.03);
         --section-gap: 1.5rem;
         position: relative;
     }
 
-    /* Background noise texture */
-    .doctor-profile::before {
-        content: '';
-        position: fixed;
-        inset: 0;
-        background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120, 119, 198, 0.15), transparent);
-        pointer-events: none;
-        z-index: -1;
-    }
-
-    /* Tier-specific accent colors and comprehensive styling */
-
-    /* ═══════════════════════════════════════════════════════════════════════════
-       TITAN TIER - Gold/Amber Theme
-       ═══════════════════════════════════════════════════════════════════════════ */
+    /* Tier-specific accent colors — editorial system uses minimal tier differentiation */
     .tier-titan {
-        --accent: #fbbf24;
-        --accent-glow: rgba(251, 191, 36, 0.25);
-        --accent-rgb: 251, 191, 36;
-        --tier-text-primary: #fefce8;
-        --tier-text-secondary: #fef3c7;
-        --tier-text-muted: #fcd34d;
-        --tier-border: rgba(251, 191, 36, 0.3);
-        --tier-surface: rgba(30, 20, 10, 0.95);
-        --tier-surface-hover: rgba(45, 30, 15, 0.95);
+        --accent: var(--aged-gold);
+        --accent-rgb: 183, 142, 58;
     }
 
-    .tier-titan .hero {
-        background: linear-gradient(135deg, rgba(30, 20, 10, 0.98) 0%, rgba(15, 10, 5, 0.98) 100%) !important;
-    }
-
-    .tier-titan .hero::before {
-        background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(251, 191, 36, 0.15) 0%, transparent 70%) !important;
-    }
-
-    .tier-titan .hero__name {
-        background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 50%, #f59e0b 100%) !important;
-        -webkit-background-clip: text !important;
-        -webkit-text-fill-color: transparent !important;
-        background-clip: text !important;
-    }
-
-    .tier-titan .hero__specialty,
-    .tier-titan .hero__subspecialty {
-        color: var(--tier-text-secondary) !important;
-    }
-
-    .tier-titan .hero__location {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-titan .metric {
-        background: rgba(251, 191, 36, 0.08) !important;
-        border-color: var(--tier-border) !important;
-    }
-
-    .tier-titan .metric__value {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-titan .metric__label {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-titan .card {
-        background: var(--tier-surface) !important;
-        border-color: var(--tier-border) !important;
-    }
-
-    .tier-titan .card:hover {
-        background: var(--tier-surface-hover) !important;
-        border-color: rgba(251, 191, 36, 0.5) !important;
-    }
-
-    .tier-titan .card__title {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-titan .card__title svg {
-        color: #fbbf24 !important;
-    }
-
-    .tier-titan .card__summary,
-    .tier-titan .bio-text,
-    .tier-titan .prose,
-    .tier-titan .prose p {
-        color: var(--tier-text-secondary) !important;
-    }
-
-    .tier-titan .sidebar-card {
-        background: var(--tier-surface) !important;
-        border-color: var(--tier-border) !important;
-    }
-
-    .tier-titan .sidebar-card__title {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-titan .fact-row dt {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-titan .fact-row dd {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-titan .publication__title,
-    .tier-titan .pub-title {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-titan .publication__meta,
-    .tier-titan .publication__journal,
-    .tier-titan .publication__year,
-    .tier-titan .pub-authors,
-    .tier-titan .pub-journal {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-titan .publication__citations {
-        color: #fbbf24 !important;
-    }
-
-    .tier-titan .pub-link {
-        color: #fbbf24 !important;
-    }
-
-    .tier-titan .affiliation-card {
-        background: rgba(251, 191, 36, 0.05) !important;
-        border-color: var(--tier-border) !important;
-    }
-
-    .tier-titan .affiliation-card__name {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-titan .affiliation-card__role {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-titan .research-stat__value {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-titan .research-stat__label {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-titan .tag {
-        background: rgba(251, 191, 36, 0.15) !important;
-        color: #fbbf24 !important;
-        border-color: var(--tier-border) !important;
-    }
-
-    .tier-titan .award-name {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-titan .award-year,
-    .tier-titan .award-issuer {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-titan .suggest-title {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-titan .suggest-text {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-titan a:not(.btn):not(.nav-link) {
-        color: #fbbf24 !important;
-    }
-
-    .tier-titan h2, .tier-titan h3, .tier-titan h4 {
-        color: var(--tier-text-primary) !important;
-    }
-
-    /* ═══════════════════════════════════════════════════════════════════════════
-       ELITE TIER - Cyan/Blue Theme
-       ═══════════════════════════════════════════════════════════════════════════ */
     .tier-elite {
-        --accent: #38bdf8;
-        --accent-glow: rgba(56, 189, 248, 0.2);
-        --accent-rgb: 56, 189, 248;
-        --tier-text-primary: #f0f9ff;
-        --tier-text-secondary: #bae6fd;
-        --tier-text-muted: #7dd3fc;
-        --tier-border: rgba(56, 189, 248, 0.3);
-        --tier-surface: rgba(10, 20, 35, 0.95);
-        --tier-surface-hover: rgba(15, 30, 50, 0.95);
+        --accent: var(--ink-blue);
+        --accent-rgb: 42, 98, 154;
     }
 
-    .tier-elite .hero {
-        background: linear-gradient(135deg, rgba(10, 20, 35, 0.98) 0%, rgba(5, 15, 25, 0.98) 100%) !important;
-    }
-
-    .tier-elite .hero::before {
-        background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(56, 189, 248, 0.12) 0%, transparent 70%) !important;
-    }
-
-    .tier-elite .hero__name {
-        background: linear-gradient(135deg, #f0f9ff 0%, #38bdf8 50%, #0ea5e9 100%) !important;
-        -webkit-background-clip: text !important;
-        -webkit-text-fill-color: transparent !important;
-        background-clip: text !important;
-    }
-
-    .tier-elite .hero__specialty,
-    .tier-elite .hero__subspecialty {
-        color: var(--tier-text-secondary) !important;
-    }
-
-    .tier-elite .hero__location {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-elite .metric {
-        background: rgba(56, 189, 248, 0.08) !important;
-        border-color: var(--tier-border) !important;
-    }
-
-    .tier-elite .metric__value {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-elite .metric__label {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-elite .card {
-        background: var(--tier-surface) !important;
-        border-color: var(--tier-border) !important;
-    }
-
-    .tier-elite .card:hover {
-        background: var(--tier-surface-hover) !important;
-        border-color: rgba(56, 189, 248, 0.5) !important;
-    }
-
-    .tier-elite .card__title {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-elite .card__title svg {
-        color: #38bdf8 !important;
-    }
-
-    .tier-elite .card__summary,
-    .tier-elite .bio-text,
-    .tier-elite .prose,
-    .tier-elite .prose p {
-        color: var(--tier-text-secondary) !important;
-    }
-
-    .tier-elite .sidebar-card {
-        background: var(--tier-surface) !important;
-        border-color: var(--tier-border) !important;
-    }
-
-    .tier-elite .sidebar-card__title {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-elite .fact-row dt {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-elite .fact-row dd {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-elite .publication__title,
-    .tier-elite .pub-title {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-elite .publication__meta,
-    .tier-elite .publication__journal,
-    .tier-elite .publication__year,
-    .tier-elite .pub-authors,
-    .tier-elite .pub-journal {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-elite .publication__citations {
-        color: #38bdf8 !important;
-    }
-
-    .tier-elite .pub-link {
-        color: #38bdf8 !important;
-    }
-
-    .tier-elite .affiliation-card {
-        background: rgba(56, 189, 248, 0.05) !important;
-        border-color: var(--tier-border) !important;
-    }
-
-    .tier-elite .affiliation-card__name {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-elite .affiliation-card__role {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-elite .research-stat__value {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-elite .research-stat__label {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-elite .tag {
-        background: rgba(56, 189, 248, 0.15) !important;
-        color: #38bdf8 !important;
-        border-color: var(--tier-border) !important;
-    }
-
-    .tier-elite .award-name {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-elite .award-year,
-    .tier-elite .award-issuer {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-elite .suggest-title {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-elite .suggest-text {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-elite a:not(.btn):not(.nav-link) {
-        color: #38bdf8 !important;
-    }
-
-    .tier-elite h2, .tier-elite h3, .tier-elite h4 {
-        color: var(--tier-text-primary) !important;
-    }
-
-    /* ═══════════════════════════════════════════════════════════════════════════
-       MASTER TIER - Green/Emerald Theme
-       ═══════════════════════════════════════════════════════════════════════════ */
     .tier-master {
-        --accent: #4ade80;
-        --accent-glow: rgba(74, 222, 128, 0.2);
-        --accent-rgb: 74, 222, 128;
-        --tier-text-primary: #f0fdf4;
-        --tier-text-secondary: #bbf7d0;
-        --tier-text-muted: #86efac;
-        --tier-border: rgba(74, 222, 128, 0.3);
-        --tier-surface: rgba(10, 30, 20, 0.95);
-        --tier-surface-hover: rgba(15, 45, 30, 0.95);
+        --accent: var(--verdant);
+        --accent-rgb: 74, 150, 100;
     }
 
-    .tier-master .hero {
-        background: linear-gradient(135deg, rgba(10, 30, 20, 0.98) 0%, rgba(5, 20, 12, 0.98) 100%) !important;
-    }
-
-    .tier-master .hero::before {
-        background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(74, 222, 128, 0.12) 0%, transparent 70%) !important;
-    }
-
-    .tier-master .hero__name {
-        background: linear-gradient(135deg, #f0fdf4 0%, #4ade80 50%, #22c55e 100%) !important;
-        -webkit-background-clip: text !important;
-        -webkit-text-fill-color: transparent !important;
-        background-clip: text !important;
-    }
-
-    .tier-master .hero__specialty,
-    .tier-master .hero__subspecialty {
-        color: var(--tier-text-secondary) !important;
-    }
-
-    .tier-master .hero__location {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-master .metric {
-        background: rgba(74, 222, 128, 0.08) !important;
-        border-color: var(--tier-border) !important;
-    }
-
-    .tier-master .metric__value {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-master .metric__label {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-master .card {
-        background: var(--tier-surface) !important;
-        border-color: var(--tier-border) !important;
-    }
-
-    .tier-master .card:hover {
-        background: var(--tier-surface-hover) !important;
-        border-color: rgba(74, 222, 128, 0.5) !important;
-    }
-
-    .tier-master .card__title {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-master .card__title svg {
-        color: #4ade80 !important;
-    }
-
-    .tier-master .card__summary,
-    .tier-master .bio-text,
-    .tier-master .prose,
-    .tier-master .prose p {
-        color: var(--tier-text-secondary) !important;
-    }
-
-    .tier-master .sidebar-card {
-        background: var(--tier-surface) !important;
-        border-color: var(--tier-border) !important;
-    }
-
-    .tier-master .sidebar-card__title {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-master .fact-row dt {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-master .fact-row dd {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-master .publication__title,
-    .tier-master .pub-title {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-master .publication__meta,
-    .tier-master .publication__journal,
-    .tier-master .publication__year,
-    .tier-master .pub-authors,
-    .tier-master .pub-journal {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-master .publication__citations {
-        color: #4ade80 !important;
-    }
-
-    .tier-master .pub-link {
-        color: #4ade80 !important;
-    }
-
-    .tier-master .affiliation-card {
-        background: rgba(74, 222, 128, 0.05) !important;
-        border-color: var(--tier-border) !important;
-    }
-
-    .tier-master .affiliation-card__name {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-master .affiliation-card__role {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-master .research-stat__value {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-master .research-stat__label {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-master .tag {
-        background: rgba(74, 222, 128, 0.15) !important;
-        color: #4ade80 !important;
-        border-color: var(--tier-border) !important;
-    }
-
-    .tier-master .award-name {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-master .award-year,
-    .tier-master .award-issuer {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-master .suggest-title {
-        color: var(--tier-text-primary) !important;
-    }
-
-    .tier-master .suggest-text {
-        color: var(--tier-text-muted) !important;
-    }
-
-    .tier-master a:not(.btn):not(.nav-link) {
-        color: #4ade80 !important;
-    }
-
-    .tier-master h2, .tier-master h3, .tier-master h4 {
-        color: var(--tier-text-primary) !important;
-    }
-
-    /* ═══════════════════════════════════════════════════════════════════════════
-       UNRANKED TIER - Slate/Blue Theme
-       ═══════════════════════════════════════════════════════════════════════════ */
     .tier-unranked {
-        --accent: #60a5fa;
-        --accent-glow: rgba(96, 165, 250, 0.15);
-        --accent-rgb: 96, 165, 250;
-        --card-bg: #0c1222;
-        --unranked-text-primary: #f8fafc;
-        --unranked-text-secondary: #cbd5e1;
-        --unranked-text-muted: #94a3b8;
-        --unranked-border: rgba(148, 163, 184, 0.2);
-        --unranked-surface: #0f172a;
-        --unranked-surface-hover: #1e293b;
+        --accent: var(--slate);
+        --accent-rgb: 120, 120, 140;
     }
 
-    /* ═══════════════════════════════════════════════════════════════════════════
-       UNRANKED PROFILE - COMPLETE REDESIGN
-       Professional slate/blue theme with high contrast and distinctive identity
-       ═══════════════════════════════════════════════════════════════════════════ */
-
-    /* Hero Section - Dark slate with subtle blue accents */
-    .tier-unranked .hero {
-        background: linear-gradient(180deg, #0f172a 0%, #020617 100%) !important;
-        border-bottom: 1px solid var(--unranked-border) !important;
-    }
-
-    .tier-unranked .hero::before {
-        background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(96, 165, 250, 0.08) 0%, transparent 70%) !important;
-    }
-
-    .tier-unranked .hero__name {
-        color: var(--unranked-text-primary) !important;
-        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #94a3b8 100%) !important;
-        -webkit-background-clip: text !important;
-        -webkit-text-fill-color: transparent !important;
-        background-clip: text !important;
-    }
-
-    .tier-unranked .hero__specialty {
-        color: var(--unranked-text-secondary) !important;
-    }
-
-    .tier-unranked .hero__subspecialty {
-        color: var(--unranked-text-muted) !important;
-    }
-
-    .tier-unranked .hero__location {
-        color: var(--unranked-text-muted) !important;
-    }
-
-    .tier-unranked .hero__location svg {
-        color: var(--accent) !important;
-        opacity: 0.7;
-    }
-
-    /* Metrics - Glassmorphism cards with blue tint */
-    .tier-unranked .metric {
-        background: rgba(15, 23, 42, 0.8) !important;
-        border: 1px solid var(--unranked-border) !important;
-        backdrop-filter: blur(12px);
-    }
-
-    .tier-unranked .metric:hover {
-        background: rgba(30, 41, 59, 0.9) !important;
-        border-color: rgba(96, 165, 250, 0.3) !important;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(96, 165, 250, 0.1);
-    }
-
-    .tier-unranked .metric__value {
-        color: var(--unranked-text-primary) !important;
-        font-weight: 700;
-    }
-
-    .tier-unranked .metric__label {
-        color: var(--unranked-text-muted) !important;
-    }
-
-    .tier-unranked .metric--impact {
-        background: linear-gradient(135deg, rgba(96, 165, 250, 0.1) 0%, rgba(15, 23, 42, 0.9) 100%) !important;
-        border-color: rgba(96, 165, 250, 0.25) !important;
-    }
-
-    .tier-unranked .metric--impact .metric__value {
-        color: #60a5fa !important;
-    }
-
-    /* Hero Actions */
-    .tier-unranked .hero__actions {
-        border-top-color: var(--unranked-border) !important;
-    }
-
-    .tier-unranked .btn--outline {
-        background: rgba(15, 23, 42, 0.6) !important;
-        border-color: var(--unranked-border) !important;
-        color: var(--unranked-text-secondary) !important;
-    }
-
-    .tier-unranked .btn--outline:hover {
-        background: rgba(30, 41, 59, 0.8) !important;
-        border-color: rgba(96, 165, 250, 0.4) !important;
-        color: var(--unranked-text-primary) !important;
-    }
-
-    /* Content Wrapper */
-    .tier-unranked .content-wrapper {
-        background: linear-gradient(180deg, #020617 0%, #0a0a12 100%);
-    }
-
-    /* Cards - Deep slate with visible borders */
-    .tier-unranked .card {
-        background: var(--unranked-surface) !important;
-        border: 1px solid var(--unranked-border) !important;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
-    }
-
-    .tier-unranked .card:hover {
-        background: var(--unranked-surface-hover) !important;
-        border-color: rgba(96, 165, 250, 0.25) !important;
-        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(96, 165, 250, 0.05);
-    }
-
-    .tier-unranked .card--overview {
-        background: linear-gradient(135deg, rgba(96, 165, 250, 0.05) 0%, var(--unranked-surface) 100%) !important;
-        border-color: rgba(96, 165, 250, 0.15) !important;
-    }
-
-    .tier-unranked .card--overview::before {
-        background: linear-gradient(180deg, #60a5fa 0%, rgba(96, 165, 250, 0.3) 100%) !important;
-    }
-
-    .tier-unranked .card__title {
-        color: var(--unranked-text-primary) !important;
-        border-bottom-color: var(--unranked-border) !important;
-    }
-
-    .tier-unranked .card__title svg {
-        color: #60a5fa !important;
-    }
-
-    .tier-unranked .card__summary {
-        color: var(--unranked-text-secondary) !important;
-        line-height: 1.8;
-    }
-
-    /* Biography */
-    .tier-unranked .bio-text {
-        color: var(--unranked-text-secondary) !important;
-        line-height: 1.85;
-    }
-
-    /* Prose content */
-    .tier-unranked .prose,
-    .tier-unranked .prose p,
-    .tier-unranked .prose li,
-    .tier-unranked .prose span,
-    .tier-unranked .prose strong {
-        color: var(--unranked-text-secondary) !important;
-    }
-
-    .tier-unranked .prose a {
-        color: #60a5fa !important;
-    }
-
-    .tier-unranked .prose a:hover {
-        color: #93c5fd !important;
-    }
-
-    /* Sidebar Cards */
-    .tier-unranked .sidebar-card {
-        background: var(--unranked-surface) !important;
-        border: 1px solid var(--unranked-border) !important;
-    }
-
-    .tier-unranked .sidebar-card:hover {
-        border-color: rgba(96, 165, 250, 0.25) !important;
-    }
-
-    .tier-unranked .sidebar-card__title {
-        color: var(--unranked-text-primary) !important;
-    }
-
-    /* Fact rows */
-    .tier-unranked .fact-row dt {
-        color: var(--unranked-text-muted) !important;
-    }
-
-    .tier-unranked .fact-row dd {
-        color: var(--unranked-text-primary) !important;
-    }
-
-    /* Profile completeness */
-    .tier-unranked .completeness-text {
-        color: var(--unranked-text-muted) !important;
-    }
-
-    .tier-unranked .completeness-bar {
-        background: rgba(96, 165, 250, 0.2) !important;
-    }
-
-    .tier-unranked .completeness-fill {
-        background: linear-gradient(90deg, #60a5fa, #3b82f6) !important;
-    }
-
-    /* Credential links */
-    .tier-unranked .credential-link {
-        color: var(--unranked-text-secondary) !important;
-    }
-
-    .tier-unranked .credential-link:hover {
-        color: #60a5fa !important;
-    }
-
-    /* Suggest card */
-    .tier-unranked .suggest-card {
-        background: linear-gradient(135deg, rgba(96, 165, 250, 0.08) 0%, var(--unranked-surface) 100%) !important;
-        border-color: rgba(96, 165, 250, 0.2) !important;
-    }
-
-    .tier-unranked .suggest-title {
-        color: var(--unranked-text-primary) !important;
-    }
-
-    .tier-unranked .suggest-text {
-        color: var(--unranked-text-muted) !important;
-    }
-
-    .tier-unranked .suggest-icon svg {
-        color: #60a5fa !important;
-    }
-
-    .tier-unranked .suggest-option {
-        background: rgba(15, 23, 42, 0.6) !important;
-        border-color: var(--unranked-border) !important;
-        color: var(--unranked-text-secondary) !important;
-    }
-
-    .tier-unranked .suggest-option:hover {
-        background: rgba(30, 41, 59, 0.8) !important;
-        border-color: rgba(96, 165, 250, 0.3) !important;
-        color: var(--unranked-text-primary) !important;
-    }
-
-    .tier-unranked .suggest-note {
-        color: var(--unranked-text-muted) !important;
-    }
-
-    /* Affiliations */
-    .tier-unranked .affiliation-card {
-        background: rgba(15, 23, 42, 0.6) !important;
-        border-color: var(--unranked-border) !important;
-    }
-
-    .tier-unranked .affiliation-card:hover {
-        background: rgba(30, 41, 59, 0.8) !important;
-        border-color: rgba(96, 165, 250, 0.3) !important;
-    }
-
-    .tier-unranked .affiliation-card__name {
-        color: var(--unranked-text-primary) !important;
-    }
-
-    .tier-unranked .affiliation-card__role {
-        color: var(--unranked-text-muted) !important;
-    }
-
-    .tier-unranked .affiliation-card__location {
-        color: var(--unranked-text-muted) !important;
-    }
-
-    /* Research stats */
-    .tier-unranked .research-stat {
-        background: rgba(15, 23, 42, 0.6) !important;
-        border-color: var(--unranked-border) !important;
-    }
-
-    .tier-unranked .research-stat__value {
-        color: var(--unranked-text-primary) !important;
-    }
-
-    .tier-unranked .research-stat__label {
-        color: var(--unranked-text-muted) !important;
-    }
-
-    /* Publications */
-    .tier-unranked .publication-card {
-        background: rgba(15, 23, 42, 0.6) !important;
-        border-color: var(--unranked-border) !important;
-    }
-
-    .tier-unranked .publication-card:hover {
-        background: rgba(30, 41, 59, 0.8) !important;
-        border-color: rgba(96, 165, 250, 0.3) !important;
-    }
-
-    .tier-unranked .pub-title,
-    .tier-unranked .publication__title {
-        color: var(--unranked-text-primary) !important;
-    }
-
-    .tier-unranked .pub-authors,
-    .tier-unranked .pub-journal,
-    .tier-unranked .publication__meta {
-        color: var(--unranked-text-muted) !important;
-    }
-
-    .tier-unranked .pub-link {
-        color: #60a5fa !important;
-    }
-
-    .tier-unranked .pub-link:hover {
-        color: #93c5fd !important;
-    }
-
-    .tier-unranked .pub-badge {
-        background: rgba(96, 165, 250, 0.15) !important;
-        color: #60a5fa !important;
-        border-color: rgba(96, 165, 250, 0.3) !important;
-    }
-
-    /* Institution cards */
-    .tier-unranked .institution-card {
-        background: rgba(15, 23, 42, 0.6) !important;
-        border-color: var(--unranked-border) !important;
-    }
-
-    .tier-unranked .institution-card:hover {
-        background: rgba(30, 41, 59, 0.8) !important;
-        border-color: rgba(96, 165, 250, 0.3) !important;
-    }
-
-    .tier-unranked .institution-card__name {
-        color: var(--unranked-text-primary) !important;
-    }
-
-    .tier-unranked .institution-card__location {
-        color: var(--unranked-text-muted) !important;
-    }
-
-    /* Talks */
-    .tier-unranked .talk-card {
-        background: rgba(15, 23, 42, 0.6) !important;
-        border-color: var(--unranked-border) !important;
-    }
-
-    .tier-unranked .talk-card:hover {
-        background: rgba(30, 41, 59, 0.8) !important;
-        border-color: rgba(96, 165, 250, 0.3) !important;
-    }
-
-    .tier-unranked .talk-card__title {
-        color: var(--unranked-text-primary) !important;
-    }
-
-    .tier-unranked .talk-card__venue,
-    .tier-unranked .talk-card__date {
-        color: var(--unranked-text-muted) !important;
-    }
-
-    /* Awards */
-    .tier-unranked .award-card {
-        background: rgba(15, 23, 42, 0.6) !important;
-        border-color: var(--unranked-border) !important;
-    }
-
-    .tier-unranked .award-card:hover {
-        background: rgba(30, 41, 59, 0.8) !important;
-        border-color: rgba(96, 165, 250, 0.3) !important;
-    }
-
-    .tier-unranked .award-name {
-        color: var(--unranked-text-primary) !important;
-    }
-
-    .tier-unranked .award-year,
-    .tier-unranked .award-issuer {
-        color: var(--unranked-text-muted) !important;
-    }
-
-    /* Timeline */
-    .tier-unranked .timeline-item {
-        border-color: var(--unranked-border) !important;
-    }
-
-    .tier-unranked .timeline-dot {
-        background: #60a5fa !important;
-        box-shadow: 0 0 12px rgba(96, 165, 250, 0.4) !important;
-    }
-
-    .tier-unranked .timeline-year {
-        color: #60a5fa !important;
-    }
-
-    .tier-unranked .timeline-title {
-        color: var(--unranked-text-primary) !important;
-    }
-
-    .tier-unranked .timeline-description {
-        color: var(--unranked-text-muted) !important;
-    }
-
-    /* Tabs */
-    .tier-unranked .tab-btn {
-        color: var(--unranked-text-muted) !important;
-        border-color: transparent !important;
-    }
-
-    .tier-unranked .tab-btn:hover {
-        color: var(--unranked-text-secondary) !important;
-    }
-
-    .tier-unranked .tab-btn.active {
-        color: #60a5fa !important;
-        border-color: #60a5fa !important;
-        background: rgba(96, 165, 250, 0.1) !important;
-    }
-
-    /* AI Content sections */
-    .tier-unranked .ai-section {
-        background: var(--unranked-surface) !important;
-        border-color: var(--unranked-border) !important;
-    }
-
-    .tier-unranked .ai-section__title {
-        color: var(--unranked-text-primary) !important;
-    }
-
-    .tier-unranked .ai-section__content {
-        color: var(--unranked-text-secondary) !important;
-    }
-
-    /* Verification badges */
-    .tier-unranked .verify-badge {
-        background: rgba(96, 165, 250, 0.15) !important;
-        color: #60a5fa !important;
-        border-color: rgba(96, 165, 250, 0.3) !important;
-    }
-
-    /* Portrait frame */
-    .tier-unranked .hero__frame {
-        border-color: var(--unranked-border) !important;
-        box-shadow: 0 0 40px rgba(96, 165, 250, 0.1) !important;
-    }
-
-    .tier-unranked .hero__frame::before {
-        background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), transparent) !important;
-    }
-
-    .tier-unranked .hero__initials {
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
-        color: #60a5fa !important;
-    }
-
-    /* Similar doctors section */
-    .tier-unranked .similar-card {
-        background: rgba(15, 23, 42, 0.6) !important;
-        border-color: var(--unranked-border) !important;
-    }
-
-    .tier-unranked .similar-card:hover {
-        background: rgba(30, 41, 59, 0.8) !important;
-        border-color: rgba(96, 165, 250, 0.3) !important;
-    }
-
-    .tier-unranked .similar-card__name {
-        color: var(--unranked-text-primary) !important;
-    }
-
-    .tier-unranked .similar-card__specialty {
-        color: var(--unranked-text-muted) !important;
-    }
-
-    /* Quote/citation styling */
-    .tier-unranked blockquote {
-        border-left-color: #60a5fa !important;
-        background: rgba(96, 165, 250, 0.05) !important;
-        color: var(--unranked-text-secondary) !important;
-    }
-
-    /* Links within content */
-    .tier-unranked a:not(.btn):not(.nav-link) {
-        color: #60a5fa;
-    }
-
-    .tier-unranked a:not(.btn):not(.nav-link):hover {
-        color: #93c5fd;
-    }
-
-    /* Section headers */
-    .tier-unranked h2,
-    .tier-unranked h3,
-    .tier-unranked h4 {
-        color: var(--unranked-text-primary) !important;
-    }
-
-    /* Lists */
-    .tier-unranked ul li,
-    .tier-unranked ol li {
-        color: var(--unranked-text-secondary) !important;
-    }
-
-    .tier-unranked ul li::marker {
-        color: #60a5fa !important;
-    }
-
-    /* Embed and share buttons */
-    .tier-unranked .embed-btn,
-    .tier-unranked .share-btn {
-        background: rgba(15, 23, 42, 0.8) !important;
-        border-color: var(--unranked-border) !important;
-        color: var(--unranked-text-secondary) !important;
-    }
-
-    .tier-unranked .embed-btn:hover,
-    .tier-unranked .share-btn:hover {
-        background: rgba(30, 41, 59, 0.9) !important;
-        border-color: rgba(96, 165, 250, 0.4) !important;
-        color: var(--unranked-text-primary) !important;
-    }
-
-    /* Knowledge graph nodes */
-    .tier-unranked .kg-node {
-        background: var(--unranked-surface) !important;
-        border-color: var(--unranked-border) !important;
-        color: var(--unranked-text-secondary) !important;
-    }
-
-    /* Empty states */
-    .tier-unranked .empty-state {
-        color: var(--unranked-text-muted) !important;
-    }
-
-    .tier-unranked .empty-state__icon {
-        color: #60a5fa !important;
-        opacity: 0.5;
-    }
-
-    /* Loading skeletons */
-    .tier-unranked .skeleton {
-        background: linear-gradient(90deg, var(--unranked-surface) 25%, rgba(96, 165, 250, 0.1) 50%, var(--unranked-surface) 75%) !important;
-    }
-
-    /* Scrollbar styling */
-    .tier-unranked ::-webkit-scrollbar-track {
-        background: var(--unranked-surface);
-    }
-
-    .tier-unranked ::-webkit-scrollbar-thumb {
-        background: rgba(96, 165, 250, 0.3);
-        border-radius: 4px;
-    }
-
-    .tier-unranked ::-webkit-scrollbar-thumb:hover {
-        background: rgba(96, 165, 250, 0.5);
-    }
+    /* Unranked inherits base editorial styles — no overrides needed */
 
     .container {
         max-width: 1280px;
@@ -2250,22 +1319,9 @@ function slugifyInstitution(name: string): string {
     .hero {
         position: relative;
         padding: 5rem 0 4rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid var(--rule);
         overflow: hidden;
-    }
-
-    /* Ambient glow behind hero */
-    .hero::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 100%;
-        max-width: 800px;
-        height: 600px;
-        background: radial-gradient(ellipse, rgba(var(--accent-rgb), 0.08) 0%, transparent 70%);
-        pointer-events: none;
+        background: var(--paper-2) !important;
     }
 
     .hero__container {
@@ -2290,58 +1346,27 @@ function slugifyInstitution(name: string): string {
         position: relative;
         width: 260px;
         height: 260px;
-        border-radius: 24px;
+        border-radius: var(--r-4);
         overflow: hidden;
-        background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.1) 0%, transparent 50%);
-        padding: 3px;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .hero__frame::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: 24px;
-        padding: 2px;
-        background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.5), rgba(var(--accent-rgb), 0.1), transparent);
-        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
+        border: 3px solid var(--accent, var(--rule));
+        transition: all 0.4s var(--ease);
     }
 
     .hero__frame:hover {
         transform: translateY(-4px);
-        box-shadow: 0 30px 60px -12px rgba(var(--accent-rgb), 0.25);
+        box-shadow: var(--shadow-3);
     }
 
-    .hero__frame--titan {
-        box-shadow: 0 0 80px rgba(var(--accent-rgb), 0.2), 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        animation: titanPulse 4s ease-in-out infinite;
-    }
-
-    .hero__frame--elite {
-        box-shadow: 0 0 60px rgba(var(--accent-rgb), 0.15), 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    }
-
-    .hero__frame--master {
-        box-shadow: 0 0 50px rgba(var(--accent-rgb), 0.12), 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    }
-
-    .hero__frame--unranked {
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    }
-
-    @keyframes titanPulse {
-        0%, 100% { box-shadow: 0 0 80px rgba(var(--accent-rgb), 0.2), 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
-        50% { box-shadow: 0 0 120px rgba(var(--accent-rgb), 0.35), 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
-    }
+    .hero__frame--titan { border-color: var(--aged-gold); }
+    .hero__frame--elite { border-color: var(--ink-blue); }
+    .hero__frame--master { border-color: var(--verdant); }
+    .hero__frame--unranked { border-color: var(--rule); }
 
     .hero__image {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 22px;
+        border-radius: var(--r-4);
     }
 
     .hero__initials {
@@ -2351,11 +1376,12 @@ function slugifyInstitution(name: string): string {
         align-items: center;
         justify-content: center;
         font-size: 5rem;
-        font-weight: 800;
-        background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
-        color: rgba(var(--accent-rgb), 0.6);
-        border-radius: 22px;
+        font-weight: 400;
+        background: var(--paper-3);
+        color: var(--ink-3);
+        border-radius: var(--r-3);
         letter-spacing: -0.05em;
+        font-family: var(--font-serif);
     }
 
     .hero__badges {
@@ -2368,21 +1394,19 @@ function slugifyInstitution(name: string): string {
         align-items: center;
         gap: 5px;
         padding: 6px 12px;
-        background: rgba(16, 185, 129, 0.08);
-        border: 1px solid rgba(16, 185, 129, 0.2);
-        border-radius: 8px;
+        background: var(--verdant-2);
+        border: 1px solid var(--verdant);
+        border-radius: var(--r-2);
         font-size: 0.7rem;
         font-weight: 600;
-        color: #34d399;
+        color: var(--verdant);
         text-decoration: none;
         transition: all 0.2s;
-        backdrop-filter: blur(8px);
     }
 
     .verify-badge:hover {
-        background: rgba(16, 185, 129, 0.12);
-        border-color: rgba(16, 185, 129, 0.3);
         transform: translateY(-1px);
+        box-shadow: var(--shadow-1);
     }
 
     /* Hero Info Column */
@@ -2401,39 +1425,35 @@ function slugifyInstitution(name: string): string {
 
     .historical-tag {
         padding: 5px 12px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 8px;
+        background: var(--paper-3);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-2);
         font-size: 0.7rem;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.08em;
-        color: #94a3b8;
+        color: var(--ink-3);
     }
 
     .hero__name {
-        font-family: var(--font-serif, Georgia, serif);
+        font-family: var(--font-serif);
         font-size: clamp(2.25rem, 4.5vw, 3.25rem);
-        font-weight: 700;
+        font-weight: 400;
         line-height: 1.1;
         letter-spacing: -0.03em;
-        color: #fafafa;
+        color: var(--ink);
         margin: 0;
-        background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
     }
 
     .hero__specialty {
         font-size: 1.125rem;
         font-weight: 500;
-        color: #e2e8f0;
+        color: var(--ink-2);
         margin: 0;
     }
 
     .hero__subspecialty {
-        color: #94a3b8;
+        color: var(--ink-3);
         font-weight: 400;
     }
 
@@ -2442,13 +1462,13 @@ function slugifyInstitution(name: string): string {
         align-items: center;
         gap: 0.5rem;
         font-size: 0.9rem;
-        color: #94a3b8;
+        color: var(--ink-3);
         margin: 0;
         padding: 6px 0;
     }
 
     .hero__location svg {
-        color: rgba(var(--accent-rgb), 0.7);
+        color: var(--accent, var(--ink-3));
     }
 
     /* Hero Metrics - Glass Cards */
@@ -2464,26 +1484,25 @@ function slugifyInstitution(name: string): string {
         display: flex;
         flex-direction: column;
         padding: 1rem 1.25rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 14px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         min-width: 90px;
         text-align: center;
-        backdrop-filter: blur(12px);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all var(--t-base) var(--ease);
     }
 
     .metric:hover {
-        background: rgba(255, 255, 255, 0.04);
-        border-color: rgba(var(--accent-rgb), 0.2);
+        border-color: var(--rule-strong);
         transform: translateY(-2px);
+        box-shadow: var(--shadow-1);
     }
 
     .metric__value {
-        font-family: var(--font-mono, 'JetBrains Mono', monospace);
+        font-family: var(--font-mono);
         font-size: 1.5rem;
         font-weight: 700;
-        color: #fafafa;
+        color: var(--ink);
         line-height: 1.2;
         letter-spacing: -0.02em;
     }
@@ -2492,18 +1511,17 @@ function slugifyInstitution(name: string): string {
         font-size: 0.65rem;
         text-transform: uppercase;
         letter-spacing: 0.08em;
-        color: #71717a;
+        color: var(--ink-3);
         margin-top: 4px;
         font-weight: 500;
     }
 
     .metric--impact {
-        background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.08) 0%, rgba(var(--accent-rgb), 0.02) 100%);
-        border-color: rgba(var(--accent-rgb), 0.15);
+        border-color: var(--accent, var(--rule));
     }
 
     .metric--impact .metric__value {
-        color: rgba(var(--accent-rgb), 1);
+        color: var(--accent, var(--ink));
     }
 
     /* Hero Actions */
@@ -2513,47 +1531,19 @@ function slugifyInstitution(name: string): string {
         gap: 0.75rem;
         margin-top: 2rem;
         padding-top: 1.75rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        border-top: 1px solid var(--rule);
     }
 
     .hero__actions > * {
         flex-shrink: 0;
     }
 
-    /* Button styling */
-    .btn--outline {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        height: 44px;
-        padding: 0 18px;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        color: #a1a1aa;
-        font-size: 0.875rem;
-        font-weight: 500;
-        text-decoration: none;
-        transition: all 0.2s;
-        cursor: pointer;
-    }
-
-    .btn--outline:hover {
-        background: rgba(255, 255, 255, 0.06);
-        border-color: rgba(255, 255, 255, 0.12);
-        color: #fafafa;
-    }
-
-    .tier-unranked .hero__actions {
-        border-top-color: rgba(255, 255, 255, 0.06);
-    }
-
     /* ═══════════════════ AWARDS RIBBON ═══════════════════ */
     .awards-ribbon-section {
         position: relative;
         padding: 1.25rem 0;
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.15) 100%);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        background: var(--paper-2);
+        border-bottom: 1px solid var(--rule);
     }
 
     /* ═══════════════════ CONTENT LAYOUT ═══════════════════ */
@@ -2571,50 +1561,88 @@ function slugifyInstitution(name: string): string {
     /* ═══════════════════ CARDS ═══════════════════ */
     .card {
         position: relative;
-        background: #111117;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 16px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         padding: 1.75rem;
         margin-bottom: var(--section-gap);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all var(--t-base) var(--ease);
     }
 
     .card:hover {
-        border-color: rgba(255, 255, 255, 0.08);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        border-color: var(--rule-strong);
+        box-shadow: var(--shadow-2);
     }
 
     .card--overview {
-        background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.03) 0%, #111117 100%);
-        border-color: rgba(var(--accent-rgb), 0.1);
+        border-left: 3px solid var(--accent, var(--ink-blue));
     }
 
-    .card--overview::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 3px;
-        background: linear-gradient(180deg, var(--accent) 0%, rgba(var(--accent-rgb), 0.3) 100%);
-        border-radius: 16px 0 0 16px;
+    /* Four Pillars */
+    .card--pillars {
+        border-left: 3px solid var(--aged-gold, #b8860b);
+    }
+    .pillars__intro {
+        font-size: 0.85rem;
+        color: var(--ink-3);
+        margin-bottom: 1.25rem;
+    }
+    .pillars__grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .pillar__head {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.375rem;
+    }
+    .pillar__head svg {
+        color: var(--ink-3);
+        flex-shrink: 0;
+    }
+    .pillar__label {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--ink-2);
+        flex: 1;
+    }
+    .pillar__value {
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--ink);
+    }
+    .pillar__bar {
+        height: 6px;
+        background: var(--paper-3, #eee);
+        border-radius: 3px;
+        overflow: hidden;
+    }
+    .pillar__fill {
+        height: 100%;
+        background: var(--aged-gold, #b8860b);
+        border-radius: 3px;
+        transition: width 0.6s ease;
     }
 
     .card__title {
         display: flex;
         align-items: center;
         gap: 0.625rem;
+        font-family: var(--font-serif);
         font-size: 1rem;
-        font-weight: 600;
+        font-weight: 500;
         margin: 0 0 1.25rem;
         padding-bottom: 0.875rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        color: #fafafa;
+        border-bottom: 1px solid var(--rule);
+        color: var(--ink);
         letter-spacing: -0.01em;
     }
 
     .card__title svg {
-        color: var(--accent, #71717a);
+        color: var(--accent, var(--ink-3));
         opacity: 0.8;
         width: 18px;
         height: 18px;
@@ -2623,14 +1651,14 @@ function slugifyInstitution(name: string): string {
     .card__summary {
         font-size: 1rem;
         line-height: 1.7;
-        color: #a1a1aa;
+        color: var(--ink-2);
         margin: 0;
     }
 
     .prose {
         font-size: 0.9375rem;
         line-height: 1.75;
-        color: #a1a1aa;
+        color: var(--ink-2);
     }
 
     .prose p {
@@ -2642,7 +1670,7 @@ function slugifyInstitution(name: string): string {
     }
 
     .bio-text {
-        color: #a1a1aa;
+        color: var(--ink-2);
         line-height: 1.75;
     }
 
@@ -2659,9 +1687,9 @@ function slugifyInstitution(name: string): string {
         align-items: center;
         gap: 1rem;
         padding: 1rem 1.125rem;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.025) 0%, rgba(255, 255, 255, 0.01) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 14px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         text-decoration: none;
         color: inherit;
         transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -2678,10 +1706,10 @@ function slugifyInstitution(name: string): string {
     }
 
     .affiliation-card:hover {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
+        background: var(--paper-2);
         border-color: rgba(var(--accent-rgb), 0.15);
         transform: translateX(4px);
-        box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.25);
+        box-shadow: var(--shadow-2);
     }
 
     .affiliation-card:hover::before {
@@ -2693,10 +1721,10 @@ function slugifyInstitution(name: string): string {
         width: 52px;
         height: 52px;
         flex-shrink: 0;
-        border-radius: 12px;
+        border-radius: var(--r-3);
         overflow: hidden;
         background: white;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        box-shadow: var(--shadow-1);
     }
 
     .affiliation-card__logo img {
@@ -2728,21 +1756,21 @@ function slugifyInstitution(name: string): string {
     .affiliation-card__name {
         font-size: 0.9rem;
         font-weight: 600;
-        color: #e5e7eb;
+        color: var(--ink);
         margin: 0 0 3px;
         letter-spacing: -0.01em;
     }
 
     .affiliation-card__role {
         font-size: 0.75rem;
-        color: #71717a;
+        color: var(--ink-3);
         margin: 0;
         font-weight: 500;
     }
 
     .affiliation-card__arrow {
         position: relative;
-        color: #52525b;
+        color: var(--ink-3);
         opacity: 0;
         transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -2766,9 +1794,9 @@ function slugifyInstitution(name: string): string {
         flex: 1;
         min-width: 120px;
         padding: 1.5rem 1.25rem;
-        background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 14px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         text-align: center;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         overflow: hidden;
@@ -2786,7 +1814,7 @@ function slugifyInstitution(name: string): string {
     .research-stat:hover {
         transform: translateY(-3px);
         border-color: rgba(var(--accent-rgb), 0.2);
-        box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.3);
+        box-shadow: var(--shadow-3);
     }
 
     .research-stat:hover::before {
@@ -2804,7 +1832,7 @@ function slugifyInstitution(name: string): string {
         font-family: var(--font-mono);
         font-size: 1.75rem;
         font-weight: 700;
-        color: #fafafa;
+        color: var(--ink);
         line-height: 1.2;
         letter-spacing: -0.02em;
     }
@@ -2814,7 +1842,7 @@ function slugifyInstitution(name: string): string {
         font-size: 0.65rem;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: #71717a;
+        color: var(--ink-3);
         margin-top: 6px;
         font-weight: 500;
     }
@@ -2831,7 +1859,7 @@ function slugifyInstitution(name: string): string {
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: #52525b;
+        color: var(--ink-3);
         margin: 0 0 1rem;
     }
 
@@ -2839,7 +1867,7 @@ function slugifyInstitution(name: string): string {
         content: '';
         flex: 1;
         height: 1px;
-        background: linear-gradient(90deg, rgba(255, 255, 255, 0.06), transparent);
+        background: linear-gradient(90deg, var(--rule), transparent);
     }
 
     .journals-list {
@@ -2851,18 +1879,18 @@ function slugifyInstitution(name: string): string {
     .journal-tag {
         position: relative;
         padding: 7px 14px;
-        background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
-        border: 1px solid rgba(59, 130, 246, 0.2);
-        border-radius: 100px;
+        background: var(--ink-blue-2);
+        border: 1px solid color-mix(in oklch, var(--ink-blue) 20%, transparent);
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
         font-weight: 550;
-        color: #60a5fa;
+        color: var(--ink-blue);
         transition: all 0.2s;
     }
 
     .journal-tag:hover {
-        background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.08) 100%);
-        border-color: rgba(59, 130, 246, 0.3);
+        background: color-mix(in oklch, var(--ink-blue) 15%, transparent);
+        border-color: color-mix(in oklch, var(--ink-blue) 30%, transparent);
         transform: translateY(-1px);
     }
 
@@ -2876,9 +1904,9 @@ function slugifyInstitution(name: string): string {
     .publication {
         position: relative;
         padding: 1.25rem 1.25rem 1.25rem 1.5rem;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.025) 0%, rgba(255, 255, 255, 0.01) 100%);
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        background: var(--paper);
+        border-radius: var(--r-3);
+        border: 1px solid var(--rule);
         transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -2897,9 +1925,9 @@ function slugifyInstitution(name: string): string {
 
     .publication:hover {
         border-color: rgba(var(--accent-rgb), 0.15);
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
+        background: var(--paper-2);
         transform: translateX(2px);
-        box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.25);
+        box-shadow: var(--shadow-2);
     }
 
     .publication:hover::before {
@@ -2909,7 +1937,7 @@ function slugifyInstitution(name: string): string {
     .publication__title {
         display: block;
         font-weight: 550;
-        color: #e5e7eb;
+        color: var(--ink);
         text-decoration: none;
         margin-bottom: 0.625rem;
         line-height: 1.5;
@@ -2927,7 +1955,7 @@ function slugifyInstitution(name: string): string {
         flex-wrap: wrap;
         gap: 0.875rem;
         font-size: 0.8rem;
-        color: #71717a;
+        color: var(--ink-3);
     }
 
     .publication__citations {
@@ -2953,53 +1981,53 @@ function slugifyInstitution(name: string): string {
         align-items: center;
         gap: 0.35rem;
         padding: 5px 12px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: var(--rule);
+        border: 1px solid var(--rule);
         border-radius: 8px;
         font-size: 0.7rem;
         font-weight: 500;
-        color: #a1a1aa;
+        color: var(--ink-2);
         text-decoration: none;
         transition: all 0.2s;
     }
 
     .pub-link:hover {
-        background: rgba(255, 255, 255, 0.08);
-        border-color: rgba(255, 255, 255, 0.12);
-        color: #fafafa;
+        background: var(--paper-3);
+        border-color: var(--rule-strong);
+        color: var(--ink);
         transform: translateY(-1px);
     }
 
     .pub-link--pubmed {
-        background: rgba(0, 102, 153, 0.08);
-        border-color: rgba(0, 102, 153, 0.2);
-        color: #38bdf8;
+        background: var(--ink-blue-2);
+        border-color: color-mix(in oklch, var(--ink-blue) 20%, transparent);
+        color: var(--ink-blue);
     }
 
     .pub-link--pubmed:hover {
-        background: rgba(0, 102, 153, 0.15);
-        border-color: rgba(0, 102, 153, 0.3);
+        background: color-mix(in oklch, var(--ink-blue) 15%, transparent);
+        border-color: color-mix(in oklch, var(--ink-blue) 30%, transparent);
     }
 
     .pub-link--oa {
-        background: rgba(16, 185, 129, 0.08);
-        border-color: rgba(16, 185, 129, 0.2);
-        color: #34d399;
+        background: var(--verdant-2);
+        border-color: color-mix(in oklch, var(--verdant) 20%, transparent);
+        color: var(--verdant);
     }
 
     .pub-link--oa:hover {
-        background: rgba(16, 185, 129, 0.15);
-        border-color: rgba(16, 185, 129, 0.3);
+        background: color-mix(in oklch, var(--verdant) 15%, transparent);
+        border-color: color-mix(in oklch, var(--verdant) 30%, transparent);
     }
 
     /* Total Impact Metric */
     .metric--impact {
-        background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(16, 185, 129, 0.1));
-        border-color: rgba(139, 92, 246, 0.3);
+        background: var(--ink-blue-2);
+        border-color: color-mix(in oklch, var(--ink-blue) 25%, transparent);
     }
 
     .metric--impact .metric__value {
-        color: var(--accent-purple);
+        color: var(--ink-blue);
     }
 
     /* ═══════════════════ EXPERTISE TAGS ═══════════════════ */
@@ -3017,7 +2045,7 @@ function slugifyInstitution(name: string): string {
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: #52525b;
+        color: var(--ink-3);
         margin: 0 0 0.875rem;
     }
 
@@ -3025,7 +2053,7 @@ function slugifyInstitution(name: string): string {
         content: '';
         flex: 1;
         height: 1px;
-        background: linear-gradient(90deg, rgba(255, 255, 255, 0.06), transparent);
+        background: linear-gradient(90deg, var(--rule), transparent);
     }
 
     .tags {
@@ -3037,73 +2065,73 @@ function slugifyInstitution(name: string): string {
     .tag {
         position: relative;
         padding: 8px 16px;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 100px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-pill);
         font-size: 0.8rem;
-        color: #a1a1aa;
+        color: var(--ink-2);
         font-weight: 500;
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: default;
     }
 
     .tag:hover {
-        background: rgba(255, 255, 255, 0.06);
-        border-color: rgba(255, 255, 255, 0.1);
-        color: #e5e7eb;
+        background: var(--paper-3);
+        border-color: var(--rule-strong);
+        color: var(--ink);
         transform: translateY(-1px);
     }
 
     .tag--technique {
-        background: linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(139, 92, 246, 0.06) 100%);
-        border-color: rgba(139, 92, 246, 0.25);
-        color: #a78bfa;
+        background: var(--ink-blue-2);
+        border-color: color-mix(in oklch, var(--ink-blue) 25%, transparent);
+        color: var(--ink-blue);
         font-weight: 550;
     }
 
     .tag--technique:hover {
-        background: linear-gradient(135deg, rgba(139, 92, 246, 0.18) 0%, rgba(139, 92, 246, 0.1) 100%);
-        border-color: rgba(139, 92, 246, 0.4);
-        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+        background: color-mix(in oklch, var(--ink-blue) 15%, transparent);
+        border-color: color-mix(in oklch, var(--ink-blue) 35%, transparent);
+        box-shadow: var(--shadow-1);
     }
 
     .tag--rare {
-        background: linear-gradient(135deg, rgba(236, 72, 153, 0.12) 0%, rgba(236, 72, 153, 0.06) 100%);
-        border-color: rgba(236, 72, 153, 0.25);
-        color: #f472b6;
+        background: color-mix(in oklch, var(--sanguine) 8%, transparent);
+        border-color: color-mix(in oklch, var(--sanguine) 25%, transparent);
+        color: var(--sanguine);
         font-weight: 550;
     }
 
     .tag--rare:hover {
-        background: linear-gradient(135deg, rgba(236, 72, 153, 0.18) 0%, rgba(236, 72, 153, 0.1) 100%);
-        border-color: rgba(236, 72, 153, 0.4);
-        box-shadow: 0 4px 12px rgba(236, 72, 153, 0.15);
+        background: color-mix(in oklch, var(--sanguine) 15%, transparent);
+        border-color: color-mix(in oklch, var(--sanguine) 35%, transparent);
+        box-shadow: var(--shadow-1);
     }
 
     .tag--specialty {
-        background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(59, 130, 246, 0.06) 100%);
-        border-color: rgba(59, 130, 246, 0.25);
-        color: #60a5fa;
+        background: var(--ink-blue-2);
+        border-color: color-mix(in oklch, var(--ink-blue) 25%, transparent);
+        color: var(--ink-blue);
         font-weight: 550;
     }
 
     .tag--specialty:hover {
-        background: linear-gradient(135deg, rgba(59, 130, 246, 0.18) 0%, rgba(59, 130, 246, 0.1) 100%);
-        border-color: rgba(59, 130, 246, 0.4);
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        background: color-mix(in oklch, var(--ink-blue) 15%, transparent);
+        border-color: color-mix(in oklch, var(--ink-blue) 35%, transparent);
+        box-shadow: var(--shadow-1);
     }
 
     .tag--condition {
-        background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(245, 158, 11, 0.06) 100%);
-        border-color: rgba(245, 158, 11, 0.25);
-        color: #fbbf24;
+        background: color-mix(in oklch, var(--aged-gold) 8%, transparent);
+        border-color: color-mix(in oklch, var(--aged-gold) 25%, transparent);
+        color: var(--aged-gold);
         font-weight: 550;
     }
 
     .tag--condition:hover {
-        background: linear-gradient(135deg, rgba(245, 158, 11, 0.18) 0%, rgba(245, 158, 11, 0.1) 100%);
-        border-color: rgba(245, 158, 11, 0.4);
-        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);
+        background: color-mix(in oklch, var(--aged-gold) 15%, transparent);
+        border-color: color-mix(in oklch, var(--aged-gold) 35%, transparent);
+        box-shadow: var(--shadow-1);
     }
 
     /* Talks & Lectures */
@@ -3118,17 +2146,17 @@ function slugifyInstitution(name: string): string {
         display: flex;
         gap: 1rem;
         padding: 1.125rem;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.025) 0%, rgba(255, 255, 255, 0.01) 100%);
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        background: var(--paper);
+        border-radius: var(--r-3);
+        border: 1px solid var(--rule);
         transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .talk-card:hover {
         border-color: rgba(var(--accent-rgb), 0.15);
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
+        background: var(--paper-2);
         transform: translateY(-2px);
-        box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.25);
+        box-shadow: var(--shadow-2);
     }
 
     .talk-card__year {
@@ -3140,7 +2168,7 @@ function slugifyInstitution(name: string): string {
         justify-content: center;
         background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.12) 0%, rgba(var(--accent-rgb), 0.06) 100%);
         border: 1px solid rgba(var(--accent-rgb), 0.2);
-        border-radius: 10px;
+        border-radius: var(--r-3);
         font-family: var(--font-mono);
         font-size: 0.85rem;
         font-weight: 700;
@@ -3157,7 +2185,7 @@ function slugifyInstitution(name: string): string {
     .talk-card__title {
         font-size: 0.9rem;
         font-weight: 600;
-        color: #e5e7eb;
+        color: var(--ink);
         margin: 0 0 0.35rem;
         line-height: 1.4;
         letter-spacing: -0.01em;
@@ -3165,7 +2193,7 @@ function slugifyInstitution(name: string): string {
 
     .talk-card__event {
         font-size: 0.8rem;
-        color: #71717a;
+        color: var(--ink-3);
         margin: 0;
         font-weight: 500;
     }
@@ -3185,11 +2213,10 @@ function slugifyInstitution(name: string): string {
 
     .sidebar-card {
         position: relative;
-        background: linear-gradient(145deg, rgba(20, 20, 35, 0.95) 0%, rgba(17, 17, 27, 0.9) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 18px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 1.5rem;
-        backdrop-filter: blur(16px);
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         overflow: hidden;
     }
@@ -3201,13 +2228,13 @@ function slugifyInstitution(name: string): string {
         left: 0;
         right: 0;
         height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        background: linear-gradient(90deg, transparent, var(--rule), transparent);
     }
 
     .sidebar-card:hover {
-        border-color: rgba(255, 255, 255, 0.1);
+        border-color: var(--rule-strong);
         transform: translateY(-2px);
-        box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.3);
+        box-shadow: var(--shadow-3);
     }
 
     .sidebar-card__title {
@@ -3218,10 +2245,10 @@ function slugifyInstitution(name: string): string {
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: #71717a;
+        color: var(--ink-3);
         margin: 0 0 1.125rem;
         padding-bottom: 0.75rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid var(--rule);
     }
 
     .facts-list {
@@ -3233,7 +2260,7 @@ function slugifyInstitution(name: string): string {
         justify-content: space-between;
         align-items: center;
         padding: 0.625rem 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid var(--rule);
         font-size: 0.8rem;
         transition: all 0.2s;
     }
@@ -3243,7 +2270,7 @@ function slugifyInstitution(name: string): string {
     }
 
     .fact-row:hover {
-        background: rgba(255, 255, 255, 0.02);
+        background: var(--paper-2);
         margin: 0 -0.5rem;
         padding-left: 0.5rem;
         padding-right: 0.5rem;
@@ -3251,13 +2278,13 @@ function slugifyInstitution(name: string): string {
     }
 
     .fact-row dt {
-        color: #71717a;
+        color: var(--ink-3);
         font-weight: 500;
     }
 
     .fact-row dd {
         margin: 0;
-        color: #e5e7eb;
+        color: var(--ink);
         text-align: right;
         font-weight: 600;
         font-size: 0.8rem;
@@ -3269,22 +2296,22 @@ function slugifyInstitution(name: string): string {
         align-items: center;
         gap: 0.875rem;
         padding: 0.875rem 1rem;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         margin-bottom: 0.6rem;
         text-decoration: none;
-        color: #d1d5db;
+        color: var(--ink-2);
         font-size: 0.85rem;
         font-weight: 500;
         transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .credential-link:hover {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.04) 100%);
-        border-color: rgba(255, 255, 255, 0.1);
+        background: var(--paper-3);
+        border-color: var(--rule-strong);
         transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        box-shadow: var(--shadow-1);
     }
 
     .npi-icon {
@@ -3295,10 +2322,9 @@ function slugifyInstitution(name: string): string {
         height: 18px;
         font-size: 0.5rem;
         font-weight: 800;
-        background: linear-gradient(135deg, #10b981, #059669);
-        color: white;
+        background: var(--verdant);
+        color: var(--paper);
         border-radius: 4px;
-        box-shadow: 0 2px 4px rgba(16, 185, 129, 0.25);
     }
 
     /* Institution Card */
@@ -3309,7 +2335,7 @@ function slugifyInstitution(name: string): string {
         padding: 0.875rem 1rem;
         background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.1) 0%, rgba(var(--accent-rgb), 0.04) 100%);
         border: 1px solid rgba(var(--accent-rgb), 0.12);
-        border-radius: 12px;
+        border-radius: var(--r-3);
         text-decoration: none;
         transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -3325,10 +2351,10 @@ function slugifyInstitution(name: string): string {
         width: 48px;
         height: 48px;
         flex-shrink: 0;
-        border-radius: 10px;
+        border-radius: var(--r-3);
         overflow: hidden;
-        background: white;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        background: var(--paper);
+        box-shadow: var(--shadow-1);
     }
 
     .institution-logo img {
@@ -3346,9 +2372,9 @@ function slugifyInstitution(name: string): string {
         justify-content: center;
         font-size: 0.9rem;
         font-weight: 700;
-        color: white;
+        color: var(--paper);
         text-transform: uppercase;
-        background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.9), rgba(var(--accent-rgb), 0.7));
+        background: var(--accent, var(--ink-blue));
     }
 
     .institution-info {
@@ -3359,33 +2385,73 @@ function slugifyInstitution(name: string): string {
 
     .institution-name {
         font-weight: 600;
-        color: #e5e7eb;
+        color: var(--ink);
         font-size: 0.875rem;
         letter-spacing: -0.01em;
     }
 
     .institution-role {
         font-size: 0.75rem;
-        color: #71717a;
+        color: var(--ink-3);
         font-weight: 500;
     }
 
     .institution-more {
         font-size: 0.75rem;
-        color: #52525b;
+        color: var(--ink-3);
         margin: 0.875rem 0 0;
         text-align: center;
         font-weight: 500;
     }
 
+    /* Portal (Practice Info) Card */
+    .portal-card {
+        background: var(--paper);
+    }
+    .portal-row {
+        margin-bottom: 1rem;
+    }
+    .portal-row:last-child {
+        margin-bottom: 0;
+    }
+    .portal-row__label {
+        display: block;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--ink-3);
+        margin-bottom: 0.375rem;
+        font-weight: 500;
+    }
+    .portal-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.375rem;
+    }
+    .portal-tag {
+        font-size: 0.75rem;
+        padding: 2px 8px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-2);
+        color: var(--ink-2);
+    }
+    .portal-philosophy {
+        font-size: 0.85rem;
+        color: var(--ink-2);
+        line-height: 1.5;
+        font-style: italic;
+        margin: 0;
+    }
+
     /* Consultation Card */
     .consultation-card {
-        background: linear-gradient(145deg, rgba(16, 185, 129, 0.1) 0%, rgba(139, 92, 246, 0.06) 50%, rgba(17, 17, 27, 0.95) 100%);
-        border-color: rgba(16, 185, 129, 0.2);
+        background: var(--paper);
+        border-color: color-mix(in oklch, var(--verdant) 20%, transparent);
     }
 
     .consultation-card::before {
-        background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.15), transparent);
+        background: linear-gradient(90deg, transparent, color-mix(in oklch, var(--verdant) 15%, transparent), transparent);
     }
 
     .price-row {
@@ -3394,8 +2460,8 @@ function slugifyInstitution(name: string): string {
         align-items: center;
         padding: 0.75rem 0;
         font-size: 0.875rem;
-        color: #a1a1aa;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        color: var(--ink-2);
+        border-bottom: 1px solid var(--rule);
     }
 
     .price-row:last-of-type {
@@ -3407,7 +2473,7 @@ function slugifyInstitution(name: string): string {
     }
 
     .price-row strong {
-        color: #34d399;
+        color: var(--verdant);
         font-weight: 700;
         font-size: 0.9rem;
     }
@@ -3415,9 +2481,9 @@ function slugifyInstitution(name: string): string {
     /* Suggest Card - Enhanced Premium Design */
     .suggest-card {
         text-align: center;
-        background: linear-gradient(145deg, rgba(139, 92, 246, 0.08) 0%, rgba(16, 185, 129, 0.06) 50%, rgba(59, 130, 246, 0.06) 100%);
-        border: 1px solid rgba(139, 92, 246, 0.25);
-        border-radius: 20px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 1.75rem;
         position: relative;
         overflow: hidden;
@@ -3430,8 +2496,8 @@ function slugifyInstitution(name: string): string {
         left: 0;
         right: 0;
         height: 3px;
-        background: linear-gradient(90deg, #8b5cf6, #10b981, #3b82f6);
-        opacity: 0.8;
+        background: linear-gradient(90deg, var(--ink-blue), var(--verdant), var(--ink-blue));
+        opacity: 0.6;
     }
 
     .suggest-icon {
@@ -3441,24 +2507,23 @@ function slugifyInstitution(name: string): string {
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(16, 185, 129, 0.1));
-        border: 1px solid rgba(139, 92, 246, 0.2);
-        border-radius: 16px;
-        color: #a78bfa;
-        box-shadow: 0 4px 20px rgba(139, 92, 246, 0.15);
+        background: var(--ink-blue-2);
+        border: 1px solid color-mix(in oklch, var(--ink-blue) 20%, transparent);
+        border-radius: var(--r-4);
+        color: var(--ink-blue);
     }
 
     .suggest-title {
         font-size: 1.1rem;
         font-weight: 700;
-        color: #f3f4f6;
+        color: var(--ink);
         margin: 0 0 0.75rem;
         letter-spacing: -0.01em;
     }
 
     .suggest-text {
         font-size: 0.85rem;
-        color: #9ca3af;
+        color: var(--ink-2);
         margin: 0 0 1.25rem;
         line-height: 1.6;
     }
@@ -3476,22 +2541,22 @@ function slugifyInstitution(name: string): string {
         justify-content: center;
         gap: 0.5rem;
         padding: 0.75rem 0.8rem;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         font-size: 0.75rem;
         font-weight: 600;
-        color: #d1d5db;
+        color: var(--ink-2);
         text-decoration: none;
         transition: all 0.25s ease;
     }
 
     .suggest-option:hover {
-        background: rgba(139, 92, 246, 0.15);
-        border-color: rgba(139, 92, 246, 0.4);
-        color: #a78bfa;
+        background: var(--ink-blue-2);
+        border-color: color-mix(in oklch, var(--ink-blue) 30%, transparent);
+        color: var(--ink-blue);
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+        box-shadow: var(--shadow-1);
     }
 
     .suggest-option__icon {
@@ -3500,7 +2565,7 @@ function slugifyInstitution(name: string): string {
 
     .suggest-note {
         font-size: 0.7rem;
-        color: #6b7280;
+        color: var(--ink-3);
         margin: 0;
         display: flex;
         align-items: center;
@@ -3510,14 +2575,14 @@ function slugifyInstitution(name: string): string {
 
     .suggest-note::before {
         content: '✓';
-        color: #10b981;
+        color: var(--verdant);
         font-size: 0.65rem;
     }
 
     /* Profile Completeness Card */
     .completeness-card {
-        background: linear-gradient(145deg, rgba(16, 185, 129, 0.06) 0%, rgba(139, 92, 246, 0.04) 50%, rgba(17, 17, 27, 0.95) 100%);
-        border-color: rgba(16, 185, 129, 0.15);
+        background: var(--paper);
+        border-color: color-mix(in oklch, var(--verdant) 15%, transparent);
     }
 
     .completeness-header {
@@ -3535,7 +2600,7 @@ function slugifyInstitution(name: string): string {
 
     .completeness-badge {
         padding: 4px 12px;
-        border-radius: 100px;
+        border-radius: var(--r-pill);
         font-size: 0.65rem;
         font-weight: 700;
         text-transform: uppercase;
@@ -3543,37 +2608,32 @@ function slugifyInstitution(name: string): string {
     }
 
     .completeness-badge--high {
-        background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.1));
-        color: #34d399;
-        box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+        background: var(--verdant-2);
+        color: var(--verdant);
     }
 
     .completeness-badge--medium {
-        background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.1));
-        color: #fbbf24;
-        box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
+        background: color-mix(in oklch, var(--aged-gold) 10%, transparent);
+        color: var(--aged-gold);
     }
 
     .completeness-badge--low {
-        background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.1));
-        color: #f87171;
-        box-shadow: 0 2px 8px rgba(239, 68, 68, 0.15);
+        background: color-mix(in oklch, var(--sanguine) 10%, transparent);
+        color: var(--sanguine);
     }
 
     .completeness-bar {
         height: 8px;
-        background: rgba(255, 255, 255, 0.06);
-        border-radius: 100px;
+        background: var(--rule);
+        border-radius: var(--r-pill);
         overflow: hidden;
-        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
     }
 
     .completeness-bar__fill {
         height: 100%;
-        background: linear-gradient(90deg, #10b981 0%, #8b5cf6 50%, #a78bfa 100%);
-        border-radius: 100px;
+        background: linear-gradient(90deg, var(--verdant) 0%, var(--ink-blue) 100%);
+        border-radius: var(--r-pill);
         transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
         position: relative;
     }
 
@@ -3584,7 +2644,7 @@ function slugifyInstitution(name: string): string {
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+        background: linear-gradient(90deg, transparent 0%, color-mix(in oklch, var(--paper) 30%, transparent) 50%, transparent 100%);
         animation: shimmer 2s infinite;
     }
 
@@ -3595,7 +2655,7 @@ function slugifyInstitution(name: string): string {
 
     .completeness-text {
         font-size: 0.75rem;
-        color: #71717a;
+        color: var(--ink-3);
         margin: 0.75rem 0 0;
         text-align: center;
         font-weight: 500;
@@ -3609,7 +2669,7 @@ function slugifyInstitution(name: string): string {
         justify-content: center;
         gap: 0.5rem;
         padding: 0.875rem 1.75rem;
-        border-radius: 12px;
+        border-radius: var(--r-3);
         font-size: 0.875rem;
         font-weight: 600;
         text-decoration: none;
@@ -3620,29 +2680,29 @@ function slugifyInstitution(name: string): string {
     }
 
     .btn--outline {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        color: #a1a1aa;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        color: var(--ink-2);
     }
 
     .btn--outline:hover {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
-        border-color: rgba(255, 255, 255, 0.15);
-        color: #fafafa;
+        background: var(--paper-3);
+        border-color: var(--rule-strong);
+        color: var(--ink);
         transform: translateY(-2px);
-        box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.2);
+        box-shadow: var(--shadow-2);
     }
 
     .btn--primary {
-        background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-        color: white;
-        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25);
+        background: var(--ink);
+        color: var(--paper);
+        box-shadow: var(--shadow-1);
     }
 
     .btn--primary:hover {
-        background: linear-gradient(135deg, #9d74f7 0%, #8b5cf6 100%);
+        opacity: 0.9;
         transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(139, 92, 246, 0.35);
+        box-shadow: var(--shadow-2);
     }
 
     .btn--primary:active {
@@ -3651,12 +2711,12 @@ function slugifyInstitution(name: string): string {
 
     .btn--text {
         background: transparent;
-        color: #a78bfa;
+        color: var(--ink-blue);
         padding: 0.5rem 0;
     }
 
     .btn--text:hover {
-        color: #c4b5fd;
+        color: var(--ink);
     }
 
     .btn--full {
@@ -3667,7 +2727,7 @@ function slugifyInstitution(name: string): string {
     .btn--small {
         padding: 0.5rem 1rem;
         font-size: 0.8rem;
-        border-radius: 10px;
+        border-radius: var(--r-3);
     }
 
     /* ═══════════════════ RESPONSIVE ═══════════════════ */

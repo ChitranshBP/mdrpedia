@@ -170,12 +170,12 @@ const currentStatusConfig = statusConfig[timeline.currentStatus];
 
 <style>
     .consensus-timeline-section {
-        background: var(--card-bg, rgba(20, 20, 35, 0.8));
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 2rem;
         margin-bottom: 2rem;
-        backdrop-filter: blur(10px);
+        
     }
 
     .timeline-header {
@@ -185,7 +185,7 @@ const currentStatusConfig = statusConfig[timeline.currentStatus];
         gap: 1.5rem;
         margin-bottom: 2rem;
         padding-bottom: 1.5rem;
-        border-bottom: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
+        border-bottom: 1px solid var(--rule);
         flex-wrap: wrap;
     }
 
@@ -200,17 +200,17 @@ const currentStatusConfig = statusConfig[timeline.currentStatus];
         font-size: 1.25rem;
         font-weight: 700;
         margin: 0 0 0.25rem;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .timeline-title svg {
-        color: var(--accent, #8b5cf6);
+        color: var(--ink-blue);
         opacity: 0.8;
     }
 
     .timeline-subtitle {
         font-size: 0.85rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         margin: 0;
     }
 
@@ -221,7 +221,7 @@ const currentStatusConfig = statusConfig[timeline.currentStatus];
         padding: 1rem 1.5rem;
         background: color-mix(in srgb, var(--status-color) 10%, transparent);
         border: 1px solid color-mix(in srgb, var(--status-color) 30%, transparent);
-        border-radius: 12px;
+        border-radius: var(--r-4);
     }
 
     .status-label {
@@ -229,7 +229,7 @@ const currentStatusConfig = statusConfig[timeline.currentStatus];
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         margin-bottom: 0.25rem;
     }
 
@@ -251,7 +251,7 @@ const currentStatusConfig = statusConfig[timeline.currentStatus];
         top: 0;
         bottom: 0;
         width: 2px;
-        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(139, 92, 246, 0.3), rgba(16, 185, 129, 0.3));
+        background: var(--rule-strong);
     }
 
     .timeline-event {
@@ -278,7 +278,7 @@ const currentStatusConfig = statusConfig[timeline.currentStatus];
         height: 12px;
         background: var(--marker-color);
         border-radius: 50%;
-        border: 3px solid rgba(20, 20, 35, 1);
+        border: 3px solid var(--paper);
         box-shadow: 0 0 0 2px var(--marker-color);
     }
 
@@ -297,15 +297,15 @@ const currentStatusConfig = statusConfig[timeline.currentStatus];
         font-family: var(--font-mono);
         font-size: 0.7rem;
         font-weight: 600;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         margin-top: 0.35rem;
     }
 
     .event-card {
         padding: 1.25rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 12px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
     }
 
     .event-header {
@@ -319,7 +319,7 @@ const currentStatusConfig = statusConfig[timeline.currentStatus];
     .event-status {
         padding: 3px 10px;
         background: color-mix(in srgb, var(--status-color) 15%, transparent);
-        border-radius: 100px;
+        border-radius: var(--r-pill);
         font-size: 0.7rem;
         font-weight: 600;
         color: var(--status-color);
@@ -329,20 +329,20 @@ const currentStatusConfig = statusConfig[timeline.currentStatus];
 
     .event-date {
         font-size: 0.75rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .event-title {
         font-size: 1rem;
         font-weight: 700;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
         margin: 0 0 0.5rem;
     }
 
     .event-description {
         font-size: 0.9rem;
         line-height: 1.6;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         margin: 0;
     }
 
@@ -357,7 +357,7 @@ const currentStatusConfig = statusConfig[timeline.currentStatus];
     .figures-label {
         font-size: 0.7rem;
         font-weight: 600;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .figures-list {
@@ -368,10 +368,10 @@ const currentStatusConfig = statusConfig[timeline.currentStatus];
 
     .figure-tag {
         padding: 3px 10px;
-        background: rgba(139, 92, 246, 0.1);
-        border-radius: 100px;
+        background: var(--paper-3);
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
-        color: #a78bfa;
+        color: var(--ink-blue);
     }
 
     /* Evidence Details */
@@ -384,7 +384,7 @@ const currentStatusConfig = statusConfig[timeline.currentStatus];
     .event-opposing summary {
         font-size: 0.8rem;
         font-weight: 600;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         cursor: pointer;
         padding: 0.5rem 0;
     }
@@ -394,11 +394,11 @@ const currentStatusConfig = statusConfig[timeline.currentStatus];
         margin: 0.5rem 0 0;
         padding-left: 1.2rem;
         font-size: 0.85rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
-    .evidence-list li { color: #10b981; }
-    .opposing-list li { color: #f59e0b; }
+    .evidence-list li { color: var(--verdant); }
+    .opposing-list li { color: var(--aged-gold); }
 
     .event-source {
         display: inline-flex;
@@ -406,7 +406,7 @@ const currentStatusConfig = statusConfig[timeline.currentStatus];
         gap: 0.3rem;
         margin-top: 1rem;
         font-size: 0.8rem;
-        color: var(--accent, #8b5cf6);
+        color: var(--ink-blue);
         text-decoration: none;
     }
 
@@ -418,7 +418,7 @@ const currentStatusConfig = statusConfig[timeline.currentStatus];
     .related-section {
         margin-top: 2rem;
         padding-top: 1.5rem;
-        border-top: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
+        border-top: 1px solid var(--rule);
         display: flex;
         flex-direction: column;
         gap: 1rem;
@@ -434,7 +434,7 @@ const currentStatusConfig = statusConfig[timeline.currentStatus];
     .related-label {
         font-size: 0.75rem;
         font-weight: 600;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .related-tags {
@@ -445,25 +445,25 @@ const currentStatusConfig = statusConfig[timeline.currentStatus];
 
     .related-tag {
         padding: 4px 12px;
-        border-radius: 100px;
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
         font-weight: 500;
     }
 
     .related-tag--technique {
-        background: rgba(139, 92, 246, 0.1);
-        color: #a78bfa;
+        background: var(--paper-3);
+        color: var(--ink-blue);
     }
 
     .related-tag--condition {
         background: rgba(236, 72, 153, 0.1);
-        color: #f472b6;
+        color: var(--sanguine);
     }
 
     /* Tier colors */
-    .tier-titan .timeline-title svg { color: #ffd700; }
-    .tier-elite .timeline-title svg { color: #00aaff; }
-    .tier-master .timeline-title svg { color: #00cc66; }
+    .tier-titan .timeline-title svg { color: var(--aged-gold); }
+    .tier-elite .timeline-title svg { color: var(--ink-blue); }
+    .tier-master .timeline-title svg { color: var(--verdant); }
 
     /* Responsive */
     @media (max-width: 640px) {

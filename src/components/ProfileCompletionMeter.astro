@@ -1,0 +1,254 @@
+---
+/**
+ * MDRPedia — Enhanced Profile Completion Meter
+ * Shows progress bar + missing items as actionable chips
+ */
+
+interface CompletionItem {
+    label: string;
+    present: boolean;
+    link: string;
+}
+
+interface Props {
+    slug: string;
+    doctorName: string;
+    isHistorical: boolean;
+    isClaimed: boolean;
+    completenessFactors: boolean[];
+    hasImage: boolean;
+    hasBio: boolean;
+    hasAffiliations: boolean;
+    hasPublications: boolean;
+    hasAwards: boolean;
+    hasTimeline: boolean;
+    hasLineage: boolean;
+    hasHIndex: boolean;
+    hasSurgeries: boolean;
+    hasLivesSaved: boolean;
+    hasCredentials: boolean;
+    hasKnowsAbout: boolean;
+}
+
+const {
+    slug,
+    doctorName,
+    isHistorical,
+    isClaimed,
+    completenessFactors,
+    hasImage,
+    hasBio,
+    hasAffiliations,
+    hasPublications,
+    hasAwards,
+    hasTimeline,
+    hasLineage,
+    hasHIndex,
+    hasSurgeries,
+    hasLivesSaved,
+    hasCredentials,
+    hasKnowsAbout,
+} = Astro.props;
+
+const profileCompleteness = Math.round(
+    (completenessFactors.filter(Boolean).length / completenessFactors.length) * 100
+);
+
+const completenessLabel = profileCompleteness >= 90
+    ? 'Comprehensive'
+    : profileCompleteness >= 70
+    ? 'Well Documented'
+    : profileCompleteness >= 50
+    ? 'Partially Complete'
+    : 'Basic';
+
+const items: CompletionItem[] = [
+    { label: 'Upload Photo', present: hasImage, link: `/suggest-edit?profile=${slug}&type=photo` },
+    { label: 'Add Biography', present: hasBio, link: `/suggest-edit?profile=${slug}&type=general` },
+    { label: 'Add Affiliation', present: hasAffiliations, link: `/suggest-edit?profile=${slug}&type=affiliation` },
+    { label: 'Add Publications', present: hasPublications, link: `/suggest-edit?profile=${slug}&type=citation` },
+    { label: 'Add Awards', present: hasAwards, link: `/suggest-edit?profile=${slug}&type=award` },
+    { label: 'Add Timeline', present: hasTimeline, link: `/suggest-edit?profile=${slug}&type=general` },
+    { label: 'Add Mentors/Students', present: hasLineage, link: `/suggest-edit?profile=${slug}&type=general` },
+    { label: 'Confirm H-Index', present: hasHIndex, link: `/suggest-edit?profile=${slug}&type=general` },
+    { label: 'Add Procedures', present: hasSurgeries, link: `/suggest-edit?profile=${slug}&type=general` },
+    { label: 'Add Impact Data', present: hasLivesSaved, link: `/suggest-edit?profile=${slug}&type=general` },
+    { label: 'Add ORCID or NPI', present: hasCredentials, link: '/doctor/claim' },
+    { label: 'Add Expertise Tags', present: hasKnowsAbout, link: `/suggest-edit?profile=${slug}&type=general` },
+];
+
+const missingItems = items.filter(i => !i.present);
+const isComplete = profileCompleteness >= 100;
+const firstName = doctorName.split(' ')[0];
+const showClaimCTA = !isClaimed && !isHistorical;
+---
+
+<div class="completion-meter">
+    <div class="completion-meter__header">
+        <h3 class="sidebar-card__title">Profile Status</h3>
+        <span class={`completion-badge completion-badge--${profileCompleteness >= 90 ? 'high' : profileCompleteness >= 50 ? 'medium' : 'low'}`}>
+            {completenessLabel}
+        </span>
+    </div>
+
+    <div class="completion-bar">
+        <div class="completion-bar__fill" style={`width: ${profileCompleteness}%`}></div>
+    </div>
+    <p class="completion-text">
+        {isComplete ? (
+            <span class="completion-check">Profile complete</span>
+        ) : (
+            <span>{profileCompleteness}% complete</span>
+        )}
+    </p>
+
+    {!isComplete && missingItems.length > 0 && (
+        <div class="completion-missing">
+            <p class="completion-missing__label">Help complete this profile:</p>
+            <div class="completion-missing__chips">
+                {missingItems.slice(0, 5).map(item => (
+                    <a href={item.link} class="completion-chip">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        {item.label}
+                    </a>
+                ))}
+            </div>
+        </div>
+    )}
+
+    {showClaimCTA && (
+        <a href={`/doctor/claim?slug=${slug}`} class="completion-claim">
+            Are you Dr. {firstName}? <strong>Claim this profile</strong>
+        </a>
+    )}
+</div>
+
+<style>
+    .completion-meter {
+        padding: 0;
+    }
+
+    .completion-meter__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--space-sm);
+    }
+
+    .completion-badge {
+        font-size: 0.65rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 3px 8px;
+        border-radius: var(--r-2);
+    }
+
+    .completion-badge--high {
+        background: var(--verdant-2, #e6f9ef);
+        color: var(--verdant, #00804a);
+    }
+
+    .completion-badge--medium {
+        background: #fff8e6;
+        color: #a67c00;
+    }
+
+    .completion-badge--low {
+        background: #fef2f2;
+        color: #c53030;
+    }
+
+    .completion-bar {
+        height: 6px;
+        background: var(--paper-3);
+        border-radius: 3px;
+        overflow: hidden;
+        margin-bottom: var(--space-xs, 4px);
+    }
+
+    .completion-bar__fill {
+        height: 100%;
+        background: var(--ink-blue);
+        border-radius: 3px;
+        transition: width 0.6s ease;
+    }
+
+    .completion-text {
+        font-size: 0.75rem;
+        color: var(--ink-3);
+        margin: 0 0 var(--space-sm);
+    }
+
+    .completion-check {
+        color: var(--verdant, #00804a);
+        font-weight: 500;
+    }
+
+    .completion-missing {
+        border-top: 1px solid var(--rule);
+        padding-top: var(--space-sm);
+    }
+
+    .completion-missing__label {
+        font-size: 0.72rem;
+        color: var(--ink-3);
+        margin: 0 0 var(--space-xs, 6px);
+    }
+
+    .completion-missing__chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .completion-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 10px;
+        font-size: 0.7rem;
+        font-weight: 500;
+        color: var(--ink-blue);
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-2);
+        text-decoration: none;
+        transition: all var(--transition-fast, 0.15s);
+        white-space: nowrap;
+    }
+
+    .completion-chip:hover {
+        background: var(--ink-blue);
+        color: #fff;
+        border-color: var(--ink-blue);
+    }
+
+    .completion-chip svg {
+        flex-shrink: 0;
+    }
+
+    .completion-claim {
+        display: block;
+        margin-top: var(--space-sm);
+        padding: var(--space-sm);
+        background: var(--paper-2);
+        border: 1px dashed var(--ink-blue);
+        border-radius: var(--r-2);
+        font-size: 0.75rem;
+        color: var(--ink-2);
+        text-decoration: none;
+        text-align: center;
+        transition: background var(--transition-fast, 0.15s);
+    }
+
+    .completion-claim:hover {
+        background: var(--paper-3);
+    }
+
+    .completion-claim strong {
+        color: var(--ink-blue);
+    }
+</style>

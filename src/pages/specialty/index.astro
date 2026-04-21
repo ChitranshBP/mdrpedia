@@ -7,13 +7,9 @@
 import Layout from "../../layouts/Layout.astro";
 import { prisma } from "../../lib/prisma";
 import { SPECIALTY_GROUPS, type SpecialtyGroup } from "../../lib/specialty-groups";
+import { slugify } from "../../lib/utils";
 
 export const prerender = false;
-
-// Slugify function: convert group name to URL-friendly slug
-function slugify(name: string): string {
-    return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-}
 
 // Fetch doctor counts for each specialty group
 interface GroupWithCount extends SpecialtyGroup {
@@ -163,7 +159,7 @@ const structuredData = {
                             style={`animation-delay: ${index * 50}ms`}
                         >
                             <div class="specialty-card__icon">
-                                <span>{group.icon}</span>
+                                <span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={group.svgPath}/></svg></span>
                             </div>
                             <div class="specialty-card__content">
                                 <h3 class="specialty-card__name">{group.name}</h3>
@@ -199,12 +195,12 @@ const structuredData = {
 
 <style>
     .specialties-page {
-        background: var(--bg-primary);
+        background: var(--paper);
         min-height: 100vh;
     }
 
     .container {
-        max-width: 1200px;
+        max-width: var(--max);
         margin: 0 auto;
         padding: 0 1.5rem;
     }
@@ -219,43 +215,35 @@ const structuredData = {
     }
 
     .breadcrumb a {
-        color: var(--text-muted);
+        color: var(--ink-3);
         text-decoration: none;
         transition: color 0.2s;
     }
 
     .breadcrumb a:hover {
-        color: var(--accent-purple);
+        color: var(--ink-blue);
     }
 
     .breadcrumb-sep {
-        color: var(--text-muted);
+        color: var(--ink-3);
         opacity: 0.5;
     }
 
     .breadcrumb-current {
-        color: var(--text-secondary);
+        color: var(--ink-2);
     }
 
     /* Hero Section */
     .specialties-hero {
         padding: 4rem 0 3rem;
-        background: linear-gradient(180deg, rgba(139, 92, 246, 0.08) 0%, rgba(139, 92, 246, 0.02) 50%, transparent 100%);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper);
+        border-bottom: 1px solid var(--rule);
         position: relative;
         overflow: hidden;
     }
 
     .specialties-hero::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 800px;
-        height: 400px;
-        background: radial-gradient(ellipse, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
-        pointer-events: none;
+        display: none;
     }
 
     .hero-content {
@@ -268,18 +256,15 @@ const structuredData = {
     .specialties-hero h1 {
         font-family: var(--font-serif);
         font-size: clamp(2.5rem, 5vw, 4rem);
-        font-weight: 800;
-        background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-purple-light) 40%, #fff 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 1.25rem;
         letter-spacing: -0.02em;
     }
 
     .hero-description {
         font-size: 1.15rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         max-width: 700px;
         margin: 0 auto;
         line-height: 1.7;
@@ -298,20 +283,18 @@ const structuredData = {
     .hero-stat {
         text-align: center;
         padding: 1.25rem 2rem;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         min-width: 150px;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
     }
 
     .hero-stat__value {
         display: block;
         font-family: var(--font-mono);
         font-size: 2rem;
-        font-weight: 700;
-        color: var(--accent-purple-light);
+        font-weight: 500;
+        color: var(--ink-blue);
         letter-spacing: -0.02em;
     }
 
@@ -319,7 +302,7 @@ const structuredData = {
         font-size: 0.75rem;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin-top: 0.25rem;
     }
 
@@ -336,13 +319,14 @@ const structuredData = {
     .section-header h2 {
         font-family: var(--font-serif);
         font-size: 1.75rem;
-        color: var(--text-primary);
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 0.5rem;
     }
 
     .section-subtitle {
         font-size: 1rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .specialties-grid {
@@ -356,12 +340,12 @@ const structuredData = {
         display: flex;
         gap: 1.25rem;
         padding: 1.5rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 16px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         text-decoration: none;
         color: inherit;
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        transition: all var(--t-base) var(--ease);
         position: relative;
         overflow: hidden;
         animation: fadeInCard 0.5s ease-out forwards;
@@ -380,29 +364,13 @@ const structuredData = {
     }
 
     .specialty-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at top left, rgba(139, 92, 246, 0.05), transparent 60%);
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 0.3s;
+        display: none;
     }
 
     .specialty-card:hover {
-        background: rgba(255, 255, 255, 0.04);
-        border-color: rgba(139, 92, 246, 0.3);
-        transform: translateY(-4px);
-        box-shadow:
-            0 16px 32px rgba(0, 0, 0, 0.3),
-            0 0 40px rgba(139, 92, 246, 0.08);
-    }
-
-    .specialty-card:hover::before {
-        opacity: 1;
+        border-color: var(--rule-strong);
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-3);
     }
 
     .specialty-card__icon {
@@ -412,16 +380,16 @@ const structuredData = {
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(139, 92, 246, 0.1);
-        border: 1px solid rgba(139, 92, 246, 0.2);
-        border-radius: 14px;
+        background: var(--ink-blue-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         font-size: 2rem;
         transition: all 0.3s;
     }
 
     .specialty-card:hover .specialty-card__icon {
-        background: rgba(139, 92, 246, 0.15);
-        border-color: rgba(139, 92, 246, 0.4);
+        background: var(--paper-3);
+        border-color: var(--rule-strong);
         transform: scale(1.05);
     }
 
@@ -435,19 +403,19 @@ const structuredData = {
     .specialty-card__name {
         font-family: var(--font-serif);
         font-size: 1.25rem;
-        font-weight: 700;
-        color: var(--text-primary);
+        font-weight: 500;
+        color: var(--ink);
         margin-bottom: 0.5rem;
         transition: color 0.2s;
     }
 
     .specialty-card:hover .specialty-card__name {
-        color: var(--accent-purple-light);
+        color: var(--ink-blue);
     }
 
     .specialty-card__description {
         font-size: 0.875rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         line-height: 1.5;
         margin-bottom: 1rem;
         flex: 1;
@@ -462,23 +430,23 @@ const structuredData = {
         justify-content: space-between;
         align-items: center;
         padding-top: 0.75rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        border-top: 1px solid var(--rule);
     }
 
     .specialty-card__count {
         font-size: 0.85rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
     }
 
     .specialty-card__count strong {
-        color: var(--accent-purple-light);
+        color: var(--ink-blue);
         font-family: var(--font-mono);
-        font-weight: 600;
+        font-weight: 500;
     }
 
     .specialty-card__arrow {
         font-size: 1.25rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         opacity: 0;
         transform: translateX(-10px);
         transition: all 0.3s;
@@ -487,14 +455,14 @@ const structuredData = {
     .specialty-card:hover .specialty-card__arrow {
         opacity: 1;
         transform: translateX(0);
-        color: var(--accent-purple);
+        color: var(--ink-blue);
     }
 
     /* CTA Section */
     .cta-section {
         padding: 4rem 0;
-        background: linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.05) 100%);
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper-2);
+        border-top: 1px solid var(--rule);
     }
 
     .cta-content {
@@ -506,13 +474,14 @@ const structuredData = {
     .cta-content h2 {
         font-family: var(--font-serif);
         font-size: 1.75rem;
-        color: var(--text-primary);
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 0.75rem;
     }
 
     .cta-content p {
         font-size: 1rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         margin-bottom: 1.5rem;
     }
 
@@ -531,34 +500,33 @@ const structuredData = {
         font-family: var(--font-sans);
         font-size: 0.95rem;
         font-weight: 600;
-        border-radius: 12px;
+        border-radius: var(--r-3);
         text-decoration: none;
         transition: all 0.2s;
         cursor: pointer;
     }
 
     .btn--primary {
-        background: var(--accent-purple);
-        color: white;
+        background: var(--ink-blue);
+        color: var(--paper);
         border: none;
     }
 
     .btn--primary:hover {
-        background: #7c3aed;
         transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+        box-shadow: var(--shadow-3);
     }
 
     .btn--secondary {
         background: transparent;
-        color: var(--text-secondary);
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: var(--ink-2);
+        border: 1px solid var(--rule);
     }
 
     .btn--secondary:hover {
-        background: rgba(255, 255, 255, 0.05);
-        border-color: rgba(255, 255, 255, 0.25);
-        color: var(--text-primary);
+        background: var(--paper-3);
+        border-color: var(--rule-strong);
+        color: var(--ink);
     }
 
     /* Responsive */

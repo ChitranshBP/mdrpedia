@@ -1,9 +1,11 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
+import AdminSidebar from "../../../components/admin/AdminSidebar.astro";
 import { ProfileStatus, Tier } from "@prisma/client";
 import type { Profile, Geography, Award, Technique, DoctorHospitalAffiliation, Hospital, Citation } from "@prisma/client";
 import { prisma } from "../../../lib/prisma";
 import { requireSuperAdmin } from "../../../lib/rbac";
+import { logAdminAction } from "../../../lib/audit";
 
 export const prerender = false;
 
@@ -46,6 +48,7 @@ if (Astro.request.method === "POST") {
             const awardId = formData.get("award_id")?.toString();
             if (awardId) {
                 await prisma.award.delete({ where: { id: awardId } });
+                await logAdminAction('DELETE_AWARD', id, { awardId }, Astro.request);
                 success = "Award deleted successfully.";
             }
         }
@@ -54,6 +57,7 @@ if (Astro.request.method === "POST") {
             const techniqueId = formData.get("technique_id")?.toString();
             if (techniqueId) {
                 await prisma.technique.delete({ where: { id: techniqueId } });
+                await logAdminAction('DELETE_TECHNIQUE', id, { techniqueId }, Astro.request);
                 success = "Technique deleted successfully.";
             }
         }
@@ -76,6 +80,7 @@ if (Astro.request.method === "POST") {
                             profile_id: existingProfile.id,
                         }
                     });
+                    await logAdminAction('ADD_AWARD', id, { awardName, issuingBody, yearAwarded }, Astro.request);
                     success = "Award added successfully.";
                 }
             }
@@ -99,6 +104,7 @@ if (Astro.request.method === "POST") {
                             profile_id: existingProfile.id,
                         }
                     });
+                    await logAdminAction('ADD_TECHNIQUE', id, { techName, yearInvented }, Astro.request);
                     success = "Technique added successfully.";
                 }
             }
@@ -108,6 +114,7 @@ if (Astro.request.method === "POST") {
             const citationId = formData.get("citation_id")?.toString();
             if (citationId) {
                 await prisma.citation.delete({ where: { id: citationId } });
+                await logAdminAction('DELETE_CITATION', id, { citationId }, Astro.request);
                 success = "Citation deleted successfully.";
             }
         }
@@ -318,10 +325,11 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
 ---
 
 <Layout title={`Edit ${profile.full_name} — Admin`}>
-    <div class="container admin-dashboard">
+    <div class="admin">
+        <AdminSidebar adminKey={adminKey} activePage="doctors" />
+        <main class="main">
         <header class="admin-header">
             <div>
-                <span class="badge badge--admin">SUPER ADMIN</span>
                 <h1>Edit: {profile.full_name}</h1>
             </div>
             <div class="actions">
@@ -329,10 +337,6 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
                     href={`/${profile.slug}`}
                     target="_blank"
                     class="btn btn--outline">View Live</a
-                >
-                <a
-                    href={`/admin/doctors?key=${adminKey}`}
-                    class="btn btn--outline">Back to List</a
                 >
             </div>
         </header>
@@ -850,6 +854,7 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
                 </div>
             </div>
         </form>
+        </main>
     </div>
 </Layout>
 
@@ -857,7 +862,7 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
     .admin-dashboard {
         padding: 40px 20px;
         max-width: 1200px;
-        color: var(--text-primary);
+        color: var(--ink);
     }
     .admin-header {
         display: flex;
@@ -865,15 +870,17 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
         margin-bottom: 30px;
     }
     .badge--admin {
-        background: #ffd700;
+        background: var(--aged-gold);
         color: #000;
         padding: 2px 6px;
         border-radius: 4px;
-        font-weight: bold;
+        font-weight: 500;
         font-size: 0.7rem;
     }
     h1 {
         font-family: var(--font-serif);
+        font-weight: 400;
+        color: var(--ink);
         margin: 5px 0 0 0;
     }
 
@@ -889,16 +896,17 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
     }
 
     .card {
-        background: var(--bg-card, #14142a);
+        background: var(--paper-2);
         padding: 24px;
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: var(--r-4);
+        border: 1px solid var(--rule);
         margin-bottom: 24px;
     }
     h3 {
         margin-top: 0;
-        color: var(--text-secondary);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        font-weight: 400;
+        color: var(--ink-2);
+        border-bottom: 1px solid var(--rule);
         padding-bottom: 10px;
         margin-bottom: 20px;
     }
@@ -928,7 +936,7 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
         margin-bottom: 8px;
         font-weight: 500;
         font-size: 0.9rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
     .checkbox-label {
         display: flex;
@@ -944,17 +952,17 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
     textarea {
         width: 100%;
         padding: 10px;
-        background: rgba(0, 0, 0, 0.2);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 6px;
-        color: white;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
+        color: var(--ink);
         font-family: inherit;
     }
     input:focus,
     select:focus,
     textarea:focus {
         outline: none;
-        border-color: #8b5cf6;
+        border-color: var(--ink-blue);
     }
     textarea {
         line-height: 1.5;
@@ -973,9 +981,9 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
         justify-content: space-between;
         align-items: flex-start;
         padding: 12px;
-        background: rgba(0, 0, 0, 0.2);
-        border-radius: 8px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        background: var(--paper-3);
+        border-radius: var(--r-3);
+        border: 1px solid var(--rule);
     }
     .item-info {
         flex: 1;
@@ -984,36 +992,36 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
         display: flex;
         align-items: center;
         gap: 8px;
-        color: var(--text-primary);
+        color: var(--ink);
     }
     .item-meta {
         display: block;
         font-size: 0.85rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin-top: 4px;
     }
     .item-desc {
         font-size: 0.85rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         margin: 8px 0 0;
         line-height: 1.4;
     }
     .empty-message {
-        color: var(--text-muted);
+        color: var(--ink-3);
         font-size: 0.9rem;
         font-style: italic;
         margin: 0 0 16px;
     }
     .help-text {
         font-size: 0.8rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin-top: 12px;
     }
 
     /* Lineage Section */
     .lineage-section {
         padding-bottom: 16px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid var(--rule);
     }
     .lineage-section:last-child {
         border-bottom: none;
@@ -1021,12 +1029,12 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
     }
     .lineage-subtitle {
         font-size: 0.9rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin: 0 0 12px;
-        font-weight: 600;
+        font-weight: 500;
     }
     .item-info a {
-        color: #8b5cf6;
+        color: var(--ink-blue);
         text-decoration: none;
     }
     .item-info a:hover {
@@ -1047,9 +1055,9 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
     .add-item-form {
         margin-top: 16px;
         padding: 16px;
-        background: rgba(139, 92, 246, 0.05);
-        border: 1px solid rgba(139, 92, 246, 0.2);
-        border-radius: 8px;
+        background: var(--ink-blue-2);
+        border: 1px solid var(--ink-blue);
+        border-radius: var(--r-3);
     }
     .inline-form {
         display: inline;
@@ -1061,16 +1069,16 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
         padding: 2px 8px;
         border-radius: 4px;
         font-size: 0.7rem;
-        font-weight: 600;
+        font-weight: 500;
         text-transform: uppercase;
     }
     .badge--gold {
-        background: rgba(255, 215, 0, 0.2);
-        color: #ffd700;
+        background: color-mix(in oklch, var(--aged-gold) 20%, transparent);
+        color: var(--aged-gold);
     }
     .badge--primary {
-        background: rgba(139, 92, 246, 0.2);
-        color: #8b5cf6;
+        background: var(--ink-blue-2);
+        color: var(--ink-blue);
     }
 
     /* Buttons */
@@ -1078,9 +1086,9 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
         text-decoration: none;
         display: inline-block;
         padding: 10px 20px;
-        border-radius: 6px;
+        border-radius: var(--r-3);
         border: none;
-        font-weight: 600;
+        font-weight: 500;
         cursor: pointer;
         text-align: center;
         transition: all 0.2s;
@@ -1089,16 +1097,16 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
         opacity: 0.9;
     }
     .btn--primary {
-        background: #8b5cf6;
+        background: var(--ink-blue);
         color: white;
     }
     .btn--outline {
         background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: white;
+        border: 1px solid var(--rule);
+        color: var(--ink);
     }
     .btn--danger {
-        background: #ef4444;
+        background: var(--sanguine);
         color: white;
     }
     .btn--sm {
@@ -1118,8 +1126,8 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
         top: 20px;
         right: 20px;
         padding: 16px 24px;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        border-radius: var(--r-3);
+        box-shadow: var(--shadow-3);
         z-index: 1000;
         animation: slideIn 0.3s ease-out;
         min-width: 300px;
@@ -1138,14 +1146,14 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
         }
     }
     .success {
-        background: rgba(16, 185, 129, 0.95);
-        color: white;
-        border: 1px solid #059669;
+        background: var(--verdant-2);
+        color: var(--verdant);
+        border: 1px solid var(--verdant);
     }
     .error {
-        background: rgba(239, 68, 68, 0.95);
-        color: white;
-        border: 1px solid #dc2626;
+        background: var(--sanguine-2);
+        color: var(--sanguine);
+        border: 1px solid var(--sanguine);
     }
 
     @media (max-width: 600px) {
@@ -1163,7 +1171,7 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
     // Loading State
     const form = document.querySelector("form.edit-form");
     form?.addEventListener("submit", () => {
-        const btn = form.querySelector('button[type="submit"]');
+        const btn = form.querySelector('button[type="submit"]') as HTMLElement | null;
         if (btn) {
             btn.innerHTML = `<span class="spinner"></span> Saving...`;
             btn.setAttribute("disabled", "true");
@@ -1173,7 +1181,7 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
     });
 
     // Auto-dismiss Toast
-    const alert = document.querySelector(".alert");
+    const alert = document.querySelector(".alert") as HTMLElement | null;
     if (alert) {
         setTimeout(() => {
             alert.style.transition = "opacity 0.5s";

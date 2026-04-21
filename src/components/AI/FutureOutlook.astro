@@ -18,12 +18,12 @@ const { outlook, doctorName, specialty, tier = 'UNRANKED' } = Astro.props;
 
 // Category config
 const categoryConfig: Record<FutureOutlookPrediction['category'], { icon: string; color: string }> = {
-    TECHNOLOGY: { icon: '🤖', color: '#3b82f6' },
-    TREATMENT: { icon: '💊', color: '#10b981' },
-    RESEARCH: { icon: '🔬', color: '#8b5cf6' },
-    POLICY: { icon: '📋', color: '#f59e0b' },
-    TRAINING: { icon: '🎓', color: '#ec4899' },
-    ACCESSIBILITY: { icon: '🌍', color: '#06b6d4' },
+    TECHNOLOGY: { icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>', color: '#3b82f6' },
+    TREATMENT: { icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M10.5 1.5a4.5 4.5 0 0 0-4.5 4.5v12a4.5 4.5 0 0 0 9 0V6a4.5 4.5 0 0 0-4.5-4.5zM8 12h5"/></svg>', color: '#10b981' },
+    RESEARCH: { icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 3h6v2H9V3zm0 4v6l-3 6h12l-3-6V7H9z"/></svg>', color: '#8b5cf6' },
+    POLICY: { icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5h6"/></svg>', color: '#f59e0b' },
+    TRAINING: { icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>', color: '#ec4899' },
+    ACCESSIBILITY: { icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zM2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>', color: '#06b6d4' },
 };
 
 // Confidence config
@@ -62,7 +62,7 @@ const confidenceConfig: Record<FutureOutlookPrediction['confidence'], { label: s
             <article class="prediction-card">
                 <div class="prediction-header">
                     <span class="category-badge" style={`--cat-color: ${categoryConfig[prediction.category].color};`}>
-                        <span class="category-icon">{categoryConfig[prediction.category].icon}</span>
+                        <span class="category-icon" set:html={categoryConfig[prediction.category].icon}></span>
                         {prediction.category.replace('_', ' ')}
                     </span>
                     <div class="prediction-meta">
@@ -112,7 +112,7 @@ const confidenceConfig: Record<FutureOutlookPrediction['confidence'], { label: s
     {outlook.emergingTechnologies && outlook.emergingTechnologies.length > 0 && (
         <div class="emerging-section">
             <h3 class="subsection-title">
-                <span class="subsection-icon">🚀</span>
+                <span class="subsection-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
                 Emerging Technologies
             </h3>
             <div class="tech-tags">
@@ -127,7 +127,7 @@ const confidenceConfig: Record<FutureOutlookPrediction['confidence'], { label: s
     {outlook.upcomingResearch && outlook.upcomingResearch.length > 0 && (
         <div class="research-section">
             <h3 class="subsection-title">
-                <span class="subsection-icon">🔬</span>
+                <span class="subsection-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 3h6v2H9V3zm0 4v6l-3 6h12l-3-6V7H9z"/></svg></span>
                 Upcoming Research Areas
             </h3>
             <ul class="research-list">
@@ -142,7 +142,7 @@ const confidenceConfig: Record<FutureOutlookPrediction['confidence'], { label: s
     {outlook.legacyProjections && (
         <div class="legacy-section">
             <h3 class="subsection-title">
-                <span class="subsection-icon">🏛️</span>
+                <span class="subsection-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></span>
                 Legacy & Long-term Impact
             </h3>
             <p class="legacy-text">{outlook.legacyProjections}</p>
@@ -164,12 +164,12 @@ const confidenceConfig: Record<FutureOutlookPrediction['confidence'], { label: s
 
 <style>
     .future-outlook-section {
-        background: var(--card-bg, rgba(20, 20, 35, 0.8));
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 2rem;
         margin-bottom: 2rem;
-        backdrop-filter: blur(10px);
+        
     }
 
     .section-header {
@@ -178,7 +178,7 @@ const confidenceConfig: Record<FutureOutlookPrediction['confidence'], { label: s
         gap: 0.5rem;
         margin-bottom: 1.5rem;
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
+        border-bottom: 1px solid var(--rule);
     }
 
     .section-title {
@@ -186,28 +186,28 @@ const confidenceConfig: Record<FutureOutlookPrediction['confidence'], { label: s
         align-items: center;
         gap: 0.75rem;
         font-size: 1.25rem;
-        font-weight: 700;
+        font-weight: 500;
         margin: 0;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .section-title svg {
-        color: #f59e0b;
+        color: var(--aged-gold);
         opacity: 0.9;
     }
 
     .section-subtitle {
         font-size: 0.85rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     /* Quote */
     .perspective-quote {
         margin: 0 0 2rem;
         padding: 1.5rem;
-        background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(139, 92, 246, 0.08));
+        background: var(--paper-3);
         border: 1px solid rgba(245, 158, 11, 0.15);
-        border-radius: 12px;
+        border-radius: var(--r-4);
         position: relative;
     }
 
@@ -222,7 +222,7 @@ const confidenceConfig: Record<FutureOutlookPrediction['confidence'], { label: s
         margin: 0 0 0.75rem 2rem;
         font-size: 1rem;
         font-style: italic;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         line-height: 1.7;
     }
 
@@ -232,7 +232,7 @@ const confidenceConfig: Record<FutureOutlookPrediction['confidence'], { label: s
         font-size: 0.85rem;
         font-style: normal;
         font-weight: 600;
-        color: #fbbf24;
+        color: var(--aged-gold);
     }
 
     /* Predictions Grid */
@@ -244,15 +244,15 @@ const confidenceConfig: Record<FutureOutlookPrediction['confidence'], { label: s
     }
 
     .prediction-card {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 12px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 1.25rem;
         transition: all 0.2s ease;
     }
 
     .prediction-card:hover {
-        border-color: rgba(255, 255, 255, 0.1);
+        border-color: var(--rule-strong);
     }
 
     .prediction-header {
@@ -270,7 +270,7 @@ const confidenceConfig: Record<FutureOutlookPrediction['confidence'], { label: s
         gap: 0.35rem;
         padding: 4px 10px;
         background: color-mix(in srgb, var(--cat-color) 15%, transparent);
-        border-radius: 100px;
+        border-radius: var(--r-pill);
         font-size: 0.7rem;
         font-weight: 600;
         color: var(--cat-color);
@@ -288,10 +288,10 @@ const confidenceConfig: Record<FutureOutlookPrediction['confidence'], { label: s
 
     .timeframe-badge {
         padding: 3px 8px;
-        background: rgba(255, 255, 255, 0.05);
+        background: var(--paper-3);
         border-radius: 4px;
         font-size: 0.65rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .confidence-badge {
@@ -305,7 +305,7 @@ const confidenceConfig: Record<FutureOutlookPrediction['confidence'], { label: s
 
     .prediction-text {
         font-size: 0.95rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         line-height: 1.6;
         margin: 0 0 1rem;
     }
@@ -320,7 +320,7 @@ const confidenceConfig: Record<FutureOutlookPrediction['confidence'], { label: s
         display: block;
         font-size: 0.7rem;
         font-weight: 600;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         margin-bottom: 0.35rem;
     }
 
@@ -329,7 +329,7 @@ const confidenceConfig: Record<FutureOutlookPrediction['confidence'], { label: s
         margin: 0;
         padding-left: 1rem;
         font-size: 0.8rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
     }
 
     .trends-list li {
@@ -337,11 +337,11 @@ const confidenceConfig: Record<FutureOutlookPrediction['confidence'], { label: s
     }
 
     .trends-list li::marker {
-        color: #10b981;
+        color: var(--verdant);
     }
 
     .barriers-list li::marker {
-        color: #f59e0b;
+        color: var(--aged-gold);
     }
 
     .innovations-tags {
@@ -350,15 +350,15 @@ const confidenceConfig: Record<FutureOutlookPrediction['confidence'], { label: s
         gap: 0.35rem;
         margin-top: 0.75rem;
         padding-top: 0.75rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        border-top: 1px solid var(--rule);
     }
 
     .innovation-tag {
         padding: 2px 8px;
-        background: rgba(139, 92, 246, 0.1);
+        background: var(--paper-3);
         border-radius: 4px;
         font-size: 0.7rem;
-        color: #a78bfa;
+        color: var(--ink-blue);
     }
 
     /* Subsections */
@@ -367,7 +367,7 @@ const confidenceConfig: Record<FutureOutlookPrediction['confidence'], { label: s
     .legacy-section {
         margin-top: 1.5rem;
         padding-top: 1.5rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        border-top: 1px solid var(--rule);
     }
 
     .subsection-title {
@@ -377,7 +377,7 @@ const confidenceConfig: Record<FutureOutlookPrediction['confidence'], { label: s
         font-size: 1rem;
         font-weight: 600;
         margin: 0 0 1rem;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .subsection-icon {
@@ -392,11 +392,11 @@ const confidenceConfig: Record<FutureOutlookPrediction['confidence'], { label: s
 
     .tech-tag {
         padding: 6px 12px;
-        background: rgba(59, 130, 246, 0.1);
-        border: 1px solid rgba(59, 130, 246, 0.2);
-        border-radius: 100px;
+        background: var(--paper-3);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-pill);
         font-size: 0.8rem;
-        color: #60a5fa;
+        color: var(--ink-blue);
     }
 
     .research-list {
@@ -406,30 +406,30 @@ const confidenceConfig: Record<FutureOutlookPrediction['confidence'], { label: s
 
     .research-list li {
         font-size: 0.9rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         line-height: 1.6;
         margin-bottom: 0.5rem;
     }
 
     .research-list li::marker {
-        color: #8b5cf6;
+        color: var(--ink-blue);
     }
 
     .legacy-text {
         font-size: 0.95rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         line-height: 1.7;
         margin: 0;
         padding: 1rem;
-        background: rgba(255, 215, 0, 0.05);
-        border-left: 3px solid rgba(255, 215, 0, 0.3);
+        background: var(--paper-3);
+        border-left: 3px solid var(--aged-gold);
         border-radius: 0 8px 8px 0;
     }
 
     /* Tier colors */
-    .tier-titan .section-title svg { color: #ffd700; }
-    .tier-elite .section-title svg { color: #00aaff; }
-    .tier-master .section-title svg { color: #00cc66; }
+    .tier-titan .section-title svg { color: var(--aged-gold); }
+    .tier-elite .section-title svg { color: var(--ink-blue); }
+    .tier-master .section-title svg { color: var(--verdant); }
 
     @media (max-width: 768px) {
         .future-outlook-section {

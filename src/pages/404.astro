@@ -5,13 +5,6 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout title="404 — Page Not Found | MDRPedia">
     <div class="error-page">
-        <!-- Animated Background -->
-        <div class="error-bg">
-            <div class="orb orb-1"></div>
-            <div class="orb orb-2"></div>
-            <div class="orb orb-3"></div>
-        </div>
-
         <div class="error-content">
             <!-- Animated 404 -->
             <div class="error-code">
@@ -80,19 +73,19 @@ import Layout from "../layouts/Layout.astro";
                 <span class="links-label">Popular destinations:</span>
                 <div class="links-grid">
                     <a href="/rankings" class="quick-link">
-                        <span class="link-icon">🏆</span>
+                        <span class="link-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6m12 5h1.5a2.5 2.5 0 0 0 0-5H18M6 9a6 6 0 0 0 12 0V4H6v5zm3 12h6m-3-3v3"/></svg></span>
                         Rankings
                     </a>
                     <a href="/rare-diseases" class="quick-link">
-                        <span class="link-icon">🧬</span>
+                        <span class="link-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 15c6.667-6 13.333 0 20-6M2 9c6.667 6 13.333 0 20 6M9 3v18m6-18v18"/></svg></span>
                         Rare Diseases
                     </a>
                     <a href="/hospitals" class="quick-link">
-                        <span class="link-icon">🏥</span>
+                        <span class="link-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M12 6v4M10 8h4"/></svg></span>
                         Hospitals
                     </a>
                     <a href="/doctor/claim" class="quick-link">
-                        <span class="link-icon">✓</span>
+                        <span class="link-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 12 15 16 10"/></svg></span>
                         Claim Profile
                     </a>
                 </div>
@@ -107,67 +100,12 @@ import Layout from "../layouts/Layout.astro";
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 60px 20px;
-        position: relative;
-        overflow: hidden;
-    }
-
-    /* Animated Background */
-    .error-bg {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        overflow: hidden;
-    }
-
-    .orb {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(80px);
-        opacity: 0.4;
-        animation: float 20s ease-in-out infinite;
-    }
-
-    .orb-1 {
-        width: 400px;
-        height: 400px;
-        background: rgba(139, 92, 246, 0.3);
-        top: -100px;
-        left: -100px;
-        animation-delay: 0s;
-    }
-
-    .orb-2 {
-        width: 300px;
-        height: 300px;
-        background: rgba(59, 130, 246, 0.25);
-        bottom: -50px;
-        right: -50px;
-        animation-delay: -7s;
-    }
-
-    .orb-3 {
-        width: 200px;
-        height: 200px;
-        background: rgba(236, 72, 153, 0.2);
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        animation-delay: -14s;
-    }
-
-    @keyframes float {
-        0%, 100% { transform: translate(0, 0) scale(1); }
-        25% { transform: translate(30px, -30px) scale(1.05); }
-        50% { transform: translate(-20px, 20px) scale(0.95); }
-        75% { transform: translate(20px, 30px) scale(1.02); }
+        padding: var(--s-9) var(--gutter);
     }
 
     .error-content {
         max-width: 540px;
         text-align: center;
-        position: relative;
-        z-index: 1;
     }
 
     /* 404 Code */
@@ -175,20 +113,17 @@ import Layout from "../layouts/Layout.astro";
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
-        margin-bottom: 24px;
+        gap: var(--s-2);
+        margin-bottom: var(--s-5);
     }
 
     .digit {
+        font-family: var(--font-serif);
         font-size: 6rem;
-        font-weight: 900;
-        letter-spacing: -0.05em;
-        background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.6) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        font-weight: 400;
+        color: var(--ink);
         line-height: 1;
-        animation: fade-in 0.6s ease-out both;
+        animation: fadeIn 0.6s ease-out both;
     }
 
     .digit:nth-child(1) { animation-delay: 0.1s; }
@@ -200,93 +135,76 @@ import Layout from "../layouts/Layout.astro";
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.05));
-        border: 2px solid rgba(139, 92, 246, 0.3);
-        border-radius: 24px;
-        animation: pulse-border 2s ease-in-out infinite, fade-in 0.6s ease-out 0.2s both;
+        background: var(--ink-blue-2);
+        border: 2px solid var(--ink-blue);
+        border-radius: var(--r-4);
+        animation: fadeIn 0.6s ease-out 0.2s both;
     }
 
     .digit.pulse svg {
         width: 48px;
         height: 48px;
-        color: #a78bfa;
-    }
-
-    @keyframes pulse-border {
-        0%, 100% {
-            border-color: rgba(139, 92, 246, 0.3);
-            box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.2);
-        }
-        50% {
-            border-color: rgba(139, 92, 246, 0.6);
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
-        }
-    }
-
-    @keyframes fade-in {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+        color: var(--ink-blue);
     }
 
     .error-title {
-        font-size: 2.25rem;
-        font-weight: 800;
-        color: white;
-        margin: 0 0 12px;
-        letter-spacing: -0.02em;
-        animation: fade-in 0.6s ease-out 0.3s both;
+        font-family: var(--font-serif);
+        font-weight: 400;
+        color: var(--ink);
+        margin: 0 0 var(--s-3);
+        animation: fadeIn 0.6s ease-out 0.3s both;
     }
 
     .error-description {
         font-size: 1.1rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         line-height: 1.7;
-        margin: 0 0 32px;
-        animation: fade-in 0.6s ease-out 0.4s both;
+        margin: 0 0 var(--s-6);
+        animation: fadeIn 0.6s ease-out 0.4s both;
     }
 
     /* Actions */
     .error-actions {
         display: flex;
-        gap: 12px;
+        gap: var(--s-3);
         justify-content: center;
-        margin-bottom: 40px;
-        animation: fade-in 0.6s ease-out 0.5s both;
+        margin-bottom: var(--s-7);
+        animation: fadeIn 0.6s ease-out 0.5s both;
     }
 
     .btn-primary,
     .btn-secondary {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        padding: 14px 24px;
-        border-radius: 14px;
-        font-weight: 600;
-        font-size: 0.95rem;
+        gap: var(--s-2);
+        padding: 12px 20px;
+        border-radius: var(--r-2);
+        font-family: var(--font-sans);
+        font-weight: 500;
+        font-size: 14px;
         text-decoration: none;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all var(--t-fast) var(--ease);
     }
 
     .btn-primary {
-        background: linear-gradient(135deg, #a855f7, #7c3aed);
-        color: white;
-        box-shadow: 0 10px 30px -10px rgba(168, 85, 247, 0.5);
+        background: var(--ink);
+        color: var(--paper);
     }
 
     .btn-primary:hover {
         transform: translateY(-2px);
-        box-shadow: 0 15px 40px -10px rgba(168, 85, 247, 0.6);
+        box-shadow: var(--shadow-2);
     }
 
     .btn-secondary {
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        color: white;
+        background: transparent;
+        border: 1px solid var(--ink);
+        color: var(--ink);
     }
 
     .btn-secondary:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: rgba(255, 255, 255, 0.2);
+        background: var(--ink);
+        color: var(--paper);
         transform: translateY(-2px);
     }
 
@@ -298,12 +216,12 @@ import Layout from "../layouts/Layout.astro";
 
     /* Search Card */
     .search-card {
-        background: linear-gradient(145deg, rgba(30, 30, 50, 0.8), rgba(20, 20, 40, 0.6));
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 20px;
-        padding: 24px;
-        margin-bottom: 32px;
-        animation: fade-in 0.6s ease-out 0.6s both;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
+        padding: var(--s-5);
+        margin-bottom: var(--s-6);
+        animation: fadeIn 0.6s ease-out 0.6s both;
     }
 
     .search-header {
@@ -311,138 +229,109 @@ import Layout from "../layouts/Layout.astro";
         align-items: center;
         justify-content: center;
         gap: 10px;
-        margin-bottom: 16px;
-        color: white;
-        font-weight: 600;
+        margin-bottom: var(--s-4);
+        color: var(--ink);
+        font-weight: 500;
     }
 
     .search-header svg {
         width: 18px;
         height: 18px;
-        color: #a78bfa;
+        color: var(--ink-blue);
     }
 
     .search-form {
         display: flex;
-        gap: 8px;
+        gap: var(--s-2);
     }
 
     .search-input {
         flex: 1;
-        padding: 14px 18px;
-        background: rgba(0, 0, 0, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
-        color: white;
+        padding: 12px 16px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-2);
+        color: var(--ink);
+        font-family: var(--font-serif);
         font-size: 0.95rem;
         outline: none;
-        transition: all 0.2s;
+        transition: border-color var(--t-fast) var(--ease);
     }
 
-    .search-input::placeholder {
-        color: var(--text-muted);
-    }
+    .search-input::placeholder { color: var(--ink-3); }
 
     .search-input:focus {
-        border-color: rgba(139, 92, 246, 0.5);
-        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        border-color: var(--ink);
+        box-shadow: 0 0 0 3px color-mix(in oklch, var(--ink-blue) 12%, transparent);
     }
 
     .search-btn {
-        padding: 14px 18px;
-        background: linear-gradient(135deg, #a855f7, #7c3aed);
+        padding: 12px 16px;
+        background: var(--ink);
         border: none;
-        border-radius: 12px;
-        color: white;
+        border-radius: var(--r-2);
+        color: var(--paper);
         cursor: pointer;
-        transition: all 0.2s;
+        transition: all var(--t-fast) var(--ease);
     }
 
-    .search-btn:hover {
-        transform: scale(1.05);
-    }
-
-    .search-btn svg {
-        width: 18px;
-        height: 18px;
-    }
+    .search-btn:hover { transform: scale(1.05); }
+    .search-btn svg { width: 18px; height: 18px; }
 
     /* Popular Links */
-    .popular-links {
-        animation: fade-in 0.6s ease-out 0.7s both;
-    }
+    .popular-links { animation: fadeIn 0.6s ease-out 0.7s both; }
 
     .links-label {
         display: block;
-        font-size: 0.8rem;
-        color: var(--text-muted);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--ink-3);
         text-transform: uppercase;
-        letter-spacing: 0.1em;
-        margin-bottom: 16px;
+        letter-spacing: 0.12em;
+        margin-bottom: var(--s-4);
     }
 
     .links-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
+        gap: var(--s-3);
     }
 
     .quick-link {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 8px;
-        padding: 16px 12px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 14px;
-        color: var(--text-secondary);
-        font-size: 0.85rem;
+        gap: var(--s-2);
+        padding: var(--s-4) var(--s-3);
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
+        color: var(--ink-2);
+        font-size: 13px;
         font-weight: 500;
         text-decoration: none;
-        transition: all 0.2s;
+        transition: all var(--t-fast) var(--ease);
     }
 
     .quick-link:hover {
-        background: rgba(139, 92, 246, 0.1);
-        border-color: rgba(139, 92, 246, 0.2);
-        color: white;
+        border-color: var(--rule-strong);
+        color: var(--ink);
         transform: translateY(-2px);
+        box-shadow: var(--shadow-2);
     }
 
     .link-icon {
         font-size: 1.4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
-    @media (max-width: 640px) {
-        .digit {
-            font-size: 4rem;
-        }
-
-        .digit.pulse {
-            width: 70px;
-            height: 70px;
-        }
-
-        .digit.pulse svg {
-            width: 32px;
-            height: 32px;
-        }
-
-        .error-title {
-            font-size: 1.75rem;
-        }
-
-        .error-description {
-            font-size: 1rem;
-        }
-
-        .error-actions {
-            flex-direction: column;
-        }
-
-        .links-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
+    @media (max-width: 768px) {
+        .digit { font-size: 4rem; }
+        .digit.pulse { width: 70px; height: 70px; }
+        .digit.pulse svg { width: 32px; height: 32px; }
+        .error-actions { flex-direction: column; }
+        .links-grid { grid-template-columns: repeat(2, 1fr); }
     }
 </style>

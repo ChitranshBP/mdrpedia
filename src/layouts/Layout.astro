@@ -1,28 +1,58 @@
 ---
 /**
- * MDRPedia — Base Layout
- * Wraps all pages with global styles, meta, and navigation
+ * MDRPedia 2.0 — Base Layout
+ * Editorial / scholarly design. Paper-light primary.
  */
 import "../styles/global.css";
 import GlobalSearchModal from "../components/GlobalSearchModal";
+import NewsletterSignup from "../components/NewsletterSignup.astro";
 
 interface Props {
 	title: string;
 	description?: string;
 	ogImage?: string;
 	tier?: string;
+	robots?: string;
 }
 
 const {
 	title,
-	description = "MDRPedia — The Global Single-Source of Truth for Doctors & Surgeons",
+	description = "MDRPedia — The Physicians' Register. An independently-verified encyclopedia of physicians worldwide. Also known as MDpedia and DRpedia.",
 	ogImage,
 	tier,
+	robots,
 } = Astro.props;
 const canonicalURL = new URL(
 	Astro.url.pathname,
 	Astro.site ?? "https://mdrpedia.com",
 );
+
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+	{ key: "home", label: "Home", href: "/" },
+	{ key: "doctors", label: "Doctors", href: "/doctors" },
+	{ key: "specialties", label: "Specialties", href: "/specialty" },
+	{ key: "institutions", label: "Institutions", href: "/institutions" },
+	{ key: "rankings", label: "Rankings", href: "/rankings" },
+	{ key: "ethics", label: "Ethical Doctors", href: "/ethical-doctors" },
+	{ key: "news", label: "News", href: "/news" },
+	{ key: "about", label: "About", href: "/about" },
+];
+
+function getActiveKey(path: string): string {
+	if (path === "/") return "home";
+	if (path.startsWith("/doctors")) return "doctors";
+	if (path.startsWith("/specialty")) return "specialties";
+	if (path.startsWith("/institutions")) return "institutions";
+	if (path.startsWith("/rankings")) return "rankings";
+	if (path.startsWith("/ethical")) return "ethics";
+	if (path.startsWith("/news")) return "news";
+	if (path.startsWith("/about")) return "about";
+	return "";
+}
+
+const activeKey = getActiveKey(currentPath);
 ---
 
 <!doctype html>
@@ -31,391 +61,220 @@ const canonicalURL = new URL(
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content={description} />
-		<meta name="robots" content="index, follow" />
+		<meta name="robots" content={robots || "index, follow"} />
 
-		<!-- Performance: Preconnect to critical third-party origins -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
 		<link rel="preconnect" href="https://logo.clearbit.com" />
-		<link rel="preconnect" href="https://orcid.org" />
-		<link rel="preconnect" href="https://doi.org" />
 		<link rel="dns-prefetch" href="https://pubmed.ncbi.nlm.nih.gov" />
-		<link rel="dns-prefetch" href="https://fonts.googleapis.com" />
 
-		<!-- Prefetch critical pages for instant navigation -->
+		<!-- Fonts: preloaded for better LCP (replaces CSS @import) -->
+		<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&family=Inter+Tight:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&family=Inter+Tight:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" media="print" onload="this.media='all'" />
+		<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&family=Inter+Tight:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" /></noscript>
+
 		<link rel="prefetch" href="/doctors" />
 		<link rel="prefetch" href="/rankings" />
-		<link rel="prefetch" href="/clinical-trials" />
 
 		<!-- Open Graph -->
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonicalURL.href} />
-		{ogImage && <meta property="og:image" content={ogImage} />}
+		<meta property="og:site_name" content="MDRPedia" />
+		<meta property="og:image" content={ogImage || `${canonicalURL.origin}/og-default.png`} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:type" content="image/png" />
 
 		<!-- Twitter Card -->
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
-		{ogImage && <meta name="twitter:image" content={ogImage} />}
+		<meta name="twitter:image" content={ogImage || `${canonicalURL.origin}/og-default.png`} />
 		<meta name="twitter:site" content="@mdrpedia" />
 
 		<link rel="canonical" href={canonicalURL.href} />
+		<!-- hreflang: x-default for future i18n; signals this is the primary language version -->
+		<link rel="alternate" hreflang="x-default" href={canonicalURL.href} />
+		<link rel="alternate" hreflang="en" href={canonicalURL.href} />
+		<link rel="alternate" type="application/rss+xml" title="MDRPedia News Feed" href="/feed.xml" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-		<!-- PWA Support -->
+		<!-- Organization Schema with alternate names -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "Organization",
+			"name": "MDRPedia",
+			"alternateName": ["MDpedia", "DRpedia", "MD Pedia", "DR Pedia", "MDR Pedia"],
+			"url": "https://mdrpedia.com",
+			"sameAs": [
+				"https://mdpedia.com",
+				"https://drpedia.com",
+				"https://twitter.com/mdrpedia"
+			],
+			"description": "The world's first independently-verified encyclopedia of physicians, ranking medical professionals by human impact. Known as MDpedia in the West and DRpedia in the East.",
+			"foundingDate": "2024",
+			"logo": {
+				"@type": "ImageObject",
+				"url": "https://mdrpedia.com/favicon.svg"
+			}
+		})} />
+
 		<link rel="manifest" href="/manifest.json" />
-		<meta name="theme-color" content="#8b5cf6" />
+		<meta name="theme-color" content={tier === "TITAN" ? "#FCFBF7" : "#f5f3ee"} />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="default" />
 		<meta name="apple-mobile-web-app-title" content="MDRPedia" />
 		<link rel="apple-touch-icon" href="/icons/icon-192.png" />
 
 		<title>{title}</title>
 	</head>
 	<body class={tier === "TITAN" ? "titan-theme" : ""}>
-		<!-- Navigation -->
-		<header class="site-header">
-			<div class="container">
-				<nav class="site-nav">
-					<a href="/" class="site-logo">
-						<span class="site-logo__icon"
-							><svg
-								width="20"
-								height="20"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								><path
-									d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"
-								></path></svg
-							></span
-						>
-						<span class="site-logo__text"
-							>MDR<strong>Pedia</strong></span
-						>
-					</a>
-					<div class="site-nav__links">
-						<a href="/doctors" class="nav-link">Browse</a>
-						<a href="/rankings" class="nav-link">Rankings</a>
-						<a href="/rare-diseases" class="nav-link">Rare Diseases</a>
-						<a href="/hospitals" class="nav-link">Hospitals</a>
-						<a href="/clinical-trials" class="nav-link">Clinical Trials</a>
-						<a href="/prizes" class="nav-link">Awards</a>
-						<a href="/news" class="nav-link">News</a>
-						<button id="search-trigger" class="nav-search-btn" title="Search (⌘K)">
-							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<circle cx="11" cy="11" r="8"></circle>
-								<path d="m21 21-4.3-4.3"></path>
-							</svg>
-							<span class="nav-search-text">Search</span>
-							<kbd class="nav-search-kbd">⌘K</kbd>
-						</button>
-						<a href="/doctor/claim" class="nav-link nav-link--cta"
-							>Claim Profile</a
-						>
-					</div>
-				</nav>
-			</div>
-		</header>
+		<a href="#main-content" class="skip-link">Skip to main content</a>
 
-		<main>
+		<!-- Regional Welcome Banner -->
+		<div id="regional-banner" class="regional-banner" hidden>
+			<div class="container regional-banner__inner">
+				<span id="regional-banner-text"></span>
+				<a id="regional-banner-link" href="/about/mdpedia">Learn more</a>
+				<button id="regional-banner-close" class="regional-banner__close" type="button" aria-label="Dismiss banner">
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+				</button>
+			</div>
+		</div>
+
+		<!-- Navigation -->
+		<nav class="chrome-nav" aria-label="Primary navigation">
+			<div class="container chrome-nav__inner">
+				<a href="/" class="mdr-logo" aria-label="MDRPedia home">
+					<svg class="mdr-logo__mark" width="32" height="32" viewBox="0 0 48 48" aria-hidden="true">
+						<circle class="ring" cx="24" cy="24" r="22.5" stroke="currentColor" stroke-width="1.2" fill="none" />
+						<circle class="ring" cx="24" cy="24" r="19" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="1 3" />
+						<path d="M10 30 Q8 22 12 14" stroke="currentColor" stroke-width="1" fill="none" />
+						<path d="M10.5 28 Q8.5 28 7.5 26.5" stroke="currentColor" stroke-width="1" fill="none" />
+						<path d="M10 25 Q8 25 7.2 23.5" stroke="currentColor" stroke-width="1" fill="none" />
+						<path d="M10 22 Q8 22 7.5 20.5" stroke="currentColor" stroke-width="1" fill="none" />
+						<path d="M10.5 19 Q9 18.5 9 17" stroke="currentColor" stroke-width="1" fill="none" />
+						<path d="M38 30 Q40 22 36 14" stroke="currentColor" stroke-width="1" fill="none" />
+						<path d="M37.5 28 Q39.5 28 40.5 26.5" stroke="currentColor" stroke-width="1" fill="none" />
+						<path d="M38 25 Q40 25 40.8 23.5" stroke="currentColor" stroke-width="1" fill="none" />
+						<path d="M38 22 Q40 22 40.5 20.5" stroke="currentColor" stroke-width="1" fill="none" />
+						<path d="M37.5 19 Q39 18.5 39 17" stroke="currentColor" stroke-width="1" fill="none" />
+						<text x="24" y="30" text-anchor="middle" fill="currentColor" font-family="'Source Serif 4', serif" font-size="20" font-weight="500">M</text>
+					</svg>
+					<span>
+						<span class="mdr-logo__text">MDR<em>Pedia</em></span>
+						<span class="mdr-logo__est">The Physicians' Register</span>
+					</span>
+				</a>
+				<div class="chrome-nav__links">
+					{navLinks.map(link => (
+						<a href={link.href} class={activeKey === link.key ? "active" : ""}>{link.label}</a>
+					))}
+				</div>
+				<div class="chrome-nav__actions">
+					<button id="search-trigger" class="chrome-nav__search" type="button" aria-label="Search the register">
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+						<span>Search the register...</span>
+						<kbd>&#8984;K</kbd>
+					</button>
+					<a href="/doctor/claim" class="chrome-nav__cta">Nominate</a>
+					<button id="mobile-menu-btn" class="chrome-nav__burger" type="button" aria-label="Open navigation menu" aria-expanded="false">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+					</button>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Mobile Navigation Drawer -->
+		<div id="mobile-nav-drawer" class="mobile-nav-drawer" aria-hidden="true">
+			<div class="mobile-nav-drawer__backdrop"></div>
+			<nav class="mobile-nav-drawer__panel" aria-label="Mobile navigation">
+				<div class="mobile-nav-drawer__header">
+					<span class="mdr-logo__text">MDR<em>Pedia</em></span>
+					<button id="mobile-menu-close" class="mobile-nav-drawer__close" type="button" aria-label="Close navigation menu">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+					</button>
+				</div>
+				<div class="mobile-nav-drawer__links">
+					{navLinks.map(link => (
+						<a href={link.href} class={activeKey === link.key ? "active" : ""}>{link.label}</a>
+					))}
+				</div>
+				<div class="mobile-nav-drawer__footer">
+					<a href="/doctor/claim" class="chrome-nav__cta mobile-nav-drawer__cta">Nominate a Physician</a>
+				</div>
+			</nav>
+		</div>
+
+		<main id="main-content">
 			<slot />
 		</main>
 
 		<!-- Footer -->
-		<footer class="site-footer">
+		<footer class="chrome-foot">
 			<div class="container">
-				<!-- SEO Category Links -->
-				<div class="footer-seo">
-					<h3 class="footer-seo__title">Find Top Specialists Worldwide</h3>
-
-					<!-- Collapsible Specialty Sections -->
-					<div class="seo-categories">
-						<!-- Cardiology -->
-						<details class="seo-category">
-							<summary class="seo-category__header">
-								<span class="seo-category__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
-								<span class="seo-category__name">Best Cardiologists</span>
-								<svg class="seo-category__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-							</summary>
-							<div class="seo-category__links">
-								<a href="/doctors?specialty=Cardiology&country=United States">Best Cardiologists in USA</a>
-								<a href="/doctors?specialty=Cardiology&country=United Kingdom">Best Cardiologists in UK</a>
-								<a href="/doctors?specialty=Cardiology&country=Germany">Best Cardiologists in Germany</a>
-								<a href="/doctors?specialty=Cardiology&country=India">Best Cardiologists in India</a>
-								<a href="/doctors?specialty=Cardiology&country=Japan">Best Cardiologists in Japan</a>
-								<a href="/doctors?specialty=Cardiology&country=Australia">Best Cardiologists in Australia</a>
-								<a href="/doctors?specialty=Cardiology&country=Canada">Best Cardiologists in Canada</a>
-								<a href="/doctors?specialty=Cardiology&country=France">Best Cardiologists in France</a>
-							</div>
-						</details>
-
-						<!-- Neurosurgery -->
-						<details class="seo-category">
-							<summary class="seo-category__header">
-								<span class="seo-category__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M12 2a8 8 0 0 1 8 8c0 2.5-1.5 5-3.5 6.5L12 22l-4.5-5.5C5.5 15 4 12.5 4 10a8 8 0 0 1 8-8z"/><circle cx="12" cy="10" r="3"/></svg></span>
-								<span class="seo-category__name">Best Neurosurgeons</span>
-								<svg class="seo-category__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-							</summary>
-							<div class="seo-category__links">
-								<a href="/doctors?specialty=Neurosurgery&country=United States">Best Neurosurgeons in USA</a>
-								<a href="/doctors?specialty=Neurosurgery&country=United Kingdom">Best Neurosurgeons in UK</a>
-								<a href="/doctors?specialty=Neurosurgery&country=Germany">Best Neurosurgeons in Germany</a>
-								<a href="/doctors?specialty=Neurosurgery&country=India">Best Neurosurgeons in India</a>
-								<a href="/doctors?specialty=Neurosurgery&country=Japan">Best Neurosurgeons in Japan</a>
-								<a href="/doctors?specialty=Neurosurgery&country=Switzerland">Best Neurosurgeons in Switzerland</a>
-								<a href="/doctors?specialty=Neurosurgery&country=Canada">Best Neurosurgeons in Canada</a>
-								<a href="/doctors?specialty=Neurosurgery&country=South Korea">Best Neurosurgeons in South Korea</a>
-							</div>
-						</details>
-
-						<!-- Oncology -->
-						<details class="seo-category">
-							<summary class="seo-category__header">
-								<span class="seo-category__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></span>
-								<span class="seo-category__name">Best Oncologists</span>
-								<svg class="seo-category__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-							</summary>
-							<div class="seo-category__links">
-								<a href="/doctors?specialty=Oncology&country=United States">Best Oncologists in USA</a>
-								<a href="/doctors?specialty=Oncology&country=United Kingdom">Best Oncologists in UK</a>
-								<a href="/doctors?specialty=Oncology&country=Germany">Best Oncologists in Germany</a>
-								<a href="/doctors?specialty=Oncology&country=India">Best Oncologists in India</a>
-								<a href="/doctors?specialty=Oncology&country=Israel">Best Oncologists in Israel</a>
-								<a href="/doctors?specialty=Oncology&country=France">Best Oncologists in France</a>
-								<a href="/doctors?specialty=Oncology&country=Japan">Best Oncologists in Japan</a>
-								<a href="/doctors?specialty=Oncology&country=Australia">Best Oncologists in Australia</a>
-							</div>
-						</details>
-
-						<!-- Orthopedics -->
-						<details class="seo-category">
-							<summary class="seo-category__header">
-								<span class="seo-category__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="M12 14v4M10 16h4"/></svg></span>
-								<span class="seo-category__name">Best Orthopedic Surgeons</span>
-								<svg class="seo-category__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-							</summary>
-							<div class="seo-category__links">
-								<a href="/doctors?specialty=Orthopedics&country=United States">Best Orthopedic Surgeons in USA</a>
-								<a href="/doctors?specialty=Orthopedics&country=United Kingdom">Best Orthopedic Surgeons in UK</a>
-								<a href="/doctors?specialty=Orthopedics&country=Germany">Best Orthopedic Surgeons in Germany</a>
-								<a href="/doctors?specialty=Orthopedics&country=India">Best Orthopedic Surgeons in India</a>
-								<a href="/doctors?specialty=Orthopedics&country=Thailand">Best Orthopedic Surgeons in Thailand</a>
-								<a href="/doctors?specialty=Orthopedics&country=Spain">Best Orthopedic Surgeons in Spain</a>
-								<a href="/doctors?specialty=Orthopedics&country=Brazil">Best Orthopedic Surgeons in Brazil</a>
-								<a href="/doctors?specialty=Orthopedics&country=South Korea">Best Orthopedic Surgeons in South Korea</a>
-							</div>
-						</details>
-
-						<!-- Gastroenterology -->
-						<details class="seo-category">
-							<summary class="seo-category__header">
-								<span class="seo-category__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M12 6v6l4 2"/></svg></span>
-								<span class="seo-category__name">Best Gastroenterologists</span>
-								<svg class="seo-category__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-							</summary>
-							<div class="seo-category__links">
-								<a href="/doctors?specialty=Gastroenterology&country=United States">Best Gastroenterologists in USA</a>
-								<a href="/doctors?specialty=Gastroenterology&country=United Kingdom">Best Gastroenterologists in UK</a>
-								<a href="/doctors?specialty=Gastroenterology&country=Germany">Best Gastroenterologists in Germany</a>
-								<a href="/doctors?specialty=Gastroenterology&country=India">Best Gastroenterologists in India</a>
-								<a href="/doctors?specialty=Gastroenterology&country=Japan">Best Gastroenterologists in Japan</a>
-								<a href="/doctors?specialty=Gastroenterology&country=France">Best Gastroenterologists in France</a>
-								<a href="/doctors?specialty=Gastroenterology&country=Australia">Best Gastroenterologists in Australia</a>
-								<a href="/doctors?specialty=Gastroenterology&country=Canada">Best Gastroenterologists in Canada</a>
-							</div>
-						</details>
-
-						<!-- Pediatrics -->
-						<details class="seo-category">
-							<summary class="seo-category__header">
-								<span class="seo-category__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="12" cy="8" r="5"/><path d="M3 21v-2a7 7 0 0 1 7-7h4a7 7 0 0 1 7 7v2"/></svg></span>
-								<span class="seo-category__name">Best Pediatricians</span>
-								<svg class="seo-category__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-							</summary>
-							<div class="seo-category__links">
-								<a href="/doctors?specialty=Pediatrics&country=United States">Best Pediatricians in USA</a>
-								<a href="/doctors?specialty=Pediatrics&country=United Kingdom">Best Pediatricians in UK</a>
-								<a href="/doctors?specialty=Pediatrics&country=Germany">Best Pediatricians in Germany</a>
-								<a href="/doctors?specialty=Pediatrics&country=India">Best Pediatricians in India</a>
-								<a href="/doctors?specialty=Pediatrics&country=Canada">Best Pediatricians in Canada</a>
-								<a href="/doctors?specialty=Pediatrics&country=Australia">Best Pediatricians in Australia</a>
-								<a href="/doctors?specialty=Pediatrics&country=France">Best Pediatricians in France</a>
-								<a href="/doctors?specialty=Pediatrics&country=Japan">Best Pediatricians in Japan</a>
-							</div>
-						</details>
-
-						<!-- Dermatology -->
-						<details class="seo-category">
-							<summary class="seo-category__header">
-								<span class="seo-category__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span>
-								<span class="seo-category__name">Best Dermatologists</span>
-								<svg class="seo-category__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-							</summary>
-							<div class="seo-category__links">
-								<a href="/doctors?specialty=Dermatology&country=United States">Best Dermatologists in USA</a>
-								<a href="/doctors?specialty=Dermatology&country=United Kingdom">Best Dermatologists in UK</a>
-								<a href="/doctors?specialty=Dermatology&country=South Korea">Best Dermatologists in South Korea</a>
-								<a href="/doctors?specialty=Dermatology&country=Germany">Best Dermatologists in Germany</a>
-								<a href="/doctors?specialty=Dermatology&country=India">Best Dermatologists in India</a>
-								<a href="/doctors?specialty=Dermatology&country=France">Best Dermatologists in France</a>
-								<a href="/doctors?specialty=Dermatology&country=Japan">Best Dermatologists in Japan</a>
-								<a href="/doctors?specialty=Dermatology&country=Brazil">Best Dermatologists in Brazil</a>
-							</div>
-						</details>
-
-						<!-- Ophthalmology -->
-						<details class="seo-category">
-							<summary class="seo-category__header">
-								<span class="seo-category__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
-								<span class="seo-category__name">Best Ophthalmologists</span>
-								<svg class="seo-category__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-							</summary>
-							<div class="seo-category__links">
-								<a href="/doctors?specialty=Ophthalmology&country=United States">Best Ophthalmologists in USA</a>
-								<a href="/doctors?specialty=Ophthalmology&country=United Kingdom">Best Ophthalmologists in UK</a>
-								<a href="/doctors?specialty=Ophthalmology&country=Germany">Best Ophthalmologists in Germany</a>
-								<a href="/doctors?specialty=Ophthalmology&country=India">Best Ophthalmologists in India</a>
-								<a href="/doctors?specialty=Ophthalmology&country=Switzerland">Best Ophthalmologists in Switzerland</a>
-								<a href="/doctors?specialty=Ophthalmology&country=Singapore">Best Ophthalmologists in Singapore</a>
-								<a href="/doctors?specialty=Ophthalmology&country=Japan">Best Ophthalmologists in Japan</a>
-								<a href="/doctors?specialty=Ophthalmology&country=Australia">Best Ophthalmologists in Australia</a>
-							</div>
-						</details>
-
-						<!-- Psychiatry -->
-						<details class="seo-category">
-							<summary class="seo-category__header">
-								<span class="seo-category__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
-								<span class="seo-category__name">Best Psychiatrists</span>
-								<svg class="seo-category__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-							</summary>
-							<div class="seo-category__links">
-								<a href="/doctors?specialty=Psychiatry&country=United States">Best Psychiatrists in USA</a>
-								<a href="/doctors?specialty=Psychiatry&country=United Kingdom">Best Psychiatrists in UK</a>
-								<a href="/doctors?specialty=Psychiatry&country=Germany">Best Psychiatrists in Germany</a>
-								<a href="/doctors?specialty=Psychiatry&country=Canada">Best Psychiatrists in Canada</a>
-								<a href="/doctors?specialty=Psychiatry&country=Australia">Best Psychiatrists in Australia</a>
-								<a href="/doctors?specialty=Psychiatry&country=Netherlands">Best Psychiatrists in Netherlands</a>
-								<a href="/doctors?specialty=Psychiatry&country=Sweden">Best Psychiatrists in Sweden</a>
-								<a href="/doctors?specialty=Psychiatry&country=Switzerland">Best Psychiatrists in Switzerland</a>
-							</div>
-						</details>
-
-						<!-- Radiology -->
-						<details class="seo-category">
-							<summary class="seo-category__header">
-								<span class="seo-category__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="4"/><path d="M3 12h4M17 12h4M12 3v4M12 17v4"/></svg></span>
-								<span class="seo-category__name">Best Radiologists</span>
-								<svg class="seo-category__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-							</summary>
-							<div class="seo-category__links">
-								<a href="/doctors?specialty=Radiology&country=United States">Best Radiologists in USA</a>
-								<a href="/doctors?specialty=Radiology&country=United Kingdom">Best Radiologists in UK</a>
-								<a href="/doctors?specialty=Radiology&country=Germany">Best Radiologists in Germany</a>
-								<a href="/doctors?specialty=Radiology&country=Japan">Best Radiologists in Japan</a>
-								<a href="/doctors?specialty=Radiology&country=South Korea">Best Radiologists in South Korea</a>
-								<a href="/doctors?specialty=Radiology&country=Canada">Best Radiologists in Canada</a>
-								<a href="/doctors?specialty=Radiology&country=France">Best Radiologists in France</a>
-								<a href="/doctors?specialty=Radiology&country=Australia">Best Radiologists in Australia</a>
-							</div>
-						</details>
-
-						<!-- Urology -->
-						<details class="seo-category">
-							<summary class="seo-category__header">
-								<span class="seo-category__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg></span>
-								<span class="seo-category__name">Best Urologists</span>
-								<svg class="seo-category__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-							</summary>
-							<div class="seo-category__links">
-								<a href="/doctors?specialty=Urology&country=United States">Best Urologists in USA</a>
-								<a href="/doctors?specialty=Urology&country=United Kingdom">Best Urologists in UK</a>
-								<a href="/doctors?specialty=Urology&country=Germany">Best Urologists in Germany</a>
-								<a href="/doctors?specialty=Urology&country=India">Best Urologists in India</a>
-								<a href="/doctors?specialty=Urology&country=France">Best Urologists in France</a>
-								<a href="/doctors?specialty=Urology&country=Turkey">Best Urologists in Turkey</a>
-								<a href="/doctors?specialty=Urology&country=Japan">Best Urologists in Japan</a>
-								<a href="/doctors?specialty=Urology&country=Spain">Best Urologists in Spain</a>
-							</div>
-						</details>
-					</div>
-				</div>
-
-				<!-- Main Footer Content -->
-				<div class="footer-content">
-					<div class="footer-brand">
-						<a href="/" class="site-logo">
-							<span class="site-logo__icon"
-								><svg
-									width="20"
-									height="20"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									stroke-width="2"
-									><path
-										d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"
-									></path></svg
-								></span
-							>
-							<span class="site-logo__text"
-								>MDR<strong>Pedia</strong></span
-							>
+				<div class="chrome-foot__grid">
+					<div class="chrome-foot__col">
+						<a href="/" class="mdr-logo chrome-foot__logo" aria-label="MDRPedia home">
+							<svg class="mdr-logo__mark" width="40" height="40" viewBox="0 0 48 48" aria-hidden="true">
+								<circle cx="24" cy="24" r="22.5" stroke="currentColor" stroke-width="1.2" fill="none" />
+								<circle cx="24" cy="24" r="19" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="1 3" />
+								<path d="M10 30 Q8 22 12 14" stroke="currentColor" stroke-width="1" fill="none" />
+								<path d="M38 30 Q40 22 36 14" stroke="currentColor" stroke-width="1" fill="none" />
+								<text x="24" y="30" text-anchor="middle" fill="currentColor" font-family="'Source Serif 4', serif" font-size="20" font-weight="500">M</text>
+							</svg>
+							<span>
+								<span class="mdr-logo__text">MDR<em>Pedia</em></span>
+								<span class="mdr-logo__est">The Physicians' Register &middot; Est. 2024</span>
+							</span>
 						</a>
-						<p class="footer-tagline">
-							The Gold Standard for Medical Professional
-							Verification. Quantifying the Unquantifiable.
+						<p class="chrome-foot__tagline">
+							An open, independently-verified register of the physicians who shape medicine — and those who practice it with integrity.
 						</p>
 					</div>
-
-					<div class="footer-links">
-						<h4>Platform</h4>
-						<a href="/about">About Us</a>
+					<div class="chrome-foot__col">
+						<h5>Register</h5>
+						<a href="/doctors">Browse Profiles</a>
 						<a href="/rankings">Rankings</a>
-						<a href="/doctors">Browse Doctors</a>
-						<a href="/hospitals">Hospitals</a>
+						<a href="/specialty">Specialties</a>
+						<a href="/institutions">Institutions</a>
 						<a href="/rare-diseases">Rare Diseases</a>
 						<a href="/clinical-trials">Clinical Trials</a>
 					</div>
-
-					<div class="footer-links">
-						<h4>Discover</h4>
-						<a href="/doctors?tier=TITAN">Titan Doctors</a>
-						<a href="/doctors?tier=ELITE">Elite Doctors</a>
-						<a href="/doctors?tier=MASTER">Master Doctors</a>
-						<a href="/nobel-laureates">Nobel Laureates</a>
+					<div class="chrome-foot__col">
+						<h5>Ethics</h5>
+						<a href="/ethical-doctors">Ethical Doctors</a>
+						<a href="/doctor/claim">Nominate</a>
 						<a href="/prizes">Medical Awards</a>
-						<a href="/news">Medical News</a>
+						<a href="/news">News</a>
 					</div>
-
-					<div class="footer-links">
-						<h4>Support</h4>
-						<a href="/doctor/claim">Claim Profile</a>
-						<a href="/suggest-edit">Suggest Edit</a>
-						<a href="/contact">Contact Us</a>
-						<a href="/privacy">Privacy Policy</a>
-						<a href="/terms">Terms of Service</a>
+					<div class="chrome-foot__col">
+						<h5>About</h5>
+						<a href="/about">Methodology</a>
+						<a href="/about">Editorial Board</a>
+						<a href="/about">Data Sources</a>
+						<a href="/contact">Contact</a>
+					</div>
+					<div class="chrome-foot__col">
+						<h5>System</h5>
+						<a href="/about">Open Data</a>
+						<a href="/privacy">Privacy</a>
+						<a href="/terms">Terms</a>
 						<a href="/communities">Communities</a>
 					</div>
-
-					<div class="footer-meta">
-						<p>
-							© {new Date().getFullYear()} MDRPedia. All data is verified
-							through peer-reviewed sources.
-						</p>
-						<p class="footer-trust">
-							Every fact is backed by a DOI-verified citation.
-						</p>
-						<div style="margin-top: 1rem; opacity: 0.5;">
-							<a
-								href="/login"
-								style="color: inherit; text-decoration: none; font-size: 0.75rem;"
-								>Admin Login</a
-							>
-						</div>
-					</div>
+				</div>
+				<div class="chrome-foot__newsletter">
+					<NewsletterSignup source="footer" />
+				</div>
+				<div class="chrome-foot__also-known">
+					Also known as <a href="/about/mdpedia">MDpedia</a> in the West and <a href="/about/drpedia">DRpedia</a> in the East
+				</div>
+				<div class="chrome-foot__bottom">
+					<span class="mono">MDRPEDIA &middot; REG. 2024 &middot; OPEN ENCYCLOPEDIA &middot; CC-BY-SA 4.0</span>
+					<span class="mono">v2.0 &middot; VERIFIED-LEDGER</span>
 				</div>
 			</div>
 		</footer>
@@ -434,10 +293,35 @@ const canonicalURL = new URL(
 			}
 		</script>
 
-		<!-- Search Trigger Script -->
+		<!-- Regional Banner Script -->
+		<script>
+			(function() {
+				if (sessionStorage.getItem('banner-dismissed')) return;
+				const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+				const eastern = ['Asia/', 'Africa/', 'Indian/', 'Pacific/Auckland'].some(p => tz.startsWith(p))
+					|| ['Asia', 'Africa', 'Indian'].some(p => tz.includes(p));
+				const link = eastern ? '/about/drpedia' : '/about/mdpedia';
+				const banner = document.getElementById('regional-banner');
+				const text = document.getElementById('regional-banner-text');
+				const linkEl = document.getElementById('regional-banner-link') as HTMLAnchorElement | null;
+				const closeBtn = document.getElementById('regional-banner-close');
+				if (banner && text && linkEl) {
+					text.textContent = eastern
+						? 'You may know us as DRpedia — same register, same verified profiles.'
+						: 'You may know us as MDpedia — same register, same verified profiles.';
+					linkEl.href = link;
+					banner.hidden = false;
+				}
+				closeBtn?.addEventListener('click', () => {
+					if (banner) banner.hidden = true;
+					sessionStorage.setItem('banner-dismissed', '1');
+				});
+			})();
+		</script>
+
+		<!-- Search Trigger + Mobile Nav Script -->
 		<script>
 			document.getElementById('search-trigger')?.addEventListener('click', () => {
-				// Simulate Cmd+K keypress to open search modal
 				const event = new KeyboardEvent('keydown', {
 					key: 'k',
 					code: 'KeyK',
@@ -447,292 +331,224 @@ const canonicalURL = new URL(
 				});
 				document.dispatchEvent(event);
 			});
+
+			// Mobile navigation drawer
+			const menuBtn = document.getElementById('mobile-menu-btn');
+			const closeBtn = document.getElementById('mobile-menu-close');
+			const drawer = document.getElementById('mobile-nav-drawer');
+			const backdrop = drawer?.querySelector('.mobile-nav-drawer__backdrop');
+
+			function openDrawer() {
+				drawer?.classList.add('open');
+				drawer?.setAttribute('aria-hidden', 'false');
+				menuBtn?.setAttribute('aria-expanded', 'true');
+				document.body.style.overflow = 'hidden';
+			}
+
+			function closeDrawer() {
+				drawer?.classList.remove('open');
+				drawer?.setAttribute('aria-hidden', 'true');
+				menuBtn?.setAttribute('aria-expanded', 'false');
+				document.body.style.overflow = '';
+			}
+
+			menuBtn?.addEventListener('click', openDrawer);
+			closeBtn?.addEventListener('click', closeDrawer);
+			backdrop?.addEventListener('click', closeDrawer);
+
+			document.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape' && drawer?.classList.contains('open')) closeDrawer();
+			});
 		</script>
 	</body>
 </html>
 
-<style is:global>
-	/* Global styles move to frontmatter import */
-</style>
-
 <style>
-	.site-header {
-		position: sticky;
-		top: 0;
-		z-index: 100;
-		background: rgba(10, 10, 18, 0.85);
-		backdrop-filter: blur(16px) saturate(180%);
-		border-bottom: 1px solid var(--border-subtle);
+	/* ── Skip Link ── */
+	.skip-link {
+		position: absolute; top: -100%; left: 16px; z-index: 999;
+		padding: 12px 24px; background: var(--ink); color: var(--paper);
+		font-weight: 600; border-radius: var(--r-3); text-decoration: none;
+		transition: top 0.2s;
 	}
+	.skip-link:focus { top: 12px; }
 
-	.site-nav {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		height: 64px;
+	/* ── Regional Banner ── */
+	.regional-banner {
+		background: var(--ink-blue-2, #eef3ff); border-bottom: 1px solid var(--rule);
+		font-size: 13px; color: var(--ink-2);
 	}
+	.regional-banner__inner {
+		display: flex; align-items: center; justify-content: center;
+		gap: 12px; padding: 8px 16px;
+	}
+	.regional-banner__inner a {
+		color: var(--ink-blue); font-weight: 500; text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+	.regional-banner__close {
+		padding: 4px; background: none; border: none; color: var(--ink-3);
+		cursor: pointer; border-radius: var(--r-1); margin-left: 4px;
+	}
+	.regional-banner__close:hover { color: var(--ink); background: var(--paper-2); }
 
-	.site-logo {
-		display: flex;
-		align-items: center;
-		gap: var(--space-sm);
-		text-decoration: none;
-		color: var(--text-primary);
-		font-size: 1.25rem;
-		font-family: var(--font-serif);
-	}
+	/* ── Logo Mark ── */
+	.mdr-logo { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; }
+	.mdr-logo__mark { display: block; }
+	.mdr-logo__text { font-family: var(--font-serif); font-size: 22px; font-weight: 500; letter-spacing: -0.01em; line-height: 1; }
+	.mdr-logo__text em { font-style: italic; font-weight: 400; color: var(--ink-2); }
+	.mdr-logo__est { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em; color: var(--ink-3); text-transform: uppercase; margin-top: 3px; display: block; }
 
-	.site-logo__icon {
-		font-size: 1.5rem;
+	/* ── Top nav ── */
+	.chrome-nav {
+		position: sticky; top: 0; z-index: 100;
+		background: color-mix(in oklch, var(--paper) 92%, transparent);
+		backdrop-filter: saturate(1.2) blur(8px);
+		-webkit-backdrop-filter: saturate(1.2) blur(8px);
+		border-bottom: 1px solid var(--rule);
 	}
-	.site-logo__text strong {
-		color: var(--accent-purple);
+	.chrome-nav__inner {
+		display: flex; align-items: center; justify-content: space-between;
+		height: 68px;
 	}
-
-	.site-nav__links {
-		display: flex;
-		gap: var(--space-lg);
+	.chrome-nav__links { display: flex; align-items: center; gap: 28px; }
+	.chrome-nav__links a {
+		font-family: var(--font-sans); font-size: 14px; font-weight: 500;
+		color: var(--ink-2); text-decoration: none; letter-spacing: -0.005em;
+		transition: color var(--t-fast) var(--ease);
 	}
-
-	.nav-link {
-		font-size: 0.875rem;
-		font-weight: 500;
-		color: var(--text-secondary);
-		transition: color var(--transition-fast);
+	.chrome-nav__links a:hover { color: var(--ink); }
+	.chrome-nav__links a.active { color: var(--ink); position: relative; }
+	.chrome-nav__links a.active::after {
+		content: ""; position: absolute; left: 0; right: 0; bottom: -22px;
+		height: 2px; background: var(--ink);
 	}
-	.nav-link:hover {
-		color: var(--text-primary);
+	.chrome-nav__cta {
+		display: inline-flex; align-items: center; gap: 6px;
+		padding: 8px 14px; border: 1px solid var(--ink); color: var(--ink);
+		font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+		text-decoration: none; border-radius: var(--r-2);
+		transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
 	}
-	.nav-link--cta {
-		color: var(--accent-purple);
-		font-weight: 600;
-	}
-	.nav-link--cta:hover {
-		color: var(--accent-purple-light, #a78bfa);
-	}
-
-	/* Search Button */
-	.nav-search-btn {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		padding: 6px 12px;
-		background: rgba(255, 255, 255, 0.04);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		border-radius: 8px;
-		color: var(--text-muted);
-		font-size: 0.85rem;
-		cursor: pointer;
-		transition: all 0.15s;
-	}
-
-	.nav-search-btn:hover {
-		background: rgba(255, 255, 255, 0.08);
-		border-color: rgba(255, 255, 255, 0.2);
-		color: var(--text-primary);
-	}
-
-	.nav-search-text {
-		display: none;
-	}
-
-	.nav-search-kbd {
-		display: none;
-		padding: 2px 6px;
-		background: rgba(255, 255, 255, 0.06);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		border-radius: 4px;
-		font-size: 0.7rem;
-		font-family: inherit;
-		color: var(--text-muted);
-	}
-
-	@media (min-width: 768px) {
-		.nav-search-text {
-			display: inline;
-		}
-		.nav-search-kbd {
-			display: inline;
-		}
-	}
-
-	.site-footer {
-		margin-top: var(--space-3xl);
-		padding: var(--space-2xl) 0;
-		border-top: 1px solid var(--border-subtle);
-	}
-
-	.footer-content {
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-end;
-		gap: var(--space-xl);
-		flex-wrap: wrap;
-	}
-
-	.footer-brand {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-xs);
-		font-family: var(--font-serif);
-		font-size: 1.1rem;
-	}
-
-	.footer-tagline {
+	.chrome-nav__cta:hover { background: var(--ink); color: var(--paper); }
+	.chrome-nav__search {
+		display: inline-flex; align-items: center; gap: 10px;
+		padding: 7px 10px 7px 12px;
+		background: var(--paper-2); border: 1px solid var(--rule);
+		border-radius: var(--r-2); color: var(--ink-3);
+		font-size: 13px; min-width: 200px; cursor: pointer;
 		font-family: var(--font-sans);
-		font-size: 0.8rem;
-		color: var(--text-muted);
+	}
+	.chrome-nav__search kbd {
+		font-family: var(--font-mono); font-size: 10px; padding: 2px 5px;
+		background: var(--paper); border: 1px solid var(--rule); border-radius: 3px;
+		color: var(--ink-3);
 	}
 
-	.footer-meta {
-		text-align: right;
-		font-size: 0.8rem;
-		color: var(--text-muted);
+	/* ── Footer ── */
+	.chrome-foot {
+		margin-top: var(--s-10);
+		border-top: 1px solid var(--rule);
+		padding: var(--s-8) 0 var(--s-7);
+		background: var(--paper-2);
 	}
-
-	.footer-trust {
-		color: var(--accent-emerald);
-		font-weight: 500;
-		margin-top: var(--space-xs);
+	.chrome-foot__grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr 1fr; gap: var(--s-6); }
+	.chrome-foot__col h5 {
+		font-family: var(--font-sans); font-size: 11px; font-weight: 600;
+		letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3);
+		margin-bottom: var(--s-3);
 	}
-
-	@media (max-width: 768px) {
-		.footer-content {
-			flex-direction: column;
-			align-items: flex-start;
-			gap: var(--space-lg);
-		}
-		.footer-meta {
-			text-align: left;
-			margin-top: var(--space-md);
-		}
+	.chrome-foot__col a {
+		display: block; font-size: 13px; color: var(--ink-2);
+		text-decoration: none; padding: 4px 0;
 	}
-
-	.footer-links {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-xs);
+	.chrome-foot__col a:hover { color: var(--ink); text-decoration: underline; }
+	.chrome-foot__newsletter {
+		margin-top: var(--s-6);
+		max-width: 480px;
 	}
-
-	.footer-links h4 {
-		font-size: 0.9rem;
-		font-weight: 600;
-		color: var(--text-primary);
-		margin-bottom: var(--space-xs);
-	}
-
-	.footer-links a {
-		font-size: 0.85rem;
-		color: var(--text-secondary);
-		text-decoration: none;
-		transition: color var(--transition-fast);
-	}
-
-	.footer-links a:hover {
-		color: var(--accent-purple);
-	}
-
-	/* SEO Footer Section */
-	.footer-seo {
-		padding-bottom: var(--space-xl);
-		margin-bottom: var(--space-xl);
-		border-bottom: 1px solid var(--border-subtle);
-	}
-
-	.footer-seo__title {
-		font-size: 1rem;
-		font-weight: 600;
-		color: var(--text-primary);
-		margin-bottom: var(--space-lg);
+	.chrome-foot__also-known {
+		margin-top: var(--s-5); padding-top: var(--s-4);
 		text-align: center;
+		font-family: var(--font-sans); font-size: 12px; color: var(--ink-3);
+		font-style: italic;
+	}
+	.chrome-foot__also-known a {
+		color: var(--ink-2); text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+	.chrome-foot__also-known a:hover { color: var(--ink); }
+	.chrome-foot__bottom {
+		margin-top: var(--s-4); padding-top: var(--s-5);
+		border-top: 1px solid var(--rule);
+		display: flex; justify-content: space-between; align-items: center;
+		font-size: 12px; color: var(--ink-3);
 	}
 
-	.seo-categories {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: var(--space-md);
+	/* ── Nav Actions ── */
+	.chrome-nav__actions { display: flex; gap: 12px; align-items: center; }
+	.chrome-nav__burger {
+		display: none; padding: 8px; background: none; border: none;
+		color: var(--ink); cursor: pointer; border-radius: var(--r-2);
 	}
+	.chrome-nav__burger:hover { background: var(--paper-2); }
+
+	/* ── Footer Utilities ── */
+	.chrome-foot__logo { margin-bottom: 16px; }
+	.chrome-foot__tagline { font-size: 13px; margin-top: 16px; max-width: 32ch; color: var(--ink-3); }
+
+	/* ── Mobile Nav Drawer ── */
+	.mobile-nav-drawer { display: none; position: fixed; inset: 0; z-index: 200; }
+	.mobile-nav-drawer.open { display: block; }
+	.mobile-nav-drawer__backdrop {
+		position: absolute; inset: 0;
+		background: color-mix(in oklch, var(--ink) 50%, transparent);
+		animation: fadeIn 0.2s ease;
+	}
+	.mobile-nav-drawer__panel {
+		position: absolute; top: 0; right: 0; bottom: 0;
+		width: min(300px, 80vw); background: var(--paper);
+		display: flex; flex-direction: column;
+		box-shadow: var(--shadow-3);
+		animation: slideInRight 0.25s var(--ease-out);
+	}
+	.mobile-nav-drawer__header {
+		display: flex; justify-content: space-between; align-items: center;
+		padding: 20px; border-bottom: 1px solid var(--rule);
+	}
+	.mobile-nav-drawer__close {
+		padding: 8px; background: none; border: none;
+		color: var(--ink-2); cursor: pointer; border-radius: var(--r-2);
+	}
+	.mobile-nav-drawer__close:hover { background: var(--paper-2); }
+	.mobile-nav-drawer__links {
+		flex: 1; padding: 16px 20px; display: flex; flex-direction: column; gap: 4px;
+	}
+	.mobile-nav-drawer__links a {
+		display: block; padding: 12px 16px; font-size: 15px; font-weight: 500;
+		color: var(--ink-2); text-decoration: none; border-radius: var(--r-3);
+		transition: all var(--t-fast) var(--ease);
+	}
+	.mobile-nav-drawer__links a:hover { background: var(--paper-2); color: var(--ink); }
+	.mobile-nav-drawer__links a.active { background: var(--ink-blue-2); color: var(--ink-blue); }
+	.mobile-nav-drawer__footer { padding: 20px; border-top: 1px solid var(--rule); }
+	.mobile-nav-drawer__cta { width: 100%; justify-content: center; }
+
+	@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+	@keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
 
 	@media (max-width: 900px) {
-		.seo-categories {
-			grid-template-columns: repeat(2, 1fr);
-		}
+		.chrome-nav__links { display: none; }
+		.chrome-nav__search span { display: none; }
+		.chrome-nav__search { min-width: auto; }
+		.chrome-nav__burger { display: flex; }
+		.chrome-foot__grid { grid-template-columns: 1fr 1fr; gap: var(--s-5); }
+		.chrome-foot__bottom { flex-direction: column; gap: 8px; text-align: center; }
+		.mdr-logo__est { display: none; }
 	}
 
-	@media (max-width: 600px) {
-		.seo-categories {
-			grid-template-columns: 1fr;
-		}
-	}
-
-	.seo-category {
-		background: rgba(255, 255, 255, 0.02);
-		border: 1px solid rgba(255, 255, 255, 0.05);
-		border-radius: 12px;
-		overflow: hidden;
-	}
-
-	.seo-category[open] {
-		background: rgba(255, 255, 255, 0.03);
-		border-color: rgba(139, 92, 246, 0.2);
-	}
-
-	.seo-category__header {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		padding: 14px 16px;
-		cursor: pointer;
-		transition: background 0.15s;
-		list-style: none;
-	}
-
-	.seo-category__header::-webkit-details-marker {
-		display: none;
-	}
-
-	.seo-category__header:hover {
-		background: rgba(255, 255, 255, 0.03);
-	}
-
-	.seo-category__icon {
-		font-size: 1.1rem;
-	}
-
-	.seo-category__name {
-		flex: 1;
-		font-size: 0.85rem;
-		font-weight: 500;
-		color: var(--text-primary);
-	}
-
-	.seo-category__chevron {
-		width: 16px;
-		height: 16px;
-		color: var(--text-muted);
-		transition: transform 0.2s;
-	}
-
-	.seo-category[open] .seo-category__chevron {
-		transform: rotate(180deg);
-	}
-
-	.seo-category__links {
-		display: flex;
-		flex-direction: column;
-		padding: 0 16px 14px;
-		gap: 6px;
-	}
-
-	.seo-category__links a {
-		font-size: 0.78rem;
-		color: var(--text-muted);
-		text-decoration: none;
-		padding: 4px 0;
-		transition: color 0.15s;
-	}
-
-	.seo-category__links a:hover {
-		color: var(--accent-purple);
+	@media (max-width: 480px) {
+		.chrome-nav__cta { display: none; }
+		.chrome-foot__grid { grid-template-columns: 1fr; }
 	}
 </style>

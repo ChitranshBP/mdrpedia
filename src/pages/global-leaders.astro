@@ -6,8 +6,6 @@ import TierBadge from "../components/TierBadge.astro";
 import { getSignedImage } from "../lib/image-security";
 
 const doctors = await getCollection("doctors");
-// Manual filter or tag-based for now.
-// We'll filter by specific roles/affiliations or just specific slugs for the "Heads of Communities"
 const leaders = doctors.filter((doc) =>
     [
         "Tedros Adhanom Ghebreyesus",
@@ -29,30 +27,25 @@ const leaders = doctors.filter((doc) =>
     title="Global Health Leaders — MDRPedia"
     description="Heads of major international healthcare communities and organizations."
 >
-    <div class="container py-20">
-        <header class="text-center mb-16">
-            <div
-                class="inline-block px-4 py-1 rounded-full bg-blue-500/10 text-blue-400 text-sm font-bold mb-4 border border-blue-500/20"
-            >
-                INTERNATIONAL LEADERSHIP
+    <div class="container">
+        <div class="page-hero">
+            <div class="page-hero__masthead">
+                <div>
+                    <span class="eyebrow">International Leadership</span>
+                    <h1>Global Health Commanders</h1>
+                </div>
             </div>
-            <h1 class="text-5xl font-bold text-white mb-6">
-                Global Health Commanders
-            </h1>
-            <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+            <p class="page-hero__subtitle">
                 The architects of global health policy, pandemic response, and
                 international medical cooperation.
             </p>
-        </header>
+        </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="leaders-grid">
             {
                 leaders.map((doc) => (
-                    <a
-                        href={`/doctors/${doc.id}`}
-                        class="group relative flex flex-col bg-[#0f172a] border border-blue-500/20 rounded-2xl overflow-hidden hover:border-blue-400/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)]"
-                    >
-                        <div class="aspect-[4/3] overflow-hidden">
+                    <a href={`/doctors/${doc.id}`} class="leader-card card">
+                        <div class="leader-card__image">
                             {doc.data.portraitUrl ? (
                                 <img
                                     src={getSignedImage(doc.data.portraitUrl, {
@@ -62,48 +55,32 @@ const leaders = doctors.filter((doc) =>
                                         crop: "fill",
                                     })}
                                     alt={doc.data.fullName}
-                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                 />
                             ) : (
-                                <div class="w-full h-full bg-gray-800 flex items-center justify-center">
-                                    <span class="text-4xl font-bold text-gray-500">
-                                        {doc.data.fullName
-                                            .split(" ")
-                                            .map((w: string) => w[0])
-                                            .slice(0, 2)
-                                            .join("")
-                                            .toUpperCase()}
-                                    </span>
+                                <div class="leader-card__placeholder portrait-ph">
+                                    {doc.data.fullName
+                                        .split(" ")
+                                        .map((w: string) => w[0])
+                                        .slice(0, 2)
+                                        .join("")
+                                        .toUpperCase()}
                                 </div>
                             )}
-                            {/* Blue Overlay Gradient */}
-                            <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] to-transparent opacity-80" />
                         </div>
 
-                        <div class="absolute top-4 right-4">
+                        <div class="leader-card__tier">
                             <TierBadge tier={doc.data.tier} size="sm" />
                         </div>
 
-                        <div class="p-6 relative">
-                            <div class="mb-4">
-                                <span class="text-blue-400 text-xs font-bold tracking-wider uppercase border border-blue-500/30 px-2 py-1 rounded">
-                                    {doc.data.affiliations?.[0]?.hospitalName ||
-                                        "Global Leader"}
-                                </span>
-                            </div>
-                            <h3 class="text-2xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">
-                                {doc.data.fullName}
-                            </h3>
-                            <p class="text-gray-400 mb-4 line-clamp-2">
-                                {doc.data.biography}
-                            </p>
-
-                            <div class="flex items-center text-sm text-blue-400/80 font-medium">
-                                View Profile{" "}
-                                <span class="ml-2 group-hover:translate-x-1 transition-transform">
-                                    →
-                                </span>
-                            </div>
+                        <div class="leader-card__body">
+                            <span class="leader-card__org eyebrow">
+                                {doc.data.affiliations?.[0]?.hospitalName || "Global Leader"}
+                            </span>
+                            <h3 class="leader-card__name">{doc.data.fullName}</h3>
+                            <p class="leader-card__bio">{doc.data.biography}</p>
+                            <span class="leader-card__link">
+                                View Profile <span>&rarr;</span>
+                            </span>
                         </div>
                     </a>
                 ))
@@ -111,160 +88,239 @@ const leaders = doctors.filter((doc) =>
         </div>
 
         <!-- Enrichment Content -->
-        <article class="enrichment-content mt-32 text-gray-300">
-            <section class="mb-24">
-                <h2
-                    class="text-3xl font-bold text-white mb-8 border-l-4 border-blue-500 pl-4"
-                >
-                    Defining Global Medical Leadership
-                </h2>
-                <div class="prose prose-invert max-w-none">
-                    <p class="text-lg leading-relaxed mb-6">
-                        What distinguishes a "Global Leader" from a "Top
-                        Doctor"? While a top doctor excels in the
-                        micro-environment of the operating theater or the
-                        clinic, a Global Leader operates on the macro-scale.
-                        Their patient is not an individual, but a population.
-                        Their instrument is not a scalpel, but policy, advocacy,
-                        and institutional vision.
-                    </p>
-                    <p class="text-lg leading-relaxed mb-6">
-                        The figures listed on this page represent the apex of <strong
-                            >Health Sovereignty</strong
-                        >. These are the individuals who sat at the tables where
-                        the response to COVID-19 was drafted. They are the
-                        architects of the President's Emergency Plan for AIDS
-                        Relief (PEPFAR). They are the minds behind the
-                        eradication of Polio in the Global South. Inclusion in
-                        this registry requires more than just clinical
-                        excellence; it requires <strong
-                            >Geopolitical Impact</strong
-                        >.
-                    </p>
-                </div>
+        <article class="enrichment">
+            <section class="enrichment__section">
+                <h2>Defining Global Medical Leadership</h2>
+                <p>
+                    What distinguishes a "Global Leader" from a "Top Doctor"? While a
+                    top doctor excels in the micro-environment of the operating theater
+                    or the clinic, a Global Leader operates on the macro-scale. Their
+                    patient is not an individual, but a population. Their instrument is
+                    not a scalpel, but policy, advocacy, and institutional vision.
+                </p>
+                <p>
+                    The figures listed on this page represent the apex of <strong>Health Sovereignty</strong>.
+                    These are the individuals who sat at the tables where the response
+                    to COVID-19 was drafted. They are the architects of the President's
+                    Emergency Plan for AIDS Relief (PEPFAR). They are the minds behind
+                    the eradication of Polio in the Global South. Inclusion in this
+                    registry requires more than just clinical excellence; it requires
+                    <strong>Geopolitical Impact</strong>.
+                </p>
             </section>
 
-            <div class="grid md:grid-cols-2 gap-12 mb-24">
-                <div
-                    class="bg-blue-900/10 p-8 rounded-2xl border border-blue-500/20"
-                >
-                    <h3 class="text-2xl font-bold text-blue-400 mb-4">
-                        The Crisis Response Paradox
-                    </h3>
-                    <p class="leading-relaxed">
-                        True leadership is often invisible during peacetime and
-                        heavily scrutinized during crises. We evaluate our
-                        "Commanders" based on their performance under pressure.
-                        How did they communicate during the initial outbreaks of
-                        Ebola? Did they champion equity in vaccine distribution?
-                        We analyze public statements, policy effectiveness, and
-                        the speed of mobilization.
+            <div class="enrichment__duo">
+                <div class="card">
+                    <h3>The Crisis Response Paradox</h3>
+                    <p>
+                        True leadership is often invisible during peacetime and heavily
+                        scrutinized during crises. We evaluate our "Commanders" based on
+                        their performance under pressure. How did they communicate during
+                        the initial outbreaks of Ebola? Did they champion equity in
+                        vaccine distribution? We analyze public statements, policy
+                        effectiveness, and the speed of mobilization.
                     </p>
                 </div>
-                <div
-                    class="bg-blue-900/10 p-8 rounded-2xl border border-blue-500/20"
-                >
-                    <h3 class="text-2xl font-bold text-blue-400 mb-4">
-                        Institutional Architecture
-                    </h3>
-                    <p class="leading-relaxed">
-                        Many of these leaders built the very institutions they
-                        lead. Whether it is Devi Shetty scaling Narayana Health
-                        to provide heart surgery at a fraction of US costs, or
-                        Paul Farmer (historical) establishing Partners In
-                        Health, the ability to build sustainable systems that
-                        outlast the individual is a core metric of our
-                        assessment.
+                <div class="card">
+                    <h3>Institutional Architecture</h3>
+                    <p>
+                        Many of these leaders built the very institutions they lead.
+                        Whether it is Devi Shetty scaling Narayana Health to provide
+                        heart surgery at a fraction of US costs, or Paul Farmer
+                        (historical) establishing Partners In Health, the ability to
+                        build sustainable systems that outlast the individual is a core
+                        metric of our assessment.
                     </p>
                 </div>
             </div>
 
-            <section class="mb-24">
-                <h2
-                    class="text-3xl font-bold text-white mb-8 border-l-4 border-blue-500 pl-4"
-                >
-                    Criteria for Inclusion
-                </h2>
-                <p class="text-lg text-gray-400 mb-8">
+            <section class="enrichment__section">
+                <h2>Criteria for Inclusion</h2>
+                <p class="enrichment__intro">
                     To be listed as a Global Health Commander on MDRPedia, a
-                    professional must meet at least three of the following five
-                    criteria:
+                    professional must meet at least three of the following five criteria:
                 </p>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div
-                        class="criteria-card p-6 bg-[#0f172a] rounded-xl border border-gray-800"
-                    >
-                        <div class="text-4xl mb-4">🏛️</div>
-                        <h4 class="font-bold text-white mb-2">
-                            Policy Authorship
-                        </h4>
-                        <p class="text-sm text-gray-400">
-                            Authored or co-authored major health legislation or
-                            WHO guidelines.
-                        </p>
+                <div class="criteria-grid">
+                    <div class="card criteria-card">
+                        <h4>Policy Authorship</h4>
+                        <p>Authored or co-authored major health legislation or WHO guidelines.</p>
                     </div>
-                    <div
-                        class="criteria-card p-6 bg-[#0f172a] rounded-xl border border-gray-800"
-                    >
-                        <div class="text-4xl mb-4">📉</div>
-                        <h4 class="font-bold text-white mb-2">
-                            Metric Reduction
-                        </h4>
-                        <p class="text-sm text-gray-400">
-                            Demonstrable impact on reducing mortality/morbidity
-                            statistics (e.g., "Reduced malaria cases by 40%").
-                        </p>
+                    <div class="card criteria-card">
+                        <h4>Metric Reduction</h4>
+                        <p>Demonstrable impact on reducing mortality/morbidity statistics (e.g., "Reduced malaria cases by 40%").</p>
                     </div>
-                    <div
-                        class="criteria-card p-6 bg-[#0f172a] rounded-xl border border-gray-800"
-                    >
-                        <div class="text-4xl mb-4">🕸️</div>
-                        <h4 class="font-bold text-white mb-2">
-                            Network Influence
-                        </h4>
-                        <p class="text-sm text-gray-400">
-                            Chairs a network or organization with >10,000 active
-                            medical members.
-                        </p>
+                    <div class="card criteria-card">
+                        <h4>Network Influence</h4>
+                        <p>Chairs a network or organization with >10,000 active medical members.</p>
                     </div>
-                    <div
-                        class="criteria-card p-6 bg-[#0f172a] rounded-xl border border-gray-800"
-                    >
-                        <div class="text-4xl mb-4">📢</div>
-                        <h4 class="font-bold text-white mb-2">
-                            Crisis Command
-                        </h4>
-                        <p class="text-sm text-gray-400">
-                            Served as the primary authority/spokesperson during
-                            a declared national emergency.
-                        </p>
+                    <div class="card criteria-card">
+                        <h4>Crisis Command</h4>
+                        <p>Served as the primary authority/spokesperson during a declared national emergency.</p>
                     </div>
-                    <div
-                        class="criteria-card p-6 bg-[#0f172a] rounded-xl border border-gray-800"
-                    >
-                        <div class="text-4xl mb-4">🔬</div>
-                        <h4 class="font-bold text-white mb-2">
-                            Research Allocation
-                        </h4>
-                        <p class="text-sm text-gray-400">
-                            Controlled/directed research funding exceeding $500M
-                            USD.
-                        </p>
+                    <div class="card criteria-card">
+                        <h4>Research Allocation</h4>
+                        <p>Controlled/directed research funding exceeding $500M USD.</p>
                     </div>
-                    <div
-                        class="criteria-card p-6 bg-[#0f172a] rounded-xl border border-gray-800"
-                    >
-                        <div class="text-4xl mb-4">🎖️</div>
-                        <h4 class="font-bold text-white mb-2">
-                            State Recognition
-                        </h4>
-                        <p class="text-sm text-gray-400">
-                            Recipient of the highest civilian honor from their
-                            home nation (e.g., Medal of Freedom, Bharat Ratna).
-                        </p>
+                    <div class="card criteria-card">
+                        <h4>State Recognition</h4>
+                        <p>Recipient of the highest civilian honor from their home nation (e.g., Medal of Freedom, Bharat Ratna).</p>
                     </div>
                 </div>
             </section>
         </article>
     </div>
 </Layout>
+
+<style>
+    .leaders-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--s-5);
+        margin-bottom: var(--s-10);
+    }
+
+    .leader-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        text-decoration: none;
+        padding: 0;
+    }
+
+    .leader-card__image {
+        aspect-ratio: 4/3;
+        overflow: hidden;
+    }
+
+    .leader-card__image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s var(--ease);
+    }
+
+    .leader-card:hover img { transform: scale(1.04); }
+
+    .leader-card__placeholder {
+        width: 100%;
+        height: 100%;
+        font-size: 2rem;
+    }
+
+    .leader-card__tier {
+        position: absolute;
+        top: var(--s-3);
+        right: var(--s-3);
+    }
+
+    .leader-card__body {
+        padding: var(--s-5);
+    }
+
+    .leader-card__org {
+        display: inline-block;
+        margin-bottom: var(--s-3);
+    }
+
+    .leader-card__name {
+        font-size: clamp(18px, 2vw, 22px);
+        margin-bottom: var(--s-2);
+    }
+
+    .leader-card__bio {
+        font-size: 14px;
+        color: var(--ink-2);
+        margin-bottom: var(--s-4);
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .leader-card__link {
+        font-family: var(--font-sans);
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--ink-blue);
+        text-decoration: none;
+    }
+
+    .leader-card__link span {
+        transition: transform var(--t-fast) var(--ease);
+        display: inline-block;
+    }
+
+    .leader-card:hover .leader-card__link span {
+        transform: translateX(4px);
+    }
+
+    /* Enrichment Content */
+    .enrichment {
+        padding-bottom: var(--s-10);
+    }
+
+    .enrichment__section {
+        margin-bottom: var(--s-9);
+    }
+
+    .enrichment__section h2 {
+        padding-bottom: var(--s-3);
+        border-bottom: 1px solid var(--rule);
+        margin-bottom: var(--s-5);
+    }
+
+    .enrichment__section p {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        margin-bottom: var(--s-5);
+    }
+
+    .enrichment__intro {
+        color: var(--ink-2);
+        margin-bottom: var(--s-6);
+    }
+
+    .enrichment__duo {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--s-5);
+        margin-bottom: var(--s-9);
+    }
+
+    .enrichment__duo h3 {
+        color: var(--ink-blue);
+        margin-bottom: var(--s-3);
+    }
+
+    .enrichment__duo p {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .criteria-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--s-4);
+    }
+
+    .criteria-card h4 {
+        margin-bottom: var(--s-2);
+    }
+
+    .criteria-card p {
+        font-size: 13px;
+        color: var(--ink-2);
+    }
+
+    @media (max-width: 1024px) {
+        .leaders-grid { grid-template-columns: repeat(2, 1fr); }
+        .criteria-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+        .leaders-grid { grid-template-columns: 1fr; }
+        .enrichment__duo { grid-template-columns: 1fr; }
+        .criteria-grid { grid-template-columns: 1fr; }
+    }
+</style>

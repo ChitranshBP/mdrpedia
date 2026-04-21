@@ -1,0 +1,221 @@
+---
+/**
+ * MDRPedia — Ethical Workplace Certification Landing Page
+ * Clinic-level ethics certification programme
+ */
+import Layout from "../../layouts/Layout.astro";
+import SealRound from "../../components/SealRound.astro";
+import { prisma } from "../../lib/prisma";
+
+export const prerender = false;
+
+const certifiedClinics = await prisma.clinicCertification.findMany({
+    where: { status: "CERTIFIED" },
+    include: {
+        hospital: {
+            select: {
+                id: true,
+                name: true,
+                slug: true,
+                geography: { select: { country: true, city: true } },
+            },
+        },
+    },
+    orderBy: { updatedAt: "desc" },
+    take: 50,
+});
+
+const clinicCount = certifiedClinics.length;
+const siteBase = Astro.site?.href.replace(/\/$/, '') ?? 'https://mdrpedia.com';
+const canonicalUrl = `${siteBase}/ethical-workplace`;
+const pageDescription = clinicCount > 0
+    ? `Browse ${clinicCount} ethics-certified clinics and hospitals on MDRPedia. Every affiliated physician holds an active individual ethics certification.`
+    : "MDRPedia's Ethical Workplace programme certifies clinics and hospitals where every affiliated physician holds individual ethics certification.";
+
+// JSON-LD: CollectionPage + ItemList of hospitals
+const collectionPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Ethics-Certified Workplaces",
+    "description": pageDescription,
+    "url": canonicalUrl,
+    "mainEntity": {
+        "@type": "ItemList",
+        "name": "Ethics-Certified Clinics",
+        "numberOfItems": clinicCount,
+        "itemListElement": certifiedClinics.map((cert, i) => ({
+            "@type": "ListItem",
+            "position": i + 1,
+            "item": {
+                "@type": "Hospital",
+                "name": cert.hospital.name,
+                "url": `${siteBase}/ethical-workplace/${cert.hospital.slug}`,
+                ...(cert.hospital.geography?.country && {
+                    "address": {
+                        "@type": "PostalAddress",
+                        "addressLocality": cert.hospital.geography.city || undefined,
+                        "addressCountry": cert.hospital.geography.country
+                    }
+                })
+            }
+        }))
+    }
+};
+
+// JSON-LD: BreadcrumbList
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": siteBase },
+        { "@type": "ListItem", "position": 2, "name": "Ethical Workplace", "item": canonicalUrl }
+    ]
+};
+---
+
+<Layout title="Ethical Workplace Certification | MDRPedia" description={pageDescription}>
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(collectionPageSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+    <header class="hero">
+        <div class="container">
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <a href="/">Home</a>
+                <span class="breadcrumb-sep">/</span>
+                <span class="breadcrumb-current">Ethical Workplace</span>
+            </nav>
+            <span class="eyebrow">Ethical Workplace Programme</span>
+            <h1>Clinics of <em>Integrity</em></h1>
+            <p class="hero__sub">
+                The Ethical Workplace badge is awarded to clinics and hospitals where every affiliated physician holds an active MDRPedia Ethics Certification.
+            </p>
+        </div>
+    </header>
+
+    <section class="how-section" aria-labelledby="how-heading">
+        <div class="container">
+            <h2 id="how-heading">How It Works</h2>
+            <div class="steps-grid">
+                <div class="step">
+                    <span class="step__num">01</span>
+                    <h3>Individual Certification</h3>
+                    <p>Every doctor affiliated with the clinic must individually earn and maintain an MDRPedia Ethics Certification.</p>
+                </div>
+                <div class="step">
+                    <span class="step__num">02</span>
+                    <h3>Clinic Application</h3>
+                    <p>The clinic submits an application. We verify that all affiliated doctors hold active certifications.</p>
+                </div>
+                <div class="step">
+                    <span class="step__num">03</span>
+                    <h3>Continuous Compliance</h3>
+                    <p>If any doctor's certification lapses or is revoked, the clinic status automatically recalculates.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tiers-section" aria-labelledby="tiers-heading">
+        <div class="container">
+            <h2 id="tiers-heading">Clinic Tier = Lowest Individual Tier</h2>
+            <p class="section-desc">Your clinic's ethics tier equals the lowest tier among its certified doctors. Elevate every physician to elevate the clinic.</p>
+            <div class="tiers-row">
+                <div class="tier-mini">
+                    <SealRound kind="advocate" size={80} />
+                    <span>Advocate</span>
+                </div>
+                <div class="tier-mini">
+                    <SealRound kind="guardian" size={80} />
+                    <span>Guardian</span>
+                </div>
+                <div class="tier-mini">
+                    <SealRound kind="legend" size={80} />
+                    <span>Legend</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {certifiedClinics.length > 0 && (
+        <section class="certified-section" aria-labelledby="certified-heading">
+            <div class="container">
+                <h2 id="certified-heading">Certified Ethical Workplaces</h2>
+                <div class="clinic-grid">
+                    {certifiedClinics.map((cert) => (
+                        <a href={`/ethical-workplace/${cert.hospital.slug}`} class="clinic-card">
+                            <div class="clinic-card__tier">
+                                {cert.tier && <SealRound kind={cert.tier.toLowerCase() as any} size={48} />}
+                            </div>
+                            <div class="clinic-card__info">
+                                <h3>{cert.hospital.name}</h3>
+                                <p>
+                                    {[cert.hospital.geography?.city, cert.hospital.geography?.country].filter(Boolean).join(', ')}
+                                </p>
+                                <span class="clinic-card__stats">{cert.certified_doctors} certified physicians</span>
+                            </div>
+                        </a>
+                    ))}
+                </div>
+            </div>
+        </section>
+    )}
+
+    <section class="apply-section">
+        <div class="container">
+            <div class="apply-card">
+                <h2>Apply for Clinic Certification</h2>
+                <p>Is your clinic committed to ethical excellence? Start the certification process today.</p>
+                <a href="/contact" class="btn">Get Started</a>
+            </div>
+        </div>
+    </section>
+</Layout>
+
+<style>
+    .hero { padding: var(--s-9) 0 var(--s-8); text-align: center; }
+    .hero h1 { margin-top: 16px; }
+    .hero h1 em { font-style: italic; color: var(--verdant); }
+    .hero__sub { font-size: 1.15rem; max-width: 56ch; margin: 20px auto 0; color: var(--ink-2); }
+
+    .how-section { padding: var(--s-7) 0; }
+    .how-section h2 { text-align: center; margin-bottom: 32px; }
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); }
+    .step { background: var(--paper-2); border: 1px solid var(--rule); border-radius: var(--r-4); padding: var(--s-5); }
+    .step__num { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em; color: var(--verdant); }
+    .step h3 { font-size: 1.1rem; margin: 8px 0; }
+    .step p { font-size: 0.9rem; color: var(--ink-2); margin: 0; }
+
+    .tiers-section { padding: var(--s-7) 0; text-align: center; }
+    .section-desc { color: var(--ink-2); max-width: 48ch; margin: 8px auto 28px; }
+    .tiers-row { display: flex; justify-content: center; gap: var(--s-7); }
+    .tier-mini { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .tier-mini span { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-2); }
+
+    .certified-section { padding: var(--s-7) 0; }
+    .certified-section h2 { margin-bottom: 24px; }
+    .clinic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+    .clinic-card { display: flex; gap: 16px; align-items: center; padding: 20px; background: var(--paper-2); border: 1px solid var(--rule); border-radius: var(--r-4); text-decoration: none; color: inherit; transition: border-color 0.2s; }
+    .clinic-card:hover { border-color: var(--verdant); }
+    .clinic-card__info h3 { font-size: 1rem; margin: 0 0 4px; }
+    .clinic-card__info p { font-size: 0.85rem; color: var(--ink-2); margin: 0; }
+    .clinic-card__stats { font-family: var(--font-mono); font-size: 0.7rem; color: var(--verdant); letter-spacing: 0.06em; }
+
+    .apply-section { padding: var(--s-7) 0 var(--s-9); }
+    .apply-card { background: var(--verdant-2); border: 1px solid color-mix(in oklch, var(--verdant) 30%, var(--rule)); border-radius: var(--r-4); padding: var(--s-7); text-align: center; }
+    .apply-card h2 { margin-bottom: 12px; }
+    .apply-card p { margin: 0 auto 24px; max-width: 48ch; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; background: var(--ink); color: var(--paper); font-weight: 500; font-size: 0.9rem; text-decoration: none; border-radius: var(--r-2); transition: opacity 0.15s; }
+    .btn:hover { opacity: 0.85; }
+
+    .breadcrumb { font-size: 0.85rem; margin-bottom: 16px; }
+    .breadcrumb a { color: var(--ink-2); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--ink); text-decoration: underline; }
+    .breadcrumb-sep { margin: 0 8px; color: var(--ink-3); }
+    .breadcrumb-current { color: var(--ink); }
+
+    @media (max-width: 900px) {
+        .steps-grid { grid-template-columns: 1fr; }
+        .tiers-row { flex-direction: column; align-items: center; gap: var(--s-5); }
+    }
+</style>

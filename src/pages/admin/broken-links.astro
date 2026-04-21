@@ -4,6 +4,7 @@
  * View and manage 404 errors
  */
 import Layout from "../../layouts/Layout.astro";
+import AdminSidebar from "../../components/admin/AdminSidebar.astro";
 import { prisma } from "../../lib/prisma";
 import { requireSuperAdmin } from "../../lib/rbac";
 
@@ -44,7 +45,7 @@ try {
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-    urlStats = await prisma.notFoundLog.groupBy({
+    urlStats = await (prisma.notFoundLog.groupBy as any)({
         by: ['url'],
         where: {
             resolved: false,
@@ -78,30 +79,10 @@ if (Astro.request.method === 'POST') {
 ---
 
 <Layout title="Broken Links — Admin">
-    <div class="admin-page">
-        <aside class="sidebar">
-            <div class="sidebar__brand">
-                <a href={`/admin?key=${adminKey}`} class="brand-link">
-                    <div class="brand-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/>
-                        </svg>
-                    </div>
-                    <span>MDRPedia</span>
-                </a>
-            </div>
-            <nav class="sidebar__nav">
-                <a href={`/admin?key=${adminKey}`} class="nav-item">Dashboard</a>
-                <a href={`/admin/doctors?key=${adminKey}`} class="nav-item">All Doctors</a>
-                <a href={`/admin/analytics?key=${adminKey}`} class="nav-item">Analytics</a>
-                <a href={`/admin/audit-log?key=${adminKey}`} class="nav-item">Activity Log</a>
-                <a href={`/admin/data-quality?key=${adminKey}`} class="nav-item">Data Quality</a>
-                <a href={`/admin/bulk-import?key=${adminKey}`} class="nav-item">Bulk Import</a>
-                <a href={`/admin/broken-links?key=${adminKey}`} class="nav-item active">Broken Links</a>
-            </nav>
-        </aside>
+    <div class="admin">
+        <AdminSidebar adminKey={adminKey} activePage="broken-links" />
 
-        <main class="main-content">
+        <main class="main">
             <header class="page-header">
                 <div>
                     <h1>Broken Links Report</h1>
@@ -245,85 +226,6 @@ if (Astro.request.method === 'POST') {
 </Layout>
 
 <style>
-    .admin-page {
-        display: flex;
-        min-height: 100vh;
-        background: #0a0a12;
-    }
-
-    .sidebar {
-        width: 220px;
-        background: rgba(15, 15, 25, 0.95);
-        border-right: 1px solid rgba(255, 255, 255, 0.06);
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        padding: 20px 0;
-    }
-
-    .sidebar__brand {
-        padding: 0 20px 20px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        margin-bottom: 16px;
-    }
-
-    .brand-link {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
-        color: white;
-        font-weight: 700;
-    }
-
-    .brand-icon {
-        width: 32px;
-        height: 32px;
-        background: linear-gradient(135deg, #8b5cf6, #6366f1);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .brand-icon svg {
-        width: 18px;
-        height: 18px;
-    }
-
-    .sidebar__nav {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        padding: 0 12px;
-    }
-
-    .nav-item {
-        padding: 10px 12px;
-        border-radius: 8px;
-        color: var(--text-secondary);
-        text-decoration: none;
-        font-size: 0.875rem;
-        transition: all 0.15s;
-    }
-
-    .nav-item:hover {
-        background: rgba(255, 255, 255, 0.05);
-        color: white;
-    }
-
-    .nav-item.active {
-        background: rgba(139, 92, 246, 0.15);
-        color: #8b5cf6;
-    }
-
-    .main-content {
-        flex: 1;
-        margin-left: 220px;
-        padding: 32px;
-    }
-
     .page-header {
         display: flex;
         justify-content: space-between;
@@ -333,13 +235,13 @@ if (Astro.request.method === 'POST') {
 
     .page-header h1 {
         font-size: 1.75rem;
-        font-weight: 700;
-        color: white;
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 4px;
     }
 
     .page-header p {
-        color: var(--text-muted);
+        color: var(--ink-3);
         font-size: 0.9rem;
     }
 
@@ -355,13 +257,13 @@ if (Astro.request.method === 'POST') {
     .stat-value {
         display: block;
         font-size: 1.5rem;
-        font-weight: 700;
-        color: white;
+        font-weight: 500;
+        color: var(--ink);
     }
 
     .stat-label {
         font-size: 0.75rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         text-transform: uppercase;
     }
 
@@ -377,45 +279,45 @@ if (Astro.request.method === 'POST') {
 
     .filter-tab {
         padding: 8px 16px;
-        border-radius: 6px;
+        border-radius: var(--r-3);
         font-size: 0.875rem;
         font-weight: 500;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         text-decoration: none;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
         transition: all 0.15s;
     }
 
     .filter-tab:hover {
-        background: rgba(255, 255, 255, 0.05);
-        color: white;
+        background: var(--paper-3);
+        color: var(--ink);
     }
 
     .filter-tab.active {
-        background: rgba(139, 92, 246, 0.15);
-        border-color: rgba(139, 92, 246, 0.3);
-        color: #8b5cf6;
+        background: var(--ink-blue-2);
+        border-color: var(--ink-blue);
+        color: var(--ink-blue);
     }
 
     /* Card */
     .card {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 24px;
         margin-bottom: 24px;
     }
 
     .card h2 {
         font-size: 1.1rem;
-        font-weight: 600;
-        color: white;
+        font-weight: 500;
+        color: var(--ink);
         margin-bottom: 8px;
     }
 
     .help-text {
-        color: var(--text-muted);
+        color: var(--ink-3);
         font-size: 0.85rem;
         margin-bottom: 16px;
     }
@@ -432,44 +334,44 @@ if (Astro.request.method === 'POST') {
         align-items: center;
         gap: 12px;
         padding: 12px;
-        background: rgba(0, 0, 0, 0.2);
-        border-radius: 8px;
+        background: var(--paper-3);
+        border-radius: var(--r-3);
     }
 
     .url-rank {
         width: 24px;
         height: 24px;
         border-radius: 50%;
-        background: rgba(255, 255, 255, 0.1);
+        background: var(--paper-2);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 0.75rem;
-        font-weight: 600;
-        color: var(--text-muted);
+        font-weight: 500;
+        color: var(--ink-3);
     }
 
     .url-path {
         flex: 1;
         font-family: monospace;
         font-size: 0.85rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
     }
 
     .url-count {
         font-size: 0.8rem;
-        font-weight: 600;
-        color: #ef4444;
-        background: rgba(239, 68, 68, 0.1);
+        font-weight: 500;
+        color: var(--sanguine);
+        background: var(--sanguine-2);
         padding: 4px 10px;
-        border-radius: 20px;
+        border-radius: var(--r-3);
     }
 
     /* Table */
     .table-container {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         overflow: hidden;
     }
 
@@ -482,19 +384,19 @@ if (Astro.request.method === 'POST') {
         text-align: left;
         padding: 12px 16px;
         font-size: 0.7rem;
-        font-weight: 600;
-        color: var(--text-muted);
+        font-weight: 500;
+        color: var(--ink-3);
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        background: rgba(0, 0, 0, 0.2);
+        background: var(--paper-2);
     }
 
     .data-table td {
         padding: 12px 16px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid var(--rule);
         vertical-align: top;
         font-size: 0.9rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
     }
 
     .row-bot {
@@ -507,26 +409,26 @@ if (Astro.request.method === 'POST') {
 
     .time-date {
         display: block;
-        color: white;
+        color: var(--ink);
         font-weight: 500;
     }
 
     .time-hour {
         display: block;
         font-size: 0.8rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .cell-url code {
         font-size: 0.8rem;
-        color: #f59e0b;
-        background: rgba(245, 158, 11, 0.1);
+        color: var(--aged-gold);
+        background: color-mix(in oklch, var(--aged-gold) 10%, transparent);
         padding: 2px 6px;
         border-radius: 4px;
     }
 
     .cell-referrer a {
-        color: #8b5cf6;
+        color: var(--ink-blue);
         text-decoration: none;
     }
 
@@ -537,29 +439,29 @@ if (Astro.request.method === 'POST') {
     .type-badge {
         display: inline-block;
         padding: 3px 10px;
-        border-radius: 20px;
+        border-radius: var(--r-3);
         font-size: 0.7rem;
-        font-weight: 600;
+        font-weight: 500;
     }
 
     .type-badge--human {
-        background: rgba(34, 197, 94, 0.15);
-        color: #22c55e;
+        background: var(--verdant-2);
+        color: var(--verdant);
     }
 
     .type-badge--bot {
-        background: rgba(156, 163, 175, 0.15);
-        color: #9ca3af;
+        background: var(--paper-3);
+        color: var(--ink-3);
     }
 
     .text-muted {
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .empty-state {
         text-align: center;
         padding: 48px;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     /* Buttons */
@@ -568,9 +470,9 @@ if (Astro.request.method === 'POST') {
         align-items: center;
         gap: 8px;
         padding: 8px 16px;
-        border-radius: 6px;
+        border-radius: var(--r-3);
         font-size: 0.875rem;
-        font-weight: 600;
+        font-weight: 500;
         border: none;
         cursor: pointer;
         text-decoration: none;
@@ -578,14 +480,14 @@ if (Astro.request.method === 'POST') {
     }
 
     .btn--primary {
-        background: #8b5cf6;
+        background: var(--ink-blue);
         color: white;
     }
 
     .btn--outline {
         background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: var(--text-secondary);
+        border: 1px solid var(--rule);
+        color: var(--ink-2);
     }
 
     .btn--sm {
@@ -596,10 +498,10 @@ if (Astro.request.method === 'POST') {
     .btn-icon {
         width: 28px;
         height: 28px;
-        border-radius: 6px;
-        background: rgba(34, 197, 94, 0.15);
+        border-radius: var(--r-2);
+        background: var(--verdant-2);
         border: none;
-        color: #22c55e;
+        color: var(--verdant);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -608,7 +510,7 @@ if (Astro.request.method === 'POST') {
     }
 
     .btn-icon:hover {
-        background: rgba(34, 197, 94, 0.25);
+        background: color-mix(in oklch, var(--verdant) 25%, transparent);
     }
 
     /* Pagination */
@@ -621,16 +523,8 @@ if (Astro.request.method === 'POST') {
     }
 
     .pagination-info {
-        color: var(--text-muted);
+        color: var(--ink-3);
         font-size: 0.9rem;
     }
 
-    @media (max-width: 1024px) {
-        .sidebar {
-            display: none;
-        }
-        .main-content {
-            margin-left: 0;
-        }
-    }
 </style>

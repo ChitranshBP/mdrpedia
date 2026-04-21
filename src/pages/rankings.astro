@@ -22,7 +22,7 @@ Object.values(rankings).forEach((r) => {
 
     if (!doctorsByGroup[groupName]) {
         doctorsByGroup[groupName] = [];
-        groupIcons[groupName] = group?.icon || '🩺';
+        groupIcons[groupName] = group?.svgPath || '';
     }
     doctorsByGroup[groupName].push(r);
 });
@@ -37,12 +37,50 @@ const sortedGroups = Object.keys(doctorsByGroup).sort((a, b) => {
 const totalDoctors = Object.values(rankings).length;
 const titanCount = Object.values(rankings).filter(r => r.tier === 'TITAN').length;
 const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').length;
+
+// Structured Data
+const siteBase = Astro.site ?? 'https://mdrpedia.com';
+const rankingsSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Global Medical Impact Rankings",
+    "description": "The definitive ranking of medical professionals by humanitarian impact, research contribution, and clinical excellence.",
+    "url": new URL('/rankings', siteBase).href,
+    "mainEntity": {
+        "@type": "ItemList",
+        "name": "Top Medical Professionals by Impact Score",
+        "numberOfItems": totalDoctors,
+        "itemListOrder": "https://schema.org/ItemListOrderDescending",
+        "itemListElement": Object.values(rankings)
+            .sort((a, b) => (b.score || 0) - (a.score || 0))
+            .slice(0, 50)
+            .map((doc, i) => ({
+                "@type": "ListItem",
+                "position": i + 1,
+                "item": {
+                    "@type": "Physician",
+                    "name": doc.fullName,
+                    "medicalSpecialty": doc.specialty,
+                    "url": new URL(`/doctors/${doc.slug}`, siteBase).href,
+                    ...(doc.geography?.country && { "workLocation": { "@type": "Place", "name": doc.geography.country } })
+                }
+            }))
+    },
+    "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": siteBase.toString() },
+            { "@type": "ListItem", "position": 2, "name": "Global Rankings", "item": new URL('/rankings', siteBase).href }
+        ]
+    }
+};
 ---
 
 <Layout
     title="Global Impact Rankings — MDRPedia"
     description="The definitive ranking of medical professionals by humanitarian impact, research contribution, and clinical excellence."
 >
+    <script type="application/ld+json" set:html={JSON.stringify(rankingsSchema)} />
     <div class="rankings-page">
         <!-- Hero Section -->
         <header class="rankings-hero">
@@ -82,7 +120,7 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
                 <div class="specialty-tabs">
                     {sortedGroups.slice(0, 10).map((group) => (
                         <a href={`#${group.toLowerCase().replace(/[^a-z0-9]/g, '-')}`} class="specialty-tab">
-                            <span class="tab-icon">{groupIcons[group]}</span>
+                            <span class="tab-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={groupIcons[group]}/></svg></span>
                             <span class="tab-name">{group}</span>
                             <span class="tab-count">{doctorsByGroup[group].length}</span>
                         </a>
@@ -106,7 +144,7 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
                         >
                             <div class="section-header">
                                 <div class="section-title-row">
-                                    <span class="section-icon">{groupIcons[group]}</span>
+                                    <span class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={groupIcons[group]}/></svg></span>
                                     <h2>{group}</h2>
                                     <span class="section-count">{doctorsByGroup[group].length} physicians</span>
                                 </div>
@@ -119,9 +157,9 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
                                         class={`leaderboard-row tier-${(doc.tier || 'unranked').toLowerCase()}`}
                                     >
                                         <div class="rank-badge">
-                                            {index === 0 && <span class="medal gold">🥇</span>}
-                                            {index === 1 && <span class="medal silver">🥈</span>}
-                                            {index === 2 && <span class="medal bronze">🥉</span>}
+                                            {index === 0 && <span class="medal gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="12" cy="8" r="6"/><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"/></svg></span>}
+                                            {index === 1 && <span class="medal silver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="12" cy="8" r="6"/><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"/></svg></span>}
+                                            {index === 2 && <span class="medal bronze"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="12" cy="8" r="6"/><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"/></svg></span>}
                                             {index > 2 && <span class="rank-num">#{index + 1}</span>}
                                         </div>
 
@@ -175,7 +213,7 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
 
                 <div class="methodology-grid">
                     <div class="method-card">
-                        <div class="method-icon">📊</div>
+                        <div class="method-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
                         <h3>Data Sources</h3>
                         <p>
                             We aggregate from <strong>PubMed, Scopus, ClinicalTrials.gov</strong>,
@@ -183,7 +221,7 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
                         </p>
                     </div>
                     <div class="method-card">
-                        <div class="method-icon">⚖️</div>
+                        <div class="method-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12l3-3 3 3M15 12l3-3 3 3M3 12l3 3 3-3M15 12l3 3 3-3"/></svg></div>
                         <h3>Weighted Citations</h3>
                         <p>
                             Not all citations are equal. A <em>Lancet</em> citation weighs 50x more
@@ -191,7 +229,7 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
                         </p>
                     </div>
                     <div class="method-card">
-                        <div class="method-icon">🏆</div>
+                        <div class="method-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6m12 5h1.5a2.5 2.5 0 0 0 0-5H18M6 9a6 6 0 0 0 12 0V4H6v5zm3 12h6m-3-3v3"/></svg></div>
                         <h3>Honor Integration</h3>
                         <p>
                             Nobel laureates and national honor recipients receive floor protection.
@@ -234,12 +272,12 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
 
 <style>
     .rankings-page {
-        background: var(--bg-main);
+        background: var(--paper);
         min-height: 100vh;
     }
 
     .container {
-        max-width: 1200px;
+        max-width: var(--max);
         margin: 0 auto;
         padding: 0 1.5rem;
     }
@@ -248,29 +286,14 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
     .rankings-hero {
         padding: 5rem 0 3rem;
         text-align: center;
-        background: linear-gradient(180deg, rgba(255, 215, 0, 0.05) 0%, transparent 100%);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper);
+        border-bottom: 1px solid var(--rule);
         position: relative;
         overflow: hidden;
     }
 
     .rankings-hero::before {
-        content: '';
-        position: absolute;
-        top: -200px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 800px;
-        height: 600px;
-        background: radial-gradient(ellipse, rgba(255, 215, 0, 0.12) 0%, transparent 60%);
-        filter: blur(80px);
-        pointer-events: none;
-        animation: pulse-gold 6s ease-in-out infinite;
-    }
-
-    @keyframes pulse-gold {
-        0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
-        50% { opacity: 0.8; transform: translateX(-50%) scale(1.1); }
+        display: none;
     }
 
     .rankings-hero .container {
@@ -283,47 +306,31 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
         align-items: center;
         gap: 8px;
         padding: 8px 18px;
-        background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.05));
-        border: 1px solid rgba(255, 215, 0, 0.3);
-        border-radius: 100px;
+        background: var(--aged-gold-2);
+        border: 1px solid var(--aged-gold);
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
         font-weight: 700;
         letter-spacing: 0.12em;
-        color: #ffd700;
+        color: var(--titan-text);
         margin-bottom: 1.5rem;
-        animation: fade-in-down 0.6s ease-out;
-    }
-
-    @keyframes fade-in-down {
-        from { opacity: 0; transform: translateY(-10px); }
-        to { opacity: 1; transform: translateY(0); }
     }
 
     .rankings-hero h1 {
         font-family: var(--font-serif);
         font-size: clamp(2.5rem, 5vw, 4rem);
-        font-weight: 800;
-        background: linear-gradient(135deg, #ffd700 0%, #fdb931 40%, #fff 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 1rem;
         letter-spacing: -0.03em;
-        animation: fade-in-up 0.6s ease-out 0.1s both;
-    }
-
-    @keyframes fade-in-up {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
     }
 
     .hero-description {
         font-size: 1.15rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         max-width: 600px;
         margin: 0 auto 2.5rem;
         line-height: 1.6;
-        animation: fade-in-up 0.6s ease-out 0.2s both;
     }
 
     /* Stats Bar */
@@ -332,31 +339,29 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
         justify-content: center;
         gap: 1rem;
         flex-wrap: wrap;
-        animation: fade-in-up 0.6s ease-out 0.3s both;
     }
 
     .stat {
         text-align: center;
         padding: 1.25rem 1.75rem;
-        background: linear-gradient(145deg, rgba(30, 30, 50, 0.6), rgba(20, 20, 40, 0.4));
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         min-width: 130px;
-        backdrop-filter: blur(10px);
         transition: all 0.2s ease;
     }
 
     .stat:hover {
         transform: translateY(-2px);
-        border-color: rgba(255, 255, 255, 0.1);
+        border-color: var(--rule-strong);
     }
 
     .stat-value {
         display: block;
         font-family: var(--font-mono);
         font-size: 2rem;
-        font-weight: 800;
-        color: var(--text-primary);
+        font-weight: 500;
+        color: var(--ink);
         line-height: 1.2;
     }
 
@@ -364,46 +369,41 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
         font-size: 0.68rem;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: var(--text-muted);
+        color: var(--ink-3);
         font-weight: 500;
     }
 
     .stat--titan .stat-value {
-        background: linear-gradient(135deg, #ffd700, #ffaa00);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        color: var(--titan-text);
     }
 
     .stat--titan {
         position: relative;
+        background: var(--titan-bg);
+        border-color: var(--titan-border);
     }
 
     .stat--titan::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(circle at center, rgba(255, 215, 0, 0.08), transparent 70%);
-        border-radius: 16px;
-        pointer-events: none;
+        display: none;
     }
 
     .stat--elite .stat-value {
-        background: linear-gradient(135deg, #00aaff, #0066ff);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        color: var(--elite-text);
+    }
+
+    .stat--elite {
+        background: var(--elite-bg);
+        border-color: var(--elite-border);
     }
 
     /* Specialty Navigation */
     .specialty-nav {
         padding: 1rem 0;
-        background: rgba(0, 0, 0, 0.2);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper-2);
+        border-bottom: 1px solid var(--rule);
         position: sticky;
         top: 0;
         z-index: 100;
-        backdrop-filter: blur(10px);
     }
 
     .specialty-tabs {
@@ -419,29 +419,29 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
         align-items: center;
         gap: 0.5rem;
         padding: 0.5rem 1rem;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 8px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         text-decoration: none;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         font-size: 0.85rem;
         white-space: nowrap;
         transition: all 0.2s;
     }
 
     .specialty-tab:hover {
-        background: rgba(255, 255, 255, 0.08);
-        border-color: rgba(255, 255, 255, 0.15);
-        color: var(--text-primary);
+        background: var(--paper-3);
+        border-color: var(--rule-strong);
+        color: var(--ink);
     }
 
     .tab-icon { font-size: 1rem; }
     .tab-count {
         font-size: 0.7rem;
         padding: 2px 6px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 4px;
-        color: var(--text-muted);
+        background: var(--paper-3);
+        border-radius: var(--r-2);
+        color: var(--ink-3);
     }
 
     /* Main Content */
@@ -456,7 +456,7 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
     .section-header {
         margin-bottom: 1.5rem;
         padding-bottom: 1rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid var(--rule);
     }
 
     .section-title-row {
@@ -472,13 +472,14 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
     .section-title-row h2 {
         font-family: var(--font-serif);
         font-size: 1.75rem;
-        color: var(--text-primary);
+        font-weight: 400;
+        color: var(--ink);
         margin: 0;
     }
 
     .section-count {
         font-size: 0.85rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin-left: auto;
     }
 
@@ -486,7 +487,7 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
     .leaderboard {
         display: flex;
         flex-direction: column;
-        gap: 0.75rem;
+        gap: 0;
     }
 
     .leaderboard-row {
@@ -494,28 +495,29 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
         align-items: center;
         gap: 1.5rem;
         padding: 1.25rem 1.5rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
+        background: var(--paper);
+        border-bottom: 1px solid var(--rule);
         text-decoration: none;
         color: inherit;
         transition: all 0.2s;
     }
 
+    .leaderboard-row:first-child {
+        border-top: 1px solid var(--rule);
+    }
+
     .leaderboard-row:hover {
-        background: rgba(255, 255, 255, 0.05);
-        border-color: rgba(255, 255, 255, 0.1);
-        transform: translateX(4px);
+        background: var(--paper-2);
     }
 
     .leaderboard-row.tier-titan {
-        background: linear-gradient(90deg, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
-        border-color: rgba(255, 215, 0, 0.15);
+        background: var(--titan-bg);
+        border-color: var(--titan-border);
     }
 
     .leaderboard-row.tier-elite {
-        background: linear-gradient(90deg, rgba(0, 170, 255, 0.05) 0%, transparent 50%);
-        border-color: rgba(0, 170, 255, 0.1);
+        background: var(--elite-bg);
+        border-color: var(--elite-border);
     }
 
     .rank-badge {
@@ -530,8 +532,8 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
     .rank-num {
         font-family: var(--font-mono);
         font-size: 1.1rem;
-        font-weight: 700;
-        color: var(--text-muted);
+        font-weight: 500;
+        color: var(--ink-3);
     }
 
     .doctor-info {
@@ -540,8 +542,8 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
 
     .doctor-name {
         font-size: 1.1rem;
-        font-weight: 600;
-        color: var(--text-primary);
+        font-weight: 500;
+        color: var(--ink);
         display: flex;
         align-items: center;
         gap: 0.75rem;
@@ -551,27 +553,28 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
     .tier-pill {
         font-size: 0.6rem;
         padding: 3px 8px;
-        border-radius: 4px;
-        font-weight: 800;
+        border-radius: var(--r-2);
+        font-weight: 700;
         letter-spacing: 0.05em;
     }
 
     .tier-pill.titan {
-        background: linear-gradient(135deg, #ffd700 0%, #fdb931 100%);
-        color: #1a1a1a;
-        box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        background: var(--titan-bg);
+        color: var(--titan-text);
+        border: 1px solid var(--titan-border);
     }
 
     .tier-pill.elite {
-        background: linear-gradient(135deg, #00aaff 0%, #0077cc 100%);
-        color: white;
+        background: var(--elite-bg);
+        color: var(--elite-text);
+        border: 1px solid var(--elite-border);
     }
 
     .doctor-meta {
         display: flex;
         gap: 1rem;
         font-size: 0.85rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .score-display {
@@ -582,20 +585,20 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
         display: block;
         font-family: var(--font-mono);
         font-size: 1.25rem;
-        font-weight: 700;
-        color: var(--accent-purple);
+        font-weight: 500;
+        color: var(--ink-blue);
     }
 
     .score-label {
         font-size: 0.65rem;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .view-arrow {
         font-size: 1.25rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         opacity: 0;
         transition: opacity 0.2s, transform 0.2s;
     }
@@ -612,7 +615,7 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
 
     .view-more-link {
         font-size: 0.9rem;
-        color: var(--accent-purple);
+        color: var(--ink-blue);
         text-decoration: none;
     }
 
@@ -623,21 +626,22 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
     /* Methodology */
     .methodology {
         padding: 5rem 0;
-        background: rgba(0, 0, 0, 0.3);
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper-2);
+        border-top: 1px solid var(--rule);
     }
 
     .methodology h2 {
         font-family: var(--font-serif);
         font-size: 2rem;
+        font-weight: 400;
         text-align: center;
-        color: var(--text-primary);
+        color: var(--ink);
         margin-bottom: 1rem;
     }
 
     .methodology-intro {
         text-align: center;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         max-width: 600px;
         margin: 0 auto 3rem;
         font-size: 1.1rem;
@@ -652,66 +656,57 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
 
     .method-card {
         padding: 2.25rem;
-        background: linear-gradient(145deg, rgba(30, 30, 50, 0.5), rgba(20, 20, 40, 0.3));
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 20px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         text-align: center;
         position: relative;
         overflow: hidden;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.3s var(--ease);
     }
 
     .method-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.4), transparent);
-        opacity: 0;
-        transition: opacity 0.3s;
-    }
-
-    .method-card:hover::before {
-        opacity: 1;
+        display: none;
     }
 
     .method-card:hover {
-        transform: translateY(-4px);
-        border-color: rgba(255, 215, 0, 0.15);
-        box-shadow: 0 20px 40px -15px rgba(255, 215, 0, 0.1);
+        transform: translateY(-3px);
+        border-color: var(--rule-strong);
+        box-shadow: var(--shadow-3);
     }
 
     .method-icon {
         font-size: 2.75rem;
         margin-bottom: 1.25rem;
-        filter: grayscale(20%);
-        transition: filter 0.2s, transform 0.2s;
+        transition: transform 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--ink-blue);
     }
 
     .method-card:hover .method-icon {
-        filter: grayscale(0%);
-        transform: scale(1.1);
+        transform: scale(1.05);
     }
 
     .method-card h3 {
         font-size: 1.15rem;
-        font-weight: 700;
-        color: var(--text-primary);
+        font-weight: 500;
+        color: var(--ink);
         margin-bottom: 0.75rem;
     }
 
     .method-card p {
         font-size: 0.9rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         line-height: 1.65;
     }
 
     /* Tier Definitions */
     .tier-definitions h3 {
         font-size: 1.25rem;
-        color: var(--text-primary);
+        font-weight: 400;
+        color: var(--ink);
         text-align: center;
         margin-bottom: 1.5rem;
     }
@@ -724,24 +719,24 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
 
     .tier-card {
         padding: 1.5rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
     }
 
     .tier-card.titan {
-        border-color: rgba(255, 215, 0, 0.2);
-        background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, transparent 100%);
+        border-color: var(--titan-border);
+        background: var(--titan-bg);
     }
 
     .tier-card.elite {
-        border-color: rgba(0, 170, 255, 0.2);
-        background: linear-gradient(135deg, rgba(0, 170, 255, 0.05) 0%, transparent 100%);
+        border-color: var(--elite-border);
+        background: var(--elite-bg);
     }
 
     .tier-card.master {
-        border-color: rgba(0, 204, 102, 0.2);
-        background: linear-gradient(135deg, rgba(0, 204, 102, 0.05) 0%, transparent 100%);
+        border-color: var(--master-border);
+        background: var(--master-bg);
     }
 
     .tier-header {
@@ -753,22 +748,22 @@ const eliteCount = Object.values(rankings).filter(r => r.tier === 'ELITE').lengt
 
     .tier-name {
         font-size: 1rem;
-        font-weight: 800;
+        font-weight: 700;
         letter-spacing: 0.1em;
     }
 
-    .tier-card.titan .tier-name { color: #ffd700; }
-    .tier-card.elite .tier-name { color: #00aaff; }
-    .tier-card.master .tier-name { color: #00cc66; }
+    .tier-card.titan .tier-name { color: var(--titan-text); }
+    .tier-card.elite .tier-name { color: var(--elite-text); }
+    .tier-card.master .tier-name { color: var(--master-text); }
 
     .tier-percentile {
         font-size: 0.75rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .tier-card p {
         font-size: 0.85rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         line-height: 1.5;
         margin: 0;
     }

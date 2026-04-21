@@ -224,12 +224,12 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
 
 <style>
     .diffs-section {
-        background: var(--card-bg, rgba(20, 20, 35, 0.8));
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 2rem;
         margin-bottom: 2rem;
-        backdrop-filter: blur(10px);
+        
     }
 
     .section-header {
@@ -240,7 +240,7 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
         gap: 1rem;
         margin-bottom: 1rem;
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
+        border-bottom: 1px solid var(--rule);
     }
 
     .section-title {
@@ -248,13 +248,13 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
         align-items: center;
         gap: 0.75rem;
         font-size: 1.25rem;
-        font-weight: 700;
+        font-weight: 500;
         margin: 0;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .section-title svg {
-        color: #10b981;
+        color: var(--verdant);
         opacity: 0.9;
     }
 
@@ -269,8 +269,8 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
         align-items: center;
         gap: 0.35rem;
         padding: 4px 12px;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 100px;
+        background: var(--paper-3);
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
     }
 
@@ -279,16 +279,16 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
     }
 
     .stat-pill.major .stat-value {
-        color: #10b981;
+        color: var(--verdant);
     }
 
     .stat-value {
         font-weight: 700;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .stat-label {
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .intro-text {
@@ -297,7 +297,7 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
 
     .intro-text p {
         font-size: 0.9rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         line-height: 1.6;
         margin: 0;
     }
@@ -310,9 +310,9 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
     }
 
     .diff-card {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 12px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         overflow: hidden;
     }
 
@@ -322,8 +322,8 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
         justify-content: space-between;
         gap: 1rem;
         padding: 1.25rem;
-        background: rgba(255, 255, 255, 0.02);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        background: var(--paper-2);
+        border-bottom: 1px solid var(--rule);
     }
 
     .guideline-info {
@@ -336,7 +336,7 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
         font-size: 1.1rem;
         font-weight: 700;
         margin: 0;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .guideline-meta {
@@ -351,21 +351,21 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
         border-radius: 4px;
         font-size: 0.7rem;
         font-weight: 600;
-        color: #60a5fa;
+        color: var(--ink-blue);
     }
 
     .condition-tag {
         padding: 3px 8px;
-        background: rgba(139, 92, 246, 0.15);
+        background: var(--paper-3);
         border-radius: 4px;
         font-size: 0.7rem;
         font-weight: 600;
-        color: #a78bfa;
+        color: var(--ink-blue);
     }
 
     .update-date {
         font-size: 0.75rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         white-space: nowrap;
     }
 
@@ -375,11 +375,11 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
         gap: 0.75rem;
         padding: 1rem 1.25rem;
         background: rgba(59, 130, 246, 0.05);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid var(--rule);
     }
 
     .research-icon {
-        color: #60a5fa;
+        color: var(--ink-blue);
         flex-shrink: 0;
     }
 
@@ -392,13 +392,13 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
     .research-label {
         font-size: 0.7rem;
         font-weight: 600;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         text-transform: uppercase;
     }
 
     .research-title {
         font-size: 0.9rem;
-        color: #60a5fa;
+        color: var(--ink-blue);
         text-decoration: none;
         line-height: 1.4;
     }
@@ -411,11 +411,11 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
         display: flex;
         gap: 0.75rem;
         font-size: 0.75rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .citation-count {
-        color: #10b981;
+        color: var(--verdant);
         font-weight: 600;
     }
 
@@ -429,7 +429,7 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
 
     .diff-column {
         padding: 1rem;
-        border-radius: 10px;
+        border-radius: var(--r-3);
     }
 
     .diff-column.before {
@@ -454,44 +454,44 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
     }
 
     .diff-column.before .diff-column-header {
-        color: #ef4444;
+        color: var(--sanguine);
     }
 
     .diff-column.after .diff-column-header {
-        color: #10b981;
+        color: var(--verdant);
     }
 
     .year-range {
         margin-left: auto;
         font-weight: 400;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .recommendation-text {
         margin: 0;
         font-size: 0.9rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         line-height: 1.6;
         font-style: italic;
         padding-left: 0.75rem;
-        border-left: 2px solid rgba(255, 255, 255, 0.1);
+        border-left: 2px solid var(--rule);
     }
 
     .evidence-grade {
         display: inline-block;
         margin-top: 0.75rem;
         padding: 2px 8px;
-        background: rgba(255, 255, 255, 0.05);
+        background: var(--paper-3);
         border-radius: 4px;
         font-size: 0.7rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .diff-arrow {
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     /* Change Summary */
@@ -500,7 +500,7 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
         padding: 1rem;
         background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(59, 130, 246, 0.08));
         border: 1px solid rgba(16, 185, 129, 0.15);
-        border-radius: 10px;
+        border-radius: var(--r-3);
     }
 
     .summary-title {
@@ -510,16 +510,16 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
         font-size: 0.85rem;
         font-weight: 700;
         margin: 0 0 0.5rem;
-        color: #10b981;
+        color: var(--verdant);
     }
 
     .summary-title svg {
-        color: #10b981;
+        color: var(--verdant);
     }
 
     .summary-text {
         font-size: 0.9rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         line-height: 1.6;
         margin: 0;
     }
@@ -532,7 +532,7 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
 
     .impact-description p {
         font-size: 0.875rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         line-height: 1.6;
         margin: 0;
     }
@@ -543,7 +543,7 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
         padding: 1rem;
         background: rgba(236, 72, 153, 0.05);
         border: 1px solid rgba(236, 72, 153, 0.1);
-        border-radius: 10px;
+        border-radius: var(--r-3);
     }
 
     .impact-title {
@@ -553,11 +553,11 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
         font-size: 0.85rem;
         font-weight: 700;
         margin: 0 0 0.75rem;
-        color: #ec4899;
+        color: var(--sanguine);
     }
 
     .impact-title svg {
-        color: #ec4899;
+        color: var(--sanguine);
     }
 
     .impact-stats {
@@ -574,13 +574,13 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
 
     .impact-label {
         font-size: 0.7rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .impact-value {
         font-size: 1rem;
         font-weight: 700;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     /* Guideline Link */
@@ -590,23 +590,23 @@ const { diffs, doctorName, tier = 'UNRANKED' } = Astro.props;
         gap: 0.35rem;
         margin: 1rem 1.25rem 1.25rem;
         padding: 0.5rem 1rem;
-        background: rgba(255, 255, 255, 0.05);
+        background: var(--paper-3);
         border-radius: 6px;
         font-size: 0.8rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         text-decoration: none;
         transition: all 0.2s;
     }
 
     .guideline-link:hover {
         background: rgba(59, 130, 246, 0.15);
-        color: #60a5fa;
+        color: var(--ink-blue);
     }
 
     /* Tier colors */
-    .tier-titan .section-title svg { color: #ffd700; }
-    .tier-elite .section-title svg { color: #00aaff; }
-    .tier-master .section-title svg { color: #00cc66; }
+    .tier-titan .section-title svg { color: var(--aged-gold); }
+    .tier-elite .section-title svg { color: var(--ink-blue); }
+    .tier-master .section-title svg { color: var(--verdant); }
 
     @media (max-width: 768px) {
         .diffs-section {

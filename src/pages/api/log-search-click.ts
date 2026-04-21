@@ -1,17 +1,22 @@
 import type { APIRoute } from 'astro';
 import { prisma } from '../../lib/prisma';
+import { getClientIP } from '../../lib/utils';
+import crypto from 'crypto';
 
 export const POST: APIRoute = async ({ request }) => {
     try {
         const body = await request.json();
-        const { query, clickedSlug, ip } = body;
+        const { query, clickedSlug } = body;
+
+        const clientIp = getClientIP(request);
+        const ipHash = crypto.createHash('sha256').update(clientIp).digest('hex').slice(0, 32);
 
         await prisma.searchLog.create({
             data: {
                 queryText: query || 'direct_click',
                 resultsCount: 1, // Placeholder
                 clickedSlug: clickedSlug,
-                ipAddress: ip || 'anonymized',
+                ipAddress: ipHash,
             }
         });
 

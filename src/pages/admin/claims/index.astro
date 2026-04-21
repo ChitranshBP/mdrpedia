@@ -4,6 +4,7 @@
  * View and manage profile claims/verifications
  */
 import Layout from "../../../layouts/Layout.astro";
+import AdminSidebar from "../../../components/admin/AdminSidebar.astro";
 import { prisma } from "../../../lib/prisma";
 import { requireSuperAdmin } from "../../../lib/rbac";
 
@@ -32,7 +33,6 @@ const profiles = await prisma.profile.findMany({
         claim_status: true,
         npi_number: true,
         orcid_id: true,
-        email: true,
         updatedAt: true,
         geography: {
             select: { country: true, city: true }
@@ -83,18 +83,9 @@ const statusLabels: Record<string, string> = {
 ---
 
 <Layout title="Claims Management — MDRPedia Admin">
-    <div class="container admin-dashboard">
-        <header class="admin-header">
-            <div class="admin-header__top">
-                <span class="badge badge--admin">SUPER ADMIN</span>
-                <h1>Profile Claims</h1>
-            </div>
-            <div class="admin-actions">
-                <a href={`/admin?key=${adminKey}`} class="btn btn--outline">
-                    &larr; Dashboard
-                </a>
-            </div>
-        </header>
+    <div class="admin">
+        <AdminSidebar adminKey={adminKey} activePage="claims" />
+        <main class="main">
 
         <!-- Stats Cards -->
         <div class="stats-grid">
@@ -153,14 +144,14 @@ const statusLabels: Record<string, string> = {
                                     <span class={`tier-badge tier-${profile.tier.toLowerCase()}`}>
                                         {profile.tier}
                                     </span>
-                                    {profile.affiliations?.[0]?.hospital?.name && (
-                                        <p class="affiliation">{profile.affiliations[0].hospital.name}</p>
+                                    {(profile as any).affiliations?.[0]?.hospital?.name && (
+                                        <p class="affiliation">{(profile as any).affiliations[0].hospital.name}</p>
                                     )}
                                 </td>
                                 <td>{profile.specialty}</td>
                                 <td>
-                                    {profile.geography?.city && `${profile.geography.city}, `}
-                                    {profile.geography?.country || '-'}
+                                    {(profile as any).geography?.city && `${(profile as any).geography.city}, `}
+                                    {(profile as any).geography?.country || '-'}
                                 </td>
                                 <td>
                                     <span class="status-badge" style={`--status-color: ${statusColors[profile.claim_status]}`}>
@@ -184,16 +175,7 @@ const statusLabels: Record<string, string> = {
                                             ORCID
                                         </span>
                                     )}
-                                    {profile.email && (
-                                        <span class="verification-badge" title="Email Provided">
-                                            <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
-                                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
-                                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
-                                            </svg>
-                                            Email
-                                        </span>
-                                    )}
-                                    {!profile.npi_number && !profile.orcid_id && !profile.email && (
+                                    {!profile.npi_number && !profile.orcid_id && (
                                         <span class="no-verification">None</span>
                                     )}
                                 </td>
@@ -234,6 +216,7 @@ const statusLabels: Record<string, string> = {
                 </tbody>
             </table>
         </div>
+        </main>
     </div>
 </Layout>
 
@@ -277,7 +260,7 @@ const statusLabels: Record<string, string> = {
     .admin-dashboard {
         padding: 40px 20px;
         max-width: 1400px;
-        color: var(--text-primary);
+        color: var(--ink);
     }
 
     .admin-header {
@@ -294,9 +277,9 @@ const statusLabels: Record<string, string> = {
     }
 
     .badge--admin {
-        background: #ffd700;
+        background: var(--aged-gold);
         color: #000;
-        font-weight: 700;
+        font-weight: 500;
         padding: 2px 8px;
         border-radius: 4px;
         font-size: 0.7rem;
@@ -306,7 +289,9 @@ const statusLabels: Record<string, string> = {
     h1 {
         font-family: var(--font-serif);
         font-size: 2rem;
+        font-weight: 400;
         margin: 0;
+        color: var(--ink);
     }
 
     /* Stats Grid */
@@ -318,9 +303,9 @@ const statusLabels: Record<string, string> = {
     }
 
     .stat-card {
-        background: var(--bg-card, #14142a);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 20px;
         text-align: center;
         text-decoration: none;
@@ -334,19 +319,19 @@ const statusLabels: Record<string, string> = {
 
     .stat-card.active {
         border-color: var(--stat-color);
-        box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+        box-shadow: var(--shadow-2);
     }
 
     .stat-value {
         display: block;
         font-size: 2rem;
-        font-weight: 700;
+        font-weight: 500;
         color: var(--stat-color);
     }
 
     .stat-label {
         font-size: 0.8rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
@@ -360,8 +345,8 @@ const statusLabels: Record<string, string> = {
     }
 
     .filter-label {
-        font-weight: 600;
-        color: var(--text-secondary);
+        font-weight: 500;
+        color: var(--ink-2);
     }
 
     .filter-buttons {
@@ -371,31 +356,31 @@ const statusLabels: Record<string, string> = {
 
     .filter-btn {
         padding: 6px 14px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        border: 1px solid var(--rule);
         background: transparent;
-        color: var(--text-secondary);
-        border-radius: 20px;
+        color: var(--ink-2);
+        border-radius: var(--r-3);
         font-size: 0.85rem;
         text-decoration: none;
         transition: all 0.2s;
     }
 
     .filter-btn:hover {
-        border-color: var(--accent-purple);
-        color: var(--accent-purple);
+        border-color: var(--ink-blue);
+        color: var(--ink-blue);
     }
 
     .filter-btn.active {
-        background: var(--accent-purple);
-        border-color: var(--accent-purple);
+        background: var(--ink-blue);
+        border-color: var(--ink-blue);
         color: white;
     }
 
     /* Table */
     .table-container {
-        background: var(--bg-card, #14142a);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         overflow: hidden;
     }
 
@@ -408,19 +393,19 @@ const statusLabels: Record<string, string> = {
     .admin-table td {
         padding: 16px;
         text-align: left;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid var(--rule);
     }
 
     .admin-table th {
-        background: rgba(255, 255, 255, 0.03);
-        font-weight: 600;
-        color: var(--text-secondary);
+        background: var(--paper-2);
+        font-weight: 500;
+        color: var(--ink-2);
     }
 
     .doctor-name {
-        color: var(--accent-purple);
+        color: var(--ink-blue);
         text-decoration: none;
-        font-weight: 600;
+        font-weight: 500;
     }
 
     .doctor-name:hover {
@@ -432,28 +417,28 @@ const statusLabels: Record<string, string> = {
         padding: 2px 6px;
         border-radius: 4px;
         font-size: 0.65rem;
-        font-weight: 700;
+        font-weight: 500;
         margin-left: 8px;
         vertical-align: middle;
     }
 
-    .tier-titan { background: rgba(255, 215, 0, 0.2); color: #ffd700; }
-    .tier-elite { background: rgba(0, 170, 255, 0.2); color: #00aaff; }
-    .tier-master { background: rgba(0, 204, 102, 0.2); color: #00cc66; }
-    .tier-unranked { background: rgba(128, 128, 128, 0.2); color: #888; }
+    .tier-titan { background: color-mix(in oklch, var(--aged-gold) 20%, transparent); color: var(--aged-gold); }
+    .tier-elite { background: color-mix(in oklch, var(--ink-blue) 20%, transparent); color: var(--ink-blue); }
+    .tier-master { background: color-mix(in oklch, var(--verdant) 20%, transparent); color: var(--verdant); }
+    .tier-unranked { background: var(--paper-3); color: var(--ink-3); }
 
     .affiliation {
         font-size: 0.8rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin: 4px 0 0;
     }
 
     .status-badge {
         display: inline-block;
         padding: 4px 10px;
-        border-radius: 12px;
+        border-radius: var(--r-3);
         font-size: 0.75rem;
-        font-weight: 600;
+        font-weight: 500;
         background: color-mix(in srgb, var(--status-color) 15%, transparent);
         color: var(--status-color);
         border: 1px solid color-mix(in srgb, var(--status-color) 40%, transparent);
@@ -470,15 +455,15 @@ const statusLabels: Record<string, string> = {
         align-items: center;
         gap: 4px;
         padding: 3px 8px;
-        background: rgba(16, 185, 129, 0.15);
-        color: #10b981;
+        background: var(--verdant-2);
+        color: var(--verdant);
         border-radius: 4px;
         font-size: 0.7rem;
-        font-weight: 600;
+        font-weight: 500;
     }
 
     .no-verification {
-        color: var(--text-muted);
+        color: var(--ink-3);
         font-size: 0.85rem;
     }
 
@@ -488,14 +473,14 @@ const statusLabels: Record<string, string> = {
     }
 
     .text-muted {
-        color: var(--text-muted);
+        color: var(--ink-3);
         font-size: 0.85rem;
     }
 
     .empty-state {
         text-align: center;
         padding: 40px;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     /* Buttons */
@@ -505,8 +490,8 @@ const statusLabels: Record<string, string> = {
         align-items: center;
         justify-content: center;
         padding: 10px 16px;
-        border-radius: 6px;
-        font-weight: 600;
+        border-radius: var(--r-3);
+        font-weight: 500;
         font-size: 0.9rem;
         cursor: pointer;
         transition: all 0.2s;
@@ -515,20 +500,20 @@ const statusLabels: Record<string, string> = {
 
     .btn--outline {
         background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: var(--text-primary);
+        border: 1px solid var(--rule);
+        color: var(--ink);
     }
 
     .btn--success {
-        background: rgba(16, 185, 129, 0.2);
-        color: #10b981;
-        border: 1px solid #10b981;
+        background: var(--verdant-2);
+        color: var(--verdant);
+        border: 1px solid var(--verdant);
     }
 
     .btn--danger {
-        background: rgba(239, 68, 68, 0.15);
-        color: #ef4444;
-        border: 1px solid rgba(239, 68, 68, 0.3);
+        background: var(--sanguine-2);
+        color: var(--sanguine);
+        border: 1px solid var(--sanguine);
     }
 
     .btn--sm {

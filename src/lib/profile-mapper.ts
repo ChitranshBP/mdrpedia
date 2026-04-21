@@ -5,6 +5,7 @@
  */
 
 import type { ProfileData } from './types';
+import { calculateTotalImpact } from './impact-calculator';
 import type {
     Profile,
     Geography,
@@ -16,6 +17,7 @@ import type {
     DoctorHospitalAffiliation,
     Hospital,
     ProfileMedia,
+    DoctorPortal,
 } from '@prisma/client';
 
 // Full DB profile type with all relations
@@ -30,6 +32,7 @@ export type DbProfileFull = Profile & {
     mentored_by: { id: string; slug: string; full_name: string; title: string | null } | null;
     mentees: { id: string; slug: string; full_name: string; title: string | null }[];
     media?: ProfileMedia[];
+    portal?: DoctorPortal | null;
     _count?: {
         impact_votes: number;
     };
@@ -119,11 +122,16 @@ export function mapDbProfileToProps(db: DbProfileFull): ProfileData {
         }
         : { country: 'Unknown' };
 
-    // Calculate Total Impact
-    // Formula: Lives Saved + Verified Surgeries + (Total Citations / 100)
+    // Calculate Total Impact (unified formula)
     const totalCitations = citations.reduce((acc, c) => acc + (c.totalCitationCount || 0), 0);
-    const researchImpact = Math.floor(totalCitations / 100);
-    const totalImpact = livesSaved + db.verified_surgeries + researchImpact;
+    const totalImpact = calculateTotalImpact({
+        livesSaved,
+        verifiedSurgeries: db.verified_surgeries,
+        totalCitations,
+        hIndex: db.h_index,
+        techniquesCount: db.techniques.length,
+        awardsCount: db.awards.length,
+    });
 
     return {
         fullName: db.full_name,
@@ -159,9 +167,23 @@ export function mapDbProfileToProps(db: DbProfileFull): ProfileData {
         aiSummary: db.ai_summary,
         media,
         totalImpact,
+        // Doctor Portal fields
+        languagesSpoken: db.portal?.languages_spoken ?? [],
+        acceptedInsurance: db.portal?.accepted_insurance ?? [],
+        patientPhilosophy: db.portal?.patient_philosophy ?? null,
+        bookingUrl: db.portal?.booking_url ?? null,
+        consultationFee: db.portal?.consultation_fee ?? null,
+        // Four Pillars score breakdown
+        clinicalMasteryIndex: db.clinical_mastery_index ?? null,
+        intellectualLegacy: db.intellectual_legacy ?? null,
+        globalMentorshipScore: db.global_mentorship_score ?? null,
+        humanitarianImpact: db.humanitarian_impact ?? null,
         // Computed display flags
         hasVerifiedCredentials: !!(db.npi_number || db.orcid_id),
         hasSignificantCitations: totalCitations > 1000,
+        // Timestamps for SEO structured data
+        createdAt: db.createdAt?.toISOString() ?? null,
+        updatedAt: db.updatedAt?.toISOString() ?? null,
     };
 }
 

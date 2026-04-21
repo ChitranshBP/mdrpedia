@@ -143,12 +143,12 @@ const sortedMisconceptions = [...misconceptions].sort((a, b) => {
 
 <style>
     .misconceptions-section {
-        background: var(--card-bg, rgba(20, 20, 35, 0.8));
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 2rem;
         margin-bottom: 2rem;
-        backdrop-filter: blur(10px);
+        
     }
 
     .section-header {
@@ -158,7 +158,7 @@ const sortedMisconceptions = [...misconceptions].sort((a, b) => {
         gap: 1rem;
         margin-bottom: 1.5rem;
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
+        border-bottom: 1px solid var(--rule);
     }
 
     .section-title {
@@ -166,19 +166,19 @@ const sortedMisconceptions = [...misconceptions].sort((a, b) => {
         align-items: center;
         gap: 0.75rem;
         font-size: 1.25rem;
-        font-weight: 700;
+        font-weight: 500;
         margin: 0;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .section-title svg {
-        color: #f59e0b;
+        color: var(--aged-gold);
         opacity: 0.9;
     }
 
     .section-count {
         font-size: 0.8rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     /* Table Header */
@@ -202,11 +202,11 @@ const sortedMisconceptions = [...misconceptions].sort((a, b) => {
     }
 
     .header-myth {
-        color: #ef4444;
+        color: var(--sanguine);
     }
 
     .header-reality {
-        color: #10b981;
+        color: var(--verdant);
     }
 
     /* Misconceptions List */
@@ -217,16 +217,16 @@ const sortedMisconceptions = [...misconceptions].sort((a, b) => {
     }
 
     .misconception-row {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 12px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 1.25rem;
         transition: all 0.2s ease;
     }
 
     .misconception-row:hover {
-        background: rgba(255, 255, 255, 0.03);
-        border-color: rgba(255, 255, 255, 0.1);
+        background: var(--paper-3);
+        border-color: var(--rule-strong);
     }
 
     .row-badges {
@@ -237,11 +237,11 @@ const sortedMisconceptions = [...misconceptions].sort((a, b) => {
 
     .category-badge {
         padding: 3px 10px;
-        background: rgba(139, 92, 246, 0.1);
-        border-radius: 100px;
+        background: var(--paper-3);
+        border-radius: var(--r-pill);
         font-size: 0.7rem;
         font-weight: 600;
-        color: #a78bfa;
+        color: var(--ink-blue);
         text-transform: uppercase;
         letter-spacing: 0.03em;
     }
@@ -249,7 +249,7 @@ const sortedMisconceptions = [...misconceptions].sort((a, b) => {
     .importance-badge {
         padding: 3px 10px;
         background: color-mix(in srgb, var(--badge-color) 15%, transparent);
-        border-radius: 100px;
+        border-radius: var(--r-pill);
         font-size: 0.7rem;
         font-weight: 600;
         color: var(--badge-color);
@@ -270,17 +270,17 @@ const sortedMisconceptions = [...misconceptions].sort((a, b) => {
         display: flex;
         gap: 0.75rem;
         padding: 1rem;
-        border-radius: 10px;
+        border-radius: var(--r-3);
     }
 
     .myth-cell {
-        background: rgba(239, 68, 68, 0.08);
-        border-left: 3px solid #ef4444;
+        background: var(--paper-3);
+        border-left: 3px solid var(--sanguine);
     }
 
     .reality-cell {
         background: rgba(16, 185, 129, 0.08);
-        border-left: 3px solid #10b981;
+        border-left: 3px solid var(--verdant);
     }
 
     .cell-icon {
@@ -293,17 +293,17 @@ const sortedMisconceptions = [...misconceptions].sort((a, b) => {
     }
 
     .myth-cell .cell-icon {
-        color: #ef4444;
+        color: var(--sanguine);
     }
 
     .reality-cell .cell-icon {
-        color: #10b981;
+        color: var(--verdant);
     }
 
     .cell-text {
         font-size: 0.95rem;
         line-height: 1.6;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         margin: 0;
     }
 
@@ -311,7 +311,7 @@ const sortedMisconceptions = [...misconceptions].sort((a, b) => {
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         padding-top: 1rem;
     }
 
@@ -322,35 +322,35 @@ const sortedMisconceptions = [...misconceptions].sort((a, b) => {
         gap: 0.5rem;
         margin-top: 1rem;
         padding-top: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        border-top: 1px solid var(--rule);
     }
 
     .sources-label {
         font-size: 0.7rem;
         font-weight: 600;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .source-link {
         padding: 2px 8px;
-        background: rgba(255, 255, 255, 0.05);
+        background: var(--paper-3);
         border-radius: 4px;
         font-size: 0.7rem;
         font-weight: 500;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         text-decoration: none;
         transition: all 0.2s ease;
     }
 
     .source-link:hover {
-        background: rgba(139, 92, 246, 0.15);
-        color: #a78bfa;
+        background: var(--paper-3);
+        color: var(--ink-blue);
     }
 
     /* Tier colors */
-    .tier-titan .section-title svg { color: #ffd700; }
-    .tier-elite .section-title svg { color: #00aaff; }
-    .tier-master .section-title svg { color: #00cc66; }
+    .tier-titan .section-title svg { color: var(--aged-gold); }
+    .tier-elite .section-title svg { color: var(--ink-blue); }
+    .tier-master .section-title svg { color: var(--verdant); }
 
     /* Responsive */
     @media (max-width: 768px) {

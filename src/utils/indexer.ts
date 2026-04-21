@@ -12,6 +12,9 @@
 
 import { google } from 'googleapis';
 import * as fs from 'fs';
+import { createLogger } from '../lib/logger';
+
+const log = createLogger('Indexer');
 
 // ─── Configuration ──────────────────────────────────────────────────────────
 
@@ -61,12 +64,12 @@ type GoogleNotificationType = 'URL_UPDATED' | 'URL_DELETED';
 
 async function notifyGoogle(url: string, type: GoogleNotificationType = 'URL_UPDATED'): Promise<boolean> {
     if (!GOOGLE_SA_JSON) {
-        console.log('[Indexer] ⚠️  Google SA JSON not configured, skipping Google notification');
+        log.warn('Google SA JSON not configured, skipping Google notification');
         return false;
     }
 
     if (!canCallGoogle()) {
-        console.log(`[Indexer] ⛔ Google daily quota reached (${GOOGLE_DAILY_QUOTA}/day), skipping`);
+        log.warn('Google daily quota reached, skipping', { quota: GOOGLE_DAILY_QUOTA });
         return false;
     }
 
@@ -78,17 +81,15 @@ async function notifyGoogle(url: string, type: GoogleNotificationType = 'URL_UPD
         } else if (fs.existsSync(GOOGLE_SA_JSON)) {
             credentials = JSON.parse(fs.readFileSync(GOOGLE_SA_JSON, 'utf-8'));
         } else {
-            console.log('[Indexer] ⚠️  Invalid GOOGLE_SERVICE_ACCOUNT_JSON');
+            log.warn('Invalid GOOGLE_SERVICE_ACCOUNT_JSON');
             return false;
         }
 
-        // @ts-ignore
-        const auth = new google.auth.JWT(
-            credentials.client_email,
-            undefined,
-            credentials.private_key,
-            ['https://www.googleapis.com/auth/indexing'],
-        );
+        const auth = new google.auth.JWT({
+            email: credentials.client_email,
+            key: credentials.private_key,
+            scopes: ['https://www.googleapis.com/auth/indexing'],
+        });
 
         const indexing = google.indexing({ version: 'v3', auth });
 
@@ -100,10 +101,10 @@ async function notifyGoogle(url: string, type: GoogleNotificationType = 'URL_UPD
         });
 
         quotaState.googleCalls++;
-        console.log(`[Indexer] ✅ Google ${type}: ${url} (${quotaState.googleCalls}/${GOOGLE_DAILY_QUOTA} today)`);
+        log.info(`Google ${type}: ${url}`, { calls: quotaState.googleCalls, quota: GOOGLE_DAILY_QUOTA });
         return response.status === 200;
-    } catch (error: any) {
-        console.error(`[Indexer] ❌ Google API error for ${url}:`, error?.message || error);
+    } catch (error) {
+        log.error(`Google API error for ${url}`, error instanceof Error ? error : new Error(String(error)));
         return false;
     }
 }
@@ -112,7 +113,7 @@ async function notifyGoogle(url: string, type: GoogleNotificationType = 'URL_UPD
 
 async function notifyIndexNow(urls: string[]): Promise<boolean> {
     if (!INDEXNOW_API_KEY) {
-        console.log('[Indexer] ⚠️  INDEXNOW_API_KEY not configured, skipping IndexNow');
+        log.warn('INDEXNOW_API_KEY not configured, skipping IndexNow');
         return false;
     }
 
@@ -140,14 +141,14 @@ async function notifyIndexNow(urls: string[]): Promise<boolean> {
 
             if (response.ok || response.status === 202) {
                 quotaState.indexNowCalls++;
-                console.log(`[Indexer] ✅ IndexNow → ${engineName}: ${urls.length} URLs submitted`);
+                log.info(`IndexNow submitted to ${engineName}`, { urlCount: urls.length });
             } else {
-                console.warn(`[Indexer] ⚠️  IndexNow → ${engineName}: ${response.status} ${response.statusText}`);
+                log.warn(`IndexNow failed for ${engineName}`, { status: response.status });
                 success = false;
             }
-        } catch (error: any) {
+        } catch (error) {
             const engineName = new URL(endpoint).hostname;
-            console.error(`[Indexer] ❌ IndexNow → ${engineName}: ${error?.message || error}`);
+            log.error(`IndexNow error for ${engineName}`, error instanceof Error ? error : new Error(String(error)));
             success = false;
         }
     }
@@ -170,7 +171,7 @@ export async function notifySearchEngines(
     type: GoogleNotificationType = 'URL_UPDATED',
     isHighPriority: boolean = false,
 ): Promise<{ google: boolean; indexNow: boolean }> {
-    console.log(`\n[Indexer] 📢 Notifying search engines: ${url} (${type})`);
+    log.info(`Notifying search engines: ${url}`, { type });
 
     // Google: only ping for new pages or high-priority (TITAN/ELITE) updates
     let googleResult = false;
@@ -196,11 +197,11 @@ export async function notifyBatch(
     highPriorityUrls: Set<string> = new Set(),
 ): Promise<{ googleCount: number; indexNowSuccess: boolean; total: number }> {
     if (urls.length === 0) {
-        console.log('[Indexer] No URLs to notify.');
+        log.debug('No URLs to notify');
         return { googleCount: 0, indexNowSuccess: true, total: 0 };
     }
 
-    console.log(`\n[Indexer] 🚀 Batch notification: ${urls.length} URLs`);
+    log.info(`Batch notification starting`, { urlCount: urls.length });
 
     // 1. IndexNow batch (single request per engine, max 10k URLs)
     const indexNowChunks: string[][] = [];
@@ -218,7 +219,7 @@ export async function notifyBatch(
     let googleCount = 0;
     for (const url of urls) {
         if (!canCallGoogle()) {
-            console.log(`[Indexer] ⛔ Google quota reached, ${urls.length - googleCount} URLs skipped`);
+            log.warn('Google quota reached', { skipped: urls.length - googleCount });
             break;
         }
 
@@ -236,10 +237,12 @@ export async function notifyBatch(
         await new Promise(r => setTimeout(r, 150));
     }
 
-    console.log(`\n[Indexer] 📊 Batch complete:`);
-    console.log(`   Google: ${googleCount}/${urls.length} notified`);
-    console.log(`   IndexNow: ${indexNowSuccess ? '✅' : '⚠️'} (${urls.length} URLs)`);
-    console.log(`   Quota remaining: ${GOOGLE_DAILY_QUOTA - quotaState.googleCalls} Google calls today`);
+    log.info('Batch complete', {
+        googleNotified: googleCount,
+        total: urls.length,
+        indexNowSuccess,
+        googleQuotaRemaining: GOOGLE_DAILY_QUOTA - quotaState.googleCalls,
+    });
 
     return { googleCount, indexNowSuccess, total: urls.length };
 }
@@ -270,9 +273,9 @@ export async function pingSitemap(): Promise<void> {
         try {
             const res = await fetch(ping);
             const engine = new URL(ping).hostname;
-            console.log(`[Indexer] 📡 Sitemap ping → ${engine}: ${res.status}`);
-        } catch (error: any) {
-            console.error(`[Indexer] ❌ Sitemap ping failed:`, error?.message);
+            log.info(`Sitemap ping to ${engine}`, { status: res.status });
+        } catch (error) {
+            log.error('Sitemap ping failed', error instanceof Error ? error : new Error(String(error)));
         }
     }
 }

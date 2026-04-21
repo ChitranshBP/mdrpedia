@@ -1,0 +1,591 @@
+---
+/**
+ * MDRPedia — Ethical Doctors Programme
+ * Landing page with tier descriptions + certified doctor listing + apply CTA
+ */
+import Layout from "../layouts/Layout.astro";
+import SealRound from "../components/SealRound.astro";
+import { prisma } from "../lib/prisma";
+import { scoreBand } from "../lib/ethics-score";
+
+export const prerender = false;
+
+const ethicsTiers = [
+    {
+        kind: 'legend' as const,
+        title: 'Legend',
+        subtitle: 'Ethics Tier I',
+        threshold: '90+',
+        description: 'Physicians whose ethical conduct has shaped institutional policy, inspired systemic change, or demonstrated extraordinary moral courage in the face of professional pressure.',
+        criteria: ['Whistleblower or institutional reform leadership', 'Documented refusal of harmful practices at personal cost', 'Founded ethics-centred programmes adopted widely'],
+    },
+    {
+        kind: 'guardian' as const,
+        title: 'Guardian',
+        subtitle: 'Ethics Tier II',
+        threshold: '75+',
+        description: 'Doctors who consistently demonstrate above-and-beyond ethical care — transparent practice, patient advocacy, and community trust-building over sustained careers.',
+        criteria: ['Sustained pro-bono or underserved community work', 'Published ethics scholarship or guidelines', 'Peer-nominated for integrity and patient-first care'],
+    },
+    {
+        kind: 'advocate' as const,
+        title: 'Advocate',
+        subtitle: 'Ethics Tier III',
+        threshold: '60+',
+        description: 'Practitioners recognised by peers and patients for principled, compassionate practice that exceeds standard obligations.',
+        criteria: ['Patient satisfaction and peer recognition', 'Transparent conflicts-of-interest disclosure', 'Active mentorship with ethical focus'],
+    },
+];
+
+// Fetch certified doctors
+const certifiedDoctors = await prisma.profile.findMany({
+    where: {
+        ethics_status: 'APPROVED',
+        ethics_tier: { not: null },
+    },
+    select: {
+        id: true,
+        full_name: true,
+        slug: true,
+        specialty: true,
+        portrait_url: true,
+        ethics_tier: true,
+        ethics_cert_id: true,
+        ethics_score: true,
+        geography: {
+            select: { country: true, city: true },
+        },
+    },
+    orderBy: { ethics_score: 'desc' },
+    take: 50,
+});
+
+const doctorCount = certifiedDoctors.length;
+const siteBase = Astro.site?.href.replace(/\/$/, '') ?? 'https://mdrpedia.com';
+const canonicalUrl = `${siteBase}/ethical-doctors`;
+const pageDescription = doctorCount > 0
+    ? `Browse ${doctorCount} ethics-certified physicians on MDRPedia. Audit-based, quarterly-verified programme honouring integrity, moral courage, and patient-centred care.`
+    : "MDRPedia's ethics certification programme honours physicians who exemplify integrity, moral courage, and patient-centred care. Audit-based, quarterly-verified.";
+
+// JSON-LD: CollectionPage + ItemList
+const collectionPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Ethics-Certified Physicians",
+    "description": pageDescription,
+    "url": canonicalUrl,
+    "mainEntity": {
+        "@type": "ItemList",
+        "name": "Ethics-Certified Doctors",
+        "numberOfItems": doctorCount,
+        "itemListElement": certifiedDoctors.map((doc, i) => ({
+            "@type": "ListItem",
+            "position": i + 1,
+            "item": {
+                "@type": "Physician",
+                "name": doc.full_name,
+                "medicalSpecialty": doc.specialty,
+                "url": `${siteBase}/ethical-doctors/verify/${doc.ethics_cert_id}`,
+                ...(doc.geography?.country && { "workLocation": { "@type": "Place", "name": doc.geography.country } })
+            }
+        }))
+    }
+};
+
+// JSON-LD: BreadcrumbList
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": siteBase },
+        { "@type": "ListItem", "position": 2, "name": "Ethical Doctors", "item": canonicalUrl }
+    ]
+};
+
+// JSON-LD: FAQPage
+const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "How do I apply for MDRPedia ethics certification?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Submit your application through the Doctor Ethics Dashboard with your contact details and target tier. You will then complete a 21-item checklist covering patient transparency, compliance, and community service." }
+        },
+        {
+            "@type": "Question",
+            "name": "What are the ethics certification tiers?",
+            "acceptedAnswer": { "@type": "Answer", "text": "There are three tiers: Legend (score 90+) for physicians who shaped institutional ethics policy, Guardian (75+) for sustained above-and-beyond ethical care, and Advocate (60+) for principled, compassionate practice exceeding standard obligations." }
+        },
+        {
+            "@type": "Question",
+            "name": "How is the ethics score calculated?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Scores are based on a 21-item audit checklist across three categories: patient transparency, peer review and compliance, and community and pro-bono service. Each item is graded by a reviewer with points earned out of a maximum." }
+        },
+        {
+            "@type": "Question",
+            "name": "What are quarterly check-ins?",
+            "acceptedAnswer": { "@type": "Answer", "text": "After initial certification, doctors must complete quarterly audits to maintain their status. Missing a quarterly check-in applies a 15% score decay. If the score drops below the tier threshold, the certification may be suspended." }
+        }
+    ]
+};
+---
+
+<Layout title="Ethical Doctors Programme | MDRPedia" description={pageDescription}>
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(collectionPageSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+    <header class="hero">
+        <div class="container">
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <a href="/">Home</a>
+                <span class="breadcrumb-sep">/</span>
+                <span class="breadcrumb-current">Ethical Doctors</span>
+            </nav>
+            <span class="eyebrow">The Ethics Programme</span>
+            <h1>Physicians of <em>Principle</em></h1>
+            <p class="hero__sub">
+                Beyond clinical excellence, MDRPedia certifies doctors whose ethical conduct, transparency, and patient advocacy are verified through rigorous quarterly audits.
+            </p>
+            <div class="hero__actions">
+                <a href="/doctor/ethics" class="btn">Apply for Certification</a>
+                <a href="#verified" class="btn btn--outline">View Certified Doctors</a>
+                <a href="/ethical-workplace" class="btn btn--outline">Clinic Certification</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="tiers-section" aria-labelledby="tiers-heading">
+        <div class="container">
+            <h2 id="tiers-heading" class="sr-only">Certification Tiers</h2>
+            <div class="tiers-grid">
+                {ethicsTiers.map(tier => (
+                    <article class="tier-card">
+                        <div class="tier-card__seal">
+                            <SealRound kind={tier.kind} size={120} />
+                        </div>
+                        <h3>{tier.title}</h3>
+                        <span class="tier-card__subtitle">{tier.subtitle}</span>
+                        <span class="tier-card__threshold">Score {tier.threshold}</span>
+                        <p>{tier.description}</p>
+                        <ul class="tier-card__criteria">
+                            {tier.criteria.map(c => (
+                                <li>{c}</li>
+                            ))}
+                        </ul>
+                    </article>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    {certifiedDoctors.length > 0 && (
+        <section class="certified-section" id="verified" aria-labelledby="certified-heading">
+            <div class="container">
+                <h2 id="certified-heading">Certified Ethical Physicians</h2>
+                <p class="section-desc">These doctors have been verified through MDRPedia's audit-based ethics certification.</p>
+                <div class="doctors-grid">
+                    {certifiedDoctors.map(doc => (
+                        <a href={`/ethical-doctors/verify/${doc.ethics_cert_id}`} class="doctor-card">
+                            <div class="doctor-card__tier">
+                                <SealRound kind={doc.ethics_tier!.toLowerCase() as any} size={48} />
+                            </div>
+                            <div class="doctor-card__info">
+                                <h3>{doc.full_name}</h3>
+                                <p class="doctor-card__specialty">{doc.specialty}</p>
+                                {doc.geography && (
+                                    <p class="doctor-card__location">
+                                        {[doc.geography.city, doc.geography.country].filter(Boolean).join(', ')}
+                                    </p>
+                                )}
+                            </div>
+                            <div class="doctor-card__score">
+                                <span class="score-val">{doc.ethics_score?.toFixed(0)}</span>
+                                <span class="score-band">{doc.ethics_score ? scoreBand(doc.ethics_score) : ''}</span>
+                            </div>
+                        </a>
+                    ))}
+                </div>
+            </div>
+        </section>
+    )}
+
+    <section class="process-section" aria-labelledby="process-heading">
+        <div class="container">
+            <h2 id="process-heading">How Certification Works</h2>
+            <div class="process-grid">
+                <div class="process-step">
+                    <span class="step-num">01</span>
+                    <h3>Apply</h3>
+                    <p>Submit your application with contact details and target tier.</p>
+                </div>
+                <div class="process-step">
+                    <span class="step-num">02</span>
+                    <h3>Initial Audit</h3>
+                    <p>Complete a 21-item checklist across patient transparency, compliance, and community service.</p>
+                </div>
+                <div class="process-step">
+                    <span class="step-num">03</span>
+                    <h3>Get Certified</h3>
+                    <p>Score 60+ to earn Advocate, 75+ for Guardian, or 90+ for Legend tier.</p>
+                </div>
+                <div class="process-step">
+                    <span class="step-num">04</span>
+                    <h3>Quarterly Check-ins</h3>
+                    <p>Maintain your certification with quarterly audits. Missed quarters apply a 15% score decay.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="nominate-section">
+        <div class="container">
+            <div class="nominate-card">
+                <h2>Start Your Ethics Certification</h2>
+                <p>Demonstrate your commitment to ethical medical practice. Apply today and earn your embeddable MDRPedia Ethics badge.</p>
+                <a href="/doctor/ethics" class="btn">Apply Now</a>
+            </div>
+        </div>
+    </section>
+</Layout>
+
+<style>
+    .hero {
+        padding: var(--s-9) 0 var(--s-8);
+        text-align: center;
+    }
+
+    .hero h1 {
+        margin-top: 16px;
+    }
+
+    .hero h1 em {
+        font-style: italic;
+        color: var(--verdant);
+    }
+
+    .hero__sub {
+        font-size: 1.15rem;
+        max-width: 56ch;
+        margin: 20px auto 0;
+        color: var(--ink-2);
+    }
+
+    .hero__actions {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        margin-top: 28px;
+    }
+
+    .tiers-section {
+        padding: var(--s-7) 0 var(--s-9);
+    }
+
+    .tiers-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--s-6);
+    }
+
+    .tier-card {
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
+        padding: var(--s-6);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tier-card__seal {
+        margin-bottom: var(--s-4);
+    }
+
+    .tier-card h3 {
+        font-size: 1.5rem;
+        margin: 0;
+    }
+
+    .tier-card__subtitle {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        margin-top: 4px;
+    }
+
+    .tier-card__threshold {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--verdant);
+        font-weight: 600;
+        margin: 4px 0 var(--s-4);
+    }
+
+    .tier-card p {
+        font-size: 0.9rem;
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .tier-card__criteria {
+        list-style: none;
+        padding: 0;
+        margin-top: var(--s-5);
+        text-align: left;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .tier-card__criteria li {
+        font-size: 0.85rem;
+        color: var(--ink-2);
+        padding-left: 20px;
+        position: relative;
+    }
+
+    .tier-card__criteria li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 8px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--verdant);
+        opacity: 0.6;
+    }
+
+    /* Certified Doctors */
+    .certified-section {
+        padding: 0 0 var(--s-9);
+    }
+
+    .certified-section h2 {
+        text-align: center;
+        margin-bottom: 8px;
+    }
+
+    .section-desc {
+        text-align: center;
+        color: var(--ink-2);
+        margin: 0 auto 28px;
+        max-width: 48ch;
+    }
+
+    .doctors-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 12px;
+    }
+
+    .doctor-card {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        padding: 16px 20px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
+        text-decoration: none;
+        color: inherit;
+        transition: border-color 0.2s;
+    }
+
+    .doctor-card:hover {
+        border-color: var(--verdant);
+    }
+
+    .doctor-card__info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .doctor-card__info h3 {
+        font-size: 0.95rem;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .doctor-card__specialty {
+        font-size: 0.8rem;
+        color: var(--ink-2);
+        margin: 2px 0 0;
+    }
+
+    .doctor-card__location {
+        font-size: 0.75rem;
+        color: var(--ink-3);
+        margin: 0;
+    }
+
+    .doctor-card__score {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        flex-shrink: 0;
+    }
+
+    .score-val {
+        font-family: var(--font-mono);
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--verdant);
+    }
+
+    .score-band {
+        font-size: 0.65rem;
+        color: var(--ink-3);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+    }
+
+    /* Process */
+    .process-section {
+        padding: 0 0 var(--s-9);
+    }
+
+    .process-section h2 {
+        text-align: center;
+        margin-bottom: 28px;
+    }
+
+    .process-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--s-5);
+    }
+
+    .process-step {
+        text-align: center;
+    }
+
+    .step-num {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+        color: var(--verdant);
+    }
+
+    .process-step h3 {
+        font-size: 1rem;
+        margin: 6px 0 4px;
+    }
+
+    .process-step p {
+        font-size: 0.85rem;
+        color: var(--ink-2);
+        margin: 0;
+    }
+
+    .nominate-section {
+        padding: 0 0 var(--s-9);
+    }
+
+    .nominate-card {
+        background: var(--verdant-2);
+        border: 1px solid color-mix(in oklch, var(--verdant) 30%, var(--rule));
+        border-radius: var(--r-4);
+        padding: var(--s-7);
+        text-align: center;
+    }
+
+    .nominate-card h2 {
+        font-size: 1.6rem;
+        margin-bottom: 12px;
+    }
+
+    .nominate-card p {
+        margin: 0 auto 24px;
+        max-width: 52ch;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 28px;
+        background: var(--ink);
+        color: var(--paper);
+        font-weight: 500;
+        font-size: 0.9rem;
+        text-decoration: none;
+        border-radius: var(--r-2);
+        transition: opacity var(--t-fast) var(--ease);
+    }
+
+    .btn:hover {
+        opacity: 0.85;
+    }
+
+    .btn--outline {
+        background: transparent;
+        color: var(--ink);
+        border: 1px solid var(--rule);
+    }
+
+    @media (max-width: 900px) {
+        .tiers-grid {
+            grid-template-columns: 1fr;
+            gap: var(--s-5);
+        }
+        .process-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    .breadcrumb {
+        font-size: 0.85rem;
+        margin-bottom: 16px;
+    }
+
+    .breadcrumb a {
+        color: var(--ink-2);
+        text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+        color: var(--ink);
+        text-decoration: underline;
+    }
+
+    .breadcrumb-sep {
+        margin: 0 8px;
+        color: var(--ink-3);
+    }
+
+    .breadcrumb-current {
+        color: var(--ink);
+    }
+
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+    }
+
+    @media (max-width: 600px) {
+        .hero__actions {
+            flex-direction: column;
+            align-items: center;
+        }
+        .process-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

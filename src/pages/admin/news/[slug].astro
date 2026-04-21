@@ -3,6 +3,7 @@
  * MDRPedia — Edit News Article
  */
 import Layout from "../../../layouts/Layout.astro";
+import AdminSidebar from "../../../components/admin/AdminSidebar.astro";
 import { getEntry } from "astro:content";
 import { requireSuperAdmin } from "../../../lib/rbac";
 
@@ -35,19 +36,17 @@ const data = article.data;
 ---
 
 <Layout title={`Edit: ${data.title} — MDRPedia Admin`}>
-    <div class="container admin-dashboard">
+    <div class="admin">
+        <AdminSidebar adminKey={adminKey} activePage="news" />
+        <main class="main">
         <header class="admin-header">
             <div class="admin-header__top">
-                <span class="badge badge--admin">SUPER ADMIN</span>
                 <h1>Edit Article</h1>
                 <span class="slug-display">/{slug}</span>
             </div>
             <div class="admin-actions">
                 <a href={`/news/${slug}`} target="_blank" class="btn btn--outline">
                     View Live &rarr;
-                </a>
-                <a href={`/admin/news?key=${adminKey}`} class="btn btn--outline">
-                    &larr; Back to News
                 </a>
             </div>
         </header>
@@ -105,6 +104,7 @@ const data = article.data;
                 </button>
             </div>
         </form>
+        </main>
     </div>
 </Layout>
 

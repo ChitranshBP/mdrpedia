@@ -1,7 +1,7 @@
 ---
 /**
- * MDRPedia — Similar Doctors Component
- * Shows related specialists in the same specialty/region
+ * MDRPedia — Smart Similar Doctors Component
+ * Multi-factor matching: sub-specialty, techniques, h-index proximity, journals, country
  */
 
 import { prisma } from "../lib/prisma";
@@ -12,6 +12,10 @@ interface Props {
     country: string;
     region?: string | null;
     tier: string;
+    subSpecialty?: string | null;
+    techniques?: string[];
+    journals?: string[];
+    hIndex?: number;
     limit?: number;
 }
 
@@ -21,18 +25,18 @@ const {
     country,
     region,
     tier,
+    subSpecialty,
+    techniques = [],
+    journals = [],
+    hIndex = 0,
     limit = 4,
 } = Astro.props;
 
-// Fetch similar doctors from the same specialty and region
-const similarDoctors = await prisma.profile.findMany({
+// Fetch a broader candidate pool from same specialty for smart scoring
+const candidates = await prisma.profile.findMany({
     where: {
         slug: { not: currentSlug },
         specialty: specialty,
-        geography: {
-            country: country,
-            ...(region ? { region: region } : {}),
-        },
     },
     select: {
         slug: true,
@@ -51,6 +55,13 @@ const similarDoctors = await prisma.profile.findMany({
                 country: true,
             },
         },
+        techniques: {
+            select: { name: true },
+        },
+        citations: {
+            select: { journal: true },
+            take: 20,
+        },
         _count: {
             select: {
                 citations: true,
@@ -58,52 +69,62 @@ const similarDoctors = await prisma.profile.findMany({
         },
     },
     orderBy: [
-        { tier: "asc" }, // TITAN first
+        { tier: "asc" },
         { h_index: "desc" },
     ],
-    take: limit,
+    take: 20,
 });
 
-// If not enough from same region, get more from same specialty
-let additionalDoctors: typeof similarDoctors = [];
-if (similarDoctors.length < limit) {
-    additionalDoctors = await prisma.profile.findMany({
-        where: {
-            slug: {
-                not: currentSlug,
-                notIn: similarDoctors.map((d) => d.slug),
-            },
-            specialty: specialty,
-        },
-        select: {
-            slug: true,
-            full_name: true,
-            title: true,
-            specialty: true,
-            sub_specialty: true,
-            tier: true,
-            portrait_url: true,
-            h_index: true,
-            years_active: true,
-            geography: {
-                select: {
-                    city: true,
-                    region: true,
-                    country: true,
-                },
-            },
-            _count: {
-                select: {
-                    citations: true,
-                },
-            },
-        },
-        orderBy: [{ tier: "asc" }, { h_index: "desc" }],
-        take: limit - similarDoctors.length,
-    });
-}
+// Score each candidate
+const scored = candidates.map(candidate => {
+    let score = 0;
 
-const allSimilar = [...similarDoctors, ...additionalDoctors];
+    // Sub-specialty match (40 points)
+    if (subSpecialty && candidate.sub_specialty &&
+        candidate.sub_specialty.toLowerCase() === subSpecialty.toLowerCase()) {
+        score += 40;
+    }
+
+    // Technique overlap (up to 30 points)
+    if (techniques.length > 0) {
+        const candidateTechs = candidate.techniques.map(t => t.name.toLowerCase());
+        const overlap = techniques.filter(t => candidateTechs.includes(t.toLowerCase())).length;
+        score += Math.min(overlap * 15, 30);
+    }
+
+    // H-index proximity (up to 20 points — closer = better)
+    if (hIndex > 0 && candidate.h_index > 0) {
+        const distance = Math.abs(hIndex - candidate.h_index);
+        const maxDistance = Math.max(hIndex, 50);
+        score += Math.round(Math.max(0, 20 * (1 - distance / maxDistance)));
+    }
+
+    // Journal overlap (up to 15 points)
+    if (journals.length > 0) {
+        const candidateJournals = candidate.citations
+            .map(c => c.journal?.toLowerCase())
+            .filter(Boolean) as string[];
+        const uniqueJournals = [...new Set(candidateJournals)];
+        const overlap = journals.filter(j => uniqueJournals.includes(j.toLowerCase())).length;
+        score += Math.min(overlap * 5, 15);
+    }
+
+    // Same country (10 points)
+    if (candidate.geography?.country === country) {
+        score += 10;
+    }
+
+    return { ...candidate, similarityScore: score };
+});
+
+// Sort by score, then fall back to tier/h-index
+scored.sort((a, b) => {
+    if (b.similarityScore !== a.similarityScore) return b.similarityScore - a.similarityScore;
+    if (a.tier !== b.tier) return a.tier < b.tier ? -1 : 1;
+    return (b.h_index || 0) - (a.h_index || 0);
+});
+
+const allSimilar = scored.slice(0, limit);
 
 const tierColors: Record<string, string> = {
     TITAN: "var(--titan-border, #FFD700)",
@@ -269,9 +290,9 @@ const tierLabels: Record<string, string> = {
     .similar-doctors {
         margin: var(--space-2xl) 0;
         padding: var(--space-xl);
-        background: var(--bg-card);
-        border: 1px solid var(--border-subtle);
-        border-radius: var(--radius-lg);
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
     }
 
     .similar-doctors__header {
@@ -286,13 +307,13 @@ const tierLabels: Record<string, string> = {
         align-items: center;
         gap: 10px;
         font-size: 1.1rem;
-        font-weight: 600;
+        font-weight: 500;
         margin: 0;
-        color: var(--text-primary);
+        color: var(--ink);
     }
 
     .similar-doctors__header svg {
-        color: var(--accent-purple);
+        color: var(--ink-blue);
     }
 
     .view-all-link {
@@ -300,7 +321,7 @@ const tierLabels: Record<string, string> = {
         align-items: center;
         gap: 4px;
         font-size: 0.85rem;
-        color: var(--accent-purple);
+        color: var(--ink-blue);
         text-decoration: none;
         font-weight: 500;
         transition: gap var(--transition-fast);
@@ -320,9 +341,9 @@ const tierLabels: Record<string, string> = {
         display: flex;
         gap: var(--space-md);
         padding: var(--space-md);
-        background: var(--bg-base);
-        border: 1px solid var(--border-subtle);
-        border-radius: var(--radius-md);
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         text-decoration: none;
         transition: all var(--transition-base);
     }
@@ -330,7 +351,7 @@ const tierLabels: Record<string, string> = {
     .doctor-card:hover {
         border-color: var(--tier-color);
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        box-shadow: var(--shadow-1);
     }
 
     .doctor-card__portrait {
@@ -352,10 +373,10 @@ const tierLabels: Record<string, string> = {
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, var(--accent-purple), #6366f1);
+        background: var(--paper-3);
         border-radius: var(--radius-md);
-        color: white;
-        font-weight: 700;
+        color: var(--ink);
+        font-weight: 500;
         font-size: 1.1rem;
         border: 2px solid var(--tier-color);
     }
@@ -385,7 +406,7 @@ const tierLabels: Record<string, string> = {
         font-size: 0.95rem;
         font-weight: 600;
         margin: 0 0 2px;
-        color: var(--text-primary);
+        color: var(--ink);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -393,19 +414,19 @@ const tierLabels: Record<string, string> = {
 
     .doctor-card__title {
         font-weight: 400;
-        color: var(--text-muted);
+        color: var(--ink-3);
         font-size: 0.85em;
     }
 
     .doctor-card__specialty {
         font-size: 0.8rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         margin: 0 0 2px;
     }
 
     .doctor-card__location {
         font-size: 0.75rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin: 0 0 8px;
     }
 
@@ -419,14 +440,14 @@ const tierLabels: Record<string, string> = {
         align-items: center;
         gap: 4px;
         font-size: 0.7rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         padding: 2px 6px;
-        background: rgba(139, 92, 246, 0.08);
+        background: var(--paper-3);
         border-radius: var(--radius-sm);
     }
 
     .doctor-card__stats .stat svg {
-        color: var(--accent-purple);
+        color: var(--ink-blue);
     }
 
     @media (max-width: 640px) {

@@ -118,6 +118,25 @@ ${indexEntries.join('\n')}
     entries.push(buildUrlEntry(SITE_URL, 1.0, 'daily', today));
     entries.push(buildUrlEntry(`${SITE_URL}/portal`, 0.5, 'monthly', today));
 
+    // About / disambiguation pages (high SEO value for brand queries)
+    entries.push(buildUrlEntry(`${SITE_URL}/about`, 0.8, 'monthly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/about/mdpedia`, 0.8, 'weekly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/about/drpedia`, 0.8, 'weekly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/about/our-name`, 0.7, 'monthly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/brand`, 0.5, 'monthly', today));
+
+    // New content pages
+    entries.push(buildUrlEntry(`${SITE_URL}/rankings`, 0.9, 'weekly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/statistics`, 0.7, 'weekly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/compare`, 0.6, 'monthly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/lineage`, 0.6, 'monthly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/geography`, 0.8, 'weekly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/nobel-laureates`, 0.8, 'monthly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/institutions`, 0.8, 'weekly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/rare-diseases`, 0.7, 'monthly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/clinical-trials`, 0.7, 'monthly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/news`, 0.8, 'daily', today));
+
     // Doctor profiles
     for (const doc of doctors) {
         entries.push(

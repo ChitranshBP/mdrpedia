@@ -86,7 +86,7 @@ export async function getDoctorRankingsAsync(): Promise<Record<string, DoctorRan
             });
         }
     } catch (e) {
-        console.log('Rankings falling back to static files:', e);
+        // Fallback to static files when DB is unavailable
 
         // Fallback to static files
         if (!fs.existsSync(DOCTORS_DIR)) {
@@ -118,7 +118,7 @@ export async function getDoctorRankingsAsync(): Promise<Record<string, DoctorRan
                     geography: data.geography
                 });
             } catch (err) {
-                console.error(`Error parsing ${file} for rankings`);
+                // Skip unparseable file
             }
         }
     }
@@ -221,4 +221,47 @@ export function getTopDoctors(specialty?: string, limit = 10): DoctorRank[] {
     }
 
     return list.sort((a, b) => b.score - a.score).slice(0, limit);
+}
+
+/**
+ * Returns the top 100 doctors globally, with optional filters.
+ * Tiebreaker: ranking_score DESC, h_index DESC, full_name ASC
+ */
+export async function getTop100(filters?: { specialty?: string; country?: string }): Promise<(DoctorRank & { globalRank: number })[]> {
+    const all = await getDoctorRankingsAsync();
+    let list = Object.values(all);
+
+    // Sort globally first for rank assignment
+    list.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        if ((b.hIndex || 0) !== (a.hIndex || 0)) return (b.hIndex || 0) - (a.hIndex || 0);
+        return a.fullName.localeCompare(b.fullName);
+    });
+
+    // Assign global ranks
+    const ranked = list.slice(0, 100).map((doc, i) => ({
+        ...doc,
+        globalRank: i + 1,
+    }));
+
+    // Apply filters after ranking
+    let result = ranked;
+    if (filters?.specialty) {
+        result = result.filter(d => d.specialty === filters.specialty);
+    }
+    if (filters?.country) {
+        result = result.filter(d => d.geography?.country === filters.country);
+    }
+
+    return result;
+}
+
+/**
+ * Checks if a doctor is in the top 100 and returns their rank.
+ * Returns null if not in top 100.
+ */
+export async function getTop100Rank(slug: string): Promise<number | null> {
+    const top100 = await getTop100();
+    const entry = top100.find(d => d.slug === slug);
+    return entry ? entry.globalRank : null;
 }

@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { prisma } from '../../../lib/prisma';
 import { requireSuperAdmin } from '../../../lib/rbac';
 import { logAdminAction } from '../../../lib/audit';
+import { checkRateLimit, getClientIdentifier, RATE_LIMITS, rateLimitResponse } from '../../../lib/rate-limit';
 
 export const prerender = false;
 
@@ -10,7 +11,19 @@ export const prerender = false;
 export const POST: APIRoute = async ({ request }) => {
     if (!requireSuperAdmin(request)) return new Response("Unauthorized", { status: 401 });
 
-    const { mentorSlug, studentSlug, relationship } = await request.json();
+    const rateCheck = checkRateLimit(getClientIdentifier(request), RATE_LIMITS.adminGeneral);
+    if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime);
+
+    let body;
+    try {
+        body = await request.json();
+    } catch {
+        return new Response(JSON.stringify({ success: false, message: "Invalid JSON body" }), {
+            status: 400,
+            headers: { "Content-Type": "application/json" }
+        });
+    }
+    const { mentorSlug, studentSlug, relationship } = body;
 
     if (!mentorSlug || !studentSlug) {
         return new Response(JSON.stringify({ success: false, message: "Missing mentor or student slug" }), { status: 400 });
@@ -38,6 +51,8 @@ export const POST: APIRoute = async ({ request }) => {
                 }
             }
         });
+
+        await logAdminAction('CREATE_LINEAGE', studentSlug, { mentorSlug, relationship }, request);
 
         return new Response(JSON.stringify({
             success: true,

@@ -1,0 +1,43 @@
+---
+/**
+ * SealRound — Circular SVG seal for tier/ethics badges
+ * Based on MDRPedia 2.0 design system (chrome.js SealRound)
+ */
+interface Props {
+  kind: 'titan' | 'elite' | 'master' | 'legend' | 'guardian' | 'advocate';
+  id?: string;
+  size?: number;
+}
+
+const { kind, id = 'MDR-0001', size = 180 } = Astro.props;
+
+const config: Record<string, { label: string; color: string; letter: string }> = {
+  titan:    { label: 'TITAN \u00B7 TIER I',       color: 'var(--aged-gold)',  letter: 'T' },
+  elite:    { label: 'ELITE \u00B7 TIER II',      color: 'var(--ink-blue)',   letter: 'E' },
+  master:   { label: 'MASTER \u00B7 TIER III',    color: 'var(--slate)',      letter: 'M' },
+  legend:   { label: 'LEGEND \u00B7 ETHICS I',    color: 'var(--verdant)',    letter: 'L' },
+  guardian: { label: 'GUARDIAN \u00B7 ETHICS II',  color: 'var(--guardian)',   letter: 'G' },
+  advocate: { label: 'ADVOCATE \u00B7 ETHICS III', color: 'var(--advocate)',  letter: 'A' },
+};
+
+const { label, color, letter } = config[kind] || config.legend;
+const arcId = `arc-${kind}-${id}`;
+const circText = `${label} \u00B7 ${label} \u00B7`;
+---
+
+<svg viewBox="0 0 200 200" width={size} height={size} class="seal-round" style={`color:${color}`}>
+  <defs>
+    <path id={arcId} d="M 100 100 m -82 0 a 82 82 0 1 1 164 0 a 82 82 0 1 1 -164 0" />
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="none" stroke="currentColor" stroke-width="1"/>
+  <circle cx="100" cy="100" r="82" fill="none" stroke="currentColor" stroke-width="0.6" stroke-dasharray="1 3"/>
+  <circle cx="100" cy="100" r="60" fill="none" stroke="currentColor" stroke-width="1"/>
+  <text font-family="JetBrains Mono, monospace" font-size="8" letter-spacing="4" fill="currentColor">
+    <textPath href={`#${arcId}`} startOffset="0">{circText}</textPath>
+  </text>
+  <text x="100" y="96" text-anchor="middle" font-family="'Source Serif 4', serif" font-size="58" font-weight="400" fill="currentColor">{letter}</text>
+  <text x="100" y="122" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" letter-spacing="2" fill="currentColor">MDRPEDIA</text>
+  <text x="100" y="134" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" letter-spacing="1.5" fill="currentColor" opacity="0.7">{`\u2116 ${id}`}</text>
+  <line x1="70" y1="145" x2="130" y2="145" stroke="currentColor" stroke-width="0.5"/>
+  <text x="100" y="156" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" letter-spacing="1.5" fill="currentColor" opacity="0.7">VERIFIED</text>
+</svg>

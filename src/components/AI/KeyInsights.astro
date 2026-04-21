@@ -16,12 +16,12 @@ const { insights, doctorName, tier = 'UNRANKED' } = Astro.props;
 
 // Category configuration
 const categoryConfig: Record<KeyInsight['category'], { icon: string; color: string }> = {
-    ACHIEVEMENT: { icon: '🏆', color: '#ffd700' },
-    INNOVATION: { icon: '💡', color: '#f59e0b' },
-    IMPACT: { icon: '🌍', color: '#10b981' },
-    EXPERTISE: { icon: '🎯', color: '#3b82f6' },
-    RECOGNITION: { icon: '⭐', color: '#ec4899' },
-    LEADERSHIP: { icon: '👑', color: '#8b5cf6' },
+    ACHIEVEMENT: { icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6m12 5h1.5a2.5 2.5 0 0 0 0-5H18M6 9a6 6 0 0 0 12 0V4H6v5zm3 12h6m-3-3v3"/></svg>', color: '#ffd700' },
+    INNOVATION: { icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 21h6m-3-3v3M12 3a6 6 0 0 0-4 10.5V17h8v-3.5A6 6 0 0 0 12 3z"/></svg>', color: '#f59e0b' },
+    IMPACT: { icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zM2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>', color: '#10b981' },
+    EXPERTISE: { icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zM12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12zM12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>', color: '#3b82f6' },
+    RECOGNITION: { icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>', color: '#ec4899' },
+    LEADERSHIP: { icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>', color: '#8b5cf6' },
 };
 ---
 
@@ -73,7 +73,7 @@ const categoryConfig: Record<KeyInsight['category'], { icon: string; color: stri
         {insights.topInsights.map((insight, index) => (
             <div class="insight-card" style={`--insight-color: ${categoryConfig[insight.category].color};`}>
                 <div class="insight-header">
-                    <span class="insight-icon">{categoryConfig[insight.category].icon}</span>
+                    <span class="insight-icon" set:html={categoryConfig[insight.category].icon}></span>
                     <span class="insight-category">{insight.category.replace('_', ' ')}</span>
                 </div>
                 <p class="insight-text">{insight.insight}</p>
@@ -138,12 +138,12 @@ const categoryConfig: Record<KeyInsight['category'], { icon: string; color: stri
 
 <style>
     .insights-section {
-        background: var(--card-bg, rgba(20, 20, 35, 0.8));
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 2rem;
         margin-bottom: 2rem;
-        backdrop-filter: blur(10px);
+        
     }
 
     .section-header {
@@ -153,7 +153,7 @@ const categoryConfig: Record<KeyInsight['category'], { icon: string; color: stri
         gap: 1rem;
         margin-bottom: 1.5rem;
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
+        border-bottom: 1px solid var(--rule);
     }
 
     .section-title {
@@ -161,35 +161,35 @@ const categoryConfig: Record<KeyInsight['category'], { icon: string; color: stri
         align-items: center;
         gap: 0.75rem;
         font-size: 1.25rem;
-        font-weight: 700;
+        font-weight: 500;
         margin: 0;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .section-title svg {
-        color: #f59e0b;
+        color: var(--aged-gold);
         opacity: 0.9;
     }
 
     .updated-badge {
         font-size: 0.7rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     /* One-liner */
     .oneliner-card {
         margin-bottom: 1.5rem;
         padding: 1.25rem;
-        background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1));
-        border: 1px solid rgba(139, 92, 246, 0.15);
-        border-radius: 12px;
+        background: var(--paper-3);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
     }
 
     .oneliner-text {
         margin: 0;
         font-size: 1.1rem;
         font-weight: 500;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
         line-height: 1.6;
         text-align: center;
     }
@@ -210,9 +210,9 @@ const categoryConfig: Record<KeyInsight['category'], { icon: string; color: stri
         align-items: center;
         gap: 0.25rem;
         padding: 1rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 10px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         text-align: center;
     }
 
@@ -223,12 +223,12 @@ const categoryConfig: Record<KeyInsight['category'], { icon: string; color: stri
     .stat-value {
         font-size: 1.5rem;
         font-weight: 700;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .stat-label {
         font-size: 0.7rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     /* Notable For */
@@ -240,7 +240,7 @@ const categoryConfig: Record<KeyInsight['category'], { icon: string; color: stri
         font-size: 0.85rem;
         font-weight: 600;
         margin: 0 0 0.75rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .notable-tags {
@@ -251,11 +251,11 @@ const categoryConfig: Record<KeyInsight['category'], { icon: string; color: stri
 
     .notable-tag {
         padding: 6px 14px;
-        background: rgba(16, 185, 129, 0.1);
-        border: 1px solid rgba(16, 185, 129, 0.2);
-        border-radius: 100px;
+        background: var(--paper-3);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-pill);
         font-size: 0.85rem;
-        color: #10b981;
+        color: var(--verdant);
     }
 
     /* Insights List */
@@ -268,16 +268,16 @@ const categoryConfig: Record<KeyInsight['category'], { icon: string; color: stri
 
     .insight-card {
         padding: 1.25rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
         border-left: 3px solid var(--insight-color);
-        border-radius: 10px;
+        border-radius: var(--r-3);
         transition: all 0.2s ease;
     }
 
     .insight-card:hover {
-        background: rgba(255, 255, 255, 0.03);
-        border-color: rgba(255, 255, 255, 0.1);
+        background: var(--paper-3);
+        border-color: var(--rule-strong);
     }
 
     .insight-header {
@@ -301,7 +301,7 @@ const categoryConfig: Record<KeyInsight['category'], { icon: string; color: stri
 
     .insight-text {
         font-size: 0.95rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         line-height: 1.6;
         margin: 0 0 0.75rem;
     }
@@ -324,13 +324,13 @@ const categoryConfig: Record<KeyInsight['category'], { icon: string; color: stri
 
     .metric-label {
         font-size: 0.75rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .insight-evidence {
         font-size: 0.8rem;
         font-style: italic;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         line-height: 1.5;
         margin: 0.5rem 0;
     }
@@ -338,25 +338,25 @@ const categoryConfig: Record<KeyInsight['category'], { icon: string; color: stri
     .insight-source {
         display: inline-block;
         padding: 2px 6px;
-        background: rgba(255, 255, 255, 0.05);
+        background: var(--paper-3);
         border-radius: 4px;
         font-size: 0.7rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         text-decoration: none;
         transition: all 0.2s;
     }
 
     .insight-source:hover {
-        background: rgba(139, 92, 246, 0.15);
-        color: #a78bfa;
+        background: var(--paper-3);
+        color: var(--ink-blue);
     }
 
     /* AI Summary */
     .ai-summary {
         padding: 1.25rem;
-        background: rgba(139, 92, 246, 0.05);
-        border: 1px solid rgba(139, 92, 246, 0.1);
-        border-radius: 12px;
+        background: var(--paper-3);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
     }
 
     .ai-summary-header {
@@ -366,26 +366,26 @@ const categoryConfig: Record<KeyInsight['category'], { icon: string; color: stri
         margin-bottom: 0.75rem;
         font-size: 0.75rem;
         font-weight: 600;
-        color: #a78bfa;
+        color: var(--ink-blue);
         text-transform: uppercase;
         letter-spacing: 0.03em;
     }
 
     .ai-summary-header svg {
-        color: #a78bfa;
+        color: var(--ink-blue);
     }
 
     .ai-summary-text {
         font-size: 0.9rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         line-height: 1.7;
         margin: 0;
     }
 
     /* Tier colors */
-    .tier-titan .section-title svg { color: #ffd700; }
-    .tier-elite .section-title svg { color: #00aaff; }
-    .tier-master .section-title svg { color: #00cc66; }
+    .tier-titan .section-title svg { color: var(--aged-gold); }
+    .tier-elite .section-title svg { color: var(--ink-blue); }
+    .tier-master .section-title svg { color: var(--verdant); }
 
     @media (max-width: 768px) {
         .insights-section {

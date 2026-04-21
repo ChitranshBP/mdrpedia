@@ -70,7 +70,7 @@ export async function GET({ params }: { params: { slug: string } }) {
         </div>
     `;
 
-    const svg = await satori(markup, {
+    const svg = await satori(markup as any, {
         width: 1200,
         height: 630,
         fonts: [
@@ -87,7 +87,7 @@ export async function GET({ params }: { params: { slug: string } }) {
     const pngData = resvg.render();
     const pngBuffer = pngData.asPng();
 
-    return new Response(pngBuffer as Buffer, {
+    return new Response(pngBuffer as unknown as BodyInit, {
         headers: {
             'Content-Type': 'image/png',
             // Cache for 1 year - OG images rarely change

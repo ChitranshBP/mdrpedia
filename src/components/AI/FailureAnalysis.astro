@@ -16,12 +16,12 @@ const { analyses, doctorName, tier = 'UNRANKED' } = Astro.props;
 
 // Reason configuration
 const reasonConfig: Record<FailureAnalysis['reasonForFailure'], { label: string; icon: string; color: string }> = {
-    SAFETY_CONCERNS: { label: 'Safety Concerns', icon: '⚠️', color: '#ef4444' },
-    BETTER_ALTERNATIVE: { label: 'Better Alternative Found', icon: '🔄', color: '#10b981' },
-    LIMITED_EFFICACY: { label: 'Limited Efficacy', icon: '📉', color: '#f59e0b' },
-    COMPLICATIONS: { label: 'Complication Rate', icon: '🏥', color: '#f97316' },
-    TECHNOLOGICAL_ADVANCEMENT: { label: 'Technology Evolved', icon: '🚀', color: '#3b82f6' },
-    COST_PROHIBITIVE: { label: 'Cost Prohibitive', icon: '💰', color: '#8b5cf6' },
+    SAFETY_CONCERNS: { label: 'Safety Concerns', icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01"/></svg>', color: '#ef4444' },
+    BETTER_ALTERNATIVE: { label: 'Better Alternative Found', icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>', color: '#10b981' },
+    LIMITED_EFFICACY: { label: 'Limited Efficacy', icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M23 18l-9.5-9.5-5 5L1 6"/></svg>', color: '#f59e0b' },
+    COMPLICATIONS: { label: 'Complication Rate', icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-4h6v4M12 7v4M10 9h4"/></svg>', color: '#f97316' },
+    TECHNOLOGICAL_ADVANCEMENT: { label: 'Technology Evolved', icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>', color: '#3b82f6' },
+    COST_PROHIBITIVE: { label: 'Cost Prohibitive', icon: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>', color: '#8b5cf6' },
 };
 ---
 
@@ -61,7 +61,7 @@ const reasonConfig: Record<FailureAnalysis['reasonForFailure'], { label: string;
                         class="reason-badge"
                         style={`--reason-color: ${reasonConfig[analysis.reasonForFailure].color};`}
                     >
-                        <span class="reason-icon">{reasonConfig[analysis.reasonForFailure].icon}</span>
+                        <span class="reason-icon" set:html={reasonConfig[analysis.reasonForFailure].icon}></span>
                         {reasonConfig[analysis.reasonForFailure].label}
                     </span>
                 </div>
@@ -153,12 +153,12 @@ const reasonConfig: Record<FailureAnalysis['reasonForFailure'], { label: string;
 
 <style>
     .failure-analysis-section {
-        background: var(--card-bg, rgba(20, 20, 35, 0.8));
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 2rem;
         margin-bottom: 2rem;
-        backdrop-filter: blur(10px);
+        
     }
 
     .section-header {
@@ -167,7 +167,7 @@ const reasonConfig: Record<FailureAnalysis['reasonForFailure'], { label: string;
         gap: 0.5rem;
         margin-bottom: 1.5rem;
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
+        border-bottom: 1px solid var(--rule);
     }
 
     .section-title {
@@ -175,19 +175,19 @@ const reasonConfig: Record<FailureAnalysis['reasonForFailure'], { label: string;
         align-items: center;
         gap: 0.75rem;
         font-size: 1.25rem;
-        font-weight: 700;
+        font-weight: 500;
         margin: 0;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .section-title svg {
-        color: #f59e0b;
+        color: var(--aged-gold);
         opacity: 0.9;
     }
 
     .section-subtitle {
         font-size: 0.85rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .analysis-intro {
@@ -195,13 +195,13 @@ const reasonConfig: Record<FailureAnalysis['reasonForFailure'], { label: string;
         padding: 1rem;
         background: rgba(245, 158, 11, 0.05);
         border: 1px solid rgba(245, 158, 11, 0.1);
-        border-radius: 10px;
+        border-radius: var(--r-3);
     }
 
     .analysis-intro p {
         margin: 0;
         font-size: 0.9rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         line-height: 1.6;
     }
 
@@ -212,15 +212,15 @@ const reasonConfig: Record<FailureAnalysis['reasonForFailure'], { label: string;
     }
 
     .analysis-card {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 12px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         overflow: hidden;
         transition: all 0.2s ease;
     }
 
     .analysis-card:hover {
-        border-color: rgba(255, 255, 255, 0.1);
+        border-color: var(--rule-strong);
     }
 
     .card-header {
@@ -229,8 +229,8 @@ const reasonConfig: Record<FailureAnalysis['reasonForFailure'], { label: string;
         justify-content: space-between;
         gap: 1rem;
         padding: 1.25rem;
-        background: rgba(255, 255, 255, 0.02);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        background: var(--paper-2);
+        border-bottom: 1px solid var(--rule);
     }
 
     .procedure-info {
@@ -243,12 +243,12 @@ const reasonConfig: Record<FailureAnalysis['reasonForFailure'], { label: string;
         font-size: 1.1rem;
         font-weight: 700;
         margin: 0;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .year-range {
         font-size: 0.75rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .reason-badge {
@@ -257,7 +257,7 @@ const reasonConfig: Record<FailureAnalysis['reasonForFailure'], { label: string;
         gap: 0.35rem;
         padding: 4px 10px;
         background: color-mix(in srgb, var(--reason-color) 15%, transparent);
-        border-radius: 100px;
+        border-radius: var(--r-pill);
         font-size: 0.7rem;
         font-weight: 600;
         color: var(--reason-color);
@@ -287,19 +287,19 @@ const reasonConfig: Record<FailureAnalysis['reasonForFailure'], { label: string;
         gap: 0.5rem;
         font-size: 0.75rem;
         font-weight: 700;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         text-transform: uppercase;
         letter-spacing: 0.05em;
         margin: 0;
     }
 
     .info-label svg {
-        color: #f59e0b;
+        color: var(--aged-gold);
     }
 
     .info-text {
         font-size: 0.9rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         line-height: 1.6;
         margin: 0;
     }
@@ -319,13 +319,13 @@ const reasonConfig: Record<FailureAnalysis['reasonForFailure'], { label: string;
 
     .lessons-list li {
         font-size: 0.875rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         line-height: 1.6;
         margin-bottom: 0.35rem;
     }
 
     .lessons-list li::marker {
-        color: #10b981;
+        color: var(--verdant);
     }
 
     /* Contribution Section */
@@ -338,7 +338,7 @@ const reasonConfig: Record<FailureAnalysis['reasonForFailure'], { label: string;
 
     .contribution-text {
         font-size: 0.9rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         line-height: 1.6;
         margin: 0;
     }
@@ -349,18 +349,18 @@ const reasonConfig: Record<FailureAnalysis['reasonForFailure'], { label: string;
         align-items: center;
         gap: 0.5rem;
         padding-top: 0.75rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        border-top: 1px solid var(--rule);
     }
 
     .successor-label {
         font-size: 0.75rem;
         font-weight: 600;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .successor-name {
         font-size: 0.875rem;
-        color: #10b981;
+        color: var(--verdant);
         font-weight: 500;
     }
 
@@ -374,13 +374,13 @@ const reasonConfig: Record<FailureAnalysis['reasonForFailure'], { label: string;
     .outcomes-label {
         font-size: 0.75rem;
         font-weight: 600;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         flex-shrink: 0;
     }
 
     .outcomes-text {
         font-size: 0.875rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
     }
 
     /* References */
@@ -394,7 +394,7 @@ const reasonConfig: Record<FailureAnalysis['reasonForFailure'], { label: string;
     .references-label {
         font-size: 0.75rem;
         font-weight: 600;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .references-list {
@@ -404,24 +404,24 @@ const reasonConfig: Record<FailureAnalysis['reasonForFailure'], { label: string;
 
     .reference-link {
         padding: 2px 8px;
-        background: rgba(255, 255, 255, 0.05);
+        background: var(--paper-3);
         border-radius: 4px;
         font-size: 0.7rem;
         font-weight: 500;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         text-decoration: none;
         transition: all 0.2s ease;
     }
 
     .reference-link:hover {
-        background: rgba(139, 92, 246, 0.15);
-        color: #a78bfa;
+        background: var(--paper-3);
+        color: var(--ink-blue);
     }
 
     /* Tier colors */
-    .tier-titan .section-title svg { color: #ffd700; }
-    .tier-elite .section-title svg { color: #00aaff; }
-    .tier-master .section-title svg { color: #00cc66; }
+    .tier-titan .section-title svg { color: var(--aged-gold); }
+    .tier-elite .section-title svg { color: var(--ink-blue); }
+    .tier-master .section-title svg { color: var(--verdant); }
 
     @media (max-width: 768px) {
         .failure-analysis-section {

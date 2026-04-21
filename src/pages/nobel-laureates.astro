@@ -24,14 +24,6 @@ const seoDescription =
 
 <Layout title={seoTitle} description={seoDescription}>
     <div class="nobel-page">
-        <!-- Ambient Background -->
-        <div class="page-bg">
-            <div class="bg-gradient"></div>
-            <div class="bg-grid"></div>
-            <div class="bg-orb bg-orb--1"></div>
-            <div class="bg-orb bg-orb--2"></div>
-        </div>
-
         <div class="container">
             <!-- Hero Section -->
             <header class="page-header">
@@ -98,7 +90,6 @@ const seoDescription =
                             <path d="M24 38h16"/>
                         </svg>
                     </div>
-                    <div class="medal-glow"></div>
                 </div>
             </section>
 
@@ -288,73 +279,13 @@ const seoDescription =
     .nobel-page {
         min-height: 100vh;
         position: relative;
-        overflow: hidden;
-    }
-
-    /* Background */
-    .page-bg {
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        z-index: 0;
-    }
-
-    .bg-gradient {
-        position: absolute;
-        top: -300px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 1000px;
-        height: 600px;
-        background: radial-gradient(ellipse, rgba(255, 215, 0, 0.08) 0%, transparent 70%);
-        filter: blur(80px);
-    }
-
-    .bg-grid {
-        position: absolute;
-        inset: 0;
-        background-image:
-            linear-gradient(rgba(255, 215, 0, 0.02) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 215, 0, 0.02) 1px, transparent 1px);
-        background-size: 60px 60px;
-        mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
-    }
-
-    .bg-orb {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(100px);
-        animation: float 25s ease-in-out infinite;
-    }
-
-    .bg-orb--1 {
-        width: 500px;
-        height: 500px;
-        background: rgba(255, 215, 0, 0.06);
-        top: 20%;
-        right: -200px;
-    }
-
-    .bg-orb--2 {
-        width: 400px;
-        height: 400px;
-        background: rgba(255, 170, 0, 0.04);
-        bottom: 10%;
-        left: -150px;
-        animation-delay: -12s;
-    }
-
-    @keyframes float {
-        0%, 100% { transform: translateY(0) scale(1); }
-        50% { transform: translateY(-40px) scale(1.05); }
+        background: var(--paper);
     }
 
     .container {
         max-width: 1100px;
         margin: 0 auto;
         padding: 0 1.5rem;
-        position: relative;
-        z-index: 1;
     }
 
     /* Header */
@@ -368,13 +299,14 @@ const seoDescription =
         align-items: center;
         gap: 8px;
         padding: 8px 18px;
-        background: rgba(255, 215, 0, 0.08);
-        border: 1px solid rgba(255, 215, 0, 0.2);
-        border-radius: 100px;
+        background: var(--aged-gold-2);
+        border: 1px solid var(--aged-gold);
+        border-radius: var(--r-pill);
         font-size: 0.7rem;
-        font-weight: 700;
+        font-weight: 600;
         letter-spacing: 0.15em;
-        color: #ffd700;
+        font-family: var(--font-mono);
+        color: var(--aged-gold);
         margin-bottom: 24px;
     }
 
@@ -384,19 +316,17 @@ const seoDescription =
     }
 
     .header-title {
+        font-family: var(--font-serif);
         font-size: clamp(2.5rem, 5vw, 4rem);
-        font-weight: 800;
-        background: linear-gradient(135deg, #fff 0%, #ffd700 50%, #ffaa00 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 20px;
         letter-spacing: -0.03em;
     }
 
     .header-subtitle {
         font-size: 1.15rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         max-width: 600px;
         margin: 0 auto 40px;
         line-height: 1.7;
@@ -407,9 +337,9 @@ const seoDescription =
         align-items: center;
         gap: 32px;
         padding: 20px 40px;
-        background: rgba(255, 215, 0, 0.03);
-        border: 1px solid rgba(255, 215, 0, 0.1);
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
     }
 
     .stat-box {
@@ -419,14 +349,14 @@ const seoDescription =
     .stat-value {
         display: block;
         font-size: 1.5rem;
-        font-weight: 800;
-        color: #ffd700;
+        font-weight: 500;
+        color: var(--aged-gold);
         font-family: var(--font-mono);
     }
 
     .stat-label {
         font-size: 0.7rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         text-transform: uppercase;
         letter-spacing: 0.1em;
     }
@@ -434,7 +364,7 @@ const seoDescription =
     .stat-divider {
         width: 1px;
         height: 40px;
-        background: rgba(255, 215, 0, 0.15);
+        background: var(--rule);
     }
 
     /* Introduction Section */
@@ -443,21 +373,22 @@ const seoDescription =
         grid-template-columns: 1fr 280px;
         gap: 48px;
         padding: 48px;
-        background: rgba(255, 215, 0, 0.02);
-        border: 1px solid rgba(255, 215, 0, 0.08);
-        border-radius: 24px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         margin-bottom: 64px;
     }
 
     .intro-content h2 {
+        font-family: var(--font-serif);
         font-size: 1.75rem;
-        font-weight: 700;
-        color: #fff;
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 20px;
     }
 
     .intro-content p {
-        color: var(--text-secondary);
+        color: var(--ink-2);
         line-height: 1.7;
         margin-bottom: 16px;
     }
@@ -479,8 +410,8 @@ const seoDescription =
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(255, 215, 0, 0.08);
-        border: 2px solid rgba(255, 215, 0, 0.2);
+        background: var(--aged-gold-2);
+        border: 2px solid var(--aged-gold);
         border-radius: 50%;
         position: relative;
         z-index: 1;
@@ -489,15 +420,7 @@ const seoDescription =
     .medal-icon svg {
         width: 60px;
         height: 60px;
-        color: #ffd700;
-    }
-
-    .medal-glow {
-        position: absolute;
-        width: 200px;
-        height: 200px;
-        background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
-        border-radius: 50%;
+        color: var(--aged-gold);
     }
 
     /* Section Title */
@@ -505,16 +428,17 @@ const seoDescription =
         display: flex;
         align-items: center;
         gap: 12px;
+        font-family: var(--font-serif);
         font-size: 1.25rem;
-        font-weight: 700;
-        color: #fff;
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 32px;
     }
 
     .section-title svg {
         width: 24px;
         height: 24px;
-        color: #ffd700;
+        color: var(--aged-gold);
     }
 
     /* Laureates Grid */
@@ -530,33 +454,22 @@ const seoDescription =
 
     .laureate-card {
         position: relative;
-        background: linear-gradient(145deg, rgba(30, 30, 45, 0.8), rgba(20, 20, 35, 0.6));
-        border: 1px solid rgba(255, 215, 0, 0.12);
-        border-radius: 20px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         overflow: hidden;
         text-decoration: none;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all var(--t-base) var(--ease);
     }
 
     .laureate-card:hover {
-        border-color: rgba(255, 215, 0, 0.4);
-        transform: translateY(-6px);
-        box-shadow: 0 30px 60px -20px rgba(255, 215, 0, 0.15);
+        border-color: var(--aged-gold);
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-3);
     }
 
     .card-glow {
-        position: absolute;
-        top: -100px;
-        right: -100px;
-        width: 200px;
-        height: 200px;
-        background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
-        opacity: 0;
-        transition: opacity 0.4s;
-    }
-
-    .laureate-card:hover .card-glow {
-        opacity: 1;
+        display: none;
     }
 
     .card-image {
@@ -569,11 +482,11 @@ const seoDescription =
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform 0.7s var(--ease);
     }
 
     .laureate-card:hover .card-image img {
-        transform: scale(1.05);
+        transform: scale(1.03);
     }
 
     .card-initials {
@@ -582,19 +495,20 @@ const seoDescription =
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 170, 0, 0.05));
+        background: var(--aged-gold-2);
     }
 
     .card-initials span {
         font-size: 3rem;
-        font-weight: 700;
-        color: rgba(255, 215, 0, 0.4);
+        font-weight: 400;
+        font-family: var(--font-serif);
+        color: var(--aged-gold);
     }
 
     .card-overlay {
         position: absolute;
         inset: 0;
-        background: linear-gradient(to top, rgba(20, 20, 35, 0.9) 0%, transparent 60%);
+        background: linear-gradient(to top, var(--paper) 0%, transparent 60%);
     }
 
     .card-tier {
@@ -612,12 +526,13 @@ const seoDescription =
         align-items: center;
         gap: 6px;
         padding: 6px 12px;
-        background: rgba(255, 215, 0, 0.1);
-        border: 1px solid rgba(255, 215, 0, 0.2);
-        border-radius: 8px;
+        background: var(--aged-gold-2);
+        border: 1px solid var(--aged-gold);
+        border-radius: var(--r-2);
         font-size: 0.75rem;
         font-weight: 600;
-        color: #ffd700;
+        font-family: var(--font-mono);
+        color: var(--aged-gold);
         margin-bottom: 16px;
     }
 
@@ -627,20 +542,21 @@ const seoDescription =
     }
 
     .card-name {
+        font-family: var(--font-serif);
         font-size: 1.35rem;
-        font-weight: 700;
-        color: #fff;
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 12px;
-        transition: color 0.3s;
+        transition: color var(--t-fast) var(--ease);
     }
 
     .laureate-card:hover .card-name {
-        color: #ffd700;
+        color: var(--aged-gold);
     }
 
     .card-bio {
         font-size: 0.9rem;
-        color: var(--text-muted);
+        color: var(--ink-2);
         line-height: 1.6;
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -654,9 +570,9 @@ const seoDescription =
         align-items: center;
         gap: 8px;
         font-size: 0.85rem;
-        font-weight: 600;
-        color: rgba(255, 215, 0, 0.8);
-        transition: color 0.2s, gap 0.2s;
+        font-weight: 500;
+        color: var(--ink-blue);
+        transition: color var(--t-fast) var(--ease), gap var(--t-fast) var(--ease);
     }
 
     .card-link svg {
@@ -665,7 +581,7 @@ const seoDescription =
     }
 
     .laureate-card:hover .card-link {
-        color: #ffd700;
+        color: var(--ink);
         gap: 12px;
     }
 
@@ -681,38 +597,40 @@ const seoDescription =
     }
 
     .process-content h3 {
+        font-family: var(--font-serif);
         font-size: 1.5rem;
-        font-weight: 700;
-        color: #fff;
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 20px;
     }
 
     .process-content p {
-        color: var(--text-secondary);
+        color: var(--ink-2);
         line-height: 1.7;
         margin-bottom: 16px;
     }
 
     .process-content strong {
-        color: #ffd700;
+        color: var(--aged-gold);
     }
 
     .process-content em {
-        color: #fff;
+        color: var(--ink);
         font-style: italic;
     }
 
     .timeline-card {
-        background: rgba(255, 215, 0, 0.03);
-        border: 1px solid rgba(255, 215, 0, 0.1);
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 28px;
     }
 
     .timeline-card h4 {
+        font-family: var(--font-serif);
         font-size: 1.1rem;
-        font-weight: 600;
-        color: #ffd700;
+        font-weight: 500;
+        color: var(--aged-gold);
         margin-bottom: 20px;
     }
 
@@ -726,7 +644,7 @@ const seoDescription =
         display: flex;
         gap: 16px;
         padding: 12px 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid var(--rule);
     }
 
     .timeline-list li:last-child {
@@ -736,15 +654,15 @@ const seoDescription =
     .timeline-year {
         font-family: var(--font-mono);
         font-size: 0.9rem;
-        font-weight: 700;
-        color: #ffd700;
+        font-weight: 600;
+        color: var(--aged-gold);
         width: 50px;
         flex-shrink: 0;
     }
 
     .timeline-text {
         font-size: 0.9rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         line-height: 1.5;
     }
 
@@ -757,9 +675,9 @@ const seoDescription =
         display: flex;
         gap: 28px;
         padding: 36px;
-        background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(255, 170, 0, 0.02));
-        border: 1px solid rgba(255, 215, 0, 0.12);
-        border-radius: 20px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
     }
 
     .importance-icon {
@@ -769,26 +687,27 @@ const seoDescription =
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(255, 215, 0, 0.1);
-        border: 1px solid rgba(255, 215, 0, 0.2);
-        border-radius: 16px;
+        background: var(--aged-gold-2);
+        border: 1px solid var(--aged-gold);
+        border-radius: var(--r-4);
     }
 
     .importance-icon svg {
         width: 28px;
         height: 28px;
-        color: #ffd700;
+        color: var(--aged-gold);
     }
 
     .importance-content h3 {
+        font-family: var(--font-serif);
         font-size: 1.35rem;
-        font-weight: 700;
-        color: #fff;
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 16px;
     }
 
     .importance-content p {
-        color: var(--text-secondary);
+        color: var(--ink-2);
         line-height: 1.7;
         margin-bottom: 12px;
     }
@@ -800,7 +719,7 @@ const seoDescription =
     /* FAQ Section */
     .faq-section {
         padding-bottom: 80px;
-        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        border-top: 1px solid var(--rule);
         padding-top: 48px;
     }
 
@@ -812,21 +731,22 @@ const seoDescription =
 
     .faq-item {
         padding: 24px;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 14px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
     }
 
     .faq-item h4 {
+        font-family: var(--font-serif);
         font-size: 1rem;
-        font-weight: 600;
-        color: #fff;
+        font-weight: 500;
+        color: var(--ink);
         margin-bottom: 12px;
     }
 
     .faq-item p {
         font-size: 0.9rem;
-        color: var(--text-muted);
+        color: var(--ink-2);
         line-height: 1.6;
     }
 

@@ -143,17 +143,17 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
             <div class="container">
                 <div class="tier-tabs">
                     <a href="#global-landmark" class="tier-tab tier-gold">
-                        <span class="tier-icon">🏆</span>
+                        <span class="tier-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6m12 5h1.5a2.5 2.5 0 0 0 0-5H18M6 9a6 6 0 0 0 12 0V4H6v5zm3 12h6m-3-3v3"/></svg></span>
                         Global Landmark
                         <span class="tier-count">{groupedPrizes[HonorTier.GLOBAL_LANDMARK].length}</span>
                     </a>
                     <a href="#national-honor" class="tier-tab tier-silver">
-                        <span class="tier-icon">🎖️</span>
+                        <span class="tier-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM8.21 13.89L7 23l5-3 5 3-1.21-9.12"/></svg></span>
                         National Honor
                         <span class="tier-count">{groupedPrizes[HonorTier.NATIONAL_HONOR].length}</span>
                     </a>
                     <a href="#professional-excellence" class="tier-tab tier-bronze">
-                        <span class="tier-icon">⭐</span>
+                        <span class="tier-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
                         Professional Excellence
                         <span class="tier-count">{groupedPrizes[HonorTier.PROFESSIONAL_EXCELLENCE].length}</span>
                     </a>
@@ -169,7 +169,7 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
                 {groupedPrizes[HonorTier.GLOBAL_LANDMARK].length > 0 && (
                     <section id="global-landmark" class="awards-section">
                         <div class="section-header tier-gold-header">
-                            <div class="section-icon">🏆</div>
+                            <div class="section-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6m12 5h1.5a2.5 2.5 0 0 0 0-5H18M6 9a6 6 0 0 0 12 0V4H6v5zm3 12h6m-3-3v3"/></svg></div>
                             <div>
                                 <h2>Global Landmark Awards</h2>
                                 <p>Paradigm-defining recognition for civilization-level contributions to medicine</p>
@@ -184,7 +184,7 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
                                         {prize.image ? (
                                             <img src={prize.image} alt={prize.name} loading="lazy" />
                                         ) : (
-                                            <div class="award-placeholder">🏆</div>
+                                            <div class="award-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6m12 5h1.5a2.5 2.5 0 0 0 0-5H18M6 9a6 6 0 0 0 12 0V4H6v5zm3 12h6m-3-3v3"/></svg></div>
                                         )}
                                     </div>
                                     <div class="award-content">
@@ -207,7 +207,7 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
                 {groupedPrizes[HonorTier.NATIONAL_HONOR].length > 0 && (
                     <section id="national-honor" class="awards-section">
                         <div class="section-header tier-silver-header">
-                            <div class="section-icon">🎖️</div>
+                            <div class="section-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM8.21 13.89L7 23l5-3 5 3-1.21-9.12"/></svg></div>
                             <div>
                                 <h2>National Honors</h2>
                                 <p>State-level recognition honoring outstanding medical service</p>
@@ -222,7 +222,7 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
                                         {prize.image ? (
                                             <img src={prize.image} alt={prize.name} loading="lazy" />
                                         ) : (
-                                            <div class="award-placeholder">🎖️</div>
+                                            <div class="award-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM8.21 13.89L7 23l5-3 5 3-1.21-9.12"/></svg></div>
                                         )}
                                     </div>
                                     <div class="award-content">
@@ -245,7 +245,7 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
                 {groupedPrizes[HonorTier.PROFESSIONAL_EXCELLENCE].length > 0 && (
                     <section id="professional-excellence" class="awards-section">
                         <div class="section-header tier-bronze-header">
-                            <div class="section-icon">⭐</div>
+                            <div class="section-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
                             <div>
                                 <h2>Professional Excellence</h2>
                                 <p>Peer-recognized achievements in specialized medical fields</p>
@@ -260,7 +260,7 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
                                         {prize.image ? (
                                             <img src={prize.image} alt={prize.name} loading="lazy" />
                                         ) : (
-                                            <div class="award-placeholder">⭐</div>
+                                            <div class="award-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
                                         )}
                                     </div>
                                     <div class="award-content">
@@ -282,7 +282,7 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
                 <!-- Empty State -->
                 {totalPrizes === 0 && (
                     <div class="empty-state">
-                        <span class="empty-icon">🏆</span>
+                        <span class="empty-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6m12 5h1.5a2.5 2.5 0 0 0 0-5H18M6 9a6 6 0 0 0 12 0V4H6v5zm3 12h6m-3-3v3"/></svg></span>
                         <h3>Awards database is being compiled</h3>
                         <p>We are continuously adding awards and their recipients.</p>
                     </div>
@@ -302,7 +302,7 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
                 <div class="tiers-grid">
                     <div class="tier-card gold">
                         <div class="tier-header">
-                            <span class="tier-medal">🏆</span>
+                            <span class="tier-medal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6m12 5h1.5a2.5 2.5 0 0 0 0-5H18M6 9a6 6 0 0 0 12 0V4H6v5zm3 12h6m-3-3v3"/></svg></span>
                             <h3>Global Landmark</h3>
                             <span class="points">+100 points</span>
                         </div>
@@ -319,7 +319,7 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
 
                     <div class="tier-card silver">
                         <div class="tier-header">
-                            <span class="tier-medal">🎖️</span>
+                            <span class="tier-medal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM8.21 13.89L7 23l5-3 5 3-1.21-9.12"/></svg></span>
                             <h3>National Honor</h3>
                             <span class="points">+75 points</span>
                         </div>
@@ -336,7 +336,7 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
 
                     <div class="tier-card bronze">
                         <div class="tier-header">
-                            <span class="tier-medal">⭐</span>
+                            <span class="tier-medal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
                             <h3>Professional Excellence</h3>
                             <span class="points">+50 points</span>
                         </div>
@@ -373,7 +373,7 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
 
 <style>
     .prizes-page {
-        background: var(--bg-main);
+        background: var(--paper);
         min-height: 100vh;
     }
 
@@ -387,38 +387,35 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
     .page-hero {
         padding: 4rem 0 3rem;
         text-align: center;
-        background: linear-gradient(180deg, rgba(255, 215, 0, 0.03) 0%, transparent 100%);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper);
+        border-bottom: 1px solid var(--rule);
     }
 
     .hero-badge {
         display: inline-block;
         padding: 6px 16px;
-        background: rgba(255, 215, 0, 0.1);
-        border: 1px solid rgba(255, 215, 0, 0.3);
-        border-radius: 100px;
+        background: var(--aged-gold-2);
+        border: 1px solid var(--aged-gold);
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
         font-weight: 700;
         letter-spacing: 0.15em;
-        color: #ffd700;
+        font-family: var(--font-mono);
+        color: var(--aged-gold);
         margin-bottom: 1.5rem;
     }
 
     .page-hero h1 {
         font-family: var(--font-serif);
         font-size: clamp(2.25rem, 5vw, 3.5rem);
-        font-weight: 800;
-        color: var(--text-primary);
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 1rem;
-        background: linear-gradient(135deg, #fff 0%, #ffd700 50%, #fff 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
     }
 
     .hero-description {
         font-size: 1.1rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         max-width: 600px;
         margin: 0 auto 2.5rem;
         line-height: 1.7;
@@ -439,22 +436,22 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
     .stat-value {
         display: block;
         font-size: 2rem;
-        font-weight: 700;
+        font-weight: 500;
         font-family: var(--font-mono);
-        color: #ffd700;
+        color: var(--aged-gold);
     }
 
     .stat-label {
         font-size: 0.75rem;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .stat-divider {
         width: 1px;
         height: 40px;
-        background: rgba(255, 255, 255, 0.1);
+        background: var(--rule);
     }
 
     /* Tier Navigation */
@@ -462,9 +459,8 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
         position: sticky;
         top: 0;
         z-index: 100;
-        background: rgba(10, 10, 20, 0.95);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper);
+        border-bottom: 1px solid var(--rule);
         padding: 1rem 0;
     }
 
@@ -485,35 +481,35 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
         align-items: center;
         gap: 0.5rem;
         padding: 0.6rem 1.25rem;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 100px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-pill);
         font-size: 0.85rem;
         font-weight: 500;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         text-decoration: none;
         white-space: nowrap;
-        transition: all 0.2s;
+        transition: all var(--t-fast);
     }
 
     .tier-tab:hover {
-        background: rgba(255, 255, 255, 0.08);
-        color: var(--text-primary);
+        background: var(--paper-3);
+        color: var(--ink);
     }
 
     .tier-tab.tier-gold:hover {
-        border-color: rgba(255, 215, 0, 0.4);
-        color: #ffd700;
+        border-color: var(--aged-gold);
+        color: var(--aged-gold);
     }
 
     .tier-tab.tier-silver:hover {
-        border-color: rgba(192, 192, 192, 0.4);
-        color: #c0c0c0;
+        border-color: var(--slate);
+        color: var(--slate);
     }
 
     .tier-tab.tier-bronze:hover {
-        border-color: rgba(205, 127, 50, 0.4);
-        color: #cd7f32;
+        border-color: var(--sanguine);
+        color: var(--sanguine);
     }
 
     .tier-icon {
@@ -522,9 +518,10 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
 
     .tier-count {
         padding: 2px 8px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 100px;
+        background: var(--paper-3);
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
+        font-family: var(--font-mono);
     }
 
     /* Awards Content */
@@ -541,23 +538,23 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
         align-items: center;
         gap: 1rem;
         padding: 1.5rem;
-        border-radius: 16px;
+        border-radius: var(--r-4);
         margin-bottom: 1.5rem;
     }
 
     .tier-gold-header {
-        background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(255, 215, 0, 0.02) 100%);
-        border: 1px solid rgba(255, 215, 0, 0.2);
+        background: var(--aged-gold-2);
+        border: 1px solid var(--aged-gold);
     }
 
     .tier-silver-header {
-        background: linear-gradient(135deg, rgba(192, 192, 192, 0.08) 0%, rgba(192, 192, 192, 0.02) 100%);
-        border: 1px solid rgba(192, 192, 192, 0.2);
+        background: var(--slate-2);
+        border: 1px solid var(--slate);
     }
 
     .tier-bronze-header {
-        background: linear-gradient(135deg, rgba(205, 127, 50, 0.08) 0%, rgba(205, 127, 50, 0.02) 100%);
-        border: 1px solid rgba(205, 127, 50, 0.2);
+        background: var(--sanguine-2);
+        border: 1px solid var(--sanguine);
     }
 
     .section-icon {
@@ -565,43 +562,44 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
     }
 
     .section-header h2 {
+        font-family: var(--font-serif);
         font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--text-primary);
+        font-weight: 400;
+        color: var(--ink);
         margin: 0;
     }
 
     .section-header p {
         font-size: 0.9rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin: 0.25rem 0 0;
     }
 
     .prestige-badge {
         margin-left: auto;
         padding: 6px 14px;
-        border-radius: 100px;
+        border-radius: var(--r-pill);
         font-size: 0.8rem;
-        font-weight: 700;
+        font-weight: 600;
         font-family: var(--font-mono);
     }
 
     .prestige-badge.gold {
-        background: rgba(255, 215, 0, 0.15);
-        color: #ffd700;
-        border: 1px solid rgba(255, 215, 0, 0.3);
+        background: var(--aged-gold-2);
+        color: var(--aged-gold);
+        border: 1px solid var(--aged-gold);
     }
 
     .prestige-badge.silver {
-        background: rgba(192, 192, 192, 0.15);
-        color: #c0c0c0;
-        border: 1px solid rgba(192, 192, 192, 0.3);
+        background: var(--slate-2);
+        color: var(--slate);
+        border: 1px solid var(--slate);
     }
 
     .prestige-badge.bronze {
-        background: rgba(205, 127, 50, 0.15);
-        color: #cd7f32;
-        border: 1px solid rgba(205, 127, 50, 0.3);
+        background: var(--sanguine-2);
+        color: var(--sanguine);
+        border: 1px solid var(--sanguine);
     }
 
     /* Awards Grid */
@@ -616,31 +614,29 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
         align-items: center;
         gap: 1rem;
         padding: 1.25rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 16px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         text-decoration: none;
-        transition: all 0.25s;
+        transition: all var(--t-base);
     }
 
     .award-card:hover {
         transform: translateY(-2px);
-        background: rgba(255, 255, 255, 0.05);
+        background: var(--paper-2);
+        box-shadow: var(--shadow-2);
     }
 
     .tier-gold-card:hover {
-        border-color: rgba(255, 215, 0, 0.4);
-        box-shadow: 0 8px 32px rgba(255, 215, 0, 0.1);
+        border-color: var(--aged-gold);
     }
 
     .tier-silver-card:hover {
-        border-color: rgba(192, 192, 192, 0.4);
-        box-shadow: 0 8px 32px rgba(192, 192, 192, 0.1);
+        border-color: var(--slate);
     }
 
     .tier-bronze-card:hover {
-        border-color: rgba(205, 127, 50, 0.4);
-        box-shadow: 0 8px 32px rgba(205, 127, 50, 0.1);
+        border-color: var(--sanguine);
     }
 
     .award-image {
@@ -650,8 +646,8 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
+        background: var(--paper-2);
+        border-radius: var(--r-3);
         overflow: hidden;
     }
 
@@ -673,15 +669,15 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
 
     .award-content h3 {
         font-size: 1rem;
-        font-weight: 600;
-        color: var(--text-primary);
+        font-weight: 500;
+        color: var(--ink);
         margin: 0 0 0.4rem;
         line-height: 1.3;
     }
 
     .award-content p {
         font-size: 0.8rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin: 0 0 0.5rem;
         line-height: 1.5;
         display: -webkit-box;
@@ -695,16 +691,16 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
     }
 
     .recipient-count {
-        color: var(--text-secondary);
+        color: var(--ink-2);
     }
 
     .award-arrow {
         flex-shrink: 0;
         font-size: 1.25rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         opacity: 0;
         transform: translateX(-8px);
-        transition: all 0.2s;
+        transition: all var(--t-fast);
     }
 
     .award-card:hover .award-arrow {
@@ -716,7 +712,7 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
     .empty-state {
         text-align: center;
         padding: 4rem 2rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .empty-icon {
@@ -728,28 +724,29 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
 
     .empty-state h3 {
         font-size: 1.25rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         margin-bottom: 0.5rem;
     }
 
     /* Prestige Explainer */
     .prestige-explainer {
         padding: 4rem 0;
-        background: rgba(0, 0, 0, 0.2);
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper-2);
+        border-top: 1px solid var(--rule);
     }
 
     .prestige-explainer h2 {
         font-family: var(--font-serif);
         font-size: 1.75rem;
-        color: var(--text-primary);
+        font-weight: 400;
+        color: var(--ink);
         text-align: center;
         margin-bottom: 0.75rem;
     }
 
     .explainer-intro {
         text-align: center;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         max-width: 600px;
         margin: 0 auto 2.5rem;
     }
@@ -762,24 +759,21 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
 
     .tier-card {
         padding: 1.75rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
     }
 
     .tier-card.gold {
-        border-color: rgba(255, 215, 0, 0.2);
-        background: linear-gradient(180deg, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+        border-color: var(--aged-gold);
     }
 
     .tier-card.silver {
-        border-color: rgba(192, 192, 192, 0.2);
-        background: linear-gradient(180deg, rgba(192, 192, 192, 0.05) 0%, transparent 50%);
+        border-color: var(--slate);
     }
 
     .tier-card.bronze {
-        border-color: rgba(205, 127, 50, 0.2);
-        background: linear-gradient(180deg, rgba(205, 127, 50, 0.05) 0%, transparent 50%);
+        border-color: var(--sanguine);
     }
 
     .tier-header {
@@ -795,9 +789,10 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
     }
 
     .tier-header h3 {
+        font-family: var(--font-serif);
         font-size: 1.1rem;
-        font-weight: 700;
-        color: var(--text-primary);
+        font-weight: 500;
+        color: var(--ink);
         margin: 0;
     }
 
@@ -807,14 +802,14 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
         font-weight: 600;
         font-family: var(--font-mono);
         padding: 4px 10px;
-        border-radius: 100px;
-        background: rgba(255, 255, 255, 0.1);
-        color: var(--text-secondary);
+        border-radius: var(--r-pill);
+        background: var(--paper-3);
+        color: var(--ink-2);
     }
 
     .tier-card p {
         font-size: 0.9rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         line-height: 1.6;
         margin-bottom: 1rem;
     }
@@ -829,20 +824,20 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
         position: relative;
         padding-left: 1.25rem;
         font-size: 0.85rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin-bottom: 0.4rem;
     }
 
     .tier-card li::before {
-        content: "•";
+        content: "\2022";
         position: absolute;
         left: 0;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
-    .tier-card.gold li::before { color: #ffd700; }
-    .tier-card.silver li::before { color: #c0c0c0; }
-    .tier-card.bronze li::before { color: #cd7f32; }
+    .tier-card.gold li::before { color: var(--aged-gold); }
+    .tier-card.silver li::before { color: var(--slate); }
+    .tier-card.bronze li::before { color: var(--sanguine); }
 
     /* Suggest Section */
     .suggest-section {
@@ -855,37 +850,39 @@ const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
         justify-content: space-between;
         gap: 2rem;
         padding: 2rem 2.5rem;
-        background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(255, 215, 0, 0.05) 100%);
-        border: 1px dashed rgba(139, 92, 246, 0.3);
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px dashed var(--rule-strong);
+        border-radius: var(--r-4);
     }
 
     .suggest-content h3 {
+        font-family: var(--font-serif);
         font-size: 1.25rem;
-        color: var(--text-primary);
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 0.4rem;
     }
 
     .suggest-content p {
         font-size: 0.9rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin: 0;
     }
 
     .suggest-btn {
         padding: 0.75rem 1.5rem;
-        background: var(--accent-purple);
-        border-radius: 10px;
+        background: var(--ink-blue);
+        border-radius: var(--r-3);
         font-size: 0.9rem;
         font-weight: 600;
-        color: white;
+        color: var(--paper);
         text-decoration: none;
         white-space: nowrap;
-        transition: all 0.2s;
+        transition: all var(--t-fast);
     }
 
     .suggest-btn:hover {
-        background: #7c3aed;
+        filter: brightness(1.1);
     }
 
     /* Responsive */

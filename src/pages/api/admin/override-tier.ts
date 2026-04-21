@@ -22,10 +22,27 @@ export const POST: APIRoute = async ({ request }) => {
         });
     }
 
-    const { slug, tier } = await request.json();
+    let body;
+    try {
+        body = await request.json();
+    } catch {
+        return new Response(JSON.stringify({ success: false, message: "Invalid JSON body" }), {
+            status: 400,
+            headers: { "Content-Type": "application/json" }
+        });
+    }
+    const { slug, tier } = body;
 
     if (!slug || !tier) {
         return new Response(JSON.stringify({ success: false, message: "Missing slug or tier" }), { status: 400 });
+    }
+
+    const VALID_TIERS = ['TITAN', 'ELITE', 'MASTER', 'UNRANKED'];
+    if (!VALID_TIERS.includes(tier)) {
+        return new Response(JSON.stringify({ success: false, message: `Invalid tier. Must be one of: ${VALID_TIERS.join(', ')}` }), {
+            status: 400,
+            headers: { "Content-Type": "application/json" }
+        });
     }
 
     try {

@@ -18,7 +18,11 @@ interface CacheStats {
 class MemoryCache {
     private cache = new Map<string, CacheItem<any>>();
     private stats: CacheStats = { hits: 0, misses: 0, size: 0 };
-    private maxSize = 1000;
+    private maxSize: number;
+
+    constructor(maxSize = 1000) {
+        this.maxSize = maxSize;
+    }
 
     get<T>(key: string): T | null {
         const item = this.cache.get(key);

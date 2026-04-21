@@ -2,7 +2,7 @@
  * GlobalSearchModal - Premium Command Palette Style Search
  * Completely revamped with glassmorphism, animations, and rich result cards
  */
-import { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 interface SearchResult {
     slug: string;
@@ -25,53 +25,53 @@ const tierConfig: Record<string, {
     glow: string;
     bg: string;
     label: string;
-    icon: string;
+    icon: React.ReactNode;
 }> = {
     TITAN: {
-        gradient: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
-        border: 'rgba(251, 191, 36, 0.6)',
-        text: '#fbbf24',
-        glow: '0 0 30px rgba(251, 191, 36, 0.4)',
-        bg: 'rgba(251, 191, 36, 0.1)',
+        gradient: 'var(--aged-gold)',
+        border: 'var(--aged-gold)',
+        text: 'var(--aged-gold)',
+        glow: 'none',
+        bg: 'var(--aged-gold-2)',
         label: 'Top 0.01%',
-        icon: '👑'
+        icon: <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
     },
     ELITE: {
-        gradient: 'linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%)',
-        border: 'rgba(56, 189, 248, 0.5)',
-        text: '#38bdf8',
-        glow: '0 0 25px rgba(56, 189, 248, 0.3)',
-        bg: 'rgba(56, 189, 248, 0.1)',
+        gradient: 'var(--ink-blue)',
+        border: 'var(--ink-blue)',
+        text: 'var(--ink-blue)',
+        glow: 'none',
+        bg: 'var(--ink-blue-2)',
         label: 'Top 1%',
-        icon: '⭐'
+        icon: <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
     },
     MASTER: {
-        gradient: 'linear-gradient(135deg, #4ade80 0%, #22c55e 100%)',
-        border: 'rgba(74, 222, 128, 0.5)',
-        text: '#4ade80',
-        glow: '0 0 25px rgba(74, 222, 128, 0.3)',
-        bg: 'rgba(74, 222, 128, 0.1)',
+        gradient: 'var(--slate)',
+        border: 'var(--slate)',
+        text: 'var(--slate)',
+        glow: 'none',
+        bg: 'var(--paper-3)',
         label: 'Top 3%',
-        icon: '✦'
+        icon: <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
     },
     UNRANKED: {
-        gradient: 'linear-gradient(135deg, #64748b 0%, #475569 100%)',
-        border: 'rgba(100, 116, 139, 0.4)',
-        text: '#94a3b8',
+        gradient: 'var(--slate)',
+        border: 'var(--rule)',
+        text: 'var(--slate)',
         glow: 'none',
-        bg: 'rgba(100, 116, 139, 0.1)',
+        bg: 'var(--paper-2)',
         label: 'Verified',
-        icon: '◆'
+        icon: <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7L12 16.4 5.7 21l2.3-7L2 9.4h7.6L12 2z"/></svg>
     },
 };
 
 const quickLinks = [
-    { href: '/rankings', icon: '', label: 'Rankings', desc: 'Browse top-rated physicians worldwide', color: '#fbbf24' },
-    { href: '/rare-diseases', icon: '', label: 'Rare Diseases', desc: 'Expert database for rare conditions', color: '#a78bfa' },
-    { href: '/hospitals', icon: '', label: 'Institutions', desc: 'Leading medical centers globally', color: '#38bdf8' },
-    { href: '/prizes', icon: '', label: 'Awards', desc: 'Nobel, Lasker & major honors', color: '#4ade80' },
-    { href: '/news', icon: '', label: 'Medical News', desc: 'Latest breakthroughs & research', color: '#f472b6' },
-    { href: '/doctor/claim', icon: '', label: 'Claim Profile', desc: 'Verify your physician identity', color: '#22d3ee' },
+    { href: '/rankings', icon: '', label: 'Rankings', desc: 'Browse top-rated physicians worldwide', color: 'var(--aged-gold)' },
+    { href: '/rare-diseases', icon: '', label: 'Rare Diseases', desc: 'Expert database for rare conditions', color: 'var(--ink-blue)' },
+    { href: '/hospitals', icon: '', label: 'Institutions', desc: 'Leading medical centers globally', color: 'var(--ink-blue)' },
+    { href: '/prizes', icon: '', label: 'Awards', desc: 'Nobel, Lasker & major honors', color: 'var(--verdant)' },
+    { href: '/news', icon: '', label: 'Medical News', desc: 'Latest breakthroughs & research', color: 'var(--ink-blue)' },
+    { href: '/doctor/claim', icon: '', label: 'Claim Profile', desc: 'Verify your physician identity', color: 'var(--ink-blue)' },
 ];
 
 const categories = [
@@ -92,7 +92,7 @@ export default function GlobalSearchModal() {
     const [recentSearches, setRecentSearches] = useState<string[]>([]);
 
     const inputRef = useRef<HTMLInputElement>(null);
-    const debounceRef = useRef<NodeJS.Timeout>();
+    const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined);
     const resultsRef = useRef<HTMLDivElement>(null);
 
     // Load recent searches from localStorage
@@ -252,9 +252,7 @@ export default function GlobalSearchModal() {
         .gsm-backdrop {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: color-mix(in oklch, var(--ink) 85%, transparent);
         }
 
         .gsm-container {
@@ -262,13 +260,10 @@ export default function GlobalSearchModal() {
             width: 100%;
             max-width: 680px;
             margin: 0 16px;
-            background: linear-gradient(180deg, rgba(15, 15, 25, 0.98) 0%, rgba(10, 10, 18, 0.99) 100%);
-            border: 1px solid rgba(139, 92, 246, 0.25);
-            border-radius: 24px;
-            box-shadow:
-                0 0 0 1px rgba(255, 255, 255, 0.05) inset,
-                0 50px 100px -30px rgba(0, 0, 0, 0.8),
-                0 0 150px -50px rgba(139, 92, 246, 0.5);
+            background: var(--paper);
+            border: 1px solid var(--rule);
+            border-radius: var(--r-4);
+            box-shadow: var(--shadow-2);
             overflow: hidden;
             animation: gsm-slide-up 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -284,7 +279,7 @@ export default function GlobalSearchModal() {
             }
         }
 
-        /* Gradient border effect */
+        /* Top border accent */
         .gsm-container::before {
             content: '';
             position: absolute;
@@ -292,38 +287,38 @@ export default function GlobalSearchModal() {
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent 0%, rgba(139, 92, 246, 0.6) 50%, transparent 100%);
+            background: var(--rule);
         }
 
         /* ═══════════════ SEARCH INPUT ═══════════════ */
         .gsm-input-section {
             position: relative;
             padding: 24px 28px;
-            background: linear-gradient(180deg, rgba(139, 92, 246, 0.05) 0%, transparent 100%);
+            background: var(--paper);
         }
 
         .gsm-input-wrapper {
             display: flex;
             align-items: center;
             gap: 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
+            background: var(--paper-2);
+            border: 1px solid var(--rule);
+            border-radius: var(--r-3);
             padding: 16px 20px;
             transition: all 0.2s ease;
         }
 
         .gsm-input-wrapper:focus-within {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(139, 92, 246, 0.4);
-            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+            background: var(--paper-3);
+            border-color: var(--ink-blue);
+            box-shadow: 0 0 0 4px var(--ink-blue-2);
         }
 
         .gsm-search-icon {
             flex-shrink: 0;
             width: 24px;
             height: 24px;
-            color: #a78bfa;
+            color: var(--ink-blue);
             transition: transform 0.2s;
         }
 
@@ -335,7 +330,7 @@ export default function GlobalSearchModal() {
             flex-shrink: 0;
             width: 24px;
             height: 24px;
-            color: #a78bfa;
+            color: var(--ink-blue);
             animation: gsm-spin 0.7s linear infinite;
         }
 
@@ -349,14 +344,14 @@ export default function GlobalSearchModal() {
             border: none;
             outline: none;
             font-size: 1.15rem;
-            font-weight: 500;
-            color: #f8fafc;
+            font-weight: 400;
+            color: var(--ink);
             font-family: inherit;
             letter-spacing: -0.01em;
         }
 
         .gsm-input::placeholder {
-            color: #64748b;
+            color: var(--slate);
             font-weight: 400;
         }
 
@@ -364,12 +359,12 @@ export default function GlobalSearchModal() {
             display: flex;
             align-items: center;
             padding: 6px 12px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+            background: var(--paper-2);
+            border: 1px solid var(--rule);
+            border-radius: var(--r-3);
             font-size: 0.75rem;
-            font-weight: 600;
-            color: #64748b;
+            font-weight: 500;
+            color: var(--slate);
             font-family: inherit;
         }
 
@@ -392,27 +387,27 @@ export default function GlobalSearchModal() {
             align-items: center;
             gap: 6px;
             padding: 8px 14px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 20px;
+            background: var(--paper-2);
+            border: 1px solid var(--rule);
+            border-radius: var(--r-4);
             font-size: 0.8rem;
             font-weight: 500;
-            color: #94a3b8;
+            color: var(--slate);
             white-space: nowrap;
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
         .gsm-category:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.1);
-            color: #e2e8f0;
+            background: var(--paper-3);
+            border-color: var(--rule);
+            color: var(--ink);
         }
 
         .gsm-category.active {
-            background: rgba(139, 92, 246, 0.15);
-            border-color: rgba(139, 92, 246, 0.4);
-            color: #a78bfa;
+            background: var(--ink-blue-2);
+            border-color: var(--ink-blue);
+            color: var(--ink-blue);
         }
 
         .gsm-category-icon {
@@ -436,7 +431,7 @@ export default function GlobalSearchModal() {
         }
 
         .gsm-results::-webkit-scrollbar-thumb {
-            background: rgba(139, 92, 246, 0.3);
+            background: var(--rule);
             border-radius: 3px;
         }
 
@@ -447,8 +442,8 @@ export default function GlobalSearchModal() {
             padding: 16px 18px;
             margin-bottom: 4px;
             text-decoration: none;
-            color: #f8fafc;
-            border-radius: 16px;
+            color: var(--ink);
+            border-radius: var(--r-3);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
@@ -463,17 +458,16 @@ export default function GlobalSearchModal() {
         }
 
         .gsm-result:hover {
-            background: rgba(255, 255, 255, 0.04);
+            background: var(--paper-2);
         }
 
         .gsm-result.selected {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(139, 92, 246, 0.05) 100%);
-            border: 1px solid rgba(139, 92, 246, 0.2);
+            background: var(--paper-2);
+            border: 1px solid var(--rule);
         }
 
         .gsm-result.selected::before {
-            opacity: 1;
-            background: linear-gradient(90deg, rgba(139, 92, 246, 0.1), transparent);
+            opacity: 0;
         }
 
         /* Avatar */
@@ -481,13 +475,13 @@ export default function GlobalSearchModal() {
             position: relative;
             width: 56px;
             height: 56px;
-            border-radius: 16px;
+            border-radius: var(--r-3);
             overflow: hidden;
             flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
+            font-weight: 500;
             font-size: 1rem;
             letter-spacing: 0.05em;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -529,7 +523,7 @@ export default function GlobalSearchModal() {
         }
 
         .gsm-name {
-            font-weight: 600;
+            font-weight: 500;
             font-size: 1.05rem;
             letter-spacing: -0.01em;
             white-space: nowrap;
@@ -544,7 +538,7 @@ export default function GlobalSearchModal() {
             padding: 4px 10px;
             border-radius: 8px;
             font-size: 0.65rem;
-            font-weight: 700;
+            font-weight: 500;
             letter-spacing: 0.03em;
             text-transform: uppercase;
             flex-shrink: 0;
@@ -559,7 +553,7 @@ export default function GlobalSearchModal() {
             align-items: center;
             gap: 12px;
             font-size: 0.875rem;
-            color: #94a3b8;
+            color: var(--slate);
         }
 
         .gsm-specialty {
@@ -571,14 +565,14 @@ export default function GlobalSearchModal() {
         .gsm-specialty-icon {
             width: 14px;
             height: 14px;
-            color: #64748b;
+            color: var(--slate);
         }
 
         .gsm-location {
             display: flex;
             align-items: center;
             gap: 5px;
-            color: #64748b;
+            color: var(--slate);
         }
 
         .gsm-location-icon {
@@ -598,15 +592,15 @@ export default function GlobalSearchModal() {
             align-items: center;
             gap: 5px;
             padding: 4px 10px;
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 8px;
+            background: var(--paper-2);
+            border-radius: var(--r-3);
             font-size: 0.75rem;
-            color: #94a3b8;
+            color: var(--slate);
         }
 
         .gsm-stat-value {
-            font-weight: 700;
-            color: #e2e8f0;
+            font-weight: 500;
+            color: var(--ink);
         }
 
         /* Enter hint */
@@ -616,17 +610,17 @@ export default function GlobalSearchModal() {
             justify-content: center;
             width: 32px;
             height: 32px;
-            background: rgba(139, 92, 246, 0.15);
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            border-radius: 10px;
-            color: #a78bfa;
+            background: var(--ink-blue-2);
+            border: 1px solid var(--ink-blue);
+            border-radius: var(--r-3);
+            color: var(--ink-blue);
             font-size: 1rem;
             flex-shrink: 0;
             transition: all 0.2s;
         }
 
         .gsm-result:hover .gsm-enter-hint {
-            background: rgba(139, 92, 246, 0.25);
+            background: var(--ink-blue-2);
             transform: scale(1.1);
         }
 
@@ -640,19 +634,19 @@ export default function GlobalSearchModal() {
             width: 64px;
             height: 64px;
             margin: 0 auto 20px;
-            color: #475569;
+            color: var(--slate);
             opacity: 0.6;
         }
 
         .gsm-no-results-title {
             font-size: 1.1rem;
-            font-weight: 600;
-            color: #e2e8f0;
+            font-weight: 500;
+            color: var(--ink);
             margin-bottom: 8px;
         }
 
         .gsm-no-results-text {
-            color: #64748b;
+            color: var(--slate);
             margin-bottom: 20px;
             font-size: 0.95rem;
         }
@@ -662,18 +656,18 @@ export default function GlobalSearchModal() {
             align-items: center;
             gap: 8px;
             padding: 12px 24px;
-            background: rgba(139, 92, 246, 0.15);
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            border-radius: 12px;
-            color: #a78bfa;
-            font-weight: 600;
+            background: var(--ink-blue-2);
+            border: 1px solid var(--ink-blue);
+            border-radius: var(--r-4);
+            color: var(--ink-blue);
+            font-weight: 500;
             font-size: 0.9rem;
             text-decoration: none;
             transition: all 0.2s;
         }
 
         .gsm-no-results-link:hover {
-            background: rgba(139, 92, 246, 0.25);
+            background: var(--ink-blue-2);
             transform: translateY(-2px);
         }
 
@@ -695,8 +689,8 @@ export default function GlobalSearchModal() {
             align-items: center;
             gap: 8px;
             font-size: 0.7rem;
-            font-weight: 700;
-            color: #64748b;
+            font-weight: 500;
+            color: var(--slate);
             text-transform: uppercase;
             letter-spacing: 0.12em;
         }
@@ -709,14 +703,14 @@ export default function GlobalSearchModal() {
         .gsm-clear-btn {
             background: none;
             border: none;
-            color: #64748b;
+            color: var(--slate);
             font-size: 0.75rem;
             cursor: pointer;
             transition: color 0.2s;
         }
 
         .gsm-clear-btn:hover {
-            color: #f87171;
+            color: var(--ink);
         }
 
         .gsm-quick-grid {
@@ -731,11 +725,11 @@ export default function GlobalSearchModal() {
             align-items: center;
             gap: 10px;
             padding: 20px 12px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
+            background: var(--paper-2);
+            border: 1px solid var(--rule);
+            border-radius: var(--r-3);
             text-decoration: none;
-            color: #e2e8f0;
+            color: var(--ink);
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
@@ -754,8 +748,8 @@ export default function GlobalSearchModal() {
         }
 
         .gsm-quick-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.1);
+            background: var(--paper-3);
+            border-color: var(--rule);
             transform: translateY(-4px);
         }
 
@@ -764,13 +758,13 @@ export default function GlobalSearchModal() {
         }
 
         .gsm-quick-item.selected {
-            background: rgba(139, 92, 246, 0.1);
-            border-color: rgba(139, 92, 246, 0.3);
+            background: var(--paper-3);
+            border-color: var(--ink-blue);
         }
 
         .gsm-quick-icon {
             font-size: 1.8rem;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+            filter: none;
         }
 
         .gsm-quick-content {
@@ -778,14 +772,14 @@ export default function GlobalSearchModal() {
         }
 
         .gsm-quick-label {
-            font-weight: 600;
+            font-weight: 500;
             font-size: 0.9rem;
             margin-bottom: 4px;
         }
 
         .gsm-quick-desc {
             font-size: 0.7rem;
-            color: #64748b;
+            color: var(--slate);
             line-height: 1.4;
         }
 
@@ -801,25 +795,25 @@ export default function GlobalSearchModal() {
             align-items: center;
             gap: 12px;
             padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.02);
+            background: var(--paper-2);
             border: 1px solid transparent;
-            border-radius: 12px;
+            border-radius: var(--r-4);
             text-decoration: none;
-            color: #e2e8f0;
+            color: var(--ink);
             font-size: 0.9rem;
             transition: all 0.2s;
             cursor: pointer;
         }
 
         .gsm-recent-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.1);
+            background: var(--paper-3);
+            border-color: var(--rule);
         }
 
         .gsm-recent-icon {
             width: 16px;
             height: 16px;
-            color: #64748b;
+            color: var(--slate);
         }
 
         .gsm-recent-text {
@@ -829,7 +823,7 @@ export default function GlobalSearchModal() {
         .gsm-recent-arrow {
             width: 16px;
             height: 16px;
-            color: #475569;
+            color: var(--slate);
             opacity: 0;
             transition: all 0.2s;
         }
@@ -845,8 +839,8 @@ export default function GlobalSearchModal() {
             align-items: center;
             justify-content: space-between;
             padding: 16px 24px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            background: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid var(--rule);
+            background: var(--paper-2);
         }
 
         .gsm-shortcuts {
@@ -860,7 +854,7 @@ export default function GlobalSearchModal() {
             align-items: center;
             gap: 8px;
             font-size: 0.75rem;
-            color: #64748b;
+            color: var(--slate);
         }
 
         .gsm-shortcut kbd {
@@ -870,28 +864,28 @@ export default function GlobalSearchModal() {
             min-width: 22px;
             height: 22px;
             padding: 0 6px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--paper-3);
+            border: 1px solid var(--rule);
             border-radius: 6px;
             font-size: 0.7rem;
-            font-weight: 600;
+            font-weight: 500;
             font-family: inherit;
-            color: #94a3b8;
+            color: var(--slate);
         }
 
         .gsm-footer-link {
             display: flex;
             align-items: center;
             gap: 6px;
-            color: #a78bfa;
+            color: var(--ink-blue);
             text-decoration: none;
             font-size: 0.85rem;
-            font-weight: 600;
+            font-weight: 500;
             transition: all 0.2s;
         }
 
         .gsm-footer-link:hover {
-            color: #c4b5fd;
+            color: var(--ink-blue);
         }
 
         .gsm-footer-link svg {
@@ -1035,7 +1029,7 @@ export default function GlobalSearchModal() {
 
                                         <div className="gsm-info">
                                             <div className="gsm-name-row">
-                                                <span className="gsm-name" style={{ color: result.tier === 'TITAN' ? '#fbbf24' : '#f8fafc' }}>
+                                                <span className="gsm-name" style={{ color: result.tier === 'TITAN' ? 'var(--titan-text)' : 'var(--ink)' }}>
                                                     {result.fullName}
                                                 </span>
                                                 <span

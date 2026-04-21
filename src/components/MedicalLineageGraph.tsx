@@ -97,12 +97,12 @@ export default function MedicalLineageGraph({ doctorName, mentors, students, cla
         links.push({ from: selfNode, to: node });
     });
 
-    // Color scheme
+    // Color scheme — editorial tokens
     const colors = {
-        self: '#8b5cf6',      // Purple
-        mentor: '#3b82f6',    // Blue
-        student: '#10b981',   // Green
-        placeholder: '#6b7280', // Gray
+        self: 'var(--ink-blue)',
+        mentor: 'var(--ink-blue)',
+        student: 'var(--verdant)',
+        placeholder: 'var(--ink-3)',
     };
 
     // Generate curved path between two points

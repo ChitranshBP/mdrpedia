@@ -6,6 +6,9 @@
 export const prerender = false;
 
 import { prisma } from '../../../lib/prisma';
+import { requireSuperAdmin } from '../../../lib/rbac';
+import { logAdminAction } from '../../../lib/audit';
+import { checkRateLimit, getClientIdentifier, RATE_LIMITS, rateLimitResponse } from '../../../lib/rate-limit';
 
 // Parse video URL to extract provider and ID
 function parseVideoUrl(url: string): { source: string; video_id: string | null } {
@@ -42,6 +45,17 @@ function getThumbnail(source: string, video_id: string | null): string | null {
  * GET - List media for a profile
  */
 export async function GET({ request }: { request: Request }) {
+    if (!requireSuperAdmin(request)) {
+        return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+            status: 401,
+            headers: { 'Content-Type': 'application/json' }
+        });
+    }
+
+    const clientId = getClientIdentifier(request);
+    const rateCheck = checkRateLimit(clientId, RATE_LIMITS.adminGeneral);
+    if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime);
+
     try {
         const url = new URL(request.url);
         const profileId = url.searchParams.get('profileId');
@@ -107,6 +121,17 @@ export async function GET({ request }: { request: Request }) {
  * POST - Add new media to a profile
  */
 export async function POST({ request }: { request: Request }) {
+    if (!requireSuperAdmin(request)) {
+        return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+            status: 401,
+            headers: { 'Content-Type': 'application/json' }
+        });
+    }
+
+    const clientId = getClientIdentifier(request);
+    const rateCheck = checkRateLimit(clientId, RATE_LIMITS.adminGeneral);
+    if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime);
+
     try {
         const body = await request.json();
         const { profileId, profileSlug, type, url, title, description } = body;
@@ -185,6 +210,8 @@ export async function POST({ request }: { request: Request }) {
             }
         });
 
+        await logAdminAction('ADD_MEDIA', resolvedProfileId, { type: mediaType, url, title }, request);
+
         return new Response(JSON.stringify({ success: true, media }), {
             headers: { 'Content-Type': 'application/json' }
         });
@@ -202,6 +229,17 @@ export async function POST({ request }: { request: Request }) {
  * PATCH - Update media (title, description, featured, order)
  */
 export async function PATCH({ request }: { request: Request }) {
+    if (!requireSuperAdmin(request)) {
+        return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+            status: 401,
+            headers: { 'Content-Type': 'application/json' }
+        });
+    }
+
+    const clientId = getClientIdentifier(request);
+    const rateCheck = checkRateLimit(clientId, RATE_LIMITS.adminGeneral);
+    if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime);
+
     try {
         const body = await request.json();
         const { mediaId, title, description, is_featured, sort_order } = body;
@@ -229,6 +267,8 @@ export async function PATCH({ request }: { request: Request }) {
             data: updateData
         });
 
+        await logAdminAction('UPDATE_MEDIA', mediaId, { title, description, is_featured, sort_order }, request);
+
         return new Response(JSON.stringify({ success: true, media }), {
             headers: { 'Content-Type': 'application/json' }
         });
@@ -246,6 +286,17 @@ export async function PATCH({ request }: { request: Request }) {
  * DELETE - Remove media from profile
  */
 export async function DELETE({ request }: { request: Request }) {
+    if (!requireSuperAdmin(request)) {
+        return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+            status: 401,
+            headers: { 'Content-Type': 'application/json' }
+        });
+    }
+
+    const clientId = getClientIdentifier(request);
+    const rateCheck = checkRateLimit(clientId, RATE_LIMITS.adminGeneral);
+    if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime);
+
     try {
         const url = new URL(request.url);
         const mediaId = url.searchParams.get('mediaId');
@@ -260,6 +311,8 @@ export async function DELETE({ request }: { request: Request }) {
         await prisma.profileMedia.delete({
             where: { id: mediaId }
         });
+
+        await logAdminAction('DELETE_MEDIA', mediaId, {}, request);
 
         return new Response(JSON.stringify({ success: true }), {
             headers: { 'Content-Type': 'application/json' }

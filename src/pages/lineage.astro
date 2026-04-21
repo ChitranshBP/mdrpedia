@@ -1,0 +1,1069 @@
+---
+/**
+ * MDRPedia -- Medical Mentorship Lineage Explorer
+ * Searchable directory of mentor-student relationships across the register.
+ * Database-first, SSR-only.
+ */
+import Layout from "../layouts/Layout.astro";
+import { prisma } from "../lib/prisma";
+
+export const prerender = false;
+
+// Fetch profiles with mentor/mentee relationships
+interface LineageProfile {
+    slug: string;
+    full_name: string;
+    specialty: string;
+    tier: string;
+    portrait_url: string | null;
+    geography: { country: string } | null;
+    mentored_by: {
+        slug: string;
+        full_name: string;
+        specialty: string;
+        tier: string;
+        portrait_url: string | null;
+    } | null;
+    mentees: {
+        slug: string;
+        full_name: string;
+        specialty: string;
+        tier: string;
+        portrait_url: string | null;
+    }[];
+}
+
+let profiles: LineageProfile[] = [];
+let error: string | null = null;
+
+try {
+    profiles = await prisma.profile.findMany({
+        where: {
+            OR: [
+                { mentored_by_id: { not: null } },
+                { mentees: { some: {} } },
+            ],
+        },
+        select: {
+            slug: true,
+            full_name: true,
+            specialty: true,
+            tier: true,
+            portrait_url: true,
+            geography: { select: { country: true } },
+            mentored_by: {
+                select: {
+                    slug: true,
+                    full_name: true,
+                    specialty: true,
+                    tier: true,
+                    portrait_url: true,
+                },
+            },
+            mentees: {
+                select: {
+                    slug: true,
+                    full_name: true,
+                    specialty: true,
+                    tier: true,
+                    portrait_url: true,
+                },
+            },
+        },
+        orderBy: { full_name: "asc" },
+    });
+} catch (e) {
+    error = "Unable to load mentorship data. Please try again later.";
+}
+
+// Build lineage entries: one per mentor who has students
+interface LineageEntry {
+    mentor: {
+        slug: string;
+        full_name: string;
+        specialty: string;
+        tier: string;
+        portrait_url: string | null;
+        country: string;
+    };
+    students: {
+        slug: string;
+        full_name: string;
+        specialty: string;
+        tier: string;
+        portrait_url: string | null;
+    }[];
+}
+
+const mentorMap = new Map<string, LineageEntry>();
+
+for (const p of profiles) {
+    // If this profile has mentees, they are a mentor
+    if (p.mentees.length > 0) {
+        if (!mentorMap.has(p.slug)) {
+            mentorMap.set(p.slug, {
+                mentor: {
+                    slug: p.slug,
+                    full_name: p.full_name,
+                    specialty: p.specialty,
+                    tier: p.tier,
+                    portrait_url: p.portrait_url,
+                    country: p.geography?.country || "Unknown",
+                },
+                students: [],
+            });
+        }
+        const entry = mentorMap.get(p.slug)!;
+        for (const m of p.mentees) {
+            if (!entry.students.find((s) => s.slug === m.slug)) {
+                entry.students.push(m);
+            }
+        }
+    }
+
+    // If this profile has a mentor, ensure the mentor entry exists
+    if (p.mentored_by) {
+        const mentorSlug = p.mentored_by.slug;
+        if (!mentorMap.has(mentorSlug)) {
+            mentorMap.set(mentorSlug, {
+                mentor: {
+                    slug: mentorSlug,
+                    full_name: p.mentored_by.full_name,
+                    specialty: p.mentored_by.specialty,
+                    tier: p.mentored_by.tier,
+                    portrait_url: p.mentored_by.portrait_url,
+                    country: "Unknown",
+                },
+                students: [],
+            });
+        }
+        const entry = mentorMap.get(mentorSlug)!;
+        if (!entry.students.find((s) => s.slug === p.slug)) {
+            entry.students.push({
+                slug: p.slug,
+                full_name: p.full_name,
+                specialty: p.specialty,
+                tier: p.tier,
+                portrait_url: p.portrait_url,
+            });
+        }
+    }
+}
+
+const lineageEntries = Array.from(mentorMap.values())
+    .filter((e) => e.students.length > 0)
+    .sort((a, b) => b.students.length - a.students.length);
+
+const totalMentors = lineageEntries.length;
+const totalStudents = lineageEntries.reduce(
+    (acc, e) => acc + e.students.length,
+    0,
+);
+const totalConnections = totalStudents; // each student-mentor pair is one connection
+
+function getInitials(name: string): string {
+    return name
+        .split(" ")
+        .filter(Boolean)
+        .map((n) => n[0])
+        .join("")
+        .slice(0, 2)
+        .toUpperCase();
+}
+
+// JSON-LD BreadcrumbList
+const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://mdrpedia.com/",
+        },
+        {
+            "@type": "ListItem",
+            position: 2,
+            name: "Mentorship Lineage",
+            item: "https://mdrpedia.com/lineage",
+        },
+    ],
+};
+
+Astro.response.headers.set(
+    "Cache-Control",
+    "public, max-age=60, s-maxage=120",
+);
+
+// Build search index for client-side filtering
+const searchIndex = lineageEntries.map((e) => ({
+    mentorSlug: e.mentor.slug,
+    mentorName: e.mentor.full_name,
+    students: e.students.map((s) => s.full_name).join(", "),
+    specialty: e.mentor.specialty,
+    country: e.mentor.country,
+}));
+---
+
+<Layout
+    title="Medical Mentorship Lineage -- MDRPedia"
+    description="Explore the academic genealogy of medicine. Discover who trained whom across generations of medical mentorship on MDRPedia."
+>
+    <script
+        type="application/ld+json"
+        set:html={JSON.stringify(breadcrumbJsonLd)}
+    />
+
+    <div class="lineage-page">
+        <!-- Hero -->
+        <header class="lineage-hero">
+            <div class="container">
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <a href="/">Home</a>
+                    <span class="sep">/</span>
+                    <span>Mentorship Lineage</span>
+                </nav>
+                <span class="hero-badge">ACADEMIC GENEALOGY</span>
+                <h1>Medical Mentorship Lineage</h1>
+                <p class="hero-desc">
+                    The surgical pedigree and academic genealogy of medicine.
+                    Tracing who trained whom, across generations of knowledge
+                    transfer.
+                </p>
+
+                <div class="stats-bar">
+                    <div class="stat">
+                        <span class="stat-value">{totalMentors}</span>
+                        <span class="stat-label">Mentors</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">{totalStudents}</span>
+                        <span class="stat-label">Students</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">{totalConnections}</span>
+                        <span class="stat-label">Connections</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        {
+            error && (
+                <div class="container">
+                    <div class="error-box">{error}</div>
+                </div>
+            )
+        }
+
+        <!-- Search / Filter -->
+        <section class="filter-bar">
+            <div class="container">
+                <div class="filter-input-wrap">
+                    <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="var(--ink-3)"
+                        stroke-width="2"
+                    >
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                    <input
+                        id="lineage-search"
+                        type="text"
+                        placeholder="Filter by mentor, student, or specialty..."
+                        autocomplete="off"
+                    />
+                </div>
+                <div class="filter-count">
+                    <span id="visible-count">{lineageEntries.length}</span> of {
+                        lineageEntries.length
+                    } lineages
+                </div>
+            </div>
+        </section>
+
+        <!-- Lineage directory -->
+        <main class="lineage-content">
+            <div class="container">
+                {
+                    lineageEntries.length === 0 && !error && (
+                        <div class="empty-msg">
+                            <p>
+                                No mentorship relationships have been recorded
+                                yet.
+                            </p>
+                        </div>
+                    )
+                }
+
+                <div class="sec-head">
+                    <div class="sec-head__left">
+                        <span class="num">&sect; 01</span>
+                        <h2>
+                            The <em>Lineage</em> Register
+                        </h2>
+                    </div>
+                    <div class="sec-head__right">
+                        {totalMentors} mentors &middot; {totalStudents} students
+                    </div>
+                </div>
+
+                <div id="lineage-list" class="lineage-list">
+                    {
+                        lineageEntries.map((entry, idx) => (
+                            <article
+                                class="lineage-entry"
+                                data-search={`${entry.mentor.full_name} ${entry.mentor.specialty} ${entry.mentor.country} ${entry.students.map((s) => s.full_name).join(" ")}`.toLowerCase()}
+                            >
+                                <div class="entry-mentor">
+                                    <a
+                                        href={`/doctors/${entry.mentor.slug}`}
+                                        class="mentor-card"
+                                    >
+                                        <div class="portrait">
+                                            {entry.mentor.portrait_url ? (
+                                                <img
+                                                    src={
+                                                        entry.mentor
+                                                            .portrait_url
+                                                    }
+                                                    alt={
+                                                        entry.mentor.full_name
+                                                    }
+                                                    width="56"
+                                                    height="56"
+                                                    loading="lazy"
+                                                />
+                                            ) : (
+                                                <span class="pp">
+                                                    {getInitials(
+                                                        entry.mentor.full_name,
+                                                    )}
+                                                </span>
+                                            )}
+                                        </div>
+                                        <div class="mentor-info">
+                                            <div class="mentor-name">
+                                                {entry.mentor.full_name}
+                                                {entry.mentor.tier !==
+                                                    "UNRANKED" && (
+                                                    <span
+                                                        class={`tier-tag ${entry.mentor.tier.toLowerCase()}`}
+                                                    >
+                                                        {entry.mentor.tier}
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <div class="mentor-meta">
+                                                {entry.mentor.specialty}
+                                                {entry.mentor.country !==
+                                                    "Unknown" && (
+                                                    <span>
+                                                        {" "}
+                                                        &middot;{" "}
+                                                        {entry.mentor.country}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div class="mentor-badge">
+                                            MENTOR
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="entry-arrow">
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="var(--ink-3)"
+                                        stroke-width="1.5"
+                                    >
+                                        <path d="M12 5v14M5 12l7 7 7-7" />
+                                    </svg>
+                                    <span class="arrow-label">
+                                        {entry.students.length} student
+                                        {entry.students.length !== 1
+                                            ? "s"
+                                            : ""}
+                                    </span>
+                                </div>
+
+                                <div class="entry-students">
+                                    {entry.students.map((student) => (
+                                        <a
+                                            href={`/doctors/${student.slug}`}
+                                            class="student-card"
+                                        >
+                                            <div class="portrait portrait-sm">
+                                                {student.portrait_url ? (
+                                                    <img
+                                                        src={
+                                                            student.portrait_url
+                                                        }
+                                                        alt={student.full_name}
+                                                        width="40"
+                                                        height="40"
+                                                        loading="lazy"
+                                                    />
+                                                ) : (
+                                                    <span class="pp">
+                                                        {getInitials(
+                                                            student.full_name,
+                                                        )}
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <div class="student-info">
+                                                <span class="student-name">
+                                                    {student.full_name}
+                                                    {student.tier !==
+                                                        "UNRANKED" && (
+                                                        <span
+                                                            class={`tier-tag sm ${student.tier.toLowerCase()}`}
+                                                        >
+                                                            {student.tier}
+                                                        </span>
+                                                    )}
+                                                </span>
+                                                <span class="student-spec">
+                                                    {student.specialty}
+                                                </span>
+                                            </div>
+                                            <span class="visit-arrow">
+                                                &rarr;
+                                            </span>
+                                        </a>
+                                    ))}
+                                </div>
+                            </article>
+                        ))
+                    }
+                </div>
+
+                <!-- Methodology -->
+                <section class="methodology-section">
+                    <div class="sec-head">
+                        <div class="sec-head__left">
+                            <span class="num">&sect; 02</span>
+                            <h2>
+                                How lineage <em>is traced</em>
+                            </h2>
+                        </div>
+                        <div class="sec-head__right">Methodology</div>
+                    </div>
+                    <div class="method-grid">
+                        <div class="method-card">
+                            <h3>Primary Sources</h3>
+                            <p>
+                                Mentor-student relationships are verified
+                                through published acknowledgments, institutional
+                                records, and fellowship training registries.
+                            </p>
+                        </div>
+                        <div class="method-card">
+                            <h3>Self-Declaration</h3>
+                            <p>
+                                Physicians who claim their profiles can
+                                declare their own mentors and students,
+                                subject to editorial verification.
+                            </p>
+                        </div>
+                        <div class="method-card">
+                            <h3>Generational Depth</h3>
+                            <p>
+                                Where possible, we trace lineage across
+                                multiple generations -- connecting
+                                grand-mentors to students of students.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+</Layout>
+
+<script define:vars={{ searchIndex }}>
+    // Client-side search/filter
+    const input = document.getElementById("lineage-search");
+    const entries = document.querySelectorAll(".lineage-entry");
+    const countEl = document.getElementById("visible-count");
+
+    if (input) {
+        input.addEventListener("input", (e) => {
+            const q = e.target.value.toLowerCase().trim();
+            let visible = 0;
+
+            entries.forEach((entry) => {
+                const data = entry.getAttribute("data-search") || "";
+                const show = !q || data.includes(q);
+                entry.style.display = show ? "" : "none";
+                if (show) visible++;
+            });
+
+            if (countEl) countEl.textContent = String(visible);
+        });
+    }
+</script>
+
+<style>
+    .lineage-page {
+        background: var(--paper);
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        margin-bottom: 1.5rem;
+    }
+    .breadcrumb a {
+        color: var(--ink-3);
+        text-decoration: none;
+    }
+    .breadcrumb a:hover {
+        color: var(--ink);
+        text-decoration: underline;
+    }
+    .breadcrumb .sep {
+        margin: 0 8px;
+        opacity: 0.4;
+    }
+
+    /* Hero */
+    .lineage-hero {
+        padding: 5rem 0 3rem;
+        text-align: center;
+        border-bottom: 1px solid var(--rule);
+    }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 18px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: 999px;
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        color: var(--ink-3);
+        margin-bottom: 1.5rem;
+    }
+
+    .lineage-hero h1 {
+        font-family: var(--font-serif);
+        font-size: clamp(2rem, 4vw, 3.5rem);
+        font-weight: 400;
+        color: var(--ink);
+        letter-spacing: -0.03em;
+        margin-bottom: 0.75rem;
+    }
+
+    .hero-desc {
+        font-size: 1.1rem;
+        color: var(--ink-2);
+        max-width: 580px;
+        margin: 0 auto 2.5rem;
+        line-height: 1.6;
+    }
+
+    /* Stats */
+    .stats-bar {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .stat {
+        text-align: center;
+        padding: 1.25rem 1.75rem;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: 8px;
+        min-width: 120px;
+        transition: all 0.2s ease;
+    }
+
+    .stat:hover {
+        transform: translateY(-2px);
+        border-color: var(--rule-strong, var(--ink-3));
+    }
+
+    .stat-value {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--ink);
+        line-height: 1.2;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .stat-label {
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--ink-3);
+        font-weight: 500;
+    }
+
+    /* Error */
+    .error-box {
+        margin: 2rem 0;
+        padding: 1rem 1.5rem;
+        background: color-mix(in oklch, var(--sanguine, #c53030) 8%, var(--paper));
+        border: 1px solid
+            color-mix(in oklch, var(--sanguine, #c53030) 30%, var(--rule));
+        border-radius: 8px;
+        font-size: 0.95rem;
+        color: var(--ink);
+    }
+
+    /* Filter */
+    .filter-bar {
+        padding: 1.25rem 0;
+        background: var(--paper-2);
+        border-bottom: 1px solid var(--rule);
+        position: sticky;
+        top: 0;
+        z-index: 50;
+    }
+
+    .filter-bar .container {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .filter-input-wrap {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 16px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 8px;
+        transition: border-color 0.15s ease;
+    }
+
+    .filter-input-wrap:focus-within {
+        border-color: var(--ink);
+    }
+
+    .filter-input-wrap input {
+        flex: 1;
+        border: none;
+        background: transparent;
+        font-family: var(--font-serif);
+        font-size: 16px;
+        color: var(--ink);
+        outline: none;
+    }
+
+    .filter-input-wrap input::placeholder {
+        color: var(--ink-3);
+    }
+
+    .filter-count {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        color: var(--ink-3);
+        white-space: nowrap;
+    }
+
+    /* Section heads (matching homepage style) */
+    .sec-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-bottom: 1px solid var(--ink);
+        padding-bottom: 16px;
+        margin-bottom: 2.5rem;
+    }
+    .sec-head__left {
+        display: flex;
+        align-items: baseline;
+        gap: 20px;
+    }
+    .sec-head__left .num {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+    }
+    .sec-head__left h2 {
+        font-size: clamp(24px, 3vw, 36px);
+        font-weight: 400;
+        font-family: var(--font-serif);
+        margin: 0;
+    }
+    .sec-head__left h2 em {
+        font-style: italic;
+        color: var(--ink-3);
+        font-weight: 400;
+    }
+    .sec-head__right {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--ink-3);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+
+    /* Content */
+    .lineage-content {
+        padding: 3rem 0 5rem;
+    }
+
+    .empty-msg {
+        text-align: center;
+        padding: 4rem 0;
+        color: var(--ink-3);
+        font-size: 1.1rem;
+    }
+
+    /* Lineage list */
+    .lineage-list {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .lineage-entry {
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: border-color 0.2s ease;
+    }
+
+    .lineage-entry:hover {
+        border-color: var(--rule-strong, var(--ink-3));
+    }
+
+    /* Mentor card */
+    .entry-mentor {
+        background: var(--paper-2);
+        border-bottom: 1px solid var(--rule);
+    }
+
+    .mentor-card {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.25rem 1.5rem;
+        text-decoration: none;
+        color: inherit;
+        transition: background 0.15s ease;
+    }
+
+    .mentor-card:hover {
+        background: var(--paper-3, var(--paper-2));
+    }
+
+    .portrait {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        overflow: hidden;
+        flex-shrink: 0;
+        border: 1px solid var(--rule);
+    }
+
+    .portrait img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .portrait .pp {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-serif);
+        font-size: 20px;
+        font-weight: 400;
+        color: var(--ink-3);
+        background: var(--paper);
+    }
+
+    .portrait-sm {
+        width: 40px;
+        height: 40px;
+    }
+
+    .portrait-sm .pp {
+        font-size: 14px;
+    }
+
+    .mentor-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .mentor-name {
+        font-family: var(--font-serif);
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: var(--ink);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .mentor-meta {
+        font-size: 0.85rem;
+        color: var(--ink-3);
+        margin-top: 2px;
+    }
+
+    .mentor-badge {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        color: var(--ink-3);
+        padding: 4px 10px;
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        flex-shrink: 0;
+    }
+
+    /* Tier tags */
+    .tier-tag {
+        font-size: 0.6rem;
+        font-weight: 700;
+        padding: 2px 7px;
+        border-radius: 3px;
+        letter-spacing: 0.06em;
+    }
+
+    .tier-tag.sm {
+        font-size: 0.55rem;
+        padding: 1px 5px;
+    }
+
+    .tier-tag.titan {
+        background: var(--titan-bg);
+        color: var(--titan-text);
+        border: 1px solid var(--titan-border);
+    }
+
+    .tier-tag.elite {
+        background: var(--elite-bg);
+        color: var(--elite-text);
+        border: 1px solid var(--elite-border);
+    }
+
+    .tier-tag.master {
+        background: var(--master-bg, var(--paper-3));
+        color: var(--master-text, var(--ink-2));
+        border: 1px solid var(--master-border, var(--rule));
+    }
+
+    /* Arrow connector */
+    .entry-arrow {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0.5rem 1.5rem;
+        border-bottom: 1px solid var(--rule);
+        background: var(--paper);
+    }
+
+    .arrow-label {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+    }
+
+    /* Students */
+    .entry-students {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .student-card {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.875rem 1.5rem;
+        text-decoration: none;
+        color: inherit;
+        border-bottom: 1px solid var(--rule);
+        transition: background 0.1s ease;
+    }
+
+    .student-card:last-child {
+        border-bottom: none;
+    }
+
+    .student-card:hover {
+        background: var(--paper-2);
+    }
+
+    .student-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .student-name {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--ink);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    .student-spec {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--ink-3);
+        margin-top: 1px;
+    }
+
+    .visit-arrow {
+        font-size: 1rem;
+        color: var(--ink-3);
+        opacity: 0;
+        transition:
+            opacity 0.15s ease,
+            transform 0.15s ease;
+        flex-shrink: 0;
+    }
+
+    .student-card:hover .visit-arrow {
+        opacity: 1;
+        transform: translateX(3px);
+    }
+
+    /* Methodology */
+    .methodology-section {
+        margin-top: 4rem;
+        padding-top: 1rem;
+    }
+
+    .method-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .method-card {
+        padding: 2rem;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: 8px;
+        transition: all 0.2s ease;
+    }
+
+    .method-card:hover {
+        transform: translateY(-2px);
+        border-color: var(--rule-strong, var(--ink-3));
+    }
+
+    .method-card h3 {
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--ink);
+        margin-bottom: 0.5rem;
+    }
+
+    .method-card p {
+        font-size: 0.9rem;
+        color: var(--ink-2);
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .lineage-hero {
+            padding: 3rem 0 2rem;
+        }
+
+        .stats-bar {
+            gap: 0.5rem;
+        }
+
+        .stat {
+            min-width: 90px;
+            padding: 0.75rem 1rem;
+        }
+
+        .stat-value {
+            font-size: 1.25rem;
+        }
+
+        .filter-bar .container {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .mentor-card {
+            padding: 1rem;
+        }
+
+        .mentor-badge {
+            display: none;
+        }
+
+        .sec-head {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+        }
+
+        .method-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .portrait {
+            width: 44px;
+            height: 44px;
+        }
+
+        .portrait-sm {
+            width: 32px;
+            height: 32px;
+        }
+
+        .student-card {
+            padding: 0.75rem 1rem;
+        }
+    }
+</style>

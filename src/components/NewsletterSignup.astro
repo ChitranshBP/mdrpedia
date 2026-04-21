@@ -1,0 +1,162 @@
+---
+/**
+ * MDRPedia — Newsletter Signup Form
+ * Inline form with honeypot anti-spam, matching editorial design
+ */
+interface Props {
+    source?: string;
+}
+
+const { source = 'footer' } = Astro.props;
+---
+
+<form class="newsletter-form" data-source={source}>
+    <div class="newsletter-inner">
+        <div class="newsletter-text">
+            <span class="newsletter-label">The MDRPedia Dispatch</span>
+            <p>New profiles, ethics rulings, and registry updates — delivered monthly.</p>
+        </div>
+        <div class="newsletter-fields">
+            <input
+                type="email"
+                name="email"
+                placeholder="your@email.com"
+                required
+                autocomplete="email"
+                class="newsletter-input"
+            />
+            <!-- Honeypot — hidden from users, visible to bots -->
+            <input type="text" name="website" autocomplete="off" tabindex="-1" style="position:absolute;left:-9999px;opacity:0;height:0;" />
+            <button type="submit" class="newsletter-btn">Subscribe</button>
+        </div>
+        <p class="newsletter-status" aria-live="polite"></p>
+    </div>
+</form>
+
+<script>
+    document.querySelectorAll('.newsletter-form').forEach(form => {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formEl = e.target as HTMLFormElement;
+            const statusEl = formEl.querySelector('.newsletter-status') as HTMLElement;
+            const btnEl = formEl.querySelector('.newsletter-btn') as HTMLButtonElement;
+            const emailInput = formEl.querySelector('input[name="email"]') as HTMLInputElement;
+            const honeypot = formEl.querySelector('input[name="website"]') as HTMLInputElement;
+
+            btnEl.disabled = true;
+            btnEl.textContent = '...';
+            statusEl.textContent = '';
+
+            try {
+                const res = await fetch('/api/newsletter', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: emailInput.value,
+                        source: formEl.dataset.source || 'footer',
+                        website: honeypot.value, // honeypot
+                    }),
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    statusEl.textContent = 'Subscribed — welcome aboard.';
+                    statusEl.style.color = 'var(--verdant)';
+                    emailInput.value = '';
+                } else {
+                    statusEl.textContent = data.error || 'Something went wrong.';
+                    statusEl.style.color = 'var(--sanguine)';
+                }
+            } catch {
+                statusEl.textContent = 'Network error. Please try again.';
+                statusEl.style.color = 'var(--sanguine)';
+            } finally {
+                btnEl.disabled = false;
+                btnEl.textContent = 'Subscribe';
+            }
+        });
+    });
+</script>
+
+<style>
+    .newsletter-form {
+        border-top: 1px solid var(--rule);
+        padding-top: var(--s-5);
+    }
+    .newsletter-inner {
+        display: flex;
+        flex-direction: column;
+        gap: var(--s-3);
+    }
+    .newsletter-label {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+    }
+    .newsletter-text p {
+        font-family: var(--font-serif);
+        font-size: 14px;
+        color: var(--ink-2);
+        margin: 4px 0 0;
+        max-width: 40ch;
+    }
+    .newsletter-fields {
+        display: flex;
+        gap: var(--s-2);
+        position: relative;
+    }
+    .newsletter-input {
+        flex: 1;
+        padding: 10px 14px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-2);
+        color: var(--ink);
+        font-family: var(--font-sans);
+        font-size: 13px;
+        outline: none;
+        transition: border-color var(--t-fast) var(--ease);
+    }
+    .newsletter-input:focus {
+        border-color: var(--ink);
+        box-shadow: 0 0 0 3px color-mix(in oklch, var(--ink-blue) 12%, transparent);
+    }
+    .newsletter-input::placeholder {
+        color: var(--ink-3);
+    }
+    .newsletter-btn {
+        padding: 10px 18px;
+        background: var(--ink);
+        color: var(--paper);
+        border: none;
+        border-radius: var(--r-2);
+        font-family: var(--font-sans);
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all var(--t-fast) var(--ease);
+        white-space: nowrap;
+    }
+    .newsletter-btn:hover {
+        background: oklch(0.10 0.02 260);
+    }
+    .newsletter-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+    .newsletter-status {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        min-height: 16px;
+        margin: 0;
+    }
+
+    @media (max-width: 600px) {
+        .newsletter-fields {
+            flex-direction: column;
+        }
+    }
+</style>

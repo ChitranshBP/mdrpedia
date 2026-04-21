@@ -12,6 +12,7 @@ import { prisma } from "../../lib/prisma";
 import type { ProfileData } from "../../lib/types";
 import type { CollectionEntry } from "astro:content";
 import { mapDbProfileToProps } from "../../lib/profile-mapper";
+import { calculateTotalImpact } from "../../lib/impact-calculator";
 
 export const prerender = false;
 
@@ -50,6 +51,7 @@ try {
             media: {
                 orderBy: [{ is_featured: "desc" }, { sort_order: "asc" }],
             },
+            portal: true,
             _count: {
                 select: { impact_votes: true },
             },
@@ -142,8 +144,16 @@ if (dbProfile) {
             students: d.students,
             aiSummary: d.aiSummary,
             media: d.media,
-            // Calculate total impact with time-based growth
-            totalImpact: calculateImpact(d),
+            totalImpact: calculateTotalImpact({
+                livesSaved: d.livesSaved || 0,
+                verifiedSurgeries: d.verifiedSurgeries || 0,
+                totalCitations: d.citations?.reduce(
+                    (acc: number, c: any) => acc + (c.totalCitationCount || c.citationCount || 0), 0
+                ) || 0,
+                hIndex: d.hIndex || 0,
+                techniquesCount: d.techniquesInvented?.length || 0,
+                awardsCount: d.awards?.length || 0,
+            }),
             impactVotes: d.impactVotes || 0,
             talks: d.talks,
             consultationPrice: d.consultationPrice,
@@ -156,43 +166,6 @@ if (dbProfile) {
     }
 }
 
-/**
- * Calculate total impact score with time-based growth factor
- * Formula: (Lives Saved × 1.5) + Verified Surgeries + (Citations / 50) + (H-Index × 10) + Time Bonus
- */
-function calculateImpact(d: any): number {
-    const livesSaved = d.livesSaved || 0;
-    const verifiedSurgeries = d.verifiedSurgeries || 0;
-    const hIndex = d.hIndex || 0;
-    const yearsActive = d.yearsActive || 0;
-
-    // Calculate total citations
-    const totalCitations = d.citations?.reduce(
-        (acc: number, c: any) => acc + (c.totalCitationCount || c.citationCount || 0),
-        0,
-    ) || 0;
-
-    // Base impact calculation
-    let baseImpact = Math.floor(
-        (livesSaved * 1.5) +
-        verifiedSurgeries +
-        (totalCitations / 50) +
-        (hIndex * 10)
-    );
-
-    // Time-based growth: Add 0.5% per year of active practice
-    const timeGrowthFactor = 1 + (yearsActive * 0.005);
-
-    // Apply time growth
-    baseImpact = Math.floor(baseImpact * timeGrowthFactor);
-
-    // Add daily increment based on current date (creates illusion of live growth)
-    // This adds a small increment each day based on profile characteristics
-    const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
-    const dailyIncrement = Math.floor((baseImpact * 0.0001) * (dayOfYear % 30)); // ~0.01% daily growth
-
-    return Math.max(baseImpact + dailyIncrement, livesSaved);
-}
 ---
 
 <HiddenAIContext doctor={doctorSource as any} />

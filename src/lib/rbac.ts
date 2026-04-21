@@ -19,23 +19,13 @@ export function requireSuperAdmin(request: Request): boolean {
         return false;
     }
 
-    // Timing-safe comparison to prevent timing attacks
-    if (key.length !== ADMIN_KEY.length) {
-        return false;
-    }
-
-    let result = 0;
-    for (let i = 0; i < key.length; i++) {
-        result |= key.charCodeAt(i) ^ ADMIN_KEY.charCodeAt(i);
+    // Timing-safe comparison — pad shorter string to prevent length leak
+    const maxLen = Math.max(key.length, ADMIN_KEY.length);
+    let result = key.length ^ ADMIN_KEY.length; // Non-zero if lengths differ
+    for (let i = 0; i < maxLen; i++) {
+        result |= (key.charCodeAt(i) || 0) ^ (ADMIN_KEY.charCodeAt(i) || 0);
     }
 
     return result === 0;
 }
 
-export function getClientIp(request: Request): string {
-    return (
-        request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-        request.headers.get("x-real-ip") ||
-        "unknown"
-    );
-}

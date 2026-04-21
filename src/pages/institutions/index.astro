@@ -5,6 +5,7 @@
  */
 import Layout from "../../layouts/Layout.astro";
 import { prisma } from "../../lib/prisma";
+import { getInstitutionLogo, getInstitutionInitials, getInstitutionColor } from "../../lib/institution-logos";
 
 export const prerender = false;
 
@@ -164,13 +165,29 @@ const sectorLabels: Record<string, string> = {
                 processedInstitutions.map((inst) => (
                     <a href={`/institutions/${inst.slug}`} class="institution-card">
                         <div class="card-header">
-                            {inst.logo_url ? (
-                                <img src={inst.logo_url} alt={inst.name} class="inst-logo" />
-                            ) : (
-                                <div class="inst-logo-placeholder">
-                                    {inst.name.charAt(0)}
-                                </div>
-                            )}
+                            {(() => {
+                                const logoUrl = inst.logo_url || getInstitutionLogo(inst.name, inst.website);
+                                const initials = getInstitutionInitials(inst.name);
+                                const color = getInstitutionColor(inst.name);
+                                return logoUrl ? (
+                                    <>
+                                        <img
+                                            src={logoUrl}
+                                            alt={inst.name}
+                                            class="inst-logo"
+                                            loading="lazy"
+                                            onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`}
+                                        />
+                                        <div class="inst-logo-placeholder" style={`display:none;background:${color}`}>
+                                            {initials}
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div class="inst-logo-placeholder" style={`background:${color}`}>
+                                        {initials}
+                                    </div>
+                                );
+                            })()}
                             <div class="card-header-text">
                                 <h3 class="inst-name">{inst.name}</h3>
                                 <p class="inst-location">
@@ -234,7 +251,7 @@ const sectorLabels: Record<string, string> = {
 </Layout>
 
 <script>
-    window.applyFilter = function(type, value) {
+    (window as any).applyFilter = function(type: string, value: string) {
         const url = new URL(window.location.href);
         if (value) {
             url.searchParams.set(type, value);
@@ -248,7 +265,7 @@ const sectorLabels: Record<string, string> = {
 <style>
     .institutions-page {
         padding: 60px 20px;
-        max-width: 1400px;
+        max-width: var(--max);
     }
 
     .error-banner {
@@ -256,10 +273,10 @@ const sectorLabels: Record<string, string> = {
         align-items: center;
         gap: 12px;
         padding: 16px 20px;
-        background: rgba(239, 68, 68, 0.1);
-        border: 1px solid rgba(239, 68, 68, 0.3);
-        border-radius: 10px;
-        color: #f87171;
+        background: var(--sanguine-2);
+        border: 1px solid var(--sanguine);
+        border-radius: var(--r-3);
+        color: var(--sanguine);
         margin-bottom: 24px;
     }
 
@@ -275,11 +292,13 @@ const sectorLabels: Record<string, string> = {
     .page-header h1 {
         font-family: var(--font-serif);
         font-size: 2.5rem;
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 12px;
     }
 
     .page-desc {
-        color: var(--text-secondary);
+        color: var(--ink-2);
         font-size: 1.1rem;
     }
 
@@ -291,9 +310,9 @@ const sectorLabels: Record<string, string> = {
         margin-bottom: 24px;
         flex-wrap: wrap;
         padding: 20px;
-        background: var(--bg-card, #14142a);
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper-2);
+        border-radius: var(--r-4);
+        border: 1px solid var(--rule);
     }
 
     .search-form {
@@ -306,24 +325,24 @@ const sectorLabels: Record<string, string> = {
     .search-input {
         flex: 1;
         padding: 10px 16px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-        color: var(--text-primary);
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
+        color: var(--ink);
         font-size: 0.95rem;
     }
 
     .search-input:focus {
         outline: none;
-        border-color: var(--accent-purple);
+        border-color: var(--ink-blue);
     }
 
     .search-btn {
         padding: 10px 20px;
-        background: var(--accent-purple);
-        color: white;
+        background: var(--ink-blue);
+        color: var(--paper);
         border: none;
-        border-radius: 8px;
+        border-radius: var(--r-3);
         font-weight: 600;
         cursor: pointer;
     }
@@ -336,15 +355,15 @@ const sectorLabels: Record<string, string> = {
 
     .filter-group label {
         font-size: 0.85rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .filter-group select {
         padding: 8px 12px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 6px;
-        color: var(--text-primary);
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-2);
+        color: var(--ink);
         cursor: pointer;
     }
 
@@ -353,11 +372,11 @@ const sectorLabels: Record<string, string> = {
         justify-content: space-between;
         align-items: center;
         margin-bottom: 24px;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .clear-filters {
-        color: var(--accent-purple);
+        color: var(--ink-blue);
         text-decoration: none;
     }
 
@@ -369,49 +388,49 @@ const sectorLabels: Record<string, string> = {
     }
 
     .institution-card {
-        background: var(--bg-card, #14142a);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         overflow: hidden;
         text-decoration: none;
         color: inherit;
-        transition: all 0.2s;
+        transition: all var(--t-base) var(--ease);
         display: flex;
         flex-direction: column;
     }
 
     .institution-card:hover {
-        border-color: var(--accent-purple);
-        transform: translateY(-4px);
-        box-shadow: 0 12px 40px rgba(139, 92, 246, 0.15);
+        border-color: var(--rule-strong);
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-3);
     }
 
     .card-header {
         display: flex;
         gap: 16px;
         padding: 20px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid var(--rule);
     }
 
     .inst-logo {
         width: 56px;
         height: 56px;
-        border-radius: 8px;
+        border-radius: var(--r-3);
         object-fit: contain;
-        background: white;
+        background: var(--paper);
     }
 
     .inst-logo-placeholder {
         width: 56px;
         height: 56px;
-        border-radius: 8px;
-        background: linear-gradient(135deg, var(--accent-purple), #6366f1);
+        border-radius: var(--r-3);
+        background: var(--ink-blue);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 1.5rem;
-        font-weight: 700;
-        color: white;
+        font-weight: 500;
+        color: var(--paper);
     }
 
     .card-header-text {
@@ -419,15 +438,16 @@ const sectorLabels: Record<string, string> = {
     }
 
     .inst-name {
+        font-family: var(--font-serif);
         font-size: 1.1rem;
-        font-weight: 600;
+        font-weight: 500;
         margin: 0 0 4px;
-        color: var(--text-primary);
+        color: var(--ink);
     }
 
     .inst-location {
         font-size: 0.85rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin: 0;
     }
 
@@ -445,42 +465,42 @@ const sectorLabels: Record<string, string> = {
 
     .sector-badge {
         padding: 3px 10px;
-        border-radius: 12px;
+        border-radius: var(--r-pill);
         font-size: 0.7rem;
         font-weight: 600;
         text-transform: uppercase;
     }
 
     .sector-public {
-        background: rgba(16, 185, 129, 0.15);
-        color: #10b981;
+        background: var(--verdant-2);
+        color: var(--verdant);
     }
 
     .sector-private {
-        background: rgba(139, 92, 246, 0.15);
-        color: var(--accent-purple);
+        background: var(--ink-blue-2);
+        color: var(--ink-blue);
     }
 
     .ranking-badge {
         padding: 3px 10px;
-        background: rgba(255, 215, 0, 0.15);
-        color: #ffd700;
-        border-radius: 12px;
+        background: var(--aged-gold-2);
+        color: var(--titan-text);
+        border-radius: var(--r-pill);
         font-size: 0.7rem;
-        font-weight: 700;
+        font-weight: 500;
     }
 
     .coe-badge {
         padding: 3px 10px;
-        background: rgba(0, 170, 255, 0.15);
-        color: #00aaff;
-        border-radius: 12px;
+        background: var(--ink-blue-2);
+        color: var(--ink-blue);
+        border-radius: var(--r-pill);
         font-size: 0.7rem;
     }
 
     .inst-desc {
         font-size: 0.85rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         line-height: 1.5;
         margin-bottom: 16px;
     }
@@ -493,37 +513,37 @@ const sectorLabels: Record<string, string> = {
 
     .stat-item {
         font-size: 0.8rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .stat-item strong {
-        color: var(--text-primary);
+        color: var(--ink);
     }
 
     .tier-stat {
         padding: 2px 8px;
-        border-radius: 4px;
+        border-radius: var(--r-2);
     }
 
     .tier-titan {
-        background: rgba(255, 215, 0, 0.1);
-        color: #ffd700;
+        background: var(--titan-bg);
+        color: var(--titan-text);
     }
 
     .tier-elite {
-        background: rgba(0, 170, 255, 0.1);
-        color: #00aaff;
+        background: var(--elite-bg);
+        color: var(--elite-text);
     }
 
     .card-footer {
         padding: 16px 20px;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
-        background: rgba(255, 255, 255, 0.02);
+        border-top: 1px solid var(--rule);
+        background: var(--paper-2);
     }
 
     .view-link {
         font-size: 0.85rem;
-        color: var(--accent-purple);
+        color: var(--ink-blue);
         font-weight: 600;
     }
 
@@ -531,7 +551,7 @@ const sectorLabels: Record<string, string> = {
         grid-column: 1 / -1;
         text-align: center;
         padding: 60px 20px;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .empty-state p {

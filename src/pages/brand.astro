@@ -1,0 +1,477 @@
+---
+export const prerender = true;
+import Layout from "../layouts/Layout.astro";
+import SealRound from "../components/SealRound.astro";
+import TierPill from "../components/TierPill.astro";
+---
+
+<Layout
+  title="Brand System — MDRPedia"
+  description="The MDRPedia design system: logo, typography, color, tier seals, ethics badges, and editorial principles."
+>
+
+<!-- HERO -->
+<header class="brand-hero">
+  <div class="container">
+    <span class="eyebrow">Brand System &middot; v2.0 &middot; 2026</span>
+    <h1 style="margin-top:20px;">The register,<br><em>made a mark.</em></h1>
+    <p class="brand-hero__lead">MDRPedia is an editorial work of record — an encyclopedia of the physicians who shape medicine, and the ones who practice it with integrity. This system gives it a voice, a mark, and a set of seals worth embedding on a clinic door.</p>
+    <div class="brand-meta">
+      <div><label>Discipline</label>Editorial &middot; Scholarly</div>
+      <div><label>Type</label>Source Serif 4 &middot; Inter Tight &middot; JetBrains Mono</div>
+      <div><label>Primary</label>Paper &middot; Deep Ink &middot; Verdant</div>
+      <div><label>Doctrine</label>"Verified, or not at all."</div>
+    </div>
+  </div>
+</header>
+
+<!-- 01 LOGO -->
+<section class="brand-sec">
+  <div class="container">
+    <div class="brand-sec-head">
+      <span class="brand-sec-head__num">01 &middot; Mark</span>
+      <div>
+        <h2>A <em>stamp</em>, not a logo.</h2>
+        <p>A serif M, wrapped by a laurel, framed by a double register ring — the symbol of a trusted authority. It reads as a seal: at 16px as a favicon, at 120px as a certificate stamp, at 2in as embossed foil on letterhead.</p>
+      </div>
+    </div>
+
+    <div class="logo-big">
+      <svg width="120" height="120" viewBox="0 0 48 48">
+        <circle cx="24" cy="24" r="22.5" fill="none" stroke="currentColor" stroke-width="0.8"/>
+        <circle cx="24" cy="24" r="19" fill="none" stroke="currentColor" stroke-width="0.5" stroke-dasharray="1 3"/>
+        <path d="M10 30 Q8 22 12 14" fill="none" stroke="currentColor" stroke-width="0.8"/>
+        <path d="M10.5 28 Q8.5 28 7.5 26.5" fill="none" stroke="currentColor" stroke-width="0.7"/>
+        <path d="M10 25 Q8 25 7.2 23.5" fill="none" stroke="currentColor" stroke-width="0.7"/>
+        <path d="M10 22 Q8 22 7.5 20.5" fill="none" stroke="currentColor" stroke-width="0.7"/>
+        <path d="M10.5 19 Q9 18.5 9 17" fill="none" stroke="currentColor" stroke-width="0.7"/>
+        <path d="M38 30 Q40 22 36 14" fill="none" stroke="currentColor" stroke-width="0.8"/>
+        <path d="M37.5 28 Q39.5 28 40.5 26.5" fill="none" stroke="currentColor" stroke-width="0.7"/>
+        <path d="M38 25 Q40 25 40.8 23.5" fill="none" stroke="currentColor" stroke-width="0.7"/>
+        <path d="M38 22 Q40 22 40.5 20.5" fill="none" stroke="currentColor" stroke-width="0.7"/>
+        <path d="M37.5 19 Q39 18.5 39 17" fill="none" stroke="currentColor" stroke-width="0.7"/>
+        <text x="24" y="30" text-anchor="middle" font-family="Source Serif 4, serif" font-size="20" font-weight="500" fill="currentColor">M</text>
+      </svg>
+      <div>
+        <div class="logo-big__text">MDR<em>Pedia</em></div>
+        <div class="logo-big__sub">The Physicians' Register &middot; Est. 2024</div>
+      </div>
+    </div>
+
+    <div class="logo-grid">
+      <div class="logo-card">
+        <a href="/" class="mdr-logo" aria-label="MDRPedia" style="text-decoration:none;">
+          <svg class="mdr-logo__mark" width="36" height="36" viewBox="0 0 48 48" aria-hidden="true">
+            <circle cx="24" cy="24" r="22.5" stroke="currentColor" stroke-width="1.2" fill="none" />
+            <circle cx="24" cy="24" r="19" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="1 3" />
+            <path d="M10 30 Q8 22 12 14" stroke="currentColor" stroke-width="1" fill="none" />
+            <path d="M38 30 Q40 22 36 14" stroke="currentColor" stroke-width="1" fill="none" />
+            <text x="24" y="30" text-anchor="middle" fill="currentColor" font-family="'Source Serif 4', serif" font-size="20" font-weight="500">M</text>
+          </svg>
+          <span>
+            <span class="mdr-logo__text">MDR<em>Pedia</em></span>
+          </span>
+        </a>
+      </div>
+      <div class="logo-card dark">
+        <a href="/" class="mdr-logo" aria-label="MDRPedia" style="text-decoration:none; color:var(--paper);">
+          <svg class="mdr-logo__mark" width="36" height="36" viewBox="0 0 48 48" aria-hidden="true">
+            <circle cx="24" cy="24" r="22.5" stroke="currentColor" stroke-width="1.2" fill="none" />
+            <circle cx="24" cy="24" r="19" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="1 3" />
+            <path d="M10 30 Q8 22 12 14" stroke="currentColor" stroke-width="1" fill="none" />
+            <path d="M38 30 Q40 22 36 14" stroke="currentColor" stroke-width="1" fill="none" />
+            <text x="24" y="30" text-anchor="middle" fill="currentColor" font-family="'Source Serif 4', serif" font-size="20" font-weight="500">M</text>
+          </svg>
+          <span>
+            <span class="mdr-logo__text" style="color:var(--paper);">MDR<em style="color:oklch(0.7 0.01 85);">Pedia</em></span>
+          </span>
+        </a>
+      </div>
+      <div class="logo-card invert">
+        <a href="/" class="mdr-logo" aria-label="MDRPedia" style="text-decoration:none;">
+          <svg class="mdr-logo__mark" width="36" height="36" viewBox="0 0 48 48" aria-hidden="true">
+            <circle cx="24" cy="24" r="22.5" stroke="currentColor" stroke-width="1.2" fill="none" />
+            <circle cx="24" cy="24" r="19" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="1 3" />
+            <path d="M10 30 Q8 22 12 14" stroke="currentColor" stroke-width="1" fill="none" />
+            <path d="M38 30 Q40 22 36 14" stroke="currentColor" stroke-width="1" fill="none" />
+            <text x="24" y="30" text-anchor="middle" fill="currentColor" font-family="'Source Serif 4', serif" font-size="20" font-weight="500">M</text>
+          </svg>
+          <span>
+            <span class="mdr-logo__text">MDR<em>Pedia</em></span>
+          </span>
+        </a>
+      </div>
+      <div class="logo-card">
+        <svg width="56" height="56" viewBox="0 0 48 48">
+          <circle cx="24" cy="24" r="22.5" stroke="currentColor" stroke-width="1.2" fill="none" />
+          <circle cx="24" cy="24" r="19" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="1 3" />
+          <path d="M10 30 Q8 22 12 14" stroke="currentColor" stroke-width="1" fill="none" />
+          <path d="M10.5 28 Q8.5 28 7.5 26.5" stroke="currentColor" stroke-width="0.8" fill="none" />
+          <path d="M10 25 Q8 25 7.2 23.5" stroke="currentColor" stroke-width="0.8" fill="none" />
+          <path d="M10 22 Q8 22 7.5 20.5" stroke="currentColor" stroke-width="0.8" fill="none" />
+          <path d="M10.5 19 Q9 18.5 9 17" stroke="currentColor" stroke-width="0.8" fill="none" />
+          <path d="M38 30 Q40 22 36 14" stroke="currentColor" stroke-width="1" fill="none" />
+          <path d="M37.5 28 Q39.5 28 40.5 26.5" stroke="currentColor" stroke-width="0.8" fill="none" />
+          <path d="M38 25 Q40 25 40.8 23.5" stroke="currentColor" stroke-width="0.8" fill="none" />
+          <path d="M38 22 Q40 22 40.5 20.5" stroke="currentColor" stroke-width="0.8" fill="none" />
+          <path d="M37.5 19 Q39 18.5 39 17" stroke="currentColor" stroke-width="0.8" fill="none" />
+          <text x="24" y="30" text-anchor="middle" fill="currentColor" font-family="'Source Serif 4', serif" font-size="20" font-weight="500">M</text>
+        </svg>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:16px;">
+      <span class="logo-label">Primary</span>
+      <span class="logo-label">Ink Reverse</span>
+      <span class="logo-label">On Gold</span>
+      <span class="logo-label">Mark only</span>
+    </div>
+  </div>
+</section>
+
+<!-- 02 TYPOGRAPHY -->
+<section class="brand-sec">
+  <div class="container">
+    <div class="brand-sec-head">
+      <span class="brand-sec-head__num">02 &middot; Typography</span>
+      <div>
+        <h2>Three voices, <em>one register.</em></h2>
+        <p>Source Serif 4 carries the editorial — long-form profiles, decisions, citations in context. Inter Tight handles the interface. JetBrains Mono carries identity: DOIs, ORCIDs, serial numbers, every time we speak to the ledger.</p>
+      </div>
+    </div>
+
+    <div class="spec serif">
+      <div class="spec__meta">
+        <strong>Source Serif 4</strong>
+        Editorial &middot; Headings<br>Weights 300&ndash;700<br>Tracking &minus;0.015em
+      </div>
+      <div class="spec__sample">A register of<br><em>consequence.</em></div>
+    </div>
+
+    <div class="spec sans">
+      <div class="spec__meta">
+        <strong>Inter Tight</strong>
+        Interface &middot; Body<br>Weights 400&ndash;700<br>Tracking &minus;0.005em
+      </div>
+      <div class="spec__sample">Browse 12,048 verified profiles across 84 countries.</div>
+    </div>
+
+    <div class="spec mono">
+      <div class="spec__meta">
+        <strong>JetBrains Mono</strong>
+        Data &middot; Identifiers<br>Weights 400&ndash;600<br>Tabular numerals
+      </div>
+      <div class="spec__sample">DOI 10.1056/NEJMoa1912388<br>ORCID 0000-0003-4183-1373</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 COLOR -->
+<section class="brand-sec">
+  <div class="container">
+    <div class="brand-sec-head">
+      <span class="brand-sec-head__num">03 &middot; Color</span>
+      <div>
+        <h2>Paper, ink, and <em>six assignments.</em></h2>
+        <p>Paper and ink do the heavy lifting; color is used only to signal stature. Each tier owns exactly one hue. No gradient fills. No accent on a whim.</p>
+      </div>
+    </div>
+
+    <div class="swatches">
+      <div class="swatch">
+        <div class="swatch__chip" style="background:var(--paper)"></div>
+        <div class="swatch__meta"><strong>Paper</strong>oklch(.972 .008 85)</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__chip" style="background:var(--ink)"></div>
+        <div class="swatch__meta" style="color:var(--paper); background:var(--ink)"><strong style="color:var(--paper)">Ink</strong>oklch(.18 .02 260)</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__chip" style="background:var(--aged-gold)"></div>
+        <div class="swatch__meta"><strong>Aged Gold</strong>Titan &middot; Tier I</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__chip" style="background:var(--ink-blue)"></div>
+        <div class="swatch__meta"><strong>Ink Blue</strong>Elite &middot; Tier II</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__chip" style="background:var(--slate)"></div>
+        <div class="swatch__meta"><strong>Slate</strong>Master &middot; Tier III</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__chip" style="background:var(--verdant)"></div>
+        <div class="swatch__meta"><strong>Verdant</strong>Ethical Legend</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 TIER SEALS -->
+<section class="brand-sec">
+  <div class="container">
+    <div class="brand-sec-head">
+      <span class="brand-sec-head__num">04 &middot; Tier Seals</span>
+      <div>
+        <h2>The <em>stature</em> ladder.</h2>
+        <p>Three tiers, built from the 4-pillar verification: <span class="mono">clinical mastery &middot; intellectual legacy &middot; mentorship &middot; humanitarian impact</span>. The seal is the doctor's; they earn it, and they can plant it on their own front page.</p>
+      </div>
+    </div>
+
+    <div class="seals-row">
+      <div class="seal-cell">
+        <div class="seal seal--titan"><span class="seal__rank">Tier I</span><span class="seal__name">Titan</span><span class="seal__id">&numero; 0001</span></div>
+        <small>Rarity: 0.4% &middot; 48 worldwide</small>
+      </div>
+      <div class="seal-cell">
+        <div class="seal seal--elite"><span class="seal__rank">Tier II</span><span class="seal__name">Elite</span><span class="seal__id">&numero; 0024</span></div>
+        <small>Rarity: 2.1% &middot; 252 worldwide</small>
+      </div>
+      <div class="seal-cell">
+        <div class="seal seal--master"><span class="seal__rank">Tier III</span><span class="seal__name">Master</span><span class="seal__id">&numero; 0118</span></div>
+        <small>Rarity: 8% &middot; 960 worldwide</small>
+      </div>
+      <div class="seal-cell">
+        <SealRound kind="titan" id="0001" size={180} />
+        <small>Embeddable &middot; 180px</small>
+      </div>
+      <div class="seal-cell">
+        <SealRound kind="elite" id="0024" size={180} />
+        <small>Embeddable &middot; 180px</small>
+      </div>
+      <div class="seal-cell">
+        <SealRound kind="master" id="0118" size={180} />
+        <small>Embeddable &middot; 180px</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 ETHICS SEALS -->
+<section class="brand-sec" style="background: var(--verdant-2);">
+  <div class="container">
+    <div class="brand-sec-head">
+      <span class="brand-sec-head__num">05 &middot; Ethics Seals &mdash; <span style="color:var(--verdant)">New</span></span>
+      <div>
+        <h2>A <em>parallel ladder</em> for how they practice.</h2>
+        <p>Stature says <em>how much they know</em>. The Ethics ladder says <em>how they practice</em>. Verified against an Ethics Charter, a conflict-of-interest disclosure, a pro-bono log, and peer + patient nominations. Revocable — publicly — if broken.</p>
+      </div>
+    </div>
+
+    <div class="round-seals">
+      <div class="round-seal-cell">
+        <SealRound kind="legend" id="E-001" size={180} />
+        <h4>Legend</h4>
+        <p>Documented humanitarian work, zero COI, public advocacy record, peer-nominated. Lifetime contribution.</p>
+      </div>
+      <div class="round-seal-cell">
+        <SealRound kind="guardian" id="E-044" size={180} />
+        <h4>Guardian</h4>
+        <p>No pharma-biased research, transparent pricing, active patient-advocacy record.</p>
+      </div>
+      <div class="round-seal-cell">
+        <SealRound kind="advocate" id="E-215" size={180} />
+        <h4>Advocate</h4>
+        <p>Signed the Charter, disclosed all affiliations, verified zero malpractice.</p>
+      </div>
+    </div>
+
+    <div class="pills-row" style="margin-top:40px;">
+      <TierPill kind="legend" />
+      <TierPill kind="guardian" />
+      <TierPill kind="advocate" />
+      <TierPill kind="titan" />
+      <TierPill kind="elite" />
+      <TierPill kind="master" />
+    </div>
+  </div>
+</section>
+
+<!-- 06 REGIONAL NAMES -->
+<section class="brand-sec">
+  <div class="container">
+    <div class="brand-sec-head">
+      <span class="brand-sec-head__num">06 &middot; Regional Names</span>
+      <div>
+        <h2>One register, <em>two names.</em></h2>
+        <p>Around the world, MDRPedia has earned two colloquial names. Both refer to this platform. Neither is a separate product — they are cultural shorthands that emerged organically from how physicians in different regions identify themselves.</p>
+      </div>
+    </div>
+
+    <div class="names-grid">
+      <a href="/about/mdpedia" class="name-card">
+        <div class="name-card__region">Western Name</div>
+        <div class="name-card__name">MDpedia</div>
+        <div class="name-card__origin">From "MD" (Doctor of Medicine)</div>
+        <p>Used across the Americas, Europe, and Australasia. Physicians in these regions shortened the name to reflect their primary credential.</p>
+        <div class="name-card__regions">
+          <span>United States</span><span>Canada</span><span>United Kingdom</span><span>Germany</span><span>France</span><span>Australia</span>
+        </div>
+      </a>
+      <a href="/about/drpedia" class="name-card">
+        <div class="name-card__region">Eastern Name</div>
+        <div class="name-card__name">DRpedia</div>
+        <div class="name-card__origin">From "Dr." (universal honorific)</div>
+        <p>Used across the Middle East, South Asia, East Asia, and Africa. The "Dr." title carries deep cultural significance in these regions.</p>
+        <div class="name-card__regions">
+          <span>India</span><span>Egypt</span><span>UAE</span><span>China</span><span>Nigeria</span><span>Saudi Arabia</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="names-note">
+      <strong>Press guidance:</strong> The official name is <strong>MDRPedia</strong>. In regional coverage, either "MDpedia" or "DRpedia" is acceptable on second reference. Always link to <code>mdrpedia.com</code>.
+    </div>
+  </div>
+</section>
+
+<!-- 07 EDITORIAL PRINCIPLES -->
+<section class="brand-sec">
+  <div class="container">
+    <div class="brand-sec-head">
+      <span class="brand-sec-head__num">06 &middot; Editorial principles</span>
+      <div>
+        <h2>How this <em>speaks.</em></h2>
+      </div>
+    </div>
+
+    <div class="principles">
+      <div class="principle">
+        <span class="principle__num">&#9312; Record</span>
+        <h3>We write for the record.</h3>
+        <p>No marketing language. Every claim is footnoted to a source. Corrections are visible, not hidden.</p>
+      </div>
+      <div class="principle">
+        <span class="principle__num">&#9313; Reserve</span>
+        <h3>Ornament sparingly.</h3>
+        <p>No gradients, no glow, no emoji on trust marks. Color carries meaning, not mood.</p>
+      </div>
+      <div class="principle">
+        <span class="principle__num">&#9314; Revoke</span>
+        <h3>A badge can be taken back.</h3>
+        <p>The ethics seals are revocable, publicly. The log is part of the credibility.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+  /* Brand Hero */
+  .brand-hero { padding: 64px 0 40px; border-bottom: 1px solid var(--rule); }
+  .brand-hero h1 { font-size: clamp(44px, 6vw, 88px); font-weight: 300; }
+  .brand-hero h1 em { font-style: italic; color: var(--ink-3); font-weight: 300; }
+  .brand-hero__lead { max-width: 56ch; font-size: 18px; color: var(--ink-2); margin-top: 20px; }
+  .brand-meta { display:flex; gap: 32px; margin-top: 32px; }
+  .brand-meta > div { font-size: 12px; }
+  .brand-meta label { display:block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 4px; }
+
+  /* Section layout */
+  .brand-sec { padding: 72px 0; border-bottom: 1px solid var(--rule); }
+  .brand-sec-head { display: grid; grid-template-columns: 180px 1fr; gap: 40px; margin-bottom: 40px; }
+  .brand-sec-head__num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; color: var(--ink-3); text-transform: uppercase; padding-top: 6px; }
+  .brand-sec-head h2 { font-size: 36px; font-weight: 400; }
+  .brand-sec-head h2 em { font-style: italic; color: var(--ink-3); font-weight: 400; }
+  .brand-sec-head p { max-width: 60ch; margin-top: 12px; }
+
+  /* Logo showcase */
+  .logo-big { display:flex; align-items:center; gap: 24px; padding: 48px; background: var(--paper-2); border: 1px solid var(--rule); }
+  .logo-big svg { width: 120px; height: 120px; display: block; }
+  .logo-big__text { font-family: var(--font-serif); font-size: 56px; font-weight: 300; line-height: 1; }
+  .logo-big__text em { font-style: italic; color: var(--ink-3); font-weight: 300; }
+  .logo-big__sub { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; color: var(--ink-3); text-transform: uppercase; margin-top: 8px; }
+
+  .logo-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 24px; }
+  .logo-card { padding: 32px; background: var(--paper-2); border: 1px solid var(--rule); display:flex; align-items:center; justify-content:center; min-height: 140px; }
+  .logo-card.dark { background: var(--ink); color: var(--paper); }
+  .logo-card.invert { background: var(--aged-gold-2); }
+  .logo-label { font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.14em; margin-top: 8px; display:block; }
+
+  /* Color swatches */
+  .swatches { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+  .swatch { border: 1px solid var(--rule); }
+  .swatch__chip { height: 120px; }
+  .swatch__meta { padding: 10px 12px; font-family: var(--font-mono); font-size: 10px; line-height: 1.5; }
+  .swatch__meta strong { font-family: var(--font-sans); font-size: 12px; font-weight: 600; display: block; color: var(--ink); margin-bottom: 4px; letter-spacing: 0; text-transform: none; }
+
+  /* Type specimens */
+  .spec { border-top: 1px solid var(--rule); padding: 32px 0; display: grid; grid-template-columns: 220px 1fr; gap: 40px; }
+  .spec__meta { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); }
+  .spec__meta strong { font-family: var(--font-sans); font-size: 13px; color: var(--ink); font-weight: 600; display: block; margin-bottom: 6px; }
+  .spec__sample { font-family: var(--font-serif); font-size: 72px; line-height: 1.05; font-weight: 300; letter-spacing: -0.02em; }
+  .spec.sans .spec__sample { font-family: var(--font-sans); font-weight: 500; letter-spacing: -0.01em; }
+  .spec.mono .spec__sample { font-family: var(--font-mono); font-size: 44px; font-weight: 500; }
+
+  /* Seals grid */
+  .seals-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; margin-top: 24px; }
+  .seal-cell { padding: 24px; background: var(--paper-2); border: 1px solid var(--rule); display:flex; flex-direction:column; align-items:center; gap: 12px; }
+  .seal-cell small { font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* Pill grid */
+  .pills-row { display:flex; flex-wrap: wrap; gap: 12px; }
+
+  /* Round seal showcase */
+  .round-seals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 24px; }
+  .round-seal-cell { padding: 32px; background: var(--paper-2); border: 1px solid var(--rule); display:flex; flex-direction: column; align-items:center; text-align: center; gap: 16px; }
+  .round-seal-cell h4 { margin-top: 8px; font-family: var(--font-serif); font-size: 22px; font-weight: 400; }
+  .round-seal-cell p { font-size: 13px; max-width: 28ch; color: var(--ink-3); }
+
+  /* Editorial principles */
+  .principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .principle { padding: 32px; background: var(--paper); }
+  .principle__num { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.14em; }
+  .principle h3 { font-size: 24px; margin: 12px 0 8px; font-weight: 400; }
+  .principle p { font-size: 14px; color: var(--ink-2); }
+
+  /* Regional names */
+  .names-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .name-card {
+    padding: 32px; background: var(--paper-2); border: 1px solid var(--rule);
+    border-radius: var(--r-3); text-decoration: none; color: var(--ink);
+    transition: border-color var(--t-fast) var(--ease);
+    display: block;
+  }
+  .name-card:hover { border-color: var(--ink-blue); }
+  .name-card__region {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ink-3); margin-bottom: 8px;
+  }
+  .name-card__name {
+    font-family: var(--font-serif); font-size: 36px; font-weight: 400;
+    line-height: 1; margin-bottom: 4px;
+  }
+  .name-card__origin {
+    font-family: var(--font-mono); font-size: 12px; color: var(--ink-blue);
+    margin-bottom: 16px;
+  }
+  .name-card p { font-size: 14px; color: var(--ink-2); margin-bottom: 16px; }
+  .name-card__regions { display: flex; flex-wrap: wrap; gap: 6px; }
+  .name-card__regions span {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink-3);
+    padding: 3px 8px; border: 1px solid var(--rule); border-radius: var(--r-1);
+  }
+  .names-note {
+    margin-top: 20px; padding: 16px 20px; background: var(--paper-2);
+    border: 1px solid var(--rule); border-radius: var(--r-2);
+    font-size: 13px; color: var(--ink-2);
+  }
+  .names-note code {
+    font-family: var(--font-mono); font-size: 12px; padding: 2px 6px;
+    background: var(--paper); border: 1px solid var(--rule); border-radius: 3px;
+  }
+
+  @media (max-width: 900px) {
+    .brand-sec-head { grid-template-columns: 1fr; gap: 12px; }
+    .brand-meta { flex-wrap: wrap; }
+    .swatches, .seals-row { grid-template-columns: repeat(2, 1fr); }
+    .logo-grid { grid-template-columns: repeat(2, 1fr); }
+    .round-seals { grid-template-columns: 1fr; }
+    .names-grid { grid-template-columns: 1fr; }
+    .spec { grid-template-columns: 1fr; }
+    .principles { grid-template-columns: 1fr; }
+    .spec__sample { font-size: 48px; }
+    .spec.mono .spec__sample { font-size: 28px; }
+    .logo-big { flex-direction: column; padding: 24px; }
+    .logo-big__text { font-size: 36px; }
+  }
+</style>

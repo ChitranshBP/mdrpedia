@@ -10,39 +10,22 @@ import type { APIRoute } from 'astro';
 import { prisma } from '../../lib/prisma';
 import { createLogger } from '../../lib/logger';
 import { getClientIP } from '../../lib/utils';
+import { checkRateLimit, rateLimitResponse } from '../../lib/rate-limit';
 import crypto from 'crypto';
 
 export const prerender = false;
 
 const log = createLogger('ImpactVote');
 
-// Rate limiting: max votes per IP per hour
-const VOTES_PER_HOUR = 10;
-const voteRateLimit = new Map<string, { count: number; resetAt: number }>();
+const MAX_BODY_SIZE = 4096; // 4KB max for vote payloads
+
+// Rate limit config for votes: 10 per hour
+const VOTE_RATE_LIMIT = { windowMs: 3600000, maxRequests: 10 };
 
 // Hash IP for privacy
 function hashIP(ip: string): string {
-    const salt = import.meta.env.IP_HASH_SALT || 'mdrpedia-impact-vote-salt';
+    const salt = import.meta.env.IP_HASH_SALT || process.env.IP_HASH_SALT || 'mdrpedia-impact-vote-salt';
     return crypto.createHash('sha256').update(ip + salt).digest('hex');
-}
-
-// Check rate limit
-function checkRateLimit(ipHash: string): { allowed: boolean; remaining: number } {
-    const now = Date.now();
-    const hourMs = 60 * 60 * 1000;
-
-    const limit = voteRateLimit.get(ipHash);
-    if (!limit || now > limit.resetAt) {
-        voteRateLimit.set(ipHash, { count: 1, resetAt: now + hourMs });
-        return { allowed: true, remaining: VOTES_PER_HOUR - 1 };
-    }
-
-    if (limit.count >= VOTES_PER_HOUR) {
-        return { allowed: false, remaining: 0 };
-    }
-
-    limit.count++;
-    return { allowed: true, remaining: VOTES_PER_HOUR - limit.count };
 }
 
 // Valid vote types
@@ -142,11 +125,14 @@ export const GET: APIRoute = async ({ request }) => {
             userVoteType: userVote?.vote_type || null
         }), {
             status: 200,
-            headers: { 'Content-Type': 'application/json' }
+            headers: {
+                'Content-Type': 'application/json',
+                'Cache-Control': 'public, max-age=60',
+            }
         });
 
     } catch (error) {
-        log.error('Failed to get impact votes', { error });
+        log.error('Failed to get impact votes', error as Error);
         return new Response(JSON.stringify({ error: 'Failed to get votes' }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }
@@ -178,22 +164,22 @@ export const POST: APIRoute = async ({ request }) => {
             });
         }
 
-        // Rate limiting
+        // Body size check
+        const contentLength = request.headers.get('content-length');
+        if (contentLength && parseInt(contentLength) > MAX_BODY_SIZE) {
+            return new Response(JSON.stringify({ error: 'Payload too large' }), {
+                status: 413,
+                headers: { 'Content-Type': 'application/json' }
+            });
+        }
+
+        // Rate limiting using shared rate limiter
         const ip = getClientIP(request);
         const ipHash = hashIP(ip);
-        const rateCheck = checkRateLimit(ipHash);
+        const rateCheck = checkRateLimit(`vote:${ipHash}`, VOTE_RATE_LIMIT);
 
         if (!rateCheck.allowed) {
-            return new Response(JSON.stringify({
-                error: 'Rate limit exceeded. Please try again later.',
-                retryAfter: 3600
-            }), {
-                status: 429,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Retry-After': '3600'
-                }
-            });
+            return rateLimitResponse(rateCheck.resetTime);
         }
 
         // Get profile ID from slug if needed
@@ -212,57 +198,38 @@ export const POST: APIRoute = async ({ request }) => {
             resolvedProfileId = profile.id;
         }
 
-        // Check if already voted
-        const existingVote = await prisma.impactVote.findUnique({
+        // Atomic upsert to prevent race conditions on concurrent votes
+        const voteData = {
+            vote_type: voteType,
+            message: message?.slice(0, 500) || null,
+            voter_name: isAnonymous ? null : voterName?.slice(0, 100),
+            voter_role: voterRole?.slice(0, 50),
+            is_anonymous: isAnonymous,
+        };
+
+        const vote = await prisma.impactVote.upsert({
             where: {
                 profile_id_ip_hash: {
                     profile_id: resolvedProfileId,
-                    ip_hash: ipHash
-                }
-            }
-        });
-
-        if (existingVote) {
-            // Update existing vote
-            const updated = await prisma.impactVote.update({
-                where: { id: existingVote.id },
-                data: {
-                    vote_type: voteType,
-                    message: message?.slice(0, 500) || null,
-                    voter_name: isAnonymous ? null : voterName?.slice(0, 100),
-                    voter_role: voterRole?.slice(0, 50),
-                    is_anonymous: isAnonymous
-                }
-            });
-
-            return new Response(JSON.stringify({
-                success: true,
-                action: 'updated',
-                vote: {
-                    id: updated.id,
-                    voteType: updated.vote_type
-                }
-            }), {
-                status: 200,
-                headers: { 'Content-Type': 'application/json' }
-            });
-        }
-
-        // Create new vote
-        const vote = await prisma.impactVote.create({
-            data: {
+                    ip_hash: ipHash,
+                },
+            },
+            update: voteData,
+            create: {
                 profile_id: resolvedProfileId,
                 ip_hash: ipHash,
-                vote_type: voteType,
-                message: message?.slice(0, 500) || null,
-                voter_name: isAnonymous ? null : voterName?.slice(0, 100),
-                voter_role: voterRole?.slice(0, 50),
-                is_anonymous: isAnonymous,
-                is_verified: false // Requires manual verification
-            }
+                ...voteData,
+                is_verified: false,
+            },
         });
 
-        log.info('Impact vote submitted', { profileId: resolvedProfileId, voteType });
+        // Determine if this was an update or create based on createdAt
+        const isNew = (Date.now() - vote.createdAt.getTime()) < 1000;
+        const action = isNew ? 'created' : 'updated';
+
+        if (isNew) {
+            log.info('Impact vote submitted', { profileId: resolvedProfileId, voteType });
+        }
 
         // Get updated count
         const totalCount = await prisma.impactVote.count({
@@ -271,19 +238,19 @@ export const POST: APIRoute = async ({ request }) => {
 
         return new Response(JSON.stringify({
             success: true,
-            action: 'created',
+            action,
             vote: {
                 id: vote.id,
                 voteType: vote.vote_type
             },
             totalCount
         }), {
-            status: 201,
+            status: isNew ? 201 : 200,
             headers: { 'Content-Type': 'application/json' }
         });
 
     } catch (error) {
-        log.error('Failed to submit impact vote', { error });
+        log.error('Failed to submit impact vote', error as Error);
         return new Response(JSON.stringify({ error: 'Failed to submit vote' }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }
@@ -338,7 +305,7 @@ export const DELETE: APIRoute = async ({ request }) => {
         });
 
     } catch (error) {
-        log.error('Failed to delete impact vote', { error });
+        log.error('Failed to delete impact vote', error as Error);
         return new Response(JSON.stringify({ error: 'Failed to delete vote' }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }

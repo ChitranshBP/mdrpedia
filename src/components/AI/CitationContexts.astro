@@ -25,13 +25,13 @@ const impactConfig: Record<CitationContext['impactCategory'], { label: string; c
 
 // Reason icons
 const reasonIcons: Record<CitationContext['citationReason'], string> = {
-    METHODOLOGY: '🔬',
-    FOUNDATION: '🏛️',
-    COMPARISON: '⚖️',
-    VALIDATION: '✓',
-    EXTENSION: '🔗',
-    CRITICISM: '💭',
-    CLINICAL_APPLICATION: '🏥',
+    METHODOLOGY: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M9 3h6v2H9V3zm0 4v6l-3 6h12l-3-6V7H9z"/></svg>',
+    FOUNDATION: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>',
+    COMPARISON: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 3v18M3 12l4-4v8l-4-4zM21 12l-4-4v8l4-4z"/></svg>',
+    VALIDATION: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>',
+    EXTENSION: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>',
+    CRITICISM: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+    CLINICAL_APPLICATION: '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-4h6v4M12 7v4M10 9h4"/></svg>',
 };
 ---
 
@@ -53,7 +53,7 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
     <div class="reasons-grid">
         {Object.entries(summary.citationsByReason).map(([reason, count]) => (
             <div class="reason-card">
-                <span class="reason-icon">{reasonIcons[reason as CitationContext['citationReason']]}</span>
+                <span class="reason-icon" set:html={reasonIcons[reason as CitationContext['citationReason']]}></span>
                 <div class="reason-content">
                     <span class="reason-count">{count.toLocaleString()}</span>
                     <span class="reason-label">{CITATION_REASON_LABELS[reason as CitationContext['citationReason']]}</span>
@@ -66,7 +66,7 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
     {summary.seminalCitations.length > 0 && (
         <div class="seminal-section">
             <h3 class="subsection-title">
-                <span class="subsection-icon">⭐</span>
+                <span class="subsection-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
                 Seminal Citations
                 <span class="help-text">Work that fundamentally shaped the field</span>
             </h3>
@@ -85,7 +85,7 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
                         </blockquote>
                         <div class="citation-meta">
                             <span class="reason-tag">
-                                {reasonIcons[citation.citationReason]} {CITATION_REASON_LABELS[citation.citationReason]}
+                                <Fragment set:html={reasonIcons[citation.citationReason]} /> {CITATION_REASON_LABELS[citation.citationReason]}
                             </span>
                             {citation.journalName && (
                                 <span class="journal-name">{citation.journalName}</span>
@@ -101,7 +101,7 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
     {summary.topCitingPapers.length > 0 && (
         <div class="top-citations-section">
             <h3 class="subsection-title">
-                <span class="subsection-icon">📊</span>
+                <span class="subsection-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></span>
                 Notable Citing Papers
             </h3>
             <div class="citations-list compact">
@@ -111,8 +111,7 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
                             <span class={`impact-badge small ${citation.impactCategory.toLowerCase()}`}>
                                 {impactConfig[citation.impactCategory].label}
                             </span>
-                            <span class="reason-tag small">
-                                {reasonIcons[citation.citationReason]}
+                            <span class="reason-tag small" set:html={reasonIcons[citation.citationReason]}>
                             </span>
                         </div>
                         <p class="citing-paper">{citation.citingPaperTitle}</p>
@@ -127,7 +126,7 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
     {summary.yearlyTrend && summary.yearlyTrend.length > 0 && (
         <div class="trend-section">
             <h3 class="subsection-title">
-                <span class="subsection-icon">📈</span>
+                <span class="subsection-icon"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg></span>
                 Citation Trend
             </h3>
             <div class="trend-bars">
@@ -166,12 +165,12 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
 
 <style>
     .citation-context-section {
-        background: var(--card-bg, rgba(20, 20, 35, 0.8));
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 2rem;
         margin-bottom: 2rem;
-        backdrop-filter: blur(10px);
+        
     }
 
     .section-header {
@@ -181,7 +180,7 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
         gap: 1rem;
         margin-bottom: 1.5rem;
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
+        border-bottom: 1px solid var(--rule);
     }
 
     .section-title {
@@ -189,23 +188,23 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
         align-items: center;
         gap: 0.75rem;
         font-size: 1.25rem;
-        font-weight: 700;
+        font-weight: 500;
         margin: 0;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .section-title svg {
-        color: #f59e0b;
+        color: var(--aged-gold);
         opacity: 0.9;
     }
 
     .total-badge {
         padding: 4px 12px;
         background: rgba(245, 158, 11, 0.15);
-        border-radius: 100px;
+        border-radius: var(--r-pill);
         font-size: 0.75rem;
         font-weight: 600;
-        color: #fbbf24;
+        color: var(--aged-gold);
     }
 
     /* Reasons Grid */
@@ -221,9 +220,9 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
         align-items: center;
         gap: 0.75rem;
         padding: 0.875rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 10px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
     }
 
     .reason-icon {
@@ -238,12 +237,12 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
     .reason-count {
         font-size: 1.1rem;
         font-weight: 700;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .reason-label {
         font-size: 0.7rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     /* Subsections */
@@ -252,7 +251,7 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
     .trend-section {
         margin-top: 1.5rem;
         padding-top: 1.5rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        border-top: 1px solid var(--rule);
     }
 
     .subsection-title {
@@ -262,7 +261,7 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
         font-size: 1rem;
         font-weight: 600;
         margin: 0 0 1rem;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .subsection-icon {
@@ -271,7 +270,7 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
 
     .help-text {
         font-size: 0.75rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         font-weight: 400;
         margin-left: auto;
     }
@@ -290,20 +289,20 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
     }
 
     .citation-card {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 10px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         padding: 1.25rem;
         transition: all 0.2s ease;
     }
 
     .citation-card:hover {
-        background: rgba(255, 255, 255, 0.03);
-        border-color: rgba(255, 255, 255, 0.1);
+        background: var(--paper-3);
+        border-color: var(--rule-strong);
     }
 
     .citation-card.seminal {
-        border-left: 3px solid #ffd700;
+        border-left: 3px solid var(--aged-gold);
     }
 
     .citation-card.compact {
@@ -319,7 +318,7 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
 
     .impact-badge {
         padding: 2px 8px;
-        border-radius: 100px;
+        border-radius: var(--r-pill);
         font-size: 0.65rem;
         font-weight: 600;
         text-transform: uppercase;
@@ -327,17 +326,17 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
 
     .impact-badge.seminal {
         background: rgba(255, 215, 0, 0.15);
-        color: #ffd700;
+        color: var(--aged-gold);
     }
 
     .impact-badge.significant {
         background: rgba(16, 185, 129, 0.15);
-        color: #10b981;
+        color: var(--verdant);
     }
 
     .impact-badge.supporting {
         background: rgba(59, 130, 246, 0.15);
-        color: #3b82f6;
+        color: var(--ink-blue);
     }
 
     .impact-badge.minor {
@@ -352,13 +351,13 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
 
     .citation-year {
         font-size: 0.75rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         margin-left: auto;
     }
 
     .citing-paper {
         font-size: 0.9rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         margin: 0 0 0.75rem;
         line-height: 1.5;
     }
@@ -366,11 +365,11 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
     .citation-context {
         margin: 0.75rem 0;
         padding: 0.75rem 1rem;
-        background: rgba(255, 255, 255, 0.03);
+        background: var(--paper-3);
         border-left: 2px solid rgba(255, 215, 0, 0.3);
         font-size: 0.85rem;
         font-style: italic;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         line-height: 1.6;
     }
 
@@ -386,10 +385,10 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
         align-items: center;
         gap: 0.25rem;
         padding: 3px 8px;
-        background: rgba(255, 255, 255, 0.05);
+        background: var(--paper-3);
         border-radius: 4px;
         font-size: 0.7rem;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
     }
 
     .reason-tag.small {
@@ -399,7 +398,7 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
 
     .journal-name {
         font-size: 0.75rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     /* Trend Bars */
@@ -440,19 +439,19 @@ const reasonIcons: Record<CitationContext['citationReason'], string> = {
         top: -1.5rem;
         font-size: 0.7rem;
         font-weight: 600;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
     }
 
     .bar-year {
         font-size: 0.65rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         margin-top: 0.5rem;
     }
 
     /* Tier colors */
-    .tier-titan .section-title svg { color: #ffd700; }
-    .tier-elite .section-title svg { color: #00aaff; }
-    .tier-master .section-title svg { color: #00cc66; }
+    .tier-titan .section-title svg { color: var(--aged-gold); }
+    .tier-elite .section-title svg { color: var(--ink-blue); }
+    .tier-master .section-title svg { color: var(--verdant); }
 
     @media (max-width: 768px) {
         .citation-context-section {

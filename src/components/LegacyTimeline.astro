@@ -57,7 +57,7 @@ const sortedEntries = [...entries].sort((a, b) => a.year - b.year);
 
     .legacy-timeline__subtitle {
         text-align: center;
-        color: var(--text-muted);
+        color: var(--ink-3);
         font-size: 0.95rem;
         margin-bottom: var(--space-2xl);
     }
@@ -79,8 +79,8 @@ const sortedEntries = [...entries].sort((a, b) => a.year - b.year);
         background: linear-gradient(
             to bottom,
             transparent,
-            var(--accent-purple),
-            var(--accent-blue),
+            var(--rule-strong),
+            var(--rule-strong),
             transparent
         );
         transform: translateX(-50%);
@@ -109,8 +109,8 @@ const sortedEntries = [...entries].sort((a, b) => a.year - b.year);
         position: absolute;
         width: 14px;
         height: 14px;
-        background: var(--accent-purple);
-        border: 3px solid var(--bg-primary);
+        background: var(--ink-blue);
+        border: 3px solid var(--paper);
         border-radius: 50%;
         top: 50%;
         transform: translateY(-50%);
@@ -126,24 +126,24 @@ const sortedEntries = [...entries].sort((a, b) => a.year - b.year);
     }
 
     .timeline__card {
-        background: var(--bg-card);
-        border: 1px solid var(--border-subtle);
-        border-radius: var(--radius-md);
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         padding: var(--space-lg);
         transition: all var(--transition-base);
     }
 
     .timeline__card:hover {
-        border-color: var(--accent-purple);
+        border-color: var(--rule-strong);
         transform: translateY(-2px);
-        box-shadow: var(--shadow-md);
+        box-shadow: var(--shadow-1);
     }
 
     .timeline__year {
         font-family: var(--font-mono);
         font-size: 0.8rem;
         font-weight: 600;
-        color: var(--accent-purple);
+        color: var(--ink-blue);
         letter-spacing: 0.05em;
     }
 
@@ -151,13 +151,13 @@ const sortedEntries = [...entries].sort((a, b) => a.year - b.year);
         font-family: var(--font-sans);
         font-size: 1rem;
         font-weight: 600;
-        color: var(--text-primary);
+        color: var(--ink);
         margin: var(--space-xs) 0;
     }
 
     .timeline__desc {
         font-size: 0.85rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         line-height: 1.6;
     }
 

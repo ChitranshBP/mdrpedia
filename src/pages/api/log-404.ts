@@ -43,9 +43,8 @@ export async function POST({ request }: { request: Request }) {
 
     } catch (error) {
         console.error('Log 404 error:', error);
-        // Don't fail - silent fallback
-        return new Response(JSON.stringify({ success: false }), {
-            status: 200,
+        return new Response(JSON.stringify({ success: false, error: 'Logging error' }), {
+            status: 500,
             headers: { 'Content-Type': 'application/json' }
         });
     }

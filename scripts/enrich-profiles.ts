@@ -64,8 +64,8 @@ async function enrichProfile(slug: string) {
     if (!openalexId) {
         console.log(`  Searching for ${data.fullName}...`);
 
-        let searchRes = { results: [], count: 0 };
-        const strategies = [];
+        let searchRes: { results: any[]; count: number } = { results: [], count: 0 };
+        const strategies: (() => Promise<any>)[] = [];
 
         // Strategy 1: Exact Match (Name + Specialty + Country)
         strategies.push(async () => searchAuthors({
@@ -116,7 +116,6 @@ async function enrichProfile(slug: string) {
 
         // Execute strategies sequentially
         for (const strategy of strategies) {
-            // @ts-ignore
             searchRes = await strategy();
             if (searchRes.count > 0) {
                 // If we found something with decent stats, break

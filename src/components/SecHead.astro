@@ -1,0 +1,43 @@
+---
+/**
+ * SecHead — Section header with section number, title, and right-side content
+ * Pattern: § 01  The Titans          48 profiles · the complete register →
+ */
+interface Props {
+  num: string;
+  right?: string;
+  rightHref?: string;
+}
+
+const { num, right, rightHref } = Astro.props;
+---
+
+<div class="sec-head">
+  <div class="sec-head__left">
+    <span class="num">&sect; {num}</span>
+    <h2><slot /></h2>
+  </div>
+  {right && (
+    <div class="sec-head__right">
+      {rightHref ? (
+        <Fragment>{right.split('·').slice(0, -1).join('·')} · <a href={rightHref}>{right.split('·').pop()?.trim()}</a></Fragment>
+      ) : (
+        right
+      )}
+    </div>
+  )}
+</div>
+
+<style>
+  .sec-head { display:flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--ink); padding-bottom: 16px; margin-bottom: 40px; }
+  .sec-head__left { display:flex; align-items: baseline; gap: 20px; }
+  .sec-head__left .num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); }
+  .sec-head__left h2 { font-size: clamp(32px, 3.5vw, 48px); font-weight: 400; }
+  .sec-head__left h2 :global(em) { font-style: italic; color: var(--ink-3); font-weight: 400; }
+  .sec-head__right { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.1em; text-transform: uppercase; }
+  .sec-head__right a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); }
+
+  @media (max-width: 900px) {
+    .sec-head { flex-direction: column; align-items: flex-start; gap: 8px; }
+  }
+</style>

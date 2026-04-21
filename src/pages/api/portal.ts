@@ -4,10 +4,30 @@
 // ============================================================================
 
 import type { APIRoute } from 'astro';
+import { requireSuperAdmin } from '../../lib/rbac';
 
 export const prerender = false;
 
+const MAX_BODY_SIZE = 51200; // 50KB max
+
 export const POST: APIRoute = async ({ request }) => {
+    // Require admin authentication
+    if (!requireSuperAdmin(request)) {
+        return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+            status: 401,
+            headers: { 'Content-Type': 'application/json' },
+        });
+    }
+
+    // Body size check
+    const contentLength = request.headers.get('content-length');
+    if (contentLength && parseInt(contentLength) > MAX_BODY_SIZE) {
+        return new Response(JSON.stringify({ error: 'Payload too large' }), {
+            status: 413,
+            headers: { 'Content-Type': 'application/json' },
+        });
+    }
+
     try {
         const body = await request.json();
         const { action } = body;

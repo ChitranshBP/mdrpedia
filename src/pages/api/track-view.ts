@@ -42,15 +42,21 @@ export async function POST({ request }: { request: Request }) {
             resolvedProfileId = profile.id;
         }
 
-        // Record the view (async, fire-and-forget pattern in production)
+        // Derive country from Accept-Language or CF/Vercel geo headers
+        const country = request.headers.get('cf-ipcountry')  // Cloudflare
+            || request.headers.get('x-vercel-ip-country')     // Vercel
+            || request.headers.get('x-country-code')           // Generic proxy
+            || null;
+
+        // Record the view
         await prisma.profileView.create({
             data: {
                 profile_id: resolvedProfileId,
                 ip_hash: ipHash,
-                user_agent: userAgent?.slice(0, 500), // Truncate long UAs
+                user_agent: userAgent?.slice(0, 500),
                 referrer: referrer?.slice(0, 500),
                 is_bot: isBotVisit,
-                country: null, // Could add GeoIP lookup later
+                country,
             }
         });
 
@@ -63,9 +69,8 @@ export async function POST({ request }: { request: Request }) {
 
     } catch (error) {
         console.error('Track view error:', error);
-        // Don't fail the page load for analytics errors
-        return new Response(JSON.stringify({ success: false }), {
-            status: 200,
+        return new Response(JSON.stringify({ success: false, error: 'Analytics error' }), {
+            status: 500,
             headers: { 'Content-Type': 'application/json' }
         });
     }
@@ -89,7 +94,7 @@ export async function GET({ request }: { request: Request }) {
         }
 
         // Build where clause
-        const whereClause: any = {};
+        const whereClause: { profile_id?: string; is_bot?: boolean } = {};
         if (profileId) {
             whereClause.profile_id = profileId;
         } else if (slug) {

@@ -188,20 +188,12 @@ const { doctorName, slug } = Astro.props;
     }
 
     .claim-card {
-        background: linear-gradient(
-            145deg,
-            rgba(30, 30, 45, 0.95),
-            rgba(20, 20, 35, 0.98)
-        );
-        border: 1px solid rgba(139, 92, 246, 0.3);
-        border-radius: 24px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         overflow: hidden;
         position: relative;
-        box-shadow:
-            0 25px 50px -12px rgba(0, 0, 0, 0.5),
-            0 0 0 1px rgba(139, 92, 246, 0.1),
-            0 0 80px -20px rgba(139, 92, 246, 0.2);
-        backdrop-filter: blur(20px);
+        box-shadow: var(--shadow-2);
     }
 
     .claim-bg {
@@ -212,37 +204,15 @@ const { doctorName, slug } = Astro.props;
     }
 
     .glow {
-        position: absolute;
-        width: 300px;
-        height: 300px;
-        border-radius: 50%;
-        filter: blur(80px);
-        opacity: 0.15;
+        display: none;
     }
 
     .glow-1 {
-        background: #8b5cf6;
-        top: -100px;
-        left: -100px;
-        animation: pulse 8s ease-in-out infinite alternate;
+        display: none;
     }
 
     .glow-2 {
-        background: #ec4899;
-        bottom: -100px;
-        right: -100px;
-        animation: pulse 8s ease-in-out infinite alternate-reverse;
-    }
-
-    @keyframes pulse {
-        0% {
-            transform: scale(1);
-            opacity: 0.15;
-        }
-        100% {
-            transform: scale(1.2);
-            opacity: 0.25;
-        }
+        display: none;
     }
 
     .claim-content {
@@ -259,13 +229,9 @@ const { doctorName, slug } = Astro.props;
     .icon-wrapper {
         width: 64px;
         height: 64px;
-        background: linear-gradient(
-            135deg,
-            rgba(139, 92, 246, 0.2),
-            rgba(236, 72, 153, 0.1)
-        );
-        border: 1px solid rgba(139, 92, 246, 0.3);
-        border-radius: 16px;
+        background: var(--paper-3);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -275,21 +241,18 @@ const { doctorName, slug } = Astro.props;
     .icon-wrapper svg {
         width: 32px;
         height: 32px;
-        color: #a855f7;
+        color: var(--ink-blue);
     }
 
     .claim-header h3 {
         font-size: 2rem;
-        font-weight: 800;
-        color: white;
+        font-weight: 500;
+        color: var(--ink);
         margin-bottom: 0.75rem;
-        background: linear-gradient(135deg, white, #a855f7);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
     }
 
     .claim-header p {
-        color: #9ca3af;
+        color: var(--ink-3);
         font-size: 1.05rem;
         line-height: 1.6;
         max-width: 500px;
@@ -323,7 +286,7 @@ const { doctorName, slug } = Astro.props;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        color: #d1d5db;
+        color: var(--ink-2);
         margin-bottom: 0.5rem;
     }
 
@@ -338,38 +301,38 @@ const { doctorName, slug } = Astro.props;
         transform: translateY(-50%);
         width: 18px;
         height: 18px;
-        color: #6b7280;
+        color: var(--ink-3);
         transition: color 0.3s;
     }
 
     .input-wrapper input {
         width: 100%;
-        background: rgba(0, 0, 0, 0.3);
-        border: 1px solid rgba(139, 92, 246, 0.2);
-        border-radius: 12px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 1rem 1rem 1rem 3rem;
-        color: white;
+        color: var(--ink);
         font-size: 1rem;
         transition: all 0.3s;
     }
 
     .input-wrapper input:focus {
         outline: none;
-        border-color: #a855f7;
-        background: rgba(0, 0, 0, 0.5);
-        box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
+        border-color: var(--ink-blue);
+        background: var(--paper);
+        box-shadow: 0 0 0 3px color-mix(in oklch, var(--ink-blue) 15%, transparent);
     }
 
     .input-wrapper input:focus + .input-icon {
-        color: #a855f7;
+        color: var(--ink-blue);
     }
 
     .upload-zone {
-        border: 2px dashed rgba(139, 92, 246, 0.3);
-        border-radius: 16px;
+        border: 2px dashed var(--rule);
+        border-radius: var(--r-4);
         padding: 2.5rem 1.5rem;
         text-align: center;
-        background: rgba(255, 255, 255, 0.02);
+        background: var(--paper-2);
         cursor: pointer;
         transition: all 0.3s;
         display: flex;
@@ -380,20 +343,20 @@ const { doctorName, slug } = Astro.props;
 
     .upload-zone:hover,
     .upload-zone.dragover {
-        border-color: #a855f7;
-        background: rgba(139, 92, 246, 0.05);
+        border-color: var(--ink-blue);
+        background: var(--paper-3);
         transform: translateY(-2px);
     }
 
     .upload-icon {
         width: 48px;
         height: 48px;
-        background: rgba(168, 85, 247, 0.1);
+        background: var(--paper-3);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #a855f7;
+        color: var(--ink-blue);
     }
 
     .upload-icon svg {
@@ -402,7 +365,7 @@ const { doctorName, slug } = Astro.props;
     }
 
     .upload-text {
-        color: #d1d5db;
+        color: var(--ink-2);
         font-size: 1rem;
         display: flex;
         flex-direction: column;
@@ -411,21 +374,21 @@ const { doctorName, slug } = Astro.props;
 
     .upload-text span {
         font-size: 0.8rem;
-        color: #6b7280;
+        color: var(--ink-3);
     }
 
     .upload-text strong {
-        color: #a855f7;
+        color: var(--ink-blue);
     }
 
     .submit-btn {
-        background: linear-gradient(135deg, #a855f7, #7c3aed);
-        color: white;
+        background: var(--ink-blue);
+        color: var(--paper);
         border: none;
         padding: 1.25rem;
-        border-radius: 12px;
+        border-radius: var(--r-4);
         font-size: 1rem;
-        font-weight: 700;
+        font-weight: 500;
         text-transform: uppercase;
         letter-spacing: 0.05em;
         cursor: pointer;
@@ -434,13 +397,13 @@ const { doctorName, slug } = Astro.props;
         justify-content: center;
         gap: 0.75rem;
         transition: all 0.3s;
-        box-shadow: 0 10px 20px -10px rgba(139, 92, 246, 0.5);
+        box-shadow: var(--shadow-1);
         margin-top: 1rem;
     }
 
     .submit-btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 15px 30px -10px rgba(139, 92, 246, 0.6);
+        box-shadow: var(--shadow-2);
     }
 
     .submit-btn svg {
@@ -454,9 +417,9 @@ const { doctorName, slug } = Astro.props;
     }
 
     .submit-btn.success {
-        background: linear-gradient(135deg, #10b981, #059669);
+        background: var(--verdant);
         pointer-events: none;
-        box-shadow: 0 10px 20px -10px rgba(16, 185, 129, 0.5);
+        box-shadow: var(--shadow-1);
     }
 
     .trust-footer {
@@ -465,7 +428,7 @@ const { doctorName, slug } = Astro.props;
         gap: 2rem;
         margin-top: 2rem;
         padding-top: 1.5rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-top: 1px solid var(--rule);
     }
 
     .trust-badge {
@@ -474,13 +437,13 @@ const { doctorName, slug } = Astro.props;
         gap: 0.5rem;
         font-size: 0.85rem;
         font-weight: 500;
-        color: #9ca3af;
+        color: var(--ink-3);
     }
 
     .trust-badge svg {
         width: 16px;
         height: 16px;
-        color: #10b981;
+        color: var(--verdant);
     }
 
     .sr-only {

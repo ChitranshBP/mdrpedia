@@ -221,12 +221,12 @@ const hasMore = sortedClaims.length > 5;
 
 <style>
     .verified-claims-section {
-        background: var(--card-bg, rgba(20, 20, 35, 0.8));
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 2rem;
         margin-bottom: 2rem;
-        backdrop-filter: blur(10px);
+        
     }
 
     .claims-header {
@@ -236,7 +236,7 @@ const hasMore = sortedClaims.length > 5;
         gap: 1rem;
         margin-bottom: 1.5rem;
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
+        border-bottom: 1px solid var(--rule);
         flex-wrap: wrap;
     }
 
@@ -245,13 +245,13 @@ const hasMore = sortedClaims.length > 5;
         align-items: center;
         gap: 0.75rem;
         font-size: 1.25rem;
-        font-weight: 700;
+        font-weight: 500;
         margin: 0;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
     }
 
     .claims-title svg {
-        color: #10b981;
+        color: var(--verdant);
         opacity: 0.9;
     }
 
@@ -265,16 +265,16 @@ const hasMore = sortedClaims.length > 5;
         align-items: center;
         gap: 0.35rem;
         font-size: 0.8rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .summary-item--verified {
-        color: #10b981;
+        color: var(--verdant);
         font-weight: 600;
     }
 
     .summary-item svg {
-        color: #10b981;
+        color: var(--verdant);
     }
 
     /* Claims List */
@@ -286,23 +286,23 @@ const hasMore = sortedClaims.length > 5;
 
     .claim-card {
         padding: 1.25rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.06));
-        border-radius: 12px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         transition: all 0.2s ease;
     }
 
     .claim-card:hover {
-        background: rgba(255, 255, 255, 0.04);
-        border-color: rgba(255, 255, 255, 0.1);
+        background: var(--paper-3);
+        border-color: var(--rule-strong);
     }
 
     .claim-card--verified {
-        border-left: 3px solid #10b981;
+        border-left: 3px solid var(--verdant);
     }
 
     .claim-card--partially_verified {
-        border-left: 3px solid #f59e0b;
+        border-left: 3px solid var(--aged-gold);
     }
 
     .claim-card--unverified {
@@ -310,7 +310,7 @@ const hasMore = sortedClaims.length > 5;
     }
 
     .claim-card--disputed {
-        border-left: 3px solid #ef4444;
+        border-left: 3px solid var(--sanguine);
     }
 
     .claim-header {
@@ -326,7 +326,7 @@ const hasMore = sortedClaims.length > 5;
         align-items: center;
         gap: 0.35rem;
         padding: 4px 10px;
-        border-radius: 100px;
+        border-radius: var(--r-pill);
         font-size: 0.7rem;
         font-weight: 600;
         text-transform: uppercase;
@@ -335,12 +335,12 @@ const hasMore = sortedClaims.length > 5;
 
     .status-badge--verified {
         background: rgba(16, 185, 129, 0.15);
-        color: #10b981;
+        color: var(--verdant);
     }
 
     .status-badge--partially_verified {
         background: rgba(245, 158, 11, 0.15);
-        color: #f59e0b;
+        color: var(--aged-gold);
     }
 
     .status-badge--unverified {
@@ -350,7 +350,7 @@ const hasMore = sortedClaims.length > 5;
 
     .status-badge--disputed {
         background: rgba(239, 68, 68, 0.15);
-        color: #ef4444;
+        color: var(--sanguine);
     }
 
     .claim-type {
@@ -358,23 +358,23 @@ const hasMore = sortedClaims.length > 5;
         font-weight: 500;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         padding: 4px 8px;
-        background: rgba(255, 255, 255, 0.04);
+        background: var(--paper-3);
         border-radius: 4px;
     }
 
     .claim-text {
         font-size: 1rem;
         line-height: 1.6;
-        color: var(--text-primary, #fff);
+        color: var(--ink);
         margin: 0 0 0.75rem;
     }
 
     .claim-context {
         font-size: 0.85rem;
         line-height: 1.5;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         margin: 0 0 0.75rem;
         font-style: italic;
     }
@@ -391,7 +391,7 @@ const hasMore = sortedClaims.length > 5;
     .sources-label {
         font-size: 0.75rem;
         font-weight: 600;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     .sources-list {
@@ -405,39 +405,39 @@ const hasMore = sortedClaims.length > 5;
         align-items: center;
         gap: 0.3rem;
         padding: 3px 8px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: var(--paper-3);
+        border: 1px solid var(--rule);
         border-radius: 6px;
         font-size: 0.7rem;
         font-weight: 500;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         text-decoration: none;
         transition: all 0.2s ease;
     }
 
     .source-link:hover {
-        background: rgba(255, 255, 255, 0.1);
-        color: var(--text-primary, #fff);
+        background: var(--paper-3);
+        color: var(--ink);
     }
 
     .source-link--doi {
-        background: rgba(139, 92, 246, 0.1);
-        border-color: rgba(139, 92, 246, 0.2);
-        color: #a78bfa;
+        background: var(--paper-3);
+        border-color: var(--rule);
+        color: var(--ink-blue);
     }
 
     .source-link--doi:hover {
-        background: rgba(139, 92, 246, 0.2);
+        background: var(--paper-3);
     }
 
     .source-link--pubmed {
-        background: rgba(0, 102, 153, 0.1);
-        border-color: rgba(0, 102, 153, 0.2);
-        color: #00aaff;
+        background: var(--paper-3);
+        border-color: var(--rule);
+        color: var(--ink-blue);
     }
 
     .source-link--pubmed:hover {
-        background: rgba(0, 102, 153, 0.2);
+        background: var(--paper-3);
     }
 
     /* Confidence Bar */
@@ -451,7 +451,7 @@ const hasMore = sortedClaims.length > 5;
     .confidence-label {
         font-size: 0.7rem;
         font-weight: 600;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
@@ -459,14 +459,14 @@ const hasMore = sortedClaims.length > 5;
     .confidence-bar {
         flex: 1;
         height: 4px;
-        background: rgba(255, 255, 255, 0.1);
+        background: var(--paper-3);
         border-radius: 2px;
         overflow: hidden;
     }
 
     .confidence-fill {
         height: 100%;
-        background: linear-gradient(90deg, #10b981, #8b5cf6);
+        background: linear-gradient(90deg, var(--verdant), var(--ink-blue));
         border-radius: 2px;
         transition: width 0.5s ease;
     }
@@ -474,14 +474,14 @@ const hasMore = sortedClaims.length > 5;
     .confidence-value {
         font-size: 0.75rem;
         font-weight: 600;
-        color: var(--text-secondary, #ccc);
+        color: var(--ink-2);
         min-width: 35px;
         text-align: right;
     }
 
     .claim-meta {
         font-size: 0.7rem;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
     }
 
     /* Show More Button */
@@ -491,25 +491,25 @@ const hasMore = sortedClaims.length > 5;
         margin-top: 1rem;
         padding: 0.75rem;
         background: transparent;
-        border: 1px dashed rgba(255, 255, 255, 0.15);
-        border-radius: 10px;
+        border: 1px dashed var(--rule);
+        border-radius: var(--r-3);
         font-size: 0.9rem;
         font-weight: 500;
-        color: var(--text-muted, #888);
+        color: var(--ink-3);
         cursor: pointer;
         transition: all 0.2s ease;
     }
 
     .show-more-btn:hover {
-        background: rgba(255, 255, 255, 0.03);
-        border-color: rgba(255, 255, 255, 0.25);
-        color: var(--text-secondary, #ccc);
+        background: var(--paper-3);
+        border-color: var(--rule-strong);
+        color: var(--ink-2);
     }
 
     /* Tier colors */
-    .tier-titan .claims-title svg { color: #ffd700; }
-    .tier-elite .claims-title svg { color: #00aaff; }
-    .tier-master .claims-title svg { color: #00cc66; }
+    .tier-titan .claims-title svg { color: var(--aged-gold); }
+    .tier-elite .claims-title svg { color: var(--ink-blue); }
+    .tier-master .claims-title svg { color: var(--verdant); }
 
     /* Responsive */
     @media (max-width: 640px) {

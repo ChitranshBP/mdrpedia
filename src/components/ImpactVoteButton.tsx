@@ -14,12 +14,12 @@ interface Props {
 }
 
 const VOTE_OPTIONS = [
-    { key: 'SAVED_LIFE', emoji: '❤️‍🩹', label: 'Saved My Life', color: '#ef4444' },
-    { key: 'LIFE_CHANGED', emoji: '✨', label: 'Life Changing', color: '#f59e0b' },
-    { key: 'EXCELLENT_CARE', emoji: '🩺', label: 'Excellent Care', color: '#10b981' },
-    { key: 'HIGHLY_SKILLED', emoji: '🎯', label: 'Highly Skilled', color: '#3b82f6' },
-    { key: 'MENTOR', emoji: '🎓', label: 'Great Mentor', color: '#8b5cf6' },
-    { key: 'RESEARCHER', emoji: '🔬', label: 'Research Impact', color: '#06b6d4' },
+    { key: 'SAVED_LIFE', icon: <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>, label: 'Saved My Life', color: 'var(--ink-blue)' },
+    { key: 'LIFE_CHANGED', icon: <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>, label: 'Life Changing', color: 'var(--aged-gold)' },
+    { key: 'EXCELLENT_CARE', icon: <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>, label: 'Excellent Care', color: 'var(--verdant)' },
+    { key: 'HIGHLY_SKILLED', icon: <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>, label: 'Highly Skilled', color: 'var(--ink-blue)' },
+    { key: 'MENTOR', icon: <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>, label: 'Great Mentor', color: 'var(--ink-blue)' },
+    { key: 'RESEARCHER', icon: <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 3h6v2H9V3zm0 4v6l-3 6h12l-3-6V7H9z"/></svg>, label: 'Research Impact', color: 'var(--ink-blue)' },
 ];
 
 export default function ImpactVoteButton({ profileId, slug, doctorName, initialCount = 0, className = '' }: Props) {
@@ -100,7 +100,7 @@ export default function ImpactVoteButton({ profileId, slug, doctorName, initialC
                 ) : (
                     <>
                         <span className="impact-btn__icon">
-                            {hasVoted ? selectedVote?.emoji : '💜'}
+                            {hasVoted ? selectedVote?.icon : <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>}
                         </span>
                         <span className="impact-btn__text">
                             {hasVoted ? 'Impacted' : 'I Was Impacted'}
@@ -120,7 +120,7 @@ export default function ImpactVoteButton({ profileId, slug, doctorName, initialC
             {showSuccess && (
                 <div className="impact-toast">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <circle cx="8" cy="8" r="8" fill="#10b981"/>
+                        <circle cx="8" cy="8" r="8" fill="var(--verdant)"/>
                         <path d="M5 8L7 10L11 6" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                     Thank you for sharing
@@ -151,7 +151,7 @@ export default function ImpactVoteButton({ profileId, slug, doctorName, initialC
                                     className={`impact-option ${userVoteType === option.key ? 'impact-option--selected' : ''}`}
                                     style={{ '--accent': option.color } as React.CSSProperties}
                                 >
-                                    <span className="impact-option__emoji">{option.emoji}</span>
+                                    <span className="impact-option__emoji">{option.icon}</span>
                                     <span className="impact-option__label">{option.label}</span>
                                     {userVoteType === option.key && (
                                         <span className="impact-option__check">✓</span>
@@ -189,10 +189,10 @@ export default function ImpactVoteButton({ profileId, slug, doctorName, initialC
                     gap: 8px;
                     height: 44px;
                     padding: 0 16px;
-                    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
-                    border: 1px solid rgba(139, 92, 246, 0.2);
-                    border-radius: 12px;
-                    color: #e9d5ff;
+                    background: var(--paper-2);
+                    border: 1px solid var(--rule);
+                    border-radius: var(--r-4);
+                    color: var(--ink);
                     font-size: 14px;
                     font-weight: 500;
                     cursor: pointer;
@@ -200,14 +200,14 @@ export default function ImpactVoteButton({ profileId, slug, doctorName, initialC
                 }
 
                 .impact-btn:hover {
-                    background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(139, 92, 246, 0.1) 100%);
-                    border-color: rgba(139, 92, 246, 0.4);
+                    background: var(--paper-3);
+                    border-color: var(--ink-blue);
                     transform: translateY(-1px);
                 }
 
                 .impact-btn--voted {
-                    background: linear-gradient(135deg, rgba(139, 92, 246, 0.25) 0%, rgba(139, 92, 246, 0.15) 100%);
-                    border-color: rgba(139, 92, 246, 0.5);
+                    background: var(--ink-blue-2);
+                    border-color: var(--ink-blue);
                 }
 
                 .impact-btn__icon {
@@ -220,10 +220,10 @@ export default function ImpactVoteButton({ profileId, slug, doctorName, initialC
 
                 .impact-btn__count {
                     padding: 2px 8px;
-                    background: rgba(139, 92, 246, 0.2);
+                    background: var(--paper-3);
                     border-radius: 6px;
                     font-size: 12px;
-                    font-weight: 600;
+                    font-weight: 500;
                 }
 
                 .impact-btn__arrow {
@@ -238,8 +238,8 @@ export default function ImpactVoteButton({ profileId, slug, doctorName, initialC
                 .impact-btn__loader {
                     width: 16px;
                     height: 16px;
-                    border: 2px solid rgba(139, 92, 246, 0.3);
-                    border-top-color: #a78bfa;
+                    border: 2px solid var(--rule);
+                    border-top-color: var(--ink-blue);
                     border-radius: 50%;
                     animation: spin 0.6s linear infinite;
                 }
@@ -257,14 +257,14 @@ export default function ImpactVoteButton({ profileId, slug, doctorName, initialC
                     align-items: center;
                     gap: 8px;
                     padding: 10px 14px;
-                    background: #18181b;
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                    border-radius: 10px;
-                    color: #fafafa;
+                    background: var(--paper);
+                    border: 1px solid var(--rule);
+                    border-radius: var(--r-3);
+                    color: var(--ink);
                     font-size: 13px;
                     font-weight: 500;
                     white-space: nowrap;
-                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+                    box-shadow: var(--shadow-2);
                     animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
                     z-index: 100;
                 }
@@ -287,10 +287,10 @@ export default function ImpactVoteButton({ profileId, slug, doctorName, initialC
                     bottom: calc(100% + 8px);
                     left: 0;
                     width: 320px;
-                    background: #18181b;
-                    border: 1px solid rgba(255, 255, 255, 0.08);
-                    border-radius: 16px;
-                    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+                    background: var(--paper);
+                    border: 1px solid var(--rule);
+                    border-radius: var(--r-3);
+                    box-shadow: var(--shadow-2);
                     overflow: hidden;
                     z-index: 60;
                     animation: panelIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
@@ -305,19 +305,19 @@ export default function ImpactVoteButton({ profileId, slug, doctorName, initialC
 
                 .impact-panel__header {
                     padding: 16px 16px 12px;
-                    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+                    border-bottom: 1px solid var(--rule);
                 }
 
                 .impact-panel__title {
-                    color: #fafafa;
+                    color: var(--ink);
                     font-size: 15px;
-                    font-weight: 600;
+                    font-weight: 500;
                     letter-spacing: -0.01em;
                 }
 
                 .impact-panel__stats {
                     margin-top: 4px;
-                    color: #71717a;
+                    color: var(--slate);
                     font-size: 13px;
                 }
 
@@ -335,24 +335,24 @@ export default function ImpactVoteButton({ profileId, slug, doctorName, initialC
                     align-items: center;
                     gap: 6px;
                     padding: 14px 8px;
-                    background: rgba(255, 255, 255, 0.03);
-                    border: 1px solid rgba(255, 255, 255, 0.06);
-                    border-radius: 12px;
-                    color: #a1a1aa;
+                    background: var(--paper-2);
+                    border: 1px solid var(--rule);
+                    border-radius: var(--r-4);
+                    color: var(--slate);
                     cursor: pointer;
                     transition: all 0.15s;
                 }
 
                 .impact-option:hover {
-                    background: rgba(255, 255, 255, 0.06);
-                    border-color: rgba(255, 255, 255, 0.1);
-                    color: #fafafa;
+                    background: var(--paper-3);
+                    border-color: var(--rule);
+                    color: var(--ink);
                 }
 
                 .impact-option--selected {
-                    background: rgba(var(--accent-rgb, 139, 92, 246), 0.15);
+                    background: var(--ink-blue-2);
                     border-color: var(--accent);
-                    color: #fafafa;
+                    color: var(--ink);
                 }
 
                 .impact-option__emoji {
@@ -377,9 +377,9 @@ export default function ImpactVoteButton({ profileId, slug, doctorName, initialC
                     justify-content: center;
                     background: var(--accent);
                     border-radius: 50%;
-                    color: white;
+                    color: var(--paper);
                     font-size: 10px;
-                    font-weight: 700;
+                    font-weight: 500;
                 }
 
                 .impact-panel__footer {
@@ -387,14 +387,14 @@ export default function ImpactVoteButton({ profileId, slug, doctorName, initialC
                     align-items: center;
                     justify-content: space-between;
                     padding: 10px 16px;
-                    border-top: 1px solid rgba(255, 255, 255, 0.06);
+                    border-top: 1px solid var(--rule);
                 }
 
                 .impact-panel__secure {
                     display: flex;
                     align-items: center;
                     gap: 6px;
-                    color: #52525b;
+                    color: var(--slate);
                     font-size: 12px;
                 }
 
@@ -403,15 +403,15 @@ export default function ImpactVoteButton({ profileId, slug, doctorName, initialC
                     background: transparent;
                     border: none;
                     border-radius: 6px;
-                    color: #71717a;
+                    color: var(--slate);
                     font-size: 12px;
                     cursor: pointer;
                     transition: all 0.15s;
                 }
 
                 .impact-panel__remove:hover {
-                    background: rgba(239, 68, 68, 0.1);
-                    color: #f87171;
+                    background: var(--paper-3);
+                    color: var(--ink);
                 }
             `}</style>
         </div>

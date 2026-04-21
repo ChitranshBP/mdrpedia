@@ -3,8 +3,8 @@ import type { UploadApiOptions } from 'cloudinary';
 
 // Configure Cloudinary with environment variables
 cloudinary.config({
-    cloud_name: import.meta.env.CLOUDINARY_CLOUD_NAME,
-    api_key: import.meta.env.CLOUDINARY_API_KEY,
+    cloud_name: import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME,
+    api_key: import.meta.env.PUBLIC_CLOUDINARY_API_KEY,
     api_secret: import.meta.env.CLOUDINARY_API_SECRET,
     secure: true,
 });
@@ -45,7 +45,7 @@ export function getOptimizedImageUrl(publicId: string, options: { width?: number
     // Or build using the cloudinary SDK url builder if complex.
     // For simplicity allowing raw access or standard fetch:
 
-    const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME;
+    const cloudName = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
     if (!cloudName) return '';
 
     const { width = 400, height = 400, crop = 'fill' } = options;

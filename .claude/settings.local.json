@@ -1,8 +1,25 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm run dev)",
-      "Bash(npm install shiki)"
-    ]
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(git *)",
+      "Read(*)",
+      "Bash(node -e \"\nconst EmbeddedPostgres = require\\('embedded-postgres'\\).default || require\\('embedded-postgres'\\);\nconsole.log\\(typeof EmbeddedPostgres, Object.keys\\(require\\('embedded-postgres'\\)\\)\\);\n\" 2>&1)",
+      "WebFetch(domain:github.com)",
+      "Bash(npx prisma generate 2>&1)",
+      "Bash(npx prisma db push 2>&1)",
+      "Bash(npx prisma db seed 2>&1)",
+      "Bash(node -e \"\nconst fs = require\\('fs'\\);\nconst dir = './src/content/doctors';\nconst files = fs.readdirSync\\(dir\\).filter\\(f => f.endsWith\\('.json'\\)\\);\nfor \\(const file of files\\) {\n  const data = JSON.parse\\(fs.readFileSync\\(dir + '/' + file, 'utf-8'\\)\\);\n  if \\(data.awards && data.awards.length > 0\\) {\n    console.log\\('File:', file\\);\n    console.log\\('Awards sample:', JSON.stringify\\(data.awards.slice\\(0,2\\), null, 2\\)\\);\n    break;\n  }\n}\n\" 2>&1)",
+      "Bash(node -e \"\nconst fs = require\\('fs'\\);\nconst dir = './src/content/doctors';\nconst files = fs.readdirSync\\(dir\\).filter\\(f => f.endsWith\\('.json'\\)\\);\nlet nullIssuing = 0;\nlet zeroYear = 0;\nlet total = 0;\nfor \\(const file of files\\) {\n  const data = JSON.parse\\(fs.readFileSync\\(dir + '/' + file, 'utf-8'\\)\\);\n  if \\(data.awards\\) {\n    for \\(const a of data.awards\\) {\n      total++;\n      if \\(!a.issuingBody\\) nullIssuing++;\n      if \\(!a.year\\) zeroYear++;\n    }\n  }\n}\nconsole.log\\('Total awards:', total\\);\nconsole.log\\('Awards with null issuingBody:', nullIssuing\\);\nconsole.log\\('Awards with no year:', zeroYear\\);\n\" 2>&1)",
+      "Bash(node -e \"\nconst fs = require\\('fs'\\);\nconst dir = './src/content/doctors';\nconst files = fs.readdirSync\\(dir\\).filter\\(f => f.endsWith\\('.json'\\)\\);\nlet issues = [];\nfor \\(const file of files\\) {\n  const data = JSON.parse\\(fs.readFileSync\\(dir + '/' + file, 'utf-8'\\)\\);\n  if \\(!data.fullName\\) issues.push\\(file + ': missing fullName'\\);\n  if \\(!data.specialty\\) issues.push\\(file + ': missing specialty'\\);\n  if \\(!data.geography?.country\\) issues.push\\(file + ': missing geography.country'\\);\n  if \\(data.timeline\\) {\n    for \\(const t of data.timeline\\) {\n      if \\(!t.year\\) { issues.push\\(file + ': timeline entry missing year'\\); break; }\n      if \\(!t.title\\) { issues.push\\(file + ': timeline entry missing title'\\); break; }\n    }\n  }\n  if \\(data.techniquesInvented\\) {\n    for \\(const t of data.techniquesInvented\\) {\n      if \\(!t\\) { issues.push\\(file + ': empty technique name'\\); break; }\n    }\n  }\n}\nconsole.log\\('Issues found:', issues.length\\);\nissues.slice\\(0,20\\).forEach\\(i => console.log\\(' -', i\\)\\);\n\" 2>&1)",
+      "Bash(npx astro check 2>&1 | tail -50)",
+      "Bash(node -e \"\nconst fs = require\\('fs'\\);\nconst dir = './src/content/doctors';\nconst files = fs.readdirSync\\(dir\\).filter\\(f => f.endsWith\\('.json'\\)\\);\nfor \\(const file of files\\) {\n  const data = JSON.parse\\(fs.readFileSync\\(dir + '/' + file, 'utf-8'\\)\\);\n  if \\(data.awards\\) {\n    for \\(const a of data.awards\\) {\n      if \\(!a.name\\) console.log\\(file, JSON.stringify\\(a\\)\\);\n    }\n  }\n}\n\" 2>&1)",
+      "Bash(node -e \"\nconst fs = require\\('fs'\\);\nconst data = JSON.parse\\(fs.readFileSync\\('./src/content/doctors/a-n-malaviya.json', 'utf-8'\\)\\);\nconsole.log\\('Awards type:', typeof data.awards[0]\\);\nconsole.log\\('Awards:', JSON.stringify\\(data.awards, null, 2\\)\\);\n\" 2>&1)",
+      "Bash(node -e \"\nconst fs = require\\('fs'\\);\nconst dir = './src/content/doctors';\nconst files = fs.readdirSync\\(dir\\).filter\\(f => f.endsWith\\('.json'\\)\\);\nlet stringTimelines = 0;\nlet stringTechniques = 0;\nfor \\(const file of files\\) {\n  const data = JSON.parse\\(fs.readFileSync\\(dir + '/' + file, 'utf-8'\\)\\);\n  if \\(data.timeline && data.timeline.length > 0 && typeof data.timeline[0] === 'string'\\) stringTimelines++;\n  if \\(data.techniquesInvented && data.techniquesInvented.length > 0 && typeof data.techniquesInvented[0] !== 'string'\\) stringTechniques++;\n}\nconsole.log\\('Timeline entries as strings:', stringTimelines\\);\nconsole.log\\('Techniques as objects \\(unexpected\\):', stringTechniques\\);\n\" 2>&1)",
+      "Bash(npx prisma db push --force-reset 2>&1)",
+      "mcp__ide__getDiagnostics"
+    ],
+    "defaultMode": "default"
   }
 }

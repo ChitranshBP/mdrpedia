@@ -149,9 +149,14 @@ export function getBotCategory(userAgent: string | null | undefined): string | n
  * Uses environment variable for salt to prevent exposure
  */
 export async function hashIP(ip: string): Promise<string> {
-    const salt = import.meta.env.IP_HASH_SALT || process.env.IP_HASH_SALT || 'mdrpedia-default-salt';
+    const salt = import.meta.env.IP_HASH_SALT || process.env.IP_HASH_SALT;
+    if (!salt) {
+        // In dev, use a fallback but warn; in production, prisma.ts startup check will catch this
+        console.warn('WARNING: IP_HASH_SALT not set, using insecure fallback');
+    }
+    const effectiveSalt = salt || 'dev-only-insecure-salt';
     const encoder = new TextEncoder();
-    const data = encoder.encode(ip + salt);
+    const data = encoder.encode(ip + effectiveSalt);
     const hashBuffer = await crypto.subtle.digest('SHA-256', data);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 32);

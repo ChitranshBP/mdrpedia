@@ -9,8 +9,20 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { requireSuperAdmin } from '../../../lib/rbac';
 import { logAdminAction } from '../../../lib/audit';
+import { checkRateLimit, getClientIdentifier, RATE_LIMITS, rateLimitResponse } from '../../../lib/rate-limit';
+import { slugify } from '../../../lib/utils';
+import { apiError } from '../../../lib/api-response';
 
 const NEWS_DIR = path.join(process.cwd(), 'src/content/news');
+
+// Sanitize slug to prevent path traversal
+function sanitizeSlug(slug: string): string | null {
+    // Reject any slug containing path traversal characters
+    if (/\.\./.test(slug) || /[\/\\]/.test(slug)) return null;
+    // Only allow lowercase alphanumeric and hyphens
+    if (!/^[a-z0-9-]+$/.test(slug)) return null;
+    return slug;
+}
 
 interface NewsArticle {
     title: string;
@@ -22,16 +34,6 @@ interface NewsArticle {
     content?: string;
 }
 
-function createSlug(title: string): string {
-    return title
-        .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-')
-        .replace(/^-|-$/g, '')
-        .slice(0, 80);
-}
-
 // GET - List all news or get single article
 export async function GET({ request }: { request: Request }) {
     if (!requireSuperAdmin(request)) {
@@ -41,13 +43,24 @@ export async function GET({ request }: { request: Request }) {
         });
     }
 
+    const clientId = getClientIdentifier(request);
+    const rateCheck = checkRateLimit(clientId, RATE_LIMITS.adminGeneral);
+    if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime);
+
     const url = new URL(request.url);
     const slug = url.searchParams.get('slug');
 
     try {
         if (slug) {
+            const safeSlug = sanitizeSlug(slug);
+            if (!safeSlug) {
+                return new Response(JSON.stringify({ error: "Invalid slug" }), {
+                    status: 400,
+                    headers: { "Content-Type": "application/json" }
+                });
+            }
             // Get single article
-            const filePath = path.join(NEWS_DIR, `${slug}.json`);
+            const filePath = path.join(NEWS_DIR, `${safeSlug}.json`);
             const content = await fs.readFile(filePath, 'utf-8');
             const article = JSON.parse(content);
             return new Response(JSON.stringify({ slug, ...article }), {
@@ -79,10 +92,7 @@ export async function GET({ request }: { request: Request }) {
             });
         }
     } catch (e) {
-        return new Response(JSON.stringify({ error: (e as Error).message }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" }
-        });
+        return apiError('News API', e, 'Failed to process news request');
     }
 }
 
@@ -95,6 +105,10 @@ export async function POST({ request }: { request: Request }) {
         });
     }
 
+    const clientId = getClientIdentifier(request);
+    const rateCheck = checkRateLimit(clientId, RATE_LIMITS.adminGeneral);
+    if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime);
+
     try {
         const body: NewsArticle = await request.json();
 
@@ -106,8 +120,15 @@ export async function POST({ request }: { request: Request }) {
             });
         }
 
-        const slug = createSlug(body.title);
-        const filePath = path.join(NEWS_DIR, `${slug}.json`);
+        const slug = slugify(body.title);
+        const safeSlug = sanitizeSlug(slug);
+        if (!safeSlug) {
+            return new Response(JSON.stringify({ error: "Could not generate a valid slug from title" }), {
+                status: 400,
+                headers: { "Content-Type": "application/json" }
+            });
+        }
+        const filePath = path.join(NEWS_DIR, `${safeSlug}.json`);
 
         // Check if exists
         try {
@@ -139,10 +160,7 @@ export async function POST({ request }: { request: Request }) {
             headers: { "Content-Type": "application/json" }
         });
     } catch (e) {
-        return new Response(JSON.stringify({ error: (e as Error).message }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" }
-        });
+        return apiError('News API', e, 'Failed to process news request');
     }
 }
 
@@ -155,6 +173,10 @@ export async function PUT({ request }: { request: Request }) {
         });
     }
 
+    const clientId = getClientIdentifier(request);
+    const rateCheck = checkRateLimit(clientId, RATE_LIMITS.adminGeneral);
+    if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime);
+
     try {
         const body = await request.json();
         const { slug, ...articleData } = body;
@@ -166,7 +188,15 @@ export async function PUT({ request }: { request: Request }) {
             });
         }
 
-        const filePath = path.join(NEWS_DIR, `${slug}.json`);
+        const safeSlug = sanitizeSlug(slug);
+        if (!safeSlug) {
+            return new Response(JSON.stringify({ error: "Invalid slug" }), {
+                status: 400,
+                headers: { "Content-Type": "application/json" }
+            });
+        }
+
+        const filePath = path.join(NEWS_DIR, `${safeSlug}.json`);
 
         // Check if exists
         try {
@@ -196,10 +226,7 @@ export async function PUT({ request }: { request: Request }) {
             headers: { "Content-Type": "application/json" }
         });
     } catch (e) {
-        return new Response(JSON.stringify({ error: (e as Error).message }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" }
-        });
+        return apiError('News API', e, 'Failed to process news request');
     }
 }
 
@@ -212,6 +239,10 @@ export async function DELETE({ request }: { request: Request }) {
         });
     }
 
+    const clientId = getClientIdentifier(request);
+    const rateCheck = checkRateLimit(clientId, RATE_LIMITS.adminGeneral);
+    if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime);
+
     try {
         const body = await request.json();
         const { slug } = body;
@@ -223,7 +254,15 @@ export async function DELETE({ request }: { request: Request }) {
             });
         }
 
-        const filePath = path.join(NEWS_DIR, `${slug}.json`);
+        const safeSlug = sanitizeSlug(slug);
+        if (!safeSlug) {
+            return new Response(JSON.stringify({ error: "Invalid slug" }), {
+                status: 400,
+                headers: { "Content-Type": "application/json" }
+            });
+        }
+
+        const filePath = path.join(NEWS_DIR, `${safeSlug}.json`);
 
         // Check if exists
         try {
@@ -243,9 +282,6 @@ export async function DELETE({ request }: { request: Request }) {
             headers: { "Content-Type": "application/json" }
         });
     } catch (e) {
-        return new Response(JSON.stringify({ error: (e as Error).message }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" }
-        });
+        return apiError('News API', e, 'Failed to process news request');
     }
 }

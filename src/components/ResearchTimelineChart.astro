@@ -1,0 +1,248 @@
+---
+/**
+ * MDRPedia — Research Timeline Chart
+ * Pure server-rendered SVG bar chart showing publication history
+ */
+
+interface Props {
+    citations: {
+        year?: number;
+        totalCitationCount?: number;
+    }[];
+}
+
+const { citations } = Astro.props;
+
+// Aggregate by year
+const yearMap = new Map<number, { pubCount: number; totalCitations: number }>();
+for (const c of citations) {
+    if (!c.year) continue;
+    const existing = yearMap.get(c.year) || { pubCount: 0, totalCitations: 0 };
+    existing.pubCount += 1;
+    existing.totalCitations += (c.totalCitationCount || 0);
+    yearMap.set(c.year, existing);
+}
+
+// Sort by year
+const yearData = [...yearMap.entries()]
+    .sort(([a], [b]) => a - b)
+    .map(([year, data]) => ({ year, ...data }));
+
+// Gate: only render if 4+ distinct years
+const show = yearData.length >= 4;
+
+// SVG dimensions
+const svgWidth = 700;
+const svgHeight = 200;
+const padding = { top: 20, right: 20, bottom: 40, left: 40 };
+const chartWidth = svgWidth - padding.left - padding.right;
+const chartHeight = svgHeight - padding.top - padding.bottom;
+
+const maxPubs = Math.max(...yearData.map(d => d.pubCount), 1);
+const maxCitations = Math.max(...yearData.map(d => d.totalCitations), 1);
+const barWidth = Math.min(Math.floor(chartWidth / yearData.length) - 4, 32);
+const gap = (chartWidth - barWidth * yearData.length) / (yearData.length + 1);
+
+// Color intensity based on citation volume
+function getBarOpacity(citations: number): number {
+    if (maxCitations === 0) return 0.4;
+    return 0.3 + 0.7 * (citations / maxCitations);
+}
+
+// Generate bar data
+const bars = yearData.map((d, i) => {
+    const x = padding.left + gap + i * (barWidth + gap);
+    const barHeight = (d.pubCount / maxPubs) * chartHeight;
+    const y = padding.top + chartHeight - barHeight;
+    const opacity = getBarOpacity(d.totalCitations);
+    return { ...d, x, y, barHeight, opacity };
+});
+
+// Y-axis ticks
+const yTicks = [0, Math.ceil(maxPubs / 2), maxPubs];
+
+// Show every Nth year label to avoid overlap
+const labelInterval = yearData.length > 15 ? 3 : yearData.length > 8 ? 2 : 1;
+---
+
+{show && (
+    <div class="research-timeline-chart">
+        <h4 class="research-timeline-chart__title">Publication Timeline</h4>
+        <div class="research-timeline-chart__wrapper">
+            <svg
+                viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+                class="research-timeline-chart__svg"
+                role="img"
+                aria-label="Publication timeline chart"
+            >
+                {/* Grid lines */}
+                {yTicks.map(tick => {
+                    const y = padding.top + chartHeight - (tick / maxPubs) * chartHeight;
+                    return (
+                        <g>
+                            <line
+                                x1={padding.left}
+                                y1={y}
+                                x2={svgWidth - padding.right}
+                                y2={y}
+                                stroke="var(--rule, #e0e0e0)"
+                                stroke-width="1"
+                                stroke-dasharray={tick === 0 ? '0' : '4 4'}
+                            />
+                            <text
+                                x={padding.left - 8}
+                                y={y + 4}
+                                text-anchor="end"
+                                fill="var(--ink-3, #888)"
+                                font-size="11"
+                                font-family="inherit"
+                            >
+                                {tick}
+                            </text>
+                        </g>
+                    );
+                })}
+
+                {/* Bars */}
+                {bars.map((bar, i) => (
+                    <g class="timeline-bar" data-year={bar.year} data-pubs={bar.pubCount} data-citations={bar.totalCitations.toLocaleString()}>
+                        <rect
+                            x={bar.x}
+                            y={bar.y}
+                            width={barWidth}
+                            height={Math.max(bar.barHeight, 2)}
+                            rx="2"
+                            fill="var(--ink-blue, #2a629a)"
+                            opacity={bar.opacity}
+                        />
+                        {/* Year label */}
+                        {i % labelInterval === 0 && (
+                            <text
+                                x={bar.x + barWidth / 2}
+                                y={svgHeight - 10}
+                                text-anchor="middle"
+                                fill="var(--ink-3, #888)"
+                                font-size="10"
+                                font-family="inherit"
+                            >
+                                {bar.year}
+                            </text>
+                        )}
+                    </g>
+                ))}
+            </svg>
+        </div>
+        {/* Tooltip */}
+        <div class="research-timeline-chart__tooltip" id="timeline-tooltip" style="display:none;">
+            <span class="tooltip-year"></span>
+            <span class="tooltip-pubs"></span>
+            <span class="tooltip-citations"></span>
+        </div>
+    </div>
+)}
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tooltip = document.getElementById('timeline-tooltip');
+        if (!tooltip) return;
+        const bars = document.querySelectorAll('.timeline-bar');
+        const yearEl = tooltip.querySelector('.tooltip-year');
+        const pubsEl = tooltip.querySelector('.tooltip-pubs');
+        const citationsEl = tooltip.querySelector('.tooltip-citations');
+        const wrapper = tooltip.parentElement;
+        if (!wrapper) return;
+
+        bars.forEach(bar => {
+            bar.addEventListener('mouseenter', (e) => {
+                const year = bar.getAttribute('data-year');
+                const pubs = bar.getAttribute('data-pubs');
+                const citations = bar.getAttribute('data-citations');
+                if (yearEl) yearEl.textContent = year || '';
+                if (pubsEl) pubsEl.textContent = `${pubs} publication${pubs === '1' ? '' : 's'}`;
+                if (citationsEl) citationsEl.textContent = `${citations} citations`;
+                tooltip.style.display = 'flex';
+            });
+            bar.addEventListener('mouseleave', () => {
+                tooltip.style.display = 'none';
+            });
+            bar.addEventListener('mousemove', (e) => {
+                const rect = wrapper.getBoundingClientRect();
+                const mouseEvent = e as MouseEvent;
+                const x = mouseEvent.clientX - rect.left;
+                const y = mouseEvent.clientY - rect.top;
+                tooltip.style.left = `${x + 12}px`;
+                tooltip.style.top = `${y - 10}px`;
+            });
+        });
+    });
+</script>
+
+<style>
+    .research-timeline-chart {
+        position: relative;
+        margin: var(--space-lg) 0;
+        padding: var(--space-md);
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
+    }
+
+    .research-timeline-chart__title {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--ink-2);
+        margin: 0 0 var(--space-sm);
+    }
+
+    .research-timeline-chart__wrapper {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .research-timeline-chart__svg {
+        width: 100%;
+        height: auto;
+        min-width: 400px;
+    }
+
+    .timeline-bar {
+        cursor: pointer;
+    }
+
+    .timeline-bar rect {
+        transition: opacity 0.2s ease;
+    }
+
+    .timeline-bar:hover rect {
+        opacity: 1 !important;
+    }
+
+    .research-timeline-chart__tooltip {
+        position: absolute;
+        pointer-events: none;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding: 8px 12px;
+        background: var(--ink, #1a1a2e);
+        color: #fff;
+        border-radius: var(--r-2);
+        font-size: 0.75rem;
+        z-index: 10;
+        white-space: nowrap;
+        box-shadow: var(--shadow-2, 0 4px 12px rgba(0,0,0,0.15));
+    }
+
+    .tooltip-year {
+        font-weight: 700;
+    }
+
+    .tooltip-pubs {
+        opacity: 0.9;
+    }
+
+    .tooltip-citations {
+        opacity: 0.7;
+        font-size: 0.7rem;
+    }
+</style>

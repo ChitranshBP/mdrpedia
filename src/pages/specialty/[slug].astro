@@ -8,15 +8,11 @@ import Layout from "../../layouts/Layout.astro";
 import TierBadge from "../../components/TierBadge.astro";
 import OptimizedImage from "../../components/OptimizedImage.astro";
 import { prisma } from "../../lib/prisma";
-import { SPECIALTY_GROUPS, type SpecialtyGroup } from "../../lib/specialty-groups";
+import { SPECIALTY_GROUPS } from "../../lib/specialty-groups";
 import { generateSpecialtyPageSchema } from "../../lib/medical-knowledge-graph";
+import { slugify } from "../../lib/utils";
 
 export const prerender = false;
-
-// Slugify function: convert group name to URL-friendly slug
-function slugify(name: string): string {
-    return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-}
 
 // Get the slug from URL params
 const { slug } = Astro.params;
@@ -166,7 +162,7 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
                 </nav>
 
                 <div class="hero-content">
-                    <span class="hero-icon">{group.icon}</span>
+                    <span class="hero-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={group.svgPath}/></svg></span>
                     <h1>{group.name}</h1>
                     <p class="hero-description">{group.description}</p>
                 </div>
@@ -225,7 +221,6 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
                                 .filter((_: string, i: number) => i < 2)
                                 .join('')
                                 .toUpperCase();
-                            const hasImage = doc.portrait_url && !doc.portrait_url.startsWith('data:');
 
                             return (
                                 <a
@@ -269,7 +264,7 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
                     </div>
                 ) : (
                     <div class="empty-state">
-                        <span class="empty-icon">{group.icon}</span>
+                        <span class="empty-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={group.svgPath}/></svg></span>
                         <h3>No specialists found</h3>
                         <p>We're actively building our database. Check back soon for {group.name.toLowerCase()} specialists.</p>
                     </div>
@@ -287,7 +282,7 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
                             href={`/specialty/${slugify(related.name)}`}
                             class="related-card"
                         >
-                            <span class="related-icon">{related.icon}</span>
+                            <span class="related-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={related.svgPath}/></svg></span>
                             <div class="related-content">
                                 <h3 class="related-name">{related.name}</h3>
                                 <p class="related-desc">{related.description}</p>
@@ -303,12 +298,12 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
 
 <style>
     .specialty-page {
-        background: var(--bg-primary);
+        background: var(--paper);
         min-height: 100vh;
     }
 
     .container {
-        max-width: 1200px;
+        max-width: var(--max);
         margin: 0 auto;
         padding: 0 1.5rem;
     }
@@ -323,29 +318,29 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
     }
 
     .breadcrumb a {
-        color: var(--text-muted);
+        color: var(--ink-3);
         text-decoration: none;
         transition: color 0.2s;
     }
 
     .breadcrumb a:hover {
-        color: var(--accent-purple);
+        color: var(--ink-blue);
     }
 
     .breadcrumb-sep {
-        color: var(--text-muted);
+        color: var(--ink-3);
         opacity: 0.5;
     }
 
     .breadcrumb-current {
-        color: var(--text-secondary);
+        color: var(--ink-2);
     }
 
     /* Hero Section */
     .specialty-hero {
         padding: 4rem 0 3rem;
-        background: linear-gradient(180deg, rgba(139, 92, 246, 0.05) 0%, transparent 100%);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper);
+        border-bottom: 1px solid var(--rule);
     }
 
     .hero-content {
@@ -357,23 +352,19 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
         display: block;
         font-size: 4rem;
         margin-bottom: 1rem;
-        filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.3));
     }
 
     .specialty-hero h1 {
         font-family: var(--font-serif);
         font-size: clamp(2.5rem, 5vw, 3.5rem);
-        font-weight: 800;
-        background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-purple-light) 50%, #fff 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 1rem;
     }
 
     .hero-description {
         font-size: 1.15rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         max-width: 600px;
         margin: 0 auto;
         line-height: 1.6;
@@ -390,9 +381,9 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
     .stat {
         text-align: center;
         padding: 1rem 1.5rem;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         min-width: 110px;
     }
 
@@ -400,31 +391,32 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
         display: block;
         font-family: var(--font-mono);
         font-size: 1.75rem;
-        font-weight: 700;
-        color: var(--text-primary);
+        font-weight: 500;
+        color: var(--ink);
     }
 
     .stat-label {
         font-size: 0.7rem;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
-    .stat--titan .stat-value { color: #ffd700; }
-    .stat--elite .stat-value { color: #00aaff; }
+    .stat--titan .stat-value { color: var(--titan-text); }
+    .stat--elite .stat-value { color: var(--elite-text); }
 
     /* Subspecialties Section */
     .subspecialties {
         padding: 3rem 0;
-        background: rgba(0, 0, 0, 0.2);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper-2);
+        border-bottom: 1px solid var(--rule);
     }
 
     .section-title {
         font-family: var(--font-serif);
         font-size: 1.5rem;
-        color: var(--text-primary);
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 1.5rem;
     }
 
@@ -436,18 +428,18 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
 
     .subspecialty-tag {
         padding: 0.5rem 1rem;
-        background: rgba(139, 92, 246, 0.1);
-        border: 1px solid rgba(139, 92, 246, 0.25);
-        border-radius: 100px;
+        background: var(--ink-blue-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-pill);
         font-size: 0.85rem;
-        color: var(--accent-purple-light);
+        color: var(--ink-blue);
         text-transform: capitalize;
         transition: all 0.2s;
     }
 
     .subspecialty-tag:hover {
-        background: rgba(139, 92, 246, 0.2);
-        border-color: rgba(139, 92, 246, 0.4);
+        background: var(--paper-3);
+        border-color: var(--rule-strong);
     }
 
     /* Doctors Section */
@@ -461,12 +453,12 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
         align-items: center;
         margin-bottom: 2rem;
         padding-bottom: 1rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid var(--rule);
     }
 
     .section-count {
         font-size: 0.9rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .doctors-grid {
@@ -480,65 +472,55 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
         display: flex;
         flex-direction: column;
         padding: 1.5rem;
-        background: rgba(255, 255, 255, 0.03);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         text-decoration: none;
         color: inherit;
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        transition: all var(--t-base) var(--ease);
         position: relative;
         overflow: hidden;
     }
 
     .doctor-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.03), transparent 70%);
-        pointer-events: none;
+        display: none;
     }
 
     .doctor-card:hover {
-        transform: translateY(-4px);
-        background: rgba(255, 255, 255, 0.05);
-        border-color: rgba(255, 255, 255, 0.15);
-        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+        transform: translateY(-3px);
+        border-color: var(--rule-strong);
+        box-shadow: var(--shadow-3);
     }
 
     /* Tier-specific styling */
     .doctor-card--titan {
-        background: linear-gradient(145deg, rgba(255, 215, 0, 0.03) 0%, rgba(255, 255, 255, 0.02) 100%);
-        border-color: rgba(255, 215, 0, 0.15);
+        background: var(--titan-bg);
+        border-color: var(--titan-border);
     }
 
     .doctor-card--titan:hover {
-        border-color: rgba(255, 215, 0, 0.4);
-        box-shadow: 0 16px 40px rgba(255, 215, 0, 0.1);
+        border-color: var(--titan-border);
+        box-shadow: var(--shadow-glow-titan);
     }
 
     .doctor-card--elite {
-        background: linear-gradient(145deg, rgba(0, 170, 255, 0.03) 0%, rgba(255, 255, 255, 0.02) 100%);
-        border-color: rgba(0, 170, 255, 0.15);
+        background: var(--elite-bg);
+        border-color: var(--elite-border);
     }
 
     .doctor-card--elite:hover {
-        border-color: rgba(0, 170, 255, 0.4);
-        box-shadow: 0 16px 40px rgba(0, 170, 255, 0.1);
+        border-color: var(--elite-border);
+        box-shadow: var(--shadow-glow-elite);
     }
 
     .doctor-card--master {
-        background: linear-gradient(145deg, rgba(0, 204, 102, 0.03) 0%, rgba(255, 255, 255, 0.02) 100%);
-        border-color: rgba(0, 204, 102, 0.15);
+        background: var(--master-bg);
+        border-color: var(--master-border);
     }
 
     .doctor-card--master:hover {
-        border-color: rgba(0, 204, 102, 0.4);
-        box-shadow: 0 16px 40px rgba(0, 204, 102, 0.1);
+        border-color: var(--master-border);
+        box-shadow: var(--shadow-glow-master);
     }
 
     .doctor-card__header {
@@ -551,29 +533,29 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
     .doctor-card__avatar {
         width: 56px;
         height: 56px;
-        border-radius: 14px;
+        border-radius: var(--r-4);
         overflow: hidden;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(255, 255, 255, 0.05);
-        border: 2px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        background: var(--paper-2);
+        border: 2px solid var(--rule);
+        box-shadow: var(--shadow-2);
     }
 
     .avatar--titan {
-        border-color: rgba(255, 215, 0, 0.3);
-        background: rgba(255, 215, 0, 0.08);
+        border-color: var(--titan-border);
+        background: var(--titan-bg);
     }
 
     .avatar--elite {
-        border-color: rgba(0, 170, 255, 0.3);
-        background: rgba(0, 170, 255, 0.08);
+        border-color: var(--elite-border);
+        background: var(--elite-bg);
     }
 
     .avatar--master {
-        border-color: rgba(0, 204, 102, 0.3);
-        background: rgba(0, 204, 102, 0.08);
+        border-color: var(--master-border);
+        background: var(--master-bg);
     }
 
     .doctor-card__avatar img {
@@ -583,14 +565,14 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
     }
 
     .avatar-initials {
-        font-weight: 700;
+        font-weight: 500;
         font-size: 0.85rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
-    .avatar--titan .avatar-initials { color: #ffd700; }
-    .avatar--elite .avatar-initials { color: #00aaff; }
-    .avatar--master .avatar-initials { color: #00cc66; }
+    .avatar--titan .avatar-initials { color: var(--titan-text); }
+    .avatar--elite .avatar-initials { color: var(--elite-text); }
+    .avatar--master .avatar-initials { color: var(--master-text); }
 
     .doctor-card__badges {
         display: flex;
@@ -602,35 +584,35 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
         font-size: 0.65rem;
         font-weight: 500;
         padding: 2px 6px;
-        border-radius: 4px;
-        background: rgba(255, 255, 255, 0.05);
-        color: var(--text-muted);
+        border-radius: var(--r-2);
+        background: var(--paper-3);
+        color: var(--ink-3);
     }
 
     .doctor-card__name {
+        font-family: var(--font-serif);
         font-size: 1.15rem;
-        font-weight: 700;
-        color: white;
+        font-weight: 500;
+        color: var(--ink);
         margin-bottom: 0.25rem;
         line-height: 1.3;
         letter-spacing: -0.01em;
     }
 
     .doctor-card--titan .doctor-card__name {
-        color: #ffd700;
-        text-shadow: 0 2px 10px rgba(255, 215, 0, 0.2);
+        color: var(--titan-text);
     }
 
     .doctor-card__specialty {
         font-size: 0.85rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         font-weight: 500;
         margin-bottom: 0.25rem;
     }
 
     .doctor-card__location {
         font-size: 0.8rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         margin-bottom: 1rem;
     }
 
@@ -638,13 +620,13 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
         display: flex;
         gap: 1rem;
         padding-top: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        border-top: 1px solid var(--rule);
         margin-top: auto;
     }
 
     .doctor-card__stats .stat {
         font-size: 0.75rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         background: none;
         border: none;
         padding: 0;
@@ -652,8 +634,8 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
     }
 
     .doctor-card__stats .stat strong {
-        color: white;
-        font-weight: 700;
+        color: var(--ink);
+        font-weight: 500;
         font-size: 1rem;
         font-family: var(--font-mono);
     }
@@ -662,9 +644,9 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
     .empty-state {
         text-align: center;
         padding: 4rem 2rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 16px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
     }
 
     .empty-icon {
@@ -676,13 +658,13 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
 
     .empty-state h3 {
         font-size: 1.25rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         margin-bottom: 0.5rem;
     }
 
     .empty-state p {
         font-size: 0.95rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         max-width: 400px;
         margin: 0 auto;
     }
@@ -690,8 +672,8 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
     /* Related Specialties Section */
     .related-section {
         padding: 4rem 0;
-        background: rgba(0, 0, 0, 0.3);
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper-2);
+        border-top: 1px solid var(--rule);
     }
 
     .related-section .section-title {
@@ -710,17 +692,17 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
         align-items: center;
         gap: 1rem;
         padding: 1.25rem 1.5rem;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         text-decoration: none;
         color: inherit;
         transition: all 0.2s;
     }
 
     .related-card:hover {
-        background: rgba(255, 255, 255, 0.05);
-        border-color: rgba(139, 92, 246, 0.3);
+        background: var(--paper-3);
+        border-color: var(--rule-strong);
         transform: translateX(4px);
     }
 
@@ -736,14 +718,14 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
 
     .related-name {
         font-size: 1rem;
-        font-weight: 600;
-        color: var(--text-primary);
+        font-weight: 500;
+        color: var(--ink);
         margin-bottom: 0.25rem;
     }
 
     .related-desc {
         font-size: 0.8rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -751,7 +733,7 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
 
     .related-arrow {
         font-size: 1.25rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         opacity: 0;
         transition: opacity 0.2s, transform 0.2s;
     }
@@ -759,7 +741,7 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
     .related-card:hover .related-arrow {
         opacity: 1;
         transform: translateX(4px);
-        color: var(--accent-purple);
+        color: var(--ink-blue);
     }
 
     /* Responsive */

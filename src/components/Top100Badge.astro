@@ -1,0 +1,73 @@
+---
+/**
+ * MDRPedia — Top 100 Badge
+ * Displayed in the hero section for doctors ranked in the top 100
+ */
+
+interface Props {
+    rank: number;
+}
+
+const { rank } = Astro.props;
+
+const isMedal = rank <= 3;
+const medalColors: Record<number, string> = {
+    1: '#FFD700',
+    2: '#C0C0C0',
+    3: '#CD7F32',
+};
+const medalLabels: Record<number, string> = {
+    1: '1st',
+    2: '2nd',
+    3: '3rd',
+};
+---
+
+<a href="/rankings/top-100" class={`top100-badge ${isMedal ? 'top100-badge--medal' : ''}`} style={isMedal ? `--medal-color: ${medalColors[rank]}` : ''}>
+    {isMedal ? (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill={medalColors[rank]} stroke="none">
+            <circle cx="12" cy="9" r="7" />
+            <path d="M8 15l-2 7 6-3 6 3-2-7" />
+        </svg>
+    ) : (
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        </svg>
+    )}
+    <span>Top 100{isMedal ? ` (${medalLabels[rank]})` : ` (#${rank})`}</span>
+</a>
+
+<style>
+    .top100-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 12px;
+        background: var(--paper-3);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-2);
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--ink-2);
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        transition: all var(--transition-fast, 0.15s);
+    }
+
+    .top100-badge:hover {
+        background: var(--paper-2);
+        border-color: var(--ink-blue);
+        color: var(--ink-blue);
+    }
+
+    .top100-badge--medal {
+        border-color: var(--medal-color);
+        color: var(--ink);
+    }
+
+    .top100-badge--medal:hover {
+        border-color: var(--medal-color);
+        box-shadow: 0 0 0 1px var(--medal-color);
+    }
+</style>

@@ -100,7 +100,6 @@ function formatDate(dateStr: string): string {
                     </button>
                     {categories.map(cat => (
                         <button class="category-pill" data-category={cat.id}>
-                            <span class="cat-icon">{cat.icon}</span>
                             {cat.name}
                         </button>
                     ))}
@@ -116,7 +115,7 @@ function formatDate(dateStr: string): string {
                         <div class="company-header">
                             <div class="company-info">
                                 <div class="company-logo">
-                                    <img src={company.logo} alt={company.name} onerror="this.style.display='none'" />
+                                    <img src={company.logo} alt={company.name} loading="lazy" onerror="this.style.display='none'" />
                                 </div>
                                 <div class="company-details">
                                     <h2>{company.name}</h2>
@@ -335,7 +334,7 @@ function formatDate(dateStr: string): string {
 
     pills.forEach(pill => {
         pill.addEventListener('click', () => {
-            const category = pill.dataset.category;
+            const category = (pill as HTMLElement).dataset.category;
 
             // Update active pill
             pills.forEach(p => p.classList.remove('active'));
@@ -343,7 +342,7 @@ function formatDate(dateStr: string): string {
 
             // Filter cards
             cards.forEach(card => {
-                if (category === 'all' || card.dataset.category === category) {
+                if (category === 'all' || (card as HTMLElement).dataset.category === category) {
                     (card as HTMLElement).style.display = '';
                 } else {
                     (card as HTMLElement).style.display = 'none';
@@ -362,21 +361,21 @@ function formatDate(dateStr: string): string {
 <style>
     .trials-page {
         min-height: 100vh;
-        background: var(--bg-primary);
+        background: var(--paper);
     }
 
     .container {
         max-width: 1400px;
         margin: 0 auto;
-        padding: 0 24px;
+        padding: 0 var(--s-5);
     }
 
     /* Hero */
     .trials-hero {
         padding: 80px 0 60px;
         text-align: center;
-        background: linear-gradient(180deg, rgba(139, 92, 246, 0.08) 0%, transparent 100%);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper);
+        border-bottom: 1px solid var(--rule);
     }
 
     .hero-badge {
@@ -384,12 +383,13 @@ function formatDate(dateStr: string): string {
         align-items: center;
         gap: 8px;
         padding: 8px 16px;
-        background: rgba(16, 185, 129, 0.1);
-        border: 1px solid rgba(16, 185, 129, 0.3);
-        border-radius: 100px;
+        background: var(--verdant-2);
+        border: 1px solid var(--verdant);
+        border-radius: var(--r-pill);
         font-size: 0.8rem;
         font-weight: 600;
-        color: #10b981;
+        font-family: var(--font-mono);
+        color: var(--verdant);
         margin-bottom: 24px;
     }
 
@@ -399,16 +399,17 @@ function formatDate(dateStr: string): string {
     }
 
     .trials-hero h1 {
+        font-family: var(--font-serif);
         font-size: 3rem;
-        font-weight: 800;
-        color: white;
+        font-weight: 500;
+        color: var(--ink);
         margin-bottom: 16px;
         letter-spacing: -0.02em;
     }
 
     .hero-tagline {
         font-size: 1.15rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         max-width: 700px;
         margin: 0 auto 40px;
         line-height: 1.7;
@@ -420,9 +421,9 @@ function formatDate(dateStr: string): string {
         align-items: center;
         gap: 32px;
         padding: 24px 40px;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 20px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         margin-bottom: 24px;
         max-width: 800px;
         margin-left: auto;
@@ -436,14 +437,15 @@ function formatDate(dateStr: string): string {
     .hero-stats .stat-value {
         display: block;
         font-size: 2rem;
-        font-weight: 800;
-        color: white;
+        font-weight: 500;
+        font-family: var(--font-mono);
+        color: var(--ink);
         letter-spacing: -0.02em;
     }
 
     .hero-stats .stat-label {
         font-size: 0.8rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
@@ -451,12 +453,12 @@ function formatDate(dateStr: string): string {
     .stat-divider {
         width: 1px;
         height: 40px;
-        background: rgba(255, 255, 255, 0.1);
+        background: var(--rule);
     }
 
     .last-updated {
         font-size: 0.85rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     /* Category Nav */
@@ -465,9 +467,8 @@ function formatDate(dateStr: string): string {
         top: 60px;
         z-index: 50;
         padding: 16px 0;
-        background: rgba(10, 10, 20, 0.95);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper);
+        border-bottom: 1px solid var(--rule);
     }
 
     .category-pills {
@@ -489,24 +490,24 @@ function formatDate(dateStr: string): string {
         padding: 10px 18px;
         font-size: 0.85rem;
         font-weight: 500;
-        color: var(--text-secondary);
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 100px;
+        color: var(--ink-2);
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-pill);
         cursor: pointer;
         white-space: nowrap;
-        transition: all 0.2s;
+        transition: all var(--t-fast);
     }
 
     .category-pill:hover {
-        background: rgba(255, 255, 255, 0.08);
-        color: white;
+        background: var(--paper-3);
+        color: var(--ink);
     }
 
     .category-pill.active {
-        background: rgba(139, 92, 246, 0.2);
-        border-color: rgba(139, 92, 246, 0.4);
-        color: #a78bfa;
+        background: var(--ink-blue);
+        border-color: var(--ink-blue);
+        color: var(--paper);
     }
 
     .cat-icon {
@@ -528,9 +529,9 @@ function formatDate(dateStr: string): string {
         justify-content: space-between;
         align-items: flex-start;
         padding: 24px;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 20px;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         margin-bottom: 24px;
     }
 
@@ -542,8 +543,9 @@ function formatDate(dateStr: string): string {
     .company-logo {
         width: 64px;
         height: 64px;
-        background: white;
-        border-radius: 14px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -558,9 +560,10 @@ function formatDate(dateStr: string): string {
     }
 
     .company-details h2 {
+        font-family: var(--font-serif);
         font-size: 1.5rem;
-        font-weight: 700;
-        color: white;
+        font-weight: 500;
+        color: var(--ink);
         margin-bottom: 8px;
     }
 
@@ -576,7 +579,7 @@ function formatDate(dateStr: string): string {
         align-items: center;
         gap: 6px;
         font-size: 0.85rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .meta-item svg {
@@ -594,9 +597,10 @@ function formatDate(dateStr: string): string {
         padding: 4px 12px;
         font-size: 0.75rem;
         font-weight: 500;
-        background: rgba(139, 92, 246, 0.1);
-        color: #a78bfa;
-        border-radius: 100px;
+        font-family: var(--font-mono);
+        background: var(--ink-blue-2);
+        color: var(--ink-blue);
+        border-radius: var(--r-pill);
     }
 
     .company-link {
@@ -606,17 +610,17 @@ function formatDate(dateStr: string): string {
         padding: 10px 18px;
         font-size: 0.85rem;
         font-weight: 500;
-        color: var(--text-secondary);
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 10px;
+        color: var(--ink-2);
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-3);
         text-decoration: none;
-        transition: all 0.2s;
+        transition: all var(--t-fast);
     }
 
     .company-link:hover {
-        background: rgba(255, 255, 255, 0.08);
-        color: white;
+        background: var(--paper-3);
+        color: var(--ink);
     }
 
     .company-link svg {
@@ -633,16 +637,16 @@ function formatDate(dateStr: string): string {
 
     /* Trial Card */
     .trial-card {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 20px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-4);
         padding: 24px;
-        transition: all 0.3s;
+        transition: all var(--t-base);
     }
 
     .trial-card:hover {
-        background: rgba(255, 255, 255, 0.04);
-        border-color: rgba(255, 255, 255, 0.1);
+        border-color: var(--rule-strong);
+        box-shadow: var(--shadow-2);
         transform: translateY(-2px);
     }
 
@@ -662,7 +666,8 @@ function formatDate(dateStr: string): string {
         padding: 4px 12px;
         font-size: 0.75rem;
         font-weight: 600;
-        border-radius: 100px;
+        font-family: var(--font-mono);
+        border-radius: var(--r-pill);
     }
 
     .status-badge {
@@ -688,32 +693,42 @@ function formatDate(dateStr: string): string {
     }
 
     .trial-name {
+        font-family: var(--font-serif);
         font-size: 1.15rem;
-        font-weight: 700;
-        color: white;
+        font-weight: 500;
+        color: var(--ink);
         margin-bottom: 8px;
         line-height: 1.4;
+    }
+
+    .trial-name-link {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .trial-name-link:hover .trial-name {
+        color: var(--ink-blue);
     }
 
     .trial-indication {
         font-size: 0.9rem;
         font-weight: 500;
-        color: #a78bfa;
+        color: var(--ink-blue);
         margin-bottom: 12px;
     }
 
     .trial-description {
         font-size: 0.9rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         line-height: 1.6;
         margin-bottom: 20px;
     }
 
     /* Latest Update */
     .latest-update {
-        background: rgba(16, 185, 129, 0.08);
-        border: 1px solid rgba(16, 185, 129, 0.2);
-        border-radius: 12px;
+        background: var(--verdant-2);
+        border: 1px solid var(--verdant);
+        border-radius: var(--r-3);
         padding: 16px;
         margin-bottom: 20px;
     }
@@ -724,7 +739,7 @@ function formatDate(dateStr: string): string {
         gap: 8px;
         font-size: 0.8rem;
         font-weight: 600;
-        color: #10b981;
+        color: var(--verdant);
         margin-bottom: 8px;
     }
 
@@ -736,12 +751,12 @@ function formatDate(dateStr: string): string {
     .update-date {
         margin-left: auto;
         font-weight: 400;
-        color: rgba(16, 185, 129, 0.7);
+        opacity: 0.7;
     }
 
     .update-summary {
         font-size: 0.9rem;
-        color: var(--text-primary);
+        color: var(--ink);
         line-height: 1.6;
         margin: 0;
     }
@@ -751,8 +766,8 @@ function formatDate(dateStr: string): string {
         display: flex;
         gap: 24px;
         padding: 16px 0;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-top: 1px solid var(--rule);
+        border-bottom: 1px solid var(--rule);
         margin-bottom: 16px;
     }
 
@@ -764,18 +779,20 @@ function formatDate(dateStr: string): string {
 
     .stat-icon {
         font-size: 1.25rem;
+        color: var(--ink-3);
     }
 
     .trial-stat .stat-value {
         display: block;
         font-size: 1rem;
-        font-weight: 700;
-        color: white;
+        font-weight: 500;
+        font-family: var(--font-mono);
+        color: var(--ink);
     }
 
     .trial-stat .stat-label {
         font-size: 0.75rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     /* Timeline */
@@ -793,15 +810,15 @@ function formatDate(dateStr: string): string {
     .timeline-label {
         display: block;
         font-size: 0.7rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
 
     .timeline-value {
         font-size: 0.85rem;
-        font-weight: 600;
-        color: var(--text-secondary);
+        font-weight: 500;
+        color: var(--ink-2);
     }
 
     .timeline-progress {
@@ -810,14 +827,14 @@ function formatDate(dateStr: string): string {
 
     .progress-bar {
         height: 6px;
-        background: rgba(255, 255, 255, 0.1);
+        background: var(--paper-3);
         border-radius: 3px;
         overflow: hidden;
     }
 
     .progress-fill {
         height: 100%;
-        background: linear-gradient(90deg, #8b5cf6, #10b981);
+        background: linear-gradient(90deg, var(--ink-blue), var(--verdant));
         border-radius: 3px;
         transition: width 0.5s ease;
     }
@@ -830,7 +847,7 @@ function formatDate(dateStr: string): string {
     .investigators h4 {
         font-size: 0.8rem;
         font-weight: 600;
-        color: var(--text-muted);
+        color: var(--ink-3);
         text-transform: uppercase;
         letter-spacing: 0.05em;
         margin-bottom: 12px;
@@ -844,14 +861,14 @@ function formatDate(dateStr: string): string {
 
     .investigator {
         padding: 12px;
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 10px;
+        background: var(--paper-2);
+        border-radius: var(--r-3);
     }
 
     .investigator-link {
         display: block;
         text-decoration: none;
-        transition: all 0.2s;
+        transition: all var(--t-fast);
     }
 
     .investigator-link:hover {
@@ -864,28 +881,28 @@ function formatDate(dateStr: string): string {
 
     .inv-name {
         display: block;
-        font-weight: 600;
-        color: white;
+        font-weight: 500;
+        color: var(--ink);
         margin-bottom: 2px;
     }
 
     .inv-role {
         display: block;
         font-size: 0.85rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .view-profile {
         display: block;
         font-size: 0.8rem;
-        color: #8b5cf6;
+        color: var(--ink-blue);
         margin-top: 6px;
     }
 
     /* Countries */
     .trial-countries {
         font-size: 0.8rem;
-        color: var(--text-muted);
+        color: var(--ink-3);
     }
 
     .countries-label {
@@ -894,27 +911,28 @@ function formatDate(dateStr: string): string {
 
     .countries-list {
         margin-left: 4px;
-        color: var(--text-secondary);
+        color: var(--ink-2);
     }
 
     /* CTA Section */
     .cta-section {
         padding: 80px 0;
         text-align: center;
-        background: linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.08) 100%);
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--paper-2);
+        border-top: 1px solid var(--rule);
     }
 
     .cta-section h2 {
+        font-family: var(--font-serif);
         font-size: 2rem;
-        font-weight: 700;
-        color: white;
+        font-weight: 400;
+        color: var(--ink);
         margin-bottom: 12px;
     }
 
     .cta-section p {
         font-size: 1.1rem;
-        color: var(--text-secondary);
+        color: var(--ink-2);
         max-width: 600px;
         margin: 0 auto 32px;
     }
@@ -926,17 +944,17 @@ function formatDate(dateStr: string): string {
         padding: 16px 32px;
         font-size: 1rem;
         font-weight: 600;
-        color: white;
-        background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-        border-radius: 12px;
+        color: var(--paper);
+        background: var(--ink-blue);
+        border-radius: var(--r-3);
         text-decoration: none;
-        transition: all 0.3s;
-        box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+        transition: all var(--t-base);
+        box-shadow: var(--shadow-2);
     }
 
     .cta-button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4);
+        box-shadow: var(--shadow-3);
     }
 
     /* Responsive */
