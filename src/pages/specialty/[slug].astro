@@ -22,7 +22,7 @@ const group = SPECIALTY_GROUPS.find(g => slugify(g.name) === slug);
 
 // 404 if no matching group
 if (!group) {
-    return Astro.redirect('/404');
+    return Astro.rewrite("/404");
 }
 
 // Build OR conditions for each specialty in the group

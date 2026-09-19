@@ -49,15 +49,6 @@ export const onRequest = defineMiddleware(async ({ request, locals }, next) => {
         }
     }
     
-    // Add Link headers for critical resources (preload hints)
-    if (response.headers.get('content-type')?.includes('text/html')) {
-        const preloadLinks = [
-            '</fonts/inter-var.woff2>; rel=preload; as=font; type="font/woff2"; crossorigin',
-        ].join(', ');
-        
-        const existingLink = newHeaders.get('Link');
-        newHeaders.set('Link', existingLink ? `${existingLink}, ${preloadLinks}` : preloadLinks);
-    }
     
     return new Response(response.body, {
         status: response.status,

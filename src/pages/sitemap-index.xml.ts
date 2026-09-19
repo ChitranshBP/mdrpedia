@@ -9,7 +9,15 @@ import * as path from 'path';
 
 export const prerender = true;
 
-const SITE_URL = import.meta.env.SITE_URL || import.meta.env.SITE || 'https://mdrpedia.com';
+// Resolve the public base URL. `import.meta.env.SITE` is the `site` value from
+// astro.config.mjs and is always the canonical production origin. SITE_URL is only
+// honoured when it is not a local dev address, so a developer .env can never leak
+// localhost URLs into a public sitemap.
+const CONFIGURED_SITE = import.meta.env.SITE || 'https://mdrpedia.com';
+const RAW_SITE_URL = import.meta.env.SITE_URL;
+const SITE_URL = (RAW_SITE_URL && !/localhost|127\.0\.0\.1|0\.0\.0\.0/.test(RAW_SITE_URL))
+    ? RAW_SITE_URL.replace(/\/$/, '')
+    : CONFIGURED_SITE.replace(/\/$/, '');
 const CONTENT_DIR = path.resolve(process.cwd(), 'src/content/doctors');
 const CHUNK_SIZE = 10_000;
 

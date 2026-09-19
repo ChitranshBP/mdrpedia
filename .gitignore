@@ -27,3 +27,7 @@ pnpm-debug.log*
 logs/
 pg-data/
 node_modules
+
+# local snapshot of the pre-hotfix server build
+dist.server-*/
+dist.bak-*/

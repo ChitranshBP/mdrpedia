@@ -311,7 +311,7 @@ profile = await prisma.profile.findUnique({
     },
 });
 
-if (!profile) return Astro.redirect("/404");
+if (!profile) return Astro.rewrite("/404");
 
 // Fetch all profiles for mentor/mentee selection (excluding current profile)
 allProfiles = await prisma.profile.findMany({

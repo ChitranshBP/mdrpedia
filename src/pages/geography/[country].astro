@@ -37,7 +37,7 @@ const matchedCountry = allGeographies.find(
 );
 
 if (!matchedCountry) {
-    return Astro.redirect('/404');
+    return Astro.rewrite("/404");
 }
 
 const countryName = matchedCountry.country;

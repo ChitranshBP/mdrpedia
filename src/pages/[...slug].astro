@@ -22,7 +22,7 @@ const page = await prisma.contentPage.findUnique({
 });
 
 if (!page || !page.published) {
-    return Astro.redirect("/404");
+    return Astro.rewrite("/404");
 }
 
 const contentHtml = marked.parse(page.content);

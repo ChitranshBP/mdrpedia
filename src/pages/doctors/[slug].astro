@@ -162,7 +162,7 @@ if (dbProfile) {
         doctorSource = staticDoctor;
     } else {
         // Profile not found in DB or static content
-        return Astro.redirect("/404");
+        return Astro.rewrite("/404");
     }
 }
 

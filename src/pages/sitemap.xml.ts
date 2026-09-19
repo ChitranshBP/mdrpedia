@@ -9,7 +9,15 @@ import * as path from 'path';
 
 export const prerender = true;
 
-const SITE_URL = import.meta.env.SITE_URL || import.meta.env.SITE || 'https://mdrpedia.com';
+// Resolve the public base URL. `import.meta.env.SITE` is the `site` value from
+// astro.config.mjs and is always the canonical production origin. SITE_URL is only
+// honoured when it is not a local dev address, so a developer .env can never leak
+// localhost URLs into a public sitemap.
+const CONFIGURED_SITE = import.meta.env.SITE || 'https://mdrpedia.com';
+const RAW_SITE_URL = import.meta.env.SITE_URL;
+const SITE_URL = (RAW_SITE_URL && !/localhost|127\.0\.0\.1|0\.0\.0\.0/.test(RAW_SITE_URL))
+    ? RAW_SITE_URL.replace(/\/$/, '')
+    : CONFIGURED_SITE.replace(/\/$/, '');
 const CONTENT_DIR = path.resolve(process.cwd(), 'src/content/doctors');
 const CHUNK_SIZE = 10_000;
 
@@ -69,6 +77,29 @@ function loadDoctors(): DoctorMeta[] {
         .filter(Boolean) as DoctorMeta[];
 }
 
+const CONTENT_ROOT = path.resolve(process.cwd(), 'src/content');
+
+/** Slugs for a file-per-entry content collection (filename === URL slug). */
+function loadSlugs(collection: string): string[] {
+    const dir = path.join(CONTENT_ROOT, collection);
+    if (!fs.existsSync(dir)) return [];
+    return fs.readdirSync(dir)
+        .filter(f => f.endsWith('.json') || f.endsWith('.md') || f.endsWith('.mdx'))
+        .map(f => f.replace(/\.(json|mdx?)$/, ''));
+}
+
+/** Clinical trial ids live nested under companies[].trials[] in a single index.json. */
+function loadTrialIds(): string[] {
+    const file = path.join(CONTENT_ROOT, 'trials', 'index.json');
+    if (!fs.existsSync(file)) return [];
+    try {
+        const data = JSON.parse(fs.readFileSync(file, 'utf-8'));
+        return (data.companies ?? []).flatMap((c: any) => (c.trials ?? []).map((t: any) => t.id)).filter(Boolean);
+    } catch {
+        return [];
+    }
+}
+
 function buildUrlEntry(loc: string, priority: number, changefreq: string, lastmod: string): string {
     return `  <url>
     <loc>${xmlEscape(loc)}</loc>
@@ -115,7 +146,7 @@ ${indexEntries.join('\n')}
     const entries: string[] = [];
 
     // Static pages
-    entries.push(buildUrlEntry(SITE_URL, 1.0, 'daily', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/`, 1.0, 'daily', today));
     entries.push(buildUrlEntry(`${SITE_URL}/portal`, 0.5, 'monthly', today));
 
     // About / disambiguation pages (high SEO value for brand queries)
@@ -147,6 +178,22 @@ ${indexEntries.join('\n')}
                 doc.updatedAt || today
             )
         );
+    }
+
+    // Editorial + reference content. Each of these has a real detail route, so
+    // every item belongs in the sitemap - previously only the index pages were listed.
+    const COLLECTION_ROUTES: Array<[string, string, number, string]> = [
+        ['news', '/news', 0.7, 'weekly'],
+        ['rareDiseases', '/rare-diseases', 0.7, 'monthly'],
+        ['prizes', '/prizes', 0.6, 'monthly'],
+    ];
+    for (const [collection, prefix, priority, changefreq] of COLLECTION_ROUTES) {
+        for (const slug of loadSlugs(collection)) {
+            entries.push(buildUrlEntry(`${SITE_URL}${prefix}/${slug}`, priority, changefreq, today));
+        }
+    }
+    for (const id of loadTrialIds()) {
+        entries.push(buildUrlEntry(`${SITE_URL}/trials/${id}`, 0.6, 'monthly', today));
     }
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>

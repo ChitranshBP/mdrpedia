@@ -25,7 +25,6 @@ export const GET: APIRoute = async () => {
 
     // Generate XML
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/sitemap-ai.xsl"?>
 <!--
   MDRPedia AI-Optimized Sitemap
 
@@ -110,7 +109,7 @@ export const GET: APIRoute = async () => {
 
         return `
   <url>
-    <loc>${BASE_URL}/doctor/${doctor.id}</loc>
+    <loc>${BASE_URL}/doctors/${doctor.id}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority.toFixed(2)}</priority>
