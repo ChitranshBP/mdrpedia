@@ -1,6 +1,19 @@
 ---
 export const prerender = true;
 import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+// Registry figures come from the collection so the page cannot drift
+// from what the site actually holds.
+const doctors = await getCollection("doctors");
+const profileCount = doctors.length;
+const countryCount = new Set(
+    doctors.map((d) => d.data.geography?.country).filter(Boolean),
+).size;
+const specialtyCount = new Set(
+    doctors.map((d) => d.data.specialty).filter(Boolean),
+).size;
+const titanCount = doctors.filter((d) => d.data.tier === "TITAN").length;
 ---
 
 <Layout
@@ -59,12 +72,12 @@ import Layout from "../layouts/Layout.astro";
                 </div>
                 <div class="stat-box">
                     <div class="stat">
-                        <span class="number">950+</span>
+                        <span class="number">{titanCount}</span>
                         <span class="label">Titans of Medicine</span>
                     </div>
                     <div class="stat">
-                        <span class="number">100M+</span>
-                        <span class="label">Lives Impacted</span>
+                        <span class="number">{countryCount}</span>
+                        <span class="label">Countries Represented</span>
                     </div>
                 </div>
             </div>
@@ -163,12 +176,44 @@ import Layout from "../layouts/Layout.astro";
             <div class="timeline-item">
                 <span class="year">2024</span>
                 <div class="timeline-content">
-                    <h4>Global Expansion</h4>
+                    <h4>The Open Register</h4>
                     <p>
-                        Today, we track over 250,000 profiles across 85
-                        countries. Our data integrity team verifies thousands of
-                        data points daily, ensuring that when you see "Verified
-                        Surgeon," it means exactly that.
+                        MDRPedia opened as a public, citable encyclopedia under
+                        CC-BY-SA. Every profile was rebuilt from primary
+                        sources—journals, national registries and institutional
+                        records—so that each claim on the site could be traced
+                        back to a document rather than a press release.
+                    </p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <span class="year">2025</span>
+                <div class="timeline-content">
+                    <h4>Depth Over Volume</h4>
+                    <p>
+                        Rather than inflate the register, we tightened it. Tier
+                        classification moved onto bibliometric evidence,
+                        citation records were reconciled against OpenAlex and
+                        PubMed, and profiles that could not be sourced were
+                        removed. A smaller register that holds up to scrutiny
+                        is worth more than a large one that does not.
+                    </p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <span class="year">2026</span>
+                <div class="timeline-content">
+                    <h4>The Ethics Ledger</h4>
+                    <p>
+                        Stature was never the whole story, so in 2026 we added a
+                        second, independent mark: <strong>Ethics</strong>—a
+                        public ledger of how a clinician practices, open to
+                        nomination and to scrutiny. Today the register holds
+                        <strong>{profileCount.toLocaleString()}</strong> verified
+                        profiles across <strong>{countryCount}</strong> countries
+                        and <strong>{specialtyCount}</strong> specialties, of
+                        which <strong>{titanCount}</strong> hold Titan rank.
+                        Every tier remains revocable.
                     </p>
                 </div>
             </div>
@@ -252,9 +297,10 @@ import Layout from "../layouts/Layout.astro";
                 </div>
             </div>
             <p class="integrity-note">
-                We have removed over 12,000 profiles for falsified credentials
-                in the last year alone. We do not accept payment for removal of
-                negative records or for "booting" rankings.
+                Profiles that cannot be traced to a primary source are removed,
+                and any tier on this register can be revoked. We do not accept
+                payment for removal of negative records, for placement, or for
+                "boosting" rankings.
             </p>
         </div>
     </section>

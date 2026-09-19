@@ -7,6 +7,7 @@ export const prerender = true;
 
 import Layout from "../../layouts/Layout.astro";
 import trialsData from "../../content/trials/index.json";
+import { getStatusColor, getPhaseColor } from "../../lib/trials";
 
 // Generate static paths for all trials
 export function getStaticPaths() {
@@ -32,26 +33,6 @@ function formatDate(dateStr: string): string {
     if (!dateStr) return 'TBD';
     const date = new Date(dateStr);
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
-}
-
-// Get status color
-function getStatusColor(status: string): string {
-    switch (status.toLowerCase()) {
-        case 'active': return '#10b981';
-        case 'completed': return '#3b82f6';
-        case 'recruiting': return '#f59e0b';
-        case 'suspended': return '#ef4444';
-        default: return '#94a3b8';
-    }
-}
-
-// Get phase color
-function getPhaseColor(phase: string): string {
-    if (phase.includes('4') || phase.includes('Post')) return '#8b5cf6';
-    if (phase.includes('3')) return '#10b981';
-    if (phase.includes('2')) return '#3b82f6';
-    if (phase.includes('1')) return '#f59e0b';
-    return '#94a3b8';
 }
 ---
 

@@ -697,6 +697,10 @@ const news = defineCollection({
         source: z.string(),
         url: z.string().optional(),
         content: z.string().optional(),
+        // published: live once `date` arrives (the default)
+        // scheduled: identical, but states the intent explicitly
+        // draft:     never goes live, whatever the date says
+        status: z.enum(['published', 'scheduled', 'draft']).default('published'),
     }),
 });
 

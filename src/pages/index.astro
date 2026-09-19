@@ -175,6 +175,9 @@ try {
 	ethicsCount = 0;
 }
 
+// Masthead edition stamp — rolls with the calendar month
+const edition = new Date().toISOString().slice(0, 7);
+
 Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, stale-while-revalidate=300');
 ---
 
@@ -186,7 +189,7 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, s
 <!-- HERO -->
 <section class="hero container">
 	<div class="hero__masthead">
-		<span class="edition">Vol. II &middot; Edition 2026-04 &middot; The Physicians' Register</span>
+		<span class="edition">Vol. II &middot; Edition {edition} &middot; The Physicians' Register</span>
 		<span class="edition">Open Encyclopedia &middot; CC-BY-SA &middot; <span id="hero-date"></span></span>
 	</div>
 

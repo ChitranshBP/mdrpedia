@@ -6,6 +6,7 @@
 import Layout from "../../../layouts/Layout.astro";
 import AdminSidebar from "../../../components/admin/AdminSidebar.astro";
 import { getCollection } from "astro:content";
+import { byDateDesc, isDraft, isScheduled } from "../../../lib/news";
 import { requireSuperAdmin } from "../../../lib/rbac";
 
 export const prerender = false;
@@ -18,9 +19,11 @@ const adminKey = new URL(Astro.request.url).searchParams.get("key");
 const news = await getCollection("news");
 
 // Sort by date descending
-const sortedNews = news.sort((a, b) =>
-    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
-);
+const sortedNews = news.sort(byDateDesc);
+
+// Future-dated entries are queued; drafts never go live on their own
+const scheduledCount = news.filter(isScheduled).length;
+const draftCount = news.filter(isDraft).length;
 
 // Group by category
 const categories = [...new Set(news.map(n => n.data.category))].sort();
@@ -55,6 +58,14 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
             <div class="stat-card">
                 <span class="stat-value">{news.filter(n => new Date(n.data.date) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)).length}</span>
                 <span class="stat-label">Last 30 Days</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">{scheduledCount}</span>
+                <span class="stat-label">Scheduled</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">{draftCount}</span>
+                <span class="stat-label">Drafts</span>
             </div>
         </div>
 
@@ -95,7 +106,15 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
                                     <span class="category-badge">{article.data.category}</span>
                                 </td>
                                 <td>{article.data.source}</td>
-                                <td>{new Date(article.data.date).toLocaleDateString()}</td>
+                                <td>
+                                    {new Date(article.data.date).toLocaleDateString()}
+                                    {isScheduled(article) && (
+                                        <span class="scheduled-badge">Scheduled</span>
+                                    )}
+                                    {isDraft(article) && (
+                                        <span class="scheduled-badge draft-badge">Draft</span>
+                                    )}
+                                </td>
                                 <td class="actions-cell">
                                     <a href={`/admin/news/${article.id}?key=${adminKey}`} class="btn btn--sm btn--outline">
                                         Edit
@@ -328,6 +347,27 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
         border-radius: var(--r-3);
         font-size: 0.75rem;
         font-weight: 500;
+    }
+
+    .draft-badge {
+        border-color: var(--rule-strong);
+        background: var(--paper-3);
+        color: var(--ink-3);
+    }
+
+    .scheduled-badge {
+        display: inline-block;
+        margin-left: 8px;
+        padding: 2px 8px;
+        border: 1px solid var(--aged-gold);
+        border-radius: var(--r-3);
+        background: var(--titan-bg);
+        color: var(--titan-text);
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        white-space: nowrap;
     }
 
     .actions-cell {

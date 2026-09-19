@@ -88,6 +88,35 @@ function loadSlugs(collection: string): string[] {
         .map(f => f.replace(/\.(json|mdx?)$/, ''));
 }
 
+/**
+ * News entries double as an editorial queue: a draft, or an entry dated in the
+ * future, has no page built for it, so it must stay out of the sitemap until
+ * it publishes. Returns [slug, lastmod] pairs using the article's own date.
+ */
+function loadPublishedNews(): Array<[string, string]> {
+    const dir = path.join(CONTENT_ROOT, 'news');
+    if (!fs.existsSync(dir)) return [];
+    const cutoff = new Date();
+    cutoff.setHours(23, 59, 59, 999);
+
+    return fs.readdirSync(dir)
+        .filter(f => f.endsWith('.json'))
+        .map(f => {
+            try {
+                const data = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf-8'));
+                if (data.status === 'draft') return null;
+                const slug = f.replace(/\.json$/, '');
+                const date = String(data.date ?? '');
+                const t = new Date(date).getTime();
+                if (!Number.isNaN(t) && t > cutoff.getTime()) return null;
+                return [slug, /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : ''] as [string, string];
+            } catch {
+                return null;
+            }
+        })
+        .filter(Boolean) as Array<[string, string]>;
+}
+
 /** Clinical trial ids live nested under companies[].trials[] in a single index.json. */
 function loadTrialIds(): string[] {
     const file = path.join(CONTENT_ROOT, 'trials', 'index.json');
@@ -182,8 +211,11 @@ ${indexEntries.join('\n')}
 
     // Editorial + reference content. Each of these has a real detail route, so
     // every item belongs in the sitemap - previously only the index pages were listed.
+    for (const [slug, lastmod] of loadPublishedNews()) {
+        entries.push(buildUrlEntry(`${SITE_URL}/news/${slug}`, 0.7, 'weekly', lastmod || today));
+    }
+
     const COLLECTION_ROUTES: Array<[string, string, number, string]> = [
-        ['news', '/news', 0.7, 'weekly'],
         ['rareDiseases', '/rare-diseases', 0.7, 'monthly'],
         ['prizes', '/prizes', 0.6, 'monthly'],
     ];

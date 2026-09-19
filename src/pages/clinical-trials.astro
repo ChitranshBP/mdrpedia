@@ -7,35 +7,12 @@ export const prerender = true;
 
 import Layout from "../layouts/Layout.astro";
 import trialsData from "../content/trials/index.json";
+import { getStatusColor, getPhaseColor, summarise } from "../lib/trials";
 
 const { companies, categories, lastUpdated } = trialsData;
 
-// Count totals
-const totalTrials = companies.reduce((acc, c) => acc + c.trials.length, 0);
-const activePhase3 = companies.reduce((acc, c) =>
-    acc + c.trials.filter(t => t.phase.includes('Phase 3')).length, 0);
-const totalEnrollment = companies.reduce((acc, c) =>
-    acc + c.trials.reduce((sum, t) => sum + (t.enrollment || 0), 0), 0);
-
-// Get status color
-function getStatusColor(status: string): string {
-    switch (status.toLowerCase()) {
-        case 'active': return '#10b981';
-        case 'completed': return '#3b82f6';
-        case 'recruiting': return '#f59e0b';
-        case 'suspended': return '#ef4444';
-        default: return '#94a3b8';
-    }
-}
-
-// Get phase color
-function getPhaseColor(phase: string): string {
-    if (phase.includes('4') || phase.includes('Post')) return '#8b5cf6';
-    if (phase.includes('3')) return '#10b981';
-    if (phase.includes('2')) return '#3b82f6';
-    if (phase.includes('1')) return '#f59e0b';
-    return '#94a3b8';
-}
+const { totalTrials, openTrials, phase3Trials, totalEnrollment } =
+    summarise(companies);
 
 // Format date
 function formatDate(dateStr: string): string {
@@ -67,12 +44,17 @@ function formatDate(dateStr: string): string {
                 <!-- Stats -->
                 <div class="hero-stats">
                     <div class="stat">
-                        <span class="stat-value">{totalTrials}</span>
-                        <span class="stat-label">Active Trials</span>
+                        <span class="stat-value">{openTrials}</span>
+                        <span class="stat-label">Trials Under Way</span>
                     </div>
                     <div class="stat-divider"></div>
                     <div class="stat">
-                        <span class="stat-value">{activePhase3}</span>
+                        <span class="stat-value">{totalTrials}</span>
+                        <span class="stat-label">Programmes Tracked</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <span class="stat-value">{phase3Trials}</span>
                         <span class="stat-label">Phase 3 Studies</span>
                     </div>
                     <div class="stat-divider"></div>
