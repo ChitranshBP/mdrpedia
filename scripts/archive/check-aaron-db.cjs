@@ -1,5 +1,5 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const { createPrismaClient } = require('../lib/prisma.cjs');
+const prisma = createPrismaClient();
 
 async function main() {
     const p = await prisma.profile.findUnique({

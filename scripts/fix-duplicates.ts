@@ -1,6 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { createPrismaClient } from '../src/lib/prisma-factory';
 
-const prisma = new PrismaClient();
+const prisma = createPrismaClient();
 
 interface DuplicatePair {
     sourceSlug: string;

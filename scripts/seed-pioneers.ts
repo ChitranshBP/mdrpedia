@@ -1,9 +1,9 @@
 
 import fs from 'fs';
 import path from 'path';
-import { PrismaClient } from '@prisma/client';
+import { createPrismaClient } from '../src/lib/prisma-factory';
 
-const prisma = new PrismaClient();
+const prisma = createPrismaClient();
 
 function slugify(text: string): string {
     return text

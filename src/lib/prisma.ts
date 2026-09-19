@@ -2,7 +2,8 @@
 // MDRPedia — Prisma Client Singleton
 // ============================================================================
 
-import { PrismaClient } from '@prisma/client';
+import type { PrismaClient } from '@prisma/client';
+import { createPrismaClient } from './prisma-factory';
 import { createLogger } from './logger';
 
 const log = createLogger('Prisma');
@@ -38,7 +39,7 @@ const globalForPrisma = globalThis as unknown as {
 
 export const prisma =
     globalForPrisma.prisma ??
-    new PrismaClient({
+    createPrismaClient({
         log: import.meta.env.DEV ? ['query', 'error', 'warn'] : ['error'],
     });
 

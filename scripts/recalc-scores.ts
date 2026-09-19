@@ -1,7 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+import { createPrismaClient } from '../src/lib/prisma-factory';
 import { calculateTotalImpact } from '../src/lib/impact-calculator';
 
-const prisma = new PrismaClient();
+const prisma = createPrismaClient();
 
 async function recalculateScores() {
     console.log('Starting ranking score recalculation...\n');

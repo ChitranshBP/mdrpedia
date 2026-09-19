@@ -1,8 +1,8 @@
-const { PrismaClient } = require('@prisma/client');
+const { createPrismaClient } = require('./lib/prisma.cjs');
 const fs = require('fs');
 const path = require('path');
 
-const prisma = new PrismaClient();
+const prisma = createPrismaClient();
 
 async function main() {
     console.log('🔄 Starting DB Synchronization...');

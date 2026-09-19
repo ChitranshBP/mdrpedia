@@ -1,7 +1,7 @@
 
-import { PrismaClient } from '@prisma/client';
+import { createPrismaClient } from '../src/lib/prisma-factory';
 
-const prisma = new PrismaClient();
+const prisma = createPrismaClient();
 
 async function main() {
     console.log('Verifying CMS Database Models...');

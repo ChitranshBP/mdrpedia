@@ -8,40 +8,46 @@
     "preview": "astro preview",
     "astro": "astro"
   },
-  "prisma": {
-    "seed": "tsx prisma/seed.ts"
-  },
   "dependencies": {
-    "@astrojs/check": "^0.9.6",
-    "@astrojs/node": "^9.5.3",
-    "@astrojs/react": "^5.0.3",
-    "@prisma/client": "^5.22.0",
+    "@astrojs/node": "^11.1.6",
+    "@astrojs/react": "^6.0.6",
+    "@prisma/adapter-pg": "^7.10.0",
+    "@prisma/client": "^7.10.0",
     "@resvg/resvg-js": "^2.6.2",
-    "@types/marked": "^5.0.2",
-    "astro": "^5.17.1",
+    "astro": "^7.3.3",
     "cloudinary": "^2.9.0",
-    "dotenv": "^17.3.1",
+    "dotenv": "^18.0.1",
     "glob": "^13.0.6",
-    "googleapis": "^171.4.0",
+    "googleapis": "^181.0.0",
     "jose": "^6.2.2",
-    "marked": "^17.0.2",
+    "marked": "^18.0.13",
+    "pg": "^8.23.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "resend": "^6.12.2",
-    "satori": "^0.19.2",
+    "satori": "^0.33.4",
     "satori-html": "^0.3.2",
-    "shiki": "^3.22.0",
+    "shiki": "^4.4.3",
     "stripe": "^22.0.2",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.3"
   },
   "devDependencies": {
-    "@pagefind/default-ui": "^1.4.0",
-    "@types/node": "^25.2.3",
+    "@astrojs/check": "^0.9.10",
+    "@pagefind/default-ui": "^1.5.2",
+    "@types/node": "^26.6.2",
+    "@types/pg": "^8.23.1",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "embedded-postgres": "^18.3.0-beta.16",
-    "pagefind": "^1.4.0",
-    "prisma": "^5.22.0",
+    "embedded-postgres": "^18.4.0-beta.17",
+    "pagefind": "^1.5.2",
+    "prisma": "^7.10.0",
     "tsx": "^4.21.0"
+  },
+  "allowScripts": {
+    "@embedded-postgres/darwin-arm64@18.4.0-beta.17": true,
+    "@prisma/engines@7.10.0": true,
+    "esbuild@0.28.2": true,
+    "fsevents@2.3.3": true,
+    "prisma@7.10.0": true
   }
 }

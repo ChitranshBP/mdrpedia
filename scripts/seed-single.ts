@@ -1,5 +1,5 @@
 
-import { PrismaClient } from '@prisma/client';
+import { createPrismaClient } from '../src/lib/prisma-factory';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const prisma = new PrismaClient();
+const prisma = createPrismaClient();
 
 async function seedSingle(slug: string) {
     console.log(`🌱 Seeding single profile: ${slug}...`);

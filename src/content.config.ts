@@ -4,9 +4,16 @@
 // ============================================================================
 
 import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
 
 const doctors = defineCollection({
-    type: 'data',
+    loader: glob({
+        pattern: '**/*.json',
+        base: './src/content/doctors',
+        // Keep legacy filename-derived ids; the loader would otherwise
+        // prefer a `slug` field in the data and change live URLs.
+        generateId: ({ entry }) => entry.replace(/\.json$/, ''),
+    }),
     schema: z.object({
         fullName: z.string(),
         title: z.string().nullable().optional(),
@@ -675,7 +682,13 @@ const doctors = defineCollection({
 });
 
 const news = defineCollection({
-    type: "data",
+    loader: glob({
+        pattern: '**/*.json',
+        base: './src/content/news',
+        // Keep legacy filename-derived ids; the loader would otherwise
+        // prefer a `slug` field in the data and change live URLs.
+        generateId: ({ entry }) => entry.replace(/\.json$/, ''),
+    }),
     schema: z.object({
         title: z.string(),
         summary: z.string(),
@@ -688,7 +701,13 @@ const news = defineCollection({
 });
 
 const communities = defineCollection({
-    type: "data",
+    loader: glob({
+        pattern: '**/*.json',
+        base: './src/content/communities',
+        // Keep legacy filename-derived ids; the loader would otherwise
+        // prefer a `slug` field in the data and change live URLs.
+        generateId: ({ entry }) => entry.replace(/\.json$/, ''),
+    }),
     schema: z.object({
         name: z.string(),
         abbr: z.string(),
@@ -711,7 +730,13 @@ const communities = defineCollection({
 });
 
 const prizes = defineCollection({
-    type: "data",
+    loader: glob({
+        pattern: '**/*.json',
+        base: './src/content/prizes',
+        // Keep legacy filename-derived ids; the loader would otherwise
+        // prefer a `slug` field in the data and change live URLs.
+        generateId: ({ entry }) => entry.replace(/\.json$/, ''),
+    }),
     schema: z.object({
         name: z.string(),
         slug: z.string(),
@@ -723,7 +748,13 @@ const prizes = defineCollection({
 });
 
 const rareDiseases = defineCollection({
-    type: "data",
+    loader: glob({
+        pattern: '**/*.json',
+        base: './src/content/rareDiseases',
+        // Keep legacy filename-derived ids; the loader would otherwise
+        // prefer a `slug` field in the data and change live URLs.
+        generateId: ({ entry }) => entry.replace(/\.json$/, ''),
+    }),
     schema: z.object({
         // Basic Information
         name: z.string(),

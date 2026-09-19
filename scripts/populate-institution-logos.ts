@@ -9,7 +9,7 @@
  * Usage: npx tsx scripts/populate-institution-logos.ts
  */
 
-import { PrismaClient } from '@prisma/client';
+import { createPrismaClient } from '../src/lib/prisma-factory';
 
 // Inline the logo lookup to avoid import issues with path aliases
 const KNOWN_INSTITUTION_LOGOS: Record<string, string> = {
@@ -133,7 +133,7 @@ function resolveLogoUrl(name: string, website: string | null): string | null {
 }
 
 async function main() {
-    const prisma = new PrismaClient();
+    const prisma = createPrismaClient();
 
     try {
         const hospitals = await prisma.hospital.findMany({
