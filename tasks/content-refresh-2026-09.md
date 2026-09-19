@@ -28,9 +28,9 @@ Audit found the stale surfaces below. Today = 2026-09-19.
 - [x] `about/our-name.astro` — dateModified
 - [x] News — 24 researched, sourced articles published for 10 Jun – 17 Sep 2026
 - [x] Clinical trials — 29 statuses refreshed, 4 mislabelled rows corrected, 9 programmes added, sources linked
-- [ ] Rare diseases — 2025/2026 therapies + breakthroughs, bump `lastUpdated`
+- [x] Rare diseases — 79 of 109 pages updated; 31 therapies, 148 breakthroughs, all sourced
 - [x] Nobel timeline + laureate award records
-- [ ] Verify: `astro check` + `npm run build`
+- [x] Verify: `astro check` 0 errors, `npm run build` exit 0
 
 ## Notes
 
@@ -46,3 +46,32 @@ without being rewritten.
 
 `tasks/news-audit.md` lists the 36 older articles that quote named people with no
 sourceable origin for the quotation. Nothing in this refresh touched their text.
+
+## Result
+
+| | Before | After |
+|---|---|---|
+| Published news | 69, top story dated Dec 2027 | 80, top story 17 Sep 2026; 13 held as drafts |
+| Jun–Sep 2026 articles | 4 | 28 |
+| Trial programmes | 29, `lastUpdated` 2026-02-23 | 38, 2026-09-19, every one linking its source |
+| Trials wrongly shown Active | 8 | 0 |
+| Disease pages with 2025–26 content | 0 | 79 of 109 |
+| Award records dated 2024+ | 0 | 20 |
+
+Verified: `astro check` 0 errors, `npm run build` exit 0, 81 news pages,
+110 disease pages, 38 trial pages built.
+
+## Left deliberately undone
+
+1. **36 legacy articles quote named people with no sourceable quotation** —
+   `tasks/news-audit.md`. Includes real public figures. Not rewritten or
+   deleted; that is the owner's call and it is 36 articles of their content.
+2. **13 drafted articles** dated 2026-10 to 2027-12 describe events that have
+   not happened. Held as drafts, not deleted. Do not flip them to `published`
+   without rewriting them.
+3. **The audit's P0.1 is still live** — `src/pages/doctor/ethics.astro` reads
+   `profile_id` from the query string, `grep -c getSession` returns 0. Outside a
+   content refresh, and it needs testing against a live database and Stripe.
+4. **30 disease pages keep their 2024-12-01 date** — nothing verifiable
+   happened for them in the window.
+5. **37 of the 2024-26 prize laureates have no profile** to attach an award to.
