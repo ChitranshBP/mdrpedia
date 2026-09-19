@@ -792,6 +792,9 @@ const rareDiseases = defineCollection({
             effectiveness: z.string().nullable().optional(),
             fdaApproved: z.boolean().nullable().optional(),
             approvalYear: z.number().nullable().optional(),
+            // What the approval actually established, and the record it came from.
+            note: z.string().nullable().optional(),
+            sourceUrl: z.string().nullable().optional(),
         })).default([]),
 
         // Research & Resources

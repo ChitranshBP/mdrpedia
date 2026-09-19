@@ -148,6 +148,7 @@ const INHERITANCE_LABELS: Record<string, string> = {
 // Research status labels
 const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
     'ACTIVE_TRIALS': { label: 'Active Clinical Trials', color: '#10b981' },
+    'OBSERVATIONAL': { label: 'Observational Studies', color: '#3b82f6' },
     'PRECLINICAL': { label: 'Preclinical Research', color: '#fbbf24' },
     'LIMITED_RESEARCH': { label: 'Limited Research', color: '#f97316' },
     'NO_ACTIVE_RESEARCH': { label: 'No Active Research', color: '#71717a' }
@@ -286,19 +287,25 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
                                     {disease.treatmentOptions.map((treatment: any) => (
                                         <div class={`treatment-card treatment-card--${treatment.type.toLowerCase()}`}>
                                             <div class="treatment-header">
-                                                <span class="treatment-type">{treatment.type.replace('_', ' ')}</span>
+                                                <span class="treatment-type">{treatment.type.replaceAll('_', ' ')}</span>
                                                 {treatment.fdaApproved && (
                                                     <span class="fda-badge">FDA Approved</span>
                                                 )}
                                             </div>
                                             <h4 class="treatment-name">{treatment.name}</h4>
                                             {treatment.effectiveness && (
-                                                <span class={`effectiveness effectiveness--${treatment.effectiveness.toLowerCase().replace('_', '-')}`}>
-                                                    {treatment.effectiveness.replace('_', ' ')}
+                                                <span class={`effectiveness effectiveness--${treatment.effectiveness.toLowerCase().replaceAll('_', '-')}`}>
+                                                    {treatment.effectiveness.replaceAll('_', ' ')}
                                                 </span>
                                             )}
                                             {treatment.approvalYear && (
                                                 <span class="approval-year">Approved {treatment.approvalYear}</span>
+                                            )}
+                                            {treatment.note && (
+                                                <p class="treatment-note">{treatment.note}</p>
+                                            )}
+                                            {treatment.sourceUrl && (
+                                                <a class="treatment-source" href={treatment.sourceUrl} target="_blank" rel="noopener noreferrer">Source</a>
                                             )}
                                         </div>
                                     ))}
@@ -356,6 +363,9 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
                                             <div class="breakthrough-content">
                                                 <h4>{breakthrough.title}</h4>
                                                 <p>{breakthrough.description}</p>
+                                                {breakthrough.sourceUrl && (
+                                                    <a class="breakthrough-source" href={breakthrough.sourceUrl} target="_blank" rel="noopener noreferrer">Source</a>
+                                                )}
                                             </div>
                                         </div>
                                     ))}
@@ -920,6 +930,26 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
         margin-top: 0.5rem;
         font-size: 0.75rem;
         color: var(--ink-3);
+    }
+
+    .treatment-note {
+        margin: 0.5rem 0 0;
+        font-size: 0.8rem;
+        line-height: 1.5;
+        color: var(--ink-2);
+    }
+
+    .treatment-source,
+    .breakthrough-source {
+        display: inline-block;
+        margin-top: 0.5rem;
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ink-blue);
+        text-decoration: underline;
+        text-underline-offset: 3px;
     }
 
     /* Diagnostics */
