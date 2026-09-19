@@ -18,7 +18,8 @@
       "Bash(node -e \"\nconst fs = require\\('fs'\\);\nconst data = JSON.parse\\(fs.readFileSync\\('./src/content/doctors/a-n-malaviya.json', 'utf-8'\\)\\);\nconsole.log\\('Awards type:', typeof data.awards[0]\\);\nconsole.log\\('Awards:', JSON.stringify\\(data.awards, null, 2\\)\\);\n\" 2>&1)",
       "Bash(node -e \"\nconst fs = require\\('fs'\\);\nconst dir = './src/content/doctors';\nconst files = fs.readdirSync\\(dir\\).filter\\(f => f.endsWith\\('.json'\\)\\);\nlet stringTimelines = 0;\nlet stringTechniques = 0;\nfor \\(const file of files\\) {\n  const data = JSON.parse\\(fs.readFileSync\\(dir + '/' + file, 'utf-8'\\)\\);\n  if \\(data.timeline && data.timeline.length > 0 && typeof data.timeline[0] === 'string'\\) stringTimelines++;\n  if \\(data.techniquesInvented && data.techniquesInvented.length > 0 && typeof data.techniquesInvented[0] !== 'string'\\) stringTechniques++;\n}\nconsole.log\\('Timeline entries as strings:', stringTimelines\\);\nconsole.log\\('Techniques as objects \\(unexpected\\):', stringTechniques\\);\n\" 2>&1)",
       "Bash(npx prisma db push --force-reset 2>&1)",
-      "mcp__ide__getDiagnostics"
+      "mcp__ide__getDiagnostics",
+      "Bash(gh run *)"
     ],
     "defaultMode": "default"
   }

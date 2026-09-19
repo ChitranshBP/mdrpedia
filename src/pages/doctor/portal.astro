@@ -431,4 +431,66 @@ const score = profile.ranking_score ? Number(profile.ranking_score).toFixed(1) :
             flex-wrap: wrap;
         }
     }
+
+    /* ──────────────────────────────────────────────────────────────────────
+       Layout utilities for this page only.
+
+       This page's markup was written against Tailwind, but Tailwind is not a
+       dependency of this project and there is no config — so none of these
+       classes resolved and the dashboard collapsed to unspaced stacked blocks.
+       An earlier patch re-implemented the colour utilities here but not the
+       layout ones. These complete that stopgap; the proper fix is to rewrite
+       this page in the project's own conventions (see global.css).
+       ────────────────────────────────────────────────────────────────────── */
+    .grid { display: grid; }
+    .flex { display: flex; }
+    .flex-col { flex-direction: column; }
+    .flex-1 { flex: 1 1 0%; }
+    .w-full { width: 100%; }
+    .max-w-lg { max-width: 32rem; }
+
+    .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+    .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .items-center { align-items: center; }
+    .items-start { align-items: flex-start; }
+    .justify-between { justify-content: space-between; }
+
+    .gap-2 { gap: 0.5rem; }
+    .gap-4 { gap: 1rem; }
+    .gap-6 { gap: 1.5rem; }
+    .gap-8 { gap: 2rem; }
+
+    .p-4 { padding: 1rem; }
+    .p-6 { padding: 1.5rem; }
+    .p-8 { padding: 2rem; }
+    .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+    .px-4 { padding-left: 1rem; padding-right: 1rem; }
+    .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+    .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+    .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+
+    .mt-2 { margin-top: 0.5rem; }
+    .mb-2 { margin-bottom: 0.5rem; }
+    .mb-6 { margin-bottom: 1.5rem; }
+    .mb-12 { margin-bottom: 3rem; }
+
+    .space-y-2 > * + * { margin-top: 0.5rem; }
+    .space-y-4 > * + * { margin-top: 1rem; }
+    .space-y-8 > * + * { margin-top: 2rem; }
+
+    .text-xs { font-size: 0.75rem; }
+    .text-sm { font-size: 0.875rem; }
+    .text-lg { font-size: 1.125rem; }
+    .text-xl { font-size: 1.25rem; }
+
+    /* 769px, not 768px: an existing rule above uses @media (max-width: 768px) to
+       force a single column, so both would match at exactly 768px. */
+    @media (min-width: 769px) {
+        .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+
 </style>
