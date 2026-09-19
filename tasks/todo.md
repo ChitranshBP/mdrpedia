@@ -3,7 +3,7 @@
 Sources: homepage read in full; four parallel audits (browse/listing, content/editorial,
 doctor-profile template, technical SEO); 3 days of production access logs; the Supabase dump.
 Every finding below was verified against code, the built `dist/` output, the logs, or the DB.
-**Status: plan only — nothing implemented.**
+**Status: implementation in progress on `fix/audit-remediation`.**
 
 Scale: ~70 `.astro` pages, 45 API routes, 975 DB profiles / 1,147 content files, ~1,385 sitemap URLs.
 
@@ -26,7 +26,7 @@ Scale: ~70 `.astro` pages, 45 API routes, 975 DB profiles / 1,147 content files,
 
 These are not design issues. Two of them are actively harming users right now.
 
-- [ ] **P0.1 — Unauthenticated IDOR across the entire Ethics product**
+- [x] **P0.1 — Unauthenticated IDOR across the entire Ethics product**
   `src/pages/doctor/ethics.astro:14,26` reads `profile_id` from the query string and renders
   that doctor's applications, audit history and score. `grep -c getSession` → **0**.
   All seven mutating routes have the same hole — no session, no cookie, no `Authorization`,
@@ -39,7 +39,7 @@ These are not design issues. Two of them are actively harming users right now.
   **Fix:** derive `profile_id` from `getSession(request)` server-side in all eight places.
   Pattern to copy: `src/pages/doctor/portal.astro:8-12`.
 
-- [ ] **P0.2 — Claim flow silently discards verification documents**
+- [x] **P0.2 — Claim flow silently discards verification documents**
   `src/components/ClaimProfile.astro:571` posts `document_name: fileInput?.files?.[0]?.name`
   — the filename string. No `FormData`, no multipart, no storage call anywhere in the flow.
   `api/claim-profile.ts:116` writes that string into a JSON blob. The user sees
@@ -47,11 +47,11 @@ These are not design issues. Two of them are actively harming users right now.
   **Fix:** real multipart upload → Cloudinary (already a dependency, creds already in `.env`),
   store the returned URL. Until it ships, remove the upload control rather than keep lying.
 
-- [ ] **P0.3 — Hardcoded JWT fallback secret**
+- [x] **P0.3 — Hardcoded JWT fallback secret**
   `src/lib/auth.ts:8-10` falls back to a literal secret when `JWT_SECRET` is unset.
   **Fix:** throw at boot, like `lib/prisma.ts:17-31` already does for its own env vars.
 
-- [ ] **P0.4 — Delete the fabricated Scientific Advisory Board**
+- [x] **P0.4 — Delete the fabricated Scientific Advisory Board**
   `src/pages/about.astro:224-256` presents three people with detailed credentials —
   "Dr. Elias Vance, FACS" (*Former Chief of Surgery at St. Jude's*), "Prof. Sarah Chen, PhD",
   "Dr. Kwame Osei" (*Founder of "Doctors Without Borders – West Africa Chapter"*) — as a board
@@ -60,7 +60,7 @@ These are not design issues. Two of them are actively harming users right now.
   `doctor/claim.astro`.) On a site selling verified credentials this is the highest-risk
   content on the domain. **Fix:** remove, or replace with real named people.
 
-- [ ] **P0.5 — Remove three hidden crawler-only text layers (Google spam-policy risk)**
+- [x] **P0.5 — Remove three hidden crawler-only text layers (Google spam-policy risk)**
   - `src/components/MedicalKnowledgeGraph.astro:254-262` — comment *"Hidden semantic layer for
     LLM crawlers"*, `display:none !important` **and** `left:-9999px !important`, containing a
     **second `<h1>`** plus duplicated affiliations/techniques/citations.
@@ -71,7 +71,7 @@ These are not design issues. Two of them are actively harming users right now.
   All of it duplicates visible HTML already covered by 11 JSON-LD blocks, so it buys nothing.
   A manual action would hit all 975 profiles at once. **Fix:** delete all four; keep the JSON-LD.
 
-- [ ] **P0.6 — Two more false statements to users**
+- [x] **P0.6 — Two more false statements to users**
   `src/pages/500.astro:23` — *"The issue has been logged and our team has been notified."*
   No Sentry/DataDog/email exists; `lib/logger.ts` is `console.error`.
   `DoctorProfileRevamp.astro:400,418,2939-2961` — "Lives Saved" / "Total Impact" run an
@@ -102,7 +102,7 @@ These are not design issues. Two of them are actively harming users right now.
   bulk rule; reserve the Astro config for the curated handful.
   Serving 500s at this volume throttles Google's crawl of the whole site.
 
-- [ ] **P1.2 — `/suggest-edit` is the biggest crawl trap on the site**
+- [x] **P1.2 — `/suggest-edit` is the biggest crawl trap on the site**
   1,847 distinct `?profile=X&type=Y` URLs crawled in 3 days; 2,031 hits; the #1 most-crawled
   200-status page. GPTBot 1,330, bingbot 128, Googlebot 7.
   `suggest-edit.astro:2` is `prerender = true` and passes no `robots` prop, so `Layout.astro:64`
@@ -110,7 +110,7 @@ These are not design issues. Two of them are actively harming users right now.
   **Fix (2 lines):** `<Layout robots="noindex, follow">` (the prop already exists) +
   `Disallow: /suggest-edit` in robots.txt.
 
-- [ ] **P1.3 — `robots.txt` blocks Googlebot from all CSS and JS**
+- [x] **P1.3 — `robots.txt` blocks Googlebot from all CSS and JS**
   `public/robots.txt:169` — `Disallow: /_astro/`. That is where every stylesheet and bundle
   lives; Googlebot would evaluate an unstyled page for CWV.
   It is currently *inert* because of a second bug: the `Disallow` block sits under a second
@@ -119,13 +119,13 @@ These are not design issues. Two of them are actively harming users right now.
   **Fix carefully — order matters:** delete line 169 **first**, then consolidate the groups.
   Fixing the grouping without deleting 169 would break rendering site-wide.
 
-- [ ] **P1.4 — `.env` sets `SITE_URL="http://localhost:4321"` and it is baked into production**
+- [x] **P1.4 — `.env` sets `SITE_URL="http://localhost:4321"` and it is baked into production**
   `.env:18`. `src/pages/feed.xml.ts:13` is `prerender = true`, so the value is frozen at build.
   Verified in the shipped artifact: `dist/client/feed.xml` contains **104 `localhost:4321` URLs**,
   including the channel link and all 50 item links. The feed is advertised in every page `<head>`.
   **Fix:** copy the localhost guard that `sitemap.xml.ts:16-20` already has. Then fix `.env`.
 
-- [ ] **P1.5 — Structured data advertises ~2,400 URLs that 404**
+- [x] **P1.5 — Structured data advertises ~2,400 URLs that 404**
   `src/lib/geo-schema.ts` breadcrumbs, measured across 1,147 profiles:
   | item | line | broken |
   |---|---|---|
@@ -137,12 +137,12 @@ These are not design issues. Two of them are actively harming users right now.
   493 distinct specialty values mostly miss.
   **Fix:** drop the `/tier/` item; `slugify()` geography; map specialty → owning group first.
 
-- [ ] **P1.6 — Every page prefetches `/doctors`, which SSRs ~1,150 profiles**
+- [x] **P1.6 — Every page prefetches `/doctors`, which SSRs ~1,150 profiles**
   `src/layouts/Layout.astro:76-77`. `doctors/index.astro:16` is `prerender = false`, selects
   every profile with three joins, and sets **no** `Cache-Control`. Every visitor on every page
   silently triggers a full-table query they may never look at. **Fix:** delete both prefetch lines.
 
-- [ ] **P1.7 — Sitemap is missing every hub page and is built from the wrong source**
+- [x] **P1.7 — Sitemap is missing every hub page and is built from the wrong source**
   `dist/client/sitemap.xml` (1,385 URLs) contains **zero** `/specialty/`, **zero** `/geography/`,
   **zero** `/institutions/<slug>`, and omits `/doctors` itself — plus `/ethical-doctors`,
   `/rankings/top-100`, `/global-leaders`, `/communities`, `/map`, `/prizes`, `/contact`.
@@ -153,16 +153,16 @@ These are not design issues. Two of them are actively harming users right now.
   `/specialty`) and `/hospitals` (301 → `/institutions`).
   **Fix:** drop `prerender`, source from Prisma, add the hub routes, correct the three bad paths.
 
-- [ ] **P1.8 — No trailing-slash policy → the whole corpus self-canonicalizes twice**
+- [x] **P1.8 — No trailing-slash policy → the whole corpus self-canonicalizes twice**
   `astro.config.mjs` has no `trailingSlash` key (default `'ignore'`), and `Layout.astro:25-28`
   builds the canonical from `Astro.url.pathname` verbatim — so `/doctors` and `/doctors/` each
   declare *themselves* canonical. **Fix:** `trailingSlash: 'never'` + strip in the canonical.
 
-- [ ] **P1.9 — `www.` serves the full site with no redirect**
+- [x] **P1.9 — `www.` serves the full site with no redirect**
   `nginx.conf:25` — `server_name mdrpedia.com www.mdrpedia.com;`, no host normalisation.
   **Fix:** `if ($host = www.mdrpedia.com) { return 301 https://mdrpedia.com$request_uri; }`
 
-- [ ] **P1.10 — The indexing pipeline is fully built and switched off**
+- [x] **P1.10 — The indexing pipeline is fully built and switched off**
   `src/utils/indexer.ts` implements the Google Indexing API + IndexNow with quota tracking.
   Credentials are provisioned (`GOOGLE_SERVICE_ACCOUNT_JSON`, `INDEXNOW_API_KEY`) and the
   IndexNow verification file is already deployed at `public/d462a5b…txt`. Its only caller is
@@ -174,19 +174,19 @@ These are not design issues. Two of them are actively harming users right now.
 - [ ] **P1.11 — Connect Google Search Console** *(prerequisite for measuring any of the above)*
   No property for mdrpedia.com exists on either connected account.
 
-- [ ] **P1.12 — Profile titles waste the highest-value slot on the site**
+- [x] **P1.12 — Profile titles waste the highest-value slot on the site**
   `DoctorProfileRevamp.astro:216` — every one of ~1,150 profiles is `<Name> — MDRPedia`.
   `doctor.specialty`, `doctor.geography.city` and `affiliations[0]` are all already in scope.
   **Fix:** `${fullName} — ${specialty}${city ? `, ${city}` : ''} | MDRPedia`.
 
-- [ ] **P1.13 — Crawl budget is going to AI bots, not Google**
+- [x] **P1.13 — Crawl budget is going to AI bots, not Google**
   Bytespider **5,862 (38% of all traffic)** · GPTBot 1,341 · Applebot 696 · AhrefsBot 674 ·
   bingbot 638 · **Googlebot 471**. robots.txt explicitly welcomes all of them.
   **Decide deliberately:** the "open dataset for AI training" positioning is a real strategy,
   but right now Bytespider alone is consuming ~12× Googlebot's crawl on a site that also needs
   organic search. At minimum add `Crawl-delay` for Bytespider/CCBot.
 
-- [ ] **P1.14 — Smaller SEO fixes**
+- [x] **P1.14 — Smaller SEO fixes**
   - `og:image` on all profiles has a double slash — `DoctorProfileRevamp.astro:219`
     interpolates `Astro.site` (a `URL`) into a template string. Same bug in two breadcrumbs
     (`specialty/[slug].astro:126`, `geography/[country].astro:151`). Use `new URL(...).href`.
@@ -388,7 +388,7 @@ These are not design issues. Two of them are actively harming users right now.
   which also kills `AIContentSchema`. ~318KB of source whose scoped CSS still ships inside the
   173KB route stylesheet. **Fix:** delete the imports and render blocks.
 
-- [ ] **P4.3 — `HiddenAIContext` is rendered twice and the second emits `undefined`**
+- [x] **P4.3 — `HiddenAIContext` is rendered twice and the second emits `undefined`**
   `doctors/[slug].astro:171` passes the raw row (correct); `DoctorProfileRevamp.astro:265` passes
   mapped `ProfileData`, which fails the component's `'data' in doctor && 'id' in doctor` branch
   test, so it reads `full_name`/`h_index` off an object that has `fullName`/`hIndex`. Every

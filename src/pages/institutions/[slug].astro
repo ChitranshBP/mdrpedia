@@ -49,7 +49,9 @@ try {
 }
 
 if (!institution) {
-    return Astro.redirect("/institutions?error=not_found");
+    // A 302 to a listing page is a soft-404: Google keeps the dead URL in the
+    // index and attributes the listing's content to it. Answer with a real 404.
+    return Astro.rewrite("/404");
 }
 
 // Process doctors by tier

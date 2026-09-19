@@ -40,6 +40,10 @@ const doctors = defineCollection({
         dateOfDeath: z.string().nullable().optional(),
         npiNumber: z.string().nullable().optional(),
         orcidId: z.string().nullable().optional(),
+        // Present in the JSON on ~95%/94% of profiles but previously undeclared,
+        // so the content layer stripped them before they reached any page.
+        education: z.array(z.string()).nullable().default([]),
+        openalexId: z.string().nullable().optional(),
         medicalSpecialty: z.array(z.string()).nullable().default([]),
         knowsAbout: z.array(z.string()).nullable().default([]),
         aiSummary: z.string().nullable().optional(),

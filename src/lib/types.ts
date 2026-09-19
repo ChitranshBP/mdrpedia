@@ -202,6 +202,10 @@ export interface ProfileData {
   dateOfDeath?: string | null;
   npiNumber?: string | null;
   orcidId?: string | null;
+  /** OpenAlex author id — present on ~94% of profiles, feeds schema.org sameAs. */
+  openalexId?: string | null;
+  /** Degrees and institutions — feeds schema.org alumniOf. */
+  education?: string[];
   medicalSpecialty?: string[];
   knowsAbout?: string[];
   affiliations?: {

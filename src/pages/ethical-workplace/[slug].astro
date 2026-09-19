@@ -35,7 +35,7 @@ const hospital = await prisma.hospital.findUnique({
 });
 
 if (!hospital || !hospital.ethics_certification) {
-    return Astro.redirect("/ethical-workplace");
+    return Astro.rewrite("/404");
 }
 
 const cert = hospital.ethics_certification;

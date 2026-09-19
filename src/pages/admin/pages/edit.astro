@@ -107,7 +107,7 @@ const initialSeoTitle = page?.seo_title || "";
 const initialSeoDesc = page?.seo_desc || "";
 ---
 
-<Layout title={`${page ? "Edit" : "New"} Page — MDRPedia Admin`}>
+<Layout title={`${page ? "Edit" : "New"} Page — MDRPedia Admin`} robots="noindex, nofollow">
     <div class="admin">
         <AdminSidebar adminKey={adminKey} activePage="pages" />
         <div class="main">

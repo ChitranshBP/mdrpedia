@@ -147,8 +147,8 @@ const collectionPageSchema = {
     "breadcrumb": {
         "@type": "BreadcrumbList",
         "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": Astro.site ?? "https://mdrpedia.com" },
-            { "@type": "ListItem", "position": 2, "name": "Geography", "item": `${Astro.site ?? 'https://mdrpedia.com'}/geography` },
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": new URL('/', Astro.site ?? "https://mdrpedia.com").href },
+            { "@type": "ListItem", "position": 2, "name": "Geography", "item": new URL('/geography', Astro.site ?? 'https://mdrpedia.com').href },
             { "@type": "ListItem", "position": 3, "name": countryName, "item": canonicalUrl }
         ]
     }

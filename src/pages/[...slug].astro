@@ -7,19 +7,29 @@ export const prerender = false;
 
 const { slug } = Astro.params;
 
-// Handle root path or strict slug matching
-const pageSlug = slug || "home"; // But home is usually index.astro.
-
-// If slug is undefined, we might be at root, but index.astro handles that.
-// This route handles /about, /terms, etc.
+// This route handles CMS pages like /about, /terms. It is also the route every
+// unmatched URL falls through to — including the ~2,358 legacy URLs from the
+// previous site on this domain that are still being crawled.
+//
+// So its failure mode matters: an unguarded query here turns every one of those
+// requests into a 500 the moment the connection pool is saturated, which is
+// exactly what production was serving (4,594 500s over three days, accelerating).
+// A URL we cannot resolve is a 404, never a 500.
 
 if (!slug) {
     return Astro.redirect("/");
 }
 
-const page = await prisma.contentPage.findUnique({
-    where: { slug: slug },
-});
+let page: Awaited<ReturnType<typeof prisma.contentPage.findUnique>> = null;
+
+try {
+    page = await prisma.contentPage.findUnique({
+        where: { slug: slug },
+    });
+} catch (error) {
+    console.error(`[...slug] lookup failed for "${slug}":`, error);
+    return Astro.rewrite("/404");
+}
 
 if (!page || !page.published) {
     return Astro.rewrite("/404");

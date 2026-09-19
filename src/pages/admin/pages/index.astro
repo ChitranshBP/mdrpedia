@@ -23,7 +23,7 @@ const editUrl = (slug?: string) =>
     `/admin/pages/edit?key=${adminKey}${slug ? `&slug=${slug}` : ""}`;
 ---
 
-<Layout title="Manage Pages — MDRPedia Admin">
+<Layout title="Manage Pages — MDRPedia Admin" robots="noindex, nofollow">
     <div class="admin">
         <AdminSidebar adminKey={adminKey} activePage="pages" />
         <div class="main">

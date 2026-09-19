@@ -1,0 +1,30 @@
+name: Notify search engines
+
+# The indexing pipeline (src/utils/indexer.ts) was fully built, credentialed and
+# never called — nothing told Google when a profile changed. This runs it nightly.
+on:
+  schedule:
+    # 03:15 UTC daily, off the deploy hour.
+    - cron: '15 3 * * *'
+  workflow_dispatch:
+    inputs:
+      all:
+        description: 'Announce every profile, not just the last 24h'
+        type: boolean
+        default: false
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run nightly notification on the VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: 22
+          script: |
+            set -euo pipefail
+            cd /home/mdrpedia.com/public_html
+            npx tsx scripts/notify-index.ts ${{ inputs.all && '--all' || '' }}

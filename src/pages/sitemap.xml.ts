@@ -6,8 +6,17 @@
 import type { APIRoute } from 'astro';
 import * as fs from 'fs';
 import * as path from 'path';
+import { prisma } from '../lib/prisma';
+import { slugify } from '../lib/utils';
+import { SPECIALTY_GROUPS } from '../lib/specialty-groups';
 
-export const prerender = true;
+// Rendered per request, not frozen at build. `doctors/[slug].astro` is
+// database-first, so a prerendered filesystem sitemap left every DB-imported
+// profile reachable but undiscoverable, and never refreshed between deploys.
+export const prerender = false;
+
+// Recomputed at most hourly by any shared cache; crawlers hit this often.
+const CACHE_CONTROL = 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400';
 
 // Resolve the public base URL. `import.meta.env.SITE` is the `site` value from
 // astro.config.mjs and is always the canonical production origin. SITE_URL is only
@@ -53,6 +62,51 @@ function xmlEscape(str: string): string {
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;');
+}
+
+/**
+ * Doctors come from the database first, matching `doctors/[slug].astro`.
+ * The filesystem collection is the fallback, as it is for the profile route.
+ */
+async function fetchDoctors(): Promise<DoctorMeta[]> {
+    try {
+        const rows = await prisma.profile.findMany({
+            select: { slug: true, tier: true, updatedAt: true },
+        });
+        if (rows.length > 0) {
+            return rows.map(r => ({
+                slug: r.slug,
+                tier: r.tier || 'UNRANKED',
+                updatedAt: r.updatedAt?.toISOString().split('T')[0],
+            }));
+        }
+    } catch {
+        // Fall through to the static collection.
+    }
+    return loadDoctors();
+}
+
+/** Distinct countries that `/geography/[country]` can actually resolve. */
+async function fetchCountrySlugs(): Promise<string[]> {
+    try {
+        const rows = await prisma.geography.findMany({
+            select: { country: true },
+            distinct: ['country'],
+        });
+        return [...new Set(rows.map(r => r.country).filter(Boolean).map(slugify))].filter(Boolean);
+    } catch {
+        return [];
+    }
+}
+
+/** Institution detail pages, which were absent from the sitemap entirely. */
+async function fetchInstitutionSlugs(): Promise<string[]> {
+    try {
+        const rows = await prisma.hospital.findMany({ select: { slug: true } });
+        return rows.map(r => r.slug).filter(Boolean);
+    } catch {
+        return [];
+    }
 }
 
 function loadDoctors(): DoctorMeta[] {
@@ -141,7 +195,9 @@ function buildUrlEntry(loc: string, priority: number, changefreq: string, lastmo
 // ─── Route ──────────────────────────────────────────────────────────────────
 
 export const GET: APIRoute = async () => {
-    const doctors = loadDoctors();
+    const doctors = await fetchDoctors();
+    const countrySlugs = await fetchCountrySlugs();
+    const institutionSlugs = await fetchInstitutionSlugs();
     const today = new Date().toISOString().split('T')[0];
 
     // Sort: TITAN first, then ELITE, etc. for optimal crawl priority
@@ -167,7 +223,10 @@ ${indexEntries.join('\n')}
 
         return new Response(indexXml, {
             status: 200,
-            headers: { 'Content-Type': 'application/xml; charset=utf-8' },
+            headers: {
+                'Content-Type': 'application/xml; charset=utf-8',
+                'Cache-Control': CACHE_CONTROL,
+            },
         });
     }
 
@@ -176,7 +235,7 @@ ${indexEntries.join('\n')}
 
     // Static pages
     entries.push(buildUrlEntry(`${SITE_URL}/`, 1.0, 'daily', today));
-    entries.push(buildUrlEntry(`${SITE_URL}/portal`, 0.5, 'monthly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/contact`, 0.4, 'yearly', today));
 
     // About / disambiguation pages (high SEO value for brand queries)
     entries.push(buildUrlEntry(`${SITE_URL}/about`, 0.8, 'monthly', today));
@@ -196,6 +255,27 @@ ${indexEntries.join('\n')}
     entries.push(buildUrlEntry(`${SITE_URL}/rare-diseases`, 0.7, 'monthly', today));
     entries.push(buildUrlEntry(`${SITE_URL}/clinical-trials`, 0.7, 'monthly', today));
     entries.push(buildUrlEntry(`${SITE_URL}/news`, 0.8, 'daily', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/doctors`, 0.9, 'daily', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/specialty`, 0.8, 'weekly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/rankings/top-100`, 0.9, 'weekly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/ethical-doctors`, 0.8, 'weekly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/global-leaders`, 0.7, 'monthly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/communities`, 0.6, 'monthly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/map`, 0.6, 'monthly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/prizes`, 0.7, 'monthly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/nobel-prize`, 0.6, 'monthly', today));
+
+    // Taxonomy hubs. These carry the internal link graph for the long tail and
+    // were entirely absent: zero /specialty/, /geography/ or /institutions/<slug>.
+    for (const group of SPECIALTY_GROUPS) {
+        entries.push(buildUrlEntry(`${SITE_URL}/specialty/${slugify(group.name)}`, 0.8, 'weekly', today));
+    }
+    for (const country of countrySlugs) {
+        entries.push(buildUrlEntry(`${SITE_URL}/geography/${country}`, 0.7, 'weekly', today));
+    }
+    for (const slug of institutionSlugs) {
+        entries.push(buildUrlEntry(`${SITE_URL}/institutions/${slug}`, 0.6, 'monthly', today));
+    }
 
     // Doctor profiles
     for (const doc of doctors) {
@@ -237,6 +317,9 @@ ${entries.join('\n')}
 
     return new Response(xml, {
         status: 200,
-        headers: { 'Content-Type': 'application/xml; charset=utf-8' },
+        headers: {
+            'Content-Type': 'application/xml; charset=utf-8',
+            'Cache-Control': CACHE_CONTROL,
+        },
     });
 };

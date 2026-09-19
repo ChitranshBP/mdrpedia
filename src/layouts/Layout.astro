@@ -13,6 +13,8 @@ interface Props {
 	ogImage?: string;
 	tier?: string;
 	robots?: string;
+	/** og:type — 'profile' for a person page, 'article' for editorial. */
+	ogType?: "website" | "profile" | "article";
 }
 
 const {
@@ -21,9 +23,13 @@ const {
 	ogImage,
 	tier,
 	robots,
+	ogType = "website",
 } = Astro.props;
+// Strip the trailing slash so /doctors and /doctors/ agree on one canonical.
+// Pairs with `trailingSlash: 'never'` in astro.config.mjs.
+const canonicalPath = Astro.url.pathname.replace(/(.)\/$/, "$1");
 const canonicalURL = new URL(
-	Astro.url.pathname,
+	canonicalPath,
 	Astro.site ?? "https://mdrpedia.com",
 );
 
@@ -73,11 +79,8 @@ const activeKey = getActiveKey(currentPath);
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&family=Inter+Tight:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" media="print" onload="this.media='all'" />
 		<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&family=Inter+Tight:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" /></noscript>
 
-		<link rel="prefetch" href="/doctors" />
-		<link rel="prefetch" href="/rankings" />
-
 		<!-- Open Graph -->
-		<meta property="og:type" content="website" />
+		<meta property="og:type" content={ogType} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonicalURL.href} />
@@ -108,9 +111,11 @@ const activeKey = getActiveKey(currentPath);
 			"name": "MDRPedia",
 			"alternateName": ["MDpedia", "DRpedia", "MD Pedia", "DR Pedia", "MDR Pedia"],
 			"url": "https://mdrpedia.com",
+			// sameAs asserts these URLs are the SAME entity. mdpedia.com and
+			// drpedia.com were listed without ownership being established, so
+			// they are omitted until they are verifiably ours. The alternate
+			// names above already carry the brand-query signal.
 			"sameAs": [
-				"https://mdpedia.com",
-				"https://drpedia.com",
 				"https://twitter.com/mdrpedia"
 			],
 			"description": "The world's first independently-verified encyclopedia of physicians, ranking medical professionals by human impact. Known as MDpedia in the West and DRpedia in the East.",

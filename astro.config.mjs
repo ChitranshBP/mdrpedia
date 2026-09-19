@@ -10,6 +10,10 @@ export default defineConfig({
   // Output mode: server for SSR with prerender for static pages
   output: 'server',
 
+  // One URL per page. Without this the default is 'ignore', so /doctors and
+  // /doctors/ both resolve and each declares itself canonical.
+  trailingSlash: 'never',
+
   adapter: node({
     mode: 'standalone',
   }),

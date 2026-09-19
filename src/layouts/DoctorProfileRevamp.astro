@@ -202,6 +202,18 @@ const completenessFactors = [
 const profileCompleteness = Math.round((completenessFactors.filter(Boolean).length / completenessFactors.length) * 100);
 const completenessLabel = profileCompleteness >= 90 ? 'Comprehensive' : profileCompleteness >= 70 ? 'Well Documented' : profileCompleteness >= 50 ? 'Partially Complete' : 'Basic';
 
+// The <title> is the highest-value slot on the page. "<Name> — MDRPedia"
+// on all ~1,150 profiles wastes it; specialty and city are already in scope.
+const titleParts = [doctor.specialty, doctor.geography.city]
+    .filter((v): v is string => !!v && v !== "Unknown");
+const pageTitle = titleParts.length
+    ? `${doctor.fullName} — ${titleParts.join(", ")} | MDRPedia`
+    : `${doctor.fullName} | MDRPedia`;
+
+// Astro.site is a URL; interpolating it into a template string yields a
+// trailing slash and so a double slash in the path.
+const ogImageUrl = new URL(`/og/${slug}.png`, Astro.site ?? "https://mdrpedia.com").href;
+
 // Generate institution slug from hospital name
 function slugifyInstitution(name: string): string {
     return name.toLowerCase()
@@ -212,10 +224,11 @@ function slugifyInstitution(name: string): string {
 ---
 
 <Layout
-    title={`${doctor.fullName} — MDRPedia`}
+    title={pageTitle}
     description={aiSummary.slice(0, 160)}
     tier={doctor.tier}
-    ogImage={`${Astro.site ?? "https://mdrpedia.com"}/og/${slug}.png`}
+    ogType="profile"
+    ogImage={ogImageUrl}
 >
     <JsonLd
         fullName={doctor.fullName}
@@ -233,8 +246,11 @@ function slugifyInstitution(name: string): string {
         hIndex={doctor.hIndex}
         yearsActive={doctor.yearsActive}
         url={Astro.url.href}
+        media={doctor.media}
         npiNumber={doctor.npiNumber || undefined}
         orcidId={doctor.orcidId || undefined}
+        openalexId={doctor.openalexId || undefined}
+        education={doctor.education}
         medicalSpecialty={doctor.medicalSpecialty}
         knowsAbout={doctor.knowsAbout}
         affiliations={doctor.affiliations?.map((a) => ({
@@ -352,7 +368,7 @@ function slugifyInstitution(name: string): string {
                         {top100Rank && <Top100Badge rank={top100Rank} />}
                     </div>
 
-                    <h1 class="hero__name">{doctor.fullName}</h1>
+                    <h1 class="hero__name" id="profile-name">{doctor.fullName}</h1>
 
                     <p class="hero__specialty">
                         <a href={`/doctors?specialty=${encodeURIComponent(doctor.specialty)}`} style="color: inherit; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
@@ -481,7 +497,7 @@ function slugifyInstitution(name: string): string {
                                 </svg>
                                 Overview
                             </h2>
-                            <p class="card__summary">{aiSummary}</p>
+                            <p class="card__summary" id="ai-summary-content">{aiSummary}</p>
 
                             <!-- Patient-Friendly Summary -->
                             <PatientFriendlySummary doctor={doctor} totalCitations={totalCitations} />

@@ -324,7 +324,7 @@ allProfiles = await prisma.profile.findMany({
 const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0] : '';
 ---
 
-<Layout title={`Edit ${profile.full_name} — Admin`}>
+<Layout title={`Edit ${profile.full_name} — Admin`} robots="noindex, nofollow">
     <div class="admin">
         <AdminSidebar adminKey={adminKey} activePage="doctors" />
         <div class="main">

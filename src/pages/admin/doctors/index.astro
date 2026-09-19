@@ -183,7 +183,7 @@ const dbSlugs = new Set(dbProfiles.map((p) => p.slug));
 const unimported = staticProfiles.filter((p) => !dbSlugs.has(p.id));
 ---
 
-<Layout title="Manage Doctors — MDRPedia">
+<Layout title="Manage Doctors — MDRPedia" robots="noindex, nofollow">
     <div class="admin">
         <AdminSidebar adminKey={adminKey} activePage="doctors" />
         <div class="main">

@@ -234,19 +234,19 @@ const entityList = {
 <!-- Medical Knowledge Graph (@graph with all connected entities) -->
 <script
     type="application/ld+json"
-    set:html={JSON.stringify(graph, null, 2)}
+    set:html={JSON.stringify(graph)}
 />
 
 <!-- Dataset descriptor for AI crawlers -->
 <script
     type="application/ld+json"
-    set:html={JSON.stringify(relationshipSummary, null, 2)}
+    set:html={JSON.stringify(relationshipSummary)}
 />
 
 <!-- Entity enumeration list -->
 {(hospitals.length > 0 || techniques.length > 0 || citations.length > 0) && (
     <script
         type="application/ld+json"
-        set:html={JSON.stringify(entityList, null, 2)}
+        set:html={JSON.stringify(entityList)}
     />
 )}

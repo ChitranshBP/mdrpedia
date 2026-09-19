@@ -29,7 +29,7 @@ const draftCount = news.filter(isDraft).length;
 const categories = [...new Set(news.map(n => n.data.category))].sort();
 ---
 
-<Layout title="Manage News — MDRPedia Admin">
+<Layout title="Manage News — MDRPedia Admin" robots="noindex, nofollow">
     <div class="admin">
         <AdminSidebar adminKey={adminKey} activePage="news" />
         <div class="main">

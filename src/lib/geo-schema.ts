@@ -1,3 +1,6 @@
+import { slugify } from './utils';
+import { getSpecialtyGroup } from './specialty-groups';
+
 // ============================================================================
 // MDRPedia — GEO Schema Generator
 // Generates Physician, FAQ, and Breadcrumb JSON-LD for every profile page
@@ -16,6 +19,9 @@ interface DoctorGEOData {
     yearsActive: number;
     npiNumber?: string;
     orcidId?: string;
+    openalexId?: string;
+    education?: string[];
+    boardCertifications?: { boardName: string; specialty?: string }[];
     medicalSpecialty?: string[];
     knowsAbout?: string[];
     affiliations?: { hospitalName: string; role?: string; hospitalUrl?: string }[];
@@ -135,11 +141,30 @@ export function generatePhysicianSchema(data: DoctorGEOData) {
         });
     }
 
-    // Build sameAs links for verified profiles
+    // Build sameAs links for verified profiles.
+    // ORCID is present on ~4% of profiles; openalex_id on 94% and was unused.
     const sameAsLinks = [];
     if (data.orcidId) {
         sameAsLinks.push(`https://orcid.org/${data.orcidId}`);
     }
+    if (data.openalexId) {
+        const id = data.openalexId.replace(/^https?:\/\/openalex\.org\//, '');
+        sameAsLinks.push(`https://openalex.org/${id}`);
+    }
+
+    // alumniOf: `education` exists on ~95% of profiles and was emitted nowhere.
+    const alumniOf = (data.education ?? [])
+        .filter(Boolean)
+        .map((name) => ({ '@type': 'EducationalOrganization', name }));
+
+    const credentials = (data.boardCertifications ?? [])
+        .filter((c) => c?.boardName)
+        .map((c) => ({
+            '@type': 'EducationalOccupationalCredential',
+            credentialCategory: 'Board Certification',
+            recognizedBy: { '@type': 'Organization', name: c.boardName },
+            ...(c.specialty ? { about: c.specialty } : {}),
+        }));
 
     return {
         '@context': 'https://schema.org',
@@ -157,6 +182,8 @@ export function generatePhysicianSchema(data: DoctorGEOData) {
         honorificPrefix: "Dr.",
         ...(identifiers.length ? { identifier: identifiers } : {}),
         ...(sameAsLinks.length ? { sameAs: sameAsLinks } : {}),
+        ...(alumniOf.length ? { alumniOf } : {}),
+        ...(credentials.length ? { hasCredential: credentials } : {}),
 
         // Lineage & Connections
         ...(data.mentors?.length ? {
@@ -349,24 +376,27 @@ export function generateBreadcrumbSchema(data: DoctorGEOData) {
         { name: 'MDRPedia', url: `${new URL(data.url).origin}/` },
     ];
 
+    // Breadcrumb URLs must resolve. Both routes match on slugify() — the raw
+    // string through encodeURIComponent produced ~1,250 404s across the corpus
+    // ("United States" -> /geography/united%20states).
     if (data.geography.country) {
         items.push({
             name: data.geography.country,
-            url: `${new URL(data.url).origin}/geography/${encodeURIComponent(data.geography.country.toLowerCase())}`,
+            url: `${new URL(data.url).origin}/geography/${slugify(data.geography.country)}`,
         });
     }
 
-    items.push({
-        name: data.specialty,
-        url: `${new URL(data.url).origin}/specialty/${encodeURIComponent(data.specialty.toLowerCase())}`,
-    });
-
-    if (data.tier && data.tier !== 'UNRANKED') {
+    // /specialty/[slug] matches on the 18 group names, not on the 493 distinct
+    // raw specialty values, so resolve to the owning group first.
+    const group = getSpecialtyGroup(data.specialty);
+    if (group) {
         items.push({
-            name: data.tier.charAt(0) + data.tier.slice(1).toLowerCase(),
-            url: `${new URL(data.url).origin}/tier/${data.tier.toLowerCase()}`,
+            name: group.name,
+            url: `${new URL(data.url).origin}/specialty/${slugify(group.name)}`,
         });
     }
+
+    // No /tier route exists, so a /tier/<tier> crumb 404s on every profile.
 
     items.push({
         name: data.fullName,

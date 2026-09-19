@@ -159,6 +159,7 @@ export function mapDbProfileToProps(db: DbProfileFull): ProfileData {
         timeline,
         npiNumber: db.npi_number,
         orcidId: db.orcid_id,
+        openalexId: db.openalex_id,
         medicalSpecialty: db.medical_specialty,
         knowsAbout: db.knows_about,
         affiliations,

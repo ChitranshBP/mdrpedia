@@ -1,4 +1,5 @@
 import { getCollection } from 'astro:content';
+import { prisma } from '../../lib/prisma';
 import satori from 'satori';
 import { html } from 'satori-html';
 import { Resvg } from '@resvg/resvg-js';
@@ -26,14 +27,45 @@ export async function GET({ params }: { params: { slug: string } }) {
         return new Response('Missing slug', { status: 400 });
     }
 
+    // The profile route is database-first, so resolving only through the static
+    // collection gave every DB-only profile a 404 social card.
+    let card: { fullName: string; tier: string; specialty: string; rankingScore: number } | null = null;
+
     const doctors = await getCollection('doctors');
     const doctor = doctors.find((d) => d.id === slug);
 
-    if (!doctor) {
-        return new Response('Not Found', { status: 404 });
+    if (doctor) {
+        card = {
+            fullName: doctor.data.fullName,
+            tier: doctor.data.tier ?? 'UNRANKED',
+            specialty: doctor.data.specialty ?? '',
+            rankingScore: doctor.data.rankingScore ?? 0,
+        };
+    } else {
+        try {
+            const row = await prisma.profile.findUnique({
+                where: { slug },
+                select: { full_name: true, tier: true, specialty: true, ranking_score: true },
+            });
+            if (row) {
+                card = {
+                    fullName: row.full_name,
+                    tier: row.tier ?? 'UNRANKED',
+                    specialty: row.specialty ?? '',
+                    rankingScore: row.ranking_score ?? 0,
+                };
+            }
+        } catch {
+            // Fall through to the default card.
+        }
     }
 
-    const { fullName, tier, specialty, rankingScore } = doctor.data;
+    // A social card is decorative: never fail the request over one.
+    if (!card) {
+        return Response.redirect(new URL('/og-default.png', 'https://mdrpedia.com'), 302);
+    }
+
+    const { fullName, tier, specialty, rankingScore } = card;
 
     // Get cached font data
     const fontData = await getFontData();

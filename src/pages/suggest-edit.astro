@@ -27,7 +27,7 @@ const editTypes = {
 const currentType = editTypes[editType as keyof typeof editTypes] || editTypes.general;
 ---
 
-<Layout title={`Suggest Edit${doctor ? ` — ${doctor.data.fullName}` : ''} — MDRPedia`}>
+<Layout title={`Suggest Edit${doctor ? ` — ${doctor.data.fullName}` : ''} — MDRPedia`} robots="noindex, follow">
     <section class="suggest-page">
         <div class="container">
             <!-- Back Link -->

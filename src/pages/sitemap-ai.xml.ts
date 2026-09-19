@@ -81,15 +81,15 @@ export const GET: APIRoute = async () => {
 
   <!-- Specialties Directory -->
   <url>
-    <loc>${BASE_URL}/specialties</loc>
+    <loc>${BASE_URL}/specialty</loc>
     <lastmod>${today}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- Hospitals/Institutions -->
+  <!-- Institutions -->
   <url>
-    <loc>${BASE_URL}/hospitals</loc>
+    <loc>${BASE_URL}/institutions</loc>
     <lastmod>${today}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

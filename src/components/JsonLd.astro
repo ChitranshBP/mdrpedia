@@ -29,6 +29,9 @@ interface Props {
   // GEO-enhanced fields
   npiNumber?: string;
   orcidId?: string;
+  openalexId?: string;
+  education?: string[];
+  boardCertifications?: { boardName: string; specialty?: string }[];
   medicalSpecialty?: string[];
   knowsAbout?: string[];
   affiliations?: {
@@ -64,19 +67,18 @@ const physicianSchema = generatePhysicianSchema(geoData);
 const faqSchema = generateFAQSchema(geoData);
 const breadcrumbSchema = generateBreadcrumbSchema(geoData);
 
-// Speakable Schema for Voice Assistants (targeting AI Summary)
-const speakableSchema = {
-  "@context": "https://schema.org",
-  "@type": "SpeakableSpecification",
-  cssSelector: ["#ai-summary-content", ".wiki-intro", ".profile-section h2"],
-};
-
-// ProfilePage Schema for enhanced SEO
+// ProfilePage Schema for enhanced SEO.
+// `speakable` is a property of a page, not a node in its own right: emitted
+// standalone it attaches to nothing. The selectors below exist on the page.
 const profilePageSchema = {
   "@context": "https://schema.org",
   "@type": "ProfilePage",
   "dateCreated": props.createdAt || "2024-01-01T00:00:00Z",
   "dateModified": props.updatedAt || new Date().toISOString(),
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": ["#ai-summary-content", "#profile-name"],
+  },
   "mainEntity": {
     "@type": "Person",
     "name": props.fullName,
@@ -150,44 +152,38 @@ const knowledgeHints = {
 <!-- Physician Schema -->
 <script
   type="application/ld+json"
-  set:html={JSON.stringify(physicianSchema, null, 2)}
+  set:html={JSON.stringify(physicianSchema)}
 />
 
 <!-- FAQ Schema -->
 <script
   type="application/ld+json"
-  set:html={JSON.stringify(faqSchema, null, 2)}
+  set:html={JSON.stringify(faqSchema)}
 />
 
 <!-- Breadcrumb Schema -->
 <script
   type="application/ld+json"
-  set:html={JSON.stringify(breadcrumbSchema, null, 2)}
-/>
-
-<!-- Speakable Schema -->
-<script
-  type="application/ld+json"
-  set:html={JSON.stringify(speakableSchema, null, 2)}
+  set:html={JSON.stringify(breadcrumbSchema)}
 />
 
 <!-- ProfilePage Schema -->
 <script
   type="application/ld+json"
-  set:html={JSON.stringify(profilePageSchema, null, 2)}
+  set:html={JSON.stringify(profilePageSchema)}
 />
 
 <!-- Knowledge Graph Hints -->
 <script
   type="application/ld+json"
-  set:html={JSON.stringify(knowledgeHints, null, 2)}
+  set:html={JSON.stringify(knowledgeHints)}
 />
 
 <!-- Image Schema -->
 {imageSchema && (
   <script
     type="application/ld+json"
-    set:html={JSON.stringify(imageSchema, null, 2)}
+    set:html={JSON.stringify(imageSchema)}
   />
 )}
 
@@ -195,6 +191,6 @@ const knowledgeHints = {
 {videoSchemas.map(vs => (
   <script
     type="application/ld+json"
-    set:html={JSON.stringify(vs, null, 2)}
+    set:html={JSON.stringify(vs)}
   />
 ))}

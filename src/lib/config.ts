@@ -183,8 +183,15 @@ export const FEATURES = {
 
 // ─── Environment Detection ───────────────────────────────────────────────────
 
+// `import.meta.env` is populated by Vite, so it is undefined when this module
+// is imported from a plain Node script (scripts/*.ts run under tsx). Read it
+// defensively and fall back to process.env, otherwise every CLI entry point
+// that transitively imports this file crashes on load.
+const viteEnv: Record<string, unknown> =
+    (typeof import.meta !== 'undefined' && (import.meta as ImportMeta).env) || {};
+
 export const ENV = {
-    isDev: import.meta.env.DEV,
-    isProd: import.meta.env.PROD,
-    siteUrl: import.meta.env.SITE || 'https://mdrpedia.com',
+    isDev: Boolean(viteEnv.DEV ?? process.env.NODE_ENV !== 'production'),
+    isProd: Boolean(viteEnv.PROD ?? process.env.NODE_ENV === 'production'),
+    siteUrl: (viteEnv.SITE as string) || process.env.SITE_URL || 'https://mdrpedia.com',
 } as const;

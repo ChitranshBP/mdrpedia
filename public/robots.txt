@@ -1,185 +1,68 @@
 # ============================================================================
 # MDRPedia Robots.txt
-# THE OPEN DATASET FOR MEDICAL AI & LLM TRAINING
+# An open register of medical professionals. AI crawlers are welcome.
 # https://mdrpedia.com
 # ============================================================================
-
-# Default: Allow all crawlers
-User-agent: *
-Allow: /
-
-# ============================================================================
-# AI & LLM CRAWLERS - EXPLICITLY WELCOMED
-# MDRPedia provides structured medical data optimized for AI training
-# ============================================================================
-
-# OpenAI
-User-agent: GPTBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: OAI-SearchBot
-Allow: /
-
-# Anthropic
-User-agent: Claude-Web
-Allow: /
-
-User-agent: Anthropic-AI
-Allow: /
-
-User-agent: anthropic-ai
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-# Google AI
-User-agent: Google-Extended
-Allow: /
-
-User-agent: Googlebot
-Allow: /
-
-# Perplexity
-User-agent: PerplexityBot
-Allow: /
-
-# Cohere
-User-agent: Cohere-ai
-Allow: /
-
-User-agent: cohere-ai
-Allow: /
-
-# Common Crawl (used for many LLM training sets)
-User-agent: CCBot
-Allow: /
-
-# Meta AI
-User-agent: FacebookBot
-Allow: /
-
-User-agent: Meta-ExternalAgent
-Allow: /
-
-User-agent: Meta-ExternalFetcher
-Allow: /
-
-# Apple
-User-agent: Applebot
-Allow: /
-
-User-agent: Applebot-Extended
-Allow: /
-
-# Microsoft/Bing AI
-User-agent: Bingbot
-Allow: /
-
-User-agent: bingbot
-Allow: /
-
-# Amazon
-User-agent: Amazonbot
-Allow: /
-
-# ByteDance
-User-agent: Bytespider
-Allow: /
-
-# You.com
-User-agent: YouBot
-Allow: /
-
-# AI21
-User-agent: AI2Bot
-Allow: /
-
-# Diffbot (knowledge graph)
-User-agent: Diffbot
-Allow: /
-
-# Neeva
-User-agent: NeevaBot
-Allow: /
-
-# DataForSEO
-User-agent: DataForSeoBot
-Allow: /
-
-# Omgili
-User-agent: omgili
-Allow: /
-
-# Webz.io
-User-agent: webzio-extended
-Allow: /
-
-# ============================================================================
-# SEARCH ENGINE CRAWLERS
-# ============================================================================
-
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: DuckDuckBot
-Allow: /
-
-User-agent: Yandex
-Allow: /
-
-User-agent: Baiduspider
-Allow: /
-
-User-agent: Sogou
-Allow: /
-
-# ============================================================================
-# SOCIAL MEDIA CRAWLERS
-# ============================================================================
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: LinkedInBot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
-User-agent: Pinterest
-Allow: /
-
-User-agent: Slackbot
-Allow: /
-
-# ============================================================================
-# DISALLOWED PATHS
+#
+# NOTE ON STRUCTURE
+# A crawler obeys exactly one group — the most specific one that matches its
+# token — and ignores every other group. Listing a bot with only "Allow: /"
+# therefore EXEMPTS it from the shared Disallow rules below. So named groups
+# exist here only where they carry a rule that differs from the default.
+# Everything else is covered by "User-agent: *", which already allows crawling.
 # ============================================================================
 
 User-agent: *
+Allow: /
+
+# Admin surfaces and write endpoints — never useful in an index.
 Disallow: /admin/
-Disallow: /api/admin/
-Disallow: /_astro/
-Disallow: /api/npi-validate
-Disallow: /api/suggest-edit
-Disallow: /api/submit-profile
+Disallow: /api/
+Disallow: /login
+
+# Crawl traps: ~5,850 thin near-duplicates over ?profile= x ?type=.
+Disallow: /suggest-edit
+Disallow: /search
+
+# Legacy URLs from the previous site on this domain. Gone, not moved.
+Disallow: /services/
+Disallow: /industries/
+
+# ============================================================================
+# THROTTLED CRAWLERS
+# Welcome, but not at 12x Googlebot's volume on shared origin capacity.
+# These groups repeat the rules above because a matched group fully replaces
+# the default one.
+# ============================================================================
+
+User-agent: Bytespider
+Crawl-delay: 10
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /login
+Disallow: /suggest-edit
+Disallow: /search
+Disallow: /services/
+Disallow: /industries/
+
+User-agent: CCBot
+Crawl-delay: 10
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /login
+Disallow: /suggest-edit
+Disallow: /search
+Disallow: /services/
+Disallow: /industries/
 
 # ============================================================================
 # SITEMAPS
 # ============================================================================
 
-# Standard Sitemap
 Sitemap: https://mdrpedia.com/sitemap.xml
 Sitemap: https://mdrpedia.com/sitemap-index.xml
-
-# AI-Optimized Sitemap (rich medical taxonomy pages)
 Sitemap: https://mdrpedia.com/sitemap-ai.xml
 
 # ============================================================================
@@ -187,14 +70,8 @@ Sitemap: https://mdrpedia.com/sitemap-ai.xml
 # ============================================================================
 #
 # MDRPedia (also known as MDpedia in the West and DRpedia in the East)
-# provides structured medical professional data including:
-# - Physician profiles with verified credentials
-# - Medical procedure descriptions with step-by-step breakdowns
-# - Citation networks and research impact data
-# - ICD-10, SNOMED CT, MeSH terminology mappings
-# - Off-label vs FDA-approved usage tracking
-# - Medical guideline evolution (before/after diffs)
-# - Institutional affiliations and geographic influence
+# provides structured medical professional data including verified
+# credentials, affiliations, publication records and impact rankings.
 #
 # Data formats available:
 # - JSON-LD structured data (Schema.org)

@@ -9,6 +9,7 @@ import { prisma } from "../../lib/prisma";
 import { requireSuperAdmin } from "../../lib/rbac";
 import { logAdminAction } from "../../lib/audit";
 import { getSignedDocumentUrl } from "../../lib/cloudinary";
+import { notifySearchEngines } from "../../utils/indexer";
 
 export const prerender = false;
 
@@ -59,7 +60,7 @@ if (Astro.request.method === "POST") {
 
         if (editId && action) {
             if (action === "approve") {
-                await prisma.profileEdit.update({
+                const approved = await prisma.profileEdit.update({
                     where: { id: editId },
                     data: {
                         status: "APPROVED",
@@ -68,6 +69,15 @@ if (Astro.request.method === "POST") {
                     },
                 });
                 await logAdminAction('APPROVE_EDIT', editId, {}, Astro.request);
+
+                if (approved.profile_slug) {
+                    const siteOrigin = Astro.site?.origin ?? "https://mdrpedia.com";
+                    notifySearchEngines(
+                        `${siteOrigin}/doctors/${approved.profile_slug}`,
+                        'URL_UPDATED',
+                    ).catch((err) => console.error('Search engine notification failed:', err));
+                }
+
                 successMsg = "Edit approved successfully.";
             } else if (action === "reject") {
                 await prisma.profileEdit.update({
@@ -101,7 +111,7 @@ const reviewedEdits = await prisma.profileEdit.findMany({
 });
 ---
 
-<Layout title="Pending Edits — MDRPedia Admin">
+<Layout title="Pending Edits — MDRPedia Admin" robots="noindex, nofollow">
     <div class="admin">
         <AdminSidebar adminKey={adminKey} activePage="edits" />
         <div class="main">

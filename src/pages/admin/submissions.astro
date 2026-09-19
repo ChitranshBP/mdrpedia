@@ -9,6 +9,7 @@ import { prisma } from "../../lib/prisma";
 import { requireSuperAdmin } from "../../lib/rbac";
 import { slugify } from "../../lib/utils";
 import { logAdminAction } from "../../lib/audit";
+import { notifySearchEngines } from "../../utils/indexer";
 
 export const prerender = false;
 
@@ -95,6 +96,15 @@ if (Astro.request.method === "POST") {
                     });
 
                     await logAdminAction('APPROVE_SUBMISSION', slug, { fullName: pending.full_name }, Astro.request);
+
+                    // Tell Google and IndexNow the page exists. Without this
+                    // nothing ever announces a new profile, and the pipeline in
+                    // utils/indexer.ts sits fully built but never called.
+                    const siteOrigin = Astro.site?.origin ?? "https://mdrpedia.com";
+                    notifySearchEngines(`${siteOrigin}/doctors/${slug}`, 'URL_UPDATED').catch((err) => {
+                        console.error('Search engine notification failed:', err);
+                    });
+
                     successMsg = `Profile "${pending.full_name}" created successfully.`;
                 }
             } else if (action === "reject") {
@@ -129,7 +139,7 @@ const reviewedSubmissions = await prisma.pendingProfile.findMany({
 });
 ---
 
-<Layout title="New Submissions — MDRPedia Admin">
+<Layout title="New Submissions — MDRPedia Admin" robots="noindex, nofollow">
     <div class="admin">
         <AdminSidebar adminKey={adminKey} activePage="submissions" />
         <div class="main">
