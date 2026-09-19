@@ -38,6 +38,22 @@ export function getPhaseColor(phase: string): string {
     return '#94a3b8';
 }
 
+/**
+ * How far a study has run between its start and its estimated completion.
+ * Returns 0 when either end is missing, so the bar never renders NaN.
+ */
+export function progressPercent(
+    startDate?: string | null,
+    estimatedCompletion?: string | null,
+): number {
+    if (!startDate || !estimatedCompletion) return 0;
+    const start = new Date(startDate).getTime();
+    const end = new Date(estimatedCompletion).getTime();
+    if (Number.isNaN(start) || Number.isNaN(end) || end <= start) return 0;
+    const pct = ((Date.now() - start) / (end - start)) * 100;
+    return Math.round(Math.min(100, Math.max(0, pct)));
+}
+
 interface TrialLike {
     phase: string;
     status: string;

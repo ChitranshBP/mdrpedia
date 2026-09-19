@@ -16,6 +16,14 @@ export default defineConfig({
 
   integrations: [react()],
 
+  // Clinical trial ids that were corrected in the September 2026 content refresh.
+  // The old slugs were live URLs, so they redirect rather than 404.
+  redirects: {
+    '/trials/pf-07304814': '/trials/pf-07817883',
+    '/trials/regn-rsa': '/trials/cemdisiran-gmg',
+    '/trials/malaria-vaccine-r21': '/trials/rtss-malaria',
+  },
+
   // Image optimization settings
   image: {
     // Use sharp for local image optimization

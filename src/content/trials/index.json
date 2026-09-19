@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-23",
+  "lastUpdated": "2026-09-19",
   "categories": [
     {
       "id": "vaccines",
@@ -39,35 +39,28 @@
         "Vaccines",
         "Oncology"
       ],
-      "marketCap": "$45.2B",
+      "marketCap": "$61.5B",
       "website": "https://www.modernatx.com",
       "trials": [
         {
           "id": "mrna-1283",
-          "name": "mRNA-1283 Next-Gen COVID-19 Vaccine",
-          "phase": "Phase 3",
-          "status": "Active",
+          "name": "mRNA-1283 Next-Gen COVID-19 Vaccine (mNEXSPIKE)",
+          "phase": "Approved",
+          "status": "Approved",
           "category": "vaccines",
-          "indication": "COVID-19 Prevention (Omicron-specific)",
+          "indication": "COVID-19 prevention (adults 65+, and 12-64 with a risk factor)",
           "enrollment": 25000,
           "startDate": "2025-03",
-          "estimatedCompletion": "2026-09",
           "description": "Next-generation mRNA vaccine targeting multiple Omicron subvariants with improved durability and broader protection.",
           "primaryEndpoints": [
             "Neutralizing antibody response",
             "Vaccine efficacy against symptomatic infection"
           ],
           "latestUpdate": {
-            "date": "2026-02-15",
-            "summary": "Interim analysis shows 78% efficacy against symptomatic infection. Strong T-cell responses observed across age groups."
+            "date": "2026-08-27",
+            "summary": "The FDA approved supplemental BLAs for the updated 2026-2027 formulas of Spikevax and mNEXSPIKE, reformulated to the JN.1-lineage XFG subvariant. mNEXSPIKE's label remains limited to adults 65 and older and people aged 12-64 with an underlying risk factor; Japanese regulators cleared the same update the same day.",
+            "source": "https://www.biospace.com/press-releases/moderna-receives-u-s-fda-approval-for-updated-2026-2027-covid-19-vaccines"
           },
-          "leadInvestigators": [
-            {
-              "name": "Dr. Jacqueline Miller",
-              "role": "Senior VP, Infectious Disease Development",
-              "mdrpediaSlug": null
-            }
-          ],
           "sites": 180,
           "countries": [
             "USA",
@@ -79,30 +72,25 @@
         },
         {
           "id": "mrna-4157",
-          "name": "mRNA-4157/V940 (Personalized Cancer Vaccine)",
+          "name": "mRNA-4157 / V940 Intismeran Autogene (Personalised Cancer Vaccine)",
           "phase": "Phase 3",
-          "status": "Active",
+          "status": "Readout Reported",
           "category": "oncology",
           "indication": "Melanoma (adjuvant treatment)",
           "enrollment": 1089,
           "startDate": "2023-07",
-          "estimatedCompletion": "2029-12",
+          "estimatedCompletion": "2029-10",
+          "registryId": "NCT05933577",
           "description": "Individualized neoantigen therapy in combination with Keytruda for high-risk melanoma patients post-surgery.",
           "primaryEndpoints": [
             "Recurrence-free survival",
             "Overall survival"
           ],
           "latestUpdate": {
-            "date": "2026-02-10",
-            "summary": "Phase 2b results showed 44% reduction in recurrence/death risk vs Keytruda alone. FDA granted Breakthrough Therapy designation."
+            "date": "2026-08-19",
+            "summary": "Merck and Moderna reported that the Phase 3 INTerpath-001 trial of intismeran autogene plus pembrolizumab met its recurrence-free survival primary endpoint and its distant metastasis-free survival key secondary endpoint in completely resected Stage IIB-IV melanoma at a prespecified interim analysis. It is the first positive Phase 3 result for an mRNA cancer therapy; hazard ratios were not disclosed in the topline release.",
+            "source": "https://www.merck.com/news/merck-and-moderna-announce-phase-3-interpath-001-trial-of-intismeran-autogene-plus-keytruda-met-endpoints-of-recurrence-free-survival-rfs-and-distant-metastasis-free-survival-dmfs-in-patient/"
           },
-          "leadInvestigators": [
-            {
-              "name": "Dr. Jeffrey Weber",
-              "role": "Deputy Director, Perlmutter Cancer Center, NYU",
-              "mdrpediaSlug": null
-            }
-          ],
           "sites": 165,
           "countries": [
             "USA",
@@ -116,22 +104,23 @@
           "id": "mrna-3927",
           "name": "mRNA-3927 (Propionic Acidemia Gene Therapy)",
           "phase": "Phase 1/2",
-          "status": "Active",
+          "status": "Recruiting",
           "category": "rare-diseases",
           "indication": "Propionic Acidemia",
-          "enrollment": 24,
+          "enrollment": 77,
           "startDate": "2024-01",
-          "estimatedCompletion": "2027-06",
+          "estimatedCompletion": "2027-08",
+          "registryId": "NCT04159103",
           "description": "mRNA therapy encoding PCCA and PCCB enzymes for this life-threatening metabolic disorder.",
           "primaryEndpoints": [
             "Safety",
             "Reduction in metabolic decompensation events"
           ],
           "latestUpdate": {
-            "date": "2026-01-28",
-            "summary": "All 12 patients in dose-escalation phase showed reduced plasma biomarkers. No serious adverse events reported."
+            "date": "2026-08-07",
+            "summary": "Moderna's second-quarter results confirmed the registrational PARAMOUNT study is fully enrolled, with primary endpoint data expected in the fourth quarter of 2026. A Recordati collaboration closed on 16 March 2026 pays Moderna $50 million upfront and hands Recordati global commercialisation rights.",
+            "source": "https://clinicaltrials.gov/study/NCT04159103"
           },
-          "leadInvestigators": [],
           "sites": 8,
           "countries": [
             "USA",
@@ -152,35 +141,28 @@
         "Rare Diseases",
         "Immunology"
       ],
-      "marketCap": "$158.7B",
+      "marketCap": "$157.7B",
       "website": "https://www.pfizer.com",
       "trials": [
         {
-          "id": "pf-07304814",
-          "name": "PF-07304814 (Universal Coronavirus Vaccine)",
-          "phase": "Phase 2",
-          "status": "Active",
-          "category": "vaccines",
-          "indication": "Pan-coronavirus protection",
-          "enrollment": 4500,
-          "startDate": "2025-06",
-          "estimatedCompletion": "2027-03",
-          "description": "Novel vaccine targeting conserved regions of coronaviruses to provide broad protection against future variants and related viruses.",
+          "id": "pf-07817883",
+          "name": "Ibuzatrelvir (PF-07817883) Oral Antiviral",
+          "phase": "Phase 3",
+          "status": "Recruiting",
+          "category": "infectious",
+          "indication": "COVID-19 treatment in high-risk non-hospitalised adults",
+          "startDate": "2024-12",
+          "estimatedCompletion": "2027-10",
+          "registryId": "NCT06679140",
+          "description": "Second-generation oral protease inhibitor intended to treat COVID-19 without the ritonavir boosting that drives Paxlovid's drug-drug interactions.",
           "primaryEndpoints": [
-            "Cross-reactive antibody response",
-            "T-cell immunity breadth"
+            "Time to sustained alleviation of COVID-19 symptoms"
           ],
           "latestUpdate": {
-            "date": "2026-02-18",
-            "summary": "Phase 1 data demonstrated robust cross-neutralizing antibodies against SARS-CoV-1, SARS-CoV-2 variants, and MERS-CoV."
+            "date": "2026-08-14",
+            "summary": "The Phase 3 record for ibuzatrelvir was refreshed showing the study still recruiting with no results posted. Pfizer's earlier intravenous candidate PF-07304814 (lufotrelvir), which this tracker previously listed as a pan-coronavirus vaccine, remains discontinued.",
+            "source": "https://clinicaltrials.gov/study/NCT06679140"
           },
-          "leadInvestigators": [
-            {
-              "name": "Dr. Kathrin Jansen",
-              "role": "Former Head of Vaccine R&D",
-              "mdrpediaSlug": null
-            }
-          ],
           "sites": 95,
           "countries": [
             "USA",
@@ -192,29 +174,23 @@
         {
           "id": "pf-06939926",
           "name": "Fordadistrogene Movaparvovec (DMD Gene Therapy)",
-          "phase": "Phase 3",
-          "status": "Active",
+          "phase": "Phase 3 (discontinued)",
+          "status": "Discontinued",
           "category": "rare-diseases",
           "indication": "Duchenne Muscular Dystrophy",
-          "enrollment": 99,
+          "enrollment": 114,
           "startDate": "2022-06",
-          "estimatedCompletion": "2026-12",
+          "registryId": "NCT04281485",
           "description": "AAV-based gene therapy delivering micro-dystrophin for ambulatory boys with DMD aged 4-7.",
           "primaryEndpoints": [
             "North Star Ambulatory Assessment change",
             "Micro-dystrophin expression"
           ],
           "latestUpdate": {
-            "date": "2026-02-05",
-            "summary": "52-week data shows significant improvement in muscle function. BLA submission expected Q3 2026."
+            "date": "2024-07-30",
+            "summary": "Pfizer discontinued fordadistrogene movaparvovec after the Phase 3 CIFFREO trial missed its primary motor-function endpoint, following a May 2024 dosing pause prompted by a patient death. Previously dosed participants continue long-term safety monitoring on the registry to 2039. No status change was found through September 2026.",
+            "source": "https://clinicaltrials.gov/study/NCT04281485"
           },
-          "leadInvestigators": [
-            {
-              "name": "Dr. Jerry Mendell",
-              "role": "Director, Center for Gene Therapy, Nationwide Children's",
-              "mdrpediaSlug": null
-            }
-          ],
           "sites": 35,
           "countries": [
             "USA",
@@ -225,24 +201,24 @@
         },
         {
           "id": "sasanlimab",
-          "name": "Sasanlimab (Anti-PD-1) + Elranatamab Combo",
+          "name": "Sasanlimab (Anti-PD-1), CREST",
           "phase": "Phase 3",
-          "status": "Active",
+          "status": "Completed",
           "category": "oncology",
-          "indication": "Relapsed/Refractory Multiple Myeloma",
-          "enrollment": 750,
-          "startDate": "2024-09",
-          "estimatedCompletion": "2028-06",
-          "description": "Combination of subcutaneous PD-1 inhibitor with BCMA-CD3 bispecific antibody for heavily pretreated myeloma.",
+          "indication": "BCG-naive high-risk non-muscle-invasive bladder cancer",
+          "enrollment": 1068,
+          "startDate": "2019-12",
+          "estimatedCompletion": "2026-12",
+          "registryId": "NCT04165317",
+          "description": "Subcutaneous anti-PD-1 antibody given with BCG in high-risk non-muscle-invasive bladder cancer.",
           "primaryEndpoints": [
-            "Progression-free survival",
-            "Overall response rate"
+            "Event-free survival"
           ],
           "latestUpdate": {
-            "date": "2026-01-30",
-            "summary": "Early cohort shows 68% overall response rate with manageable safety profile. Enrollment ahead of schedule."
+            "date": "2026-02-13",
+            "summary": "Pfizer withdrew its European marketing application for sasanlimab in bladder cancer after the CHMP raised concerns about the CREST trial's design and conduct. No EU refiling has been disclosed.",
+            "source": "https://www.ema.europa.eu/en/medicines/human/EPAR/zumrad"
           },
-          "leadInvestigators": [],
           "sites": 120,
           "countries": [
             "USA",
@@ -251,6 +227,27 @@
             "France",
             "Australia"
           ]
+        },
+        {
+          "id": "elranatamab",
+          "name": "Elranatamab (Elrexfio), MagnetisMM-5",
+          "phase": "Phase 3",
+          "status": "Readout Reported",
+          "category": "oncology",
+          "indication": "Relapsed/refractory multiple myeloma, earlier lines",
+          "enrollment": 750,
+          "startDate": "2024-09",
+          "estimatedCompletion": "2028-06",
+          "registryId": "NCT05020236",
+          "description": "BCMA-CD3 bispecific antibody moving from later-line accelerated approval into earlier treatment lines.",
+          "primaryEndpoints": [
+            "Progression-free survival"
+          ],
+          "latestUpdate": {
+            "date": "2026-04-29",
+            "summary": "Pfizer reported that the Phase 3 MagnetisMM-5 trial of elranatamab monotherapy significantly improved progression-free survival versus standard of care in earlier-line relapsed/refractory multiple myeloma. Conversion of the accelerated approval to full approval has not been dated.",
+            "source": "https://www.ema.europa.eu/en/medicines/human/EPAR/elrexfio"
+          }
         }
       ]
     },
@@ -265,40 +262,29 @@
         "Cancer immunotherapy",
         "Infectious diseases"
       ],
-      "marketCap": "$28.4B",
+      "marketCap": "$24.1B",
       "website": "https://www.biontech.de",
       "trials": [
         {
           "id": "bnt162b4",
           "name": "BNT162b4 (T-Cell Boosting COVID Vaccine)",
-          "phase": "Phase 2",
-          "status": "Active",
+          "phase": "Phase 1 (completed)",
+          "status": "Discontinued",
           "category": "vaccines",
           "indication": "COVID-19 (Enhanced T-cell response)",
           "enrollment": 1800,
           "startDate": "2025-08",
-          "estimatedCompletion": "2026-11",
+          "registryId": "NCT05541861",
           "description": "Novel vaccine component designed to enhance T-cell immunity for longer-lasting protection regardless of variants.",
           "primaryEndpoints": [
             "T-cell response magnitude",
             "Duration of cellular immunity"
           ],
           "latestUpdate": {
-            "date": "2026-02-12",
-            "summary": "Phase 1 showed 4-fold increase in virus-specific T-cells persisting at 6 months. Moving to expanded Phase 2."
+            "date": "2026-01-13",
+            "summary": "The Phase 1 record for BNT162b4, completed in November 2024, was last refreshed with no change in status. No successor trial or company statement was found through September 2026, so the programme is treated as dormant rather than active.",
+            "source": "https://clinicaltrials.gov/study/NCT05541861"
           },
-          "leadInvestigators": [
-            {
-              "name": "Dr. Ugur Sahin",
-              "role": "CEO & Co-founder, BioNTech",
-              "mdrpediaSlug": null
-            },
-            {
-              "name": "Dr. \u00d6zlem T\u00fcreci",
-              "role": "CMO & Co-founder, BioNTech",
-              "mdrpediaSlug": null
-            }
-          ],
           "sites": 45,
           "countries": [
             "Germany",
@@ -315,17 +301,18 @@
           "indication": "Claudin-6 positive solid tumors",
           "enrollment": 180,
           "startDate": "2023-03",
-          "estimatedCompletion": "2027-09",
+          "estimatedCompletion": "2028-08",
+          "registryId": "NCT04503278",
           "description": "First-in-class combination of CAR-T cells with mRNA vaccine boosting targeting Claudin-6 in ovarian, testicular, and lung cancers.",
           "primaryEndpoints": [
             "Overall response rate",
             "CAR-T cell persistence"
           ],
           "latestUpdate": {
-            "date": "2026-02-01",
-            "summary": "59% objective response rate in evaluable patients. Complete responses seen in 3 ovarian cancer patients."
+            "date": "2026-06-18",
+            "summary": "The Phase 1/2 solid-tumour study is active but no longer recruiting. The separate pivotal Phase 2 in germ cell tumours remains terminated after BioNTech wound down its CLDN6 CAR-T ambitions in 2025, so there is no registrational path without a new pivotal trial.",
+            "source": "https://clinicaltrials.gov/study/NCT04503278"
           },
-          "leadInvestigators": [],
           "sites": 22,
           "countries": [
             "Germany",
@@ -336,13 +323,13 @@
         {
           "id": "bnt141",
           "name": "BNT141 (mRNA Cancer Immunotherapy)",
-          "phase": "Phase 1",
-          "status": "Active",
+          "phase": "Phase 1/2 (terminated)",
+          "status": "Terminated",
           "category": "oncology",
           "indication": "CLDN18.2+ Gastric Cancer",
           "enrollment": 90,
           "startDate": "2025-01",
-          "estimatedCompletion": "2027-06",
+          "registryId": "NCT04683939",
           "description": "Intravenously administered mRNA encoding a secreted antibody targeting Claudin 18.2.",
           "primaryEndpoints": [
             "Safety",
@@ -350,16 +337,38 @@
             "Tumor response"
           ],
           "latestUpdate": {
-            "date": "2026-01-15",
-            "summary": "Dose escalation ongoing. Therapeutic antibody levels detected in all patients at higher dose levels."
+            "date": "2024-10-02",
+            "summary": "The Phase 1/2 study was terminated by sponsor decision and the registry record has not changed since. No BNT141 news was found dated in 2025 or 2026.",
+            "source": "https://clinicaltrials.gov/study/NCT04683939"
           },
-          "leadInvestigators": [],
           "sites": 15,
           "countries": [
             "Germany",
             "Spain",
             "USA"
           ]
+        },
+        {
+          "id": "pumitamig",
+          "name": "Pumitamig (BNT327, PD-L1xVEGF Bispecific)",
+          "phase": "Phase 3",
+          "status": "Recruiting",
+          "category": "oncology",
+          "indication": "Small cell and non-small cell lung cancer, triple-negative breast cancer",
+          "enrollment": 4300,
+          "startDate": "2025-01",
+          "estimatedCompletion": "2028-12",
+          "registryId": "NCT07173751",
+          "description": "Partnered with Bristol Myers Squibb. PD-L1xVEGF bispecifics are the most contested class in oncology after the ivonescimab debate, and this is BioNTech’s largest value driver.",
+          "primaryEndpoints": [
+            "Progression-free survival",
+            "Overall survival"
+          ],
+          "latestUpdate": {
+            "date": "2026-08-20",
+            "summary": "BioNTech and Bristol Myers Squibb reported encouraging interim data for pumitamig with chemotherapy in first-line lung cancer around ASCO 2026, and BioNTech highlighted late-stage lung-cancer momentum and first global data for a pumitamig plus elfetabart drozuntecan combination in August.",
+            "source": "https://clinicaltrials.gov/study/NCT07173751"
+          }
         }
       ]
     },
@@ -375,19 +384,18 @@
         "Immunology",
         "Neuroscience"
       ],
-      "marketCap": "$212.5B",
+      "marketCap": "$266.8B",
       "website": "https://www.novartis.com",
       "trials": [
         {
           "id": "kymriah-all",
           "name": "Kymriah (Tisagenlecleucel) in Pediatric ALL",
-          "phase": "Phase 4 (Post-Marketing)",
-          "status": "Active",
+          "phase": "Post-marketing",
+          "status": "Approved",
           "category": "oncology",
           "indication": "Pediatric B-cell ALL (Expanded Age Range)",
           "enrollment": 350,
           "startDate": "2024-06",
-          "estimatedCompletion": "2028-12",
           "description": "Real-world study evaluating CAR-T therapy in broader pediatric population including infants.",
           "primaryEndpoints": [
             "Complete remission rate",
@@ -395,16 +403,10 @@
             "Long-term safety"
           ],
           "latestUpdate": {
-            "date": "2026-02-08",
-            "summary": "92% complete remission rate maintained. FDA approved expanded indication down to age 1 month."
+            "date": "2026-07-29",
+            "summary": "A five-year update of the pivotal ELIANA trial published in the Journal of Clinical Oncology confirmed durable remissions and no new long-term safety signals for tisagenlecleucel in paediatric and young-adult relapsed/refractory B-cell ALL. Novartis's second-quarter results showed Kymriah sales falling 11 per cent to $88 million amid competition from newer CAR-T entrants.",
+            "source": "https://pubmed.ncbi.nlm.nih.gov/42525896/"
           },
-          "leadInvestigators": [
-            {
-              "name": "Dr. Carl June",
-              "role": "Director, Center for Cellular Immunotherapies, UPenn",
-              "mdrpediaSlug": "carl-june"
-            }
-          ],
           "sites": 80,
           "countries": [
             "USA",
@@ -416,24 +418,25 @@
         },
         {
           "id": "pluvicto-combo",
-          "name": "Pluvicto + Checkpoint Inhibitor Combination",
+          "name": "Pluvicto in Hormone-Sensitive Prostate Cancer (PSMAddition)",
           "phase": "Phase 3",
-          "status": "Active",
+          "status": "Approved",
           "category": "oncology",
-          "indication": "Metastatic Castration-Resistant Prostate Cancer",
-          "enrollment": 1200,
+          "indication": "PSMA-positive metastatic hormone-sensitive prostate cancer",
+          "enrollment": 1140,
           "startDate": "2025-02",
-          "estimatedCompletion": "2028-06",
+          "estimatedCompletion": "2027-02",
+          "registryId": "NCT04720157",
           "description": "Radioligand therapy combined with pembrolizumab for enhanced tumor killing.",
           "primaryEndpoints": [
             "Overall survival",
             "Radiographic progression-free survival"
           ],
           "latestUpdate": {
-            "date": "2026-02-20",
-            "summary": "Interim analysis triggered early. Results expected Q2 2026 with potential accelerated approval pathway."
+            "date": "2026-07-31",
+            "summary": "The FDA approved Pluvicto with an androgen-receptor pathway inhibitor for PSMA-positive metastatic hormone-sensitive prostate cancer, on the Phase 3 PSMAddition trial in which the radioligand therapy cut the risk of progression or death by 33 per cent. The approval keeps a postmarketing commitment to report the final overall survival analysis. Novartis had withdrawn the equivalent EU application on 23 March 2026 after the CHMP found no overall survival benefit, so the US and EU labels have diverged.",
+            "source": "https://www.novartis.com/news/media-releases/fda-approves-pluvicto-psma-metastatic-hormone-sensitive-prostate-cancer-mhspc-advancing-potential-new-standard-care-across-metastatic-disease"
           },
-          "leadInvestigators": [],
           "sites": 200,
           "countries": [
             "USA",
@@ -445,24 +448,25 @@
         },
         {
           "id": "iptacopan",
-          "name": "Iptacopan (Factor B Inhibitor)",
+          "name": "Iptacopan (Fabhalta, Factor B Inhibitor)",
           "phase": "Phase 3",
-          "status": "Active",
+          "status": "Approved",
           "category": "rare-diseases",
-          "indication": "C3 Glomerulopathy",
+          "indication": "IgA nephropathy (approved); C3 glomerulopathy (APPEAR-C3G ongoing)",
           "enrollment": 98,
           "startDate": "2024-03",
-          "estimatedCompletion": "2026-09",
+          "estimatedCompletion": "2027-01",
+          "registryId": "NCT04817618",
           "description": "Oral Factor B inhibitor for complement-mediated kidney disease.",
           "primaryEndpoints": [
             "Proteinuria reduction",
             "eGFR stabilization"
           ],
           "latestUpdate": {
-            "date": "2026-01-25",
-            "summary": "66% of patients achieved >50% proteinuria reduction. BLA under FDA review with PDUFA date August 2026."
+            "date": "2026-07-17",
+            "summary": "The FDA converted Fabhalta's accelerated approval in primary IgA nephropathy to traditional approval after two-year APPLAUSE-IgAN data showed the oral factor B inhibitor slowed eGFR decline by 48 per cent versus placebo, making it the first complement inhibitor with confirmed kidney-function benefit in the disease. The C3 glomerulopathy study continues to a January 2027 primary completion.",
+            "source": "https://www.novartis.com/news/media-releases/novartis-fabhalta-iptacopan-receives-fda-traditional-approval-first-and-only-complement-inhibitor-significantly-slow-kidney-function-decline-primary-igan"
           },
-          "leadInvestigators": [],
           "sites": 45,
           "countries": [
             "USA",
@@ -470,6 +474,48 @@
             "Germany",
             "Netherlands"
           ]
+        },
+        {
+          "id": "pelacarsen",
+          "name": "Pelacarsen, Lp(a)HORIZON",
+          "phase": "Phase 3",
+          "status": "Readout Reported",
+          "category": "rare-diseases",
+          "indication": "Elevated lipoprotein(a) with established cardiovascular disease",
+          "enrollment": null,
+          "startDate": null,
+          "estimatedCompletion": null,
+          "registryId": null,
+          "description": "The first large cardiovascular outcomes test of the lipoprotein(a) hypothesis.",
+          "primaryEndpoints": [
+            "Major adverse cardiovascular events"
+          ],
+          "latestUpdate": {
+            "date": "2026-09-04",
+            "summary": "Novartis announced Lp(a)HORIZON topline results showing pelacarsen did not meet its primary objective in patients with elevated lipoprotein(a) and established cardiovascular disease. The result reopened the question of whether lowering Lp(a) as a biomarker translates into fewer cardiovascular events, with read-across to every other Lp(a) programme.",
+            "source": "https://www.novartis.com/news/media-releases/novartis-announces-lpahorizon-phase-iii-topline-results-pelacarsen-patients-elevated-lpa-and-established-cardiovascular-disease-cvd"
+          }
+        },
+        {
+          "id": "del-desiran",
+          "name": "Delpacibart Etedesiran (del-desiran), HARBOR",
+          "phase": "Phase 3",
+          "status": "Readout Reported",
+          "category": "rare-diseases",
+          "indication": "Myotonic dystrophy type 1",
+          "enrollment": null,
+          "startDate": null,
+          "estimatedCompletion": null,
+          "registryId": null,
+          "description": "Lead antibody-oligonucleotide conjugate from the Avidity Biosciences acquisition.",
+          "primaryEndpoints": [
+            "Video hand-opening time"
+          ],
+          "latestUpdate": {
+            "date": "2026-09-08",
+            "summary": "Novartis said the Phase 3 HARBOR study did not meet its primary endpoint in myotonic dystrophy type 1 — the second Phase 3 miss in five days and a setback for the lead asset of its roughly $12 billion Avidity acquisition. It was the clearest 2026 test of the antibody-oligonucleotide-conjugate modality.",
+            "source": "https://www.novartis.com/news/media-releases/novartis-provides-update-delpacibart-etedesiran-del-desiran-phase-iii-harbor-study-treatment-myotonic-dystrophy-type-1-dm1"
+          }
         }
       ]
     },
@@ -485,29 +531,30 @@
         "Ophthalmology",
         "Rare Diseases"
       ],
-      "marketCap": "$95.8B",
+      "marketCap": "$80.8B",
       "website": "https://www.regeneron.com",
       "trials": [
         {
           "id": "regn5458",
-          "name": "REGN5458 (BCMAxCD3 Bispecific)",
+          "name": "Linvoseltamab (REGN5458, BCMAxCD3 Bispecific)",
           "phase": "Phase 3",
-          "status": "Active",
+          "status": "Approved",
           "category": "oncology",
           "indication": "Relapsed/Refractory Multiple Myeloma",
           "enrollment": 500,
           "startDate": "2024-05",
-          "estimatedCompletion": "2027-11",
+          "estimatedCompletion": "2033-04",
+          "registryId": "NCT05730036",
           "description": "Bispecific antibody redirecting T-cells to BCMA-expressing myeloma cells.",
           "primaryEndpoints": [
             "Overall survival",
             "Complete response rate"
           ],
           "latestUpdate": {
-            "date": "2026-02-14",
-            "summary": "Phase 2 showed 63% overall response rate. Registrational Phase 3 fully enrolled ahead of schedule."
+            "date": "2026-06-18",
+            "summary": "Linvoseltamab remains on US accelerated approval and EU conditional authorisation, with no conversion to full approval in 2026; the US label requires at least four prior lines against three in the EU. Regeneron withdrew a planned Phase 2/3 trial in transplant-eligible newly diagnosed myeloma before enrolling anyone, while starting two new Phase 3 studies. Full approval is gated on LINKER-MM3, whose registry primary completion is 2033. Second-quarter net product sales were $16.5 million.",
+            "source": "https://clinicaltrials.gov/study/NCT05730036"
           },
-          "leadInvestigators": [],
           "sites": 85,
           "countries": [
             "USA",
@@ -518,25 +565,26 @@
           ]
         },
         {
-          "id": "regn-rsa",
-          "name": "Pozelimab + Cemdisiran (C5 Inhibition)",
+          "id": "cemdisiran-gmg",
+          "name": "Cemdisiran (C5 siRNA), NIMBLE",
           "phase": "Phase 3",
-          "status": "Active",
+          "status": "Under Review",
           "category": "rare-diseases",
-          "indication": "Generalized Myasthenia Gravis",
-          "enrollment": 235,
+          "indication": "Generalised myasthenia gravis",
+          "enrollment": 288,
           "startDate": "2024-08",
-          "estimatedCompletion": "2026-12",
-          "description": "Dual complement inhibition approach combining antibody and siRNA therapy.",
+          "estimatedCompletion": "2026-11",
+          "registryId": "NCT05070858",
+          "description": "Quarterly subcutaneous siRNA targeting complement C5. The asset that advanced is cemdisiran as monotherapy, not the pozelimab combination this row previously tracked.",
           "primaryEndpoints": [
             "MG-ADL score improvement",
             "Complete stable remission rate"
           ],
           "latestUpdate": {
-            "date": "2026-02-06",
-            "summary": "Primary endpoint met with 4.2 point improvement vs placebo. Filing expected H2 2026."
+            "date": "2026-07-30",
+            "summary": "Regeneron's second-quarter filing confirms the New Drug Application for cemdisiran in generalised myasthenia gravis remains under FDA review with a decision guided for November 2026, following Phase 3 NIMBLE data presented at the American Academy of Neurology meeting in April 2026. A European decision is guided for the second half of 2027. The asset that advanced is cemdisiran monotherapy, not the pozelimab combination this row previously tracked.",
+            "source": "https://clinicaltrials.gov/study/NCT05070858"
           },
-          "leadInvestigators": [],
           "sites": 75,
           "countries": [
             "USA",
@@ -560,35 +608,30 @@
         "Diabetes",
         "Immunology"
       ],
-      "marketCap": "$685.2B",
+      "marketCap": "$1.03T",
       "website": "https://www.lilly.com",
       "trials": [
         {
           "id": "donanemab",
-          "name": "Donanemab (TRAILBLAZER-ALZ 3)",
+          "name": "Donanemab (Kisunla), TRAILBLAZER-ALZ 3",
           "phase": "Phase 3",
           "status": "Active",
           "category": "neurology",
-          "indication": "Early Symptomatic Alzheimer's Disease",
-          "enrollment": 3300,
+          "indication": "Prevention of symptomatic Alzheimer's disease in people with preclinical pathology",
+          "enrollment": 2996,
           "startDate": "2023-10",
-          "estimatedCompletion": "2027-06",
+          "estimatedCompletion": "2027-11",
+          "registryId": "NCT05026866",
           "description": "Anti-amyloid antibody targeting N3pG amyloid for earlier-stage Alzheimer's patients.",
           "primaryEndpoints": [
             "iADRS score change",
             "Amyloid plaque clearance"
           ],
           "latestUpdate": {
-            "date": "2026-02-19",
-            "summary": "FDA approved Kisunla (donanemab) in July 2025. Post-marketing study confirms 35% slowing of decline at 18 months."
+            "date": "2026-07-09",
+            "summary": "Lilly presented plasma p-tau217 blood-test findings alongside Kisunla at AAIC 2026, two months after Health Canada authorised the therapy on 4 May 2026 and Lilly launched it in India on 13 May. The Phase 3 prevention trial remains on track to complete in November 2027, so a prevention-indication filing would not come before 2028.",
+            "source": "https://clinicaltrials.gov/study/NCT05026866"
           },
-          "leadInvestigators": [
-            {
-              "name": "Dr. Reisa Sperling",
-              "role": "Director, Center for Alzheimer Research, BWH",
-              "mdrpediaSlug": null
-            }
-          ],
           "sites": 275,
           "countries": [
             "USA",
@@ -600,24 +643,23 @@
         },
         {
           "id": "orforglipron",
-          "name": "Orforglipron (Oral GLP-1)",
-          "phase": "Phase 3",
-          "status": "Active",
+          "name": "Orforglipron (Foundayo, Oral GLP-1)",
+          "phase": "Approved",
+          "status": "Approved",
           "category": "metabolic",
-          "indication": "Obesity and Type 2 Diabetes",
+          "indication": "Chronic weight management (approved); type 2 diabetes (filed)",
           "enrollment": 6000,
           "startDate": "2024-01",
-          "estimatedCompletion": "2026-09",
           "description": "Once-daily oral GLP-1 receptor agonist for weight management and glycemic control.",
           "primaryEndpoints": [
             "Percent weight change",
             "HbA1c reduction"
           ],
           "latestUpdate": {
-            "date": "2026-02-11",
-            "summary": "Phase 2 showed 14.7% weight loss at 36 weeks. Phase 3 on track for H2 2026 readout."
+            "date": "2026-04-01",
+            "summary": "The FDA approved Foundayo (orforglipron), the first oral GLP-1 receptor agonist for chronic weight management, about 50 days after filing under the agency's Commissioner's National Priority Voucher pilot — the fastest new-molecular-entity approval since 2002. US launch followed on 9 April 2026 at a $649 monthly list price. A type 2 diabetes decision is expected later.",
+            "source": "https://www.accessdata.fda.gov/drugsatfda_docs/appletter/2026/220934Orig1s000ltr.pdf"
           },
-          "leadInvestigators": [],
           "sites": 350,
           "countries": [
             "USA",
@@ -629,24 +671,23 @@
         },
         {
           "id": "lebrikizumab-ad",
-          "name": "Lebrikizumab (IL-13 Inhibitor)",
-          "phase": "Phase 4",
-          "status": "Active",
+          "name": "Lebrikizumab (Ebglyss, IL-13 Inhibitor)",
+          "phase": "Approved",
+          "status": "Approved",
           "category": "immunology",
           "indication": "Moderate-to-Severe Atopic Dermatitis",
           "enrollment": 800,
           "startDate": "2025-06",
-          "estimatedCompletion": "2028-12",
           "description": "Real-world effectiveness study in diverse patient population.",
           "primaryEndpoints": [
             "IGA 0/1 response",
             "EASI-75 achievement"
           ],
           "latestUpdate": {
-            "date": "2026-01-20",
-            "summary": "Approved in EU and US. Real-world data confirms efficacy with convenient monthly dosing."
+            "date": "2026-06-09",
+            "summary": "The FDA approved a once-every-eight-weeks maintenance dose of Ebglyss for adults and adolescents with moderate-to-severe atopic dermatitis, following positive Phase 3 ADorable-1 paediatric results in March 2026 and four-year durability data showing 94 per cent EASI-75 response. The EMA accepted a paediatric filing from Almirall on 20 July 2026.",
+            "source": "https://www.ema.europa.eu/en/medicines/human/EPAR/ebglyss"
           },
-          "leadInvestigators": [],
           "sites": 150,
           "countries": [
             "USA",
@@ -655,6 +696,28 @@
             "UK",
             "Canada"
           ]
+        },
+        {
+          "id": "retatrutide",
+          "name": "Retatrutide (Triple GIP/GLP-1/Glucagon Agonist), TRIUMPH",
+          "phase": "Phase 3",
+          "status": "Active",
+          "category": "rare-diseases",
+          "indication": "Obesity, obstructive sleep apnoea and type 2 diabetes",
+          "enrollment": 10000,
+          "startDate": "2024-04",
+          "estimatedCompletion": "2029-02",
+          "registryId": "NCT06383390",
+          "description": "Triple-receptor agonist and successor asset to tirzepatide, tested across obesity, sleep apnoea, diabetes and cardiovascular outcomes.",
+          "primaryEndpoints": [
+            "Percentage change in body weight",
+            "Major adverse cardiovascular events"
+          ],
+          "latestUpdate": {
+            "date": "2026-07-23",
+            "summary": "Lilly reported that retatrutide succeeded in two further Phase 3 obesity trials, delivering up to 22.6 per cent weight loss and setting up an FDA filing in early 2027. TRIUMPH-1 had earlier shown up to 30.3 per cent average weight loss, announced 21 May 2026, and a separate Phase 3 showed reduced obstructive sleep apnoea severity on 23 June.",
+            "source": "https://clinicaltrials.gov/study/NCT06383390"
+          }
         }
       ]
     },
@@ -670,29 +733,28 @@
         "Oncology",
         "Immunology"
       ],
-      "marketCap": "$78.5B",
+      "marketCap": "$100.6B",
       "website": "https://www.gsk.com",
       "trials": [
         {
           "id": "rsv-older-adults",
-          "name": "Arexvy RSV Vaccine (Extended Protection Study)",
-          "phase": "Phase 3b",
-          "status": "Active",
+          "name": "Arexvy RSV Vaccine, Age Expansion",
+          "phase": "Approved",
+          "status": "Approved",
           "category": "vaccines",
-          "indication": "RSV Prevention in Older Adults",
+          "indication": "RSV prevention in adults 18 and older at increased risk",
           "enrollment": 12000,
           "startDate": "2024-09",
-          "estimatedCompletion": "2027-03",
           "description": "Evaluating duration of protection and need for revaccination with approved RSV vaccine.",
           "primaryEndpoints": [
             "Efficacy against RSV-LRTD at Season 3",
             "Immunogenicity persistence"
           ],
           "latestUpdate": {
-            "date": "2026-02-16",
-            "summary": "Season 2 efficacy of 67% against RSV-LRTD maintained. Single dose may provide multi-season protection."
+            "date": "2026-03-13",
+            "summary": "The FDA approved an expanded indication for Arexvy covering adults aged 18 to 49 at increased risk of RSV lower respiratory tract disease, on a Phase 3b study showing a non-inferior immune response versus adults 60 and older. Whether the new group receives an ACIP recommendation remains unresolved amid litigation over the advisory committee.",
+            "source": "https://www.cidrap.umn.edu/respiratory-syncytial-virus-rsv/fda-approves-use-rsv-vaccine-risk-younger-adults"
           },
-          "leadInvestigators": [],
           "sites": 200,
           "countries": [
             "USA",
@@ -704,24 +766,25 @@
         },
         {
           "id": "blenrep-combo",
-          "name": "Blenrep + Pomalidomide + Dexamethasone",
+          "name": "Blenrep (Belantamab Mafodotin) Combinations, DREAMM-7 / DREAMM-8",
           "phase": "Phase 3",
-          "status": "Active",
+          "status": "Approved",
           "category": "oncology",
           "indication": "Relapsed/Refractory Multiple Myeloma",
           "enrollment": 430,
           "startDate": "2023-11",
-          "estimatedCompletion": "2026-06",
+          "estimatedCompletion": "2028-06",
+          "registryId": "NCT04246047",
           "description": "BCMA-targeted ADC in combination with standard of care for myeloma.",
           "primaryEndpoints": [
             "Progression-free survival",
             "Overall response rate"
           ],
           "latestUpdate": {
-            "date": "2026-02-03",
-            "summary": "Primary analysis shows significant PFS improvement. Re-filing with FDA planned for Q2 2026."
+            "date": "2026-08-19",
+            "summary": "Blenrep combination regimens were approved in Singapore for relapsed/refractory multiple myeloma, extending a 2026 run of access wins that included a NICE recommendation for NHS use in April and a permanent US billing code on 1 July. The 2025 FDA complete response letter was resolved by the 23 October 2025 approval of Blenrep with bortezomib and dexamethasone.",
+            "source": "https://www.ema.europa.eu/en/medicines/human/EPAR/blenrep"
           },
-          "leadInvestigators": [],
           "sites": 140,
           "countries": [
             "USA",
@@ -732,25 +795,23 @@
           ]
         },
         {
-          "id": "malaria-vaccine-r21",
-          "name": "Malaria Vaccine Booster Study",
-          "phase": "Phase 3",
-          "status": "Active",
+          "id": "rtss-malaria",
+          "name": "RTS,S/AS01 (Mosquirix) Malaria Vaccine Rollout",
+          "phase": "Post-approval",
+          "status": "Approved",
           "category": "vaccines",
-          "indication": "Malaria Prevention in Children",
-          "enrollment": 4500,
+          "indication": "Malaria prevention in children in sub-Saharan Africa",
           "startDate": "2025-03",
-          "estimatedCompletion": "2028-06",
-          "description": "Evaluating optimal booster schedules for sustained malaria protection in endemic regions.",
+          "description": "GSK's RTS,S/AS01 was the first malaria vaccine recommended by the WHO, in October 2021, and is now in routine immunisation schedules across sub-Saharan Africa. R21/Matrix-M, which this row previously credited to GSK, is an Oxford, Novavax and Serum Institute of India vaccine.",
           "primaryEndpoints": [
-            "Clinical malaria incidence",
-            "Antibody persistence"
+            "All-cause child mortality",
+            "Severe malaria incidence"
           ],
           "latestUpdate": {
-            "date": "2026-01-28",
-            "summary": "WHO prequalification received. Over 18 million doses shipped to endemic countries."
+            "date": "2026-05-12",
+            "summary": "A four-country Lancet evaluation reported that RTS,S/AS01E averted about one in eight deaths among eligible children in Ghana, Kenya and Malawi over four years, cutting all-cause child mortality by 13.2 per cent and severe malaria by 21.6 per cent. Fourth-dose coverage of just 39.9 per cent highlighted a booster-completion gap as malaria vaccines reached routine schedules in 25 sub-Saharan African countries.",
+            "source": "https://www.cidrap.umn.edu/malaria/rtss-malaria-vaccine-averted-1-8-deaths-among-eligible-kids-3-african-nations-over-4-years"
           },
-          "leadInvestigators": [],
           "sites": 25,
           "countries": [
             "Ghana",
@@ -774,14 +835,14 @@
         "Infectious Disease",
         "Immunology"
       ],
-      "marketCap": "$245.8B",
+      "marketCap": "$362.4B",
       "website": "https://www.merck.com",
       "trials": [
         {
           "id": "keytruda-adjuvant",
           "name": "Keytruda Adjuvant Combinations",
           "phase": "Phase 3",
-          "status": "Active",
+          "status": "Approved",
           "category": "oncology",
           "indication": "Multiple Solid Tumors (Adjuvant Setting)",
           "enrollment": 8500,
@@ -793,10 +854,10 @@
             "Overall survival"
           ],
           "latestUpdate": {
-            "date": "2026-02-17",
-            "summary": "Positive results in renal cell carcinoma arm. Two additional tumor types showing promising interim data."
+            "date": "2026-09-18",
+            "summary": "Merck received a positive CHMP opinion for Keytruda plus Padcev as perioperative treatment of resectable muscle-invasive bladder cancer, ten weeks after the FDA approved the same regimen on 10 July 2026. Subcutaneous Keytruda Qlex contributed $463 million in the second quarter of 2026 as Merck converts patients ahead of the intravenous product losing exclusivity in 2028.",
+            "source": "https://www.merck.com/news/merck-highlights-key-regulatory-and-clinical-milestones-across-broad-diverse-pipeline/"
           },
-          "leadInvestigators": [],
           "sites": 450,
           "countries": [
             "USA",
@@ -809,24 +870,23 @@
         },
         {
           "id": "v116-pneumonia",
-          "name": "V116 (21-Valent Pneumococcal Vaccine)",
-          "phase": "Phase 3",
-          "status": "Active",
+          "name": "Capvaxive (V116) 21-Valent Pneumococcal Vaccine",
+          "phase": "Approved",
+          "status": "Approved",
           "category": "vaccines",
-          "indication": "Pneumococcal Disease in Adults",
+          "indication": "Pneumococcal disease in adults and in at-risk children aged 2 to 17",
           "enrollment": 6400,
           "startDate": "2023-09",
-          "estimatedCompletion": "2026-06",
           "description": "Next-generation pneumococcal vaccine covering 8 unique serotypes not in current vaccines.",
           "primaryEndpoints": [
             "Opsonophagocytic activity",
             "IgG geometric mean concentrations"
           ],
           "latestUpdate": {
-            "date": "2026-02-09",
-            "summary": "Met all primary endpoints. BLA submitted to FDA; approval expected H2 2026."
+            "date": "2026-06-18",
+            "summary": "The FDA approved an additional indication for Capvaxive covering children and adolescents aged 2 to 17 at increased risk of pneumococcal disease, extending the 21-valent conjugate vaccine beyond adults. Capvaxive sales reached $184 million in the second quarter of 2026, up 42 per cent. An ACIP recommendation for the paediatric risk group is still outstanding.",
+            "source": "https://www.merck.com/news/merck-highlights-key-regulatory-and-clinical-milestones-across-broad-diverse-pipeline/"
           },
-          "leadInvestigators": [],
           "sites": 180,
           "countries": [
             "USA",
@@ -838,24 +898,24 @@
         },
         {
           "id": "sotatercept",
-          "name": "Sotatercept (PAH Treatment)",
+          "name": "Sotatercept (Winrevair), HYPERION and ZENITH",
           "phase": "Phase 3 (HYPERION)",
-          "status": "Active",
+          "status": "Approved",
           "category": "cardiovascular",
           "indication": "Pulmonary Arterial Hypertension",
           "enrollment": 600,
           "startDate": "2024-07",
-          "estimatedCompletion": "2027-09",
+          "registryId": "NCT04896008",
           "description": "First-in-class activin signaling inhibitor as monotherapy for treatment-naive PAH.",
           "primaryEndpoints": [
             "6-minute walk distance",
             "Time to clinical worsening"
           ],
           "latestUpdate": {
-            "date": "2026-02-04",
-            "summary": "FDA approved Winrevair (sotatercept) March 2024. HYPERION study exploring expanded use ongoing."
+            "date": "2026-08-04",
+            "summary": "Merck reported second-quarter 2026 Winrevair sales of $588 million, up 75 per cent, on continued US uptake and early launches in Japan and Europe. Both flagship Phase 3 studies have closed out: ZENITH completed in February 2025 after stopping early for efficacy, and HYPERION was likewise halted ahead of schedule for benefit rather than for failure. A label expansion filing has not been disclosed.",
+            "source": "https://www.merck.com/news/merck-highlights-key-regulatory-and-clinical-milestones-across-broad-diverse-pipeline/"
           },
-          "leadInvestigators": [],
           "sites": 110,
           "countries": [
             "USA",
@@ -864,6 +924,49 @@
             "UK",
             "Italy"
           ]
+        },
+        {
+          "id": "enlicitide",
+          "name": "Enlicitide Decanoate (Lipfendra), CORALreef",
+          "phase": "Phase 3",
+          "status": "Approved",
+          "category": "rare-diseases",
+          "indication": "LDL-cholesterol lowering — first oral PCSK9 inhibitor",
+          "enrollment": 14550,
+          "startDate": "2023-10",
+          "estimatedCompletion": "2029-11",
+          "registryId": "NCT06008756",
+          "description": "First once-daily oral PCSK9 inhibitor, approved on LDL lowering while a 14,550-patient cardiovascular outcomes trial continues.",
+          "primaryEndpoints": [
+            "Percentage change in LDL cholesterol",
+            "Major adverse cardiovascular events"
+          ],
+          "latestUpdate": {
+            "date": "2026-07-15",
+            "summary": "The FDA approved enlicitide decanoate as Lipfendra, which Merck describes as the first and only once-daily oral PCSK9 inhibitor, for lowering LDL cholesterol. The CORALreef Outcomes cardiovascular trial continues to a 2029 primary completion.",
+            "source": "https://www.fda.gov/drugs/novel-drug-approvals-fda/novel-drug-approvals-2026"
+          }
+        },
+        {
+          "id": "alimatravir",
+          "name": "Alimatravir (MK-8527), EXPrESSIVE",
+          "phase": "Phase 3",
+          "status": "Recruiting",
+          "category": "infectious",
+          "indication": "Once-monthly oral HIV-1 pre-exposure prophylaxis",
+          "enrollment": 8970,
+          "startDate": "2025-07",
+          "estimatedCompletion": "2027-07",
+          "registryId": "NCT07044297",
+          "description": "A once-monthly pill would be the first oral alternative to injectable long-acting PrEP.",
+          "primaryEndpoints": [
+            "Incidence of HIV-1 infection"
+          ],
+          "latestUpdate": {
+            "date": "2026-07-24",
+            "summary": "Merck announced initial access plans for alimatravir, an investigational once-monthly oral HIV pre-exposure prophylaxis still in Phase 3 — unusually early access planning for a pre-approval asset. The two Phase 3 studies read out in July and October 2027.",
+            "source": "https://clinicaltrials.gov/study/NCT07044297"
+          }
         }
       ]
     },
@@ -879,29 +982,29 @@
         "Respiratory",
         "Immunology"
       ],
-      "marketCap": "$198.4B",
+      "marketCap": "$257.6B",
       "website": "https://www.astrazeneca.com",
       "trials": [
         {
           "id": "dato-dxd",
-          "name": "Dato-DXd (Trop2-directed ADC)",
+          "name": "Datopotamab Deruxtecan (Datroway, Trop2 ADC)",
           "phase": "Phase 3",
-          "status": "Active",
+          "status": "Approved",
           "category": "oncology",
-          "indication": "HR+/HER2- Metastatic Breast Cancer",
+          "indication": "HR+/HER2- and first-line triple-negative metastatic breast cancer; EGFR-mutated NSCLC",
           "enrollment": 930,
           "startDate": "2022-09",
-          "estimatedCompletion": "2026-04",
+          "estimatedCompletion": "2027-07",
           "description": "Antibody-drug conjugate targeting Trop2 with novel topoisomerase I inhibitor payload.",
           "primaryEndpoints": [
             "Progression-free survival",
             "Overall survival"
           ],
           "latestUpdate": {
-            "date": "2026-02-21",
-            "summary": "Met primary PFS endpoint with 6.9 month improvement vs chemotherapy. FDA filing imminent."
+            "date": "2026-07-31",
+            "summary": "Datroway won European Union approval for first-line metastatic triple-negative breast cancer, following a CHMP positive opinion on 26 June and the FDA approval of the same indication on 22 May 2026 for patients who are not candidates for PD-1/PD-L1 inhibitors. It is the third approved indication. TROPION-Breast05 reads out in July 2027.",
+            "source": "https://www.fda.gov/drugs/resources-information-approved-drugs/oncology-cancerhematologic-malignancies-approval-notifications"
           },
-          "leadInvestigators": [],
           "sites": 175,
           "countries": [
             "USA",
@@ -914,23 +1017,22 @@
         {
           "id": "nirsevimab-infants",
           "name": "Nirsevimab (Beyfortus) Effectiveness Study",
-          "phase": "Phase 4",
-          "status": "Active",
+          "phase": "Post-approval",
+          "status": "Approved",
           "category": "infectious",
           "indication": "RSV Prevention in Infants",
           "enrollment": 25000,
           "startDate": "2025-07",
-          "estimatedCompletion": "2027-06",
           "description": "Real-world effectiveness study of long-acting RSV monoclonal antibody in infants.",
           "primaryEndpoints": [
             "RSV hospitalization rate",
             "Medically attended RSV"
           ],
           "latestUpdate": {
-            "date": "2026-02-13",
-            "summary": "First full RSV season data shows 83% reduction in hospitalizations vs historical controls."
+            "date": "2026-09-14",
+            "summary": "Real-world evidence reported nirsevimab immunisation to be about 97 per cent effective against RSV-related infant ICU admission and associated with roughly a 79 per cent lower risk of RSV hospitalisation, a month after separate data showed the antibody’s protection does not carry into a second RSV season.",
+            "source": "https://www.ema.europa.eu/en/medicines/human/EPAR/beyfortus"
           },
-          "leadInvestigators": [],
           "sites": 500,
           "countries": [
             "USA",
@@ -944,22 +1046,23 @@
           "id": "volrustomig",
           "name": "Volrustomig (PD-1/CTLA-4 Bispecific)",
           "phase": "Phase 3",
-          "status": "Active",
+          "status": "Discontinued",
           "category": "oncology",
-          "indication": "1L Metastatic NSCLC",
+          "indication": "1L metastatic NSCLC discontinued; cervical cancer, mesothelioma and head and neck continue",
           "enrollment": 1100,
           "startDate": "2024-11",
-          "estimatedCompletion": "2028-03",
+          "estimatedCompletion": "2027-11",
+          "registryId": "NCT05984277",
           "description": "Novel bispecific antibody combining PD-1 and CTLA-4 blockade in single molecule.",
           "primaryEndpoints": [
             "Overall survival",
             "Progression-free survival"
           ],
           "latestUpdate": {
-            "date": "2026-01-22",
-            "summary": "Phase 2 showed 48% ORR in PD-L1 high patients. Pivotal Phase 3 enrollment progressing well."
+            "date": "2026-08-17",
+            "summary": "AstraZeneca discontinued the Phase 3 eVOLVE-Lung02 trial in first-line metastatic non-small cell lung cancer after an independent data monitoring committee found at a planned interim review that volrustomig was unlikely to beat pembrolizumab plus chemotherapy on either progression-free or overall survival. Phase 3 studies in cervical cancer, mesothelioma and head and neck cancer continue, the first reading out in November 2027.",
+            "source": "https://www.biospace.com/drug-development/astrazeneca-pulls-plug-on-late-stage-lung-cancer-trial-taking-another-clinical-blow"
           },
-          "leadInvestigators": [],
           "sites": 220,
           "countries": [
             "USA",
@@ -968,6 +1071,48 @@
             "South Korea",
             "Germany"
           ]
+        },
+        {
+          "id": "tozorakimab",
+          "name": "Tozorakimab (Anti-IL-33), OBERON and TITANIA",
+          "phase": "Phase 3",
+          "status": "Completed",
+          "category": "infectious",
+          "indication": "Symptomatic chronic obstructive pulmonary disease",
+          "enrollment": 2304,
+          "startDate": "2022-01",
+          "estimatedCompletion": "2026-03",
+          "registryId": "NCT05158387",
+          "description": "Anti-IL-33 monoclonal antibody in COPD — the same target Sanofi abandoned with itepekimab, with the opposite result.",
+          "primaryEndpoints": [
+            "Annualised rate of moderate or severe COPD exacerbations"
+          ],
+          "latestUpdate": {
+            "date": "2026-09-08",
+            "summary": "AstraZeneca reported full Phase 3 results showing tozorakimab produced statistically significant and clinically meaningful reductions in COPD exacerbations across both pivotal trials and across eosinophil levels, described as a first for the anti-IL-33 class. Topline wins were announced on 27 March and 6 May 2026.",
+            "source": "https://clinicaltrials.gov/study/NCT05158387"
+          }
+        },
+        {
+          "id": "camizestrant",
+          "name": "Camizestrant (Etcamah), SERENA-6",
+          "phase": "Phase 3",
+          "status": "Approved",
+          "category": "oncology",
+          "indication": "ESR1-mutated HR+/HER2- advanced breast cancer",
+          "enrollment": null,
+          "startDate": null,
+          "estimatedCompletion": null,
+          "registryId": null,
+          "description": "Next-generation oral SERD, switched onto when an ESR1 resistance mutation emerges in circulating tumour DNA rather than when the scan changes.",
+          "primaryEndpoints": [
+            "Progression-free survival"
+          ],
+          "latestUpdate": {
+            "date": "2026-09-04",
+            "summary": "The FDA approved camizestrant with a CDK4/6 inhibitor for ESR1-mutated, HR-positive, HER2-negative advanced breast cancer, opening a ctDNA-guided treatment paradigm. The approval came despite a negative advisory committee vote on 30 April 2026 and a review-date extension announced on 27 May.",
+            "source": "https://www.fda.gov/drugs/novel-drug-approvals-fda/novel-drug-approvals-2026"
+          }
         }
       ]
     },
@@ -983,29 +1128,28 @@
         "Vaccines",
         "Rare Diseases"
       ],
-      "marketCap": "$132.6B",
+      "marketCap": "$101.8B",
       "website": "https://www.sanofi.com",
       "trials": [
         {
           "id": "dupixent-copd",
           "name": "Dupixent in Type 2 COPD",
-          "phase": "Phase 3",
-          "status": "Active",
+          "phase": "Approved",
+          "status": "Approved",
           "category": "respiratory",
           "indication": "COPD with Type 2 Inflammation",
           "enrollment": 1800,
           "startDate": "2023-05",
-          "estimatedCompletion": "2026-03",
           "description": "IL-4/IL-13 blockade for COPD patients with eosinophilic phenotype.",
           "primaryEndpoints": [
             "Annualized rate of moderate/severe exacerbations",
             "FEV1 change"
           ],
           "latestUpdate": {
-            "date": "2026-02-22",
-            "summary": "Primary endpoint met with 30% reduction in exacerbations. First biologic therapy for COPD potentially launching 2026."
+            "date": "2026-09-15",
+            "summary": "Analyses presented around the European Respiratory Society 2026 congress showed Dupixent reduced COPD exacerbations consistently across seasons and smoking status. In the same year the drug won the first FDA approval for allergic fungal rhinosinusitis in February 2026 and an expansion into chronic spontaneous urticaria in children aged 2 to 11 in April, with quarterly sales passing EUR 5 billion for the first time.",
+            "source": "https://www.sanofi.com/assets/dotcom/pressreleases/2026/2026-07-30-05-30-00-3335767-en.pdf"
           },
-          "leadInvestigators": [],
           "sites": 280,
           "countries": [
             "USA",
@@ -1019,23 +1163,23 @@
         {
           "id": "itepekimab",
           "name": "Itepekimab (Anti-IL-33)",
-          "phase": "Phase 3",
-          "status": "Active",
+          "phase": "Phase 3 (discontinued)",
+          "status": "Discontinued",
           "category": "respiratory",
           "indication": "Moderate-to-Severe Asthma",
           "enrollment": 2200,
           "startDate": "2024-04",
-          "estimatedCompletion": "2027-06",
+          "registryId": "NCT04701983",
           "description": "Monoclonal antibody targeting IL-33, a key upstream cytokine in allergic inflammation.",
           "primaryEndpoints": [
             "Severe exacerbation rate",
             "Pre-bronchodilator FEV1"
           ],
           "latestUpdate": {
-            "date": "2026-01-18",
-            "summary": "Phase 2b showed benefit across all asthma phenotypes including those not responsive to existing biologics."
+            "date": "2026-07-30",
+            "summary": "Sanofi confirmed with its second-quarter 2026 results that it is discontinuing the entire itepekimab clinical development programme, including all chronic rhinosinusitis studies, after assessing the split Phase 3 AERIFY-1 and AERIFY-2 COPD results and the arrival of competing approved COPD biologics. Balinatunfib was discontinued at the same time.",
+            "source": "https://www.sanofi.com/assets/dotcom/pressreleases/2026/2026-07-30-05-30-00-3335767-en.pdf"
           },
-          "leadInvestigators": [],
           "sites": 190,
           "countries": [
             "USA",
@@ -1047,24 +1191,24 @@
         },
         {
           "id": "rilzabrutinib",
-          "name": "Rilzabrutinib (BTK Inhibitor)",
-          "phase": "Phase 3",
-          "status": "Active",
+          "name": "Rilzabrutinib (Wayrilz, BTK Inhibitor)",
+          "phase": "Approved",
+          "status": "Approved",
           "category": "rare-diseases",
           "indication": "Immune Thrombocytopenia (ITP)",
           "enrollment": 300,
           "startDate": "2024-09",
-          "estimatedCompletion": "2026-12",
+          "registryId": "NCT04562766",
           "description": "Oral reversible BTK inhibitor for chronic ITP patients.",
           "primaryEndpoints": [
             "Durable platelet response",
             "Reduction in bleeding events"
           ],
           "latestUpdate": {
-            "date": "2026-02-07",
-            "summary": "Phase 2 showed 50% durable response rate. Potential first oral therapy for ITP."
+            "date": "2026-06-23",
+            "summary": "Wayrilz was approved in Japan for immune thrombocytopenia, completing approvals across the three major markets after US clearance in August 2025 and European Commission authorisation on 22 December 2025.",
+            "source": "https://www.ema.europa.eu/en/medicines/human/EPAR/wayrilz"
           },
-          "leadInvestigators": [],
           "sites": 85,
           "countries": [
             "USA",

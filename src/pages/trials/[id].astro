@@ -102,7 +102,7 @@ function formatDate(dateStr: string): string {
                         <line x1="2" y1="12" x2="22" y2="12"/>
                         <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
                     </svg>
-                    <span class="stat-value">{trial.countries?.length || 0}</span>
+                    <span class="stat-value">{trial.countries?.length || 'N/A'}</span>
                     <span class="stat-label">Countries</span>
                 </div>
                 <div class="stat-card">
@@ -114,6 +114,18 @@ function formatDate(dateStr: string): string {
                     </svg>
                     <span class="stat-value">{formatDate(trial.estimatedCompletion)}</span>
                     <span class="stat-label">Est. Completion</span>
+                </div>
+                <div class="stat-card">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <path d="M14 2v6h6M16 13H8M16 17H8"/>
+                    </svg>
+                    {trial.registryId ? (
+                        <a class="stat-value stat-value--link" href={`https://clinicaltrials.gov/study/${trial.registryId}`} target="_blank" rel="noopener noreferrer">{trial.registryId}</a>
+                    ) : (
+                        <span class="stat-value">N/A</span>
+                    )}
+                    <span class="stat-label">Registry Record</span>
                 </div>
             </div>
 
@@ -151,45 +163,9 @@ function formatDate(dateStr: string): string {
                             <div class="update-card">
                                 <span class="update-date">{formatDate(trial.latestUpdate.date)}</span>
                                 <p>{trial.latestUpdate.summary}</p>
-                            </div>
-                        </section>
-                    )}
-
-                    <!-- Lead Investigators -->
-                    {trial.leadInvestigators && trial.leadInvestigators.length > 0 && (
-                        <section class="content-section">
-                            <h2>Lead Investigators</h2>
-                            <div class="investigators-list">
-                                {trial.leadInvestigators.map((inv: any) => (
-                                    <div class="investigator-card">
-                                        {inv.mdrpediaSlug ? (
-                                            <a href={`/doctors/${inv.mdrpediaSlug}`} class="investigator-link">
-                                                <div class="investigator-avatar">
-                                                    {inv.name.split(' ').map((n: string) => n[0]).slice(0, 2).join('')}
-                                                </div>
-                                                <div class="investigator-info">
-                                                    <span class="investigator-name">{inv.name}</span>
-                                                    <span class="investigator-role">{inv.role}</span>
-                                                </div>
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-                                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                                                    <polyline points="15 3 21 3 21 9"/>
-                                                    <line x1="10" y1="14" x2="21" y2="3"/>
-                                                </svg>
-                                            </a>
-                                        ) : (
-                                            <div class="investigator-card-inner">
-                                                <div class="investigator-avatar">
-                                                    {inv.name.split(' ').map((n: string) => n[0]).slice(0, 2).join('')}
-                                                </div>
-                                                <div class="investigator-info">
-                                                    <span class="investigator-name">{inv.name}</span>
-                                                    <span class="investigator-role">{inv.role}</span>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-                                ))}
+                                {trial.latestUpdate.source && (
+                                    <a class="update-source" href={trial.latestUpdate.source} target="_blank" rel="noopener noreferrer">Source</a>
+                                )}
                             </div>
                         </section>
                     )}
@@ -496,6 +472,28 @@ function formatDate(dateStr: string): string {
         color: var(--verdant);
         font-weight: 600;
         margin-bottom: 8px;
+    }
+
+    .update-source {
+        display: inline-block;
+        margin-top: 12px;
+        font-size: 0.75rem;
+        font-family: var(--font-mono);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ink-blue);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    .stat-value--link {
+        font-size: 1rem;
+        font-weight: 500;
+        font-family: var(--font-mono);
+        color: var(--ink-blue);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        word-break: break-all;
     }
 
     .update-card p {
