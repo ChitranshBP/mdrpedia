@@ -11,8 +11,8 @@
   "dependencies": {
     "@astrojs/node": "^11.1.6",
     "@astrojs/react": "^6.0.6",
-    "@prisma/adapter-pg": "^7.10.0",
-    "@prisma/client": "^7.10.0",
+    "@prisma/adapter-pg": "^8.1.0-dev.7",
+    "@prisma/client": "^8.1.0-dev.7",
     "@resvg/resvg-js": "^2.6.2",
     "astro": "^7.3.3",
     "cloudinary": "^2.9.0",
@@ -29,7 +29,7 @@
     "satori-html": "^0.3.2",
     "shiki": "^4.4.3",
     "stripe": "^22.0.2",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
@@ -40,7 +40,7 @@
     "@types/react-dom": "^19.2.3",
     "embedded-postgres": "^18.4.0-beta.17",
     "pagefind": "^1.5.2",
-    "prisma": "^7.10.0",
+    "prisma": "^8.1.0-dev.7",
     "tsx": "^4.21.0"
   },
   "allowScripts": {
