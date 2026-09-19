@@ -7,6 +7,7 @@ export const prerender = false;
 import { prisma } from '../../../lib/prisma';
 import { apiError } from '../../../lib/api-response';
 import { checkRateLimit, getClientIdentifier, RATE_LIMITS, rateLimitResponse } from '../../../lib/rate-limit';
+import { requireSession } from '../../../lib/api-auth';
 
 function json(data: unknown, status = 200) {
     return new Response(JSON.stringify(data), {
@@ -19,12 +20,10 @@ export async function GET({ request }: { request: Request }) {
     const rateCheck = checkRateLimit(getClientIdentifier(request), RATE_LIMITS.ethicsPublic);
     if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime);
 
-    const url = new URL(request.url);
-    const profileId = url.searchParams.get('profile_id');
-
-    if (!profileId) {
-        return json({ error: 'profile_id is required' }, 400);
-    }
+    // The caller's own certification record only — never one named in the query string.
+    const auth = await requireSession(request);
+    if (!auth.ok) return auth.response;
+    const profileId = auth.session.profileId;
 
     try {
         const profile = await prisma.profile.findUnique({

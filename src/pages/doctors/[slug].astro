@@ -6,7 +6,6 @@
  */
 
 import DoctorProfileRevamp from "../../layouts/DoctorProfileRevamp.astro";
-import HiddenAIContext from "../../components/SEO/HiddenAIContext.astro";
 import { getEntry } from "astro:content";
 import { prisma } from "../../lib/prisma";
 import type { ProfileData } from "../../lib/types";
@@ -168,5 +167,4 @@ if (dbProfile) {
 
 ---
 
-<HiddenAIContext doctor={doctorSource as any} />
 <DoctorProfileRevamp doctor={profileData} profileId={resolvedProfileId} />

@@ -37,7 +37,6 @@ import ControversiesTimeline from "../components/AI/ControversiesTimeline.astro"
 import MisconceptionsTable from "../components/AI/MisconceptionsTable.astro";
 import ClinicalScenarios from "../components/AI/ClinicalScenarios.astro";
 import AIContentSchema from "../components/AI/AIContentSchema.astro";
-import HiddenAIContext from "../components/SEO/HiddenAIContext.astro";
 
 // AI-Optimized Content Components (Phase 2)
 import MentorshipTree from "../components/AI/MentorshipTree.astro";
@@ -262,7 +261,6 @@ function slugifyInstitution(name: string): string {
     )}
 
     <!-- Hidden AI Context for LLM crawlers -->
-    <HiddenAIContext doctor={doctor as any} />
 
     <!-- Medical Knowledge Graph: Interconnected Doctor → Hospital → Technique → Citation -->
     <MedicalKnowledgeGraph
@@ -397,7 +395,6 @@ function slugifyInstitution(name: string): string {
                                 <span 
                                     class="metric__value js-counter" 
                                     data-target={doctor.livesSaved}
-                                    data-live-increment="true"
                                 >
                                     {doctor.livesSaved.toLocaleString()}
                                 </span>
@@ -415,7 +412,6 @@ function slugifyInstitution(name: string): string {
                                 <span
                                     class="metric__value js-counter"
                                     data-target={totalImpact}
-                                    data-live-increment="true"
                                 >
                                     {totalImpact.toLocaleString()}
                                 </span>
@@ -2911,8 +2907,6 @@ function slugifyInstitution(name: string): string {
         const duration = 2000; // 2 seconds
         const start = 0;
         const startTime = performance.now();
-        const isLive = el.dataset.liveIncrement === "true";
-
         function update(currentTime: number) {
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
@@ -2927,38 +2921,12 @@ function slugifyInstitution(name: string): string {
                 requestAnimationFrame(update);
             } else {
                 el.textContent = target.toLocaleString();
-                if (isLive) {
-                    startLiveIncrement(el, target);
-                }
             }
         }
 
         requestAnimationFrame(update);
     }
 
-    function startLiveIncrement(el: HTMLElement, startValue: number) {
-        let currentValue = startValue;
-        
-        // Random increment between 5s and 15s
-        function scheduleNext() {
-            const delay = 5000 + Math.random() * 10000;
-            setTimeout(() => {
-                currentValue++;
-                el.textContent = currentValue.toLocaleString();
-                
-                // Add a subtle highlight effect
-                el.style.color = '#10b981'; // Green flash
-                el.style.transition = 'color 0.3s';
-                setTimeout(() => {
-                    el.style.color = '';
-                }, 300);
-
-                scheduleNext();
-            }, delay);
-        }
-
-        scheduleNext();
-    }
 </script>
 
 <script>

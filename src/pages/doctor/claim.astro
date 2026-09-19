@@ -6,13 +6,25 @@ export const prerender = true;
  */
 import Layout from "../../layouts/Layout.astro";
 import NPIClaimWizard from "../../components/NPIClaimWizard";
+import { getCollection } from "astro:content";
 
-// Trust statistics
+// Registry figures come from the collection so the page cannot claim
+// more than the register actually holds.
+const doctors = await getCollection("doctors");
+const citationsTracked = doctors.reduce(
+    (total, d) => total + (d.data.citations?.length ?? 0),
+    0,
+);
+
 const stats = {
-    verifiedDoctors: "104,000+",
-    countries: "78",
-    specialties: "150+",
-    citationsTracked: "2.5M+"
+    verifiedDoctors: doctors.length.toLocaleString(),
+    countries: new Set(
+        doctors.map((d) => d.data.geography?.country).filter(Boolean),
+    ).size.toLocaleString(),
+    specialties: new Set(
+        doctors.map((d) => d.data.specialty).filter(Boolean),
+    ).size.toLocaleString(),
+    citationsTracked: citationsTracked.toLocaleString(),
 };
 
 // Benefits of claiming
@@ -83,33 +95,9 @@ const faqs = [
     }
 ];
 
-// Testimonials
-const testimonials = [
-    {
-        quote: "Claiming my MDRPedia profile increased patient referrals by 40%. The verification badge adds instant credibility.",
-        name: "Dr. Sarah Chen",
-        title: "Chief of Cardiac Surgery",
-        institution: "Stanford Medical Center",
-        tier: "TITAN"
-    },
-    {
-        quote: "The lineage feature connected me with surgeons trained by my mentor across three continents. Incredible for collaboration.",
-        name: "Dr. Michael Okonkwo",
-        title: "Transplant Surgeon",
-        institution: "Cleveland Clinic",
-        tier: "ELITE"
-    },
-    {
-        quote: "Finally, a platform that accurately represents my research impact. The citation tracking is unmatched.",
-        name: "Dr. Elena Vasquez",
-        title: "Neurosurgery Research Director",
-        institution: "Johns Hopkins",
-        tier: "TITAN"
-    }
-];
 ---
 
-<Layout title="Claim Your Profile — MDRPedia" description="Verify and claim your MDRPedia profile. Join 104,000+ verified physicians managing their digital authority.">
+<Layout title="Claim Your Profile — MDRPedia" description="Verify and claim your MDRPedia profile. Take control of how your credentials, research and impact are recorded.">
     <div class="claim-page">
         <!-- Hero Section -->
         <section class="claim-hero">
@@ -136,7 +124,7 @@ const testimonials = [
                     </h1>
 
                     <p class="hero-subtitle">
-                        Join <strong>{stats.verifiedDoctors}</strong> verified physicians who control their digital presence on MDRPedia — the global authority for medical professional profiles.
+                        MDRPedia records <strong>{stats.verifiedDoctors}</strong> physicians. Claim yours to control how your credentials, research and impact are published.
                     </p>
 
                     <!-- Trust Indicators -->
@@ -323,44 +311,6 @@ const testimonials = [
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Testimonials -->
-        <section class="testimonials-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Trusted by Leading Physicians</h2>
-                    <p>See what verified doctors are saying</p>
-                </div>
-
-                <div class="testimonials-grid">
-                    {testimonials.map((testimonial) => (
-                        <div class={`testimonial-card tier-${testimonial.tier.toLowerCase()}`}>
-                            <div class="testimonial-quote">
-                                <svg class="quote-icon" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"/>
-                                </svg>
-                                <p>"{testimonial.quote}"</p>
-                            </div>
-                            <div class="testimonial-author">
-                                <div class="author-avatar">
-                                    {testimonial.name.charAt(4)}
-                                </div>
-                                <div class="author-info">
-                                    <div class="author-name">
-                                        {testimonial.name}
-                                        <span class={`tier-badge tier-${testimonial.tier.toLowerCase()}`}>
-                                            {testimonial.tier}
-                                        </span>
-                                    </div>
-                                    <div class="author-title">{testimonial.title}</div>
-                                    <div class="author-institution">{testimonial.institution}</div>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
                 </div>
             </div>
         </section>
@@ -897,93 +847,17 @@ const testimonials = [
 
     /* ─── Testimonials Section ──────────────────────────────────────────────── */
 
-    .testimonials-section {
-        padding: 100px 0;
-        background: var(--paper-2);
-    }
 
-    .testimonials-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-        gap: 24px;
-        max-width: 1100px;
-        margin: 0 auto;
-    }
 
-    .testimonial-card {
-        padding: 28px;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        transition: all var(--t-base) var(--ease);
-    }
 
-    .testimonial-card:hover {
-        border-color: var(--ink-blue);
-        transform: translateY(-4px);
-        box-shadow: var(--shadow-2);
-    }
 
-    .testimonial-card.tier-titan {
-        background: var(--titan-bg);
-        border-color: var(--titan-border);
-    }
 
-    .testimonial-card.tier-elite {
-        background: var(--elite-bg);
-        border-color: var(--elite-border);
-    }
 
-    .testimonial-quote {
-        position: relative;
-        margin-bottom: 24px;
-    }
 
-    .quote-icon {
-        position: absolute;
-        top: -8px;
-        left: -8px;
-        width: 32px;
-        height: 32px;
-        color: var(--ink-blue-2);
-    }
 
-    .testimonial-quote p {
-        font-size: 1rem;
-        color: var(--text-secondary);
-        line-height: 1.6;
-        padding-left: 24px;
-        font-style: italic;
-        font-family: var(--font-serif);
-    }
 
-    .testimonial-author {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-    }
 
-    .author-avatar {
-        width: 48px;
-        height: 48px;
-        background: var(--ink-blue);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.1rem;
-        font-weight: 500;
-        color: var(--paper);
-    }
 
-    .author-name {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.95rem;
-        font-weight: 500;
-        color: var(--ink);
-    }
 
     .tier-badge {
         padding: 2px 8px;
@@ -1004,15 +878,7 @@ const testimonials = [
         color: var(--ink-blue);
     }
 
-    .author-title {
-        font-size: 0.85rem;
-        color: var(--text-secondary);
-    }
 
-    .author-institution {
-        font-size: 0.8rem;
-        color: var(--text-muted);
-    }
 
     /* ─── FAQ Section ───────────────────────────────────────────────────────── */
 
@@ -1178,9 +1044,6 @@ const testimonials = [
         }
 
         .benefits-grid,
-        .testimonials-grid {
-            grid-template-columns: 1fr;
-        }
 
         .faq-answer {
             padding-left: 24px;

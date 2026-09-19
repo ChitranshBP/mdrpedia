@@ -7,6 +7,7 @@ export const prerender = false;
 import { prisma } from '../../../lib/prisma';
 import { apiError } from '../../../lib/api-response';
 import { checkRateLimit, getClientIdentifier, RATE_LIMITS, rateLimitResponse } from '../../../lib/rate-limit';
+import { requireApplicationOwner } from '../../../lib/api-auth';
 
 function json(data: unknown, status = 200) {
     return new Response(JSON.stringify(data), {
@@ -30,6 +31,9 @@ export async function POST({ request }: { request: Request }) {
         if (!agreed_to_terms) {
             return json({ error: 'Must agree to terms and conditions' }, 400);
         }
+
+        const auth = await requireApplicationOwner(request, application_id);
+        if (!auth.ok) return auth.response;
 
         const app = await prisma.ethicsApplication.findUnique({ where: { id: application_id } });
         if (!app) return json({ error: 'Application not found' }, 404);

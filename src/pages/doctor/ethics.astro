@@ -1,18 +1,26 @@
 ---
 /**
  * MDRPedia — Doctor Ethics Dashboard
- * Doctors can view their ethics certification status, score, checklist, and upload evidence
- * If no profile_id provided, shows a lookup form instead of redirecting (fixes infinite loop)
+ * A doctor's own ethics certification status, score, checklist and evidence.
+ *
+ * The acting profile is derived from the session cookie. It is never read from
+ * the query string: doing so let any visitor open any doctor's ethics file.
  */
 import Layout from "../../layouts/Layout.astro";
 import { prisma } from "../../lib/prisma";
+import { getSession } from "../../lib/auth";
 import { scoreBand } from "../../lib/ethics-score";
 import { isStripeConfigured } from "../../lib/stripe";
 
 export const prerender = false;
 
+const session = await getSession(Astro.request);
+if (!session) {
+    return Astro.redirect("/login?error=not_authenticated&redirect=/doctor/ethics");
+}
+
 const url = new URL(Astro.request.url);
-const profileId = url.searchParams.get("profile_id");
+const profileId = session.profileId;
 const paymentStatus = url.searchParams.get("payment");
 
 let profile: any = null;
@@ -21,9 +29,8 @@ let latestAudit: any = null;
 let band: string | null = null;
 let templates: any[] = [];
 let subscription: any = null;
-let lookupMode = false;
 
-if (profileId) {
+{
     profile = await prisma.profile.findUnique({
         where: { id: profileId },
         select: {
@@ -54,9 +61,7 @@ if (profileId) {
         },
     });
 
-    if (!profile) {
-        lookupMode = true;
-    } else {
+    if (profile) {
         application = profile.ethics_applications[0] || null;
         latestAudit = application?.audits?.[0] || null;
         band = profile.ethics_score ? scoreBand(profile.ethics_score) : null;
@@ -68,8 +73,6 @@ if (profileId) {
             where: { profile_id: profileId },
         });
     }
-} else {
-    lookupMode = true;
 }
 
 const stripeEnabled = isStripeConfigured();
@@ -101,33 +104,16 @@ const categoryLabels: Record<string, string> = {
     <div class="ethics-dash">
         <div class="container">
 
-            {/* ── Profile Lookup Mode ─────────────────────── */}
-            {lookupMode && (
+            {/* ── Session profile missing ─────────────────── */}
+            {!profile && (
                 <div class="lookup-section">
                     <span class="eyebrow">Ethics Certification</span>
-                    <h1>Find Your Profile</h1>
+                    <h1>Profile unavailable</h1>
                     <p class="lookup-desc">
-                        Enter your name or MDRPedia slug to access your ethics certification dashboard.
+                        We could not load the profile linked to your account. Please sign in again,
+                        or <a href="/contact">contact us</a> if this keeps happening.
                     </p>
-                    <form id="lookup-form" class="lookup-form">
-                        <input
-                            type="text"
-                            id="lookup-input"
-                            name="query"
-                            placeholder="Search by name or slug..."
-                            required
-                            autocomplete="off"
-                        />
-                        <button type="submit" class="btn btn--primary" id="lookup-btn">Search</button>
-                    </form>
-                    <div id="lookup-results" class="lookup-results" style="display:none;"></div>
-                    <div id="lookup-error" class="lookup-error" style="display:none;"></div>
-
-                    {profileId && !profile && (
-                        <div class="lookup-error" style="display:block;">
-                            Profile not found. Please search for your profile below.
-                        </div>
-                    )}
+                    <a href="/login" class="btn btn--primary">Sign in again</a>
                 </div>
             )}
 
@@ -228,7 +214,7 @@ const categoryLabels: Record<string, string> = {
                                         </div>
                                     )}
                                     {subscription.stripe_customer_id && (
-                                        <button class="btn btn--sm btn--outline" id="manage-subscription" data-profile-id={profile.id}>
+                                        <button class="btn btn--sm btn--outline" id="manage-subscription">
                                             Manage Subscription
                                         </button>
                                     )}
@@ -240,10 +226,10 @@ const categoryLabels: Record<string, string> = {
                             )}
                             {profile.ethics_tier === 'ADVOCATE' && (
                                 <div class="upgrade-buttons">
-                                    <button class="btn btn--sm btn--outline" data-upgrade="GUARDIAN_TIER" data-profile-id={profile.id}>
+                                    <button class="btn btn--sm btn--outline" data-upgrade="GUARDIAN_TIER">
                                         Upgrade to Guardian
                                     </button>
-                                    <button class="btn btn--sm btn--outline" data-upgrade="LEGEND_TIER" data-profile-id={profile.id}>
+                                    <button class="btn btn--sm btn--outline" data-upgrade="LEGEND_TIER">
                                         Upgrade to Legend
                                     </button>
                                 </div>
@@ -269,7 +255,7 @@ const categoryLabels: Record<string, string> = {
                                         <option value="LEGEND">Legend (Paid, Score 90+)</option>
                                     </select>
                                 </div>
-                                <button type="submit" class="btn btn--primary" id="apply-btn" data-profile-id={profile.id}>
+                                <button type="submit" class="btn btn--primary" id="apply-btn">
                                     Apply Now
                                 </button>
                             </form>
@@ -398,11 +384,11 @@ const categoryLabels: Record<string, string> = {
                             {(latestAudit.status === 'DRAFT') && (
                                 <div class="checkin-actions">
                                     <button class="btn btn--outline" id="save-draft-btn"
-                                        data-audit-id={latestAudit.id} data-profile-id={profile.id}>
+                                        data-audit-id={latestAudit.id}>
                                         Save Draft
                                     </button>
                                     <button class="btn btn--primary" id="submit-checkin-btn"
-                                        data-audit-id={latestAudit.id} data-profile-id={profile.id}>
+                                        data-audit-id={latestAudit.id}>
                                         Submit Check-in
                                     </button>
                                 </div>
@@ -438,7 +424,7 @@ const categoryLabels: Record<string, string> = {
     </div>
 </Layout>
 
-<script define:vars={{ profileId }}>
+<script is:inline>
     // ── Utility: disable/enable button with loading text ──────────
     function setLoading(btn, loading, text) {
         if (!btn) return;
@@ -449,49 +435,6 @@ const categoryLabels: Record<string, string> = {
         } else {
             btn.textContent = btn.dataset.originalText || btn.textContent;
         }
-    }
-
-    // ── Profile Lookup ──────────────────────────────────────────────
-    const lookupForm = document.getElementById('lookup-form');
-    if (lookupForm) {
-        lookupForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const input = document.getElementById('lookup-input');
-            const resultsDiv = document.getElementById('lookup-results');
-            const errorDiv = document.getElementById('lookup-error');
-            const btn = document.getElementById('lookup-btn');
-            const query = input.value.trim();
-            if (!query) return;
-
-            setLoading(btn, true, 'Searching...');
-            errorDiv.style.display = 'none';
-            resultsDiv.style.display = 'none';
-
-            try {
-                const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=5`);
-                const data = await res.json();
-                const results = data.results || data.doctors || [];
-
-                if (results.length === 0) {
-                    errorDiv.textContent = 'No profiles found. Try a different name or slug.';
-                    errorDiv.style.display = 'block';
-                    return;
-                }
-
-                resultsDiv.innerHTML = results.map(r =>
-                    `<a href="/doctor/ethics?profile_id=${r.id}" class="lookup-result">
-                        <strong>${r.full_name || r.fullName}</strong>
-                        <span>${r.specialty || ''}</span>
-                    </a>`
-                ).join('');
-                resultsDiv.style.display = 'block';
-            } catch (err) {
-                errorDiv.textContent = 'Search failed. Please try again.';
-                errorDiv.style.display = 'block';
-            } finally {
-                setLoading(btn, false);
-            }
-        });
     }
 
     // ── Apply Form ──────────────────────────────────────────────────
@@ -511,7 +454,6 @@ const categoryLabels: Record<string, string> = {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        profile_id: btn.dataset.profileId,
                         target_tier: tier,
                         contact_email: email,
                     })
@@ -561,7 +503,7 @@ const categoryLabels: Record<string, string> = {
     }
 
     // ── Check-in: Collect items and submit ──────────────────────────
-    async function collectAndSubmitItems(auditId, profileIdVal, setStatus) {
+    async function collectAndSubmitItems(auditId, setStatus) {
         const items = [];
         const textareas = document.querySelectorAll('.item-response');
         for (const ta of textareas) {
@@ -579,7 +521,6 @@ const categoryLabels: Record<string, string> = {
                 const file = input.files[0];
                 const formData = new FormData();
                 formData.append('file', file);
-                formData.append('profile_id', profileIdVal);
                 formData.append('audit_id', auditId);
 
                 const uploadRes = await fetch('/api/ethics/upload-evidence', {
@@ -629,7 +570,6 @@ const categoryLabels: Record<string, string> = {
             try {
                 const ok = await collectAndSubmitItems(
                     saveDraftBtn.dataset.auditId,
-                    saveDraftBtn.dataset.profileId,
                     'draft'
                 );
                 if (ok) {
@@ -650,7 +590,6 @@ const categoryLabels: Record<string, string> = {
             try {
                 const ok = await collectAndSubmitItems(
                     submitCheckinBtn.dataset.auditId,
-                    submitCheckinBtn.dataset.profileId,
                     'submit'
                 );
                 if (ok) {
@@ -671,7 +610,7 @@ const categoryLabels: Record<string, string> = {
                 const res = await fetch('/api/ethics/portal', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ profile_id: manageSubBtn.dataset.profileId }),
+                    body: JSON.stringify({}),
                 });
                 const data = await res.json();
                 if (res.ok && data.url) {
@@ -695,7 +634,6 @@ const categoryLabels: Record<string, string> = {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        profile_id: btn.dataset.profileId,
                         tier,
                     }),
                 });

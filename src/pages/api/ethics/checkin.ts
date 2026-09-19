@@ -7,6 +7,7 @@ export const prerender = false;
 import { prisma } from '../../../lib/prisma';
 import { apiError } from '../../../lib/api-response';
 import { checkRateLimit, getClientIdentifier, RATE_LIMITS, rateLimitResponse } from '../../../lib/rate-limit';
+import { requireAuditOwner } from '../../../lib/api-auth';
 
 function json(data: unknown, status = 200) {
     return new Response(JSON.stringify(data), {
@@ -26,6 +27,9 @@ export async function POST({ request }: { request: Request }) {
         if (!audit_id || !items || !Array.isArray(items)) {
             return json({ error: 'audit_id and items array are required' }, 400);
         }
+
+        const auth = await requireAuditOwner(request, audit_id);
+        if (!auth.ok) return auth.response;
 
         // Verify audit exists and is in correct state
         const audit = await prisma.ethicsAudit.findUnique({

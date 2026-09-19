@@ -8,6 +8,7 @@ import AdminSidebar from "../../components/admin/AdminSidebar.astro";
 import { prisma } from "../../lib/prisma";
 import { requireSuperAdmin } from "../../lib/rbac";
 import { logAdminAction } from "../../lib/audit";
+import { getSignedDocumentUrl } from "../../lib/cloudinary";
 
 export const prerender = false;
 
@@ -21,6 +22,30 @@ if (!requireSuperAdmin(Astro.request)) {
 
 const url = new URL(Astro.request.url);
 const adminKey = url.searchParams.get("key");
+
+/**
+ * Claim requests store their payload as JSON in `new_value`. Verification
+ * documents are uploaded as private Cloudinary assets, so a reviewer needs a
+ * short-lived signed URL rather than the raw stored id.
+ */
+function describeEdit(edit: { field_name: string; new_value: string | null }) {
+    if (edit.field_name !== "__claim_request" || !edit.new_value) {
+        return { text: edit.new_value ?? "", documentUrl: null, documentName: null };
+    }
+    try {
+        const parsed = JSON.parse(edit.new_value);
+        const documentUrl = parsed.document_id
+            ? getSignedDocumentUrl(parsed.document_id, parsed.document_type ?? "image")
+            : null;
+        return {
+            text: `Registration: ${parsed.registration_number ?? "—"}`,
+            documentUrl,
+            documentName: parsed.document_name ?? null,
+        };
+    } catch {
+        return { text: edit.new_value, documentUrl: null, documentName: null };
+    }
+}
 
 let successMsg = "";
 let errorMsg = "";
@@ -113,7 +138,21 @@ const reviewedEdits = await prisma.profileEdit.findMany({
                                         <div class="value-preview old">{edit.old_value || "—"}</div>
                                     </td>
                                     <td class="value-cell">
-                                        <div class="value-preview new">{edit.new_value}</div>
+                                        {(() => {
+                                            const detail = describeEdit(edit);
+                                            return (
+                                                <div class="value-preview new">
+                                                    <span>{detail.text}</span>
+                                                    {detail.documentUrl ? (
+                                                        <a href={detail.documentUrl} target="_blank" rel="noopener" class="doc-link">
+                                                            View document{detail.documentName ? ` (${detail.documentName})` : ""}
+                                                        </a>
+                                                    ) : edit.field_name === "__claim_request" ? (
+                                                        <span class="doc-missing">No document supplied</span>
+                                                    ) : null}
+                                                </div>
+                                            );
+                                        })()}
                                     </td>
                                     <td>
                                         <div class="contributor">
@@ -324,6 +363,21 @@ const reviewedEdits = await prisma.profileEdit.findMany({
     .value-preview.new {
         background: var(--verdant-2);
         color: var(--verdant);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        max-height: none;
+    }
+
+    .doc-link {
+        font-weight: 600;
+        text-decoration: underline;
+        word-break: break-word;
+    }
+
+    .doc-missing {
+        color: var(--ink-3);
+        font-style: italic;
     }
 
     .contributor {

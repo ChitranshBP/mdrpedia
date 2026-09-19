@@ -204,19 +204,6 @@ const hasMore = sortedClaims.length > 5;
             Show all {sortedClaims.length} claims
         </button>
     )}
-
-    <!-- Hidden semantic content for AI crawlers -->
-    <div class="ai-semantic-layer" aria-hidden="true" style="display:none;">
-        <h3>All Verified Claims</h3>
-        {sortedClaims.map(claim => (
-            <div>
-                <p><strong>{claim.status}:</strong> {claim.claim}</p>
-                {claim.sources?.map(s => (
-                    <p>Source: {s.type} - {s.identifier}</p>
-                ))}
-            </div>
-        ))}
-    </div>
 </section>
 
 <style>

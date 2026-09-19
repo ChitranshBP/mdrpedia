@@ -5,8 +5,29 @@
 
 import { SignJWT, jwtVerify } from 'jose';
 
+// ─── Environment Validation ─────────────────────────────────────────────────
+// Crash early rather than sign sessions with a public, hardcoded secret.
+// Mirrors the guard in lib/prisma.ts.
+
+const isProd = import.meta.env.PROD ?? process.env.NODE_ENV === 'production';
+const rawSecret = import.meta.env.JWT_SECRET || process.env.JWT_SECRET;
+
+if (!rawSecret) {
+    const msg = 'FATAL: JWT_SECRET environment variable is not set';
+    console.error(msg);
+    if (isProd) throw new Error(msg);
+}
+
+if (rawSecret && rawSecret.length < 32) {
+    const msg = 'FATAL: JWT_SECRET must be at least 32 characters';
+    console.error(msg);
+    if (isProd) throw new Error(msg);
+}
+
+// Dev-only ephemeral secret: random per boot, so it can never be a shared
+// known value and any token minted against it dies with the process.
 const JWT_SECRET = new TextEncoder().encode(
-    import.meta.env.JWT_SECRET || process.env.JWT_SECRET || 'mdrpedia-portal-secret-change-in-production'
+    rawSecret || `dev-only-${crypto.randomUUID()}`
 );
 
 const COOKIE_NAME = 'mdr_session';

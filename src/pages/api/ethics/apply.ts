@@ -8,6 +8,7 @@ export const prerender = false;
 import { prisma } from '../../../lib/prisma';
 import { apiError } from '../../../lib/api-response';
 import { checkRateLimit, getClientIdentifier, RATE_LIMITS, rateLimitResponse } from '../../../lib/rate-limit';
+import { requireSession, requireApplicationOwner } from '../../../lib/api-auth';
 
 function json(data: unknown, status = 200) {
     return new Response(JSON.stringify(data), {
@@ -20,12 +21,16 @@ export async function POST({ request }: { request: Request }) {
     const rateCheck = checkRateLimit(getClientIdentifier(request), RATE_LIMITS.ethicsApply);
     if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime);
 
+    const auth = await requireSession(request);
+    if (!auth.ok) return auth.response;
+    const profile_id = auth.session.profileId;
+
     try {
         const body = await request.json();
-        const { profile_id, target_tier, contact_email } = body;
+        const { target_tier, contact_email } = body;
 
-        if (!profile_id || !target_tier || !contact_email) {
-            return json({ error: 'profile_id, target_tier, and contact_email are required' }, 400);
+        if (!target_tier || !contact_email) {
+            return json({ error: 'target_tier and contact_email are required' }, 400);
         }
 
         const validTiers = ['ADVOCATE', 'GUARDIAN', 'LEGEND'];
@@ -77,6 +82,9 @@ export async function PUT({ request }: { request: Request }) {
         if (!application_id) {
             return json({ error: 'application_id is required' }, 400);
         }
+
+        const auth = await requireApplicationOwner(request, application_id);
+        if (!auth.ok) return auth.response;
 
         const app = await prisma.ethicsApplication.findUnique({ where: { id: application_id } });
         if (!app) return json({ error: 'Application not found' }, 404);

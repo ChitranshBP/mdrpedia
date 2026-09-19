@@ -8,6 +8,7 @@ import { prisma } from '../../../lib/prisma';
 import { stripe, PRICE_IDS, isStripeConfigured } from '../../../lib/stripe';
 import { apiError } from '../../../lib/api-response';
 import { checkRateLimit, getClientIdentifier, RATE_LIMITS, rateLimitResponse } from '../../../lib/rate-limit';
+import { requireSession } from '../../../lib/api-auth';
 
 function json(data: unknown, status = 200) {
     return new Response(JSON.stringify(data), {
@@ -24,12 +25,16 @@ export async function POST({ request }: { request: Request }) {
         return json({ error: 'Payment system not configured' }, 503);
     }
 
+    const auth = await requireSession(request);
+    if (!auth.ok) return auth.response;
+    const profile_id = auth.session.profileId;
+
     try {
         const body = await request.json();
-        const { profile_id, tier } = body;
+        const { tier } = body;
 
-        if (!profile_id || !tier) {
-            return json({ error: 'profile_id and tier are required' }, 400);
+        if (!tier) {
+            return json({ error: 'tier is required' }, 400);
         }
 
         if (!['GUARDIAN_TIER', 'LEGEND_TIER'].includes(tier)) {

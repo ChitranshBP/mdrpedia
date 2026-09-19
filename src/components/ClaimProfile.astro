@@ -519,16 +519,14 @@ const { doctorName, slug } = Astro.props;
                 dt.items.add(files[0]);
                 fileInput.files = dt.files;
                 const text = uploadArea.querySelector(".upload-text");
-                if (text)
-                    text.innerHTML = `<strong>Selected:</strong><br/><span>${files[0].name}</span>`;
+                if (text) text.textContent = `Selected: ${files[0].name}`;
             }
         });
 
         fileInput?.addEventListener("change", () => {
             if (fileInput.files && fileInput.files.length > 0) {
                 const text = uploadArea?.querySelector(".upload-text");
-                if (text)
-                    text.innerHTML = `<strong>Selected:</strong><br/><span>${fileInput.files[0].name}</span>`;
+                if (text) text.textContent = `Selected: ${fileInput.files[0].name}`;
             }
         });
 
@@ -561,16 +559,18 @@ const { doctorName, slug } = Astro.props;
             setStatus("", "");
 
             try {
+                // Multipart, so the verification document is actually sent.
+                const payloadBody = new FormData();
+                payloadBody.append("profile_slug", form.dataset.slug ?? "");
+                payloadBody.append("email", email);
+                payloadBody.append("registration_number", licence);
+                payloadBody.append("honeypot_filled", String(Boolean(hp && hp.value)));
+                const chosen = fileInput?.files?.[0];
+                if (chosen) payloadBody.append("document", chosen, chosen.name);
+
                 const res = await fetch("/api/claim-profile", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        profile_slug: form.dataset.slug,
-                        email,
-                        registration_number: licence,
-                        document_name: fileInput?.files?.[0]?.name ?? null,
-                        honeypot_filled: Boolean(hp && hp.value),
-                    }),
+                    body: payloadBody,
                 });
 
                 const payload = await res.json().catch(() => ({}));

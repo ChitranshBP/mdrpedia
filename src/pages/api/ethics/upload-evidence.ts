@@ -7,6 +7,7 @@ export const prerender = false;
 import { uploadImage } from '../../../lib/cloudinary';
 import { apiError } from '../../../lib/api-response';
 import { checkRateLimit, getClientIdentifier, RATE_LIMITS, rateLimitResponse } from '../../../lib/rate-limit';
+import { requireSession, requireAuditOwner } from '../../../lib/api-auth';
 
 function json(data: unknown, status = 200) {
     return new Response(JSON.stringify(data), {
@@ -19,14 +20,25 @@ export async function POST({ request }: { request: Request }) {
     const rateCheck = checkRateLimit(getClientIdentifier(request), RATE_LIMITS.ethicsCheckin);
     if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime);
 
+    const auth = await requireSession(request);
+    if (!auth.ok) return auth.response;
+
     try {
         const formData = await request.formData();
         const file = formData.get('file') as File | null;
-        const profileId = formData.get('profile_id') as string | null;
         const auditId = formData.get('audit_id') as string | null;
 
-        if (!file || !profileId) {
-            return json({ error: 'file and profile_id are required' }, 400);
+        // Evidence always files under the authenticated doctor's own profile.
+        const profileId = auth.session.profileId;
+
+        if (!file) {
+            return json({ error: 'file is required' }, 400);
+        }
+
+        // If the upload is scoped to an audit, that audit must be theirs too.
+        if (auditId) {
+            const auditAuth = await requireAuditOwner(request, auditId);
+            if (!auditAuth.ok) return auditAuth.response;
         }
 
         // Validate file type

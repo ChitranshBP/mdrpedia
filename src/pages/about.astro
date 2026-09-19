@@ -221,40 +221,25 @@ const titanCount = doctors.filter((d) => d.data.tier === "TITAN").length;
     </section>
 
     <section class="content-block">
-        <h2 class="section-title">The Scientific Advisory Board</h2>
+        <h2 class="section-title">Editorial Governance</h2>
         <p class="section-intro">
-            MDRPedia is governed by a rotating board of distinguished medical
-            professionals who oversee our ranking methodology and ensure our
-            neutrality.
+            MDRPedia does not yet have an external advisory board. Ranking
+            methodology is maintained in-house and published in full, so it can
+            be checked rather than taken on trust.
         </p>
-        <div class="board-grid">
-            <div class="board-member">
-                <div class="member-role">Chair of Surgery</div>
-                <h4>Dr. Elias Vance, FACS</h4>
-                <p>
-                    Former Chief of Surgery at St. Jude's. Dr. Vance ensures our
-                    surgical volume weighting accounts for case complexity and
-                    risk factors.
-                </p>
-            </div>
-            <div class="board-member">
-                <div class="member-role">Head of Research Integrity</div>
-                <h4>Prof. Sarah Chen, PhD</h4>
-                <p>
-                    A leading bibliometrician, Prof. Chen designed our citation
-                    analysis engine to filter out self-citations and predatory
-                    journals, ensuring only high-impact research counts.
-                </p>
-            </div>
-            <div class="board-member">
-                <div class="member-role">Global Health Liaison</div>
-                <h4>Dr. Kwame Osei</h4>
-                <p>
-                    Founder of "Doctors Without Borders - West Africa Chapter."
-                    Dr. Osei oversees the Humanitarian Impact pillar, verifying
-                    fieldwork in crisis zones.
-                </p>
-            </div>
+        <div class="governance-note">
+            <p>
+                Every tier is derived from stated inputs — citation record,
+                h-index, years in practice, documented techniques and verified
+                honours — and every tier is revocable. The weightings are set out
+                on the <a href="/rankings">rankings page</a>.
+            </p>
+            <p>
+                If a profile is wrong, <a href="/suggest-edit">tell us</a>. If you
+                are a clinician or bibliometrician willing to review the
+                methodology publicly, <a href="/contact">we would like to hear
+                from you</a>.
+            </p>
         </div>
     </section>
 
@@ -588,6 +573,21 @@ const titanCount = doctors.filter((d) => d.data.tier === "TITAN").length;
     }
 
     /* Board Grid */
+    .governance-note {
+        max-width: 68ch;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        color: var(--ink-2);
+        line-height: 1.7;
+    }
+
+    .governance-note a {
+        color: var(--ink);
+        text-decoration: underline;
+    }
+
     .board-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

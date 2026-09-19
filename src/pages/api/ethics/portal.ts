@@ -8,6 +8,7 @@ import { prisma } from '../../../lib/prisma';
 import { stripe, isStripeConfigured } from '../../../lib/stripe';
 import { apiError } from '../../../lib/api-response';
 import { checkRateLimit, getClientIdentifier, RATE_LIMITS, rateLimitResponse } from '../../../lib/rate-limit';
+import { requireSession } from '../../../lib/api-auth';
 
 function json(data: unknown, status = 200) {
     return new Response(JSON.stringify(data), {
@@ -24,12 +25,11 @@ export async function POST({ request }: { request: Request }) {
         return json({ error: 'Payment system not configured' }, 503);
     }
 
+    const auth = await requireSession(request);
+    if (!auth.ok) return auth.response;
+    const profile_id = auth.session.profileId;
+
     try {
-        const body = await request.json();
-        const { profile_id } = body;
-
-        if (!profile_id) return json({ error: 'profile_id is required' }, 400);
-
         const sub = await prisma.ethicsSubscription.findUnique({
             where: { profile_id },
         });
