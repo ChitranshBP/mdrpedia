@@ -491,7 +491,7 @@ for (const line of lines) {
         if (seenNames.has(name)) continue;
         seenNames.add(name);
 
-        // Format for pioneers_raw.tsv: Rank|Name|Institution|Country|D-Index|Citations|Specialization
+        // Format for pioneers-raw.tsv: Rank|Name|Institution|Country|D-Index|Citations|Specialization
         // Using "India" as default country for this registry.
         // D-Index/Citations are placeholder 0 for now as they aren't provided.
         // We might want to use 110 (Leader) or similar so they appear in filtered lists.
@@ -504,7 +504,7 @@ for (const line of lines) {
     }
 }
 
-const targetPath = path.join(process.cwd(), 'src/data/pioneers_raw.tsv');
+const targetPath = path.join(process.cwd(), 'src/data/pioneers-raw.tsv');
 fs.appendFileSync(targetPath, formattedLines.join('\n') + '\n');
 console.log(`Appended ${formattedLines.length} unique impact records to ${targetPath}`);
 process.exit(0);

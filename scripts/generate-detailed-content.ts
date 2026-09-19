@@ -11,7 +11,7 @@ const DOCTORS_DIR = path.join(process.cwd(), 'src/content/doctors');
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
 // Rate limiting and state tracking
-const STATUS_FILE = path.join(process.cwd(), 'generation_status.json');
+const STATUS_FILE = path.join(process.cwd(), 'generation-status.json');
 
 async function saveStatus(status: any) {
     fs.writeFileSync(STATUS_FILE, JSON.stringify(status, null, 2));

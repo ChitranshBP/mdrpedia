@@ -26,7 +26,7 @@ expect "#"
 
 # Run PubMed sync
 puts "--- STARTING PUBMED SYNC ---"
-send "npx tsx scripts/sync_citations.ts\r"
+send "npx tsx scripts/sync-citations.ts\r"
 expect "#"
 
 send "exit\r"

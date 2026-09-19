@@ -490,6 +490,6 @@ for (const line of lines) {
     }
 }
 
-const targetPath = path.join(process.cwd(), 'src/data/pioneers_raw.tsv');
+const targetPath = path.join(process.cwd(), 'src/data/pioneers-raw.tsv');
 fs.appendFileSync(targetPath, formattedLines.join('\n') + '\n');
 console.log(`Appended ${formattedLines.length} lines to ${targetPath}`);

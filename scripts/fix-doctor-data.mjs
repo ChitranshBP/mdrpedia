@@ -42,7 +42,7 @@ const COUNTRY_MAP = {
 
 // Parse TSV file
 async function parseTSV() {
-    const tsvPath = path.join(ROOT, 'src/data/pioneers_clean.tsv');
+    const tsvPath = path.join(ROOT, 'src/data/pioneers-clean.tsv');
     const content = await fs.readFile(tsvPath, 'utf-8');
     const lines = content.trim().split('\n');
 
@@ -217,7 +217,7 @@ async function main() {
     console.log('===========================\n');
 
     // Parse TSV
-    console.log('📖 Reading pioneers_raw.tsv...');
+    console.log('📖 Reading pioneers-raw.tsv...');
     const tsvDoctors = await parseTSV();
     console.log(`   Found ${tsvDoctors.length} doctors in TSV`);
 

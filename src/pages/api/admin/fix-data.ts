@@ -1,6 +1,6 @@
 /**
  * MDRPedia — Fix Corrupted Data API
- * Re-imports doctor data from pioneers_raw.tsv to fix specialty/h-index issues
+ * Re-imports doctor data from pioneers-raw.tsv to fix specialty/h-index issues
  */
 
 export const prerender = false;
@@ -25,7 +25,7 @@ interface TSVDoctor {
 
 // Parse TSV file
 async function parseTSV(): Promise<TSVDoctor[]> {
-    const tsvPath = path.join(process.cwd(), 'src/data/pioneers_clean.tsv');
+    const tsvPath = path.join(process.cwd(), 'src/data/pioneers-clean.tsv');
     const content = await fs.readFile(tsvPath, 'utf-8');
     const lines = content.trim().split('\n');
 

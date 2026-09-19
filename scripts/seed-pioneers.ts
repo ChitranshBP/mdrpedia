@@ -18,7 +18,7 @@ function slugify(text: string): string {
 }
 
 // Configuration
-const INPUT_FILE = path.join(process.cwd(), 'src/data/pioneers_raw.tsv');
+const INPUT_FILE = path.join(process.cwd(), 'src/data/pioneers-raw.tsv');
 const OUTPUT_DIR = path.join(process.cwd(), 'src/content/doctors');
 
 // Tier Logic (Adjusted based on distribution)

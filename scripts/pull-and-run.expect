@@ -24,7 +24,7 @@ expect "#"
 
 # Run in background with nohup and redirect output
 # Running both scripts sequentially in a subshell
-send "nohup sh -c 'npx tsx scripts/enrich-profiles.ts scan && npx tsx scripts/sync_citations.ts' > extraction.log 2>&1 &\r"
+send "nohup sh -c 'npx tsx scripts/enrich-profiles.ts scan && npx tsx scripts/sync-citations.ts' > extraction.log 2>&1 &\r"
 expect "#"
 
 # Wait a moment for process to start
