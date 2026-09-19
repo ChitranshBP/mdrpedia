@@ -77,6 +77,42 @@
             "effectiveness": "HIGHLY_EFFECTIVE",
             "fdaApproved": true,
             "approvalYear": null
+        },
+        {
+            "name": "Ekterly (sebetralstat)",
+            "type": "MEDICATION",
+            "effectiveness": null,
+            "fdaApproved": true,
+            "approvalYear": 2025,
+            "note": "FDA (3 Jul 2025); EU Sept 2025. First and only oral on-demand treatment for acute HAE attacks, replacing injection-only rescue therapy.",
+            "sourceUrl": "https://www.fda.gov/drugs/novel-drug-approvals-fda/novel-drug-approvals-2025"
+        },
+        {
+            "name": "Andembry (garadacimab-gxii)",
+            "type": "MEDICATION",
+            "effectiveness": null,
+            "fdaApproved": true,
+            "approvalYear": 2025,
+            "note": "FDA (16 Jun 2025); EU Feb 2025. First prophylactic HAE therapy targeting activated factor XII; once-monthly subcutaneous dosing.",
+            "sourceUrl": "https://www.fda.gov/drugs/novel-drug-approvals-fda/novel-drug-approvals-2025"
+        },
+        {
+            "name": "Dawnzera (donidalorsen)",
+            "type": "MEDICATION",
+            "effectiveness": null,
+            "fdaApproved": true,
+            "approvalYear": 2025,
+            "note": "FDA (21 Aug 2025); EU Jan 2026. First-in-class prekallikrein ASO for routine prevention of HAE attacks.",
+            "sourceUrl": "https://www.fda.gov/drugs/novel-drug-approvals-fda/novel-drug-approvals-2025"
+        },
+        {
+            "name": "Orladeyo oral pellets (berotralstat)",
+            "type": "MEDICATION",
+            "effectiveness": null,
+            "fdaApproved": true,
+            "approvalYear": 2025,
+            "note": "FDA (11 Dec 2025, NDA 219776). Extends berotralstat prophylaxis down to children aged 2 years and older via unit-dose pellets.",
+            "sourceUrl": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219776"
         }
     ],
     "researchStatus": "ACTIVE_TRIALS",
@@ -113,21 +149,39 @@
     "historicalBackground": "Hereditary angioedema was first described by Quincke in 1888. In 1963, Donald and Rosen identified the deficiency of C1 inhibitor as the underlying cause. Subsequent research led to the development of effective treatments, significantly improving the prognosis for individuals with HAE.",
     "recentBreakthroughs": [
         {
-            "year": 2018,
-            "title": "FDA Approves Lanadelumab for HAE Prophylaxis",
-            "description": "The FDA approved lanadelumab, a monoclonal antibody that inhibits plasma kallikrein, for the prevention of HAE attacks in patients 12 years and older. This subcutaneous injection significantly reduces the frequency of angioedema attacks.",
-            "sourceUrl": null
+            "year": 2026,
+            "title": "New WAO guidelines and first paediatric HAE guideline",
+            "description": "The 2025 WAO Guidelines (40 experts, 22 countries; World Allergy Organization Journal, 19 March 2026) reset global classification, diagnosis and treatment with explicit attention to worldwide access disparities. Separately, the first International Guideline on Pediatric HAE was published in Allergy on 30 January 2026.",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/42165046/"
+        },
+        {
+            "year": 2026,
+            "title": "Oral bradykinin B2 antagonist works for prophylaxis too",
+            "description": "Lancet Haematology (19 March 2026) published CHAPTER-1 (prophylaxis) and RAPIDe-1 (on-demand), the phase 2 trials of oral deucrictibant — the first evidence that B2-receptor antagonism works prophylactically, not only acutely.",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/41865746/"
+        },
+        {
+            "year": 2026,
+            "title": "In-vivo CRISPR editing cuts HAE attacks by 87%",
+            "description": "The phase 3 HAELO trial (New England Journal of Medicine, 13 June 2026; n=80) showed that a single intravenous infusion of lonvoguran ziclumeran (lonvo-z, formerly NTLA-2002), which knocks out KLKB1 in the liver, reduced monthly attack rate by 87% versus placebo with no grade ≥3 adverse events. Intellia lists lonvo-z at BLA submission stage; it is not yet approved.",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/42294842/"
         },
         {
             "year": 2020,
             "title": "Oral Plasma Kallikrein Inhibitor Shows Promise in HAE",
             "description": "Clinical trials have shown that oral plasma kallikrein inhibitors are effective in preventing HAE attacks, offering a more convenient alternative to injectable therapies.",
             "sourceUrl": null
+        },
+        {
+            "year": 2018,
+            "title": "FDA Approves Lanadelumab for HAE Prophylaxis",
+            "description": "The FDA approved lanadelumab, a monoclonal antibody that inhibits plasma kallikrein, for the prevention of HAE attacks in patients 12 years and older. This subcutaneous injection significantly reduces the frequency of angioedema attacks.",
+            "sourceUrl": null
         }
     ],
     "heroImage": null,
     "diagrams": [],
-    "lastUpdated": "2024-12-01",
+    "lastUpdated": "2026-09-19",
     "reviewedBy": "MDRPedia Medical Team",
     "sources": [
         {

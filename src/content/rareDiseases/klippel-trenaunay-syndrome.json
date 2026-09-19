@@ -112,6 +112,15 @@
             "effectiveness": "EXPERIMENTAL",
             "fdaApproved": true,
             "approvalYear": 2009
+        },
+        {
+            "name": "Vijoice (alpelisib)",
+            "type": "MEDICATION",
+            "effectiveness": null,
+            "fdaApproved": false,
+            "approvalYear": 2026,
+            "note": "EMA / EC (15 Jul 2026, conditional). Authorised for severe or life-threatening PIK3CA-related overgrowth spectrum (PROS) in patients ≥2 years. Caveat: the EU label names PROS, not Klippel-Trénaunay syndrome specifically.",
+            "sourceUrl": "https://www.ema.europa.eu/en/medicines/human/EPAR/vijoice"
         }
     ],
     "researchStatus": "ACTIVE_TRIALS",
@@ -154,21 +163,27 @@
     "historicalBackground": "Klippel-Trenaunay Syndrome was first described in 1900 by French physicians Maurice Klippel and Paul Trénaunay.",
     "recentBreakthroughs": [
         {
-            "year": 2022,
-            "title": "Sirolimus Shows Promise in Reducing Symptoms of Vascular Malformations",
-            "description": "A study published in the *Journal of Vascular Anomalies* demonstrated that sirolimus (rapamycin) can significantly reduce the size and symptoms of vascular malformations in patients with KTS.",
-            "sourceUrl": null
+            "year": 2025,
+            "title": "ART-001 PI3Kα inhibitor phase 2 in slow-flow malformations",
+            "description": "A multicentre randomised double-blind phase 2 trial (Orphanet Journal of Rare Diseases, February 2025) enrolled 35 patients — 13 with Klippel-Trénaunay syndrome — on oral serabelisib for 24 weeks; response rates (≥20% lesion volume reduction) were 29.4% and 33.3% at the two doses, with no drug-related serious adverse events.",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/39930502/"
         },
         {
             "year": 2023,
             "title": "Genetic Mosaicism Investigated in Klippel-Trenaunay Syndrome",
             "description": "Research is ongoing to identify the specific genetic mutations responsible for KTS, with a focus on mosaic mutations that occur during embryonic development. This may lead to more targeted therapies in the future.",
             "sourceUrl": null
+        },
+        {
+            "year": 2022,
+            "title": "Sirolimus Shows Promise in Reducing Symptoms of Vascular Malformations",
+            "description": "A study published in the *Journal of Vascular Anomalies* demonstrated that sirolimus (rapamycin) can significantly reduce the size and symptoms of vascular malformations in patients with KTS.",
+            "sourceUrl": null
         }
     ],
     "heroImage": null,
     "diagrams": [],
-    "lastUpdated": "2024-12-01",
+    "lastUpdated": "2026-09-19",
     "reviewedBy": "MDRPedia Medical Team",
     "sources": [
         {

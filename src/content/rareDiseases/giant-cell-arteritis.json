@@ -83,6 +83,15 @@
             "effectiveness": "SUPPORTIVE",
             "fdaApproved": false,
             "approvalYear": null
+        },
+        {
+            "name": "Rinvoq (upadacitinib)",
+            "type": "MEDICATION",
+            "effectiveness": null,
+            "fdaApproved": true,
+            "approvalYear": 2025,
+            "note": "FDA (29 Apr 2025, efficacy supplement). First oral JAK inhibitor approved for GCA; in SELECT-GCA, sustained remission was achieved by 46.4% on upadacitinib 15 mg vs 29.0% on placebo.",
+            "sourceUrl": "https://news.abbvie.com/2025-04-29-RINVOQ-R-upadacitinib-Receives-U-S-FDA-Approval-for-Giant-Cell-Arteritis-GCA"
         }
     ],
     "researchStatus": "ACTIVE_TRIALS",
@@ -116,21 +125,33 @@
     "historicalBackground": "Giant cell arteritis was first described by Jonathan Hutchinson in 1890. Horton et al. provided a detailed pathological description in 1932, leading to the alternative name 'Horton's arteritis.' The association with polymyalgia rheumatica was recognized later, highlighting the systemic nature of the disease.",
     "recentBreakthroughs": [
         {
-            "year": 2017,
-            "title": "FDA Approval of Tocilizumab for Giant Cell Arteritis",
-            "description": "Tocilizumab, an interleukin-6 receptor antagonist, was approved by the FDA for the treatment of giant cell arteritis. This marked the first FDA-approved therapy specifically for GCA and provided an alternative to long-term high-dose corticosteroid use.",
-            "sourceUrl": null
+            "year": 2026,
+            "title": "Upadacitinib must be continued to hold remission",
+            "description": "The SELECT-GCA two-year re-randomised extension (Annals of the Rheumatic Diseases, 28 July 2026) found that patients continuing upadacitinib 15 mg flared in 7.4% of cases versus 59.5% of those switched to placebo, with glucocorticoid-free remission maintained in 71.7% versus 31.4%.",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/42521523/"
+        },
+        {
+            "year": 2026,
+            "title": "Secukinumab phase 3 fails in giant cell arteritis",
+            "description": "The GCAptAIN phase 3 trial (NEJM Evidence, 3 June 2026) missed its primary endpoint: sustained remission at week 52 was 25.6% with secukinumab 300 mg versus 16.9% on placebo (p=0.09). IL-17A blockade is not an effective steroid-sparing strategy in GCA.",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/42234457/"
         },
         {
             "year": 2021,
             "title": "Advances in Imaging Techniques for GCA Diagnosis",
             "description": "Improved imaging modalities, such as high-resolution vessel wall MRI and PET/CT, have enhanced the ability to diagnose GCA non-invasively, particularly in cases involving large vessel vasculitis.",
             "sourceUrl": null
+        },
+        {
+            "year": 2017,
+            "title": "FDA Approval of Tocilizumab for Giant Cell Arteritis",
+            "description": "Tocilizumab, an interleukin-6 receptor antagonist, was approved by the FDA for the treatment of giant cell arteritis. This marked the first FDA-approved therapy specifically for GCA and provided an alternative to long-term high-dose corticosteroid use.",
+            "sourceUrl": null
         }
     ],
     "heroImage": null,
     "diagrams": [],
-    "lastUpdated": "2024-12-01",
+    "lastUpdated": "2026-09-19",
     "reviewedBy": "MDRPedia Medical Team",
     "sources": [
         {

@@ -94,6 +94,33 @@
             "effectiveness": "MODERATELY_EFFECTIVE",
             "fdaApproved": true,
             "approvalYear": null
+        },
+        {
+            "name": "Qfitlia (fitusiran)",
+            "type": "MEDICATION",
+            "effectiveness": null,
+            "fdaApproved": true,
+            "approvalYear": 2025,
+            "note": "FDA (28 Mar 2025). First-in-class antithrombin-lowering siRNA; prophylaxis for hemophilia A or B with or without inhibitors, age 12+, in as few as six subcutaneous doses a year.",
+            "sourceUrl": "https://www.fda.gov/drugs/novel-drug-approvals-fda/novel-drug-approvals-2025"
+        },
+        {
+            "name": "Alhemo (concizumab-mtci)",
+            "type": "MEDICATION",
+            "effectiveness": null,
+            "fdaApproved": true,
+            "approvalYear": 2025,
+            "note": "FDA (31 Jul 2025, indication expansion). Once-daily subcutaneous prophylaxis extended to hemophilia A or B patients 12+ without inhibitors (previously inhibitor patients only).",
+            "sourceUrl": "https://business.optum.com/en/support/professionalrx-resources/clinicalupdate-alhemo-080125.html"
+        },
+        {
+            "name": "Hympavzi (marstacimab-hncq)",
+            "type": "MEDICATION",
+            "effectiveness": null,
+            "fdaApproved": true,
+            "approvalYear": 2026,
+            "note": "FDA (8 Jun 2026, indication expansion). Extended to patients 12+ with inhibitors and children 6–11; adults/adolescents with inhibitors had mean treated ABR 1.4 vs 19.8 on prior therapy (≈93% reduction).",
+            "sourceUrl": "https://www.pfizer.com/news/press-release/press-release-detail/us-fda-approves-pfizers-hympavzi-treatment-two-additional"
         }
     ],
     "researchStatus": "ACTIVE_TRIALS",
@@ -136,21 +163,33 @@
     "historicalBackground": "Hemophilia has been recognized for centuries, with descriptions dating back to ancient times. It was historically known as 'the royal disease' due to its prevalence among European royal families, particularly descendants of Queen Victoria, who was a carrier of the hemophilia B gene.",
     "recentBreakthroughs": [
         {
-            "year": 2022,
-            "title": "FDA Approves First Gene Therapy for Hemophilia B",
-            "description": "The FDA approved Hemgenix, the first gene therapy for adults with hemophilia B. This one-time intravenous infusion delivers a functional copy of the factor IX gene to the liver, enabling patients to produce their own factor IX and reducing the need for regular infusions.",
-            "sourceUrl": null
+            "year": 2026,
+            "title": "Mim8 (denecimig) phase 3 results published in NEJM",
+            "description": "\"Mim8 Bispecific Antibody Prophylaxis in Hemophilia A with or without Inhibitors\" was published in the New England Journal of Medicine in April 2026; Novo Nordisk filed a BLA in September 2025 for this once-weekly to once-monthly subcutaneous FVIIIa-mimetic, which is not yet approved.",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/42054679/"
+        },
+        {
+            "year": 2025,
+            "title": "Pfizer discontinues its approved hemophilia B gene therapy",
+            "description": "On 25 February 2025 Pfizer announced it would stop global development and commercialisation of Beqvez (fidanacogene elaparvovec) for hemophilia B, citing limited patient and physician interest — less than a year after FDA approval.",
+            "sourceUrl": "https://www.aabb.org/news-resources/news/article/2025/02/25/pfizer-halts-production-of-fda-approved-hemophilia-b-gene-therapy"
         },
         {
             "year": 2023,
             "title": "FDA Approves Gene Therapy for Hemophilia A",
             "description": "Roctavian is approved for severe hemophilia A. This is a one-time gene therapy that reduces the need for factor VIII infusions.",
             "sourceUrl": null
+        },
+        {
+            "year": 2022,
+            "title": "FDA Approves First Gene Therapy for Hemophilia B",
+            "description": "The FDA approved Hemgenix, the first gene therapy for adults with hemophilia B. This one-time intravenous infusion delivers a functional copy of the factor IX gene to the liver, enabling patients to produce their own factor IX and reducing the need for regular infusions.",
+            "sourceUrl": null
         }
     ],
     "heroImage": null,
     "diagrams": [],
-    "lastUpdated": "2024-12-01",
+    "lastUpdated": "2026-09-19",
     "reviewedBy": "MDRPedia Medical Team",
     "sources": [
         {

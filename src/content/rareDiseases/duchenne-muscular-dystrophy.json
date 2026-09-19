@@ -57,7 +57,9 @@
             "type": "MEDICATION",
             "effectiveness": "MODERATELY_EFFECTIVE",
             "fdaApproved": false,
-            "approvalYear": null
+            "approvalYear": null,
+            "note": "Never FDA approved. The European Commission declined to renew its conditional marketing authorisation on 28 March 2025 after the EMA concluded effectiveness was not confirmed, ending eleven years of EU availability.",
+            "sourceUrl": "https://www.ema.europa.eu/en/medicines/human/EPAR/translarna"
         },
         {
             "name": "Exon-skipping therapies (e.g., eteplirsen, golodirsen, viltolarsen)",
@@ -69,9 +71,11 @@
         {
             "name": "Gene Therapy (delandistrogene moxeparvovec-rokl)",
             "type": "GENE_THERAPY",
-            "effectiveness": "HIGHLY_EFFECTIVE",
+            "effectiveness": "MODERATELY_EFFECTIVE",
             "fdaApproved": true,
-            "approvalYear": 2023
+            "approvalYear": 2023,
+            "note": "FDA approved 2023. Carries a boxed warning for acute serious liver injury and acute liver failure added on 14 November 2025 after three deaths, and the indication is now limited to ambulatory patients aged 4 and over. The EMA's CHMP recommended refusing marketing authorisation in July 2025, so it has never been authorised in the EU.",
+            "sourceUrl": "https://www.fda.gov/vaccines-blood-biologics/tissue-tissue-products/elevidys"
         },
         {
             "name": "Physical Therapy",
@@ -107,6 +111,15 @@
             "effectiveness": "SUPPORTIVE",
             "fdaApproved": false,
             "approvalYear": null
+        },
+        {
+            "name": "Duvyzat (givinostat)",
+            "type": "MEDICATION",
+            "effectiveness": null,
+            "fdaApproved": false,
+            "approvalYear": 2025,
+            "note": "EMA / European Commission (6 Jun 2025, conditional). Four-stair-climb time worsened 1.25 s on givinostat (n=81) vs 3.03 s on placebo (n=39) over 18 months; ambulant patients ≥6 years on corticosteroids.",
+            "sourceUrl": "https://www.ema.europa.eu/en/medicines/human/EPAR/duvyzat"
         }
     ],
     "researchStatus": "ACTIVE_TRIALS",
@@ -154,6 +167,48 @@
     "historicalBackground": "Duchenne Muscular Dystrophy was first described in detail by the French neurologist Guillaume Benjamin Amand Duchenne in the mid-19th century. The genetic basis of the disease was discovered in 1986, with the identification of the dystrophin gene on the X chromosome.",
     "recentBreakthroughs": [
         {
+            "year": 2026,
+            "title": "RGX-202 completes registrational dosing ahead of BLA",
+            "description": "REGENXBIO announced on 24 June 2026 that dosing was complete in the confirmatory study of its microdystrophin gene therapy RGX-202, finishing the registrational programme early, with BLA initiation planned for Q3 2026 under accelerated approval.",
+            "sourceUrl": "https://ir.regenxbio.com/news-releases/news-release-details/regenxbio-completes-dosing-confirmatory-study-rgx-202-marking"
+        },
+        {
+            "year": 2026,
+            "title": "Advisory committee votes against deramiocel; decision delayed",
+            "description": "An FDA advisory committee voted against approval of Capricor's cell therapy deramiocel for DMD cardiomyopathy on 29 July 2026; the PDUFA date was subsequently extended from 22 August to 22 November 2026.",
+            "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1133869/000110465926100071/capr-20260824xex99d1.htm"
+        },
+        {
+            "year": 2026,
+            "title": "Dyne exon-51 conjugate wins FDA priority review",
+            "description": "The FDA accepted the BLA for z-rostudirsen (DYNE-251), a transferrin-receptor antibody–oligonucleotide conjugate for exon 51-amenable DMD, granting priority review on 20 July 2026 while the confirmatory phase 3 FORZETTO trial continues enrolling.",
+            "sourceUrl": "https://www.clinicaltrialvanguard.com/news/dyne-therapeutics-z-rostudirsen-wins-priority-review-for-duchenne-muscular-dystrophy/"
+        },
+        {
+            "year": 2025,
+            "title": "EU withdraws Translarna after non-renewal decision",
+            "description": "On 28 March 2025 the European Commission decided not to renew the conditional marketing authorisation for Translarna (ataluren), the EMA having concluded that effectiveness was not confirmed — ending eleven years of EU availability for nonsense-mutation DMD.",
+            "sourceUrl": "https://www.ema.europa.eu/en/medicines/human/EPAR/translarna"
+        },
+        {
+            "year": 2025,
+            "title": "European regulators refuse Elevidys marketing authorisation",
+            "description": "At its 21–24 July 2025 meeting the EMA's CHMP recommended refusing marketing authorisation for Elevidys in ambulatory DMD patients aged 3–7; the therapy has never been authorised in the EU.",
+            "sourceUrl": "https://www.ema.europa.eu/en/news/meeting-highlights-committee-medicinal-products-human-use-chmp-21-24-july-2025"
+        },
+        {
+            "year": 2025,
+            "title": "Elevidys boxed warning; non-ambulatory indication removed",
+            "description": "On 14 November 2025 the FDA added a boxed warning for acute serious liver injury and acute liver failure and narrowed the indication to ambulatory DMD patients aged 4+. Elevidys remains marketed in the US and still appears on the FDA approved cell and gene therapy list as of 17 September 2026.",
+            "sourceUrl": "https://www.fda.gov/vaccines-blood-biologics/tissue-tissue-products/elevidys"
+        },
+        {
+            "year": 2025,
+            "title": "FDA halts Elevidys after three gene-therapy deaths",
+            "description": "On 18 July 2025 the FDA asked Sarepta to suspend Elevidys distribution and placed AAVrh74-platform trials on clinical hold after three deaths from acute liver failure, revoking the platform technology designation. Sarepta paused shipments on 21 July; the FDA lifted the hold and recommended resumption for ambulatory patients on 28 July 2025.",
+            "sourceUrl": "https://www.fda.gov/news-events/press-announcements/fda-requests-sarepta-therapeutics-suspend-distribution-elevidys-and-places-clinical-trials-hold"
+        },
+        {
             "year": 2023,
             "title": "FDA Approves First Gene Therapy for Duchenne Muscular Dystrophy",
             "description": "The FDA approved delandistrogene moxeparvovec-rokl (Elevidys), the first gene therapy for Duchenne muscular dystrophy (DMD). This adeno-associated virus (AAV) vector-based gene therapy delivers a truncated (micro-dystrophin) gene to muscle cells, aiming to improve muscle function in DMD patients.",
@@ -168,7 +223,7 @@
     ],
     "heroImage": null,
     "diagrams": [],
-    "lastUpdated": "2024-12-01",
+    "lastUpdated": "2026-09-19",
     "reviewedBy": "MDRPedia Medical Team",
     "sources": [
         {

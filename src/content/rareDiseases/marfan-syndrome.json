@@ -1,7 +1,10 @@
 {
     "name": "Marfan Syndrome",
     "slug": "marfan-syndrome",
-    "aliases": ["Marfan's Syndrome", "MFS"],
+    "aliases": [
+        "Marfan's Syndrome",
+        "MFS"
+    ],
     "description": "Marfan syndrome is a genetic disorder that affects the body's connective tissue, which provides support and structure to organs and tissues throughout the body. It primarily affects the heart, blood vessels, bones, joints, and eyes.",
     "category": "GENETIC",
     "icdCode": "Q87.4",
@@ -122,6 +125,18 @@
     "historicalBackground": "The syndrome was first described by French pediatrician Antoine Marfan in 1896 when he noticed unusually long limbs in a 5-year-old girl named Gabrielle. The genetic basis was discovered in 1991 when mutations in the FBN1 gene were identified. The understanding of the condition has evolved significantly, with the role of TGF-β dysregulation being discovered in the 2000s, leading to the use of losartan as a treatment.",
     "recentBreakthroughs": [
         {
+            "year": 2026,
+            "title": "Allopurinol gains EMA orphan designation for Marfan",
+            "description": "A Cardiovascular Drugs and Therapy review (September 2026) reports that allopurinol, validated as an antioxidant in Marfan mouse models, has received EMA orphan drug designation for Marfan syndrome as a potential add-on to beta-blockers and ARBs.",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/42752801/"
+        },
+        {
+            "year": 2026,
+            "title": "Swedish cohort redefines cancer risk in Marfan syndrome",
+            "description": "A register-based study of 1,544 people with Marfan syndrome matched 1:50 found no increase in overall adult cancer risk (HR 1.00, 95% CI 0.78–1.27), contradicting earlier reports, but a raised risk of adult endocrine tumours (HR 2.86) and more than doubled childhood cancer risk (HR 2.44).",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/42129962/"
+        },
+        {
             "year": 2024,
             "title": "Gene therapy trials show promise",
             "description": "Early-phase clinical trials testing CRISPR-based approaches to correct FBN1 mutations have shown encouraging safety profiles.",
@@ -142,7 +157,7 @@
     ],
     "heroImage": null,
     "diagrams": [],
-    "lastUpdated": "2024-12-01",
+    "lastUpdated": "2026-09-19",
     "reviewedBy": "MDRPedia Medical Team",
     "sources": [
         {

@@ -93,6 +93,24 @@
             "effectiveness": "SUPPORTIVE",
             "fdaApproved": false,
             "approvalYear": null
+        },
+        {
+            "name": "Wayrilz (rilzabrutinib)",
+            "type": "MEDICATION",
+            "effectiveness": null,
+            "fdaApproved": true,
+            "approvalYear": 2025,
+            "note": "FDA (29 Aug 2025); EU Dec 2025; UK MHRA May 2026; Japan Jun 2026. First-in-class BTK inhibitor for ITP; in the 202-patient LUNA 3 phase 3, 23% achieved a durable platelet response at week 24–25 vs 0% on placebo (p<0.0001).",
+            "sourceUrl": "https://www.gov.uk/government/news/rilzabrutinib-authorised-to-treat-adults-with-immune-thrombocytopenia-when-prior-treatments-have-been-insufficient"
+        },
+        {
+            "name": "Doptelet / Doptelet Sprinkle (avatrombopag)",
+            "type": "MEDICATION",
+            "effectiveness": null,
+            "fdaApproved": true,
+            "approvalYear": 2025,
+            "note": "FDA (24 Jul 2025). Extends TPO receptor agonist therapy to children aged 1 year and older with persistent or chronic ITP.",
+            "sourceUrl": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=219696"
         }
     ],
     "researchStatus": "ACTIVE_TRIALS",
@@ -131,21 +149,33 @@
     "historicalBackground": "ITP was first described in the 18th century, but its autoimmune nature was not fully understood until the mid-20th century. Early treatments focused on splenectomy, while more recent advances have led to the development of immunomodulatory therapies and TPO-RAs.",
     "recentBreakthroughs": [
         {
-            "year": 2018,
-            "title": "FDA Approves Fostamatinib for Chronic ITP",
-            "description": "Fostamatinib, a spleen tyrosine kinase (Syk) inhibitor, was approved by the FDA for the treatment of adults with chronic ITP who have had an insufficient response to previous treatment. This provides a new oral treatment option for patients with refractory ITP.",
-            "sourceUrl": null
+            "year": 2026,
+            "title": "ASH 2026 guideline overhauls first-line ITP therapy",
+            "description": "The American Society of Hematology focused update (Blood Advances, 19 August 2026) now conditionally recommends initial therapy with rituximab plus corticosteroids, or a thrombopoietic agent plus corticosteroids, rather than corticosteroids alone, and strongly recommends a thrombopoietic agent after first-line steroid failure.",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/42617047/"
+        },
+        {
+            "year": 2025,
+            "title": "Ianalumab positive in phase 3; efgartigimod fails",
+            "description": "VAYHIT2 (NEJM, 9 December 2025) showed ianalumab plus eltrombopag gave 54% freedom from treatment failure at 12 months versus 30% with eltrombopag alone (HR 0.55, p=0.04) — the first positive phase 3 of a short-course anti-BAFF-R antibody in second-line ITP. Conversely, subcutaneous efgartigimod failed the ADVANCE SC phase 3 (13.7% vs 16.2% placebo, p=0.51); efgartigimod has no ITP approval.",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/41363800/"
         },
         {
             "year": 2023,
             "title": "Avatrombopag Demonstrates Sustained Platelet Response in ITP",
             "description": "Clinical trials have shown that avatrombopag, another TPO-RA, can achieve sustained platelet response and reduce the need for rescue therapies in patients with chronic ITP.",
             "sourceUrl": null
+        },
+        {
+            "year": 2018,
+            "title": "FDA Approves Fostamatinib for Chronic ITP",
+            "description": "Fostamatinib, a spleen tyrosine kinase (Syk) inhibitor, was approved by the FDA for the treatment of adults with chronic ITP who have had an insufficient response to previous treatment. This provides a new oral treatment option for patients with refractory ITP.",
+            "sourceUrl": null
         }
     ],
     "heroImage": null,
     "diagrams": [],
-    "lastUpdated": "2024-12-01",
+    "lastUpdated": "2026-09-19",
     "reviewedBy": "MDRPedia Medical Team",
     "sources": [
         {

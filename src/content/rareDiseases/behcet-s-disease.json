@@ -92,6 +92,15 @@
             "effectiveness": "SUPPORTIVE",
             "fdaApproved": false,
             "approvalYear": null
+        },
+        {
+            "name": "Otezla XR (apremilast extended-release 75 mg)",
+            "type": "MEDICATION",
+            "effectiveness": null,
+            "fdaApproved": true,
+            "approvalYear": 2025,
+            "note": "FDA (29 Aug 2025, NDA 210745). Once-daily apremilast now carries the Behçet's oral-ulcer indication in adults.",
+            "sourceUrl": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=210745"
         }
     ],
     "researchStatus": "ACTIVE_TRIALS",
@@ -132,21 +141,33 @@
     "historicalBackground": "Behcet's Disease was first described by Turkish dermatologist Hulusi Behçet in 1937. He identified the triad of oral ulcers, genital ulcers, and uveitis as the key features of the disease.",
     "recentBreakthroughs": [
         {
-            "year": 2022,
-            "title": "New Biologic Therapies Show Promise in Treating Refractory Behcet's Disease",
-            "description": "Clinical trials have demonstrated the efficacy of novel biologic agents, such as IL-17 inhibitors and JAK inhibitors, in patients with Behcet's Disease who have not responded to conventional therapies.",
-            "sourceUrl": null
+            "year": 2026,
+            "title": "Mufemilast phase 2 randomised trial hits primary endpoint",
+            "description": "In 90 patients with active oral ulcers, the selective PDE4 inhibitor mufemilast reduced oral-ulcer AUC0-12 versus placebo by −104.8 (45 mg) and −142.5 (60 mg), both p<0.001, with improved pain scores and faster ulcer-free remission (NCT04609397).",
+            "sourceUrl": "https://doi.org/10.1016/j.ard.2026.01.014"
+        },
+        {
+            "year": 2026,
+            "title": "EULAR Behçet's syndrome management recommendations, 2025 update",
+            "description": "A 29-member, 11-country EULAR task force (Annals of the Rheumatic Diseases, 23 March 2026) issued five overarching principles and twelve organ-based recommendations (one new, seven modified), keeping colchicine first-line for mucocutaneous and joint disease, positioning apremilast and immunosuppressives for refractory disease, and encouraging early anti-TNFα monoclonal antibodies for organ- or life-threatening manifestations.",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/41876291/"
         },
         {
             "year": 2023,
             "title": "Genetic Studies Identify Novel Susceptibility Genes for Behcet's Disease",
             "description": "Genome-wide association studies (GWAS) have identified new genetic loci associated with an increased risk of developing Behcet's Disease, providing insights into the disease's pathogenesis.",
             "sourceUrl": null
+        },
+        {
+            "year": 2022,
+            "title": "New Biologic Therapies Show Promise in Treating Refractory Behcet's Disease",
+            "description": "Clinical trials have demonstrated the efficacy of novel biologic agents, such as IL-17 inhibitors and JAK inhibitors, in patients with Behcet's Disease who have not responded to conventional therapies.",
+            "sourceUrl": null
         }
     ],
     "heroImage": null,
     "diagrams": [],
-    "lastUpdated": "2024-12-01",
+    "lastUpdated": "2026-09-19",
     "reviewedBy": "MDRPedia Medical Team",
     "sources": [
         {

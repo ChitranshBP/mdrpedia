@@ -98,6 +98,15 @@
             "effectiveness": "HIGHLY_EFFECTIVE",
             "fdaApproved": false,
             "approvalYear": null
+        },
+        {
+            "name": "Genglycos (pariglasgene brecaparvovec-opnr, formerly DTX401)",
+            "type": "GENE_THERAPY",
+            "effectiveness": null,
+            "fdaApproved": true,
+            "approvalYear": 2026,
+            "note": "FDA (19 Aug 2026, accelerated approval). First gene therapy for glycogen storage disease type Ia (ages ≥8). Phase 3 GlucoGene (n=46) cut daily cornstarch intake 41% vs 10% on placebo at week 48 (p<0.0001). Continued approval contingent on confirmatory trials.",
+            "sourceUrl": "https://www.fda.gov/vaccines-blood-biologics/genglycos"
         }
     ],
     "researchStatus": "ACTIVE_TRIALS",
@@ -142,21 +151,33 @@
     "historicalBackground": "The first description of glycogen storage disease was by von Gierke in 1929, who identified a patient with hepatomegaly and hypoglycemia due to a deficiency in glucose-6-phosphatase. Subsequent research led to the identification of other enzyme deficiencies involved in glycogen metabolism, leading to the classification of different types of GSD.",
     "recentBreakthroughs": [
         {
-            "year": 2022,
-            "title": "Advances in Gene Therapy for Glycogen Storage Disease Type Ia",
-            "description": "Significant progress has been made in gene therapy approaches for GSD Ia, with early-phase clinical trials showing promising results in restoring glucose homeostasis and reducing the need for dietary management.",
-            "sourceUrl": null
+            "year": 2026,
+            "title": "DTX401 96-week randomised crossover trial published",
+            "description": "The Journal of Inherited Metabolic Disease (31 August 2026) published DTX401-CL301 (n=46): 41% versus 10% cornstarch reduction at week 48 (p<0.0001), improved fasting tolerance and reduced night-time dosing; by week 96 both arms reached ~61% reduction and 67% eliminated at least one night-time dose.",
+            "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13529436/"
+        },
+        {
+            "year": 2025,
+            "title": "ACMG bulletin on cipaglucosidase alfa plus miglustat",
+            "description": "Genetics in Medicine Open (25 August 2025) issued an ACMG therapeutics bulletin for late-onset Pompe disease (GSD II), covering use in adults not improving on other enzyme replacement therapies and three boxed warnings — hypersensitivity (27%), infusion-associated reactions (32%) and cardiorespiratory failure risk — with benefit sustained over 104 weeks.",
+            "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12398902/"
         },
         {
             "year": 2023,
             "title": "Novel Enzyme Enhancer for Glycogen Storage Disease Type V (McArdle Disease)",
             "description": "Researchers have identified a small molecule enhancer that increases the activity of the deficient myophosphorylase enzyme in McArdle disease, potentially improving exercise tolerance and reducing muscle cramps.",
             "sourceUrl": null
+        },
+        {
+            "year": 2022,
+            "title": "Advances in Gene Therapy for Glycogen Storage Disease Type Ia",
+            "description": "Significant progress has been made in gene therapy approaches for GSD Ia, with early-phase clinical trials showing promising results in restoring glucose homeostasis and reducing the need for dietary management.",
+            "sourceUrl": null
         }
     ],
     "heroImage": null,
     "diagrams": [],
-    "lastUpdated": "2024-12-01",
+    "lastUpdated": "2026-09-19",
     "reviewedBy": "MDRPedia Medical Team",
     "sources": [
         {

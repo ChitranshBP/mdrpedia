@@ -96,6 +96,15 @@
             "effectiveness": "HIGHLY_EFFECTIVE",
             "fdaApproved": true,
             "approvalYear": 2021
+        },
+        {
+            "name": "Livmarli (maralixibat) tablets",
+            "type": "MEDICATION",
+            "effectiveness": null,
+            "fdaApproved": false,
+            "approvalYear": 2026,
+            "note": "EMA / EC (line extension adopted 18 Feb 2026, procedure X/0015). Adds a tablet formulation for cholestatic pruritus in patients ≥12 years, alongside the existing oral solution.",
+            "sourceUrl": "https://www.ema.europa.eu/en/medicines/human/EPAR/livmarli"
         }
     ],
     "researchStatus": "ACTIVE_TRIALS",
@@ -137,21 +146,33 @@
     "historicalBackground": "Alagille syndrome was first described by Daniel Alagille in 1969, who characterized the association of cholestasis, heart disease, and skeletal abnormalities in affected individuals. The genetic basis of the disease was later identified in the 1990s with the discovery of mutations in the JAG1 gene.",
     "recentBreakthroughs": [
         {
-            "year": 2021,
-            "title": "FDA Approves Maralixibat for Cholestatic Pruritus in Alagille Syndrome",
-            "description": "The FDA approved maralixibat, an ileal bile acid transporter (IBAT) inhibitor, for the treatment of cholestatic pruritus in patients with Alagille syndrome aged 1 year and older. This provides a new therapeutic option for managing the debilitating itch associated with ALGS.",
-            "sourceUrl": null
+            "year": 2026,
+            "title": "First indirect comparison of the two approved IBAT inhibitors",
+            "description": "A population-adjusted unanchored comparison using ASSERT/ASSERT-EXT patient-level data (odevixibat) against published ICONIC data (maralixibat) found odevixibat numerically better on pruritus and serum bile acids and significantly better on PedsQL quality of life (mean difference 14.64; 95% CI 5.70–23.58).",
+            "sourceUrl": "https://doi.org/10.57264/cer-2026-0138"
+        },
+        {
+            "year": 2026,
+            "title": "Maralixibat improves xanthomas and hypercholesterolemia",
+            "description": "An integrated post hoc analysis of the ICONIC and ITCH trials (63 children, 43% with xanthomas at baseline; Journal of Pediatrics, April 2026) showed mean Clinician Xanthoma Scale scores decreasing through 96 weeks alongside improved bile acids, lipid profile and quality of life.",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/42002216/"
         },
         {
             "year": 2023,
             "title": "Gene Therapy Approaches Showing Promise in Preclinical Studies",
             "description": "Research into gene therapy for Alagille syndrome is ongoing, with preclinical studies showing promising results in animal models. These approaches aim to correct the underlying genetic defect in JAG1 or NOTCH2, potentially offering a curative therapy in the future.",
             "sourceUrl": null
+        },
+        {
+            "year": 2021,
+            "title": "FDA Approves Maralixibat for Cholestatic Pruritus in Alagille Syndrome",
+            "description": "The FDA approved maralixibat, an ileal bile acid transporter (IBAT) inhibitor, for the treatment of cholestatic pruritus in patients with Alagille syndrome aged 1 year and older. This provides a new therapeutic option for managing the debilitating itch associated with ALGS.",
+            "sourceUrl": null
         }
     ],
     "heroImage": null,
     "diagrams": [],
-    "lastUpdated": "2024-12-01",
+    "lastUpdated": "2026-09-19",
     "reviewedBy": "MDRPedia Medical Team",
     "sources": [
         {

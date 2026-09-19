@@ -1,7 +1,11 @@
 {
     "name": "Amyotrophic Lateral Sclerosis",
     "slug": "amyotrophic-lateral-sclerosis",
-    "aliases": ["ALS", "Lou Gehrig's Disease", "Motor Neurone Disease"],
+    "aliases": [
+        "ALS",
+        "Lou Gehrig's Disease",
+        "Motor Neurone Disease"
+    ],
     "description": "Amyotrophic lateral sclerosis is a progressive neurodegenerative disease that affects nerve cells in the brain and spinal cord, causing loss of muscle control. ALS is often called Lou Gehrig's disease, after the baseball player who was diagnosed with it.",
     "category": "NEUROLOGICAL",
     "icdCode": "G12.21",
@@ -136,15 +140,45 @@
     "historicalBackground": "ALS was first described by Jean-Martin Charcot in 1869. The disease gained public attention when baseball legend Lou Gehrig was diagnosed in 1939. The 2014 Ice Bucket Challenge raised over $220 million for ALS research. The identification of the SOD1 gene in 1993 opened the door to understanding genetic causes and developing targeted therapies.",
     "recentBreakthroughs": [
         {
-            "year": 2023,
-            "title": "First gene-targeted therapy approved",
-            "description": "FDA approves tofersen (Qalsody) for SOD1-ALS, the first therapy targeting a genetic cause of ALS.",
-            "sourceUrl": null
+            "year": 2026,
+            "title": "FDA opens accelerated approval path for CNM-Au8",
+            "description": "Following a Type C meeting announced 4 May 2026, the FDA told Clene that existing data may support an NDA under accelerated approval using blood neurofilament light as a surrogate endpoint, drawing on the HEALEY platform trial and RESCUE-ALS.",
+            "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1822791/000143774926014542/ex_955500.htm"
+        },
+        {
+            "year": 2026,
+            "title": "First STMN2 restoration data in sporadic ALS",
+            "description": "On 23 February 2026 QurAlis reported interim ANQUR phase 1/2 results for QRL-201 (69 patients dosed) — the first programme to show restored STMN2 expression in sporadic ALS, with a statistically significant neurofilament effect and a trend toward slowed ALSFRS-R decline.",
+            "sourceUrl": "https://www.quralis.com/news/quralis-demonstrates-effects-on-disease-progression-and-target-engagement-in-anqur-clinical-trial-of-qrl-201-a-first-in-class-precision-medicine-in-development-for-sporadic-als/"
+        },
+        {
+            "year": 2026,
+            "title": "Long-term tofersen data published in JAMA Neurology",
+            "description": "The integrated VALOR plus open-label extension analysis (JAMA Neurology, February 2026) found earlier tofersen initiation associated with less decline over 148 weeks on ALSFRS-R (−9.9 vs −13.5 points) and slow vital capacity (−13.8% vs −18.1%), and with prolonged survival versus SOD1-ALS natural history.",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/41661214/"
+        },
+        {
+            "year": 2025,
+            "title": "Antigen-specific T cells found attacking motor neurons",
+            "description": "Researchers at Columbia University and the La Jolla Institute for Immunology published the first study showing inflammatory T cells targeting a specific antigen on motor neurons in people with ALS, opening an immune-directed therapeutic avenue.",
+            "sourceUrl": "https://en.wikipedia.org/wiki/ALS"
+        },
+        {
+            "year": 2025,
+            "title": "Lancet case series shows functional recovery with jacifusen",
+            "description": "An investigator-initiated multicentre open-label case series of the FUS-targeting antisense oligonucleotide jacifusen/ulefnersen (The Lancet, May 2025) reported up to 83% neurofilament light reduction at six months and unprecedented functional recovery in one young patient who regained unaided walking and ventilator-free breathing.",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/40414239/"
         },
         {
             "year": 2024,
             "title": "C9orf72 antisense trials advance",
             "description": "Clinical trials for antisense oligonucleotides targeting C9orf72 repeat expansion show promising results.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2023,
+            "title": "First gene-targeted therapy approved",
+            "description": "FDA approves tofersen (Qalsody) for SOD1-ALS, the first therapy targeting a genetic cause of ALS.",
             "sourceUrl": null
         },
         {
@@ -156,7 +190,7 @@
     ],
     "heroImage": null,
     "diagrams": [],
-    "lastUpdated": "2024-12-01",
+    "lastUpdated": "2026-09-19",
     "reviewedBy": "MDRPedia Medical Team",
     "sources": [
         {

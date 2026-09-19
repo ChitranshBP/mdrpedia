@@ -89,6 +89,33 @@
             "effectiveness": "SUPPORTIVE",
             "fdaApproved": false,
             "approvalYear": null
+        },
+        {
+            "name": "Amvuttra (vutrisiran)",
+            "type": "MEDICATION",
+            "effectiveness": null,
+            "fdaApproved": true,
+            "approvalYear": 2025,
+            "note": "FDA (Mar 2025) and EMA/EC (CHMP opinion 25 Apr 2025), plus UK, Japan and Brazil. Indication expanded beyond hATTR polyneuropathy to ATTR amyloidosis with cardiomyopathy (hereditary and wild-type), reducing cardiovascular mortality, hospitalisations and urgent heart-failure visits.",
+            "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1178670/000117867025000089/alny2025q2earningsrelease.htm"
+        },
+        {
+            "name": "Wainzua (eplontersen)",
+            "type": "MEDICATION",
+            "effectiveness": null,
+            "fdaApproved": false,
+            "approvalYear": 2025,
+            "note": "EMA / EC (6 Mar 2025). Serum transthyretin fell 80% vs 10% on placebo; mNIS+7 neuropathy score worsened ~3 points vs ~26 points on placebo over 65 weeks.",
+            "sourceUrl": "https://www.ema.europa.eu/en/medicines/human/EPAR/wainzua"
+        },
+        {
+            "name": "Attrogy (diflunisal)",
+            "type": "MEDICATION",
+            "effectiveness": null,
+            "fdaApproved": false,
+            "approvalYear": 2025,
+            "note": "EMA / EC (17 Jul 2025). First EU authorisation of diflunisal for hereditary transthyretin-mediated amyloidosis in adults with stage 1 or stage 2 polyneuropathy; orphan designation EU/3/22/2640.",
+            "sourceUrl": "https://www.ema.europa.eu/en/medicines/human/EPAR/attrogy"
         }
     ],
     "researchStatus": "ACTIVE_TRIALS",
@@ -129,6 +156,36 @@
     "historicalBackground": "FAP was first described in Portugal in the 1950s by Dr. Corino de Andrade. Initially, liver transplantation was the only available treatment option. The discovery of TTR as the causative protein and subsequent development of TTR stabilizers and gene silencing therapies have revolutionized the treatment landscape.",
     "recentBreakthroughs": [
         {
+            "year": 2026,
+            "title": "Eplontersen CARDIO-TTRansform misses primary endpoint",
+            "description": "On 9 July 2026 Ionis reported that the 1,432-patient CARDIO-TTRansform phase 3 in hereditary and wild-type ATTR cardiomyopathy did not meet its primary composite of cardiovascular mortality and recurrent cardiovascular events at week 140; a nominally significant HR of 0.71 was seen in the stabiliser-free monotherapy subgroup. Full data were presented at ESC Congress in August 2026.",
+            "sourceUrl": "https://www.sec.gov/Archives/edgar/data/874015/000114036126028092/ef20077664_ex99-1.htm"
+        },
+        {
+            "year": 2026,
+            "title": "FDA lifts holds on both nex-z phase 3 trials",
+            "description": "The FDA placed MAGNITUDE (ATTR-CM) and MAGNITUDE-2 (ATTRv polyneuropathy) on clinical hold on 29 October 2025 after grade 4 transaminase and bilirubin elevations in one patient; the holds were lifted on 27 January 2026 and 2 March 2026 respectively, with enhanced liver monitoring, short-course steroid guidance and new exclusion criteria.",
+            "sourceUrl": "https://www.globenewswire.com/news-release/2026/03/02/3247267/0/en/intellia-therapeutics-announces-fda-lift-of-clinical-hold-on-magnitude-phase-3-clinical-trial-in-attr-cm.html"
+        },
+        {
+            "year": 2025,
+            "title": "CRISPR nex-z sustains 87% TTR knockdown at three years",
+            "description": "Intellia reported phase 1 data for nexiguran ziclumeran (nex-z / NTLA-2001) at AHA 2025 in 36 ATTR patients followed up to 44 months: a mean 87% serum transthyretin reduction in the nine patients reaching 36 months, with NT-proBNP stable or improved in 70% at 24 months.",
+            "sourceUrl": "https://www.globenewswire.com/news-release/2025/11/10/3184975/0/en/intellia-therapeutics-presents-positive-longer-term-phase-1-data-of-nexiguran-ziclumeran-nex-z-in-patients-with-transthyretin-attr-amyloidosis-with-cardiomyopathy.html"
+        },
+        {
+            "year": 2022,
+            "title": "Vutrisiran Approved for hATTR Amyloidosis",
+            "description": "Vutrisiran, a next-generation RNAi therapeutic, was approved for hATTR amyloidosis, offering subcutaneous administration and potentially improved efficacy and safety profiles compared to earlier treatments.",
+            "sourceUrl": null
+        },
+        {
+            "year": 2019,
+            "title": "FDA Approves Tafamidis for hATTR Amyloidosis Cardiomyopathy",
+            "description": "Tafamidis received FDA approval for the treatment of transthyretin amyloid cardiomyopathy (ATTR-CM), expanding its use beyond polyneuropathy and addressing the cardiac manifestations of the disease.",
+            "sourceUrl": null
+        },
+        {
             "year": 2018,
             "title": "FDA Approves Patisiran for hATTR Amyloidosis",
             "description": "Patisiran, an RNA interference therapeutic, received FDA approval for the treatment of hereditary transthyretin-mediated amyloidosis (hATTR), marking a significant advancement in targeted gene therapy for this condition.",
@@ -139,23 +196,11 @@
             "title": "FDA Approves Inotersen for hATTR Amyloidosis",
             "description": "Inotersen, an antisense oligonucleotide, was approved by the FDA for the treatment of hATTR amyloidosis, providing another option for reducing TTR protein production.",
             "sourceUrl": null
-        },
-        {
-            "year": 2019,
-            "title": "FDA Approves Tafamidis for hATTR Amyloidosis Cardiomyopathy",
-            "description": "Tafamidis received FDA approval for the treatment of transthyretin amyloid cardiomyopathy (ATTR-CM), expanding its use beyond polyneuropathy and addressing the cardiac manifestations of the disease.",
-            "sourceUrl": null
-        },
-        {
-            "year": 2022,
-            "title": "Vutrisiran Approved for hATTR Amyloidosis",
-            "description": "Vutrisiran, a next-generation RNAi therapeutic, was approved for hATTR amyloidosis, offering subcutaneous administration and potentially improved efficacy and safety profiles compared to earlier treatments.",
-            "sourceUrl": null
         }
     ],
     "heroImage": null,
     "diagrams": [],
-    "lastUpdated": "2024-12-01",
+    "lastUpdated": "2026-09-19",
     "reviewedBy": "MDRPedia Medical Team",
     "sources": [
         {

@@ -1,7 +1,10 @@
 {
     "name": "Huntington's Disease",
     "slug": "huntington-disease",
-    "aliases": ["Huntington's Chorea", "HD"],
+    "aliases": [
+        "Huntington's Chorea",
+        "HD"
+    ],
     "description": "Huntington's disease is a progressive neurodegenerative disorder caused by an inherited defect in a single gene. It causes the progressive breakdown of nerve cells in the brain, affecting movement, cognitive abilities, and behavior.",
     "category": "NEUROLOGICAL",
     "icdCode": "G10",
@@ -125,6 +128,24 @@
     "historicalBackground": "The disease is named after George Huntington, who described it in 1872 based on observations of affected families on Long Island, NY. The genetic cause (HTT gene) was discovered in 1993 after a decade-long collaborative effort. This was one of the first disease genes mapped using genetic linkage analysis and remains a model for understanding trinucleotide repeat disorders.",
     "recentBreakthroughs": [
         {
+            "year": 2026,
+            "title": "Oral votoplam shows dose-dependent slowing in PIVOT-HD",
+            "description": "PTC Therapeutics' 28 April 2026 24-month PIVOT-HD extension analysis reported 52% slowing of cUHDRS progression at 10 mg and 28% at 5 mg in Stage 2 patients versus matched natural history, with sustained blood huntingtin lowering; a ~770-patient phase 3 (INVEST-HD) has begun.",
+            "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1070081/000107008126000006/tmb-20260428xex99d1.htm"
+        },
+        {
+            "year": 2026,
+            "title": "First Huntington's gene therapy BLA filed with FDA",
+            "description": "After a June 2026 Type B meeting in which the FDA accepted the three-year phase I/II analysis as the primary basis for accelerated approval, uniQure submitted the BLA for ifezuntirgene inilparvovec (AMT-130) on 2 September 2026, with a UK application filed in parallel. No approval decision had been issued as of 19 September 2026.",
+            "sourceUrl": "https://uniqure.gcs-web.com/news-releases/news-release-details/uniqure-announces-submission-biologics-license-application"
+        },
+        {
+            "year": 2025,
+            "title": "AMT-130 first therapy shown to slow Huntington's progression",
+            "description": "On 24 September 2025 uniQure reported that high-dose AMT-130 produced a statistically significant 75% slowing of cUHDRS progression at 36 months versus propensity-matched external controls (p=0.003), with 60% slowing of Total Functional Capacity decline (p=0.033) and a mean 8.2% reduction in CSF neurofilament light.",
+            "sourceUrl": "https://www.uniqure.com/programs-pipeline/huntingtons-disease"
+        },
+        {
             "year": 2024,
             "title": "Next-generation ASO therapies in trials",
             "description": "Following setbacks with tominersen, new antisense oligonucleotide approaches with improved selectivity are showing promise in early trials.",
@@ -139,7 +160,7 @@
     ],
     "heroImage": null,
     "diagrams": [],
-    "lastUpdated": "2024-12-01",
+    "lastUpdated": "2026-09-19",
     "reviewedBy": "MDRPedia Medical Team",
     "sources": [
         {

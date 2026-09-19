@@ -92,6 +92,24 @@
             "effectiveness": "MODERATELY_EFFECTIVE",
             "fdaApproved": true,
             "approvalYear": 2024
+        },
+        {
+            "name": "Zevaskyn (prademagene zamikeracel)",
+            "type": "GENE_THERAPY",
+            "effectiveness": null,
+            "fdaApproved": true,
+            "approvalYear": 2025,
+            "note": "FDA (28 Apr 2025). One-time surgical application onto chronic wounds in recessive dystrophic EB; pivotal VIITAL phase 3 published in The Lancet, June 2025.",
+            "sourceUrl": "https://www.fda.gov/vaccines-blood-biologics/zevaskyn"
+        },
+        {
+            "name": "Vyjuvek (beremagene geperpavec)",
+            "type": "GENE_THERAPY",
+            "effectiveness": null,
+            "fdaApproved": false,
+            "approvalYear": 2025,
+            "note": "EMA / EC (23 Apr 2025); UK MHRA May 2026. 67% (21/31) of treated wounds completely healed at 6 months vs 22% (7/31) with placebo; licensed from birth for COL7A1-mutation dystrophic EB.",
+            "sourceUrl": "https://www.ema.europa.eu/en/medicines/human/EPAR/vyjuvek"
         }
     ],
     "researchStatus": "ACTIVE_TRIALS",
@@ -131,21 +149,33 @@
     "historicalBackground": "The first clinical descriptions of Epidermolysis Bullosa date back to the late 19th century. Herlitz described the severe, lethal form of EB in 1935. The genetic basis of EB began to be elucidated in the late 20th century with the identification of mutations in genes encoding structural proteins of the skin.",
     "recentBreakthroughs": [
         {
-            "year": 2022,
-            "title": "Topical Gene Therapy Shows Promise in EB",
-            "description": "A clinical trial demonstrated that topical gene therapy using a modified herpes simplex virus to deliver the COL7A1 gene improved wound healing in patients with recessive dystrophic EB.",
-            "sourceUrl": null
+            "year": 2026,
+            "title": "Long-term paediatric Filsuvez data from EASE",
+            "description": "A prespecified EASE subgroup analysis in 156 children found 44.6% achieved first complete target wound closure within 45 days with Oleogel-S10 versus 25.6% with control gel, and body-surface wound burden fell from 12.5% to 5.3% at month 24.",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/42205007/"
+        },
+        {
+            "year": 2025,
+            "title": "VIITAL phase 3 of pz-cel published in The Lancet",
+            "description": "The pivotal two-centre intrapatient-controlled phase 3 trial (NCT04227106) of the autologous COL7A1 gene-modified keratinocyte sheet prademagene zamikeracel in recessive dystrophic EB was published in The Lancet in June 2025, randomising 86 matched chronic wounds in 11 patients.",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/40570869/"
         },
         {
             "year": 2024,
             "title": "FDA Approves Filsuvez for Wound Healing in EB",
             "description": "The FDA approved Filsuvez, a birch bark extract ointment, for the treatment of partial thickness wounds associated with dystrophic and junctional epidermolysis bullosa (EB) in patients 6 months of age and older.",
             "sourceUrl": null
+        },
+        {
+            "year": 2022,
+            "title": "Topical Gene Therapy Shows Promise in EB",
+            "description": "A clinical trial demonstrated that topical gene therapy using a modified herpes simplex virus to deliver the COL7A1 gene improved wound healing in patients with recessive dystrophic EB.",
+            "sourceUrl": null
         }
     ],
     "heroImage": null,
     "diagrams": [],
-    "lastUpdated": "2024-12-01",
+    "lastUpdated": "2026-09-19",
     "reviewedBy": "MDRPedia Medical Team",
     "sources": [
         {

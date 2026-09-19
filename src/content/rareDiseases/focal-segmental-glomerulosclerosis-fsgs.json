@@ -91,6 +91,15 @@
             "effectiveness": "SUPPORTIVE",
             "fdaApproved": true,
             "approvalYear": null
+        },
+        {
+            "name": "Filspari (sparsentan)",
+            "type": "MEDICATION",
+            "effectiveness": null,
+            "fdaApproved": true,
+            "approvalYear": 2026,
+            "note": "FDA (13 Apr 2026, NDA 216403 SUPPL-6). First FSGS-specific drug approval; indicated to reduce proteinuria in patients ≥8 years with FSGS without nephrotic syndrome. In DUPLEX, UPCR fell 48% vs 27% in the non-nephrotic subgroup.",
+            "sourceUrl": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&ApplNo=216403"
         }
     ],
     "researchStatus": "ACTIVE_TRIALS",
@@ -130,21 +139,33 @@
     "historicalBackground": "FSGS was first described as a distinct entity in the mid-20th century. Over time, understanding of its various causes and subtypes has evolved, leading to more targeted treatment approaches. Research continues to focus on identifying the underlying mechanisms and developing more effective therapies.",
     "recentBreakthroughs": [
         {
-            "year": 2022,
-            "title": "Identification of Novel Genetic Mutations Associated with FSGS",
-            "description": "Recent studies have identified new genetic mutations that contribute to the development of FSGS, providing potential targets for future therapies.",
-            "sourceUrl": null
+            "year": 2026,
+            "title": "Paediatric DUPLEX subgroup supports age-8 indication",
+            "description": "Among 35 children aged 8 to under 18 (Kidney International Reports, April 2026), UPCR fell 39.5% with sparsentan versus 24.9% with irbesartan at week 108, with complete remission in 12.5% versus 5.3%; safety was comparable.",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/42210914/"
+        },
+        {
+            "year": 2025,
+            "title": "Sparsentan works in genetic FSGS subtypes",
+            "description": "A post hoc DUPLEX analysis of 31 patients with podocyte-gene variants, 25 with COL4A3-5 variants and 14 with APOL1 high-risk genotypes (CJASN, December 2025) found greater proteinuria lowering, more frequent complete remission and fewer composite kidney endpoints with sparsentan than irbesartan in these treatment-resistant genetic forms.",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/41433094/"
         },
         {
             "year": 2023,
             "title": "Development of Targeted Therapies for Specific FSGS Subtypes",
             "description": "Researchers are developing targeted therapies based on the underlying cause of FSGS, such as gene therapies for genetic forms of the disease.",
             "sourceUrl": null
+        },
+        {
+            "year": 2022,
+            "title": "Identification of Novel Genetic Mutations Associated with FSGS",
+            "description": "Recent studies have identified new genetic mutations that contribute to the development of FSGS, providing potential targets for future therapies.",
+            "sourceUrl": null
         }
     ],
     "heroImage": null,
     "diagrams": [],
-    "lastUpdated": "2024-12-01",
+    "lastUpdated": "2026-09-19",
     "reviewedBy": "MDRPedia Medical Team",
     "sources": [
         {

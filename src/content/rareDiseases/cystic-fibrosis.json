@@ -1,7 +1,10 @@
 {
     "name": "Cystic Fibrosis",
     "slug": "cystic-fibrosis",
-    "aliases": ["CF", "Mucoviscidosis"],
+    "aliases": [
+        "CF",
+        "Mucoviscidosis"
+    ],
     "description": "Cystic fibrosis is a progressive genetic disease that causes persistent lung infections and limits the ability to breathe over time. It affects the cells that produce mucus, sweat, and digestive juices, causing these fluids to become thick and sticky.",
     "category": "GENETIC",
     "icdCode": "E84",
@@ -97,6 +100,15 @@
             "effectiveness": "EXPERIMENTAL",
             "fdaApproved": false,
             "approvalYear": null
+        },
+        {
+            "name": "Alyftrek (vanzacaftor/tezacaftor/deutivacaftor)",
+            "type": "MEDICATION",
+            "effectiveness": null,
+            "fdaApproved": false,
+            "approvalYear": 2025,
+            "note": "EMA / EC (30 Jun 2025); Health Canada (31 Jul 2025). Ages 6+ with at least one non-Class I mutation; ppFEV1 maintained at ~67 points at 24 weeks, non-inferior to Kaftrio across 405- and 573-patient studies.",
+            "sourceUrl": "https://www.ema.europa.eu/en/medicines/human/EPAR/alyftrek"
         }
     ],
     "researchStatus": "ACTIVE_TRIALS",
@@ -149,6 +161,18 @@
     "historicalBackground": "CF was first recognized as a distinct clinical entity by Dorothy Andersen in 1938. The sweat test was developed in 1959. The CFTR gene was identified in 1989 by Francis Collins, Lap-Chee Tsui, and John Riordan. The approval of ivacaftor in 2012 marked the beginning of the CFTR modulator era, with Trikafta (2019) representing a breakthrough for approximately 90% of CF patients.",
     "recentBreakthroughs": [
         {
+            "year": 2026,
+            "title": "417 rare CFTR variants screened against vanzacaftor triple",
+            "description": "An in-vitro screen of 417 CFTR variants (272 tested for the first time, 145 previously non- or borderline-responsive to the elexacaftor triple) found roughly 76% responsive to vanzacaftor/tezacaftor/ivacaftor, potentially expanding eligibility for ultra-rare genotypes.",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/42728175/"
+        },
+        {
+            "year": 2026,
+            "title": "TIMBERLINE extends vanzacaftor triple to preschoolers",
+            "description": "A phase 3 open-label trial of vanzacaftor/tezacaftor/deutivacaftor in 67 children aged 2–5 (Lancet Respiratory Medicine, September 2026) found mean sweat chloride fell 9.6 mmol/L to 28.9 mmol/L at week 24, with 65% below the 30 mmol/L diagnostic threshold.",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/42710511/"
+        },
+        {
             "year": 2024,
             "title": "Trikafta approved for younger children",
             "description": "FDA approval extended to children as young as 1 year old, enabling earlier intervention.",
@@ -169,7 +193,7 @@
     ],
     "heroImage": null,
     "diagrams": [],
-    "lastUpdated": "2024-12-01",
+    "lastUpdated": "2026-09-19",
     "reviewedBy": "MDRPedia Medical Team",
     "sources": [
         {

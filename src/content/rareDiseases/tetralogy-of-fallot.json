@@ -1,7 +1,10 @@
 {
     "name": "Tetralogy of Fallot",
     "slug": "tetralogy-of-fallot",
-    "aliases": ["TOF", "Fallot's Tetralogy"],
+    "aliases": [
+        "TOF",
+        "Fallot's Tetralogy"
+    ],
     "description": "Tetralogy of Fallot is a congenital heart defect that consists of four structural abnormalities: a ventricular septal defect, pulmonary stenosis, right ventricular hypertrophy, and an overriding aorta. It is the most common cyanotic heart defect.",
     "category": "CARDIOVASCULAR",
     "icdCode": "Q21.3",
@@ -79,6 +82,15 @@
             "effectiveness": "MODERATELY_EFFECTIVE",
             "fdaApproved": true,
             "approvalYear": null
+        },
+        {
+            "name": "Edwards SAPIEN 3 Transcatheter Pulmonic Valve Delivery System",
+            "type": "MEDICATION",
+            "effectiveness": null,
+            "fdaApproved": true,
+            "approvalYear": 2026,
+            "note": "FDA (28 Jan 2026). Next-generation delivery system for percutaneous pulmonary valve implantation in right-ventricular outflow tract dysfunction — the dominant late complication after tetralogy of Fallot repair.",
+            "sourceUrl": "https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfpma/pma.cfm?id=P200015S068"
         }
     ],
     "researchStatus": "ACTIVE_TRIALS",
@@ -126,6 +138,12 @@
     "historicalBackground": "Étienne-Louis Arthur Fallot first described this constellation of defects in 1888. Helen Taussig and Alfred Blalock pioneered the first palliative surgical treatment (Blalock-Taussig shunt) in 1944 at Johns Hopkins. Complete intracardiac repair was first performed by Walton Lillehei in 1954. Modern surgical techniques have made TOF highly treatable with excellent long-term outcomes.",
     "recentBreakthroughs": [
         {
+            "year": 2026,
+            "title": "EP-guided ablation at valve replacement cuts ventricular tachycardia",
+            "description": "A prospective multicentre cohort of 204 adults with repaired tetralogy of Fallot undergoing surgical pulmonary valve replacement (European Heart Journal, August 2026) found that pre-operative electrophysiological study with targeted intraoperative cryoablation of anatomical isthmuses rendered VT non-inducible in 74.1% versus 15.0% with empiric ablation (adjusted OR 20.4, p<0.0001).",
+            "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/42206474/"
+        },
+        {
             "year": 2024,
             "title": "Advanced 3D printing for surgical planning",
             "description": "Patient-specific 3D printed heart models improve surgical precision and outcomes in complex TOF repairs.",
@@ -146,7 +164,7 @@
     ],
     "heroImage": null,
     "diagrams": [],
-    "lastUpdated": "2024-12-01",
+    "lastUpdated": "2026-09-19",
     "reviewedBy": "MDRPedia Medical Team",
     "sources": [
         {
