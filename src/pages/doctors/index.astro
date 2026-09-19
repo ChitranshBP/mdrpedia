@@ -858,6 +858,14 @@ const masterCount = tierCounts.master;
 
     /* Doctor Card */
     .doctor-card {
+        /* This page renders every profile in one document (~975 cards, ~17k DOM
+           nodes) because the filters run client-side over the full set — cards
+           cannot be paginated away without breaking that. content-visibility
+           lets the browser skip layout and paint for off-screen cards, which is
+           where the cost actually is; contain-intrinsic-size keeps the scrollbar
+           stable until a card has been rendered once. */
+        content-visibility: auto;
+        contain-intrinsic-size: auto 280px;
         display: flex;
         flex-direction: column;
         padding: 24px;
