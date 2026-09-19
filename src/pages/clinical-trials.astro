@@ -108,7 +108,7 @@ function formatDate(dateStr: string): string {
         </nav>
 
         <!-- Companies & Trials -->
-        <main class="trials-content">
+        <div class="trials-content">
             <div class="container">
                 {companies.map(company => (
                     <section class="company-section" id={company.id}>
@@ -314,7 +314,7 @@ function formatDate(dateStr: string): string {
                     </section>
                 ))}
             </div>
-        </main>
+        </div>
 
         <!-- CTA Section -->
         <section class="cta-section">

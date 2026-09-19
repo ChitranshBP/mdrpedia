@@ -117,7 +117,7 @@ function getTierColor(tier: string): string {
     <div class="admin">
         <AdminSidebar adminKey={adminKey} activePage="data-quality" />
 
-        <main class="main">
+        <div class="main">
             <header class="page-header">
                 <div>
                     <h1>Data Quality Report</h1>
@@ -243,7 +243,7 @@ function getTierColor(tier: string): string {
             {filteredProfiles.length > 100 && (
                 <p class="table-note">Showing first 100 results. Apply filters to narrow down.</p>
             )}
-        </main>
+        </div>
     </div>
 </Layout>
 
@@ -419,7 +419,7 @@ function getTierColor(tier: string): string {
     .tier-badge--gold { background: rgba(255, 215, 0, 0.15); color: #ffd700; }
     .tier-badge--blue { background: rgba(0, 170, 255, 0.15); color: #00aaff; }
     .tier-badge--green { background: rgba(0, 204, 102, 0.15); color: #00cc66; }
-    .tier-badge--gray { background: rgba(156, 163, 175, 0.15); color: #9ca3af; }
+    .tier-badge--gray { background: rgba(156, 163, 175, 0.15); color: var(--ink-2); }
 
     .cell-score {
         min-width: 150px;

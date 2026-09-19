@@ -110,7 +110,7 @@ const initialSeoDesc = page?.seo_desc || "";
 <Layout title={`${page ? "Edit" : "New"} Page — MDRPedia Admin`}>
     <div class="admin">
         <AdminSidebar adminKey={adminKey} activePage="pages" />
-        <main class="main">
+        <div class="main">
         <header class="admin-header">
             <div class="admin-header__top">
                 <h1>{page ? `Edit: ${page.title}` : "Create New Page"}</h1>
@@ -216,7 +216,7 @@ const initialSeoDesc = page?.seo_desc || "";
                 </div>
             </div>
         </form>
-        </main>
+        </div>
     </div>
 </Layout>
 

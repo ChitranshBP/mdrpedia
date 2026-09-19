@@ -79,7 +79,7 @@ const reviewedEdits = await prisma.profileEdit.findMany({
 <Layout title="Pending Edits — MDRPedia Admin">
     <div class="admin">
         <AdminSidebar adminKey={adminKey} activePage="edits" />
-        <main class="main">
+        <div class="main">
 
         {successMsg && <div class="alert success">{successMsg}</div>}
         {errorMsg && <div class="alert error">{errorMsg}</div>}
@@ -190,7 +190,7 @@ const reviewedEdits = await prisma.profileEdit.findMany({
                 </table>
             </div>
         </section>
-        </main>
+        </div>
     </div>
 </Layout>
 

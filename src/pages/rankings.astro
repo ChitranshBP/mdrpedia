@@ -130,7 +130,7 @@ const rankingsSchema = {
         </nav>
 
         <!-- Main Content -->
-        <main class="rankings-content">
+        <div class="rankings-content">
             <div class="container">
                 {sortedGroups.map((group) => {
                     const doctors = doctorsByGroup[group]
@@ -200,7 +200,7 @@ const rankingsSchema = {
                     );
                 })}
             </div>
-        </main>
+        </div>
 
         <!-- Methodology Section -->
         <section class="methodology">

@@ -29,7 +29,7 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
 <Layout title="Manage News — MDRPedia Admin">
     <div class="admin">
         <AdminSidebar adminKey={adminKey} activePage="news" />
-        <main class="main">
+        <div class="main">
         <header class="admin-header">
             <div class="admin-header__top">
                 <span class="badge badge--admin">SUPER ADMIN</span>
@@ -116,7 +116,7 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
                 </tbody>
             </table>
         </div>
-        </main>
+        </div>
     </div>
 </Layout>
 

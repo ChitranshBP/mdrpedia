@@ -74,7 +74,7 @@ function getActionColor(action: string): string {
     <div class="admin">
         <AdminSidebar adminKey={adminKey} activePage="audit-log" />
 
-        <main class="main">
+        <div class="main">
             <header class="page-header">
                 <div>
                     <h1>Activity Log</h1>
@@ -200,7 +200,7 @@ function getActionColor(action: string): string {
                     )}
                 </div>
             )}
-        </main>
+        </div>
     </div>
 </Layout>
 
@@ -398,7 +398,7 @@ function getActionColor(action: string): string {
 
     .action-badge--gray {
         background: rgba(156, 163, 175, 0.15);
-        color: #9ca3af;
+        color: var(--ink-2);
     }
 
     .text-muted {

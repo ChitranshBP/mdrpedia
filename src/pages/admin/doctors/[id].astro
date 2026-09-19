@@ -327,7 +327,7 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
 <Layout title={`Edit ${profile.full_name} — Admin`}>
     <div class="admin">
         <AdminSidebar adminKey={adminKey} activePage="doctors" />
-        <main class="main">
+        <div class="main">
         <header class="admin-header">
             <div>
                 <h1>Edit: {profile.full_name}</h1>
@@ -854,7 +854,7 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
                 </div>
             </div>
         </form>
-        </main>
+        </div>
     </div>
 </Layout>
 

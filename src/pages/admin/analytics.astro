@@ -119,7 +119,7 @@ function formatNumber(num: number): string {
     <div class="admin">
         <AdminSidebar adminKey={adminKey} activePage="analytics" />
 
-        <main class="main">
+        <div class="main">
             <header class="page-header">
                 <div>
                     <h1>Analytics</h1>
@@ -237,7 +237,7 @@ function formatNumber(num: number): string {
                     )}
                 </div>
             </div>
-        </main>
+        </div>
     </div>
 </Layout>
 
@@ -315,7 +315,7 @@ function formatNumber(num: number): string {
 
     .stat-icon--gray {
         background: rgba(156, 163, 175, 0.15);
-        color: #9ca3af;
+        color: var(--ink-2);
     }
 
     .stat-icon--blue {
@@ -426,7 +426,7 @@ function formatNumber(num: number): string {
     .tier-badge--titan { background: rgba(255, 215, 0, 0.15); color: #ffd700; }
     .tier-badge--elite { background: rgba(0, 170, 255, 0.15); color: #00aaff; }
     .tier-badge--master { background: rgba(0, 204, 102, 0.15); color: #00cc66; }
-    .tier-badge--unranked { background: rgba(156, 163, 175, 0.15); color: #9ca3af; }
+    .tier-badge--unranked { background: rgba(156, 163, 175, 0.15); color: var(--ink-2); }
 
     .profile-views {
         font-size: 0.9rem;

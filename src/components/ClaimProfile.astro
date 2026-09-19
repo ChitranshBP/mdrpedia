@@ -97,8 +97,13 @@ const { doctorName, slug } = Astro.props;
                 </div>
 
                 <div class="form-group full-width">
-                    <label>Verification Document</label>
-                    <div class="upload-zone" id="uploadArea">
+                    <label for="certUpload">Verification Document</label>
+                    <button
+                        type="button"
+                        class="upload-zone"
+                        id="uploadArea"
+                        aria-describedby="uploadHint"
+                    >
                         <div class="upload-icon">
                             <svg
                                 viewBox="0 0 24 24"
@@ -113,11 +118,11 @@ const { doctorName, slug } = Astro.props;
                                 <line x1="12" y1="3" x2="12" y2="15"></line>
                             </svg>
                         </div>
-                        <div class="upload-text">
+                        <div class="upload-text" id="uploadHint">
                             <strong>Click to upload</strong> or drag and drop
                             <span>PDF, JPG or PNG (max. 10MB)</span>
                         </div>
-                    </div>
+                    </button>
                     <input
                         type="file"
                         id="certUpload"
@@ -126,7 +131,7 @@ const { doctorName, slug } = Astro.props;
                     />
                 </div>
 
-                <div style="display:none; opacity:0; visibility:hidden;">
+                <div style="display:none; opacity:0; visibility:hidden;" aria-hidden="true">
                     <input
                         type="text"
                         id="website_url_hp"
@@ -148,6 +153,8 @@ const { doctorName, slug } = Astro.props;
                         <polyline points="12 5 19 12 12 19"></polyline>
                     </svg>
                 </button>
+
+                <p class="claim-status" id="claimStatus" role="status" aria-live="polite"></p>
             </form>
 
             <div class="trust-footer">
@@ -328,6 +335,12 @@ const { doctorName, slug } = Astro.props;
     }
 
     .upload-zone {
+        /* Rendered as a <button> so it is focusable and Enter/Space work;
+           these reset the UA button styling back to the drop-zone look. */
+        width: 100%;
+        font: inherit;
+        color: inherit;
+        appearance: none;
         border: 2px dashed var(--rule);
         border-radius: var(--r-4);
         padding: 2.5rem 1.5rem;
@@ -341,11 +354,31 @@ const { doctorName, slug } = Astro.props;
         gap: 1rem;
     }
 
+    .upload-zone:focus-visible {
+        outline: 2px solid var(--ink-blue);
+        outline-offset: 2px;
+    }
+
     .upload-zone:hover,
     .upload-zone.dragover {
         border-color: var(--ink-blue);
         background: var(--paper-3);
         transform: translateY(-2px);
+    }
+
+    .claim-status {
+        margin: 0.75rem 0 0;
+        font-size: 0.9rem;
+        line-height: 1.45;
+        min-height: 1.35em;
+    }
+
+    .claim-status--error {
+        color: var(--sanguine, #a11);
+    }
+
+    .claim-status--success {
+        color: var(--verdant, #0a6);
     }
 
     .upload-icon {
@@ -500,26 +533,68 @@ const { doctorName, slug } = Astro.props;
         });
 
         // Form submit
-        const form = document.getElementById("claimForm");
-        form?.addEventListener("submit", (e) => {
+        const form = document.getElementById("claimForm") as HTMLFormElement | null;
+        const status = document.getElementById("claimStatus");
+
+        const setStatus = (message: string, state: "error" | "success" | "") => {
+            if (!status) return;
+            status.textContent = message;
+            status.className = state ? `claim-status claim-status--${state}` : "claim-status";
+        };
+
+        form?.addEventListener("submit", async (e) => {
             e.preventDefault();
-            const btn = document.getElementById("submitBtn");
-            if (btn) {
-                const hp = document.getElementById(
-                    "website_url_hp",
-                ) as HTMLInputElement;
-                if (hp && hp.value) {
-                    console.warn("Bot detected");
-                    return;
+            const btn = document.getElementById("submitBtn") as HTMLButtonElement | null;
+            const label = btn?.querySelector("span");
+            const hp = document.getElementById("website_url_hp") as HTMLInputElement;
+            const email = (document.getElementById("claimEmail") as HTMLInputElement)?.value.trim();
+            const licence = (document.getElementById("claimLicense") as HTMLInputElement)?.value.trim();
+
+            if (!email || !licence) {
+                setStatus("Please provide both an email address and a registration number.", "error");
+                return;
+            }
+
+            const original = label?.textContent ?? "Submit Verification Request";
+            if (btn) btn.disabled = true;
+            if (label) label.textContent = "Submitting…";
+            setStatus("", "");
+
+            try {
+                const res = await fetch("/api/claim-profile", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        profile_slug: form.dataset.slug,
+                        email,
+                        registration_number: licence,
+                        document_name: fileInput?.files?.[0]?.name ?? null,
+                        honeypot_filled: Boolean(hp && hp.value),
+                    }),
+                });
+
+                const payload = await res.json().catch(() => ({}));
+
+                if (!res.ok) {
+                    throw new Error(payload.error || "We couldn't submit that request.");
                 }
 
-                btn.classList.add("success");
-                btn.innerHTML = `
-                    <span>Request Submitted Successfully</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="20 6 9 17 4 12"/>
-                    </svg>
-                `;
+                btn?.classList.add("success");
+                if (label) label.textContent = "Request Submitted";
+                setStatus(
+                    payload.message || "Verification request received. We'll email you once it's reviewed.",
+                    "success",
+                );
+                form.querySelectorAll("input").forEach((i) => {
+                    if (i.type !== "hidden") i.setAttribute("disabled", "true");
+                });
+            } catch (err) {
+                if (btn) btn.disabled = false;
+                if (label) label.textContent = original;
+                setStatus(
+                    err instanceof Error ? err.message : "We couldn't submit that request. Please try again.",
+                    "error",
+                );
             }
         });
     });

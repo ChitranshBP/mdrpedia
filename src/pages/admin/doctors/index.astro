@@ -186,7 +186,7 @@ const unimported = staticProfiles.filter((p) => !dbSlugs.has(p.id));
 <Layout title="Manage Doctors — MDRPedia">
     <div class="admin">
         <AdminSidebar adminKey={adminKey} activePage="doctors" />
-        <main class="main">
+        <div class="main">
 
         {successMsg && <div class="alert success">{successMsg}</div>}
         {errorMsg && <div class="alert error">{errorMsg}</div>}
@@ -296,7 +296,7 @@ const unimported = staticProfiles.filter((p) => !dbSlugs.has(p.id));
                 </div>
             </div>
         </div>
-        </main>
+        </div>
     </div>
 </Layout>
 

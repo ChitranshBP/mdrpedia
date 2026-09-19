@@ -55,7 +55,7 @@ export async function GET({ params, request }: { params: { certId: string }; req
         '<div style="font-size:13px;font-weight:600;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (d.doctor.name||"") + '</div>' +
         '<div style="font-size:10px;font-weight:600;letter-spacing:0.08em;color:' + color + ';text-transform:uppercase;margin-top:2px">' + tier + ' Certified</div>' +
         '<div style="font-size:11px;color:#6b7280;margin-top:4px">' + statusDot + statusText + (band ? " \\u00B7 " + band : "") + '</div>' +
-        '<div style="font-size:10px;color:#9ca3af;margin-top:2px">Last audit: ' + auditDate + '</div>' +
+        '<div style="font-size:10px;color:#6b7280;margin-top:2px">Last audit: ' + auditDate + '</div>' +
       '</div>' +
     '</a>';
   }).catch(function(){

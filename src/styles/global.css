@@ -230,7 +230,18 @@ code {
 .rule-strong { height: 1px; background: var(--rule-strong); border: 0; }
 
 /* Focus */
-:focus-visible { outline: 2px solid var(--ink-blue); outline-offset: 2px; border-radius: 2px; }
+/* Accessibility guarantee: focus is never invisible.
+   `outline: none` appears in ~30 component rules across this codebase, most of them
+   more specific than this selector, and several provide no replacement indicator
+   (the homepage hero search among them). Rather than rely on each component to
+   remember, this rule always draws a ring. The !important is deliberate: an
+   invisible focus indicator is a WCAG 2.4.7 failure, not a style preference.
+   :focus-visible only matches keyboard/AT focus, so mouse clicks are unaffected. */
+:focus-visible {
+  outline: 2px solid var(--ink-blue) !important;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
 
 /* Selection */
 ::selection { background: var(--aged-gold-2); color: var(--ink); }

@@ -132,7 +132,7 @@ const reviewedSubmissions = await prisma.pendingProfile.findMany({
 <Layout title="New Submissions — MDRPedia Admin">
     <div class="admin">
         <AdminSidebar adminKey={adminKey} activePage="submissions" />
-        <main class="main">
+        <div class="main">
 
         {successMsg && <div class="alert success">{successMsg}</div>}
         {errorMsg && <div class="alert error">{errorMsg}</div>}
@@ -244,7 +244,7 @@ const reviewedSubmissions = await prisma.pendingProfile.findMany({
                 </table>
             </div>
         </section>
-        </main>
+        </div>
     </div>
 </Layout>
 
