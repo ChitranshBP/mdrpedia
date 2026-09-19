@@ -1,10 +1,10 @@
+#!/usr/bin/env tsx
+
 // ⚠️ LEGACY - DO NOT RUN.
 // This script writes static sitemap-*.xml files into public/, which would shadow
 // the live endpoints in src/pages/sitemap*.xml.ts and serve stale URLs.
 // The sitemaps are generated at build time by those endpoints instead.
 // Kept only for reference; it is not wired into `npm run build`.
-
-#!/usr/bin/env tsx
 // ============================================================================
 // MDRPedia — Hierarchical Sitemap Generator
 // Generates organized sitemaps for optimal crawling:

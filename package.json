@@ -28,8 +28,7 @@
     "satori": "^0.33.4",
     "satori-html": "^0.3.2",
     "shiki": "^4.4.3",
-    "stripe": "^22.0.2",
-    "typescript": "^7.0.2"
+    "stripe": "^22.0.2"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
@@ -41,14 +40,15 @@
     "embedded-postgres": "^18.4.0-beta.17",
     "pagefind": "^1.5.2",
     "prisma": "^8.1.0-dev.7",
-    "tsx": "^4.21.0"
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
   },
   "allowScripts": {
     "@embedded-postgres/darwin-arm64@18.4.0-beta.17": true,
-    "@prisma/engines@7.10.0": true,
     "esbuild@0.28.2": true,
     "fsevents@2.3.3": true,
-    "prisma@7.10.0": true,
-    "@embedded-postgres/linux-x64@18.4.0-beta.17": true
+    "@embedded-postgres/linux-x64@18.4.0-beta.17": true,
+    "@prisma/engines@8.1.0-dev.7": true,
+    "prisma@8.1.0-dev.7": true
   }
 }
