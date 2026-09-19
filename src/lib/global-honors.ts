@@ -379,7 +379,7 @@ export function getHonorStyle(tier: HonorTier): {
                 badgeColor: '#300066',          // Deep Purple
                 borderColor: '#FFD700',          // Gold
                 textColor: '#FFD700',
-                fontFamily: "'Lora', serif",
+                fontFamily: "var(--font-serif)",
                 icon: 'GL',
             };
         case HonorTier.NATIONAL_HONOR:
@@ -395,7 +395,7 @@ export function getHonorStyle(tier: HonorTier): {
                 badgeColor: '#0a1a2f',          // Oxford Blue
                 borderColor: '#4a6fa5',
                 textColor: '#8ab4f8',
-                fontFamily: "'Lora', serif",
+                fontFamily: "var(--font-serif)",
                 icon: 'PE',
             };
         default:
