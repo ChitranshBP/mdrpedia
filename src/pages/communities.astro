@@ -116,14 +116,16 @@ const specialtyCommunities = [...specMap.entries()]
                                 <span class="org-card__count">
                                     {org.doctorCount} related profiles
                                 </span>
-                                <a
-                                    href={org.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="org-card__link"
-                                >
-                                    Visit Website ↗
-                                </a>
+                                {org.url && org.url !== "#" && (
+                                    <a
+                                        href={org.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="org-card__link"
+                                    >
+                                        Visit Website ↗
+                                    </a>
+                                )}
                             </div>
                         </div>
                     ))
