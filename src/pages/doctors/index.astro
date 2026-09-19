@@ -214,6 +214,7 @@ const masterCount = tierCounts.master;
                     >
                         <path d="M3 4h18M6 8h12M9 12h6M12 16h0"></path>
                     </svg>
+                    <label class="sr-only" for="browse-search">Filter visible results</label>
                     <input
                         type="text"
                         id="browse-search"
@@ -225,25 +226,29 @@ const masterCount = tierCounts.master;
 
                 <!-- Role Filter -->
                 <div class="filter-group">
-                    <span class="filter-label">Role</span>
-                    <div class="filter-buttons">
+                    <span class="filter-label" id="filter-label-role">Role</span>
+                    <div class="filter-buttons" role="group" aria-labelledby="filter-label-role">
                         <button
                             class="filter-btn filter-btn--active"
+                            aria-pressed="true"
                             data-group="role"
                             data-filter="all">All</button
                         >
                         <button
                             class="filter-btn"
+                            aria-pressed="false"
                             data-group="role"
                             data-filter="surgeon">Surgeon</button
                         >
                         <button
                             class="filter-btn"
+                            aria-pressed="false"
                             data-group="role"
                             data-filter="physician">Physician</button
                         >
                         <button
                             class="filter-btn"
+                            aria-pressed="false"
                             data-group="role"
                             data-filter="researcher">Researcher</button
                         >
@@ -251,10 +256,11 @@ const masterCount = tierCounts.master;
                 </div>
 
                 <div class="filter-group">
-                    <span class="filter-label">Tier</span>
-                    <div class="filter-buttons">
+                    <span class="filter-label" id="filter-label-tier">Tier</span>
+                    <div class="filter-buttons" role="group" aria-labelledby="filter-label-tier">
                         <button
                             class="filter-btn filter-btn--active"
+                            aria-pressed="true"
                             data-group="tier"
                             data-filter="all">All</button
                         >
@@ -273,7 +279,7 @@ const masterCount = tierCounts.master;
 
                 <!-- Country Filter -->
                 <div class="filter-group">
-                    <span class="filter-label">Country</span>
+                    <label class="filter-label" for="country-filter">Country</label>
                     <select id="country-filter" class="filter-select">
                         <option value="all">All Countries</option>
                         {
@@ -286,7 +292,7 @@ const masterCount = tierCounts.master;
 
                 <!-- Specialty Filter -->
                 <div class="filter-group">
-                    <span class="filter-label">Specialty</span>
+                    <label class="filter-label" for="specialty-filter">Specialty</label>
                     <select id="specialty-filter" class="filter-select">
                         <option value="all">All Specialties</option>
                         {
@@ -299,7 +305,7 @@ const masterCount = tierCounts.master;
             </div>
 
             <!-- Results Count -->
-            <div class="results-info" id="results-info">
+            <div class="results-info" id="results-info" role="status" aria-live="polite">
                 Showing all {sortedDoctors.length} profiles
             </div>
 
@@ -407,7 +413,7 @@ const masterCount = tierCounts.master;
             </div>
 
             <!-- Empty State -->
-            <div class="empty-state" id="empty-state" hidden>
+            <div class="empty-state" id="empty-state" role="status" aria-live="polite" hidden>
                 <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -487,13 +493,17 @@ const masterCount = tierCounts.master;
         // Update tier buttons
         document.querySelectorAll('.filter-btn[data-group="tier"]').forEach((btn) => {
             const b = btn as HTMLButtonElement;
-            b.classList.toggle("filter-btn--active", b.dataset.filter === currentTier);
+            const isActive = b.dataset.filter === currentTier;
+            b.classList.toggle("filter-btn--active", isActive);
+            b.setAttribute("aria-pressed", String(isActive));
         });
 
         // Update role buttons
         document.querySelectorAll('.filter-btn[data-group="role"]').forEach((btn) => {
             const b = btn as HTMLButtonElement;
-            b.classList.toggle("filter-btn--active", b.dataset.filter === currentRole);
+            const isActive = b.dataset.filter === currentRole;
+            b.classList.toggle("filter-btn--active", isActive);
+            b.setAttribute("aria-pressed", String(isActive));
         });
 
         // Update dropdowns

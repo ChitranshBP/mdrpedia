@@ -151,6 +151,7 @@ export default function CompareSearch({ selectedSlugs, maxDoctors = 3 }: Props) 
                             ? 'Search for a physician to compare...'
                             : `Add another physician (${maxDoctors - selectedSlugs.length} remaining)...`
                         }
+                        aria-label="Search for a physician to compare"
                         style={{
                             flex: 1, border: 'none', background: 'transparent',
                             fontFamily: 'var(--font-serif)', fontSize: '16px',

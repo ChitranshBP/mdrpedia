@@ -134,18 +134,18 @@ function getTierColor(tier: string): string {
                         <div class="stat-card__fill" style={`width: ${avgScore}%`}></div>
                     </div>
                 </div>
-                <div class="stat-card stat-card--clickable" onclick={`window.location='?key=${adminKey}&missing=Portrait'`}>
+                <a class="stat-card stat-card--clickable" href={`?key=${adminKey}&missing=Portrait`}>
                     <div class="stat-card__value stat-card__value--red">{missingPhotos}</div>
                     <div class="stat-card__label">Missing Photos</div>
-                </div>
-                <div class="stat-card stat-card--clickable" onclick={`window.location='?key=${adminKey}&missing=Biography'`}>
+                </a>
+                <a class="stat-card stat-card--clickable" href={`?key=${adminKey}&missing=Biography`}>
                     <div class="stat-card__value stat-card__value--red">{missingBios}</div>
                     <div class="stat-card__label">Missing Bios</div>
-                </div>
-                <div class="stat-card stat-card--clickable" onclick={`window.location='?key=${adminKey}&missing=Citations'`}>
+                </a>
+                <a class="stat-card stat-card--clickable" href={`?key=${adminKey}&missing=Citations`}>
                     <div class="stat-card__value stat-card__value--yellow">{missingCitations}</div>
                     <div class="stat-card__label">No Citations</div>
-                </div>
+                </a>
                 <div class="stat-card">
                     <div class="stat-card__value stat-card__value--green">{completeProfiles}</div>
                     <div class="stat-card__label">100% Complete</div>

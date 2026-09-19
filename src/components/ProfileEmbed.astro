@@ -40,15 +40,15 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
 
     <div class="embed-panel" id="embed-panel" hidden>
         <div class="embed-backdrop" id="embed-backdrop"></div>
-        <div class="embed-dialog">
+        <div class="embed-dialog" role="dialog" aria-modal="true" aria-labelledby="embed-title">
         <div class="embed-header">
-            <h4>Share or Embed Profile</h4>
+            <h4 id="embed-title">Share or Embed Profile</h4>
             <button class="close-btn" id="embed-close" aria-label="Close">×</button>
         </div>
 
         <!-- Profile URL -->
         <div class="embed-section">
-            <label>Profile URL</label>
+            <label for="profile-url">Profile URL</label>
             <div class="input-group">
                 <input type="text" value={profileUrl} readonly id="profile-url" />
                 <button class="copy-btn" data-copy="profile-url" title="Copy URL">
@@ -103,10 +103,10 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
 
         <!-- Embed Options -->
         <div class="embed-section">
-            <label>Embed Style</label>
-            <div class="embed-tabs">
-                <button class="embed-tab active" data-tab="simple">Simple Badge</button>
-                <button class="embed-tab" data-tab="rich">Rich Card</button>
+            <span class="embed-style-label" id="embed-style-label">Embed Style</span>
+            <div class="embed-tabs" role="tablist" aria-labelledby="embed-style-label">
+                <button class="embed-tab active" data-tab="simple" role="tab" aria-selected="true">Simple Badge</button>
+                <button class="embed-tab" data-tab="rich" role="tab" aria-selected="false">Rich Card</button>
             </div>
         </div>
 
@@ -204,17 +204,40 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
     const embedSimple = document.getElementById('embed-simple');
     const embedRich = document.getElementById('embed-rich');
 
+    const FOCUSABLE =
+        'a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])';
+
     function openPanel() {
         panel!.hidden = false;
         toggle!.setAttribute('aria-expanded', 'true');
         document.body.style.overflow = 'hidden';
+        // Move focus into the dialog, otherwise keyboard users stay on the page behind it.
+        (panel!.querySelector(FOCUSABLE) as HTMLElement | null)?.focus();
     }
 
     function closePanel() {
         panel!.hidden = true;
         toggle!.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
+        toggle!.focus();
     }
+
+    // Keep Tab inside the dialog while it is open.
+    panel?.addEventListener('keydown', (e) => {
+        if ((e as KeyboardEvent).key !== 'Tab' || panel.hidden) return;
+        const items = Array.from(panel.querySelectorAll<HTMLElement>(FOCUSABLE));
+        if (items.length === 0) return;
+        const first = items[0];
+        const last = items[items.length - 1];
+        const ev = e as KeyboardEvent;
+        if (ev.shiftKey && document.activeElement === first) {
+            ev.preventDefault();
+            last.focus();
+        } else if (!ev.shiftKey && document.activeElement === last) {
+            ev.preventDefault();
+            first.focus();
+        }
+    });
 
     toggle?.addEventListener('click', () => {
         const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
@@ -236,8 +259,12 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
     embedTabs.forEach(tab => {
         tab.addEventListener('click', () => {
             const tabType = tab.getAttribute('data-tab');
-            embedTabs.forEach(t => t.classList.remove('active'));
+            embedTabs.forEach(t => {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
+            });
             tab.classList.add('active');
+            tab.setAttribute('aria-selected', 'true');
 
             if (tabType === 'simple') {
                 embedSimple!.hidden = false;
@@ -363,8 +390,8 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
     }
 
     .close-btn {
-        width: 28px;
-        height: 28px;
+        width: 40px;
+        height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -390,7 +417,8 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
         margin-bottom: 0;
     }
 
-    .embed-section label {
+    .embed-section label,
+    .embed-style-label {
         display: block;
         font-size: 0.75rem;
         font-weight: 600;

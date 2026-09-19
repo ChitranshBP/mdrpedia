@@ -67,10 +67,20 @@ export default function ShareProfileModal({ slug, fullName }: Props) {
             {isOpen && (
                 <div className="share-modal">
                     <div className="share-backdrop" onClick={() => setIsOpen(false)} />
-                    <div className="share-dialog">
+                    <div
+                        className="share-dialog"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="share-title"
+                    >
                         <div className="share-header">
-                            <span className="share-title">Share Profile</span>
-                            <button onClick={() => setIsOpen(false)} className="share-close">
+                            <span className="share-title" id="share-title">Share Profile</span>
+                            <button
+                                type="button"
+                                onClick={() => setIsOpen(false)}
+                                className="share-close"
+                                aria-label="Close share dialog"
+                            >
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                     <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                                 </svg>
@@ -207,8 +217,8 @@ export default function ShareProfileModal({ slug, fullName }: Props) {
                 }
 
                 .share-close {
-                    width: 32px;
-                    height: 32px;
+                    width: 40px;
+                    height: 40px;
                     display: flex;
                     align-items: center;
                     justify-content: center;

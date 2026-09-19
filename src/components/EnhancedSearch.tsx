@@ -216,6 +216,7 @@ export default function EnhancedSearch({
                     onFocus={() => setIsOpen(true)}
                     onKeyDown={handleKeyDown}
                     placeholder={placeholder}
+                    aria-label={placeholder || 'Search physicians'}
                     autoFocus={autoFocus}
                     autoComplete="off"
                     style={{
@@ -233,6 +234,8 @@ export default function EnhancedSearch({
                 {query && (
                     <button
                         onClick={() => { setQuery(''); setResults([]); inputRef.current?.focus(); }}
+                        type="button"
+                        aria-label="Clear search"
                         style={{
                             padding: '4px',
                             background: 'transparent',

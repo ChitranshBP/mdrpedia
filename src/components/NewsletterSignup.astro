@@ -17,16 +17,20 @@ const { source = 'footer' } = Astro.props;
             <p>New profiles, ethics rulings, and registry updates — delivered monthly.</p>
         </div>
         <div class="newsletter-fields">
+            <label class="sr-only" for="newsletter-email">Email address</label>
             <input
                 type="email"
+                id="newsletter-email"
                 name="email"
                 placeholder="your@email.com"
                 required
                 autocomplete="email"
                 class="newsletter-input"
             />
-            <!-- Honeypot — hidden from users, visible to bots -->
-            <input type="text" name="website" autocomplete="off" tabindex="-1" style="position:absolute;left:-9999px;opacity:0;height:0;" />
+            <!-- Honeypot — hidden from users, visible to bots.
+                 aria-hidden matters: off-screen positioning alone leaves this
+                 reachable in screen-reader browse mode as an unlabelled field. -->
+            <input type="text" name="website" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;" />
             <button type="submit" class="newsletter-btn">Subscribe</button>
         </div>
         <p class="newsletter-status" aria-live="polite"></p>

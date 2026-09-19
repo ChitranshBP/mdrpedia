@@ -37,8 +37,8 @@ const hasImages = images.length > 0 || hasGallery;
 <div class="media-vault" data-tier={tier}>
     <!-- Tab Navigation (if both images and videos exist) -->
     {hasVideos && hasImages && (
-        <div class="media-vault__tabs">
-            <button class="media-vault__tab active" data-tab="images">
+        <div class="media-vault__tabs" role="tablist" aria-label="Media type">
+            <button class="media-vault__tab active" data-tab="images" role="tab" aria-selected="true">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
                     <circle cx="8.5" cy="8.5" r="1.5"/>
@@ -46,7 +46,7 @@ const hasImages = images.length > 0 || hasGallery;
                 </svg>
                 Images
             </button>
-            <button class="media-vault__tab" data-tab="videos">
+            <button class="media-vault__tab" data-tab="videos" role="tab" aria-selected="false">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polygon points="5 3 19 12 5 21 5 3"/>
                 </svg>
@@ -78,7 +78,7 @@ const hasImages = images.length > 0 || hasGallery;
             (hasGallery || hasImages) && (
                 <div class="media-vault__grid">
                     {galleryUrls.map((url, i) => (
-                        <div class="media-vault__item" data-index={i}>
+                        <button type="button" class="media-vault__item" data-index={i} aria-haspopup="dialog">
                             <img
                                 src={url}
                                 alt={`${fullName} — Archive ${i + 1}`}
@@ -100,10 +100,10 @@ const hasImages = images.length > 0 || hasGallery;
                                     <line x1="3" y1="21" x2="10" y2="14" />
                                 </svg>
                             </div>
-                        </div>
+                        </button>
                     ))}
                     {images.map((img, i) => (
-                        <div class="media-vault__item" data-index={galleryUrls.length + i}>
+                        <button type="button" class="media-vault__item" data-index={galleryUrls.length + i} aria-haspopup="dialog">
                             <img
                                 src={img.url}
                                 alt={img.title || `${fullName} — Media ${i + 1}`}
@@ -125,7 +125,7 @@ const hasImages = images.length > 0 || hasGallery;
                                     <line x1="3" y1="21" x2="10" y2="14" />
                                 </svg>
                             </div>
-                        </div>
+                        </button>
                     ))}
                 </div>
             )
@@ -153,7 +153,7 @@ const hasImages = images.length > 0 || hasGallery;
 </div>
 
 <!-- Lightbox -->
-<div class="media-vault__lightbox" id="mediaLightbox" aria-hidden="true">
+<div class="media-vault__lightbox" id="mediaLightbox" role="dialog" aria-modal="true" aria-label="Media viewer" aria-hidden="true">
     <button class="media-vault__lightbox-close" aria-label="Close lightbox"
         >&times;</button
     >
@@ -292,6 +292,13 @@ const hasImages = images.length > 0 || hasGallery;
     }
 
     .media-vault__item {
+        /* rendered as a <button> for keyboard access; reset UA button styling */
+        appearance: none;
+        border: none;
+        padding: 0;
+        font: inherit;
+        color: inherit;
+        width: 100%;
         position: relative;
         border-radius: var(--radius-md);
         overflow: hidden;
@@ -378,8 +385,12 @@ const hasImages = images.length > 0 || hasGallery;
                 const targetPanel = tab.getAttribute('data-tab');
 
                 // Update active tab
-                tabs.forEach(t => t.classList.remove('active'));
+                tabs.forEach(t => {
+                    t.classList.remove('active');
+                    t.setAttribute('aria-selected', 'false');
+                });
                 tab.classList.add('active');
+                tab.setAttribute('aria-selected', 'true');
 
                 // Update active panel
                 panels.forEach(p => {
@@ -397,27 +408,49 @@ const hasImages = images.length > 0 || hasGallery;
         ) as HTMLImageElement;
         const items = document.querySelectorAll(".media-vault__item");
 
+        const closeBtn = lightbox?.querySelector(
+            ".media-vault__lightbox-close",
+        ) as HTMLElement | null;
+        // Element to restore focus to when the lightbox closes.
+        let lastTrigger: HTMLElement | null = null;
+
+        function openLightbox(trigger: HTMLElement) {
+            const img = trigger.querySelector("img") as HTMLImageElement;
+            if (!img || !lightbox || !lightboxImg) return;
+            lastTrigger = trigger;
+            lightboxImg.src = img.src;
+            lightboxImg.alt = img.alt;
+            lightbox.setAttribute("aria-hidden", "false");
+            closeBtn?.focus();
+        }
+
+        function closeLightbox() {
+            if (!lightbox || lightbox.getAttribute("aria-hidden") === "true") return;
+            lightbox.setAttribute("aria-hidden", "true");
+            lastTrigger?.focus();
+            lastTrigger = null;
+        }
+
         items.forEach((item) => {
-            item.addEventListener("click", () => {
-                const img = item.querySelector("img") as HTMLImageElement;
-                if (img && lightbox && lightboxImg) {
-                    lightboxImg.src = img.src;
-                    lightboxImg.alt = img.alt;
-                    lightbox.setAttribute("aria-hidden", "false");
-                }
-            });
+            item.addEventListener("click", () => openLightbox(item as HTMLElement));
         });
 
         lightbox?.addEventListener("click", (e) => {
             if ((e.target as Element).closest(".media-vault__lightbox-img"))
                 return;
-            lightbox.setAttribute("aria-hidden", "true");
+            closeLightbox();
+        });
+
+        // Keep Tab inside the lightbox while it is open.
+        lightbox?.addEventListener("keydown", (e) => {
+            if ((e as KeyboardEvent).key === "Tab") {
+                e.preventDefault();
+                closeBtn?.focus();
+            }
         });
 
         document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") {
-                lightbox?.setAttribute("aria-hidden", "true");
-            }
+            if (e.key === "Escape") closeLightbox();
         });
     });
 </script>

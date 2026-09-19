@@ -94,6 +94,9 @@ export default function GlobalSearchModal() {
     const inputRef = useRef<HTMLInputElement>(null);
     const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined);
     const resultsRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+    // Element that had focus before the dialog opened, so we can restore it on close.
+    const triggerRef = useRef<HTMLElement | null>(null);
 
     // Load recent searches from localStorage
     useEffect(() => {
@@ -128,9 +131,30 @@ export default function GlobalSearchModal() {
         return () => document.removeEventListener('keydown', handleKeyDown);
     }, []);
 
-    // Focus input when modal opens
+    // Keep Tab inside the dialog while it is open.
+    const handleContainerKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key !== 'Tab') return;
+        const root = containerRef.current;
+        if (!root) return;
+        const focusable = root.querySelectorAll<HTMLElement>(
+            'a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+        }
+    };
+
+    // Focus input when modal opens; restore focus to the trigger on close.
     useEffect(() => {
         if (isOpen) {
+            triggerRef.current = document.activeElement as HTMLElement | null;
             setTimeout(() => inputRef.current?.focus(), 50);
             document.body.style.overflow = 'hidden';
         } else {
@@ -138,6 +162,8 @@ export default function GlobalSearchModal() {
             setResults([]);
             setSelectedIndex(0);
             document.body.style.overflow = '';
+            triggerRef.current?.focus?.();
+            triggerRef.current = null;
         }
         return () => { document.body.style.overflow = ''; };
     }, [isOpen]);
@@ -949,7 +975,14 @@ export default function GlobalSearchModal() {
             <div className="gsm-overlay">
                 <div className="gsm-backdrop" onClick={() => setIsOpen(false)} />
 
-                <div className="gsm-container">
+                <div
+                    className="gsm-container"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label="Site search"
+                    ref={containerRef}
+                    onKeyDown={handleContainerKeyDown}
+                >
                     {/* Search Input */}
                     <div className="gsm-input-section">
                         <div className="gsm-input-wrapper">
@@ -971,6 +1004,16 @@ export default function GlobalSearchModal() {
                                 onChange={(e) => setQuery(e.target.value)}
                                 onKeyDown={handleKeyDown}
                                 placeholder="Search physicians, specialties, institutions..."
+                                aria-label="Search physicians, specialties and institutions"
+                                role="combobox"
+                                aria-expanded={results.length > 0}
+                                aria-controls="gsm-results"
+                                aria-activedescendant={
+                                    results.length > 0 && selectedIndex >= 0
+                                        ? `gsm-result-${selectedIndex}`
+                                        : undefined
+                                }
+                                autoComplete="off"
                                 className="gsm-input"
                             />
                             <kbd className="gsm-kbd">ESC</kbd>
@@ -995,7 +1038,7 @@ export default function GlobalSearchModal() {
 
                     {/* Results */}
                     {results.length > 0 && (
-                        <div className="gsm-results" ref={resultsRef}>
+                        <div className="gsm-results" ref={resultsRef} id="gsm-results" role="listbox" aria-label="Search results">
                             {results.map((result, index) => {
                                 const config = tierConfig[result.tier] || tierConfig.UNRANKED;
                                 const location = [result.city, result.country].filter(Boolean).join(', ');
@@ -1003,6 +1046,9 @@ export default function GlobalSearchModal() {
                                 return (
                                     <a
                                         key={result.slug}
+                                        id={`gsm-result-${index}`}
+                                        role="option"
+                                        aria-selected={selectedIndex === index}
                                         href={`/doctors/${result.slug}`}
                                         className={`gsm-result ${selectedIndex === index ? 'selected' : ''}`}
                                         onMouseEnter={() => setSelectedIndex(index)}

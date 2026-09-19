@@ -393,6 +393,22 @@ code {
 .reveal { opacity: 0; transform: translateY(10px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
 .reveal.in { opacity: 1; transform: none; }
 
+/* Respect the OS "reduce motion" setting. .reveal starts at opacity:0, so it is not
+   enough to drop the transition — the content must be shown outright, otherwise a
+   reduced-motion user sees nothing at all if the observer is also skipped. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* ─── Animation Keyframes ────────────────────────────────────────────────── */
 
 @keyframes fadeIn {

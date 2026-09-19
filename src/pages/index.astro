@@ -597,10 +597,16 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, s
   if (dateEl) dateEl.textContent = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
   // Count-up animation
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const ease = t => 1 - Math.pow(1 - t, 3);
   const startCount = (el) => {
     const target = +el.dataset.count;
     if (!target) return;
+    if (prefersReducedMotion) {
+      // Skip the 1400ms animation; show the final figure immediately.
+      el.textContent = target.toLocaleString();
+      return;
+    }
     const dur = 1400;
     const t0 = performance.now();
     const step = (now) => {

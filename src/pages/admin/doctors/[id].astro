@@ -352,18 +352,20 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
                         <h3>Basic Information</h3>
                         <div class="form-row">
                             <div class="form-group flex-2">
-                                <label>Full Name</label>
+                                <label for="full-name">Full Name</label>
                                 <input
                                     type="text"
+                                    id="full-name"
                                     name="full_name"
                                     value={profile.full_name}
                                     required
                                 />
                             </div>
                             <div class="form-group flex-1">
-                                <label>Title (MD, PhD)</label>
+                                <label for="title">Title (MD, PhD)</label>
                                 <input
                                     type="text"
+                                    id="title"
                                     name="title"
                                     value={profile.title || ""}
                                 />
@@ -371,51 +373,55 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
                         </div>
                         <div class="form-row">
                             <div class="form-group flex-1">
-                                <label>Primary Specialty</label>
+                                <label for="specialty">Primary Specialty</label>
                                 <input
                                     type="text"
+                                    id="specialty"
                                     name="specialty"
                                     value={profile.specialty}
                                     required
                                 />
                             </div>
                             <div class="form-group flex-1">
-                                <label>Sub-Specialty</label>
+                                <label for="sub-specialty">Sub-Specialty</label>
                                 <input
                                     type="text"
+                                    id="sub-specialty"
                                     name="sub_specialty"
                                     value={profile.sub_specialty || ""}
                                 />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Portrait URL</label>
+                            <label for="portrait-url">Portrait URL</label>
                             <input
                                 type="url"
+                                id="portrait-url"
                                 name="portrait_url"
                                 value={profile.portrait_url || ""}
                                 placeholder="https://..."
                             />
                         </div>
                         <div class="form-group">
-                            <label>Biography</label>
-                            <textarea name="bio" rows="10">{profile.biography}</textarea>
+                            <label for="bio">Biography</label>
+                            <textarea id="bio" name="bio" rows="10">{profile.biography}</textarea>
                         </div>
                     </div>
 
                     <div class="card">
                         <h3>Specialties & Expertise</h3>
                         <div class="form-group">
-                            <label>Medical Specialties (Comma separated)</label>
+                            <label for="medical-specialty">Medical Specialties (Comma separated)</label>
                             <input
                                 type="text"
+                                id="medical-specialty"
                                 name="medical_specialty"
                                 value={profile.medical_specialty.join(", ")}
                             />
                         </div>
                         <div class="form-group">
-                            <label>Knows About (Procedures/Conditions)</label>
-                            <textarea name="knows_about" rows="3">{profile.knows_about.join(", ")}</textarea>
+                            <label for="knows-about">Knows About (Procedures/Conditions)</label>
+                            <textarea id="knows-about" name="knows_about" rows="3">{profile.knows_about.join(", ")}</textarea>
                         </div>
                     </div>
 
@@ -449,21 +455,21 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
                                 <input type="hidden" name="action" value="add_award" />
                                 <div class="form-row">
                                     <div class="form-group flex-2">
-                                        <label>Award Name</label>
-                                        <input type="text" name="award_name" required />
+                                        <label for="award-name">Award Name</label>
+                                        <input type="text" id="award-name" name="award_name" required />
                                     </div>
                                     <div class="form-group flex-1">
-                                        <label>Year</label>
-                                        <input type="number" name="year_awarded" min="1900" max="2030" required />
+                                        <label for="year-awarded">Year</label>
+                                        <input type="number" id="year-awarded" name="year_awarded" min="1900" max="2030" required />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Issuing Organization</label>
-                                    <input type="text" name="issuing_body" required />
+                                    <label for="issuing-body">Issuing Organization</label>
+                                    <input type="text" id="issuing-body" name="issuing_body" required />
                                 </div>
                                 <div class="form-group">
-                                    <label>Description (optional)</label>
-                                    <textarea name="award_description" rows="2"></textarea>
+                                    <label for="award-description">Description (optional)</label>
+                                    <textarea id="award-description" name="award_description" rows="2"></textarea>
                                 </div>
                                 <button type="submit" class="btn btn--primary">Add Award</button>
                             </form>
@@ -503,17 +509,17 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
                                 <input type="hidden" name="action" value="add_technique" />
                                 <div class="form-row">
                                     <div class="form-group flex-2">
-                                        <label>Technique Name</label>
-                                        <input type="text" name="tech_name" required />
+                                        <label for="tech-name">Technique Name</label>
+                                        <input type="text" id="tech-name" name="tech_name" required />
                                     </div>
                                     <div class="form-group flex-1">
-                                        <label>Year Invented</label>
-                                        <input type="number" name="year_invented" min="1800" max="2030" />
+                                        <label for="year-invented">Year Invented</label>
+                                        <input type="number" id="year-invented" name="year_invented" min="1800" max="2030" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Description</label>
-                                    <textarea name="tech_description" rows="2"></textarea>
+                                    <label for="tech-description">Description</label>
+                                    <textarea id="tech-description" name="tech_description" rows="2"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label class="checkbox-label">
@@ -560,32 +566,32 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
                             <form method="POST" class="add-item-form">
                                 <input type="hidden" name="action" value="add_citation" />
                                 <div class="form-group">
-                                    <label>Publication Title</label>
-                                    <input type="text" name="citation_title" required />
+                                    <label for="citation-title">Publication Title</label>
+                                    <input type="text" id="citation-title" name="citation_title" required />
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group flex-2">
-                                        <label>Journal</label>
-                                        <input type="text" name="journal" />
+                                        <label for="journal">Journal</label>
+                                        <input type="text" id="journal" name="journal" />
                                     </div>
                                     <div class="form-group flex-1">
-                                        <label>Year</label>
-                                        <input type="number" name="pub_year" min="1900" max="2030" />
+                                        <label for="pub-year">Year</label>
+                                        <input type="number" id="pub-year" name="pub_year" min="1900" max="2030" />
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group flex-1">
-                                        <label>DOI</label>
-                                        <input type="text" name="doi" placeholder="10.1000/xyz123" />
+                                        <label for="doi">DOI</label>
+                                        <input type="text" id="doi" name="doi" placeholder="10.1000/xyz123" />
                                     </div>
                                     <div class="form-group flex-1">
-                                        <label>PubMed ID</label>
-                                        <input type="text" name="pubmed_id" placeholder="12345678" />
+                                        <label for="pubmed-id">PubMed ID</label>
+                                        <input type="text" id="pubmed-id" name="pubmed_id" placeholder="12345678" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Citation Count</label>
-                                    <input type="number" name="citation_count" min="0" value="0" />
+                                    <label for="citation-count">Citation Count</label>
+                                    <input type="number" id="citation-count" name="citation_count" min="0" value="0" />
                                 </div>
                                 <button type="submit" class="btn btn--primary">Add Publication</button>
                             </form>
@@ -624,8 +630,8 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
                                 <form method="POST" class="add-item-form">
                                     <input type="hidden" name="action" value="set_mentor" />
                                     <div class="form-group">
-                                        <label>Select Mentor</label>
-                                        <select name="mentor_id" required>
+                                        <label for="mentor-id">Select Mentor</label>
+                                        <select id="mentor-id" name="mentor_id" required>
                                             <option value="">-- Select a doctor --</option>
                                             {allProfiles.map((p) => (
                                                 <option value={p.id}>{p.full_name}</option>
@@ -669,8 +675,8 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
                                 <form method="POST" class="add-item-form">
                                     <input type="hidden" name="action" value="add_mentee" />
                                     <div class="form-group">
-                                        <label>Select Mentee</label>
-                                        <select name="mentee_id" required>
+                                        <label for="mentee-id">Select Mentee</label>
+                                        <select id="mentee-id" name="mentee_id" required>
                                             <option value="">-- Select a doctor --</option>
                                             {allProfiles
                                                 .filter(p => !profile.mentees.some(m => m.id === p.id))
@@ -720,15 +726,15 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
                         <h3>Status & Ranking</h3>
                         <div class="form-row">
                             <div class="form-group flex-1">
-                                <label>Status</label>
-                                <select name="status">
+                                <label for="status">Status</label>
+                                <select id="status" name="status">
                                     <option value="LIVING" selected={profile.status === "LIVING"}>LIVING</option>
                                     <option value="HISTORICAL" selected={profile.status === "HISTORICAL"}>HISTORICAL</option>
                                 </select>
                             </div>
                             <div class="form-group flex-1">
-                                <label>Tier</label>
-                                <select name="tier">
+                                <label for="tier">Tier</label>
+                                <select id="tier" name="tier">
                                     <option value="TITAN" selected={profile.tier === "TITAN"}>TITAN</option>
                                     <option value="ELITE" selected={profile.tier === "ELITE"}>ELITE</option>
                                     <option value="MASTER" selected={profile.tier === "MASTER"}>MASTER</option>
@@ -737,10 +743,11 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Ranking Score</label>
+                            <label for="ranking-score">Ranking Score</label>
                             <input
                                 type="number"
                                 step="0.01"
+                                id="ranking-score"
                                 name="ranking_score"
                                 value={profile.ranking_score || 0}
                             />
@@ -751,18 +758,20 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
                         <h3>Impact Metrics</h3>
                         <div class="form-row">
                             <div class="form-group flex-1">
-                                <label>H-Index</label>
+                                <label for="h-index">H-Index</label>
                                 <input
                                     type="number"
+                                    id="h-index"
                                     name="h_index"
                                     value={profile.h_index}
                                     min="0"
                                 />
                             </div>
                             <div class="form-group flex-1">
-                                <label>Years Active</label>
+                                <label for="years-active">Years Active</label>
                                 <input
                                     type="number"
+                                    id="years-active"
                                     name="years_active"
                                     value={profile.years_active}
                                     min="0"
@@ -770,9 +779,10 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Verified Surgeries</label>
+                            <label for="verified-surgeries">Verified Surgeries</label>
                             <input
                                 type="number"
+                                id="verified-surgeries"
                                 name="verified_surgeries"
                                 value={profile.verified_surgeries}
                                 min="0"
@@ -783,18 +793,20 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
                     <div class="card">
                         <h3>Verification IDs</h3>
                         <div class="form-group">
-                            <label>NPI Number</label>
+                            <label for="npi-number">NPI Number</label>
                             <input
                                 type="text"
+                                id="npi-number"
                                 name="npi_number"
                                 value={profile.npi_number || ""}
                                 placeholder="10-digit NPI"
                             />
                         </div>
                         <div class="form-group">
-                            <label>ORCID ID</label>
+                            <label for="orcid-id">ORCID ID</label>
                             <input
                                 type="text"
+                                id="orcid-id"
                                 name="orcid_id"
                                 value={profile.orcid_id || ""}
                                 placeholder="0000-0000-0000-0000"
@@ -805,17 +817,19 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
                     <div class="card">
                         <h3>Dates</h3>
                         <div class="form-group">
-                            <label>Date of Birth</label>
+                            <label for="date-of-birth">Date of Birth</label>
                             <input
                                 type="date"
+                                id="date-of-birth"
                                 name="date_of_birth"
                                 value={formatDate(profile.date_of_birth)}
                             />
                         </div>
                         <div class="form-group">
-                            <label>Date of Death (if historical)</label>
+                            <label for="date-of-death">Date of Death (if historical)</label>
                             <input
                                 type="date"
+                                id="date-of-death"
                                 name="date_of_death"
                                 value={formatDate(profile.date_of_death)}
                             />
@@ -825,25 +839,28 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
                     <div class="card">
                         <h3>Geography</h3>
                         <div class="form-group">
-                            <label>Country</label>
+                            <label for="country">Country</label>
                             <input
                                 type="text"
+                                id="country"
                                 name="country"
                                 value={profile.geography?.country || ""}
                             />
                         </div>
                         <div class="form-group">
-                            <label>Region/State</label>
+                            <label for="region">Region/State</label>
                             <input
                                 type="text"
+                                id="region"
                                 name="region"
                                 value={profile.geography?.region || ""}
                             />
                         </div>
                         <div class="form-group">
-                            <label>City</label>
+                            <label for="city">City</label>
                             <input
                                 type="text"
+                                id="city"
                                 name="city"
                                 value={profile.geography?.city || ""}
                             />
