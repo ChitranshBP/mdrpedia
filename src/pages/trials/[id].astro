@@ -88,7 +88,7 @@ function getPhaseColor(phase: string): string {
                 <p class="indication">{trial.indication}</p>
 
                 <div class="sponsor">
-                    <img src={company.logo} alt={company.name} class="sponsor-logo" loading="lazy" />
+                    {company.logo && <img src={company.logo} alt={company.name} class="sponsor-logo" loading="lazy" onerror="this.remove()" />}
                     <div class="sponsor-info">
                         <span class="sponsor-label">Sponsor</span>
                         <span class="sponsor-name">{company.name}</span>
@@ -259,7 +259,7 @@ function getPhaseColor(phase: string): string {
                     <div class="sidebar-card">
                         <h3>Sponsor</h3>
                         <div class="sponsor-card">
-                            <img src={company.logo} alt={company.name} class="sponsor-logo-sm" loading="lazy" />
+                            {company.logo && <img src={company.logo} alt={company.name} class="sponsor-logo-sm" loading="lazy" onerror="this.remove()" />}
                             <div class="sponsor-details">
                                 <span class="sponsor-name-sm">{company.name}</span>
                                 <span class="sponsor-hq">{company.headquarters}</span>

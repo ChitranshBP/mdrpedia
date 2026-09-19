@@ -31,10 +31,14 @@
     {
       "id": "moderna",
       "name": "Moderna",
-      "logo": "https://logo.clearbit.com/modernatx.com",
+      "logo": null,
       "headquarters": "Cambridge, MA, USA",
       "founded": 2010,
-      "focus": ["mRNA therapeutics", "Vaccines", "Oncology"],
+      "focus": [
+        "mRNA therapeutics",
+        "Vaccines",
+        "Oncology"
+      ],
       "marketCap": "$45.2B",
       "website": "https://www.modernatx.com",
       "trials": [
@@ -49,7 +53,10 @@
           "startDate": "2025-03",
           "estimatedCompletion": "2026-09",
           "description": "Next-generation mRNA vaccine targeting multiple Omicron subvariants with improved durability and broader protection.",
-          "primaryEndpoints": ["Neutralizing antibody response", "Vaccine efficacy against symptomatic infection"],
+          "primaryEndpoints": [
+            "Neutralizing antibody response",
+            "Vaccine efficacy against symptomatic infection"
+          ],
           "latestUpdate": {
             "date": "2026-02-15",
             "summary": "Interim analysis shows 78% efficacy against symptomatic infection. Strong T-cell responses observed across age groups."
@@ -62,7 +69,13 @@
             }
           ],
           "sites": 180,
-          "countries": ["USA", "UK", "Germany", "Japan", "Brazil"]
+          "countries": [
+            "USA",
+            "UK",
+            "Germany",
+            "Japan",
+            "Brazil"
+          ]
         },
         {
           "id": "mrna-4157",
@@ -75,7 +88,10 @@
           "startDate": "2023-07",
           "estimatedCompletion": "2029-12",
           "description": "Individualized neoantigen therapy in combination with Keytruda for high-risk melanoma patients post-surgery.",
-          "primaryEndpoints": ["Recurrence-free survival", "Overall survival"],
+          "primaryEndpoints": [
+            "Recurrence-free survival",
+            "Overall survival"
+          ],
           "latestUpdate": {
             "date": "2026-02-10",
             "summary": "Phase 2b results showed 44% reduction in recurrence/death risk vs Keytruda alone. FDA granted Breakthrough Therapy designation."
@@ -88,7 +104,13 @@
             }
           ],
           "sites": 165,
-          "countries": ["USA", "Australia", "UK", "Germany", "France"]
+          "countries": [
+            "USA",
+            "Australia",
+            "UK",
+            "Germany",
+            "France"
+          ]
         },
         {
           "id": "mrna-3927",
@@ -101,24 +123,35 @@
           "startDate": "2024-01",
           "estimatedCompletion": "2027-06",
           "description": "mRNA therapy encoding PCCA and PCCB enzymes for this life-threatening metabolic disorder.",
-          "primaryEndpoints": ["Safety", "Reduction in metabolic decompensation events"],
+          "primaryEndpoints": [
+            "Safety",
+            "Reduction in metabolic decompensation events"
+          ],
           "latestUpdate": {
             "date": "2026-01-28",
             "summary": "All 12 patients in dose-escalation phase showed reduced plasma biomarkers. No serious adverse events reported."
           },
           "leadInvestigators": [],
           "sites": 8,
-          "countries": ["USA", "UK"]
+          "countries": [
+            "USA",
+            "UK"
+          ]
         }
       ]
     },
     {
       "id": "pfizer",
       "name": "Pfizer",
-      "logo": "https://logo.clearbit.com/pfizer.com",
+      "logo": null,
       "headquarters": "New York, NY, USA",
       "founded": 1849,
-      "focus": ["Vaccines", "Oncology", "Rare Diseases", "Immunology"],
+      "focus": [
+        "Vaccines",
+        "Oncology",
+        "Rare Diseases",
+        "Immunology"
+      ],
       "marketCap": "$158.7B",
       "website": "https://www.pfizer.com",
       "trials": [
@@ -133,7 +166,10 @@
           "startDate": "2025-06",
           "estimatedCompletion": "2027-03",
           "description": "Novel vaccine targeting conserved regions of coronaviruses to provide broad protection against future variants and related viruses.",
-          "primaryEndpoints": ["Cross-reactive antibody response", "T-cell immunity breadth"],
+          "primaryEndpoints": [
+            "Cross-reactive antibody response",
+            "T-cell immunity breadth"
+          ],
           "latestUpdate": {
             "date": "2026-02-18",
             "summary": "Phase 1 data demonstrated robust cross-neutralizing antibodies against SARS-CoV-1, SARS-CoV-2 variants, and MERS-CoV."
@@ -146,7 +182,12 @@
             }
           ],
           "sites": 95,
-          "countries": ["USA", "Germany", "South Africa", "Singapore"]
+          "countries": [
+            "USA",
+            "Germany",
+            "South Africa",
+            "Singapore"
+          ]
         },
         {
           "id": "pf-06939926",
@@ -159,7 +200,10 @@
           "startDate": "2022-06",
           "estimatedCompletion": "2026-12",
           "description": "AAV-based gene therapy delivering micro-dystrophin for ambulatory boys with DMD aged 4-7.",
-          "primaryEndpoints": ["North Star Ambulatory Assessment change", "Micro-dystrophin expression"],
+          "primaryEndpoints": [
+            "North Star Ambulatory Assessment change",
+            "Micro-dystrophin expression"
+          ],
           "latestUpdate": {
             "date": "2026-02-05",
             "summary": "52-week data shows significant improvement in muscle function. BLA submission expected Q3 2026."
@@ -172,7 +216,12 @@
             }
           ],
           "sites": 35,
-          "countries": ["USA", "UK", "Italy", "Spain"]
+          "countries": [
+            "USA",
+            "UK",
+            "Italy",
+            "Spain"
+          ]
         },
         {
           "id": "sasanlimab",
@@ -185,24 +234,37 @@
           "startDate": "2024-09",
           "estimatedCompletion": "2028-06",
           "description": "Combination of subcutaneous PD-1 inhibitor with BCMA-CD3 bispecific antibody for heavily pretreated myeloma.",
-          "primaryEndpoints": ["Progression-free survival", "Overall response rate"],
+          "primaryEndpoints": [
+            "Progression-free survival",
+            "Overall response rate"
+          ],
           "latestUpdate": {
             "date": "2026-01-30",
             "summary": "Early cohort shows 68% overall response rate with manageable safety profile. Enrollment ahead of schedule."
           },
           "leadInvestigators": [],
           "sites": 120,
-          "countries": ["USA", "Japan", "Germany", "France", "Australia"]
+          "countries": [
+            "USA",
+            "Japan",
+            "Germany",
+            "France",
+            "Australia"
+          ]
         }
       ]
     },
     {
       "id": "biontech",
       "name": "BioNTech",
-      "logo": "https://logo.clearbit.com/biontech.de",
+      "logo": null,
       "headquarters": "Mainz, Germany",
       "founded": 2008,
-      "focus": ["mRNA therapeutics", "Cancer immunotherapy", "Infectious diseases"],
+      "focus": [
+        "mRNA therapeutics",
+        "Cancer immunotherapy",
+        "Infectious diseases"
+      ],
       "marketCap": "$28.4B",
       "website": "https://www.biontech.de",
       "trials": [
@@ -217,7 +279,10 @@
           "startDate": "2025-08",
           "estimatedCompletion": "2026-11",
           "description": "Novel vaccine component designed to enhance T-cell immunity for longer-lasting protection regardless of variants.",
-          "primaryEndpoints": ["T-cell response magnitude", "Duration of cellular immunity"],
+          "primaryEndpoints": [
+            "T-cell response magnitude",
+            "Duration of cellular immunity"
+          ],
           "latestUpdate": {
             "date": "2026-02-12",
             "summary": "Phase 1 showed 4-fold increase in virus-specific T-cells persisting at 6 months. Moving to expanded Phase 2."
@@ -229,13 +294,17 @@
               "mdrpediaSlug": null
             },
             {
-              "name": "Dr. Özlem Türeci",
+              "name": "Dr. \u00d6zlem T\u00fcreci",
               "role": "CMO & Co-founder, BioNTech",
               "mdrpediaSlug": null
             }
           ],
           "sites": 45,
-          "countries": ["Germany", "USA", "UK"]
+          "countries": [
+            "Germany",
+            "USA",
+            "UK"
+          ]
         },
         {
           "id": "bnt211",
@@ -248,14 +317,21 @@
           "startDate": "2023-03",
           "estimatedCompletion": "2027-09",
           "description": "First-in-class combination of CAR-T cells with mRNA vaccine boosting targeting Claudin-6 in ovarian, testicular, and lung cancers.",
-          "primaryEndpoints": ["Overall response rate", "CAR-T cell persistence"],
+          "primaryEndpoints": [
+            "Overall response rate",
+            "CAR-T cell persistence"
+          ],
           "latestUpdate": {
             "date": "2026-02-01",
             "summary": "59% objective response rate in evaluable patients. Complete responses seen in 3 ovarian cancer patients."
           },
           "leadInvestigators": [],
           "sites": 22,
-          "countries": ["Germany", "USA", "Spain"]
+          "countries": [
+            "Germany",
+            "USA",
+            "Spain"
+          ]
         },
         {
           "id": "bnt141",
@@ -268,24 +344,37 @@
           "startDate": "2025-01",
           "estimatedCompletion": "2027-06",
           "description": "Intravenously administered mRNA encoding a secreted antibody targeting Claudin 18.2.",
-          "primaryEndpoints": ["Safety", "Antibody expression levels", "Tumor response"],
+          "primaryEndpoints": [
+            "Safety",
+            "Antibody expression levels",
+            "Tumor response"
+          ],
           "latestUpdate": {
             "date": "2026-01-15",
             "summary": "Dose escalation ongoing. Therapeutic antibody levels detected in all patients at higher dose levels."
           },
           "leadInvestigators": [],
           "sites": 15,
-          "countries": ["Germany", "Spain", "USA"]
+          "countries": [
+            "Germany",
+            "Spain",
+            "USA"
+          ]
         }
       ]
     },
     {
       "id": "novartis",
       "name": "Novartis",
-      "logo": "https://logo.clearbit.com/novartis.com",
+      "logo": null,
       "headquarters": "Basel, Switzerland",
       "founded": 1996,
-      "focus": ["Oncology", "Cardiovascular", "Immunology", "Neuroscience"],
+      "focus": [
+        "Oncology",
+        "Cardiovascular",
+        "Immunology",
+        "Neuroscience"
+      ],
       "marketCap": "$212.5B",
       "website": "https://www.novartis.com",
       "trials": [
@@ -300,7 +389,11 @@
           "startDate": "2024-06",
           "estimatedCompletion": "2028-12",
           "description": "Real-world study evaluating CAR-T therapy in broader pediatric population including infants.",
-          "primaryEndpoints": ["Complete remission rate", "Event-free survival", "Long-term safety"],
+          "primaryEndpoints": [
+            "Complete remission rate",
+            "Event-free survival",
+            "Long-term safety"
+          ],
           "latestUpdate": {
             "date": "2026-02-08",
             "summary": "92% complete remission rate maintained. FDA approved expanded indication down to age 1 month."
@@ -313,7 +406,13 @@
             }
           ],
           "sites": 80,
-          "countries": ["USA", "Germany", "Japan", "UK", "France"]
+          "countries": [
+            "USA",
+            "Germany",
+            "Japan",
+            "UK",
+            "France"
+          ]
         },
         {
           "id": "pluvicto-combo",
@@ -326,14 +425,23 @@
           "startDate": "2025-02",
           "estimatedCompletion": "2028-06",
           "description": "Radioligand therapy combined with pembrolizumab for enhanced tumor killing.",
-          "primaryEndpoints": ["Overall survival", "Radiographic progression-free survival"],
+          "primaryEndpoints": [
+            "Overall survival",
+            "Radiographic progression-free survival"
+          ],
           "latestUpdate": {
             "date": "2026-02-20",
             "summary": "Interim analysis triggered early. Results expected Q2 2026 with potential accelerated approval pathway."
           },
           "leadInvestigators": [],
           "sites": 200,
-          "countries": ["USA", "Germany", "France", "Australia", "Canada"]
+          "countries": [
+            "USA",
+            "Germany",
+            "France",
+            "Australia",
+            "Canada"
+          ]
         },
         {
           "id": "iptacopan",
@@ -346,24 +454,37 @@
           "startDate": "2024-03",
           "estimatedCompletion": "2026-09",
           "description": "Oral Factor B inhibitor for complement-mediated kidney disease.",
-          "primaryEndpoints": ["Proteinuria reduction", "eGFR stabilization"],
+          "primaryEndpoints": [
+            "Proteinuria reduction",
+            "eGFR stabilization"
+          ],
           "latestUpdate": {
             "date": "2026-01-25",
             "summary": "66% of patients achieved >50% proteinuria reduction. BLA under FDA review with PDUFA date August 2026."
           },
           "leadInvestigators": [],
           "sites": 45,
-          "countries": ["USA", "UK", "Germany", "Netherlands"]
+          "countries": [
+            "USA",
+            "UK",
+            "Germany",
+            "Netherlands"
+          ]
         }
       ]
     },
     {
       "id": "regeneron",
       "name": "Regeneron",
-      "logo": "https://logo.clearbit.com/regeneron.com",
+      "logo": null,
       "headquarters": "Tarrytown, NY, USA",
       "founded": 1988,
-      "focus": ["Immunology", "Oncology", "Ophthalmology", "Rare Diseases"],
+      "focus": [
+        "Immunology",
+        "Oncology",
+        "Ophthalmology",
+        "Rare Diseases"
+      ],
       "marketCap": "$95.8B",
       "website": "https://www.regeneron.com",
       "trials": [
@@ -378,14 +499,23 @@
           "startDate": "2024-05",
           "estimatedCompletion": "2027-11",
           "description": "Bispecific antibody redirecting T-cells to BCMA-expressing myeloma cells.",
-          "primaryEndpoints": ["Overall survival", "Complete response rate"],
+          "primaryEndpoints": [
+            "Overall survival",
+            "Complete response rate"
+          ],
           "latestUpdate": {
             "date": "2026-02-14",
             "summary": "Phase 2 showed 63% overall response rate. Registrational Phase 3 fully enrolled ahead of schedule."
           },
           "leadInvestigators": [],
           "sites": 85,
-          "countries": ["USA", "France", "Spain", "Italy", "Japan"]
+          "countries": [
+            "USA",
+            "France",
+            "Spain",
+            "Italy",
+            "Japan"
+          ]
         },
         {
           "id": "regn-rsa",
@@ -398,24 +528,38 @@
           "startDate": "2024-08",
           "estimatedCompletion": "2026-12",
           "description": "Dual complement inhibition approach combining antibody and siRNA therapy.",
-          "primaryEndpoints": ["MG-ADL score improvement", "Complete stable remission rate"],
+          "primaryEndpoints": [
+            "MG-ADL score improvement",
+            "Complete stable remission rate"
+          ],
           "latestUpdate": {
             "date": "2026-02-06",
             "summary": "Primary endpoint met with 4.2 point improvement vs placebo. Filing expected H2 2026."
           },
           "leadInvestigators": [],
           "sites": 75,
-          "countries": ["USA", "Japan", "Germany", "Poland", "Canada"]
+          "countries": [
+            "USA",
+            "Japan",
+            "Germany",
+            "Poland",
+            "Canada"
+          ]
         }
       ]
     },
     {
       "id": "eli-lilly",
       "name": "Eli Lilly",
-      "logo": "https://logo.clearbit.com/lilly.com",
+      "logo": null,
       "headquarters": "Indianapolis, IN, USA",
       "founded": 1876,
-      "focus": ["Neuroscience", "Oncology", "Diabetes", "Immunology"],
+      "focus": [
+        "Neuroscience",
+        "Oncology",
+        "Diabetes",
+        "Immunology"
+      ],
       "marketCap": "$685.2B",
       "website": "https://www.lilly.com",
       "trials": [
@@ -430,7 +574,10 @@
           "startDate": "2023-10",
           "estimatedCompletion": "2027-06",
           "description": "Anti-amyloid antibody targeting N3pG amyloid for earlier-stage Alzheimer's patients.",
-          "primaryEndpoints": ["iADRS score change", "Amyloid plaque clearance"],
+          "primaryEndpoints": [
+            "iADRS score change",
+            "Amyloid plaque clearance"
+          ],
           "latestUpdate": {
             "date": "2026-02-19",
             "summary": "FDA approved Kisunla (donanemab) in July 2025. Post-marketing study confirms 35% slowing of decline at 18 months."
@@ -443,7 +590,13 @@
             }
           ],
           "sites": 275,
-          "countries": ["USA", "Japan", "UK", "Germany", "Australia"]
+          "countries": [
+            "USA",
+            "Japan",
+            "UK",
+            "Germany",
+            "Australia"
+          ]
         },
         {
           "id": "orforglipron",
@@ -456,14 +609,23 @@
           "startDate": "2024-01",
           "estimatedCompletion": "2026-09",
           "description": "Once-daily oral GLP-1 receptor agonist for weight management and glycemic control.",
-          "primaryEndpoints": ["Percent weight change", "HbA1c reduction"],
+          "primaryEndpoints": [
+            "Percent weight change",
+            "HbA1c reduction"
+          ],
           "latestUpdate": {
             "date": "2026-02-11",
             "summary": "Phase 2 showed 14.7% weight loss at 36 weeks. Phase 3 on track for H2 2026 readout."
           },
           "leadInvestigators": [],
           "sites": 350,
-          "countries": ["USA", "Mexico", "Japan", "Germany", "Australia"]
+          "countries": [
+            "USA",
+            "Mexico",
+            "Japan",
+            "Germany",
+            "Australia"
+          ]
         },
         {
           "id": "lebrikizumab-ad",
@@ -476,24 +638,38 @@
           "startDate": "2025-06",
           "estimatedCompletion": "2028-12",
           "description": "Real-world effectiveness study in diverse patient population.",
-          "primaryEndpoints": ["IGA 0/1 response", "EASI-75 achievement"],
+          "primaryEndpoints": [
+            "IGA 0/1 response",
+            "EASI-75 achievement"
+          ],
           "latestUpdate": {
             "date": "2026-01-20",
             "summary": "Approved in EU and US. Real-world data confirms efficacy with convenient monthly dosing."
           },
           "leadInvestigators": [],
           "sites": 150,
-          "countries": ["USA", "Germany", "France", "UK", "Canada"]
+          "countries": [
+            "USA",
+            "Germany",
+            "France",
+            "UK",
+            "Canada"
+          ]
         }
       ]
     },
     {
       "id": "gsk",
       "name": "GSK",
-      "logo": "https://logo.clearbit.com/gsk.com",
+      "logo": null,
       "headquarters": "London, UK",
       "founded": 2000,
-      "focus": ["Vaccines", "Infectious Diseases", "Oncology", "Immunology"],
+      "focus": [
+        "Vaccines",
+        "Infectious Diseases",
+        "Oncology",
+        "Immunology"
+      ],
       "marketCap": "$78.5B",
       "website": "https://www.gsk.com",
       "trials": [
@@ -508,14 +684,23 @@
           "startDate": "2024-09",
           "estimatedCompletion": "2027-03",
           "description": "Evaluating duration of protection and need for revaccination with approved RSV vaccine.",
-          "primaryEndpoints": ["Efficacy against RSV-LRTD at Season 3", "Immunogenicity persistence"],
+          "primaryEndpoints": [
+            "Efficacy against RSV-LRTD at Season 3",
+            "Immunogenicity persistence"
+          ],
           "latestUpdate": {
             "date": "2026-02-16",
             "summary": "Season 2 efficacy of 67% against RSV-LRTD maintained. Single dose may provide multi-season protection."
           },
           "leadInvestigators": [],
           "sites": 200,
-          "countries": ["USA", "UK", "Belgium", "Japan", "Australia"]
+          "countries": [
+            "USA",
+            "UK",
+            "Belgium",
+            "Japan",
+            "Australia"
+          ]
         },
         {
           "id": "blenrep-combo",
@@ -528,14 +713,23 @@
           "startDate": "2023-11",
           "estimatedCompletion": "2026-06",
           "description": "BCMA-targeted ADC in combination with standard of care for myeloma.",
-          "primaryEndpoints": ["Progression-free survival", "Overall response rate"],
+          "primaryEndpoints": [
+            "Progression-free survival",
+            "Overall response rate"
+          ],
           "latestUpdate": {
             "date": "2026-02-03",
             "summary": "Primary analysis shows significant PFS improvement. Re-filing with FDA planned for Q2 2026."
           },
           "leadInvestigators": [],
           "sites": 140,
-          "countries": ["USA", "Spain", "France", "Germany", "UK"]
+          "countries": [
+            "USA",
+            "Spain",
+            "France",
+            "Germany",
+            "UK"
+          ]
         },
         {
           "id": "malaria-vaccine-r21",
@@ -548,24 +742,38 @@
           "startDate": "2025-03",
           "estimatedCompletion": "2028-06",
           "description": "Evaluating optimal booster schedules for sustained malaria protection in endemic regions.",
-          "primaryEndpoints": ["Clinical malaria incidence", "Antibody persistence"],
+          "primaryEndpoints": [
+            "Clinical malaria incidence",
+            "Antibody persistence"
+          ],
           "latestUpdate": {
             "date": "2026-01-28",
             "summary": "WHO prequalification received. Over 18 million doses shipped to endemic countries."
           },
           "leadInvestigators": [],
           "sites": 25,
-          "countries": ["Ghana", "Kenya", "Burkina Faso", "Tanzania", "Nigeria"]
+          "countries": [
+            "Ghana",
+            "Kenya",
+            "Burkina Faso",
+            "Tanzania",
+            "Nigeria"
+          ]
         }
       ]
     },
     {
       "id": "merck",
       "name": "Merck (MSD)",
-      "logo": "https://logo.clearbit.com/merck.com",
+      "logo": null,
       "headquarters": "Rahway, NJ, USA",
       "founded": 1891,
-      "focus": ["Oncology", "Vaccines", "Infectious Disease", "Immunology"],
+      "focus": [
+        "Oncology",
+        "Vaccines",
+        "Infectious Disease",
+        "Immunology"
+      ],
       "marketCap": "$245.8B",
       "website": "https://www.merck.com",
       "trials": [
@@ -580,14 +788,24 @@
           "startDate": "2024-02",
           "estimatedCompletion": "2029-12",
           "description": "Master protocol evaluating pembrolizumab combinations across 12 tumor types in adjuvant setting.",
-          "primaryEndpoints": ["Disease-free survival", "Overall survival"],
+          "primaryEndpoints": [
+            "Disease-free survival",
+            "Overall survival"
+          ],
           "latestUpdate": {
             "date": "2026-02-17",
             "summary": "Positive results in renal cell carcinoma arm. Two additional tumor types showing promising interim data."
           },
           "leadInvestigators": [],
           "sites": 450,
-          "countries": ["USA", "China", "Japan", "Germany", "UK", "Brazil"]
+          "countries": [
+            "USA",
+            "China",
+            "Japan",
+            "Germany",
+            "UK",
+            "Brazil"
+          ]
         },
         {
           "id": "v116-pneumonia",
@@ -600,14 +818,23 @@
           "startDate": "2023-09",
           "estimatedCompletion": "2026-06",
           "description": "Next-generation pneumococcal vaccine covering 8 unique serotypes not in current vaccines.",
-          "primaryEndpoints": ["Opsonophagocytic activity", "IgG geometric mean concentrations"],
+          "primaryEndpoints": [
+            "Opsonophagocytic activity",
+            "IgG geometric mean concentrations"
+          ],
           "latestUpdate": {
             "date": "2026-02-09",
             "summary": "Met all primary endpoints. BLA submitted to FDA; approval expected H2 2026."
           },
           "leadInvestigators": [],
           "sites": 180,
-          "countries": ["USA", "Germany", "Japan", "Australia", "Belgium"]
+          "countries": [
+            "USA",
+            "Germany",
+            "Japan",
+            "Australia",
+            "Belgium"
+          ]
         },
         {
           "id": "sotatercept",
@@ -620,24 +847,38 @@
           "startDate": "2024-07",
           "estimatedCompletion": "2027-09",
           "description": "First-in-class activin signaling inhibitor as monotherapy for treatment-naive PAH.",
-          "primaryEndpoints": ["6-minute walk distance", "Time to clinical worsening"],
+          "primaryEndpoints": [
+            "6-minute walk distance",
+            "Time to clinical worsening"
+          ],
           "latestUpdate": {
             "date": "2026-02-04",
             "summary": "FDA approved Winrevair (sotatercept) March 2024. HYPERION study exploring expanded use ongoing."
           },
           "leadInvestigators": [],
           "sites": 110,
-          "countries": ["USA", "France", "Germany", "UK", "Italy"]
+          "countries": [
+            "USA",
+            "France",
+            "Germany",
+            "UK",
+            "Italy"
+          ]
         }
       ]
     },
     {
       "id": "astrazeneca",
       "name": "AstraZeneca",
-      "logo": "https://logo.clearbit.com/astrazeneca.com",
+      "logo": null,
       "headquarters": "Cambridge, UK",
       "founded": 1999,
-      "focus": ["Oncology", "Cardiovascular", "Respiratory", "Immunology"],
+      "focus": [
+        "Oncology",
+        "Cardiovascular",
+        "Respiratory",
+        "Immunology"
+      ],
       "marketCap": "$198.4B",
       "website": "https://www.astrazeneca.com",
       "trials": [
@@ -652,14 +893,23 @@
           "startDate": "2022-09",
           "estimatedCompletion": "2026-04",
           "description": "Antibody-drug conjugate targeting Trop2 with novel topoisomerase I inhibitor payload.",
-          "primaryEndpoints": ["Progression-free survival", "Overall survival"],
+          "primaryEndpoints": [
+            "Progression-free survival",
+            "Overall survival"
+          ],
           "latestUpdate": {
             "date": "2026-02-21",
             "summary": "Met primary PFS endpoint with 6.9 month improvement vs chemotherapy. FDA filing imminent."
           },
           "leadInvestigators": [],
           "sites": 175,
-          "countries": ["USA", "Japan", "France", "Germany", "Spain"]
+          "countries": [
+            "USA",
+            "Japan",
+            "France",
+            "Germany",
+            "Spain"
+          ]
         },
         {
           "id": "nirsevimab-infants",
@@ -672,14 +922,23 @@
           "startDate": "2025-07",
           "estimatedCompletion": "2027-06",
           "description": "Real-world effectiveness study of long-acting RSV monoclonal antibody in infants.",
-          "primaryEndpoints": ["RSV hospitalization rate", "Medically attended RSV"],
+          "primaryEndpoints": [
+            "RSV hospitalization rate",
+            "Medically attended RSV"
+          ],
           "latestUpdate": {
             "date": "2026-02-13",
             "summary": "First full RSV season data shows 83% reduction in hospitalizations vs historical controls."
           },
           "leadInvestigators": [],
           "sites": 500,
-          "countries": ["USA", "France", "Spain", "UK", "Germany"]
+          "countries": [
+            "USA",
+            "France",
+            "Spain",
+            "UK",
+            "Germany"
+          ]
         },
         {
           "id": "volrustomig",
@@ -692,24 +951,38 @@
           "startDate": "2024-11",
           "estimatedCompletion": "2028-03",
           "description": "Novel bispecific antibody combining PD-1 and CTLA-4 blockade in single molecule.",
-          "primaryEndpoints": ["Overall survival", "Progression-free survival"],
+          "primaryEndpoints": [
+            "Overall survival",
+            "Progression-free survival"
+          ],
           "latestUpdate": {
             "date": "2026-01-22",
             "summary": "Phase 2 showed 48% ORR in PD-L1 high patients. Pivotal Phase 3 enrollment progressing well."
           },
           "leadInvestigators": [],
           "sites": 220,
-          "countries": ["USA", "China", "Japan", "South Korea", "Germany"]
+          "countries": [
+            "USA",
+            "China",
+            "Japan",
+            "South Korea",
+            "Germany"
+          ]
         }
       ]
     },
     {
       "id": "sanofi",
       "name": "Sanofi",
-      "logo": "https://logo.clearbit.com/sanofi.com",
+      "logo": null,
       "headquarters": "Paris, France",
       "founded": 2004,
-      "focus": ["Immunology", "Oncology", "Vaccines", "Rare Diseases"],
+      "focus": [
+        "Immunology",
+        "Oncology",
+        "Vaccines",
+        "Rare Diseases"
+      ],
       "marketCap": "$132.6B",
       "website": "https://www.sanofi.com",
       "trials": [
@@ -724,14 +997,24 @@
           "startDate": "2023-05",
           "estimatedCompletion": "2026-03",
           "description": "IL-4/IL-13 blockade for COPD patients with eosinophilic phenotype.",
-          "primaryEndpoints": ["Annualized rate of moderate/severe exacerbations", "FEV1 change"],
+          "primaryEndpoints": [
+            "Annualized rate of moderate/severe exacerbations",
+            "FEV1 change"
+          ],
           "latestUpdate": {
             "date": "2026-02-22",
             "summary": "Primary endpoint met with 30% reduction in exacerbations. First biologic therapy for COPD potentially launching 2026."
           },
           "leadInvestigators": [],
           "sites": 280,
-          "countries": ["USA", "Germany", "France", "UK", "Japan", "China"]
+          "countries": [
+            "USA",
+            "Germany",
+            "France",
+            "UK",
+            "Japan",
+            "China"
+          ]
         },
         {
           "id": "itepekimab",
@@ -744,14 +1027,23 @@
           "startDate": "2024-04",
           "estimatedCompletion": "2027-06",
           "description": "Monoclonal antibody targeting IL-33, a key upstream cytokine in allergic inflammation.",
-          "primaryEndpoints": ["Severe exacerbation rate", "Pre-bronchodilator FEV1"],
+          "primaryEndpoints": [
+            "Severe exacerbation rate",
+            "Pre-bronchodilator FEV1"
+          ],
           "latestUpdate": {
             "date": "2026-01-18",
             "summary": "Phase 2b showed benefit across all asthma phenotypes including those not responsive to existing biologics."
           },
           "leadInvestigators": [],
           "sites": 190,
-          "countries": ["USA", "France", "Germany", "Japan", "Poland"]
+          "countries": [
+            "USA",
+            "France",
+            "Germany",
+            "Japan",
+            "Poland"
+          ]
         },
         {
           "id": "rilzabrutinib",
@@ -764,14 +1056,23 @@
           "startDate": "2024-09",
           "estimatedCompletion": "2026-12",
           "description": "Oral reversible BTK inhibitor for chronic ITP patients.",
-          "primaryEndpoints": ["Durable platelet response", "Reduction in bleeding events"],
+          "primaryEndpoints": [
+            "Durable platelet response",
+            "Reduction in bleeding events"
+          ],
           "latestUpdate": {
             "date": "2026-02-07",
             "summary": "Phase 2 showed 50% durable response rate. Potential first oral therapy for ITP."
           },
           "leadInvestigators": [],
           "sites": 85,
-          "countries": ["USA", "France", "Germany", "UK", "Canada"]
+          "countries": [
+            "USA",
+            "France",
+            "Germany",
+            "UK",
+            "Canada"
+          ]
         }
       ]
     }
