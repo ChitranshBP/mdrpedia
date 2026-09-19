@@ -2,18 +2,21 @@
 import React, { useState } from "react";
 
 // Tier Themes for Avatar Background
+// Tier styling is driven by the design tokens so these avatars match the tier
+// badges rendered next to them. The previous values were a separate palette of
+// dark gradients left over from an earlier dark theme.
 const TIER_COLORS = {
-    TITAN: "linear-gradient(135deg, #300066 0%, #1a0033 100%)", // Deep Purple
-    ELITE: "linear-gradient(135deg, #001a4d 0%, #001133 100%)", // Navy
-    MASTER: "linear-gradient(135deg, #003322 0%, #002211 100%)", // Green
-    UNRANKED: "linear-gradient(135deg, #1a1a2e 0%, #16162a 100%)", // Dark
+    TITAN: "color-mix(in oklch, var(--aged-gold) 15%, transparent)",
+    ELITE: "color-mix(in oklch, var(--ink-blue) 15%, transparent)",
+    MASTER: "color-mix(in oklch, var(--slate) 15%, transparent)",
+    UNRANKED: "var(--paper-3)",
 };
 
 const TIER_TEXT = {
-    TITAN: "#FFD700", // Gold
-    ELITE: "#00AAFF",
-    MASTER: "#00CC66",
-    UNRANKED: "#8888AA"
+    TITAN: "var(--titan-text, var(--ink))",
+    ELITE: "var(--ink-blue)",
+    MASTER: "var(--slate)",
+    UNRANKED: "var(--ink-3)",
 };
 
 // Thumbnail size presets for responsive images

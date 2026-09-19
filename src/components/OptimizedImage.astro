@@ -52,11 +52,14 @@ const initials = fallbackInitials || alt
 const hasValidSrc = src && !src.startsWith("data:") && src.length > 0;
 
 // Tier colors for fallback
+// Tier colours come from the design tokens so a fallback avatar matches the
+// tier badge beside it. Previously this used a competing hardcoded palette
+// (MASTER rendered green here, slate in the badge).
 const tierColors: Record<string, { bg: string; text: string }> = {
-    TITAN: { bg: "rgba(255, 215, 0, 0.15)", text: "#ffd700" },
-    ELITE: { bg: "rgba(0, 170, 255, 0.15)", text: "#00aaff" },
-    MASTER: { bg: "rgba(0, 204, 102, 0.15)", text: "#00cc66" },
-    UNRANKED: { bg: "rgba(255, 255, 255, 0.08)", text: "#888" },
+    TITAN: { bg: "color-mix(in oklch, var(--aged-gold) 15%, transparent)", text: "var(--titan-text, var(--ink))" },
+    ELITE: { bg: "color-mix(in oklch, var(--ink-blue) 15%, transparent)", text: "var(--ink-blue)" },
+    MASTER: { bg: "color-mix(in oklch, var(--slate) 15%, transparent)", text: "var(--slate)" },
+    UNRANKED: { bg: "var(--paper-3)", text: "var(--ink-3)" },
 };
 
 const colors = tierColors[tier] || tierColors.UNRANKED;
@@ -78,7 +81,7 @@ const colors = tierColors[tier] || tierColors.UNRANKED;
             referrerpolicy="no-referrer"
             class="optimized-image__img"
             onload="this.parentElement.dataset.loaded='true'"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';this.parentElement.dataset.loaded='true';"
         />
         <div class="optimized-image__fallback" style="display: none;">
             <span class="optimized-image__initials">{initials}</span>

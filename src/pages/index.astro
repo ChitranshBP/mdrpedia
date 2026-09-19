@@ -261,7 +261,19 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, s
 			<a class="roll__card" href={`/doctors/${titan.slug}`}>
 				<div class="roll__portrait">
 					{titan.portrait_url ? (
-						<img src={titan.portrait_url} alt={titan.full_name} loading="lazy" width="88" height="88" class="roll__img" />
+						<>
+							<img
+								src={titan.portrait_url}
+								alt={titan.full_name}
+								loading="lazy"
+								width="88"
+								height="88"
+								class="roll__img"
+								referrerpolicy="no-referrer"
+								onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+							/>
+							<div class="pp" style="display:none">{getInitials(titan.full_name)}</div>
+						</>
 					) : (
 						<div class="pp">{getInitials(titan.full_name)}</div>
 					)}

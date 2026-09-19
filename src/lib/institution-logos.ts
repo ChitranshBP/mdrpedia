@@ -122,37 +122,21 @@ function extractDomain(url: string): string | null {
 export function getInstitutionLogo(name: string, website?: string | null): string | null {
     const normalizedName = name.toLowerCase().trim();
 
-    // Check for exact or partial match in known logos
+    // Clearbit's free logo API was shut down; every logo.clearbit.com URL now fails
+    // to connect. Returning one made the browser fire a doomed request per card
+    // (83 on the institutions index) before falling back to the monogram anyway.
+    // Only hand-verified, non-Clearbit URLs are returned now; everything else
+    // returns null so the coloured monogram renders immediately.
     for (const [key, url] of Object.entries(KNOWN_INSTITUTION_LOGOS)) {
+        if (url.includes("logo.clearbit.com")) continue;
         if (normalizedName.includes(key) || key.includes(normalizedName)) {
             return url;
         }
     }
 
-    // If a website URL is provided, use its domain for Clearbit
-    if (website) {
-        const domain = extractDomain(website);
-        if (domain) {
-            return `https://logo.clearbit.com/${domain}`;
-        }
-    }
-
-    // Try to extract domain from name for Clearbit
-    // Common patterns: "Name Hospital", "Name University", "Name Medical Center"
-    const words = normalizedName.split(/\s+/);
-    if (words.length >= 2) {
-        const firstWord = words[0];
-        const possibleDomains = [
-            `${firstWord}.edu`,
-            `${firstWord}.org`,
-            `${firstWord}hospital.org`,
-            `${firstWord}healthcare.org`,
-        ];
-        return `https://logo.clearbit.com/${possibleDomains[0]}`;
-    }
-
     return null;
 }
+
 
 /**
  * Generate institution initials for fallback display
