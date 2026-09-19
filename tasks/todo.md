@@ -7,6 +7,19 @@ Every finding below was verified against code, the built `dist/` output, the log
 
 Scale: ~70 `.astro` pages, 45 API routes, 975 DB profiles / 1,147 content files, ~1,385 sitemap URLs.
 
+## Changes landed since this plan was written
+
+- **2026-09-19 — `astro.config.mjs:21-25`: three clinical-trial slug redirects.**
+  `/trials/pf-07304814` → `/trials/pf-07817883`, `/trials/regn-rsa` → `/trials/cemdisiran-gmg`,
+  `/trials/malaria-vaccine-r21` → `/trials/rtss-malaria`. Verified correct:
+  all three targets exist in `src/content/trials/index.json`; all three old ids are fully
+  removed (0 occurrences), so `getStaticPaths()` generates no route that would shadow the
+  redirect; `sitemap.xml.ts:120-126,228` derives trial URLs from that same file, so the sitemap
+  picks the new ids up and drops the old ones automatically; and Astro emits **301** for GET
+  config redirects (`node_modules/astro/dist/core/redirects/render.js:14`, 308 for other
+  methods) — permanent, so it does not add to the 302 problem in P1.1.
+  Nothing to do. Noted because it is now the proven in-repo redirect mechanism (see P1.1).
+
 ---
 
 # P0 — Ship today (security, then honesty)
@@ -82,6 +95,11 @@ These are not design issues. Two of them are actively harming users right now.
   **Fix, in order:** (a) `curl -i https://mdrpedia.com/404` on the live box and fix the crash;
   (b) find and remove the wildcard 302; (c) serve **410 Gone** for `/services/*` and
   `/industries/*`; (d) 301 only the handful with a real modern equivalent.
+  For (d), `astro.config.mjs` `redirects` is now the established pattern in this repo and emits
+  a correct 301 — but use it only for the genuine one-to-one mappings. Do **not** wildcard all
+  2,358 legacy URLs to `/`: a mass 301 to an unrelated page is treated as a soft-404 anyway, and
+  410 is the honest signal for content that is actually gone. nginx is the better place for the
+  bulk rule; reserve the Astro config for the curated handful.
   Serving 500s at this volume throttles Google's crawl of the whole site.
 
 - [ ] **P1.2 — `/suggest-edit` is the biggest crawl trap on the site**
@@ -442,7 +460,10 @@ These are not design issues. Two of them are actively harming users right now.
   **Fix:** transliterate (`.normalize('NFD').replace(/\p{Diacritic}/gu,'')`), 301 the old slugs,
   merge the duplicates, repair the three names.
 - [ ] **Content honesty:** `clinical-trials.astro:36` badges "Live Clinical Trial Updates" over a
-  static snapshot whose own `lastUpdated` is 2026-02-23 (7 months stale, no rebuild automation).
+  build-time snapshot (`prerender = true`). *Partly resolved 2026-09-19* — the content refresh
+  bumped `lastUpdated` to today, so the badge is currently truthful. What remains is that there
+  is still **no rebuild automation**, so it will drift again; either schedule a rebuild or
+  reword the badge to "last reviewed <date>".
   `privacy.astro:14-20` / `terms.astro:15` render `new Date()` into a prerendered page, so the
   legal "last updated" stamp silently advances on every unrelated deploy.
 - [ ] **Five hub pages have zero inbound internal links** — `/map`, `/statistics`, `/lineage`,
