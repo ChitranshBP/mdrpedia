@@ -84,7 +84,11 @@ const tierCounts = results.reduce((acc, d) => {
 }, {} as Record<string, number>);
 ---
 
-<Layout title={query ? `Search: ${query} — MDRPedia` : "Search — MDRPedia"}>
+<Layout
+	title={query ? `Search: ${query} — MDRPedia` : "Search — MDRPedia"}
+	description="Search MDRPedia for physicians, specialties, institutions and medical research across the register."
+	robots="noindex, follow"
+>
     <section class="search-page">
         <div class="container">
             <!-- Search Header -->

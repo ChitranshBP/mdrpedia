@@ -30,7 +30,7 @@ const contentHtml = marked.parse(page.content);
 
 <Layout
     title={`${page.seo_title || page.title} — MDRPedia`}
-    description={page.seo_desc || ""}
+    description={page.seo_desc || undefined}
 >
     <div class="container content-page">
         <header class="page-header">

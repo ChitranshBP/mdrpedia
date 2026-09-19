@@ -137,7 +137,10 @@ const hospitalDatasetSchema = {
 };
 ---
 
-<Layout title={`${institution.name} — MDRPedia`}>
+<Layout
+    title={`${institution.name} — MDRPedia`}
+    description={`${doctors.length} verified physician${doctors.length === 1 ? "" : "s"} affiliated with ${institution.name}${institution.country ? `, ${institution.country}` : ""}${specialties.length ? ` across ${specialties.length} specialties` : ""}. Profiles, citations and clinical impact on MDRPedia.`}
+>
     <!-- Hospital Knowledge Graph Schema -->
     <script
         type="application/ld+json"
