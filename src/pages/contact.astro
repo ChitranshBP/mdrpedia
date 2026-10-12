@@ -38,7 +38,7 @@ import Layout from "../layouts/Layout.astro";
                     For general inquiries, profile claims, and technical
                     support.
                 </p>
-                <a href="mailto:support@mdrpedia.com" class="btn btn--primary"
+                <a href="mailto:support@mdrpedia.com" id="support-mailto" class="btn btn--primary"
                     >support@mdrpedia.com</a
                 >
             </div>
@@ -93,6 +93,19 @@ import Layout from "../layouts/Layout.astro";
         </div>
     </div>
 </Layout>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const subject = params.get("subject");
+    const award = params.get("award");
+    const link = document.getElementById("support-mailto") as HTMLAnchorElement | null;
+    if (link && (subject || award)) {
+        const labels: Record<string, string> = { "suggest-recipient": "Suggest a recipient" };
+        const title = [subject ? labels[subject] ?? subject : "Enquiry", award].filter(Boolean).join(": ");
+        link.href = `mailto:support@mdrpedia.com?subject=${encodeURIComponent(title)}`;
+        link.textContent = `Email us about: ${title}`;
+    }
+</script>
 
 <style>
     .page-content {

@@ -151,7 +151,7 @@ const faqSchema = {
             </p>
             <div class="hero__actions">
                 <a href="/doctor/ethics" class="btn">Apply for Certification</a>
-                <a href="#verified" class="btn btn--outline">View Certified Doctors</a>
+                {certifiedDoctors.length > 0 && <a href="#verified" class="btn btn--outline">View Certified Doctors</a>}
                 <a href="/ethical-workplace" class="btn btn--outline">Clinic Certification</a>
             </div>
         </div>

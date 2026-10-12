@@ -53,8 +53,10 @@ import Layout from "../layouts/Layout.astro";
                     <span>Looking for a specific doctor?</span>
                 </div>
                 <form action="/doctors" method="get" class="search-form">
+                    <label for="not-found-search" class="sr-only">Search doctors by name, specialty, or institution</label>
                     <input
                         type="text"
+                        id="not-found-search"
                         name="q"
                         placeholder="Search by name, specialty, or institution..."
                         class="search-input"
@@ -93,6 +95,15 @@ import Layout from "../layouts/Layout.astro";
         </div>
     </div>
 </Layout>
+
+<script>
+    const body = new Blob(
+        [JSON.stringify({ url: location.pathname + location.search, referrer: document.referrer })],
+        { type: "application/json" },
+    );
+    if (navigator.sendBeacon) navigator.sendBeacon("/api/log-404", body);
+    else fetch("/api/log-404", { method: "POST", body, keepalive: true });
+</script>
 
 <style>
     .error-page {

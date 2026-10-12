@@ -195,15 +195,6 @@ Astro.response.headers.set(
     "Cache-Control",
     "public, max-age=60, s-maxage=120",
 );
-
-// Build search index for client-side filtering
-const searchIndex = lineageEntries.map((e) => ({
-    mentorSlug: e.mentor.slug,
-    mentorName: e.mentor.full_name,
-    students: e.students.map((s) => s.full_name).join(", "),
-    specialty: e.mentor.specialty,
-    country: e.mentor.country,
-}));
 ---
 
 <Layout
@@ -272,6 +263,7 @@ const searchIndex = lineageEntries.map((e) => ({
                         <circle cx="11" cy="11" r="8"></circle>
                         <path d="m21 21-4.3-4.3"></path>
                     </svg>
+                    <label for="lineage-search" class="sr-only">Filter lineages by mentor, student, or specialty</label>
                     <input
                         id="lineage-search"
                         type="text"
@@ -491,7 +483,7 @@ const searchIndex = lineageEntries.map((e) => ({
     </div>
 </Layout>
 
-<script define:vars={{ searchIndex }}>
+<script>
     // Client-side search/filter
     const input = document.getElementById("lineage-search");
     const entries = document.querySelectorAll(".lineage-entry");
