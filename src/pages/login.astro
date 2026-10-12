@@ -51,6 +51,7 @@ import "../styles/pages/utility.css";
 							</div>
 						</div>
 						<button type="submit" class="u-btn">Open dashboard</button>
+						<p id="admin-status" class="u-status" data-state="err" role="alert"></p>
 					</form>
 				</section>
 			</div>
@@ -70,12 +71,23 @@ import "../styles/pages/utility.css";
 		toggleBtn.setAttribute("aria-pressed", String(show));
 	});
 
-	document.getElementById("loginForm")?.addEventListener("submit", (e) => {
+	document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
 		e.preventDefault();
 		const input = document.getElementById("key") as HTMLInputElement | null;
-		if (input && input.value) {
-			window.location.href = `/admin?key=${encodeURIComponent(input.value)}`;
+		const status = document.getElementById("admin-status");
+		if (!input?.value) return;
+		const res = await fetch("/api/admin/login", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			credentials: "same-origin",
+			body: JSON.stringify({ key: input.value }),
+		}).catch(() => null);
+		if (res?.ok) {
+			window.location.href = "/admin";
+			return;
 		}
+		if (status) status.textContent = res?.status === 429 ? "Too many attempts. Try again later." : "That access key was not accepted.";
+		input.select();
 	});
 
 	const doctorForm = document.getElementById("doctorLoginForm");
