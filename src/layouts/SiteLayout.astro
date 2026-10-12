@@ -1,0 +1,63 @@
+---
+/**
+ * MDRPedia — register design-system layout (claude.ai/design "MDRPedia").
+ * Pages adopt it one at a time; Layout.astro remains the default elsewhere.
+ */
+import "../styles/register.css";
+import SiteHeader from "../components/site/SiteHeader.astro";
+import SiteFooter from "../components/site/SiteFooter.astro";
+
+interface Props {
+	title: string;
+	description: string;
+	active?: "" | "find" | "regions" | "register" | "evidence";
+	ogImage?: string;
+	robots?: string;
+	jsonLd?: Record<string, unknown>[];
+}
+
+const { title, description, active = "", ogImage, robots = "index, follow", jsonLd = [] } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname.replace(/(.)\/$/, "$1"), Astro.site ?? "https://mdrpedia.com");
+const image = ogImage || new URL("/og-default.png", canonicalURL.origin).href;
+const FONTS =
+	"https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap";
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta name="robots" content={robots} />
+		<link rel="canonical" href={canonicalURL.href} />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="stylesheet" href={FONTS} />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalURL.href} />
+		<meta property="og:site_name" content="MDRPedia" />
+		<meta property="og:image" content={image} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={image} />
+		<meta name="twitter:site" content="@mdrpedia" />
+		<meta name="theme-color" content="#0c3a20" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="manifest" href="/manifest.json" />
+		<link rel="alternate" type="application/rss+xml" title="MDRPedia News Feed" href="/feed.xml" />
+		{jsonLd.map((node) => <script type="application/ld+json" set:html={JSON.stringify(node)} />)}
+	</head>
+	<body class="r-body">
+		<a href="#main-content" class="r-skip">Skip to main content</a>
+		<SiteHeader active={active} />
+		<main id="main-content">
+			<slot />
+		</main>
+		<SiteFooter />
+	</body>
+</html>

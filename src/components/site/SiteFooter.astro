@@ -1,0 +1,53 @@
+---
+const cols = [
+	{
+		h: "REGISTER",
+		links: [
+			{ l: "Find a doctor", h: "/search" },
+			{ l: "Browse physicians", h: "/doctors" },
+			{ l: "By region", h: "/geography" },
+			{ l: "Ethics Register", h: "/ethical-doctors" },
+		],
+	},
+	{
+		h: "INSTITUTION",
+		links: [
+			{ l: "Evidence standard", h: "/about#data-sources" },
+			{ l: "Methodology", h: "/about#methodology" },
+			{ l: "Claim your record", h: "/doctor/claim" },
+			{ l: "Free NMC compliance check", h: "/nmc-compliance-check" },
+			{ l: "Example doctor profile", h: "/doctors/devi-shetty" },
+			{ l: "Identity", h: "/about/our-name" },
+		],
+	},
+	{
+		h: "OPEN DATA",
+		links: [
+			{ l: "Statistics & exports", h: "/statistics" },
+			{ l: "Privacy", h: "/privacy" },
+			{ l: "Terms", h: "/terms" },
+		],
+	},
+];
+---
+
+<footer class="r-footer">
+	<div class="r-footer__inner">
+		<div class="r-footer__cols">
+			<div class="r-footer__brand">
+				<span>MDRPedia</span>
+				<p>The honour roll of medicine. An open, sourced register of the physicians who shaped it. Also known as MDpedia and DRpedia.</p>
+			</div>
+			{cols.map((c) => (
+				<nav class="r-footer__col" aria-labelledby={`r-foot-${c.h}`}>
+					<h2 id={`r-foot-${c.h}`}>{c.h}</h2>
+					{c.links.map((k) => <a href={k.h}>{k.l}</a>)}
+				</nav>
+			))}
+		</div>
+		<div class="r-footer__base">
+			<span>MDRPEDIA · EST. 2024 · CC-BY-SA 4.0</span>
+			<span>EVERY CLAIM SOURCED · EVERY MARK REVOCABLE</span>
+		</div>
+	</div>
+</footer>

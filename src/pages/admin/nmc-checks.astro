@@ -1,0 +1,237 @@
+---
+/**
+ * MDRPedia — NMC compliance check queue
+ */
+import Layout from "../../layouts/Layout.astro";
+import AdminSidebar from "../../components/admin/AdminSidebar.astro";
+import { prisma } from "../../lib/prisma";
+import { requireSuperAdmin } from "../../lib/rbac";
+import { CHANNEL_LABELS, verdictFor, type Channels, type NmcScreenResult } from "../../lib/nmc/types";
+import type { FullReport } from "../../lib/nmc/full-scan";
+
+export const prerender = false;
+
+if (!requireSuperAdmin(Astro.request)) {
+    return Astro.redirect("/login");
+}
+
+const url = new URL(Astro.request.url);
+const adminKey = url.searchParams.get("key");
+const filter = url.searchParams.get("status") || "open";
+
+const where =
+    filter === "all" ? {} : filter === "open" ? { status: { in: ["queued", "review", "failed", "scanning"] } } : { status: filter };
+
+const [checks, grouped] = await Promise.all([
+    prisma.nmcCheck.findMany({ where, orderBy: { createdAt: "desc" }, take: 100 }),
+    prisma.nmcCheck.groupBy({ by: ["status"], _count: true }),
+]);
+
+const counts: Record<string, number> = {};
+for (const g of grouped) counts[g.status] = g._count;
+const total = Object.values(counts).reduce((a, b) => a + b, 0);
+
+const FILTERS: [string, string][] = [
+    ["open", "Needs action"],
+    ["queued", "Queued"],
+    ["review", "In review"],
+    ["failed", "Failed"],
+    ["reported", "Reported"],
+    ["instant_only", "Instant only"],
+    ["all", "All"],
+];
+const openCount = (counts.queued ?? 0) + (counts.review ?? 0) + (counts.failed ?? 0) + (counts.scanning ?? 0);
+
+const fmt = (d: Date) => d.toLocaleString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+---
+
+<Layout title="NMC Checks — MDRPedia Admin" robots="noindex, nofollow">
+    <div class="admin">
+        <AdminSidebar adminKey={adminKey} activePage="nmc-checks" />
+        <main class="main">
+            <header class="head">
+                <div>
+                    <h1>NMC compliance checks</h1>
+                    <p>{total} requests · {openCount} need action. Queued checks are scanned automatically every 15 minutes; reports with hand-review channels wait here.</p>
+                </div>
+                <button type="button" class="btn" data-action="process">Scan queue now</button>
+            </header>
+
+            <nav class="filters" aria-label="Filter by status">
+                {FILTERS.map(([key, label]) => (
+                    <a href={`/admin/nmc-checks?key=${adminKey}&status=${key}`} class:list={["filter", { active: filter === key }]} aria-current={filter === key ? "page" : undefined}>
+                        {label} <span>{key === "open" ? openCount : key === "all" ? total : counts[key] ?? 0}</span>
+                    </a>
+                ))}
+            </nav>
+
+            {checks.length === 0 ? (
+                <p class="empty">No checks in this view.</p>
+            ) : (
+                <ul class="list">
+                    {checks.map((c) => {
+                        const channels = (c.channels ?? {}) as Channels;
+                        const instant = c.instantResult as unknown as NmcScreenResult | null;
+                        const report = c.fullReport as unknown as FullReport | null;
+                        return (
+                            <li class="item" data-id={c.id}>
+                                <div class="row">
+                                    <div>
+                                        <strong>{c.name}</strong> · <a href={`mailto:${c.email}`}>{c.email}</a>
+                                        {c.phone && <> · {c.phone}</>}
+                                        {c.registrationNo && <> · Reg. {c.registrationNo}</>}
+                                    </div>
+                                    <span class={`status status--${c.status}`}>{c.status.replace("_", " ")}</span>
+                                </div>
+                                <div class="meta">
+                                    {fmt(c.createdAt)}
+                                    {instant && <> · Instant: {verdictFor(instant.findings).verdict} ({c.engine})</>}
+                                    {c.reportSentAt && <> · Report sent {fmt(c.reportSentAt)}</>}
+                                </div>
+                                {Object.keys(channels).length > 0 && (
+                                    <ul class="channels">
+                                        {Object.entries(channels).map(([k, v]) => {
+                                            const section = report?.sections.find((s) => s.key === k);
+                                            return (
+                                                <li>
+                                                    <strong>{CHANNEL_LABELS[k as keyof typeof CHANNEL_LABELS]}</strong> {v}
+                                                    {section && (
+                                                        <span class="section">
+                                                            {section.result ? ` — ${verdictFor(section.result.findings).verdict}` : " — hand review"}
+                                                            {section.manual && " · needs manual check"}
+                                                        </span>
+                                                    )}
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
+                                )}
+                                {report && (
+                                    <details>
+                                        <summary>Full report findings</summary>
+                                        {report.sections.map((s) => (
+                                            <div class="report-section">
+                                                <strong>{s.label}</strong>: {s.note}
+                                                {s.result?.findings.map((f) => (
+                                                    <div class="finding"><b>{f.severity} · {f.clause}</b> {f.title} — “{f.excerpt}”</div>
+                                                ))}
+                                            </div>
+                                        ))}
+                                    </details>
+                                )}
+                                {c.content && (
+                                    <details>
+                                        <summary>Pasted content ({c.content.length.toLocaleString()} chars)</summary>
+                                        <pre>{c.content}</pre>
+                                    </details>
+                                )}
+                                <label class="note-label" for={`note-${c.id}`}>Reviewer notes (added to the report email)</label>
+                                <textarea id={`note-${c.id}`} rows="3" data-note>{c.adminNote ?? ""}</textarea>
+                                <div class="actions">
+                                    <button type="button" class="btn btn--ghost" data-action="note">Save notes</button>
+                                    {Object.keys(channels).length > 0 && <button type="button" class="btn btn--ghost" data-action="scan">{report ? "Re-scan" : "Scan now"}</button>}
+                                    {report && <button type="button" class="btn" data-action="send">{c.reportSentAt ? "Resend report" : "Send report"}</button>}
+                                    {c.status !== "archived" && <button type="button" class="btn btn--ghost" data-action="archive">Archive</button>}
+                                    <span class="msg" role="status" aria-live="polite"></span>
+                                </div>
+                            </li>
+                        );
+                    })}
+                </ul>
+            )}
+        </main>
+    </div>
+</Layout>
+
+<script>
+    const key = new URL(location.href).searchParams.get("key") ?? "";
+
+    async function call(payload: Record<string, unknown>) {
+        const res = await fetch("/api/admin/nmc-checks", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "x-admin-key": key },
+            body: JSON.stringify(payload),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.success) throw new Error(data.error || `HTTP ${res.status}`);
+        return data;
+    }
+
+    document.addEventListener("click", async (e) => {
+        const btn = (e.target as HTMLElement).closest<HTMLButtonElement>("button[data-action]");
+        if (!btn) return;
+        const item = btn.closest<HTMLElement>("[data-id]");
+        const msg = item?.querySelector<HTMLElement>(".msg");
+        const id = item?.dataset.id;
+        const action = btn.dataset.action!;
+        btn.disabled = true;
+        if (msg) msg.textContent = "Working…";
+        try {
+            if (action === "process") {
+                const r = await call({ action });
+                alert(`Scanned ${r.processed} queued ${r.processed === 1 ? "check" : "checks"}.`);
+                location.reload();
+                return;
+            }
+            if (action === "note") {
+                const note = item!.querySelector<HTMLTextAreaElement>("[data-note]")!.value;
+                await call({ action, id, note });
+                if (msg) msg.textContent = "Saved";
+            } else if (action === "archive") {
+                await call({ action: "status", id, status: "archived" });
+                location.reload();
+            } else {
+                if (action === "send") {
+                    const note = item!.querySelector<HTMLTextAreaElement>("[data-note]")!.value;
+                    await call({ action: "note", id, note });
+                }
+                await call({ action, id });
+                location.reload();
+            }
+        } catch (err) {
+            if (msg) msg.textContent = `Failed: ${(err as Error).message}`;
+        } finally {
+            btn.disabled = false;
+        }
+    });
+</script>
+
+<style>
+    .admin { display: flex; min-height: 100vh; }
+    .main { flex: 1; padding: 32px; max-width: 1100px; }
+    .head { display: flex; justify-content: space-between; gap: 24px; align-items: flex-start; margin-bottom: 20px; }
+    .head h1 { font-family: var(--font-serif); font-size: 28px; margin: 0 0 6px; }
+    .head p { margin: 0; color: var(--ink-2); font-size: 14px; }
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .filter { padding: 6px 12px; border: 1px solid var(--rule); color: var(--ink); text-decoration: none; font-size: 14px; }
+    .filter span { color: var(--ink-3); margin-left: 4px; }
+    .filter.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+    .filter.active span { color: inherit; }
+    .list { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; }
+    .item { border: 1px solid var(--rule); background: var(--paper); padding: 18px; display: grid; gap: 8px; }
+    .row { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .meta { font-size: 13px; color: var(--ink-3); }
+    .channels { margin: 0; padding-left: 18px; font-size: 14px; }
+    .section { color: var(--ink-2); }
+    .status { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; padding: 2px 8px; border: 1px solid currentColor; }
+    .status--queued, .status--scanning { color: #9a4f00; }
+    .status--review { color: var(--ink-blue); }
+    .status--failed { color: #8a2b1c; }
+    .status--reported { color: #127a0a; }
+    .status--instant_only, .status--archived { color: var(--ink-3); }
+    details { font-size: 14px; }
+    summary { cursor: pointer; color: var(--ink-2); }
+    pre { white-space: pre-wrap; background: var(--paper-2); padding: 12px; font-size: 13px; max-height: 240px; overflow: auto; }
+    .report-section { padding: 6px 0; }
+    .finding { padding-left: 12px; color: var(--ink-2); }
+    .note-label { font-size: 13px; font-weight: 600; color: var(--ink-2); }
+    textarea { width: 100%; font: inherit; font-size: 14px; padding: 8px; border: 1px solid var(--rule); background: #fff; }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .btn { height: 36px; padding: 0 14px; border: 1px solid #127a0a; background: #127a0a; color: #fff; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+    .btn--ghost { background: transparent; color: var(--ink); border-color: var(--rule-strong); }
+    .btn:disabled { opacity: 0.6; cursor: wait; }
+    .btn:focus-visible, .filter:focus-visible { outline: 2px solid var(--ink-blue); outline-offset: 2px; }
+    .msg { font-size: 13px; color: var(--ink-2); }
+    .empty { color: var(--ink-3); }
+    @media (max-width: 800px) { .admin { flex-direction: column; } .main { padding: 16px; } .head { flex-direction: column; } }
+</style>

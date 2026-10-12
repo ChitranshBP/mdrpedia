@@ -1,0 +1,103 @@
+---
+interface Props {
+	active?: "" | "find" | "regions" | "register" | "evidence";
+}
+
+const { active = "" } = Astro.props;
+
+const links = [
+	{ key: "find", label: "Find a doctor", href: "/search" },
+	{ key: "regions", label: "Regions", href: "/geography/india" },
+	{ key: "register", label: "Register", href: "/doctors" },
+	{ key: "evidence", label: "Evidence", href: "/about#methodology" },
+];
+
+const countries = [
+	{ name: "India", reg: "NMC · NMR", slug: "india" },
+	{ name: "United States", reg: "STATE BOARDS", slug: "united-states" },
+	{ name: "United Kingdom", reg: "GMC", slug: "united-kingdom" },
+];
+---
+
+<header class="r-header" data-country="India">
+	<div class="r-header__bar">
+		<a href="/" class="r-header__logo">MDRPedia</a>
+		<nav class="r-header__nav" aria-label="Primary">
+			{links.map((l) => (
+				<a href={l.href} data-nav={l.key} aria-current={l.key === active ? "page" : undefined}>{l.label}</a>
+			))}
+		</nav>
+		<div class="r-country">
+			<button type="button" class="r-country__btn" aria-haspopup="true" aria-expanded="false" aria-controls="r-country-menu">
+				<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>
+				<span class="r-sr-only">Register country:</span>
+				<span data-country-label>India</span>
+				<span class="r-country__caret" aria-hidden="true">▾</span>
+			</button>
+			<div class="r-country__menu" id="r-country-menu" role="menu" hidden>
+				<span class="r-country__label" aria-hidden="true">SHOWING DOCTORS REGISTERED IN</span>
+				{countries.map((c) => (
+					<button type="button" class="r-country__opt" role="menuitemradio" aria-checked={c.name === "India" ? "true" : "false"} data-name={c.name} data-slug={c.slug}>
+						<span>{c.name}</span><span>{c.reg}</span>
+					</button>
+				))}
+				<span class="r-country__note">Set from your location. Regions opens the register for this country.</span>
+			</div>
+		</div>
+		<a href="/doctor/claim" class="r-header__cta">For doctors</a>
+	</div>
+	<div class="r-header__stripe" aria-hidden="true"></div>
+</header>
+
+<script is:inline>
+	(() => {
+		const header = document.currentScript.previousElementSibling;
+		const slugs = { India: "india", "United States": "united-states", "United Kingdom": "united-kingdom" };
+		const guess = () => {
+			try {
+				const saved = localStorage.getItem("mdr-country");
+				if (saved && slugs[saved]) return saved;
+			} catch (e) {}
+			const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+			if (/Kolkata|Calcutta/.test(tz)) return "India";
+			if (tz.startsWith("America/")) return "United States";
+			if (tz === "Europe/London") return "United Kingdom";
+			return "India";
+		};
+		const apply = (name) => {
+			header.dataset.country = name;
+			header.querySelector("[data-country-label]").textContent = name;
+			header.querySelector('[data-nav="regions"]').href = "/geography/" + slugs[name];
+			header.querySelectorAll(".r-country__opt").forEach((o) => o.setAttribute("aria-checked", String(o.dataset.name === name)));
+		};
+		apply(guess());
+
+		const btn = header.querySelector(".r-country__btn");
+		const menu = header.querySelector(".r-country__menu");
+		const opts = [...menu.querySelectorAll(".r-country__opt")];
+		const setOpen = (open, focusBtn) => {
+			menu.hidden = !open;
+			btn.setAttribute("aria-expanded", String(open));
+			if (open) (opts.find((o) => o.getAttribute("aria-checked") === "true") || opts[0]).focus();
+			else if (focusBtn) btn.focus();
+		};
+		btn.addEventListener("click", () => setOpen(menu.hidden));
+		menu.addEventListener("click", (e) => {
+			const opt = e.target.closest(".r-country__opt");
+			if (!opt) return;
+			try { localStorage.setItem("mdr-country", opt.dataset.name); } catch (err) {}
+			apply(opt.dataset.name);
+			window.dispatchEvent(new Event("mdr-country"));
+			setOpen(false, true);
+		});
+		menu.addEventListener("keydown", (e) => {
+			const i = opts.indexOf(document.activeElement);
+			if (e.key === "Escape") setOpen(false, true);
+			else if (e.key === "ArrowDown") { e.preventDefault(); opts[(i + 1) % opts.length].focus(); }
+			else if (e.key === "ArrowUp") { e.preventDefault(); opts[(i - 1 + opts.length) % opts.length].focus(); }
+		});
+		document.addEventListener("click", (e) => {
+			if (!menu.hidden && !header.querySelector(".r-country").contains(e.target)) setOpen(false);
+		});
+	})();
+</script>

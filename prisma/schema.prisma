@@ -814,3 +814,31 @@ model NewsletterSubscriber {
   @@index([verified])
   @@map("newsletter_subscribers")
 }
+
+// ============================================
+// NMC COMPLIANCE CHECKS
+// ============================================
+
+model NmcCheck {
+  id             String    @id @default(cuid())
+  name           String
+  email          String
+  phone          String?
+  registrationNo String?
+  channels       Json      @default("{}")
+  content        String?   @db.Text
+  instantResult  Json?
+  engine         String? // ai | rules
+  status         String    @default("queued") // queued | scanning | reported | failed | instant_only
+  fullReport     Json?
+  reportSentAt   DateTime?
+  adminNote      String?   @db.Text
+  ipHash         String?
+  consent        Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([status, createdAt])
+  @@index([email])
+  @@map("nmc_checks")
+}

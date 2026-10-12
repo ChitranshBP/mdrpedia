@@ -1,0 +1,86 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import NmcComplianceCheck from "../components/NmcComplianceCheck";
+
+export const prerender = true;
+
+const title = "Free NMC Compliance Check for Doctors — Ethical Advertising Guidelines | MDRPedia";
+const description =
+	"Check your website, Instagram, YouTube and Google profile against the NMC Guidelines on Ethical Advertising (6 Oct 2026). Testimonials, \"best doctor\" claims, offers and before-and-after photos flagged clause by clause, with compliant rewrites. Free.";
+
+const heroPoints = [
+	"Add your website and social handles",
+	"Paste a few posts or your bio for an instant check",
+	"Get a clause-by-clause report with compliant rewrites",
+];
+
+const rules = [
+	{ c: "EXPL V", t: "Patient testimonials, reviews, star ratings" },
+	{ c: "8.1(ix)", t: "\"Best\", \"No. 1\", \"top\" claims" },
+	{ c: "8.1(iii)", t: "Success rates, patient counts, \"guaranteed\"" },
+	{ c: "8.1(v)", t: "Before-and-after photos, case stories" },
+	{ c: "8.1(x)", t: "Discounts, offers, free procedures" },
+	{ c: "8.1(iv)", t: "Drug, device or supplement endorsements" },
+	{ c: "8.1(i)", t: "Fear-based or demand-creating messages" },
+	{ c: "DISCLOSE", t: "Missing NMR/SMR registration number" },
+];
+
+const pageUrl = new URL("/nmc-compliance-check", Astro.site ?? "https://mdrpedia.com").href;
+const jsonLd = [
+	{
+		"@context": "https://schema.org",
+		"@type": "WebApplication",
+		name: "NMC Compliance Check",
+		url: pageUrl,
+		applicationCategory: "HealthApplication",
+		operatingSystem: "Any",
+		isAccessibleForFree: true,
+		offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
+		description,
+		publisher: { "@type": "Organization", name: "MDRPedia", url: "https://mdrpedia.com" },
+	},
+	{
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		itemListElement: [
+			{ "@type": "ListItem", position: 1, name: "MDRPedia", item: "https://mdrpedia.com" },
+			{ "@type": "ListItem", position: 2, name: "NMC Compliance Check", item: pageUrl },
+		],
+	},
+];
+---
+
+<SiteLayout title={title} description={description} jsonLd={jsonLd}>
+	<section class="nmc-hero" aria-labelledby="nmc-title">
+		<div class="nmc-hero__inner">
+			<div class="nmc-hero__copy">
+				<span class="nmc-hero__kicker">FREE FOR DOCTORS · NMC GUIDELINES ON ETHICAL ADVERTISING · 6 OCT 2026</span>
+				<h1 id="nmc-title">Is your online presence <em>NMC-compliant?</em></h1>
+				<p class="nmc-hero__lede">
+					The new guidelines cover your website, Instagram, YouTube and Google profile. Testimonials, "best doctor" claims, offers and
+					before-and-after photos can now lead to suspension. Check yours in two minutes.
+				</p>
+			</div>
+			<ol class="nmc-hero__steps" aria-label="How it works">
+				{heroPoints.map((t, i) => <li><b aria-hidden="true">{i + 1}</b><span>{t}</span></li>)}
+			</ol>
+		</div>
+	</section>
+
+	<section class="nmc-main" aria-label="Compliance check">
+		<NmcComplianceCheck client:load />
+
+		<aside class="nmc-aside" aria-label="About the check">
+			<div class="nmc-rules">
+				<h2>WHAT WE CHECK FOR</h2>
+				<dl>
+					{rules.map((r) => <div><dt>{r.c}</dt><dd>{r.t}</dd></div>)}
+				</dl>
+			</div>
+			<div class="nmc-allowed">
+				<h2>STILL ALLOWED</h2>
+				<p>Educational posts with no promotional intent or commercial benefit (Explanation I). Factual credentials. Clinic address and timings.</p>
+			</div>
+		</aside>
+	</section>
+</SiteLayout>
