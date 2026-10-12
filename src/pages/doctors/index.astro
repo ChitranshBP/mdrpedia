@@ -228,8 +228,8 @@ const jsonLd = [
 ];
 ---
 
-<SiteLayout title={title} description={description} active="register" robots={filtered ? "noindex, follow" : "index, follow"} jsonLd={jsonLd}>
-	<div class="rg r-listing" data-country={country?.name ?? "all"} data-country-param={countryParam ? "1" : ""}>
+<SiteLayout title={title} description={description} canonical={!filtered && page > 1 ? `/doctors?page=${page}` : undefined} active="register" robots={filtered ? "noindex, follow" : "index, follow"} jsonLd={jsonLd}>
+	<div class="rg r-listing" data-country={country?.name ?? "all"} data-country-param={countryParam ? "1" : ""} data-view-country={countryParam && country ? country.name : undefined}>
 		<section class="rg-hero">
 			<span class="rg-eyebrow">{eyebrow}</span>
 			<h1>The Register</h1>

@@ -11,7 +11,7 @@ interface Props {
 const { country = "" } = Astro.props;
 ---
 
-<span data-region-sync data-country={country} hidden></span>
+<span data-region-sync data-country={country} data-view-country={country} hidden></span>
 
 <script>
 	const SLUGS: Record<string, string> = { India: "india", "United States": "united-states", "United Kingdom": "united-kingdom" };

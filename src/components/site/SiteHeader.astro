@@ -71,6 +71,10 @@ const countries = [
 			header.querySelectorAll(".r-country__opt").forEach((o) => o.setAttribute("aria-checked", String(o.dataset.name === name)));
 		};
 		apply(guess());
+		document.addEventListener("DOMContentLoaded", () => {
+			const view = document.querySelector("[data-view-country]");
+			if (view && slugs[view.dataset.viewCountry]) apply(view.dataset.viewCountry);
+		});
 
 		const btn = header.querySelector(".r-country__btn");
 		const menu = header.querySelector(".r-country__menu");

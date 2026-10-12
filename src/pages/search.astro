@@ -187,7 +187,7 @@ const jsonLd = [
 ---
 
 <SiteLayout title={title} description={description} active="find" robots="noindex, follow" jsonLd={jsonLd}>
-	<div class="fd r-listing" data-country={country?.name ?? "all"} data-country-param={countryParam ? "1" : ""}>
+	<div class="fd r-listing" data-country={country?.name ?? "all"} data-country-param={countryParam ? "1" : ""} data-view-country={countryParam && country ? country.name : undefined}>
 		<section class="fd-hero">
 			<span class="fd-eyebrow">{eyebrow}</span>
 			<h1>Find a doctor in {scope || "any country"}</h1>
