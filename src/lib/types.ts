@@ -210,6 +210,7 @@ export interface ProfileData {
   knowsAbout?: string[];
   affiliations?: {
     hospitalName: string;
+    hospitalSlug?: string | null;
     role?: string | null;
     hospitalUrl?: string | null;
   }[];
@@ -254,6 +255,7 @@ export interface ProfileData {
   conditionsTreated?: string[]; // Diseases/conditions treated
   talks?: { title: string; event: string; year: number; url?: string }[];
   /** Computed display flags */
+  claimStatus?: 'UNCLAIMED' | 'PENDING' | 'VERIFIED' | 'REJECTED' | null;
   hasVerifiedCredentials?: boolean;  // NPI or ORCID present
   hasSignificantCitations?: boolean; // citations > 1000
   createdAt?: string | null;
