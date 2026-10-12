@@ -16,7 +16,6 @@ if (!requireSuperAdmin(Astro.request)) {
 }
 
 const url = new URL(Astro.request.url);
-const adminKey = url.searchParams.get("key");
 const filter = url.searchParams.get("status") || "open";
 
 const where =
@@ -47,7 +46,7 @@ const fmt = (d: Date) => d.toLocaleString("en-IN", { day: "numeric", month: "sho
 
 <Layout title="NMC Checks — MDRPedia Admin" robots="noindex, nofollow">
     <div class="admin">
-        <AdminSidebar adminKey={adminKey} activePage="nmc-checks" />
+        <AdminSidebar activePage="nmc-checks" />
         <main class="main">
             <header class="head">
                 <div>
@@ -59,7 +58,7 @@ const fmt = (d: Date) => d.toLocaleString("en-IN", { day: "numeric", month: "sho
 
             <nav class="filters" aria-label="Filter by status">
                 {FILTERS.map(([key, label]) => (
-                    <a href={`/admin/nmc-checks?key=${adminKey}&status=${key}`} class:list={["filter", { active: filter === key }]} aria-current={filter === key ? "page" : undefined}>
+                    <a href={`/admin/nmc-checks?status=${key}`} class:list={["filter", { active: filter === key }]} aria-current={filter === key ? "page" : undefined}>
                         {label} <span>{key === "open" ? openCount : key === "all" ? total : counts[key] ?? 0}</span>
                     </a>
                 ))}
@@ -144,12 +143,10 @@ const fmt = (d: Date) => d.toLocaleString("en-IN", { day: "numeric", month: "sho
 </Layout>
 
 <script>
-    const key = new URL(location.href).searchParams.get("key") ?? "";
-
     async function call(payload: Record<string, unknown>) {
         const res = await fetch("/api/admin/nmc-checks", {
             method: "POST",
-            headers: { "Content-Type": "application/json", "x-admin-key": key },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
         });
         const data = await res.json().catch(() => ({}));

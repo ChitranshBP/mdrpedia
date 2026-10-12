@@ -121,7 +121,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
                 );
             }
             const sniffed = sniffFileType(new Uint8Array(await documentFile.slice(0, 16).arrayBuffer()));
-            if (!sniffed || !ALLOWED_DOCUMENT_TYPES.includes(sniffed)) {
+            if (!sniffed || sniffed !== documentFile.type) {
                 return new Response(
                     JSON.stringify({ error: "Document must be a PDF, JPG or PNG." }),
                     { status: 400 },
