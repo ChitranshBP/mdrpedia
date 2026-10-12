@@ -1,33 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useToast } from './Toast';
 
-interface DoctorVerificationData {
+interface ClaimProfileChoice {
+    slug: string;
     fullName: string;
-    specialty: string;
-    registrationNumber?: string;
-    credential?: string;
-    country?: string;
+    specialty?: string;
 }
 
 interface NPIClaimWizardProps {
-    onSuccess?: (doctor: DoctorVerificationData) => void;
+    onSuccess?: (profile: ClaimProfileChoice) => void;
 }
 
-// Verification methods by region
+// Registration identifiers accepted for manual review; format is checked here, validity by our team
 const VERIFICATION_METHODS = [
     { code: 'NPI', label: 'NPI (United States)', country: 'United States', placeholder: '10-digit NPI', pattern: /^\d{10}$/, maxLength: 10 },
     { code: 'GMC', label: 'GMC Number (United Kingdom)', country: 'United Kingdom', placeholder: '7-digit GMC', pattern: /^\d{7}$/, maxLength: 7 },
     { code: 'AHPRA', label: 'AHPRA (Australia)', country: 'Australia', placeholder: 'MED followed by 10 digits', pattern: /^MED\d{10}$/i, maxLength: 13 },
     { code: 'MCI', label: 'MCI Registration (India)', country: 'India', placeholder: 'State code + number', pattern: /^[A-Z]{2,3}\d+$/i, maxLength: 15 },
     { code: 'ORCID', label: 'ORCID iD (International)', country: 'International', placeholder: '0000-0000-0000-0000', pattern: /^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/i, maxLength: 19 },
-    { code: 'EMAIL', label: 'Institutional Email', country: 'International', placeholder: 'name@institution.edu', pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, maxLength: 100 },
 ];
 
 // Step labels for progress indicator
 const STEPS = [
     { number: 1, label: 'Method', icon: 'globe' },
-    { number: 2, label: 'Verify', icon: 'shield' },
-    { number: 3, label: 'Confirm', icon: 'user' },
+    { number: 2, label: 'Details', icon: 'shield' },
+    { number: 3, label: 'Review', icon: 'user' },
     { number: 4, label: 'Complete', icon: 'check' },
 ];
 
@@ -35,12 +32,17 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
     const [step, setStep] = useState(1);
     const [selectedMethod, setSelectedMethod] = useState<typeof VERIFICATION_METHODS[0] | null>(null);
     const [registrationNumber, setRegistrationNumber] = useState('');
+    const [email, setEmail] = useState('');
+    const [honeypot, setHoneypot] = useState('');
+    const [profile, setProfile] = useState<ClaimProfileChoice | null>(null);
+    const [profileQuery, setProfileQuery] = useState('');
+    const [profileResults, setProfileResults] = useState<ClaimProfileChoice[]>([]);
+    const [searching, setSearching] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const [doctorData, setDoctorData] = useState<DoctorVerificationData | null>(null);
+    const [resultMessage, setResultMessage] = useState('');
     const [focusedInput, setFocusedInput] = useState(false);
 
-    // Try to use toast, fallback gracefully if not in provider
     let toast: ReturnType<typeof useToast> | null = null;
     try {
         toast = useToast();
@@ -48,11 +50,54 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
         // Not wrapped in ToastProvider, will use inline messages
     }
 
-    // Validate input based on selected method
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
     const isInputValid = selectedMethod ? selectedMethod.pattern.test(registrationNumber) : false;
+    const canContinue = isInputValid && isEmailValid && profile !== null;
     const progressPercentage = selectedMethod
         ? Math.min((registrationNumber.length / selectedMethod.maxLength) * 100, 100)
         : 0;
+
+    useEffect(() => {
+        const slug = new URLSearchParams(window.location.search).get('slug');
+        if (!slug) return;
+        setProfile({ slug, fullName: slug.replace(/-/g, ' ') });
+        fetch(`/api/search?q=${encodeURIComponent(slug.replace(/-/g, ' '))}`)
+            .then((r) => (r.ok ? r.json() : []))
+            .then((rows: ClaimProfileChoice[]) => {
+                const hit = Array.isArray(rows) ? rows.find((r) => r.slug === slug) : null;
+                if (hit) setProfile({ slug: hit.slug, fullName: hit.fullName, specialty: hit.specialty });
+            })
+            .catch(() => {});
+    }, []);
+
+    useEffect(() => {
+        const q = profileQuery.trim();
+        if (q.length < 3) {
+            setProfileResults([]);
+            return;
+        }
+        const controller = new AbortController();
+        const timer = setTimeout(async () => {
+            setSearching(true);
+            try {
+                const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`, { signal: controller.signal });
+                const rows = res.ok ? await res.json() : [];
+                setProfileResults(
+                    Array.isArray(rows)
+                        ? rows.slice(0, 5).map((r: ClaimProfileChoice) => ({ slug: r.slug, fullName: r.fullName, specialty: r.specialty }))
+                        : [],
+                );
+            } catch {
+                // aborted or offline; keep the previous list
+            } finally {
+                setSearching(false);
+            }
+        }, 350);
+        return () => {
+            clearTimeout(timer);
+            controller.abort();
+        };
+    }, [profileQuery]);
 
     const handleMethodSelect = (method: typeof VERIFICATION_METHODS[0]) => {
         setSelectedMethod(method);
@@ -61,60 +106,60 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
         setStep(2);
     };
 
-    const handleVerifySubmit = async (e: React.FormEvent) => {
+    const handleDetailsSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!selectedMethod || !isInputValid) {
+        if (!profile) {
+            setError('Choose the profile you are claiming.');
+            return;
+        }
+        if (!isInputValid) {
             setError(`Please enter a valid ${selectedMethod?.label || 'registration number'}`);
             return;
         }
+        if (!isEmailValid) {
+            setError('Please enter a valid contact email address.');
+            return;
+        }
+
+        setError('');
+        setStep(3);
+    };
+
+    const handleClaim = async () => {
+        if (!profile || !selectedMethod) return;
 
         setLoading(true);
         setError('');
 
         try {
-            // API call based on verification method
-            const endpoint = selectedMethod.code === 'NPI'
-                ? `/api/npi-validate?npi=${registrationNumber}`
-                : `/api/verify-registration?type=${selectedMethod.code}&number=${encodeURIComponent(registrationNumber)}`;
+            const res = await fetch('/api/claim-profile', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    profile_slug: profile.slug,
+                    email: email.trim(),
+                    registration_number: `${selectedMethod.code}:${registrationNumber}`,
+                    honeypot_filled: Boolean(honeypot),
+                }),
+            });
+            const data = await res.json().catch(() => ({}));
 
-            const res = await fetch(endpoint);
-            const data = await res.json();
-
-            if (data.valid) {
-                setDoctorData({
-                    ...data.doctor,
-                    country: selectedMethod.country,
-                    registrationNumber: registrationNumber
-                });
-                setStep(3);
-                toast?.success('Identity verified successfully!');
+            if (res.ok && data.success) {
+                setResultMessage(data.message || "Verification request received. We'll email you once it's reviewed.");
+                setStep(4);
+                toast?.success('Claim request submitted.');
+                onSuccess?.(profile);
             } else {
-                setError(data.message || 'Invalid registration number');
-                toast?.error(data.message || 'Invalid registration number');
+                const msg = data.error || 'Could not submit your claim. Please try again.';
+                setError(msg);
+                toast?.error(msg);
             }
         } catch {
-            const errorMsg = 'System Error. Please try again.';
-            setError(errorMsg);
-            toast?.error(errorMsg);
+            const msg = 'Network error. Please try again.';
+            setError(msg);
+            toast?.error(msg);
         } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleClaim = async () => {
-        if (!doctorData) return;
-
-        setLoading(true);
-        try {
-            toast?.success(`Profile for ${doctorData.fullName} claimed! Redirecting...`);
-            onSuccess?.(doctorData);
-
-            setTimeout(() => {
-                window.location.href = '/doctor/portal';
-            }, 1500);
-        } catch {
-            toast?.error('Failed to claim profile. Please try again.');
             setLoading(false);
         }
     };
@@ -717,6 +762,67 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                     box-shadow: var(--shadow-3);
                 }
 
+                .text-input {
+                    width: 100%;
+                    box-sizing: border-box;
+                    background: var(--paper);
+                    border: 1px solid var(--rule);
+                    border-radius: var(--r-3);
+                    padding: 0.75rem 1rem;
+                    font-size: 0.95rem;
+                    color: var(--ink);
+                    font-family: var(--font-sans);
+                }
+
+                .field-hint { font-size: 0.75rem; color: var(--ink-3); margin: 0.375rem 0 0; }
+
+                .profile-chosen {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 0.75rem;
+                    padding: 0.75rem 1rem;
+                    border: 1px solid var(--rule);
+                    border-radius: var(--r-3);
+                    background: var(--paper-2);
+                    font-size: 0.9rem;
+                    color: var(--ink);
+                }
+
+                .profile-change {
+                    background: none;
+                    border: none;
+                    color: var(--ink-blue);
+                    cursor: pointer;
+                    font-size: 0.8rem;
+                }
+
+                .profile-results {
+                    list-style: none;
+                    margin: 0.375rem 0 0;
+                    padding: 0;
+                    border: 1px solid var(--rule);
+                    border-radius: var(--r-3);
+                    overflow: hidden;
+                }
+
+                .profile-results button {
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    text-align: left;
+                    padding: 0.625rem 1rem;
+                    background: var(--paper);
+                    border: none;
+                    border-bottom: 1px solid var(--rule);
+                    cursor: pointer;
+                    color: var(--ink);
+                    font-size: 0.875rem;
+                }
+
+                .profile-results button:hover { background: var(--paper-2); }
+                .profile-results span { font-size: 0.75rem; color: var(--ink-3); }
+
                 .animate-in {
                     animation: fade-in 0.4s ease-out;
                 }
@@ -762,7 +868,7 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                             </div>
                             <h2 className="wizard-title">Verify Your Identity</h2>
                             <p className="wizard-subtitle">
-                                Select your verification method based on your region or professional registration
+                                Select the professional registration you will submit. Each request is reviewed by our editorial team before a profile is marked as claimed
                             </p>
                         </div>
 
@@ -780,7 +886,6 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                                             {method.code === 'AHPRA' && <path d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />}
                                             {method.code === 'MCI' && <path d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />}
                                             {method.code === 'ORCID' && <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0-14v8m-4-4h8" />}
-                                            {method.code === 'EMAIL' && <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />}
                                         </svg>
                                     </div>
                                     <div className="method-info">
@@ -796,15 +901,15 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
 
                         <div className="trust-footer">
                             <p className="trust-text">
-                                Supported in 78+ countries. Your data is encrypted and secure.
+                                Requests are reviewed manually; there is no instant verification.
                             </p>
                         </div>
                     </div>
                 )}
 
-                {/* Step 2: Enter Registration Number */}
+                {/* Step 2: Profile, registration number and contact email */}
                 {step === 2 && selectedMethod && (
-                    <form onSubmit={handleVerifySubmit} className="animate-in">
+                    <form onSubmit={handleDetailsSubmit} className="animate-in">
                         <div className="wizard-header">
                             <div className="wizard-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink-blue)" strokeWidth="2">
@@ -812,20 +917,51 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                                     <path d="M9 12l2 2 4-4" />
                                 </svg>
                             </div>
-                            <h2 className="wizard-title">Enter Your {selectedMethod.code}</h2>
+                            <h2 className="wizard-title">Your Claim Details</h2>
                             <p className="wizard-subtitle">
                                 {selectedMethod.label} - {selectedMethod.country}
                             </p>
                         </div>
 
                         <div className="input-section">
-                            <label className="input-label">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <rect x="3" y="4" width="18" height="16" rx="2" />
-                                    <path d="M7 8h10M7 12h6" />
-                                </svg>
-                                Registration Number
-                            </label>
+                            <label className="input-label" htmlFor="claim-profile-search">Profile you are claiming</label>
+                            {profile ? (
+                                <div className="profile-chosen">
+                                    <span>{profile.fullName}{profile.specialty ? ` — ${profile.specialty}` : ''}</span>
+                                    <button type="button" className="profile-change" onClick={() => { setProfile(null); setProfileQuery(''); }}>
+                                        Change
+                                    </button>
+                                </div>
+                            ) : (
+                                <>
+                                    <input
+                                        id="claim-profile-search"
+                                        type="text"
+                                        value={profileQuery}
+                                        onChange={(e) => setProfileQuery(e.target.value)}
+                                        className="text-input"
+                                        placeholder="Search for your name"
+                                        autoComplete="off"
+                                    />
+                                    {searching && <p className="field-hint">Searching…</p>}
+                                    {profileResults.length > 0 && (
+                                        <ul className="profile-results">
+                                            {profileResults.map((r) => (
+                                                <li key={r.slug}>
+                                                    <button type="button" onClick={() => { setProfile(r); setProfileResults([]); setError(''); }}>
+                                                        <strong>{r.fullName}</strong>
+                                                        {r.specialty && <span>{r.specialty}</span>}
+                                                    </button>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </>
+                            )}
+                        </div>
+
+                        <div className="input-section">
+                            <label className="input-label" htmlFor="claim-registration">Registration number</label>
 
                             <div className="input-wrapper">
                                 <span className={`input-icon ${focusedInput ? 'focused' : ''} ${isInputValid ? 'valid' : ''}`}>
@@ -834,6 +970,7 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                                     </svg>
                                 </span>
                                 <input
+                                    id="claim-registration"
                                     type="text"
                                     value={registrationNumber}
                                     onChange={handleInputChange}
@@ -857,83 +994,111 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                                 <span style={{ color: 'var(--ink-3)' }}>
                                     {registrationNumber.length} / {selectedMethod.maxLength}
                                 </span>
-                                {isInputValid && (
-                                    <span className="valid-badge">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                                            <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
-                                            <polyline points="22 4 12 14.01 9 11.01" />
-                                        </svg>
-                                        Valid format
-                                    </span>
-                                )}
+                                {isInputValid && <span className="valid-badge">Format looks right</span>}
                             </div>
-
-                            {error && (
-                                <div className="error-message" role="alert">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <circle cx="12" cy="12" r="10" />
-                                        <path d="M12 8v4M12 16h.01" />
-                                    </svg>
-                                    {error}
-                                </div>
-                            )}
                         </div>
+
+                        <div className="input-section">
+                            <label className="input-label" htmlFor="claim-email">Contact email</label>
+                            <input
+                                id="claim-email"
+                                type="email"
+                                value={email}
+                                onChange={(e) => { setEmail(e.target.value); if (error) setError(''); }}
+                                className="text-input"
+                                placeholder="you@example.com"
+                                autoComplete="email"
+                            />
+                            <input
+                                type="text"
+                                name="website"
+                                value={honeypot}
+                                onChange={(e) => setHoneypot(e.target.value)}
+                                tabIndex={-1}
+                                autoComplete="off"
+                                aria-hidden="true"
+                                style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0 }}
+                            />
+                        </div>
+
+                        {error && (
+                            <div className="error-message" role="alert">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M12 8v4M12 16h.01" />
+                                </svg>
+                                {error}
+                            </div>
+                        )}
 
                         <button
                             type="submit"
-                            disabled={loading || !isInputValid}
-                            className={`submit-btn ${loading || !isInputValid ? 'disabled' : 'active'}`}
+                            disabled={!canContinue}
+                            className={`submit-btn ${canContinue ? 'active' : 'disabled'}`}
                         >
                             <span className="btn-content">
-                                {loading ? (
-                                    <>
-                                        <span className="spinner"></span>
-                                        Verifying...
-                                    </>
-                                ) : (
-                                    <>
-                                        Verify Identity
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <path d="M5 12h14M12 5l7 7-7 7" />
-                                        </svg>
-                                    </>
-                                )}
+                                Review request
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
                             </span>
                         </button>
 
                         <button type="button" onClick={() => setStep(1)} className="back-btn">
-                            Change verification method
+                            Change registration type
                         </button>
-
-                        <div className="trust-footer">
-                            <div className="trust-badges">
-                                <span className="trust-badge">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--verdant)" strokeWidth="2">
-                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                                    </svg>
-                                    256-bit SSL
-                                </span>
-                                <span className="trust-badge">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--verdant)" strokeWidth="2">
-                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                                        <path d="M7 11V7a5 5 0 0110 0v4" />
-                                    </svg>
-                                    Encrypted
-                                </span>
-                                <span className="trust-badge">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--verdant)" strokeWidth="2">
-                                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
-                                        <polyline points="22 4 12 14.01 9 11.01" />
-                                    </svg>
-                                    Verified
-                                </span>
-                            </div>
-                        </div>
                     </form>
                 )}
 
-                {/* Step 3: Confirm Identity */}
-                {step === 3 && doctorData && (
+                {/* Step 3: Review and submit */}
+                {step === 3 && profile && selectedMethod && (
+                    <div className="animate-in">
+                        <div className="wizard-header">
+                            <h2 className="wizard-title">Review Your Request</h2>
+                            <p className="wizard-subtitle">
+                                Submitting adds your claim to our review queue. The profile is not changed or marked verified until we have checked your registration.
+                            </p>
+                        </div>
+
+                        <div className="doctor-card">
+                            <div className="doctor-info">
+                                <div className="doctor-avatar">
+                                    {profile.fullName.charAt(0).toUpperCase()}
+                                </div>
+                                <div className="doctor-details">
+                                    <h3>{profile.fullName}</h3>
+                                    <div className="doctor-status">
+                                        {selectedMethod.code}: {registrationNumber} · {email.trim()}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {error && (
+                            <div className="error-message" role="alert">{error}</div>
+                        )}
+
+                        <button onClick={handleClaim} disabled={loading} className="confirm-btn">
+                            <span className="btn-content">
+                                {loading ? (
+                                    <>
+                                        <span className="spinner"></span>
+                                        Submitting...
+                                    </>
+                                ) : (
+                                    'Submit claim request'
+                                )}
+                            </span>
+                        </button>
+
+                        <button onClick={() => { setError(''); setStep(2); }} className="back-btn" disabled={loading}>
+                            Go back and edit
+                        </button>
+                    </div>
+                )}
+
+                {/* Step 4: Result from the claim API */}
+                {step === 4 && profile && (
                     <div className="animate-in">
                         <div className="wizard-header">
                             <div className="success-icon">
@@ -941,48 +1106,12 @@ export default function NPIClaimWizard({ onSuccess }: NPIClaimWizardProps) {
                                     <polyline points="20 6 9 17 4 12" />
                                 </svg>
                             </div>
-                            <h2 className="wizard-title">Identity Verified</h2>
-                            <p className="wizard-subtitle">
-                                We found your record in the registry
-                            </p>
+                            <h2 className="wizard-title">Request Received</h2>
+                            <p className="wizard-subtitle" role="status">{resultMessage}</p>
                         </div>
-
-                        <div className="doctor-card">
-                            <div className="doctor-info">
-                                <div className="doctor-avatar">
-                                    {doctorData.fullName.charAt(0)}
-                                </div>
-                                <div className="doctor-details">
-                                    <h3>{doctorData.fullName}</h3>
-                                    <div className="doctor-status">
-                                        <span className="status-dot"></span>
-                                        Active License - {doctorData.specialty}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button onClick={handleClaim} disabled={loading} className="confirm-btn">
-                            <span className="btn-content">
-                                {loading ? (
-                                    <>
-                                        <span className="spinner"></span>
-                                        Claiming Profile...
-                                    </>
-                                ) : (
-                                    <>
-                                        Confirm & Claim Profile
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <path d="M5 12h14M12 5l7 7-7 7" />
-                                        </svg>
-                                    </>
-                                )}
-                            </span>
-                        </button>
-
-                        <button onClick={() => setStep(2)} className="back-btn">
-                            Not you? Go back and try again
-                        </button>
+                        <a href={`/doctors/${profile.slug}`} className="back-btn" style={{ display: 'block', textAlign: 'center' }}>
+                            Back to {profile.fullName}
+                        </a>
                     </div>
                 )}
             </div>
