@@ -3,7 +3,7 @@ export const prerender = true;
 import "../styles/pages/directory.css";
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { getCollection } from "astro:content";
-import { getSignedImage } from "../lib/image-security";
+import { portraitAttrs } from "../lib/portrait";
 
 const doctors = await getCollection("doctors");
 const leaders = doctors.filter((doc) =>
@@ -49,9 +49,12 @@ const TIER: Record<string, string> = { TITAN: "Titan", ELITE: "Elite", MASTER: "
 							{doc.data.portraitUrl ? (
 								<div class="dx-photo">
 									<img
-										src={getSignedImage(doc.data.portraitUrl, { width: 600, height: 450, gravity: "face", crop: "fill" })}
+										{...portraitAttrs(doc.data.portraitUrl, 400, 300)}
 										alt=""
 										loading="lazy"
+										decoding="async"
+										referrerpolicy="no-referrer"
+										onerror="this.parentElement.hidden=true"
 									/>
 								</div>
 							) : (

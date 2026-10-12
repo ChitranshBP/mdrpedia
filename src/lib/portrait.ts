@@ -7,7 +7,7 @@
 const WIKI_WIDTHS = [120, 250, 330, 500, 960];
 const WIKI_RE = /^https:\/\/upload\.wikimedia\.org\/wikipedia\/([\w-]+)\/(?:thumb\/)?([0-9a-f])\/([0-9a-f]{2})\/([^/]+)(?:\/\d+px-[^/]+)?$/;
 
-const CLOUD = (import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_CLOUD_NAME || '').trim();
+const CLOUD = (import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME || import.meta.env.CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_CLOUD_NAME || '').trim();
 
 function wikiThumb(m: RegExpMatchArray, width: number): string {
     const [, project, a, ab, file] = m;
