@@ -1,6 +1,7 @@
 ---
 export const prerender = false;
-import Layout from "../../layouts/Layout.astro";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import "../../styles/pages/utility.css";
 import { getSession } from "../../lib/auth";
 import { prisma } from "../../lib/prisma";
 
@@ -49,448 +50,54 @@ try {
 const score = profile.ranking_score ? Number(profile.ranking_score).toFixed(1) : '—';
 ---
 
-<Layout
-	title="Doctor Portal — MDRPedia"
-	description="Private portal for physicians to manage their MDRPedia profile."
+<SiteLayout
+	title="Doctor portal | MDRPedia"
+	description="Private portal for physicians to view their MDRPedia record."
 	robots="noindex, nofollow"
 >
-    <div class="min-h-screen pt-24 pb-20 container">
-        <header
-            class="flex justify-between items-center mb-12 border-b border-white/10 pb-8"
-        >
-            <div>
-                <h1 class="text-3xl font-bold text-white mb-2">
-                    My Governance Dashboard
-                </h1>
-                <p class="text-gray-400">
-                    Welcome back, <span class="text-white">{doctorName}</span>
-                </p>
-            </div>
-            <div class="flex items-center gap-4">
-                <div
-                    class="px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full text-green-400 text-xs font-bold uppercase tracking-wider flex items-center gap-2"
-                >
-                    <span
-                        class="w-2 h-2 rounded-full bg-green-500 animate-pulse"
-                    ></span>
-                    Verified Identity
-                </div>
-                {
-                    tier === "TITAN" && (
-                        <div class="px-3 py-1 bg-yellow-500/10 border border-yellow-500/20 rounded-full text-yellow-400 text-xs font-bold uppercase tracking-wider">
-                            Titan Tier
-                        </div>
-                    )
-                }
-                <a href="/api/auth/logout" class="portal-logout-btn">Sign Out</a>
-            </div>
-        </header>
+	<div class="u-page">
+		<div class="u-wrap">
+			<header class="u-head">
+				<span class="u-kicker">DOCTOR PORTAL · PRIVATE</span>
+				<h1 class="u-h1">Welcome, <em>{doctorName}.</em></h1>
+				<div class="u-portal__bar">
+					<span class="u-tag">VERIFIED IDENTITY</span>
+					{tier === "TITAN" && <span class="u-tag">TITAN TIER</span>}
+					<a class="u-btn u-btn--line" href="/api/auth/logout">Sign out</a>
+				</div>
+			</header>
 
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <!-- Sidebar -->
-            <div class="space-y-2">
-                <a
-                    href="/doctor/portal"
-                    class="block px-4 py-3 bg-white/10 text-white rounded-lg font-medium"
-                    >Overview</a
-                >
-                <a
-                    href={`/doctors/${slug}`}
-                    class="block px-4 py-3 text-gray-400 hover:bg-white/5 rounded-lg transition-colors"
-                    >View Profile</a
-                >
-                <a
-                    href="/suggest-edit"
-                    class="block px-4 py-3 text-gray-400 hover:bg-white/5 rounded-lg transition-colors"
-                    >Suggest Edit</a
-                >
-                <a
-                    href="#"
-                    class="block px-4 py-3 text-gray-400 hover:bg-white/5 rounded-lg transition-colors"
-                    >Analytics</a
-                >
-                <a
-                    href="#"
-                    class="block px-4 py-3 text-gray-400 hover:bg-white/5 rounded-lg transition-colors"
-                    >Settings</a
-                >
-            </div>
+			<div class="u-portal">
+				<nav class="u-portal__nav" aria-label="Portal">
+					<a href="/doctor/portal" aria-current="page">Overview</a>
+					<a href={`/doctors/${slug}`}>View my record</a>
+					<a href={`/suggest-edit?profile=${encodeURIComponent(slug)}&type=general`}>Suggest an edit</a>
+				</nav>
 
-            <!-- Main Content -->
-            <div class="md:col-span-3 space-y-8">
-                <!-- Analytics Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div
-                        class="p-6 bg-[#1a052e] border border-purple-500/30 rounded-2xl"
-                    >
-                        <div
-                            class="text-purple-400 text-sm font-bold uppercase tracking-wider mb-2"
-                        >
-                            Profile Views
-                        </div>
-                        <div class="text-4xl font-bold text-white">{viewCount.toLocaleString()}</div>
-                    </div>
-                    <div
-                        class="p-6 bg-white/5 border border-white/10 rounded-2xl"
-                    >
-                        <div
-                            class="text-gray-400 text-sm font-bold uppercase tracking-wider mb-2"
-                        >
-                            Search Appearances
-                        </div>
-                        <div class="text-4xl font-bold text-white">{searchCount.toLocaleString()}</div>
-                    </div>
-                    <div
-                        class="p-6 bg-white/5 border border-white/10 rounded-2xl"
-                    >
-                        <div
-                            class="text-gray-400 text-sm font-bold uppercase tracking-wider mb-2"
-                        >
-                            MDR Score
-                        </div>
-                        <div class="text-4xl font-bold text-white">{score}</div>
-                        {profile.h_index && (
-                            <div class="text-xs text-gray-500 mt-2">
-                                h-index: {profile.h_index}
-                            </div>
-                        )}
-                    </div>
-                </div>
+				<div class="u-portal__main">
+					<section aria-label="Record statistics">
+						<div class="u-stats">
+							<div class="u-stat"><b>{viewCount.toLocaleString()}</b><span>Profile views</span></div>
+							<div class="u-stat"><b>{searchCount.toLocaleString()}</b><span>Search clicks to your record</span></div>
+							<div class="u-stat">
+								<b>{score}</b>
+								<span>MDR score{profile.h_index ? ` · h-index ${profile.h_index}` : ""}</span>
+							</div>
+						</div>
+					</section>
 
-                <!-- Content Lock Section -->
-                <div class="p-8 bg-white/5 border border-white/10 rounded-2xl">
-                    <div class="flex justify-between items-start mb-6">
-                        <div>
-                            <h2 class="text-xl font-bold text-white mb-2">
-                                Content Lock
-                            </h2>
-                            <p class="text-gray-400 text-sm max-w-lg">
-                                When enabled, your Biography, Education, and
-                                Awards sections cannot be edited by the
-                                community or AI scrapers. Only you can make
-                                changes.
-                            </p>
-                        </div>
-                        <div
-                            class="relative inline-flex items-center cursor-pointer"
-                        >
-                            <input
-                                type="checkbox"
-                                checked
-                                class="sr-only peer"
-                            />
-                            <div
-                                class="w-14 h-7 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-green-500"
-                            >
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div
-                            class="px-4 py-2 bg-green-500/20 border border-green-500/30 rounded text-green-400 text-xs font-mono"
-                        >
-                            STATUS: ACTIVE
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Recent Alerts -->
-                <div class="space-y-4">
-                    <h3 class="text-lg font-bold text-white">Recent Alerts</h3>
-                    <div
-                        class="p-4 bg-white/5 border border-white/10 rounded-xl flex items-center gap-4"
-                    >
-                        <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                        <p class="text-sm text-white">
-                            No new alerts. Your profile is up to date.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</Layout>
-
-<style>
-    /* ─── Portal Page — Editorial Design System Overrides ─────────────────── */
-
-    /* ── Page wrapper ── */
-    .min-h-screen {
-        background: var(--paper);
-        color: var(--ink);
-    }
-
-    /* ── Header ── */
-    header.border-b {
-        border-bottom-color: var(--rule) !important;
-    }
-
-    header h1 {
-        color: var(--ink) !important;
-        font-family: var(--font-serif);
-        font-weight: 400 !important;
-    }
-
-    header p {
-        color: var(--ink-3) !important;
-    }
-
-    header p span {
-        color: var(--ink) !important;
-    }
-
-    /* ── Verified / Tier badges in header ── */
-    .bg-green-500\/10 {
-        background: var(--verdant-2) !important;
-        border-color: var(--verdant) !important;
-    }
-
-    .text-green-400 {
-        color: var(--verdant) !important;
-    }
-
-    .bg-green-500 {
-        background: var(--verdant) !important;
-    }
-
-    .bg-yellow-500\/10 {
-        background: var(--aged-gold-2) !important;
-        border-color: var(--aged-gold) !important;
-    }
-
-    .border-yellow-500\/20 {
-        border-color: var(--aged-gold) !important;
-    }
-
-    .text-yellow-400 {
-        color: var(--titan-text) !important;
-    }
-
-    /* ── Logout button ── */
-    .portal-logout-btn {
-        font-size: 0.8rem;
-        padding: 0.4rem 0.75rem;
-        border: 1px solid var(--rule);
-        border-radius: var(--r-pill);
-        color: var(--ink-3);
-        text-decoration: none;
-        transition: all var(--t-fast) var(--ease);
-    }
-
-    .portal-logout-btn:hover {
-        color: var(--sanguine);
-        border-color: var(--sanguine);
-    }
-
-    /* ── Sidebar links ── */
-    .bg-white\/10 {
-        background: var(--paper-3) !important;
-    }
-
-    .text-white {
-        color: var(--ink) !important;
-    }
-
-    .text-gray-400 {
-        color: var(--ink-3) !important;
-    }
-
-    .text-gray-500 {
-        color: var(--ink-3) !important;
-    }
-
-    a.hover\:bg-white\/5:hover {
-        background: var(--paper-2) !important;
-    }
-
-    /* ── Analytics Cards ── */
-    .bg-\[\#1a052e\] {
-        background: var(--ink-blue-2) !important;
-        border-color: var(--ink-blue) !important;
-    }
-
-    .border-purple-500\/30 {
-        border-color: var(--ink-blue) !important;
-    }
-
-    .text-purple-400 {
-        color: var(--ink-blue) !important;
-    }
-
-    .bg-white\/5 {
-        background: var(--paper-2) !important;
-    }
-
-    .border-white\/10 {
-        border-color: var(--rule) !important;
-    }
-
-    .text-4xl.font-bold {
-        color: var(--ink) !important;
-        font-weight: 500 !important;
-        font-family: var(--font-mono);
-    }
-
-    /* ── Content Lock section ── */
-    h2.text-xl {
-        color: var(--ink) !important;
-        font-family: var(--font-serif);
-        font-weight: 400 !important;
-    }
-
-    /* ── Toggle switch ── */
-    .bg-gray-700 {
-        background: var(--rule-strong) !important;
-    }
-
-    .peer-checked\:bg-green-500:is(:has(~ :checked), .peer:checked ~ &) {
-        background: var(--verdant) !important;
-    }
-
-    /* ── Status badges ── */
-    .bg-green-500\/20 {
-        background: var(--verdant-2) !important;
-    }
-
-    .border-green-500\/30 {
-        border-color: var(--verdant) !important;
-    }
-
-    .border-green-500\/20 {
-        border-color: var(--verdant) !important;
-    }
-
-    /* ── Recent Alerts ── */
-    h3.text-lg {
-        color: var(--ink) !important;
-        font-family: var(--font-serif);
-        font-weight: 400 !important;
-    }
-
-    .bg-blue-500 {
-        background: var(--ink-blue) !important;
-    }
-
-    .text-sm.text-white {
-        color: var(--ink) !important;
-    }
-
-    /* ── Card border-radius normalization ── */
-    .rounded-2xl {
-        border-radius: var(--r-4) !important;
-    }
-
-    .rounded-xl {
-        border-radius: var(--r-4) !important;
-    }
-
-    .rounded-lg {
-        border-radius: var(--r-3) !important;
-    }
-
-    .rounded-full {
-        border-radius: var(--r-pill) !important;
-    }
-
-    /* ── Font-weight normalization ── */
-    .font-bold {
-        font-weight: 500 !important;
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 768px) {
-        header.flex {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 16px;
-        }
-
-        .md\:grid-cols-4 {
-            grid-template-columns: 1fr !important;
-        }
-
-        .md\:grid-cols-3 {
-            grid-template-columns: 1fr !important;
-        }
-
-        .md\:col-span-3 {
-            grid-column: span 1 !important;
-        }
-    }
-
-    @media (max-width: 480px) {
-        header h1 {
-            font-size: 1.5rem !important;
-        }
-
-        .text-4xl {
-            font-size: 2rem !important;
-        }
-
-        .flex.gap-4 {
-            flex-wrap: wrap;
-        }
-    }
-
-    /* ──────────────────────────────────────────────────────────────────────
-       Layout utilities for this page only.
-
-       This page's markup was written against Tailwind, but Tailwind is not a
-       dependency of this project and there is no config — so none of these
-       classes resolved and the dashboard collapsed to unspaced stacked blocks.
-       An earlier patch re-implemented the colour utilities here but not the
-       layout ones. These complete that stopgap; the proper fix is to rewrite
-       this page in the project's own conventions (see global.css).
-       ────────────────────────────────────────────────────────────────────── */
-    .grid { display: grid; }
-    .flex { display: flex; }
-    .flex-col { flex-direction: column; }
-    .flex-1 { flex: 1 1 0%; }
-    .w-full { width: 100%; }
-    .max-w-lg { max-width: 32rem; }
-
-    .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
-    .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-
-    .items-center { align-items: center; }
-    .items-start { align-items: flex-start; }
-    .justify-between { justify-content: space-between; }
-
-    .gap-2 { gap: 0.5rem; }
-    .gap-4 { gap: 1rem; }
-    .gap-6 { gap: 1.5rem; }
-    .gap-8 { gap: 2rem; }
-
-    .p-4 { padding: 1rem; }
-    .p-6 { padding: 1.5rem; }
-    .p-8 { padding: 2rem; }
-    .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
-    .px-4 { padding-left: 1rem; padding-right: 1rem; }
-    .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
-    .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
-    .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
-
-    .mt-2 { margin-top: 0.5rem; }
-    .mb-2 { margin-bottom: 0.5rem; }
-    .mb-6 { margin-bottom: 1.5rem; }
-    .mb-12 { margin-bottom: 3rem; }
-
-    .space-y-2 > * + * { margin-top: 0.5rem; }
-    .space-y-4 > * + * { margin-top: 1rem; }
-    .space-y-8 > * + * { margin-top: 2rem; }
-
-    .text-xs { font-size: 0.75rem; }
-    .text-sm { font-size: 0.875rem; }
-    .text-lg { font-size: 1.125rem; }
-    .text-xl { font-size: 1.25rem; }
-
-    /* 769px, not 768px: an existing rule above uses @media (max-width: 768px) to
-       force a single column, so both would match at exactly 768px. */
-    @media (min-width: 769px) {
-        .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-        .md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    }
-
-</style>
+					<section class="u-prose u-prose--flush">
+						<h2>Corrections</h2>
+						<p>
+							Your score comes from the public evidence on your record. To correct a fact, send a suggestion with a source;
+							an editor reviews it before anything changes. Claiming never adds points by itself.
+						</p>
+						<p>
+							<a class="u-btn u-btn--green" href={`/suggest-edit?profile=${encodeURIComponent(slug)}&type=general`}>Suggest an edit</a>
+						</p>
+					</section>
+				</div>
+			</div>
+		</div>
+	</div>
+</SiteLayout>

@@ -1,5 +1,6 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import SiteLayout from "../layouts/SiteLayout.astro";
+import "../styles/pages/utility.css";
 import { prisma } from "../lib/prisma";
 import { marked } from "marked";
 
@@ -38,74 +39,18 @@ if (!page || !page.published) {
 const contentHtml = marked.parse(page.content);
 ---
 
-<Layout
-    title={`${page.seo_title || page.title} — MDRPedia`}
-    description={page.seo_desc || undefined}
+<SiteLayout
+	title={`${page.seo_title || page.title} | MDRPedia`}
+	description={page.seo_desc || `${page.title} on MDRPedia, the physicians' register.`}
 >
-    <div class="container content-page">
-        <header class="page-header">
-            <h1>{page.title}</h1>
-        </header>
-
-        <article class="prose" set:html={contentHtml} />
-
-        <div class="page-meta">
-            <small>Last updated: {page.updatedAt.toLocaleDateString()}</small>
-        </div>
-    </div>
-</Layout>
-
-<style>
-    .content-page {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: var(--s-9) var(--gutter);
-    }
-
-    .page-header {
-        margin-bottom: var(--s-7);
-        text-align: center;
-        border-bottom: 1px solid var(--rule);
-        padding-bottom: var(--s-5);
-    }
-
-    .prose {
-        line-height: 1.7;
-        font-size: 1.05rem;
-    }
-
-    .prose :global(h2) {
-        margin-top: var(--s-7);
-        margin-bottom: var(--s-4);
-    }
-
-    .prose :global(p) {
-        margin-bottom: var(--s-5);
-        color: var(--ink-2);
-    }
-
-    .prose :global(a) {
-        color: var(--ink-blue);
-    }
-
-    .prose :global(ul),
-    .prose :global(ol) {
-        margin-bottom: var(--s-5);
-        padding-left: var(--s-5);
-        color: var(--ink-2);
-    }
-
-    .page-meta {
-        margin-top: var(--s-9);
-        padding-top: var(--s-5);
-        border-top: 1px solid var(--rule);
-        color: var(--ink-3);
-        text-align: center;
-        font-family: var(--font-mono);
-        font-size: 12px;
-    }
-
-    @media (max-width: 768px) {
-        .content-page { padding: var(--s-7) var(--gutter); }
-    }
-</style>
+	<div class="u-page">
+		<div class="u-wrap">
+			<header class="u-head">
+				<span class="u-kicker">MDRPEDIA</span>
+				<h1 class="u-h1">{page.title}</h1>
+				<p class="u-meta">Last updated: {page.updatedAt.toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" })}</p>
+			</header>
+			<article class="u-prose" set:html={contentHtml} />
+		</div>
+	</div>
+</SiteLayout>

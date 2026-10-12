@@ -10,7 +10,10 @@ export const prerender = false;
 const MAX_BODY_SIZE = 256 * 1024; // 256KB
 const ALLOWED_FIELDS = [
     'full_name', 'specialty', 'subSpecialty', 'biography', 'country', 'city',
-    'hospital', 'title', 'orcid_id', 'npi_number', 'portraitUrl', 'bookingUrl'
+    'hospital', 'title', 'orcid_id', 'npi_number', 'portraitUrl', 'bookingUrl',
+    // Free-text suggestions from the /suggest-edit form and profile modal (reviewed by hand).
+    'citation', 'award', 'affiliation', 'location', 'techniques', 'metrics', 'photo',
+    'dateOfBirth', 'education', 'stats', 'other'
 ];
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {

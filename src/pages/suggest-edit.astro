@@ -1,599 +1,301 @@
 ---
-export const prerender = true;
+// Server-rendered: the ?profile= and ?type= query strings are read per request.
+export const prerender = false;
 /**
- * MDRPedia — Suggest Profile Edit Page
- * Allows users to submit corrections/additions to doctor profiles
+ * MDRPedia — Suggest a profile edit.
+ * Posts to /api/suggest-edit (field_name, new_value, reason, contributor_*, profile_slug, honeypot_filled).
  */
-import Layout from "../layouts/Layout.astro";
-import { getCollection } from "astro:content";
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { getEntry } from "astro:content";
+import { prisma } from "../lib/prisma";
+import "../styles/pages/utility.css";
 
-const profileSlug = Astro.url.searchParams.get("profile") || "";
+const profileSlug = (Astro.url.searchParams.get("profile") || "").slice(0, 200);
 const editType = Astro.url.searchParams.get("type") || "general";
 
-// Get doctor info if slug provided
-let doctor = null;
+let doctor: { name: string; tier: string } | null = null;
 if (profileSlug) {
-    const allDoctors = await getCollection("doctors");
-    doctor = allDoctors.find(d => d.id === profileSlug);
+	try {
+		const entry = await getEntry("doctors", profileSlug);
+		if (entry) doctor = { name: entry.data.fullName, tier: entry.data.tier };
+	} catch {
+		/* fall through to the database */
+	}
+	if (!doctor) {
+		try {
+			const p = await prisma.profile.findUnique({ where: { slug: profileSlug }, select: { full_name: true, tier: true } });
+			if (p) doctor = { name: p.full_name, tier: String(p.tier ?? "UNRANKED") };
+		} catch {
+			/* the form still works without the name */
+		}
+	}
 }
 
 const editTypes = {
-    citation: { icon: "citation", title: "Add Citation", description: "Add a research paper, publication, or academic citation" },
-    award: { icon: "award", title: "Add Award", description: "Add an award, honor, or recognition" },
-    affiliation: { icon: "affiliation", title: "Add Affiliation", description: "Add a hospital, institution, or organization affiliation" },
-    general: { icon: "general", title: "General Information", description: "Add or correct other profile information" },
-};
+	citation: { title: "Add a citation", description: "Add a research paper, publication or academic citation." },
+	award: { title: "Add an honour", description: "Add an award, honour or recognition." },
+	affiliation: { title: "Add an affiliation", description: "Add a hospital, institution or organisation affiliation." },
+	general: { title: "Correct or add information", description: "Add or correct any other part of the record." },
+} as const;
+type EditKey = keyof typeof editTypes;
+const currentKey: EditKey = (editType in editTypes ? editType : "general") as EditKey;
+const current = editTypes[currentKey];
+const categories = [
+	["biography", "Biography / summary"],
+	["specialty", "Specialty / sub-specialty"],
+	["location", "Location / geography"],
+	["techniques", "Techniques / procedures"],
+	["metrics", "h-index / citations"],
+	["photo", "Profile photo"],
+	["other", "Other"],
+];
+const defaultCategory = categories.some(([k]) => k === editType) ? editType : "";
+const query = (type: string) => `/suggest-edit?${profileSlug ? `profile=${encodeURIComponent(profileSlug)}&` : ""}type=${type}`;
 
-const currentType = editTypes[editType as keyof typeof editTypes] || editTypes.general;
+const title = `Suggest an edit${doctor ? ` to ${doctor.name}` : ""} | MDRPedia`;
+const description = "Suggest a correction or addition to a physician's record on MDRPedia. Every suggestion is reviewed by an editor against a source before anything changes.";
 ---
 
-<Layout title={`Suggest Edit${doctor ? ` — ${doctor.data.fullName}` : ''} — MDRPedia`} robots="noindex, follow">
-    <section class="suggest-page">
-        <div class="container">
-            <!-- Back Link -->
-            {doctor && (
-                <a href={`/doctors/${profileSlug}`} class="back-link">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M19 12H5M12 19l-7-7 7-7"/>
-                    </svg>
-                    Back to {doctor.data.fullName}'s Profile
-                </a>
-            )}
+<SiteLayout title={title} description={description} robots="noindex, follow">
+	<div class="u-page">
+		<div class="u-wrap">
+			<header class="u-head u-center">
+				{doctor ? <a class="u-back" href={`/doctors/${profileSlug}`}>&larr; Back to {doctor.name}</a> : <a class="u-back" href="/doctors">&larr; Browse the register</a>}
+				<span class="u-kicker">SUGGEST AN EDIT · REVIEWED BY AN EDITOR</span>
+				<h1 class="u-h1">{current.title}</h1>
+				<p class="u-lede">{current.description}</p>
+				{doctor && <p class="u-for"><b>{doctor.name}</b><span>{doctor.tier}</span></p>}
+				<nav class="u-tabs" aria-label="Type of suggestion">
+					{Object.entries(editTypes).map(([key, v]) => (
+						<a href={query(key)} aria-current={currentKey === key ? "page" : undefined}>{v.title}</a>
+					))}
+				</nav>
+			</header>
 
-            <!-- Header -->
-            <div class="page-header">
-                <div class="header-icon">
-                    {currentType.icon === "citation" && <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>}
-                    {currentType.icon === "award" && <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6m12 5h1.5a2.5 2.5 0 0 0 0-5H18M6 9a6 6 0 0 0 12 0V4H6v5zm3 12h6m-3-3v3"/></svg>}
-                    {currentType.icon === "affiliation" && <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M12 6v4M10 8h4"/></svg>}
-                    {currentType.icon === "general" && <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>}
-                </div>
-                <h1>{currentType.title}</h1>
-                <p class="header-description">{currentType.description}</p>
-                {doctor && (
-                    <div class="profile-badge">
-                        <span class="badge-label">For:</span>
-                        <span class="badge-name">{doctor.data.fullName}</span>
-                        <span class={`badge-tier badge-tier--${doctor.data.tier.toLowerCase()}`}>{doctor.data.tier}</span>
-                    </div>
-                )}
-            </div>
+			<form class="u-form" id="suggest-form" novalidate>
+				<input type="hidden" name="profile_slug" value={profileSlug} />
+				<input type="hidden" name="edit_type" value={currentKey} />
 
-            <!-- Edit Type Tabs -->
-            <div class="type-tabs">
-                {Object.entries(editTypes).map(([key, value]) => (
-                    <a
-                        href={`/suggest-edit?profile=${profileSlug}&type=${key}`}
-                        class={`type-tab ${editType === key ? 'type-tab--active' : ''}`}
-                    >
-                        <span class="tab-icon">
-                            {value.icon === "citation" && <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>}
-                            {value.icon === "award" && <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6m12 5h1.5a2.5 2.5 0 0 0 0-5H18M6 9a6 6 0 0 0 12 0V4H6v5zm3 12h6m-3-3v3"/></svg>}
-                            {value.icon === "affiliation" && <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M12 6v4M10 8h4"/></svg>}
-                            {value.icon === "general" && <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>}
-                        </span>
-                        <span class="tab-label">{value.title}</span>
-                    </a>
-                ))}
-            </div>
+				<fieldset class="u-set">
+					<legend>The suggestion</legend>
 
-            <!-- Form -->
-            <form class="suggest-form" id="suggest-form">
-                <input type="hidden" name="profileSlug" value={profileSlug} />
-                <input type="hidden" name="editType" value={editType} />
+					{currentKey === "citation" && (
+						<>
+							<div class="u-field">
+								<label for="citationTitle">Publication title <span class="u-req">*</span></label>
+								<input class="u-input" type="text" id="citationTitle" name="citationTitle" placeholder="e.g. Novel approaches to cardiac surgery" required maxlength="300" />
+							</div>
+							<div class="u-row">
+								<div class="u-field">
+									<label for="citationDOI">DOI</label>
+									<input class="u-input" type="text" id="citationDOI" name="citationDOI" placeholder="10.1000/xyz123" maxlength="200" />
+								</div>
+								<div class="u-field">
+									<label for="citationPubMed">PubMed ID</label>
+									<input class="u-input" type="text" id="citationPubMed" name="citationPubMed" placeholder="12345678" maxlength="20" />
+								</div>
+							</div>
+							<div class="u-row">
+								<div class="u-field">
+									<label for="citationJournal">Journal</label>
+									<input class="u-input" type="text" id="citationJournal" name="citationJournal" placeholder="e.g. The Lancet" maxlength="200" />
+								</div>
+								<div class="u-field">
+									<label for="citationYear">Year</label>
+									<input class="u-input" type="number" id="citationYear" name="citationYear" placeholder="2024" min="1900" max="2100" />
+								</div>
+							</div>
+						</>
+					)}
 
-                {/* Citation Form */}
-                {editType === "citation" && (
-                    <div class="form-section">
-                        <div class="form-group">
-                            <label for="citationTitle">Publication Title <span class="required">*</span></label>
-                            <input type="text" id="citationTitle" name="citationTitle" placeholder="e.g., Novel Approaches to Cardiac Surgery" required />
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="citationDOI">DOI</label>
-                                <input type="text" id="citationDOI" name="citationDOI" placeholder="e.g., 10.1000/xyz123" />
-                            </div>
-                            <div class="form-group">
-                                <label for="citationPubMed">PubMed ID</label>
-                                <input type="text" id="citationPubMed" name="citationPubMed" placeholder="e.g., 12345678" />
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="citationJournal">Journal</label>
-                                <input type="text" id="citationJournal" name="citationJournal" placeholder="e.g., The Lancet" />
-                            </div>
-                            <div class="form-group">
-                                <label for="citationYear">Year</label>
-                                <input type="number" id="citationYear" name="citationYear" placeholder="e.g., 2024" min="1900" max="2030" />
-                            </div>
-                        </div>
-                    </div>
-                )}
+					{currentKey === "award" && (
+						<>
+							<div class="u-field">
+								<label for="awardName">Award name <span class="u-req">*</span></label>
+								<input class="u-input" type="text" id="awardName" name="awardName" placeholder="e.g. Lasker Award" required maxlength="300" />
+							</div>
+							<div class="u-row">
+								<div class="u-field">
+									<label for="awardYear">Year received</label>
+									<input class="u-input" type="number" id="awardYear" name="awardYear" placeholder="2024" min="1900" max="2100" />
+								</div>
+								<div class="u-field">
+									<label for="awardIssuer">Issuing organisation</label>
+									<input class="u-input" type="text" id="awardIssuer" name="awardIssuer" placeholder="e.g. Lasker Foundation" maxlength="200" />
+								</div>
+							</div>
+							<div class="u-field">
+								<label for="awardContribution">Contribution (why it was awarded)</label>
+								<textarea class="u-textarea" id="awardContribution" name="awardContribution" rows="3" maxlength="1500"></textarea>
+							</div>
+						</>
+					)}
 
-                {/* Award Form */}
-                {editType === "award" && (
-                    <div class="form-section">
-                        <div class="form-group">
-                            <label for="awardName">Award Name <span class="required">*</span></label>
-                            <input type="text" id="awardName" name="awardName" placeholder="e.g., Nobel Prize in Medicine" required />
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="awardYear">Year Received</label>
-                                <input type="number" id="awardYear" name="awardYear" placeholder="e.g., 2024" min="1900" max="2030" />
-                            </div>
-                            <div class="form-group">
-                                <label for="awardIssuer">Issuing Organization</label>
-                                <input type="text" id="awardIssuer" name="awardIssuer" placeholder="e.g., Nobel Foundation" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="awardContribution">Contribution (why awarded)</label>
-                            <textarea id="awardContribution" name="awardContribution" rows="3" placeholder="Brief description of why this award was given..."></textarea>
-                        </div>
-                    </div>
-                )}
+					{currentKey === "affiliation" && (
+						<>
+							<div class="u-field">
+								<label for="affiliationName">Institution name <span class="u-req">*</span></label>
+								<input class="u-input" type="text" id="affiliationName" name="affiliationName" placeholder="e.g. Johns Hopkins Hospital" required maxlength="300" />
+							</div>
+							<div class="u-row">
+								<div class="u-field">
+									<label for="affiliationRole">Role or position</label>
+									<input class="u-input" type="text" id="affiliationRole" name="affiliationRole" placeholder="e.g. Chief of Cardiology" maxlength="200" />
+								</div>
+								<div class="u-field">
+									<label for="affiliationDepartment">Department</label>
+									<input class="u-input" type="text" id="affiliationDepartment" name="affiliationDepartment" placeholder="e.g. Department of Surgery" maxlength="200" />
+								</div>
+							</div>
+							<div class="u-field">
+								<label for="affiliationUrl">Institution website</label>
+								<input class="u-input" type="url" id="affiliationUrl" name="affiliationUrl" placeholder="https://" maxlength="500" />
+							</div>
+						</>
+					)}
 
-                {/* Affiliation Form */}
-                {editType === "affiliation" && (
-                    <div class="form-section">
-                        <div class="form-group">
-                            <label for="affiliationName">Institution Name <span class="required">*</span></label>
-                            <input type="text" id="affiliationName" name="affiliationName" placeholder="e.g., Johns Hopkins Hospital" required />
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="affiliationRole">Role / Position</label>
-                                <input type="text" id="affiliationRole" name="affiliationRole" placeholder="e.g., Chief of Cardiology" />
-                            </div>
-                            <div class="form-group">
-                                <label for="affiliationDepartment">Department</label>
-                                <input type="text" id="affiliationDepartment" name="affiliationDepartment" placeholder="e.g., Department of Surgery" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="affiliationUrl">Institution Website</label>
-                            <input type="url" id="affiliationUrl" name="affiliationUrl" placeholder="https://..." />
-                        </div>
-                    </div>
-                )}
+					{currentKey === "general" && (
+						<>
+							<div class="u-field">
+								<label for="generalCategory">What would you like to add or correct? <span class="u-req">*</span></label>
+								<select class="u-select" id="generalCategory" name="generalCategory" required>
+									<option value="" selected={!defaultCategory}>Select a category</option>
+									{categories.map(([k, label]) => <option value={k} selected={defaultCategory === k}>{label}</option>)}
+								</select>
+							</div>
+							<div class="u-field">
+								<label for="generalDetails">Details <span class="u-req">*</span></label>
+								<textarea class="u-textarea" id="generalDetails" name="generalDetails" rows="5" placeholder="What should change, and what should it say?" required maxlength="4000"></textarea>
+							</div>
+						</>
+					)}
 
-                {/* General Form */}
-                {editType === "general" && (
-                    <div class="form-section">
-                        <div class="form-group">
-                            <label for="generalCategory">What would you like to add or correct? <span class="required">*</span></label>
-                            <select id="generalCategory" name="generalCategory" required>
-                                <option value="">Select a category...</option>
-                                <option value="biography">Biography / Summary</option>
-                                <option value="specialty">Specialty / Sub-specialty</option>
-                                <option value="location">Location / Geography</option>
-                                <option value="techniques">Techniques / Procedures</option>
-                                <option value="metrics">H-Index / Citations</option>
-                                <option value="photo">Profile Photo</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="generalDetails">Details <span class="required">*</span></label>
-                            <textarea id="generalDetails" name="generalDetails" rows="5" placeholder="Please provide the information you'd like to add or correct..." required></textarea>
-                        </div>
-                    </div>
-                )}
+					<div class="u-field">
+						<label for="sourceUrl">Source URL</label>
+						<input class="u-input" type="url" id="sourceUrl" name="sourceUrl" placeholder="https://" maxlength="500" />
+						<p class="u-hint">A link that verifies the information. Suggestions with a source are reviewed faster.</p>
+					</div>
+				</fieldset>
 
-                {/* Common Fields */}
-                <div class="form-section">
-                    <div class="form-group">
-                        <label for="sourceUrl">Source URL (for verification)</label>
-                        <input type="url" id="sourceUrl" name="sourceUrl" placeholder="https://... (link to verify this information)" />
-                        <p class="form-hint">Providing a source helps us verify and publish your suggestion faster.</p>
-                    </div>
+				<fieldset class="u-set">
+					<legend>Who is suggesting this</legend>
+					<p class="u-set__note">Editors may contact you about the suggestion. Your details are never shown publicly.</p>
+					<div class="u-row">
+						<div class="u-field">
+							<label for="contributor_name">Your name <span class="u-req">*</span></label>
+							<input class="u-input" type="text" id="contributor_name" name="contributor_name" autocomplete="name" required maxlength="200" />
+						</div>
+						<div class="u-field">
+							<label for="contributor_email">Your email <span class="u-req">*</span></label>
+							<input class="u-input" type="email" id="contributor_email" name="contributor_email" autocomplete="email" required maxlength="200" />
+						</div>
+					</div>
+				</fieldset>
 
-                    <div class="form-group">
-                        <label for="submitterEmail">Your Email (optional)</label>
-                        <input type="email" id="submitterEmail" name="submitterEmail" placeholder="your@email.com" />
-                        <p class="form-hint">We'll notify you when your suggestion is reviewed. Never shared publicly.</p>
-                    </div>
-                </div>
+				<div class="u-hp" aria-hidden="true">
+					<input type="checkbox" name="honeypot_filled" tabindex="-1" autocomplete="off" />
+				</div>
 
-                <div class="form-actions">
-                    <button type="submit" class="btn btn--primary">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
-                        </svg>
-                        Submit Suggestion
-                    </button>
-                    <p class="submit-note">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                        </svg>
-                        All suggestions are reviewed by our editorial team before publishing.
-                    </p>
-                </div>
-            </form>
+				<p class="u-msg u-msg--err" id="suggest-error" role="alert" hidden></p>
 
-            <!-- Success Message (hidden by default) -->
-            <div class="success-message" id="success-message" style="display: none;">
-                <div class="success-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
-                <h2>Thank You!</h2>
-                <p>Your suggestion has been submitted successfully. Our team will review it shortly.</p>
-                {doctor && (
-                    <a href={`/doctors/${profileSlug}`} class="btn btn--secondary">
-                        Return to Profile
-                    </a>
-                )}
-            </div>
-        </div>
-    </section>
-</Layout>
+				<div class="u-actions">
+					<button type="submit" class="u-btn" id="suggest-submit">Submit suggestion</button>
+					<span class="u-hint">An editor reviews every suggestion before anything is published.</span>
+				</div>
+			</form>
+
+			<div class="u-done" id="suggest-done" hidden tabindex="-1">
+				<span class="u-kicker">RECEIVED</span>
+				<h2>Thank you.</h2>
+				<p>Your suggestion is in the review queue. An editor will check it against the source before anything changes.</p>
+				{doctor && <a class="u-btn u-btn--line" href={`/doctors/${profileSlug}`}>Return to {doctor.name}</a>}
+			</div>
+		</div>
+	</div>
+</SiteLayout>
 
 <script>
-    const form = document.getElementById('suggest-form') as HTMLFormElement;
-    const successMessage = document.getElementById('success-message');
+	const form = document.getElementById("suggest-form") as HTMLFormElement | null;
+	const done = document.getElementById("suggest-done") as HTMLElement | null;
+	const errEl = document.getElementById("suggest-error") as HTMLElement | null;
+	const btn = document.getElementById("suggest-submit") as HTMLButtonElement | null;
 
-    form?.addEventListener('submit', async (e) => {
-        e.preventDefault();
+	const val = (fd: FormData, k: string) => String(fd.get(k) ?? "").trim();
 
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
+	form?.addEventListener("submit", async (e) => {
+		e.preventDefault();
+		if (!errEl || !btn) return;
+		errEl.hidden = true;
 
-        try {
-            const response = await fetch('/api/suggest-edit', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data),
-            });
+		if (!form.checkValidity()) {
+			form.reportValidity();
+			return;
+		}
 
-            if (response.ok) {
-                form.style.display = 'none';
-                if (successMessage) successMessage.style.display = 'block';
-            } else {
-                alert('Failed to submit. Please try again.');
-            }
-        } catch (error) {
-            alert('An error occurred. Please try again.');
-        }
-    });
+		const fd = new FormData(form);
+		const type = val(fd, "edit_type");
+		let field_name = type;
+		const lines: string[] = [];
+		const add = (label: string, k: string) => {
+			const v = val(fd, k);
+			if (v) lines.push(`${label}: ${v}`);
+		};
+
+		if (type === "citation") {
+			add("Title", "citationTitle"); add("DOI", "citationDOI"); add("PubMed ID", "citationPubMed");
+			add("Journal", "citationJournal"); add("Year", "citationYear");
+		} else if (type === "award") {
+			add("Award", "awardName"); add("Year", "awardYear"); add("Issuer", "awardIssuer"); add("Contribution", "awardContribution");
+		} else if (type === "affiliation") {
+			add("Institution", "affiliationName"); add("Role", "affiliationRole");
+			add("Department", "affiliationDepartment"); add("Website", "affiliationUrl");
+		} else {
+			field_name = val(fd, "generalCategory");
+			add("Details", "generalDetails");
+		}
+
+		const sourceUrl = val(fd, "sourceUrl");
+		const payload = {
+			profile_slug: val(fd, "profile_slug"),
+			field_name,
+			new_value: lines.join("\n"),
+			reason: sourceUrl ? `Source: ${sourceUrl}` : undefined,
+			contributor_name: val(fd, "contributor_name"),
+			contributor_email: val(fd, "contributor_email"),
+			honeypot_filled: fd.get("honeypot_filled") === "on",
+		};
+
+		if (!payload.profile_slug) {
+			errEl.textContent = "Open this form from a doctor's record so we know which record to correct.";
+			errEl.hidden = false;
+			return;
+		}
+
+		btn.disabled = true;
+		btn.textContent = "Submitting...";
+		try {
+			const res = await fetch("/api/suggest-edit", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(payload),
+			});
+			if (res.ok) {
+				form.hidden = true;
+				if (done) {
+					done.hidden = false;
+					done.focus();
+				}
+			} else {
+				const data = await res.json().catch(() => ({}));
+				errEl.textContent = data.error || "Could not submit. Please try again.";
+				errEl.hidden = false;
+			}
+		} catch {
+			errEl.textContent = "Network error. Please try again.";
+			errEl.hidden = false;
+		} finally {
+			btn.disabled = false;
+			btn.textContent = "Submit suggestion";
+		}
+	});
 </script>
-
-<style>
-    .suggest-page {
-        padding: 48px 0 80px;
-        min-height: 70vh;
-    }
-
-    .back-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        color: var(--ink-3);
-        text-decoration: none;
-        font-size: 0.9rem;
-        margin-bottom: 24px;
-        transition: color var(--t-fast) var(--ease);
-    }
-
-    .back-link:hover {
-        color: var(--ink);
-    }
-
-    .back-link svg {
-        width: 18px;
-        height: 18px;
-    }
-
-    .page-header {
-        text-align: center;
-        margin-bottom: 32px;
-    }
-
-    .header-icon {
-        width: 72px;
-        height: 72px;
-        margin: 0 auto 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--ink-blue-2);
-        border-radius: var(--r-4);
-        font-size: 2rem;
-        color: var(--ink-blue);
-    }
-
-    .page-header h1 {
-        font-size: 2rem;
-        font-weight: 400;
-        font-family: var(--font-serif);
-        color: var(--ink);
-        margin-bottom: 8px;
-    }
-
-    .header-description {
-        color: var(--ink-3);
-        font-size: 1rem;
-        margin-bottom: 16px;
-    }
-
-    .profile-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 16px;
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-pill);
-    }
-
-    .badge-label {
-        color: var(--ink-3);
-        font-size: 0.85rem;
-    }
-
-    .badge-name {
-        color: var(--ink);
-        font-weight: 600;
-    }
-
-    .badge-tier {
-        font-size: 0.7rem;
-        font-weight: 600;
-        padding: 2px 8px;
-        border-radius: var(--r-pill);
-        text-transform: uppercase;
-        font-family: var(--font-mono);
-    }
-
-    .badge-tier--titan {
-        background: var(--titan-bg);
-        color: var(--titan-text);
-    }
-
-    .badge-tier--elite {
-        background: var(--elite-bg);
-        color: var(--elite-text);
-    }
-
-    .badge-tier--master {
-        background: var(--master-bg);
-        color: var(--master-text);
-    }
-
-    .badge-tier--unranked {
-        background: var(--paper-3);
-        color: var(--ink-3);
-    }
-
-    /* Type Tabs */
-    .type-tabs {
-        display: flex;
-        gap: 8px;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin-bottom: 32px;
-    }
-
-    .type-tab {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 18px;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-3);
-        color: var(--ink-3);
-        text-decoration: none;
-        font-size: 0.9rem;
-        transition: all var(--t-fast) var(--ease);
-    }
-
-    .type-tab:hover {
-        background: var(--paper-2);
-        color: var(--ink);
-    }
-
-    .type-tab--active {
-        background: var(--ink-blue-2);
-        border-color: var(--ink-blue);
-        color: var(--ink-blue);
-    }
-
-    .tab-icon {
-        font-size: 1.1rem;
-        display: flex;
-        align-items: center;
-    }
-
-    /* Form */
-    .suggest-form {
-        max-width: 640px;
-        margin: 0 auto;
-    }
-
-    .form-section {
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        padding: 24px;
-        margin-bottom: 20px;
-    }
-
-    .form-group {
-        margin-bottom: 20px;
-    }
-
-    .form-group:last-child {
-        margin-bottom: 0;
-    }
-
-    .form-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-    }
-
-    label {
-        display: block;
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: var(--ink);
-        margin-bottom: 8px;
-    }
-
-    .required {
-        color: var(--sanguine);
-    }
-
-    input, textarea, select {
-        width: 100%;
-        padding: 12px 16px;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-3);
-        color: var(--ink);
-        font-size: 0.95rem;
-        font-family: inherit;
-        transition: border-color var(--t-fast) var(--ease);
-    }
-
-    input::placeholder, textarea::placeholder {
-        color: var(--ink-3);
-    }
-
-    input:focus, textarea:focus, select:focus {
-        outline: none;
-        border-color: var(--ink-blue);
-        box-shadow: 0 0 0 3px color-mix(in oklch, var(--ink-blue) 12%, transparent);
-    }
-
-    select {
-        cursor: pointer;
-    }
-
-    textarea {
-        resize: vertical;
-        min-height: 100px;
-    }
-
-    .form-hint {
-        font-size: 0.8rem;
-        color: var(--ink-3);
-        margin-top: 6px;
-    }
-
-    /* Form Actions */
-    .form-actions {
-        text-align: center;
-        padding-top: 16px;
-    }
-
-    .btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        padding: 14px 28px;
-        border-radius: var(--r-3);
-        font-weight: 500;
-        font-size: 1rem;
-        text-decoration: none;
-        border: none;
-        cursor: pointer;
-        transition: opacity var(--t-fast) var(--ease);
-    }
-
-    .btn svg {
-        width: 18px;
-        height: 18px;
-    }
-
-    .btn--primary {
-        background: var(--ink);
-        color: var(--paper);
-    }
-
-    .btn--primary:hover {
-        opacity: 0.85;
-    }
-
-    .btn--secondary {
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        color: var(--ink);
-    }
-
-    .submit-note {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        margin-top: 16px;
-        font-size: 0.85rem;
-        color: var(--ink-3);
-    }
-
-    .submit-note svg {
-        width: 16px;
-        height: 16px;
-        color: var(--verdant);
-    }
-
-    /* Success Message */
-    .success-message {
-        text-align: center;
-        padding: 60px 20px;
-        max-width: 500px;
-        margin: 0 auto;
-    }
-
-    .success-icon {
-        font-size: 4rem;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--verdant);
-    }
-
-    .success-message h2 {
-        font-size: 1.75rem;
-        font-family: var(--font-serif);
-        font-weight: 400;
-        color: var(--ink);
-        margin-bottom: 12px;
-    }
-
-    .success-message p {
-        color: var(--ink-3);
-        margin-bottom: 24px;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-        .type-tabs {
-            gap: 6px;
-        }
-        .type-tab {
-            padding: 8px 14px;
-            font-size: 0.85rem;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .form-row {
-            grid-template-columns: 1fr;
-        }
-
-        .type-tabs {
-            flex-direction: column;
-        }
-
-        .type-tab {
-            justify-content: center;
-        }
-
-        .page-header h1 {
-            font-size: 1.6rem;
-        }
-    }
-</style>
