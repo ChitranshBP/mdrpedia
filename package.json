@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && npx pagefind --site dist",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -32,13 +32,11 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
-    "@pagefind/default-ui": "^1.5.2",
     "@types/node": "^26.6.2",
     "@types/pg": "^8.23.1",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "embedded-postgres": "^18.4.0-beta.17",
-    "pagefind": "^1.5.2",
     "prisma": "^7.10.0",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3"
