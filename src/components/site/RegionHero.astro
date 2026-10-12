@@ -1,0 +1,36 @@
+---
+interface Crumb { label: string; href?: string }
+interface Props {
+	eyebrow: string;
+	heading: string;
+	lede?: string;
+	crumbs: Crumb[];
+	levels?: { label: string; state: "done" | "current" | "" }[];
+}
+
+const { eyebrow, heading, lede, crumbs, levels = [] } = Astro.props;
+---
+
+<section class="rg-hero">
+	<div class="rg-hero__inner">
+		<span class="rg-eyebrow">{eyebrow}</span>
+		<h1>{heading}</h1>
+		{lede && <p class="rg-hero__lede">{lede}</p>}
+		<nav class="rg-crumbs" aria-label="Breadcrumb">
+			<ol>
+				{crumbs.map((c) => (
+					<li>{c.href ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}</li>
+				))}
+			</ol>
+		</nav>
+		{levels.length > 0 && (
+			<ol class="rg-levels" aria-label="Level">
+				{levels.map((l) => (
+					<li class={l.state ? `is-${l.state}` : undefined} aria-current={l.state === "current" ? "step" : undefined}>
+						{l.state === "done" ? `✓ ${l.label}` : l.label}
+					</li>
+				))}
+			</ol>
+		)}
+	</div>
+</section>

@@ -1,0 +1,57 @@
+---
+import type { RegisterEntry } from "../../lib/regions";
+
+interface Props {
+	entries: RegisterEntry[];
+	/** Rank of the first row; omit for alphabetical listings, which carry no rank. */
+	rankFrom?: number;
+	showTier?: boolean;
+	/** Which parts of the location to print: below country level the state is implied. */
+	where?: "city" | "city-state";
+	caption: string;
+}
+
+const { entries, rankFrom, showTier = true, where = "city-state", caption } = Astro.props;
+
+const placeOf = (e: RegisterEntry) => (where === "city" ? [e.city] : [e.city, e.state]).filter(Boolean).join(", ");
+const TIER: Record<string, string> = { TITAN: "Titan", ELITE: "Elite", MASTER: "Master" };
+---
+
+{entries.length > 0 && (
+	<div class="rg-scroll" tabindex="0" role="region" aria-label={caption}>
+		<table class="rg-table">
+			<caption class="r-sr-only">{caption}</caption>
+			<thead>
+				<tr>
+					<th scope="col" class="col-rank">{rankFrom !== undefined ? "RANK" : <span class="r-sr-only">Listed A–Z, no rank</span>}</th>
+					<th scope="col">PHYSICIAN</th>
+					<th scope="col" class="col-where">PRACTISES IN</th>
+					{showTier && <th scope="col" class="col-tier">TIER</th>}
+					<th scope="col" class="col-num">H-INDEX</th>
+					<th scope="col" class="col-num">PAPERS</th>
+					<th scope="col" class="col-eth">ETHICS</th>
+				</tr>
+			</thead>
+			<tbody>
+				{entries.map((e, i) => {
+					const place = placeOf(e);
+					return (
+						<tr>
+							<td class="rg-rank">{rankFrom !== undefined ? `#${rankFrom + i}` : ""}</td>
+							<td class="rg-who">
+								<a class="rg-name" href={`/doctors/${e.slug}`}>{e.name}</a>
+								<span class="rg-spec">{e.specialty}</span>
+								{e.historical && <span class="rg-hist">HISTORICAL</span>}
+							</td>
+							<td class:list={["rg-where", { "is-none": !place }]}>{place || <span class="rg-dim">Not yet verified</span>}</td>
+							{showTier && <td class:list={["rg-tier", { "is-none": !TIER[e.tier] }]} data-label="Tier">{TIER[e.tier] ?? <span class="rg-dim">—</span>}</td>}
+							<td class:list={["rg-num", { "is-none": e.hIndex <= 0 }]} data-label="h-index">{e.hIndex > 0 ? e.hIndex : <span class="rg-dim">—</span>}</td>
+							<td class:list={["rg-num", { "is-none": e.papers <= 0 }]} data-label="Papers">{e.papers > 0 ? e.papers : <span class="rg-dim">—</span>}</td>
+							<td class:list={["rg-eth", { "is-none": !e.ethics }]} data-label="Ethics">{e.ethics ?? <span class="rg-dim">—</span>}</td>
+						</tr>
+					);
+				})}
+			</tbody>
+		</table>
+	</div>
+)}

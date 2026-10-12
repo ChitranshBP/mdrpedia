@@ -1,0 +1,50 @@
+---
+/**
+ * Keeps the header's country picker and the page in step: the header shows the
+ * country being browsed, and picking another country opens its register.
+ * Also drives the "Filter states / cities" boxes.
+ */
+interface Props {
+	country?: string;
+}
+
+const { country = "" } = Astro.props;
+---
+
+<span data-region-sync data-country={country} hidden></span>
+
+<script>
+	const SLUGS: Record<string, string> = { India: "india", "United States": "united-states", "United Kingdom": "united-kingdom" };
+	const header = document.querySelector<HTMLElement>(".r-header");
+	const country = document.querySelector<HTMLElement>("[data-region-sync]")?.dataset.country ?? "";
+
+	if (header && SLUGS[country] && header.dataset.country !== country) {
+		header.dataset.country = country;
+		const label = header.querySelector("[data-country-label]");
+		if (label) label.textContent = country;
+		header.querySelector('[data-nav="regions"]')?.setAttribute("href", `/geography/${SLUGS[country]}`);
+		header.querySelectorAll<HTMLElement>(".r-country__opt").forEach((o) => o.setAttribute("aria-checked", String(o.dataset.name === country)));
+	}
+
+	window.addEventListener("mdr-country", () => {
+		const picked = header?.dataset.country ?? "";
+		if (SLUGS[picked] && picked !== country) window.location.href = `/geography/${SLUGS[picked]}`;
+	});
+
+	document.querySelectorAll<HTMLInputElement>("[data-place-filter]").forEach((input) => {
+		const list = document.getElementById(input.getAttribute("aria-controls") ?? "");
+		const none = document.getElementById(`${input.getAttribute("aria-controls")}-none`);
+		if (!list) return;
+		const items = [...list.querySelectorAll<HTMLElement>("li")];
+		input.addEventListener("input", () => {
+			const q = input.value.trim().toLowerCase();
+			let shown = 0;
+			for (const li of items) {
+				const match = !q || (li.dataset.name ?? "").toLowerCase().includes(q);
+				li.hidden = !match;
+				if (match) shown++;
+			}
+			if (none) none.hidden = shown > 0;
+		});
+	});
+</script>
