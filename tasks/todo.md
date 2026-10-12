@@ -542,14 +542,24 @@ _2026-10-12 — everything below is on `fix/audit-remediation`, built green (`as
 
 **New: NMC compliance check** (`/nmc-compliance-check`, claude.ai/design "NMC Compliance Check") — first page on the new register design system (`SiteLayout`, `register.css`, `components/site/*`). Instant screen via Claude (`claude-haiku-5-5`, needs `ANTHROPIC_API_KEY`) with a deterministic rule engine fallback; leads in `nmc_checks`; reports by email (needs `RESEND_API_KEY`; optional `NMC_ALERT_EMAIL`); queue at `/admin/nmc-checks`.
 
-**Still open:**
-- [ ] **Deploy** this branch (merge → build on VPS → `pm2 restart mdrpedia`). Set `ANTHROPIC_API_KEY`, `RESEND_API_KEY`, `NMC_ALERT_EMAIL` in the prod `.env`.
-- [ ] **Cron** for the NMC full scan: `*/15 * * * * curl -s -X POST -H "x-admin-key: $ADMIN_ACCESS_KEY" -H "Content-Type: application/json" -d '{"action":"process"}' http://127.0.0.1:4331/api/admin/nmc-checks`
-- [ ] **Unicode slugs (P5b):** after deploy, `npx tsx --env-file=.env scripts/fix-unicode-slugs.ts` (dry run) → `--apply` → commit renamed content → redeploy → set `SLUG_REDIRECTS=1` and restart. 50 DB profiles, 5 merges.
-- [ ] **P1.11** add mdrpedia.com to Search Console (needs owner login + GoDaddy TXT record).
-- [ ] **P3.7** proxy portraits through Cloudinary fetch + `srcset` (`lib/cloudinary.ts` has no fetch helper yet).
-- [ ] Rotate `ADMIN_ACCESS_KEY` to a long random value — the current one is short enough to guess.
-- [ ] Homepage "last verified" reads Feb 2026 because no profile `updatedAt` is newer; it is accurate but will look stale until profiles are refreshed.
+**Shipped 2026-10-12 (deployed to prod, `main` = a90ded2):**
+- [x] Every claude.ai/design page ported onto SiteLayout: Home v2, Find a Doctor, Register, Profile (+ Doctor Showcase), Regions, Evidence, Methodology, About/Brand (Identity), Claim, Ethics Register, Seal (+ embeddable `/seal.js`, `/api/register/lookup`), NMC check. The 36 remaining public pages moved to the same system (only `/admin/*` still uses `Layout.astro`).
+- [x] Security: token types + single-use magic links, cookie admin auth (no key in URLs/HTML), rate limits, upload magic-byte checks, HTML sanitizer, HSTS + CSP report-only, dead endpoints removed, expect scripts with a root password + GitHub PAT removed from HEAD.
+- [x] Live bug: every form/multipart POST returned 403 (Astro origin check behind the TLS proxy; OpenLiteSpeed also duplicates `Origin`) → host-based check in middleware.
+- [x] Trust: licence/editor "verified" only shown with evidence (`license_verified` was bulk-true on all 975); homepage claim reworded; auto-drafted summaries labelled.
+- [x] P3.7 portraits: Wikimedia thumbs / Cloudinary fetch + 2x srcset (`lib/portrait.ts`).
+- [x] Deploy path: `scripts/deploy.sh` (git bundle → build to dist-next → swap → reload → health check → auto-rollback). Server can't reach GitHub.
+- [x] Prod env: `JWT_SECRET` added, `ADMIN_ACCESS_KEY` rotated (64 hex; copy in local `.env`), `PUBLIC_CLOUDINARY_CLOUD_NAME`. Backup `.env.bak-20261012234259` on server.
+- [x] NMC cron `/etc/cron.d/mdrpedia` (every 15 min → `logs/nmc-cron.log`); pm2-logrotate (20M, 14 kept).
+- [x] Email: in production an unset `RESEND_API_KEY` now fails loudly instead of pretending to send.
+
+**Still open (needs the owner):**
+- [ ] Set `RESEND_API_KEY` (+ `FROM_EMAIL`, `NMC_ALERT_EMAIL`) and `ANTHROPIC_API_KEY` in the server `.env`, then `pm2 reload mdrpedia --update-env`. Until then no emails go out (magic links, claim, NMC reports) and the NMC check uses the rule engine.
+- [ ] Revoke the GitHub PAT and change the old root password that are in public git history (`scripts/*.expect`, removed from HEAD in dcec188).
+- [ ] Unicode slugs: `npx tsx --env-file=.env scripts/fix-unicode-slugs.ts` (dry) → `--apply` deletes 8 duplicate profile rows (merges) — confirm first → commit renamed content → deploy → `SLUG_REDIRECTS=1`.
+- [ ] P1.11 Search Console for mdrpedia.com (owner Google login + GoDaddy TXT).
+- [ ] Data: backfill country for ~190 DB profiles stuck on Global/Unknown (content files have it); reset `license_verified` to false in the DB; replace h-index placeholders (110); rewrite stub bios (936/975 under 200 chars).
+- [ ] `register_no` column for stable "MDR №" numbers and NMR/SMR registration number field (schema change).
 
 ---
 
