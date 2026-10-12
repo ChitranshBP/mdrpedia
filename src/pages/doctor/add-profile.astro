@@ -1,407 +1,149 @@
 ---
 export const prerender = true;
-import Layout from "../../layouts/Layout.astro";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import "../../styles/pages/utility.css";
 ---
 
-<Layout title="Add a Doctor Profile — MDRPedia">
-    <div class="add-profile-page">
-        <div class="container">
-            <header class="page-header">
-                <h1>Add a Doctor Profile</h1>
-                <p>
-                    Contribute to the world's largest free medical encyclopedia.
-                </p>
-            </header>
+<SiteLayout
+	title="Add a Doctor Profile | MDRPedia"
+	description="Propose a physician who is not yet in the MDRPedia register. Every submission is checked by an editor against public sources before a profile is created."
+>
+	<div class="u-page">
+		<div class="u-wrap">
+			<header class="u-head u-center">
+				<span class="u-kicker">CONTRIBUTE · REVIEWED BEFORE PUBLISHING</span>
+				<h1 class="u-h1">Add a <em>physician.</em></h1>
+				<p class="u-lede">
+					Propose a doctor who is not yet in the register. Nothing is published until an editor has checked it against public sources.
+					Already listed? <a href="/doctor/claim">Claim the record</a> instead.
+				</p>
+			</header>
 
-            <div class="form-wrapper">
-                <form id="add-profile-form" class="add-form">
-                    <div class="form-section">
-                        <h2>Basic Information</h2>
+			<form id="add-profile-form" class="u-form" novalidate>
+				<fieldset class="u-set">
+					<legend>Basic information</legend>
+					<div class="u-row">
+						<div class="u-field">
+							<label for="full_name">Full name <span class="u-req">*</span></label>
+							<input class="u-input" type="text" id="full_name" name="full_name" required maxlength="200" placeholder="e.g. Atul Gawande" />
+						</div>
+						<div class="u-field">
+							<label for="specialty">Specialty <span class="u-req">*</span></label>
+							<input class="u-input" type="text" id="specialty" name="specialty" required maxlength="200" placeholder="e.g. Surgery" />
+						</div>
+					</div>
+					<div class="u-row">
+						<div class="u-field">
+							<label for="country">Country <span class="u-req">*</span></label>
+							<input class="u-input" type="text" id="country" name="country" required maxlength="100" placeholder="e.g. United States" />
+						</div>
+						<div class="u-field">
+							<label for="city">City</label>
+							<input class="u-input" type="text" id="city" name="city" placeholder="e.g. Boston" />
+						</div>
+					</div>
+					<div class="u-field">
+						<label for="hospital">Primary affiliation / hospital <span class="u-req">*</span></label>
+						<input class="u-input" type="text" id="hospital" name="hospital" required placeholder="e.g. Brigham and Women's Hospital" />
+					</div>
+				</fieldset>
 
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="full_name">Full Name *</label>
-                                <input
-                                    type="text"
-                                    id="full_name"
-                                    name="full_name"
-                                    required
-                                    placeholder="e.g. Dr. Atul Gawande"
-                                />
-                            </div>
+				<fieldset class="u-set">
+					<legend>Professional details</legend>
+					<div class="u-field">
+						<label for="biography">Biography</label>
+						<textarea class="u-textarea" id="biography" name="biography" rows="4" maxlength="5000" placeholder="A short professional biography, with sources if you have them."></textarea>
+					</div>
+					<div class="u-row">
+						<div class="u-field">
+							<label for="orcid_id">ORCID iD</label>
+							<input class="u-input" type="text" id="orcid_id" name="orcid_id" placeholder="0000-0000-0000-0000" />
+						</div>
+						<div class="u-field">
+							<label for="npi_number">NPI number (US only)</label>
+							<input class="u-input" type="text" id="npi_number" name="npi_number" inputmode="numeric" placeholder="10 digits" />
+						</div>
+					</div>
+				</fieldset>
 
-                            <div class="form-group">
-                                <label for="specialty">Specialty *</label>
-                                <input
-                                    type="text"
-                                    id="specialty"
-                                    name="specialty"
-                                    required
-                                    placeholder="e.g. Surgery"
-                                />
-                            </div>
-                        </div>
+				<fieldset class="u-set">
+					<legend>Contributor</legend>
+					<p class="u-set__note">We ask for this to prevent spam. Editors may contact you about the submission.</p>
+					<div class="u-row">
+						<div class="u-field">
+							<label for="contributor_name">Your name <span class="u-req">*</span></label>
+							<input class="u-input" type="text" id="contributor_name" name="contributor_name" autocomplete="name" required />
+						</div>
+						<div class="u-field">
+							<label for="contributor_email">Your email <span class="u-req">*</span></label>
+							<input class="u-input" type="email" id="contributor_email" name="contributor_email" autocomplete="email" required />
+						</div>
+					</div>
+				</fieldset>
 
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="country">Country *</label>
-                                <input
-                                    type="text"
-                                    id="country"
-                                    name="country"
-                                    required
-                                    placeholder="e.g. United States"
-                                />
-                            </div>
+				<div class="u-hp" aria-hidden="true">
+					<input type="checkbox" name="honeypot_filled" tabindex="-1" autocomplete="off" />
+				</div>
 
-                            <div class="form-group">
-                                <label for="city">City</label>
-                                <input
-                                    type="text"
-                                    id="city"
-                                    name="city"
-                                    placeholder="e.g. Boston"
-                                />
-                            </div>
-                        </div>
+				<div class="u-actions">
+					<button type="submit" id="btn-submit" class="u-btn">Submit profile</button>
+				</div>
 
-                        <div class="form-group">
-                            <label for="hospital"
-                                >Primary Affiliation / Hospital *</label
-                            >
-                            <input
-                                type="text"
-                                id="hospital"
-                                name="hospital"
-                                required
-                                placeholder="e.g. Brigham and Women's Hospital"
-                            />
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2>Professional Details</h2>
-
-                        <div class="form-group">
-                            <label for="biography">Biography</label>
-                            <textarea
-                                id="biography"
-                                name="biography"
-                                rows="4"
-                                placeholder="Brief professional biography..."
-                            ></textarea>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="orcid_id">ORCID ID</label>
-                                <input
-                                    type="text"
-                                    id="orcid_id"
-                                    name="orcid_id"
-                                    placeholder="0000-0000-0000-0000"
-                                />
-                            </div>
-
-                            <div class="form-group">
-                                <label for="npi_number"
-                                    >NPI Number (US Only)</label
-                                >
-                                <input
-                                    type="text"
-                                    id="npi_number"
-                                    name="npi_number"
-                                    placeholder="10-digit NPI"
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2>Contributor Identity</h2>
-                        <p class="section-desc">
-                            We require this to prevent spam. Your name will be
-                            listed as a contributor.
-                        </p>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="contributor_name">Your Name *</label
-                                >
-                                <input
-                                    type="text"
-                                    id="contributor_name"
-                                    name="contributor_name"
-                                    required
-                                />
-                            </div>
-
-                            <div class="form-group">
-                                <label for="contributor_email"
-                                    >Your Email *</label
-                                >
-                                <input
-                                    type="email"
-                                    id="contributor_email"
-                                    name="contributor_email"
-                                    required
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Honeypot -->
-                    <div style="display:none" aria-hidden="true">
-                        <input
-                            type="checkbox"
-                            name="honeypot_filled"
-                            tabindex="-1"
-                        />
-                    </div>
-
-                    <div class="form-actions">
-                        <button
-                            type="submit"
-                            id="btn-submit"
-                            class="btn btn--primary btn--lg"
-                            >Submit Profile</button
-                        >
-                    </div>
-
-                    <div id="form-message" class="form-message" hidden></div>
-                </form>
-            </div>
-        </div>
-    </div>
-</Layout>
+				<p id="form-message" class="u-msg" role="status" aria-live="polite" hidden></p>
+			</form>
+		</div>
+	</div>
+</SiteLayout>
 
 <script>
-    const form = document.getElementById("add-profile-form") as HTMLFormElement;
-    const msgEl = document.getElementById("form-message");
-    const btn = document.getElementById("btn-submit") as HTMLButtonElement;
+	const form = document.getElementById("add-profile-form") as HTMLFormElement | null;
+	const msgEl = document.getElementById("form-message") as HTMLElement | null;
+	const btn = document.getElementById("btn-submit") as HTMLButtonElement | null;
 
-    if (form) {
-        form.addEventListener("submit", async (e) => {
-            e.preventDefault();
+	function show(text: string, ok: boolean) {
+		if (!msgEl) return;
+		msgEl.textContent = text;
+		msgEl.className = `u-msg ${ok ? "u-msg--ok" : "u-msg--err"}`;
+		msgEl.hidden = false;
+	}
 
-            btn.textContent = "Submitting...";
-            btn.disabled = true;
-            msgEl!.hidden = true;
-            msgEl!.textContent = "";
-            msgEl!.className = "form-message";
+	form?.addEventListener("submit", async (e) => {
+		e.preventDefault();
+		if (!btn || !msgEl) return;
 
-            const formData = new FormData(form);
-            const data: Record<string, any> = {};
+		if (!form.checkValidity()) {
+			form.reportValidity();
+			return;
+		}
 
-            formData.forEach((value, key) => {
-                data[key] = value;
-            });
-            // Handle checkbox manually if needed, but for honeypot usually fine
+		btn.textContent = "Submitting...";
+		btn.disabled = true;
+		msgEl.hidden = true;
 
-            try {
-                const res = await fetch("/api/submit-profile", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data),
-                });
+		const data: Record<string, FormDataEntryValue> = {};
+		new FormData(form).forEach((value, key) => {
+			data[key] = value;
+		});
 
-                const result = await res.json();
+		try {
+			const res = await fetch("/api/submit-profile", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(data),
+			});
+			const result = await res.json().catch(() => ({}));
 
-                if (res.ok) {
-                    msgEl!.textContent =
-                        "Profile submitted successfully! It will be reviewed by our team.";
-                    msgEl!.classList.add("success");
-                    msgEl!.hidden = false;
-                    form.reset();
-                } else {
-                    msgEl!.textContent = result.error || "Submission failed.";
-                    msgEl!.classList.add("error");
-                    msgEl!.hidden = false;
-                }
-            } catch (err) {
-                msgEl!.textContent = "Network error. Please try again.";
-                msgEl!.classList.add("error");
-                msgEl!.hidden = false;
-            } finally {
-                btn.textContent = "Submit Profile";
-                btn.disabled = false;
-            }
-        });
-    }
+			if (res.ok) {
+				show("Profile submitted. An editor will review it before anything is published.", true);
+				form.reset();
+			} else {
+				show(result.error || "Submission failed.", false);
+			}
+		} catch {
+			show("Network error. Please try again.", false);
+		} finally {
+			btn.textContent = "Submit profile";
+			btn.disabled = false;
+		}
+	});
 </script>
-
-<style>
-    .add-profile-page {
-        padding: 60px 20px 100px;
-        background: var(--paper);
-        min-height: 80vh;
-    }
-
-    .container {
-        max-width: 720px;
-        margin: 0 auto;
-    }
-
-    .page-header {
-        text-align: center;
-        margin-bottom: 48px;
-    }
-
-    .page-header h1 {
-        font-size: 2.5rem;
-        font-weight: 400;
-        margin-bottom: 12px;
-        font-family: var(--font-serif);
-        color: var(--ink);
-    }
-
-    .page-header p {
-        font-size: 1.1rem;
-        color: var(--ink-2);
-    }
-
-    .form-wrapper {
-        background: var(--paper);
-        padding: 40px;
-        border-radius: var(--r-4);
-        border: 1px solid var(--rule);
-        box-shadow: var(--shadow-2);
-    }
-
-    .form-section {
-        margin-bottom: 32px;
-        padding-bottom: 32px;
-        border-bottom: 1px solid var(--rule);
-    }
-
-    .form-section:last-of-type {
-        border-bottom: none;
-        padding-bottom: 0;
-    }
-
-    h2 {
-        font-size: 1.2rem;
-        font-family: var(--font-serif);
-        font-weight: 400;
-        margin-bottom: 20px;
-        color: var(--ink);
-    }
-
-    .section-desc {
-        font-size: 0.9rem;
-        color: var(--ink-3);
-        margin-bottom: 20px;
-        margin-top: -12px;
-    }
-
-    .form-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-    }
-
-    .form-group {
-        margin-bottom: 20px;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 500;
-        font-size: 0.9rem;
-        color: var(--ink-2);
-    }
-
-    .form-group input,
-    .form-group textarea {
-        width: 100%;
-        padding: 12px;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-3);
-        color: var(--ink);
-        font-family: inherit;
-        font-size: 1rem;
-        transition: border-color var(--t-fast) var(--ease);
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-        outline: none;
-        border-color: var(--ink-blue);
-        box-shadow: 0 0 0 3px color-mix(in oklch, var(--ink-blue) 12%, transparent);
-    }
-
-    .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 500;
-        transition: opacity var(--t-fast) var(--ease);
-        cursor: pointer;
-        border: none;
-    }
-
-    .btn--primary {
-        background: var(--ink);
-        color: var(--paper);
-    }
-
-    .btn--primary:hover {
-        opacity: 0.85;
-    }
-
-    .btn--lg {
-        width: 100%;
-        padding: 14px;
-        font-size: 1.05rem;
-        border-radius: var(--r-3);
-        margin-top: 10px;
-    }
-
-    .btn:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-
-    .form-message {
-        margin-top: 20px;
-        padding: 12px;
-        border-radius: var(--r-3);
-        text-align: center;
-        font-size: 0.95rem;
-    }
-
-    .form-message.success {
-        background: var(--verdant-2);
-        color: var(--verdant);
-        border: 1px solid var(--verdant);
-    }
-
-    .form-message.error {
-        background: var(--sanguine-2);
-        color: var(--sanguine);
-        border: 1px solid var(--sanguine);
-    }
-
-    @media (max-width: 768px) {
-        .page-header h1 {
-            font-size: 2rem;
-        }
-        .form-wrapper {
-            padding: 28px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .form-row {
-            grid-template-columns: 1fr;
-        }
-        .form-wrapper {
-            padding: 20px;
-        }
-        .page-header h1 {
-            font-size: 1.6rem;
-        }
-    }
-</style>
