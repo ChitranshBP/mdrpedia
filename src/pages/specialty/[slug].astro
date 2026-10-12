@@ -10,6 +10,7 @@ import OptimizedImage from "../../components/OptimizedImage.astro";
 import { prisma } from "../../lib/prisma";
 import { SPECIALTY_GROUPS } from "../../lib/specialty-groups";
 import { generateSpecialtyPageSchema } from "../../lib/medical-knowledge-graph";
+import Pagination from "../../components/Pagination.astro";
 import { slugify } from "../../lib/utils";
 
 export const prerender = false;
@@ -33,11 +34,25 @@ const specialtyConditions = group.specialties.map(specialty => ({
     }
 }));
 
-// Query doctors matching any of the group's specialties
-const doctors = await prisma.profile.findMany({
-    where: {
-        OR: specialtyConditions
-    },
+const PAGE_SIZE = 48;
+const where = { OR: specialtyConditions };
+const requestedPage = Math.max(1, parseInt(Astro.url.searchParams.get('page') || '1', 10) || 1);
+
+const [totalDoctors, tierGroups, countryRows] = await Promise.all([
+    prisma.profile.count({ where }),
+    prisma.profile.groupBy({ by: ['tier'], where, _count: { _all: true } }),
+    prisma.geography.findMany({
+        where: { profiles: { some: where } },
+        select: { country: true },
+        distinct: ['country'],
+    }),
+]);
+
+const page = Math.min(requestedPage, Math.max(1, Math.ceil(totalDoctors / PAGE_SIZE)));
+const totalPages = Math.max(1, Math.ceil(totalDoctors / PAGE_SIZE));
+
+const sortedDoctors = await prisma.profile.findMany({
+    where,
     select: {
         slug: true,
         full_name: true,
@@ -57,34 +72,18 @@ const doctors = await prisma.profile.findMany({
     },
     orderBy: [
         { tier: 'asc' },
-        { ranking_score: 'desc' },
-        { h_index: 'desc' }
-    ]
+        { ranking_score: { sort: 'desc', nulls: 'last' } },
+        { h_index: 'desc' },
+        { slug: 'asc' }
+    ],
+    skip: (page - 1) * PAGE_SIZE,
+    take: PAGE_SIZE
 });
 
-// Sort by tier properly (TITAN > ELITE > MASTER > UNRANKED)
-const tierOrder: Record<string, number> = {
-    TITAN: 0,
-    ELITE: 1,
-    MASTER: 2,
-    UNRANKED: 3
-};
-
-const sortedDoctors = [...doctors].sort((a, b) => {
-    const tierDiff = (tierOrder[a.tier] ?? 3) - (tierOrder[b.tier] ?? 3);
-    if (tierDiff !== 0) return tierDiff;
-    const rankA = a.ranking_score ?? 0;
-    const rankB = b.ranking_score ?? 0;
-    if (rankB !== rankA) return rankB - rankA;
-    return (b.h_index ?? 0) - (a.h_index ?? 0);
-});
-
-// Calculate stats
-const totalDoctors = sortedDoctors.length;
-const titanCount = sortedDoctors.filter(d => d.tier === 'TITAN').length;
-const eliteCount = sortedDoctors.filter(d => d.tier === 'ELITE').length;
-const uniqueCountries = new Set(sortedDoctors.map(d => d.geography?.country).filter(Boolean));
-const countryCount = uniqueCountries.size;
+const tierTotal = (tier: string) => tierGroups.find(t => t.tier === tier)?._count._all ?? 0;
+const titanCount = tierTotal('TITAN');
+const eliteCount = tierTotal('ELITE');
+const countryCount = countryRows.length;
 
 // Get related specialty groups (exclude current)
 const relatedGroups = SPECIALTY_GROUPS
@@ -206,10 +205,10 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
             <div class="container">
                 <div class="section-header">
                     <h2 class="section-title">Leading Specialists</h2>
-                    <span class="section-count">{totalDoctors} physicians</span>
+                    <span class="section-count">{totalDoctors.toLocaleString()} physicians</span>
                 </div>
 
-                {sortedDoctors.length > 0 ? (
+                {sortedDoctors.length > 0 ? (<>
                     <div class="doctors-grid">
                         {sortedDoctors.map(doc => {
                             const location = [doc.geography?.city, doc.geography?.country]
@@ -262,7 +261,8 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
                             );
                         })}
                     </div>
-                ) : (
+                    <Pagination page={page} totalPages={totalPages} total={totalDoctors} pageSize={PAGE_SIZE} label="specialists" />
+                </>) : (
                     <div class="empty-state">
                         <span class="empty-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={group.svgPath}/></svg></span>
                         <h3>No specialists found</h3>

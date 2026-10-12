@@ -5,7 +5,7 @@
  * Optimized for SEO with structured data
  */
 import Layout from "../../layouts/Layout.astro";
-import { prisma } from "../../lib/prisma";
+import { getSpecialtyStats } from "../../lib/cached-stats";
 import { SPECIALTY_GROUPS, type SpecialtyGroup } from "../../lib/specialty-groups";
 import { slugify } from "../../lib/utils";
 
@@ -17,30 +17,23 @@ interface GroupWithCount extends SpecialtyGroup {
     slug: string;
 }
 
-const groupsWithCounts: GroupWithCount[] = await Promise.all(
-    SPECIALTY_GROUPS.map(async (group) => {
-        // Build OR conditions for each specialty in the group
-        const specialtyConditions = group.specialties.map(specialty => ({
-            specialty: {
-                contains: specialty,
-                mode: 'insensitive' as const
-            }
-        }));
+const specialtyStats = await getSpecialtyStats();
 
-        // Count doctors matching any of the group's specialties
-        const doctorCount = await prisma.profile.count({
-            where: {
-                OR: specialtyConditions
-            }
-        });
+const groupsWithCounts: GroupWithCount[] = SPECIALTY_GROUPS.map((group) => {
+    const needles = group.specialties.map(specialty => specialty.toLowerCase());
+    const doctorCount = specialtyStats
+        .filter(row => {
+            const value = row.specialty.toLowerCase();
+            return needles.some(needle => value.includes(needle));
+        })
+        .reduce((sum, row) => sum + row.count, 0);
 
-        return {
-            ...group,
-            doctorCount,
-            slug: slugify(group.name)
-        };
-    })
-);
+    return {
+        ...group,
+        doctorCount,
+        slug: slugify(group.name)
+    };
+});
 
 // Sort by doctor count (most doctors first)
 const sortedGroups = groupsWithCounts.sort((a, b) => b.doctorCount - a.doctorCount);
