@@ -42,7 +42,7 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
         <div class="embed-backdrop" id="embed-backdrop"></div>
         <div class="embed-dialog" role="dialog" aria-modal="true" aria-labelledby="embed-title">
         <div class="embed-header">
-            <h4 id="embed-title">Share or Embed Profile</h4>
+            <h2 id="embed-title">Share or Embed Profile</h2>
             <button class="close-btn" id="embed-close" aria-label="Close">×</button>
         </div>
 
@@ -51,7 +51,7 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
             <label for="profile-url">Profile URL</label>
             <div class="input-group">
                 <input type="text" value={profileUrl} readonly id="profile-url" />
-                <button class="copy-btn" data-copy="profile-url" title="Copy URL">
+                <button class="copy-btn" data-copy="profile-url" title="Copy URL" aria-label="Copy URL" type="button">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="9" y="9" width="13" height="13" rx="2"/>
                         <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
@@ -62,7 +62,7 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
 
         <!-- Quick Share Buttons -->
         <div class="embed-section">
-            <label>Quick Share</label>
+            <span class="embed-section-label" id="quick-share-label">Quick Share</span>
             <div class="share-buttons">
                 <a
                     href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`${fullName} — ${specialty} | MDRPedia`)}&url=${encodeURIComponent(profileUrl)}`}
@@ -70,6 +70,7 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
                     rel="noopener"
                     class="share-btn twitter"
                     title="Share on X (Twitter)"
+                    aria-label="Share on X (Twitter)"
                 >
                     𝕏
                 </a>
@@ -79,6 +80,7 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
                     rel="noopener"
                     class="share-btn linkedin"
                     title="Share on LinkedIn"
+                    aria-label="Share on LinkedIn"
                 >
                     in
                 </a>
@@ -86,6 +88,7 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
                     href={`mailto:?subject=${encodeURIComponent(`${fullName} — MDRPedia`)}&body=${encodeURIComponent(`Check out ${fullName}'s profile on MDRPedia: ${profileUrl}`)}`}
                     class="share-btn email"
                     title="Share via Email"
+                    aria-label="Share via Email"
                 >
                     ✉
                 </a>
@@ -95,6 +98,7 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
                     rel="noopener"
                     class="share-btn whatsapp"
                     title="Share on WhatsApp"
+                    aria-label="Share on WhatsApp"
                 >
                     ●
                 </a>
@@ -115,7 +119,7 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
             <p class="embed-hint">Minimal link badge for your website</p>
             <div class="input-group">
                 <textarea readonly id="embed-code" rows="3">{embedCode}</textarea>
-                <button class="copy-btn" data-copy="embed-code" title="Copy Embed Code">
+                <button class="copy-btn" data-copy="embed-code" title="Copy Embed Code" aria-label="Copy Embed Code" type="button">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="9" y="9" width="13" height="13" rx="2"/>
                         <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
@@ -136,7 +140,7 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
             <p class="embed-hint">Impact card with key metrics</p>
             <div class="input-group">
                 <textarea readonly id="embed-code-rich" rows="6">{richEmbedCode}</textarea>
-                <button class="copy-btn" data-copy="embed-code-rich" title="Copy Rich Embed">
+                <button class="copy-btn" data-copy="embed-code-rich" title="Copy Rich Embed" aria-label="Copy Rich Embed" type="button">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="9" y="9" width="13" height="13" rx="2"/>
                         <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
@@ -188,7 +192,7 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
         )}
 
         <!-- Copied Toast -->
-        <div class="copied-toast" id="copied-toast">Copied!</div>
+        <div class="copied-toast" id="copied-toast" role="status" aria-live="polite">Copied!</div>
         </div><!-- .embed-dialog -->
     </div>
 </div>
@@ -382,7 +386,7 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
         border-bottom: 1px solid var(--rule);
     }
 
-    .embed-header h4 {
+    .embed-header h2 {
         font-size: 0.95rem;
         font-weight: 600;
         color: var(--ink);
@@ -418,6 +422,7 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
     }
 
     .embed-section label,
+    .embed-section-label,
     .embed-style-label {
         display: block;
         font-size: 0.75rem;
@@ -710,5 +715,14 @@ const richEmbedCode = `<div style="display:inline-block;font-family:system-ui,sa
             border-radius: var(--r-4) var(--r-4) 0 0;
             max-height: 85vh;
         }
+    }
+
+    .embed-toggle:focus-visible,
+    .copy-btn:focus-visible,
+    .share-btn:focus-visible,
+    .embed-tab:focus-visible,
+    .close-btn:focus-visible {
+        outline: 2px solid var(--ink-blue);
+        outline-offset: 2px;
     }
 </style>

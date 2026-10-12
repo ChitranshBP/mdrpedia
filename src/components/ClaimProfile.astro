@@ -13,11 +13,6 @@ const { doctorName, slug } = Astro.props;
 
 <section class="claim-profile-premium" id="claim-profile">
     <div class="claim-card">
-        <div class="claim-bg">
-            <div class="glow glow-1"></div>
-            <div class="glow glow-2"></div>
-        </div>
-
         <div class="claim-content">
             <div class="claim-header">
                 <div class="icon-wrapper">
@@ -32,7 +27,7 @@ const { doctorName, slug } = Astro.props;
                         <path d="M9 12l2 2 4-4"></path>
                     </svg>
                 </div>
-                <h3>Are you {doctorName}?</h3>
+                <h2>Are you {doctorName}?</h2>
                 <p>
                     Claim your MDRPedia profile to unlock analytics, manage your
                     digital legacy, and receive your verified badge.
@@ -203,25 +198,6 @@ const { doctorName, slug } = Astro.props;
         box-shadow: var(--shadow-2);
     }
 
-    .claim-bg {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        overflow: hidden;
-    }
-
-    .glow {
-        display: none;
-    }
-
-    .glow-1 {
-        display: none;
-    }
-
-    .glow-2 {
-        display: none;
-    }
-
     .claim-content {
         position: relative;
         z-index: 1;
@@ -251,7 +227,7 @@ const { doctorName, slug } = Astro.props;
         color: var(--ink-blue);
     }
 
-    .claim-header h3 {
+    .claim-header h2 {
         font-size: 2rem;
         font-weight: 500;
         color: var(--ink);

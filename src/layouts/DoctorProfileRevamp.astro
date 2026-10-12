@@ -9,12 +9,10 @@ import JsonLd from "../components/JsonLd.astro";
 import MedicalKnowledgeGraph from "../components/MedicalKnowledgeGraph.astro";
 import TierBadge from "../components/TierBadge.astro";
 import SimilarDoctors from "../components/SimilarDoctors.astro";
-import ShareProfileModal from "../components/ShareProfileModal";
 import ImpactVoteButton from "../components/ImpactVoteButton";
 import { generateAISummary } from "../lib/ai-summary";
 import ClaimProfile from "../components/ClaimProfile.astro";
 import PatientFriendlySummary from "../components/PatientFriendlySummary.astro";
-import ProfileCompletionMeter from "../components/ProfileCompletionMeter.astro";
 import ResearchTimelineChart from "../components/ResearchTimelineChart.astro";
 import Top100Badge from "../components/Top100Badge.astro";
 import { getTop100Rank } from "../lib/ranking";
@@ -27,6 +25,7 @@ import AwardsRibbon from "../components/AwardsRibbon.astro";
 import LegacyTimeline from "../components/LegacyTimeline.astro";
 import ProfileEmbed from "../components/ProfileEmbed.astro";
 
+import { classifyAward, HonorTier } from "../lib/global-honors";
 import type { ProfileData } from "../lib/types";
 import { getInstitutionLogo, getInstitutionInitials, getInstitutionColor } from "../lib/institution-logos";
 
@@ -109,7 +108,7 @@ try { top100Rank = await getTop100Rank(slug); } catch {};
 const hasMeaningfulBio = doctor.biography && doctor.biography.length > 50;
 const hasAffiliations = doctor.affiliations && doctor.affiliations.length > 0;
 const hasPublications = doctor.citations && doctor.citations.length > 0;
-const hasAwards = doctor.awards && doctor.awards.length > 0;
+const hasRibbonAwards = !!doctor.awards?.some((a) => classifyAward(a.name).tier !== HonorTier.UNCLASSIFIED);
 const hasTimeline = doctor.timeline && doctor.timeline.length > 0;
 const hasLineage = (doctor.mentors && doctor.mentors.length > 0) || (doctor.students && doctor.students.length > 0);
 const hasMedia = hasImage || (doctor.galleryUrls && doctor.galleryUrls.length > 0) || (doctor.media && doctor.media.length > 0);
@@ -129,24 +128,6 @@ const pillars = hasFourPillars ? [
 // Top journals from citations
 const topJournals = [...new Set(doctor.citations?.map(c => c.journal).filter((j): j is string => !!j) || [])].slice(0, 5);
 
-// Profile Completeness Score (for uniform display)
-const completenessFactors = [
-    hasImage,
-    hasMeaningfulBio,
-    hasAffiliations,
-    hasPublications,
-    hasAwards,
-    hasTimeline,
-    hasLineage,
-    doctor.hIndex > 0,
-    doctor.verifiedSurgeries > 0,
-    doctor.livesSaved > 0,
-    doctor.npiNumber || doctor.orcidId,
-    doctor.knowsAbout && doctor.knowsAbout.length > 0,
-];
-const profileCompleteness = Math.round((completenessFactors.filter(Boolean).length / completenessFactors.length) * 100);
-const completenessLabel = profileCompleteness >= 90 ? 'Comprehensive' : profileCompleteness >= 70 ? 'Well Documented' : profileCompleteness >= 50 ? 'Partially Complete' : 'Basic';
-
 // The <title> is the highest-value slot on the page. "<Name> — MDRPedia"
 // on all ~1,150 profiles wastes it; specialty and city are already in scope.
 const titleParts = [normalizeSpecialty(doctor.specialty), doctor.geography.city]
@@ -159,13 +140,40 @@ const pageTitle = titleParts.length
 // trailing slash and so a double slash in the path.
 const ogImageUrl = new URL(`/og/${slug}.png`, Astro.site ?? "https://mdrpedia.com").href;
 
-// Generate institution slug from hospital name
-function slugifyInstitution(name: string): string {
-    return name.toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, '')
-        .replace(/\s+/g, '-')
-        .slice(0, 50);
+function institutionHref(aff: { hospitalName: string; hospitalSlug?: string | null }): string | null {
+    if (aff.hospitalSlug) return `/institutions/${aff.hospitalSlug}`;
+    const fallback = aff.hospitalName
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+    return fallback ? `/institutions/${fallback}` : null;
 }
+
+const portraitOrigin = (() => {
+    if (!hasImage || !doctor.portraitUrl) return null;
+    try {
+        const u = new URL(doctor.portraitUrl);
+        return u.origin === Astro.url.origin ? null : u.origin;
+    } catch {
+        return null;
+    }
+})();
+
+const isUnclaimed = !doctor.claimStatus || doctor.claimStatus === "UNCLAIMED";
+const consultationFee = doctor.consultationFee ?? doctor.consultationPrice ?? null;
+const showConsultation = !isHistorical && !!doctor.bookingUrl && !!(consultationFee || doctor.teleConsultationPrice);
+
+const metrics = [
+    { label: "H-Index", value: doctor.hIndex, impact: false },
+    { label: "Citations", value: totalCitations, impact: false },
+    { label: "Surgeries", value: doctor.verifiedSurgeries, impact: false },
+    { label: "Lives Saved", value: doctor.livesSaved, impact: false },
+    { label: "Years Active", value: doctor.yearsActive, impact: false },
+    { label: "Total Impact", value: totalImpact, impact: true },
+].filter((m) => m.value > 0);
+
+const PUBLICATIONS_COLLAPSED = 5;
+const publications = doctor.citations ?? [];
 ---
 
 <Layout
@@ -175,6 +183,7 @@ function slugifyInstitution(name: string): string {
     ogType="profile"
     ogImage={ogImageUrl}
 >
+    {portraitOrigin && <link rel="preconnect" href={portraitOrigin} />}
     <JsonLd
         fullName={doctor.fullName}
         specialty={doctor.specialty}
@@ -279,7 +288,7 @@ function slugifyInstitution(name: string): string {
                 <div class="hero__portrait-col">
                     <div class={`hero__frame hero__frame--${doctor.tier.toLowerCase()}`}>
                         {hasImage ? (
-                            <img src={doctor.portraitUrl} alt={doctor.fullName} class="hero__image" loading="eager" fetchpriority="high" width="280" height="280" />
+                            <img src={doctor.portraitUrl} alt={doctor.fullName} class="hero__image" loading="eager" fetchpriority="high" decoding="async" width="280" height="280" />
                         ) : (
                             <div class="hero__initials">{initials}</div>
                         )}
@@ -305,7 +314,7 @@ function slugifyInstitution(name: string): string {
                     <h1 class="hero__name" id="profile-name">{doctor.fullName}</h1>
 
                     <p class="hero__specialty">
-                        <a href={`/doctors?specialty=${encodeURIComponent(doctor.specialty)}`} style="color: inherit; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
+                        <a href={`/doctors?specialty=${encodeURIComponent(doctor.specialty)}`} class="hero__specialty-link">
                             {doctor.specialty}
                         </a>
                         {doctor.subSpecialty && <span class="hero__subspecialty"> · {doctor.subSpecialty}</span>}
@@ -322,58 +331,19 @@ function slugifyInstitution(name: string): string {
 
                     <!-- Key Metrics Grid -->
                     <div class="hero__metrics">
-                        {doctor.hIndex > 0 && (
-                            <div class="metric">
-                                <span class="metric__value js-counter" data-target={doctor.hIndex}>{doctor.hIndex}</span>
-                                <span class="metric__label">H-Index</span>
+                        {metrics.map((m) => (
+                            <div class={m.impact ? "metric metric--impact" : "metric"}>
+                                <span class="metric__value js-counter" data-target={m.value} aria-hidden="true">{m.value.toLocaleString()}</span>
+                                <span class="sr-only">{m.value.toLocaleString()}</span>
+                                <span class="metric__label">{m.label}</span>
                             </div>
-                        )}
-                        {totalCitations > 0 && (
-                            <div class="metric">
-                                <span class="metric__value js-counter" data-target={totalCitations}>{totalCitations.toLocaleString()}</span>
-                                <span class="metric__label">Citations</span>
-                            </div>
-                        )}
-                        {doctor.verifiedSurgeries > 0 && (
-                            <div class="metric">
-                                <span class="metric__value js-counter" data-target={doctor.verifiedSurgeries}>{doctor.verifiedSurgeries.toLocaleString()}</span>
-                                <span class="metric__label">Surgeries</span>
-                            </div>
-                        )}
-                        {doctor.livesSaved > 0 && (
-                            <div class="metric">
-                                <span 
-                                    class="metric__value js-counter" 
-                                    data-target={doctor.livesSaved}
-                                >
-                                    {doctor.livesSaved.toLocaleString()}
-                                </span>
-                                <span class="metric__label">Lives Saved</span>
-                            </div>
-                        )}
-                        {doctor.yearsActive > 0 && (
-                            <div class="metric">
-                                <span class="metric__value js-counter" data-target={doctor.yearsActive}>{doctor.yearsActive}</span>
-                                <span class="metric__label">Years Active</span>
-                            </div>
-                        )}
-                        {totalImpact > 0 && (
-                            <div class="metric metric--impact">
-                                <span
-                                    class="metric__value js-counter"
-                                    data-target={totalImpact}
-                                >
-                                    {totalImpact.toLocaleString()}
-                                </span>
-                                <span class="metric__label">Total Impact</span>
-                            </div>
-                        )}
+                        ))}
                     </div>
 
                     <!-- Action Buttons -->
                     <div class="hero__actions">
                         <ImpactVoteButton
-                            client:visible
+                            client:idle
                             slug={slug}
                             profileId={profileId}
                             doctorName={doctor.fullName}
@@ -388,14 +358,8 @@ function slugifyInstitution(name: string): string {
                             hIndex={doctor.hIndex}
                             livesSaved={doctor.livesSaved}
                         />
-                        <ShareProfileModal
-                            client:idle
-                            slug={slug}
-                            fullName={doctor.fullName}
-                            title={`MDRPedia: ${doctor.fullName}`}
-                        />
-                        {doctor.tier === "UNRANKED" && (
-                            <a href="#claim-profile" class="btn btn--outline" onclick="document.getElementById('claim-profile').scrollIntoView({ behavior: 'smooth' }); return false;">Claim Profile</a>
+                        {isUnclaimed && (
+                            <a href="#claim-profile" class="btn btn--outline">Claim Profile</a>
                         )}
                     </div>
                 </div>
@@ -403,7 +367,7 @@ function slugifyInstitution(name: string): string {
         </header>
 
         <!-- ═══════════════════ AWARDS RIBBON ═══════════════════ -->
-        {hasAwards && (
+        {hasRibbonAwards && (
             <section class="awards-ribbon-section">
                 <div class="container">
                     <AwardsRibbon awards={doctor.awards!.map(a => ({
@@ -449,7 +413,7 @@ function slugifyInstitution(name: string): string {
                                 <p class="pillars__intro">Four pillars that compose the MDRPedia Impact Quotient.</p>
                                 <div class="pillars__grid">
                                     {pillars.map(p => {
-                                        const pct = Math.min(Math.round(p.value * 100), 100);
+                                        const pct = Math.max(0, Math.min(Math.round(p.value), 100));
                                         return (
                                             <div class="pillar">
                                                 <div class="pillar__head">
@@ -457,7 +421,7 @@ function slugifyInstitution(name: string): string {
                                                     <span class="pillar__label">{p.label}</span>
                                                     <span class="pillar__value">{pct}</span>
                                                 </div>
-                                                <div class="pillar__bar">
+                                                <div class="pillar__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow={pct} aria-label={p.label}>
                                                     <div class="pillar__fill" style={`width: ${pct}%`} />
                                                 </div>
                                             </div>
@@ -489,9 +453,11 @@ function slugifyInstitution(name: string): string {
                                         const logoUrl = getInstitutionLogo(aff.hospitalName);
                                         const initials = getInstitutionInitials(aff.hospitalName);
                                         const bgColor = getInstitutionColor(aff.hospitalName);
+                                        const href = institutionHref(aff);
+                                        const Tag = href ? "a" : "div";
                                         return (
-                                            <a
-                                                href={`/institutions/${slugifyInstitution(aff.hospitalName)}`}
+                                            <Tag
+                                                href={href ?? undefined}
                                                 class="affiliation-card"
                                             >
                                                 <div class="affiliation-card__logo">
@@ -500,7 +466,9 @@ function slugifyInstitution(name: string): string {
                                                             src={logoUrl}
                                                             alt={aff.hospitalName}
                                                             loading="lazy"
-                                                            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                                                            class="js-logo"
+                                                            width="40"
+                                                            height="40"
                                                         />
                                                         <div class="affiliation-card__initials" style={`background: ${bgColor}; display: none;`}>
                                                             {initials}
@@ -512,13 +480,15 @@ function slugifyInstitution(name: string): string {
                                                     )}
                                                 </div>
                                                 <div class="affiliation-card__info">
-                                                    <h4 class="affiliation-card__name">{aff.hospitalName}</h4>
+                                                    <h3 class="affiliation-card__name">{aff.hospitalName}</h3>
                                                     {aff.role && <p class="affiliation-card__role">{aff.role}</p>}
                                                 </div>
-                                                <svg class="affiliation-card__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                                                </svg>
-                                            </a>
+                                                {href && (
+                                                    <svg class="affiliation-card__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                                                    </svg>
+                                                )}
+                                            </Tag>
                                         );
                                     })}
                                 </div>
@@ -559,7 +529,7 @@ function slugifyInstitution(name: string): string {
                                 {/* Top Journals */}
                                 {topJournals.length > 0 && (
                                     <div class="journals-section">
-                                        <h4 class="journals-title">Published In</h4>
+                                        <h3 class="journals-title">Published In</h3>
                                         <div class="journals-list">
                                             {topJournals.map(journal => (
                                                 <span class="journal-tag">{journal}</span>
@@ -569,11 +539,11 @@ function slugifyInstitution(name: string): string {
                                 )}
 
                                 <!-- Key Publications -->
-                                <div class="publications-list">
-                                    <h4 class="publications-title">Key Publications</h4>
-                                    {doctor.citations!.slice(0, 5).map((citation) => (
+                                <div class="publications-list" id="publications">
+                                    <h3 class="publications-title">Key Publications</h3>
+                                    {publications.slice(0, PUBLICATIONS_COLLAPSED).map((citation) => (
                                         <article class="publication">
-                                            <h5 class="publication__title">
+                                            <h4 class="publication__title">
                                                 {citation.doi ? (
                                                     <a
                                                         href={`https://doi.org/${citation.doi}`}
@@ -585,7 +555,7 @@ function slugifyInstitution(name: string): string {
                                                 ) : (
                                                     <span>{citation.title}</span>
                                                 )}
-                                            </h5>
+                                            </h4>
                                             <div class="publication__meta">
                                                 {citation.journal && <span class="publication__journal">{citation.journal}</span>}
                                                 {citation.year && <span class="publication__year">{citation.year}</span>}
@@ -628,10 +598,69 @@ function slugifyInstitution(name: string): string {
                                         </article>
                                     ))}
 
-                                    {doctor.citations!.length > 5 && (
-                                        <button class="btn btn--text show-more-btn" data-expand="publications">
-                                            View all {doctor.citations!.length} publications
-                                        </button>
+                                    {publications.length > PUBLICATIONS_COLLAPSED && (
+                                        <details class="publications-more">
+                                            <summary class="btn btn--text">
+                                                <span class="publications-more__closed">View all {publications.length} publications</span>
+                                                <span class="publications-more__open">Show fewer publications</span>
+                                            </summary>
+                                            {publications.slice(PUBLICATIONS_COLLAPSED).map((citation) => (
+                                        <article class="publication">
+                                            <h4 class="publication__title">
+                                                {citation.doi ? (
+                                                    <a
+                                                        href={`https://doi.org/${citation.doi}`}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                    >
+                                                        {citation.title}
+                                                    </a>
+                                                ) : (
+                                                    <span>{citation.title}</span>
+                                                )}
+                                            </h4>
+                                            <div class="publication__meta">
+                                                {citation.journal && <span class="publication__journal">{citation.journal}</span>}
+                                                {citation.year && <span class="publication__year">{citation.year}</span>}
+                                                {(((citation as any).citationCount ?? citation.totalCitationCount ?? 0) > 0) && (
+                                                    <span class="publication__citations">
+                                                        {((citation as any).citationCount ?? citation.totalCitationCount ?? 0).toLocaleString()} citations
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <div class="publication__links">
+                                                {citation.doi && (
+                                                    <a href={`https://doi.org/${citation.doi}`} target="_blank" rel="noopener" class="pub-link" title="DOI">
+                                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+                                                            <polyline points="15 3 21 3 21 9"/>
+                                                            <line x1="10" y1="14" x2="21" y2="3"/>
+                                                        </svg>
+                                                        DOI
+                                                    </a>
+                                                )}
+                                                {citation.pubmedId && (
+                                                    <a href={`https://pubmed.ncbi.nlm.nih.gov/${citation.pubmedId}`} target="_blank" rel="noopener" class="pub-link pub-link--pubmed" title="PubMed">
+                                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                            <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+                                                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+                                                        </svg>
+                                                        PubMed
+                                                    </a>
+                                                )}
+                                                {citation.isOpenAccess && citation.openAccessUrl && (
+                                                    <a href={citation.openAccessUrl} target="_blank" rel="noopener" class="pub-link pub-link--oa" title="Open Access">
+                                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                                            <path d="M7 11V7a5 5 0 0110 0v4"/>
+                                                        </svg>
+                                                        Free PDF
+                                                    </a>
+                                                )}
+                                            </div>
+                                        </article>
+                                    ))}
+                                        </details>
                                     )}
                                 </div>
                             </section>
@@ -653,7 +682,7 @@ function slugifyInstitution(name: string): string {
                                 <div class="expertise-container">
                                     {doctor.techniquesInvented && doctor.techniquesInvented.length > 0 && (
                                         <div class="expertise-group">
-                                            <h4 class="expertise-group__title">Pioneering Techniques</h4>
+                                            <h3 class="expertise-group__title">Pioneering Techniques</h3>
                                             <div class="tags">
                                                 {doctor.techniquesInvented.map(tech => (
                                                     <span class="tag tag--technique">{tech}</span>
@@ -663,7 +692,7 @@ function slugifyInstitution(name: string): string {
                                     )}
                                     {doctor.rareConditions && doctor.rareConditions.length > 0 && (
                                         <div class="expertise-group">
-                                            <h4 class="expertise-group__title">Rare Conditions Treated</h4>
+                                            <h3 class="expertise-group__title">Rare Conditions Treated</h3>
                                             <div class="tags">
                                                 {doctor.rareConditions.map(condition => (
                                                     <span class="tag tag--rare">{condition}</span>
@@ -673,7 +702,7 @@ function slugifyInstitution(name: string): string {
                                     )}
                                     {doctor.medicalSpecialty && doctor.medicalSpecialty.length > 0 && (
                                         <div class="expertise-group">
-                                            <h4 class="expertise-group__title">Medical Specialties</h4>
+                                            <h3 class="expertise-group__title">Medical Specialties</h3>
                                             <div class="tags">
                                                 {doctor.medicalSpecialty.map(spec => (
                                                     <a href={`/doctors?specialty=${encodeURIComponent(spec)}`} class="tag tag--specialty" style="text-decoration: none;">{spec}</a>
@@ -683,7 +712,7 @@ function slugifyInstitution(name: string): string {
                                     )}
                                     {doctor.conditionsTreated && doctor.conditionsTreated.length > 0 && (
                                         <div class="expertise-group">
-                                            <h4 class="expertise-group__title">Conditions & Diseases Treated</h4>
+                                            <h3 class="expertise-group__title">Conditions & Diseases Treated</h3>
                                             <div class="tags">
                                                 {doctor.conditionsTreated.map(condition => (
                                                     <a href={`/search?q=${encodeURIComponent(condition)}`} class="tag tag--condition" style="text-decoration: none;">{condition}</a>
@@ -693,7 +722,7 @@ function slugifyInstitution(name: string): string {
                                     )}
                                     {doctor.knowsAbout && doctor.knowsAbout.length > 0 && (
                                         <div class="expertise-group">
-                                            <h4 class="expertise-group__title">Clinical Knowledge & Procedures</h4>
+                                            <h3 class="expertise-group__title">Clinical Knowledge & Procedures</h3>
                                             <div class="tags">
                                                 {doctor.knowsAbout.map(topic => (
                                                     <a href={`/search?q=${encodeURIComponent(topic)}`} class="tag" style="text-decoration: none;">{topic}</a>
@@ -719,7 +748,7 @@ function slugifyInstitution(name: string): string {
                                         <article class="talk-card">
                                             <div class="talk-card__year">{talk.year}</div>
                                             <div class="talk-card__content">
-                                                <h4 class="talk-card__title">{talk.title}</h4>
+                                                <h3 class="talk-card__title">{talk.title}</h3>
                                                 <p class="talk-card__event">{talk.event}</p>
                                             </div>
                                         </article>
@@ -779,47 +808,22 @@ function slugifyInstitution(name: string): string {
                         )}
 
                         <!-- Similar Doctors -->
-                        <section class="card">
-                            <SimilarDoctors
-                                currentSlug={slug}
-                                specialty={doctor.specialty}
-                                country={doctor.geography.country}
-                                region={doctor.geography.region}
-                                tier={doctor.tier}
-                                subSpecialty={doctor.subSpecialty}
-                                techniques={doctor.techniquesInvented || []}
-                                journals={topJournals as string[]}
-                                hIndex={doctor.hIndex}
-                            />
-                        </section>
+                        <SimilarDoctors
+                            currentSlug={slug}
+                            specialty={doctor.specialty}
+                            country={doctor.geography.country}
+                            region={doctor.geography.region}
+                            tier={doctor.tier}
+                            subSpecialty={doctor.subSpecialty}
+                            techniques={doctor.techniquesInvented || []}
+                            journals={topJournals as string[]}
+                            hIndex={doctor.hIndex}
+                        />
                     </div>
 
                     <!-- Sidebar -->
                     <aside class="sidebar-col">
                         <div class="sidebar-sticky">
-                            <!-- Profile Completeness -->
-                            <div class="sidebar-card completeness-card">
-                                <ProfileCompletionMeter
-                                    slug={slug}
-                                    doctorName={doctor.fullName}
-                                    isHistorical={isHistorical}
-                                    isClaimed={doctor.hasVerifiedCredentials || false}
-                                    completenessFactors={completenessFactors as boolean[]}
-                                    hasImage={!!hasImage}
-                                    hasBio={!!hasMeaningfulBio}
-                                    hasAffiliations={!!hasAffiliations}
-                                    hasPublications={!!hasPublications}
-                                    hasAwards={!!hasAwards}
-                                    hasTimeline={!!hasTimeline}
-                                    hasLineage={!!hasLineage}
-                                    hasHIndex={doctor.hIndex > 0}
-                                    hasSurgeries={doctor.verifiedSurgeries > 0}
-                                    hasLivesSaved={doctor.livesSaved > 0}
-                                    hasCredentials={!!(doctor.npiNumber || doctor.orcidId)}
-                                    hasKnowsAbout={!!(doctor.knowsAbout && doctor.knowsAbout.length > 0)}
-                                />
-                            </div>
-
                             <!-- Quick Facts Card -->
                             <div class="sidebar-card facts-card">
                                 <h3 class="sidebar-card__title">Quick Facts</h3>
@@ -878,48 +882,6 @@ function slugifyInstitution(name: string): string {
                                 </div>
                             )}
 
-                            <!-- Primary Institution Card -->
-                            {hasAffiliations && (() => {
-                                const primaryAff = doctor.affiliations![0];
-                                const primaryLogo = getInstitutionLogo(primaryAff.hospitalName);
-                                const primaryInitials = getInstitutionInitials(primaryAff.hospitalName);
-                                const primaryBgColor = getInstitutionColor(primaryAff.hospitalName);
-                                return (
-                                    <div class="sidebar-card institution-card">
-                                        <h3 class="sidebar-card__title">Primary Institution</h3>
-                                        <a href={`/institutions/${slugifyInstitution(primaryAff.hospitalName)}`} class="institution-link">
-                                            <div class="institution-logo">
-                                                {primaryLogo ? (
-                                                    <img
-                                                        src={primaryLogo}
-                                                        alt={primaryAff.hospitalName}
-                                                        loading="lazy"
-                                                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-                                                    />
-                                                ) : null}
-                                                <div
-                                                    class="institution-initials"
-                                                    style={`background: ${primaryBgColor}; ${primaryLogo ? 'display: none;' : ''}`}
-                                                >
-                                                    {primaryInitials}
-                                                </div>
-                                            </div>
-                                            <div class="institution-info">
-                                                <span class="institution-name">{primaryAff.hospitalName}</span>
-                                                {primaryAff.role && (
-                                                    <span class="institution-role">{primaryAff.role}</span>
-                                                )}
-                                            </div>
-                                        </a>
-                                        {doctor.affiliations!.length > 1 && (
-                                            <p class="institution-more">
-                                                +{doctor.affiliations!.length - 1} other affiliation{doctor.affiliations!.length > 2 ? 's' : ''}
-                                            </p>
-                                        )}
-                                    </div>
-                                );
-                            })()}
-
                             <!-- Practice Info Card (from Doctor Portal) -->
                             {!isHistorical && (doctor.languagesSpoken?.length || doctor.acceptedInsurance?.length || doctor.patientPhilosophy) && (
                                 <div class="sidebar-card portal-card">
@@ -950,20 +912,20 @@ function slugifyInstitution(name: string): string {
                                             <p class="portal-philosophy">{doctor.patientPhilosophy}</p>
                                         </div>
                                     )}
-                                    {doctor.bookingUrl && (
+                                    {doctor.bookingUrl && !showConsultation && (
                                         <a href={doctor.bookingUrl} target="_blank" rel="noopener" class="btn btn--primary btn--full">Book Appointment</a>
                                     )}
                                 </div>
                             )}
 
                             <!-- Consultation Card (for living doctors) -->
-                            {!isHistorical && (doctor.consultationPrice || doctor.teleConsultationPrice) && (
+                            {showConsultation && (
                                 <div class="sidebar-card consultation-card">
                                     <h3 class="sidebar-card__title">Book Consultation</h3>
-                                    {doctor.consultationPrice && (
+                                    {consultationFee && (
                                         <div class="price-row">
                                             <span>In-Person</span>
-                                            <strong>{doctor.consultationPrice}</strong>
+                                            <strong>{consultationFee}</strong>
                                         </div>
                                     )}
                                     {doctor.teleConsultationPrice && (
@@ -972,7 +934,7 @@ function slugifyInstitution(name: string): string {
                                             <strong>{doctor.teleConsultationPrice}</strong>
                                         </div>
                                     )}
-                                    <a href="#" class="btn btn--primary btn--full">Book Appointment</a>
+                                    <a href={doctor.bookingUrl!} target="_blank" rel="noopener" class="btn btn--primary btn--full">Book Appointment</a>
                                 </div>
                             )}
 
@@ -983,7 +945,7 @@ function slugifyInstitution(name: string): string {
                                         <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
                                     </svg>
                                 </div>
-                                <h4 class="suggest-title">Help Improve This Profile</h4>
+                                <h3 class="suggest-title">Help Improve This Profile</h3>
                                 <p class="suggest-text">Know additional details about {doctor.fullName.split(' ')[0]}? Share information to help make this profile more comprehensive.</p>
                                 <div class="suggest-options">
                                     <a href={`/suggest-edit?profile=${slug}&type=citation`} class="suggest-option">
@@ -1011,7 +973,7 @@ function slugifyInstitution(name: string): string {
             </div>
         </div>
         
-        {doctor.tier === "UNRANKED" && (
+        {isUnclaimed && (
             <ClaimProfile doctorName={doctor.fullName} slug={slug} />
         )}
     </article>
@@ -1429,11 +1391,6 @@ function slugifyInstitution(name: string): string {
 
     .prose p:last-child {
         margin-bottom: 0;
-    }
-
-    .bio-text {
-        color: var(--ink-2);
-        line-height: 1.75;
     }
 
     /* ═══════════════════ AFFILIATIONS ═══════════════════ */
@@ -2089,83 +2046,6 @@ function slugifyInstitution(name: string): string {
         border-radius: 4px;
     }
 
-    /* Institution Card */
-    .institution-link {
-        display: flex;
-        align-items: center;
-        gap: 0.875rem;
-        padding: 0.875rem 1rem;
-        background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.1) 0%, rgba(var(--accent-rgb), 0.04) 100%);
-        border: 1px solid rgba(var(--accent-rgb), 0.12);
-        border-radius: var(--r-3);
-        text-decoration: none;
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .institution-link:hover {
-        background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.15) 0%, rgba(var(--accent-rgb), 0.08) 100%);
-        border-color: rgba(var(--accent-rgb), 0.25);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px -8px rgba(var(--accent-rgb), 0.2);
-    }
-
-    .institution-logo {
-        width: 48px;
-        height: 48px;
-        flex-shrink: 0;
-        border-radius: var(--r-3);
-        overflow: hidden;
-        background: var(--paper);
-        box-shadow: var(--shadow-1);
-    }
-
-    .institution-logo img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        padding: 4px;
-    }
-
-    .institution-initials {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.9rem;
-        font-weight: 700;
-        color: var(--paper);
-        text-transform: uppercase;
-        background: var(--accent, var(--ink-blue));
-    }
-
-    .institution-info {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-    }
-
-    .institution-name {
-        font-weight: 600;
-        color: var(--ink);
-        font-size: 0.875rem;
-        letter-spacing: -0.01em;
-    }
-
-    .institution-role {
-        font-size: 0.75rem;
-        color: var(--ink-3);
-        font-weight: 500;
-    }
-
-    .institution-more {
-        font-size: 0.75rem;
-        color: var(--ink-3);
-        margin: 0.875rem 0 0;
-        text-align: center;
-        font-weight: 500;
-    }
-
     /* Portal (Practice Info) Card */
     .portal-card {
         background: var(--paper);
@@ -2341,88 +2221,6 @@ function slugifyInstitution(name: string): string {
         font-size: 0.65rem;
     }
 
-    /* Profile Completeness Card */
-    .completeness-card {
-        background: var(--paper);
-        border-color: color-mix(in oklch, var(--verdant) 15%, transparent);
-    }
-
-    .completeness-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1rem;
-    }
-
-    .completeness-header .sidebar-card__title {
-        margin: 0;
-        padding-bottom: 0;
-        border-bottom: none;
-    }
-
-    .completeness-badge {
-        padding: 4px 12px;
-        border-radius: var(--r-pill);
-        font-size: 0.65rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-    }
-
-    .completeness-badge--high {
-        background: var(--verdant-2);
-        color: var(--verdant);
-    }
-
-    .completeness-badge--medium {
-        background: color-mix(in oklch, var(--aged-gold) 10%, transparent);
-        color: var(--aged-gold);
-    }
-
-    .completeness-badge--low {
-        background: color-mix(in oklch, var(--sanguine) 10%, transparent);
-        color: var(--sanguine);
-    }
-
-    .completeness-bar {
-        height: 8px;
-        background: var(--rule);
-        border-radius: var(--r-pill);
-        overflow: hidden;
-    }
-
-    .completeness-bar__fill {
-        height: 100%;
-        background: linear-gradient(90deg, var(--verdant) 0%, var(--ink-blue) 100%);
-        border-radius: var(--r-pill);
-        transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-    }
-
-    .completeness-bar__fill::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(90deg, transparent 0%, color-mix(in oklch, var(--paper) 30%, transparent) 50%, transparent 100%);
-        animation: shimmer 2s infinite;
-    }
-
-    @keyframes shimmer {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(100%); }
-    }
-
-    .completeness-text {
-        font-size: 0.75rem;
-        color: var(--ink-3);
-        margin: 0.75rem 0 0;
-        text-align: center;
-        font-weight: 500;
-    }
-
     /* ═══════════════════ BUTTONS ═══════════════════ */
     .btn {
         position: relative;
@@ -2484,12 +2282,6 @@ function slugifyInstitution(name: string): string {
     .btn--full {
         width: 100%;
         margin-top: 1.125rem;
-    }
-
-    .btn--small {
-        padding: 0.5rem 1rem;
-        font-size: 0.8rem;
-        border-radius: var(--r-3);
     }
 
     /* ═══════════════════ RESPONSIVE ═══════════════════ */
@@ -2579,109 +2371,70 @@ function slugifyInstitution(name: string): string {
         }
     }
 
-    /* ═══════════════════ ANIMATIONS ═══════════════════ */
-    @keyframes countUp {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
+    .hero__specialty-link {
+        color: inherit;
+        text-decoration: none;
     }
 
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .hero__specialty-link:hover {
+        text-decoration: underline;
     }
 
-    @keyframes glow {
-        0%, 100% { box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.15); }
-        50% { box-shadow: 0 0 40px rgba(var(--accent-rgb), 0.25); }
+    .publications-more > summary {
+        list-style: none;
+        cursor: pointer;
     }
 
-    /* Section entrance animations */
-    .card {
-        animation: fadeInUp 0.5s ease-out backwards;
+    .publications-more > summary::-webkit-details-marker {
+        display: none;
     }
 
-    .card:nth-child(1) { animation-delay: 0.1s; }
-    .card:nth-child(2) { animation-delay: 0.2s; }
-    .card:nth-child(3) { animation-delay: 0.3s; }
-    .card:nth-child(4) { animation-delay: 0.4s; }
-    .card:nth-child(5) { animation-delay: 0.5s; }
-
-    .sidebar-card {
-        animation: fadeInUp 0.5s ease-out backwards;
+    .publications-more[open] .publications-more__closed,
+    .publications-more:not([open]) .publications-more__open {
+        display: none;
     }
 
-    .sidebar-card:nth-child(1) { animation-delay: 0.15s; }
-    .sidebar-card:nth-child(2) { animation-delay: 0.25s; }
-    .sidebar-card:nth-child(3) { animation-delay: 0.35s; }
-    .sidebar-card:nth-child(4) { animation-delay: 0.45s; }
-
-    /* Metric hover glow */
-    .metric:hover {
-        animation: glow 2s ease-in-out infinite;
-    }
-
-    /* Reduce motion for accessibility */
-    @media (prefers-reduced-motion: reduce) {
-        .card,
-        .sidebar-card {
-            animation: none;
-        }
-
-        .metric:hover {
-            animation: none;
-        }
-
-        .completeness-bar__fill::after {
-            animation: none;
-        }
-
-        .hero__frame--titan {
-            animation: none;
-        }
+    .affiliation-card:focus-visible,
+    .suggest-option:focus-visible,
+    .pub-link:focus-visible,
+    .publication__title a:focus-visible,
+    .tag:focus-visible,
+    .hero__specialty-link:focus-visible,
+    .verify-badge:focus-visible,
+    .credential-link:focus-visible,
+    .btn:focus-visible,
+    .publications-more > summary:focus-visible {
+        outline: 2px solid var(--ink-blue);
+        outline-offset: 2px;
     }
 </style>
 
 <script>
-    // Intersection Observer for Counters
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px"
-    };
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const el = entry.target as HTMLElement;
-                startCounter(el);
-                observer.unobserve(el);
-            }
-        });
-    }, observerOptions);
+    if (!reduceMotion && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    startCounter(entry.target as HTMLElement);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
 
-    document.querySelectorAll('.js-counter').forEach(el => observer.observe(el));
+        document.querySelectorAll('.js-counter').forEach((el) => observer.observe(el));
+    }
 
     function startCounter(el: HTMLElement) {
         const target = parseInt(el.dataset.target || '0');
         if (!target) return;
 
-        const duration = 2000; // 2 seconds
-        const start = 0;
+        const duration = 2000;
         const startTime = performance.now();
         function update(currentTime: number) {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            
-            // Ease out quart
+            const progress = Math.min((currentTime - startTime) / duration, 1);
             const ease = 1 - Math.pow(1 - progress, 4);
-            
-            const current = Math.floor(start + (target - start) * ease);
-            el.textContent = current.toLocaleString();
+            el.textContent = Math.floor(target * ease).toLocaleString();
 
             if (progress < 1) {
                 requestAnimationFrame(update);
@@ -2693,18 +2446,20 @@ function slugifyInstitution(name: string): string {
         requestAnimationFrame(update);
     }
 
-</script>
+    document.querySelectorAll<HTMLImageElement>('img.js-logo').forEach((img) => {
+        const showFallback = () => {
+            img.style.display = 'none';
+            const next = img.nextElementSibling as HTMLElement | null;
+            if (next) next.style.display = 'flex';
+        };
+        if (img.complete && img.naturalWidth === 0) showFallback();
+        else img.addEventListener('error', showFallback, { once: true });
+    });
 
-<script>
-    // Show more publications toggle
-    document.addEventListener('DOMContentLoaded', () => {
-        const showMoreBtns = document.querySelectorAll('.show-more-btn');
-        showMoreBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Could expand to show all publications
-                // For now, link to full publications page
-                window.location.hash = 'publications';
-            });
-        });
+    document.querySelector<HTMLAnchorElement>('a[href="#claim-profile"]')?.addEventListener('click', (e) => {
+        const target = document.getElementById('claim-profile');
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
     });
 </script>

@@ -3,7 +3,7 @@
  * OptimizedImage — Performance-optimized image component
  * Features:
  * - Native lazy loading
- * - Blur placeholder while loading
+ * - Tinted placeholder behind the image (image is never hidden pending JS)
  * - Error fallback with initials
  * - Proper aspect ratio to prevent CLS
  */
@@ -68,7 +68,6 @@ const colors = tierColors[tier] || tierColors.UNRANKED;
 <div
     class:list={["optimized-image", className]}
     style={`--img-width: ${width}px; --img-height: ${computedHeight}px; --fallback-bg: ${colors.bg}; --fallback-text: ${colors.text};`}
-    data-loaded="false"
 >
     {hasValidSrc ? (
         <img
@@ -77,11 +76,10 @@ const colors = tierColors[tier] || tierColors.UNRANKED;
             width={width}
             height={computedHeight}
             loading={priority ? "eager" : "lazy"}
-            decoding={priority ? "sync" : "async"}
+            decoding="async"
+            fetchpriority={priority ? "high" : undefined}
             referrerpolicy="no-referrer"
             class="optimized-image__img"
-            onload="this.parentElement.dataset.loaded='true'"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';this.parentElement.dataset.loaded='true';"
         />
         <div class="optimized-image__fallback" style="display: none;">
             <span class="optimized-image__initials">{initials}</span>
@@ -91,7 +89,6 @@ const colors = tierColors[tier] || tierColors.UNRANKED;
             <span class="optimized-image__initials">{initials}</span>
         </div>
     )}
-    <div class="optimized-image__skeleton"></div>
 </div>
 
 <style>
@@ -108,34 +105,6 @@ const colors = tierColors[tier] || tierColors.UNRANKED;
         width: 100%;
         height: 100%;
         object-fit: cover;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .optimized-image[data-loaded="true"] .optimized-image__img {
-        opacity: 1;
-    }
-
-    .optimized-image[data-loaded="true"] .optimized-image__skeleton {
-        display: none;
-    }
-
-    .optimized-image__skeleton {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.03) 25%,
-            rgba(255, 255, 255, 0.08) 50%,
-            rgba(255, 255, 255, 0.03) 75%
-        );
-        background-size: 200% 100%;
-        animation: shimmer 1.5s infinite;
-    }
-
-    @keyframes shimmer {
-        0% { background-position: 200% 0; }
-        100% { background-position: -200% 0; }
     }
 
     .optimized-image__fallback {
@@ -154,3 +123,16 @@ const colors = tierColors[tier] || tierColors.UNRANKED;
         letter-spacing: 0.05em;
     }
 </style>
+
+<script>
+    function bindFallback(img: HTMLImageElement) {
+        const showFallback = () => {
+            img.style.display = "none";
+            const next = img.nextElementSibling as HTMLElement | null;
+            if (next) next.style.display = "flex";
+        };
+        if (img.complete && img.naturalWidth === 0) showFallback();
+        else img.addEventListener("error", showFallback, { once: true });
+    }
+    document.querySelectorAll<HTMLImageElement>(".optimized-image__img").forEach(bindFallback);
+</script>

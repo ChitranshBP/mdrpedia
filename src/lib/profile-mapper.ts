@@ -81,6 +81,7 @@ export function mapDbProfileToProps(db: DbProfileFull): ProfileData {
     // Map affiliations to UI format
     const affiliations = db.affiliations.map(a => ({
         hospitalName: a.hospital.name,
+        hospitalSlug: a.hospital.slug,
         role: a.role ?? undefined,
         hospitalUrl: a.hospital.website ?? undefined,
     }));
@@ -180,6 +181,7 @@ export function mapDbProfileToProps(db: DbProfileFull): ProfileData {
         globalMentorshipScore: db.global_mentorship_score ?? null,
         humanitarianImpact: db.humanitarian_impact ?? null,
         // Computed display flags
+        claimStatus: db.claim_status,
         hasVerifiedCredentials: !!(db.npi_number || db.orcid_id),
         hasSignificantCitations: totalCitations > 1000,
         // Timestamps for SEO structured data

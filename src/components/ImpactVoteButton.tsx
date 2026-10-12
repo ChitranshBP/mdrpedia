@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
+import './ImpactVoteButton.css';
 
 interface Props {
     profileId?: string;
@@ -93,6 +94,9 @@ export default function ImpactVoteButton({ profileId, slug, doctorName, initialC
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 disabled={isLoading}
+                aria-haspopup="true"
+                aria-expanded={isOpen}
+                aria-label={hasVoted ? `Impacted by ${doctorName}. Change or remove your response` : `I was impacted by ${doctorName}`}
                 className={`impact-btn ${hasVoted ? 'impact-btn--voted' : ''}`}
             >
                 {isLoading ? (
@@ -118,7 +122,7 @@ export default function ImpactVoteButton({ profileId, slug, doctorName, initialC
             </button>
 
             {showSuccess && (
-                <div className="impact-toast">
+                <div className="impact-toast" role="status">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                         <circle cx="8" cy="8" r="8" fill="var(--verdant)"/>
                         <path d="M5 8L7 10L11 6" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -129,8 +133,8 @@ export default function ImpactVoteButton({ profileId, slug, doctorName, initialC
 
             {isOpen && (
                 <>
-                    <div className="impact-overlay" onClick={() => setIsOpen(false)} />
-                    <div className="impact-panel">
+                    <div className="impact-overlay" onClick={() => setIsOpen(false)} aria-hidden="true" />
+                    <div className="impact-panel" role="group" aria-label="How were you impacted?" onKeyDown={(e) => { if (e.key === 'Escape') setIsOpen(false); }}>
                         <div className="impact-panel__header">
                             <div className="impact-panel__title">
                                 How did Dr. {firstName} help you?
@@ -149,6 +153,7 @@ export default function ImpactVoteButton({ profileId, slug, doctorName, initialC
                                     onClick={() => handleVote(option.key)}
                                     disabled={isLoading}
                                     className={`impact-option ${userVoteType === option.key ? 'impact-option--selected' : ''}`}
+                                    aria-pressed={userVoteType === option.key}
                                     style={{ '--accent': option.color } as React.CSSProperties}
                                 >
                                     <span className="impact-option__emoji">{option.icon}</span>
@@ -176,244 +181,6 @@ export default function ImpactVoteButton({ profileId, slug, doctorName, initialC
                     </div>
                 </>
             )}
-
-            <style>{`
-                .impact-vote {
-                    position: relative;
-                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                }
-
-                .impact-btn {
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 8px;
-                    height: 44px;
-                    padding: 0 16px;
-                    background: var(--paper-2);
-                    border: 1px solid var(--rule);
-                    border-radius: var(--r-4);
-                    color: var(--ink);
-                    font-size: 14px;
-                    font-weight: 500;
-                    cursor: pointer;
-                    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-                }
-
-                .impact-btn:hover {
-                    background: var(--paper-3);
-                    border-color: var(--ink-blue);
-                    transform: translateY(-1px);
-                }
-
-                .impact-btn--voted {
-                    background: var(--ink-blue-2);
-                    border-color: var(--ink-blue);
-                }
-
-                .impact-btn__icon {
-                    font-size: 16px;
-                }
-
-                .impact-btn__text {
-                    letter-spacing: -0.01em;
-                }
-
-                .impact-btn__count {
-                    padding: 2px 8px;
-                    background: var(--paper-3);
-                    border-radius: 6px;
-                    font-size: 12px;
-                    font-weight: 500;
-                }
-
-                .impact-btn__arrow {
-                    opacity: 0.6;
-                    transition: transform 0.2s;
-                }
-
-                .impact-btn__arrow.open {
-                    transform: rotate(180deg);
-                }
-
-                .impact-btn__loader {
-                    width: 16px;
-                    height: 16px;
-                    border: 2px solid var(--rule);
-                    border-top-color: var(--ink-blue);
-                    border-radius: 50%;
-                    animation: spin 0.6s linear infinite;
-                }
-
-                @keyframes spin {
-                    to { transform: rotate(360deg); }
-                }
-
-                .impact-toast {
-                    position: absolute;
-                    bottom: calc(100% + 8px);
-                    left: 50%;
-                    transform: translateX(-50%);
-                    display: flex;
-                    align-items: center;
-                    gap: 8px;
-                    padding: 10px 14px;
-                    background: var(--paper);
-                    border: 1px solid var(--rule);
-                    border-radius: var(--r-3);
-                    color: var(--ink);
-                    font-size: 13px;
-                    font-weight: 500;
-                    white-space: nowrap;
-                    box-shadow: var(--shadow-2);
-                    animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-                    z-index: 100;
-                }
-
-                @keyframes toastIn {
-                    from {
-                        opacity: 0;
-                        transform: translateX(-50%) translateY(4px) scale(0.96);
-                    }
-                }
-
-                .impact-overlay {
-                    position: fixed;
-                    inset: 0;
-                    z-index: 50;
-                }
-
-                .impact-panel {
-                    position: absolute;
-                    bottom: calc(100% + 8px);
-                    left: 0;
-                    width: 320px;
-                    background: var(--paper);
-                    border: 1px solid var(--rule);
-                    border-radius: var(--r-3);
-                    box-shadow: var(--shadow-2);
-                    overflow: hidden;
-                    z-index: 60;
-                    animation: panelIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-                }
-
-                @keyframes panelIn {
-                    from {
-                        opacity: 0;
-                        transform: translateY(8px) scale(0.98);
-                    }
-                }
-
-                .impact-panel__header {
-                    padding: 16px 16px 12px;
-                    border-bottom: 1px solid var(--rule);
-                }
-
-                .impact-panel__title {
-                    color: var(--ink);
-                    font-size: 15px;
-                    font-weight: 500;
-                    letter-spacing: -0.01em;
-                }
-
-                .impact-panel__stats {
-                    margin-top: 4px;
-                    color: var(--slate);
-                    font-size: 13px;
-                }
-
-                .impact-panel__grid {
-                    display: grid;
-                    grid-template-columns: repeat(2, 1fr);
-                    gap: 6px;
-                    padding: 12px;
-                }
-
-                .impact-option {
-                    position: relative;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: 6px;
-                    padding: 14px 8px;
-                    background: var(--paper-2);
-                    border: 1px solid var(--rule);
-                    border-radius: var(--r-4);
-                    color: var(--slate);
-                    cursor: pointer;
-                    transition: all 0.15s;
-                }
-
-                .impact-option:hover {
-                    background: var(--paper-3);
-                    border-color: var(--rule);
-                    color: var(--ink);
-                }
-
-                .impact-option--selected {
-                    background: var(--ink-blue-2);
-                    border-color: var(--accent);
-                    color: var(--ink);
-                }
-
-                .impact-option__emoji {
-                    font-size: 22px;
-                    line-height: 1;
-                }
-
-                .impact-option__label {
-                    font-size: 12px;
-                    font-weight: 500;
-                    text-align: center;
-                }
-
-                .impact-option__check {
-                    position: absolute;
-                    top: 6px;
-                    right: 6px;
-                    width: 16px;
-                    height: 16px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    background: var(--accent);
-                    border-radius: 50%;
-                    color: var(--paper);
-                    font-size: 10px;
-                    font-weight: 500;
-                }
-
-                .impact-panel__footer {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    padding: 10px 16px;
-                    border-top: 1px solid var(--rule);
-                }
-
-                .impact-panel__secure {
-                    display: flex;
-                    align-items: center;
-                    gap: 6px;
-                    color: var(--slate);
-                    font-size: 12px;
-                }
-
-                .impact-panel__remove {
-                    padding: 4px 10px;
-                    background: transparent;
-                    border: none;
-                    border-radius: 6px;
-                    color: var(--slate);
-                    font-size: 12px;
-                    cursor: pointer;
-                    transition: all 0.15s;
-                }
-
-                .impact-panel__remove:hover {
-                    background: var(--paper-3);
-                    color: var(--ink);
-                }
-            `}</style>
         </div>
     );
 }
