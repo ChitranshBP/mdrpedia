@@ -37,7 +37,8 @@ const HUB_CACHE = 'public, max-age=60, s-maxage=300, stale-while-revalidate=8640
 const SINGULAR_PROFILE = /^\/doctor\/([a-z0-9-]+)\/?$/;
 const DOCTOR_ROUTES = new Set(['claim', 'portal', 'ethics', 'add-profile']);
 
-export const onRequest = defineMiddleware(async ({ request, locals }, next) => {
+export const onRequest = defineMiddleware(async ({ request, locals, isPrerendered }, next) => {
+    if (isPrerendered) return next();
     const startTime = Date.now();
     const url = new URL(request.url);
 
