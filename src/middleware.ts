@@ -9,6 +9,14 @@ import { defineMiddleware } from 'astro:middleware';
 const STATIC_ASSETS = /\.(js|css|woff2?|ttf|otf|png|jpg|jpeg|gif|webp|avif|svg|ico|mp4|webm)$/i;
 const IMMUTABLE_ASSETS = /\/_astro\//;
 
+// Public SSR pages that are identical for every visitor. s-maxage is what a shared
+// cache (nginx proxy_cache, CDN, LiteSpeed cache) honours; max-age keeps browsers honest.
+const PROFILE_PAGE = /^\/doctors\/[^/]+\/?$/;
+const HUB_PAGE = /^\/(doctors|specialty|geography|institutions|rankings|map|ethical-doctors)(\/|$)/;
+
+const PROFILE_CACHE = 'public, max-age=60, s-maxage=600, stale-while-revalidate=86400';
+const HUB_CACHE = 'public, max-age=60, s-maxage=300, stale-while-revalidate=86400';
+
 export const onRequest = defineMiddleware(async ({ request, locals }, next) => {
     const startTime = Date.now();
     const url = new URL(request.url);
@@ -42,10 +50,16 @@ export const onRequest = defineMiddleware(async ({ request, locals }, next) => {
         if (!newHeaders.has('Cache-Control')) {
             newHeaders.set('Cache-Control', 'no-store, must-revalidate');
         }
-    } else if (url.pathname === '/' || url.pathname.startsWith('/doctors')) {
-        // Dynamic pages - short cache with revalidation
-        if (!newHeaders.has('Cache-Control')) {
-            newHeaders.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
+    } else if (
+        (request.method === 'GET' || request.method === 'HEAD') &&
+        response.status === 200 &&
+        !newHeaders.has('Cache-Control') &&
+        !newHeaders.has('Set-Cookie')
+    ) {
+        if (PROFILE_PAGE.test(url.pathname)) {
+            newHeaders.set('Cache-Control', PROFILE_CACHE);
+        } else if (url.pathname === '/' || HUB_PAGE.test(url.pathname)) {
+            newHeaders.set('Cache-Control', HUB_CACHE);
         }
     }
     
