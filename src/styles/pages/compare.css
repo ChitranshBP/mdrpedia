@@ -1,0 +1,85 @@
+/* Physician comparison (claude.ai/design "MDRPedia" register system). */
+
+.cmp {
+  --cmp-green: #0e3b2e;
+  --cmp-gold: #7a5c16;
+  /* The CompareSearch island styles itself with the classic tokens. */
+  --paper: #fff; --paper-2: var(--r-line-soft); --paper-3: var(--r-line-soft); --rule: var(--r-line);
+  --ink: var(--r-ink); --ink-2: var(--r-ink-2); --ink-3: var(--r-ink-3);
+  --font-sans: var(--r-sans); --font-serif: var(--r-sans); --font-mono: var(--r-mono); --sanguine: var(--r-red);
+}
+.r-body .cmp a { color: var(--cmp-green); }
+.r-body .cmp a:hover { color: var(--cmp-gold); }
+
+.cmp-wrap { max-width: var(--r-max); margin: 0 auto; padding-left: 40px; padding-right: 40px; }
+.cmp-hero { padding-top: 64px; padding-bottom: 32px; display: flex; flex-direction: column; gap: 20px; }
+.cmp-crumbs { font-family: var(--r-mono); font-size: 12px; color: var(--r-ink-3); display: flex; flex-wrap: wrap; gap: 6px; }
+.cmp-eyebrow { font-family: var(--r-mono); font-size: 12px; color: var(--cmp-gold); }
+.cmp-hero h1 {
+  font-family: var(--r-serif); font-weight: 500; font-size: clamp(44px, 6vw, 80px);
+  line-height: 0.98; letter-spacing: -0.02em; margin: 0; text-wrap: balance;
+}
+.cmp-hero p { margin: 0; max-width: 56ch; color: var(--r-ink-2); font-size: 18px; }
+
+.cmp-main { padding-bottom: 88px; display: flex; flex-direction: column; gap: 32px; }
+.cmp-search { border-top: 3px double var(--cmp-green); padding-top: 20px; min-width: 0; }
+.cmp-error { margin: 0; padding: 12px 14px; background: var(--r-red-soft); color: var(--r-red); font-weight: 600; }
+
+.cmp-empty { background: var(--r-card); border: 1px solid var(--r-line); padding: 32px; display: flex; flex-direction: column; gap: 12px; }
+.cmp-empty h2 { font-family: var(--r-serif); font-weight: 500; font-size: 30px; margin: 0; }
+.cmp-empty p { margin: 0; max-width: 58ch; color: var(--r-ink-2); }
+.cmp-hints { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; }
+.cmp-hints span { font-family: var(--r-mono); font-size: 12px; color: var(--r-ink-3); }
+
+/* Physician header cards */
+.cmp-heads { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); gap: 24px; }
+.cmp-head { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; text-decoration: none; padding: 16px 0; border-top: 3px double var(--cmp-green); height: 100%; }
+.cmp-portrait {
+  width: 88px; height: 88px; border-radius: 50%; overflow: hidden; background: var(--r-line-soft);
+  display: flex; align-items: center; justify-content: center; font-family: var(--r-serif); font-size: 30px; color: var(--cmp-gold);
+}
+.cmp-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cmp-head__name { font-family: var(--r-serif); font-size: 28px; line-height: 1.1; color: var(--r-ink); overflow-wrap: anywhere; }
+.r-body .cmp a.cmp-head:hover .cmp-head__name { color: var(--cmp-gold); text-decoration: underline; }
+.cmp-tier { font-family: var(--r-mono); font-size: 11px; color: var(--r-ink-2); text-transform: uppercase; border: 1px solid currentColor; padding: 2px 8px; }
+.cmp-tier--titan { color: var(--cmp-gold); }
+.cmp-tier--elite { color: var(--cmp-green); }
+
+/* Comparison table */
+.cmp-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.cmp-table thead th { text-align: left; padding: 10px 16px 10px 0; border-bottom: 2px solid var(--cmp-green); font-family: var(--r-mono); font-weight: 400; font-size: 11px; color: var(--r-ink-3); text-transform: uppercase; overflow-wrap: anywhere; }
+.cmp-table thead th:first-child, .cmp-table tbody th { width: 160px; }
+.cmp-table tbody th { text-align: left; padding: 16px 16px 16px 0; font-family: var(--r-mono); font-weight: 400; font-size: 12px; color: var(--r-ink-3); text-transform: uppercase; vertical-align: top; }
+.cmp-table td { padding: 16px 16px 16px 0; vertical-align: top; border-bottom: 1px solid var(--r-line); overflow-wrap: anywhere; }
+.cmp-table tbody tr { border-bottom: 1px solid var(--r-line); }
+.cmp-table tbody tr th { border-bottom: 1px solid var(--r-line); }
+.cmp-primary { display: block; font-size: 16px; font-weight: 600; }
+.cmp-secondary { display: block; font-size: 14px; color: var(--r-ink-2); }
+.cmp-num { font-family: var(--r-serif); font-size: 30px; line-height: 1.1; }
+.cmp-best { display: block; font-family: var(--r-mono); font-size: 11px; color: var(--r-green); }
+.is-best .cmp-num { color: var(--r-green); }
+.cmp-ethics { color: var(--r-green); }
+
+.cmp-actions { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 32px; }
+
+@media (max-width: 720px) {
+  .cmp-wrap { padding-left: 20px; padding-right: 20px; }
+  .cmp-hero { padding-top: 44px; padding-bottom: 24px; }
+  .cmp-hero p { font-size: 17px; }
+  .cmp-main { padding-bottom: 64px; }
+  .cmp-empty { padding: 24px 20px; }
+  .cmp-heads { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .cmp-head { flex-direction: row; align-items: center; gap: 14px; padding: 14px 0; }
+  .cmp-portrait { width: 56px; height: 56px; flex: none; font-size: 20px; }
+  .cmp-head__name { font-size: 22px; flex: 1; }
+
+  .cmp-table, .cmp-table tbody, .cmp-table tr, .cmp-table th, .cmp-table td { display: block; width: 100%; }
+  .cmp-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .cmp-table tbody tr { padding: 14px 0; border-bottom: 1px solid var(--r-line); }
+  .cmp-table tbody th, .cmp-table thead th:first-child { width: 100%; padding: 0 0 6px; border: 0; }
+  .cmp-table td { display: flex; align-items: baseline; gap: 12px; padding: 6px 0; border: 0; }
+  .cmp-table td::before { content: attr(data-doctor); font-size: 14px; color: var(--r-ink-2); flex: 1 1 auto; }
+  .cmp-table td > * { text-align: right; }
+  .cmp-num { font-size: 24px; }
+  .cmp-table td > .cmp-best { text-align: left; min-width: 60px; }
+}
