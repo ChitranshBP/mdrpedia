@@ -1,5 +1,6 @@
 ---
 import { sanitizeHtml } from "../lib/sanitize-html";
+import { portraitAttrs } from "../lib/portrait";
 /**
  * MDRPedia — doctor record (claude.ai/design "Profile", with the tabbed body
  * and NMC-safe framing from "Doctor Showcase").
@@ -414,7 +415,7 @@ const bioHtml = hasBio ? sanitizeHtml(doctor.biography) : "";
 				<div class={`p-portrait${hasImage ? "" : " p-portrait--initials"}`}>
 					{hasImage ? (
 						<>
-							<img src={doctor.portraitUrl!} alt={`Portrait of ${doctor.fullName}`} class="js-portrait" width="120" height="150" loading="eager" fetchpriority="high" decoding="async" referrerpolicy="no-referrer" />
+							<img {...portraitAttrs(doctor.portraitUrl, 120, 150)} alt={`Portrait of ${doctor.fullName}`} class="js-portrait" width="120" height="150" loading="eager" fetchpriority="high" decoding="async" referrerpolicy="no-referrer" />
 							<span class="p-portrait__initials" aria-hidden="true" hidden>{initials}</span>
 						</>
 					) : (
@@ -867,7 +868,7 @@ const bioHtml = hasBio ? sanitizeHtml(doctor.biography) : "";
 									<span class="p-related__pic">
 										{sImg ? (
 											<>
-												<img src={sImg} alt="" class="js-portrait" loading="lazy" decoding="async" width="56" height="56" referrerpolicy="no-referrer" />
+												<img {...portraitAttrs(sImg, 56, 56)} alt="" class="js-portrait" loading="lazy" decoding="async" width="56" height="56" referrerpolicy="no-referrer" />
 												<span class="p-portrait__initials" hidden>{sInitials}</span>
 											</>
 										) : (
