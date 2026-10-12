@@ -18,9 +18,24 @@ const HUB_PAGE = /^\/(doctors|specialty|geography|institutions|rankings|map|ethi
 const PROFILE_CACHE = 'public, max-age=60, s-maxage=600, stale-while-revalidate=86400';
 const HUB_CACHE = 'public, max-age=60, s-maxage=300, stale-while-revalidate=86400';
 
+// /doctor/<slug> was the profile route before /doctors/<slug>; crawlers still request it.
+const SINGULAR_PROFILE = /^\/doctor\/([a-z0-9-]+)\/?$/;
+const DOCTOR_ROUTES = new Set(['claim', 'portal', 'ethics', 'add-profile']);
+
 export const onRequest = defineMiddleware(async ({ request, locals }, next) => {
     const startTime = Date.now();
     const url = new URL(request.url);
+
+    // The host panel serves www without normalising it; one canonical origin.
+    const host = request.headers.get('host')?.toLowerCase();
+    if (host === 'www.mdrpedia.com') {
+        return Response.redirect(`https://mdrpedia.com${url.pathname}${url.search}`, 301);
+    }
+
+    const singular = url.pathname.match(SINGULAR_PROFILE);
+    if (singular && !DOCTOR_ROUTES.has(singular[1])) {
+        return Response.redirect(new URL(`/doctors/${singular[1]}${url.search}`, url).href, 301);
+    }
 
     if (isGone(url.pathname)) {
         const target = legacyRedirect(url.pathname);
