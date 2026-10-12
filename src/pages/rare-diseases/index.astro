@@ -2,841 +2,190 @@
 export const prerender = true;
 /**
  * MDRPedia — Rare Diseases Directory
- * Comprehensive database of rare diseases with expert connections
+ * Reference entries for rare conditions, with the specialists on record who treat them.
  */
-import Layout from "../../layouts/Layout.astro";
+import SiteLayout from "../../layouts/SiteLayout.astro";
 import { getCollection } from "astro:content";
+import "../../styles/pages/clinical.css";
 
 const rareDiseases = await getCollection("rareDiseases");
 const doctors = await getCollection("doctors");
 
-// Sort diseases alphabetically
-const sortedDiseases = rareDiseases.sort((a, b) =>
-    a.data.name.localeCompare(b.data.name)
-);
+const sortedDiseases = rareDiseases.sort((a, b) => a.data.name.localeCompare(b.data.name));
+const categories = [...new Set(sortedDiseases.map((d) => d.data.category))].sort();
 
-// Get unique categories
-const categories = [...new Set(sortedDiseases.map(d => d.data.category))].sort();
-
-// Category SVG icon paths (24x24 viewBox, stroke-based)
-const CATEGORY_ICONS: Record<string, string> = {
-    'GENETIC': 'M2 15c6.667-6 13.333 0 20-6M2 9c6.667 6 13.333 0 20 6M9 3v18m6-18v18',
-    'METABOLIC': 'M9 3h6v2H9V3zm0 4v6l-3 6h12l-3-6V7H9z',
-    'NEUROLOGICAL': 'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
-    'CARDIOVASCULAR': 'M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z',
-    'IMMUNOLOGICAL': 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
-    'ONCOLOGICAL': 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
-    'HEMATOLOGICAL': 'M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z',
-    'MUSCULOSKELETAL': 'M22 12h-4l-3 9L9 3l-3 9H2',
-    'DERMATOLOGICAL': 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
-    'GASTROINTESTINAL': 'M22 12h-4l-3 9L9 3l-3 9H2',
-    'RESPIRATORY': 'M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2',
-    'ENDOCRINE': 'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
-    'OPHTHALMOLOGICAL': 'M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z',
-    'OTHER': 'M9 3h6v2H9V3zm0 4v6l-3 6h12l-3-6V7H9z',
+const CATEGORY_LABELS: Record<string, string> = {
+	GENETIC: "Genetic",
+	METABOLIC: "Metabolic",
+	NEUROLOGICAL: "Neurological",
+	CARDIOVASCULAR: "Cardiovascular",
+	IMMUNOLOGICAL: "Immunological",
+	ONCOLOGICAL: "Oncological",
+	HEMATOLOGICAL: "Hematological",
+	MUSCULOSKELETAL: "Musculoskeletal",
+	DERMATOLOGICAL: "Dermatological",
+	GASTROINTESTINAL: "Gastrointestinal",
+	RESPIRATORY: "Respiratory",
+	ENDOCRINE: "Endocrine",
+	OPHTHALMOLOGICAL: "Ophthalmological",
+	AUTOIMMUNE: "Autoimmune",
+	INFECTIOUS: "Infectious",
+	RENAL: "Renal",
+	OTHER: "Other",
 };
+const labelOf = (c: string) => CATEGORY_LABELS[c] || CATEGORY_LABELS.OTHER;
 
-// Category info
-const CATEGORY_INFO: Record<string, { icon: string; color: string; label: string }> = {
-    'GENETIC': { icon: CATEGORY_ICONS['GENETIC'], color: '#a78bfa', label: 'Genetic' },
-    'METABOLIC': { icon: CATEGORY_ICONS['METABOLIC'], color: '#fbbf24', label: 'Metabolic' },
-    'NEUROLOGICAL': { icon: CATEGORY_ICONS['NEUROLOGICAL'], color: '#f472b6', label: 'Neurological' },
-    'CARDIOVASCULAR': { icon: CATEGORY_ICONS['CARDIOVASCULAR'], color: '#ef4444', label: 'Cardiovascular' },
-    'IMMUNOLOGICAL': { icon: CATEGORY_ICONS['IMMUNOLOGICAL'], color: '#10b981', label: 'Immunological' },
-    'ONCOLOGICAL': { icon: CATEGORY_ICONS['ONCOLOGICAL'], color: '#8b5cf6', label: 'Oncological' },
-    'HEMATOLOGICAL': { icon: CATEGORY_ICONS['HEMATOLOGICAL'], color: '#dc2626', label: 'Hematological' },
-    'MUSCULOSKELETAL': { icon: CATEGORY_ICONS['MUSCULOSKELETAL'], color: '#78716c', label: 'Musculoskeletal' },
-    'DERMATOLOGICAL': { icon: CATEGORY_ICONS['DERMATOLOGICAL'], color: '#f97316', label: 'Dermatological' },
-    'GASTROINTESTINAL': { icon: CATEGORY_ICONS['GASTROINTESTINAL'], color: '#84cc16', label: 'Gastrointestinal' },
-    'RESPIRATORY': { icon: CATEGORY_ICONS['RESPIRATORY'], color: '#38bdf8', label: 'Respiratory' },
-    'ENDOCRINE': { icon: CATEGORY_ICONS['ENDOCRINE'], color: '#c084fc', label: 'Endocrine' },
-    'OPHTHALMOLOGICAL': { icon: CATEGORY_ICONS['OPHTHALMOLOGICAL'], color: '#06b6d4', label: 'Ophthalmological' },
-    'OTHER': { icon: CATEGORY_ICONS['OTHER'], color: '#71717a', label: 'Other' }
-};
-
-// Count doctors treating each disease
 function getDoctorCount(disease: any) {
-    return doctors.filter(doc => {
-        const rareConditions = doc.data.rareConditions || [];
-        const conditionsTreated = doc.data.conditionsTreated || [];
-        const allConditions = [...rareConditions, ...conditionsTreated].map(c => c.toLowerCase());
-        return allConditions.some(c =>
-            c.includes(disease.data.name.toLowerCase()) ||
-            disease.data.aliases?.some((a: string) => c.includes(a.toLowerCase()))
-        );
-    }).length;
+	return doctors.filter((doc) => {
+		const rareConditions = doc.data.rareConditions || [];
+		const conditionsTreated = doc.data.conditionsTreated || [];
+		const allConditions = [...rareConditions, ...conditionsTreated].map((c) => c.toLowerCase());
+		return allConditions.some(
+			(c) =>
+				c.includes(disease.data.name.toLowerCase()) ||
+				disease.data.aliases?.some((a: string) => c.includes(a.toLowerCase())),
+		);
+	}).length;
 }
 
-// Stats
 const totalDiseases = sortedDiseases.length;
 const totalTrials = sortedDiseases.reduce((sum, d) => sum + (d.data.clinicalTrialsCount || 0), 0);
+const clip = (s: string) => (s.length > 150 ? `${s.slice(0, 150).trimEnd()}…` : s);
 ---
 
-<Layout
-    title="Rare Diseases Directory — MDRPedia"
-    description="Comprehensive database of rare diseases with expert physicians, treatment options, research updates, and patient resources."
+<SiteLayout
+	title="Rare Diseases Directory — MDRPedia"
+	description="Comprehensive database of rare diseases with expert physicians, treatment options, research updates, and patient resources."
+	active="find"
 >
-    <div class="rare-diseases-page">
-        <!-- Hero Section -->
-        <header class="page-hero">
-            <div class="container">
-                <div class="hero-content">
-                    <span class="hero-badge">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M12 6v6l4 2"/>
-                        </svg>
-                        RARE DISEASES DIRECTORY
-                    </span>
-                    <h1>Understanding Rare Diseases</h1>
-                    <p class="hero-description">
-                        Explore our comprehensive database of rare diseases, connect with leading specialists,
-                        and discover the latest treatments and ongoing research.
-                    </p>
+	<div class="cl">
+		<section class="cl-hero">
+			<span class="cl-eyebrow">Rare diseases directory</span>
+			<h1>Understanding rare diseases</h1>
+			<p>Reference entries for rare conditions, with the specialists on record who treat them and the research under way.</p>
+			<ul class="cl-stats" aria-label="Directory totals">
+				<li><b>{totalDiseases}</b><span>Diseases</span></li>
+				<li><b>{categories.length}</b><span>Categories</span></li>
+				<li><b>{totalTrials.toLocaleString("en-US")}</b><span>Listed trials</span></li>
+			</ul>
+		</section>
 
-                    <!-- Stats -->
-                    <div class="hero-stats">
-                        <div class="stat">
-                            <span class="stat__value">{totalDiseases}</span>
-                            <span class="stat__label">Diseases</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat__value">{categories.length}</span>
-                            <span class="stat__label">Categories</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat__value">{totalTrials}+</span>
-                            <span class="stat__label">Active Trials</span>
-                        </div>
-                    </div>
+		<section class="cl-main">
+			<div class="cl-controls">
+				<div class="cl-search">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+					<label for="disease-search" class="r-sr-only">Search rare diseases</label>
+					<input type="text" id="disease-search" placeholder="Search by name, symptom or category" autocomplete="off" />
+				</div>
+				<div class="cl-pills" role="group" aria-label="Filter by category">
+					<button type="button" class="category-pill cl-pill" data-category="all" aria-pressed="true">All <span>{totalDiseases}</span></button>
+					{categories.map((cat) => (
+						<button type="button" class="category-pill cl-pill" data-category={cat} aria-pressed="false">
+							{labelOf(cat)} <span>{sortedDiseases.filter((d) => d.data.category === cat).length}</span>
+						</button>
+					))}
+				</div>
+			</div>
 
-                    <!-- Search -->
-                    <div class="hero-search">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="11" cy="11" r="8"/>
-                            <path d="M21 21l-4.35-4.35"/>
-                        </svg>
-                        <label for="disease-search" class="sr-only">Search rare diseases</label>
-                        <input
-                            type="text"
-                            id="disease-search"
-                            placeholder="Search diseases by name, symptoms, or category..."
-                            autocomplete="off"
-                        />
-                    </div>
-                </div>
-            </div>
-        </header>
+			<p class="cl-meta" id="disease-count" aria-live="polite">{totalDiseases} diseases</p>
 
-        <!-- Category Filter -->
-        <section class="filter-section">
-            <div class="container">
-                <div class="category-pills">
-                    <button class="category-pill active" data-category="all">
-                        All Diseases
-                    </button>
-                    {categories.map(cat => {
-                        const info = CATEGORY_INFO[cat] || CATEGORY_INFO['OTHER'];
-                        const count = sortedDiseases.filter(d => d.data.category === cat).length;
-                        return (
-                            <button
-                                class="category-pill"
-                                data-category={cat}
-                                style={`--cat-color: ${info.color}`}
-                            >
-                                <span class="pill-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={info.icon}/></svg></span>
-                                {info.label}
-                                <span class="pill-count">{count}</span>
-                            </button>
-                        );
-                    })}
-                </div>
-            </div>
-        </section>
+			<div class="cl-grid" id="diseases-grid">
+				{sortedDiseases.map((disease) => {
+					const doctorCount = getDoctorCount(disease);
+					return (
+						<a
+							href={`/rare-diseases/${disease.data.slug}`}
+							class="cl-card disease-card"
+							data-category={disease.data.category}
+							data-name={disease.data.name.toLowerCase()}
+							data-aliases={disease.data.aliases?.join(" ").toLowerCase() || ""}
+							data-symptoms={disease.data.symptoms?.join(" ").toLowerCase() || ""}
+						>
+							<span class="cl-card__top">
+								<span>{labelOf(disease.data.category)}</span>
+								{disease.data.researchStatus === "ACTIVE_TRIALS" && <span class="cl-flag cl-flag--live">Active research</span>}
+							</span>
+							<h2 class="cl-card__title">{disease.data.name}</h2>
+							{disease.data.aliases && disease.data.aliases.length > 0 && (
+								<p class="cl-card__aka">Also known as {disease.data.aliases.slice(0, 2).join(", ")}</p>
+							)}
+							<p class="cl-card__text">{clip(disease.data.description)}</p>
+							<span class="cl-card__meta">
+								{disease.data.prevalence && <span>{disease.data.prevalence}</span>}
+								{disease.data.clinicalTrialsCount > 0 && <span>{disease.data.clinicalTrialsCount} trials</span>}
+								{doctorCount > 0 ? (
+									<span>{doctorCount} specialist{doctorCount !== 1 ? "s" : ""}</span>
+								) : (
+									disease.data.specialistTypes?.length > 0 && <span>{disease.data.specialistTypes.slice(0, 2).join(", ")}</span>
+								)}
+							</span>
+						</a>
+					);
+				})}
+			</div>
 
-        <!-- Diseases Grid -->
-        <div class="diseases-section">
-            <div class="container">
-                <div class="diseases-grid" id="diseases-grid">
-                    {sortedDiseases.map((disease) => {
-                        const catInfo = CATEGORY_INFO[disease.data.category] || CATEGORY_INFO['OTHER'];
-                        const doctorCount = getDoctorCount(disease);
-                        return (
-                            <a
-                                href={`/rare-diseases/${disease.data.slug}`}
-                                class="disease-card"
-                                data-category={disease.data.category}
-                                data-name={disease.data.name.toLowerCase()}
-                                data-aliases={disease.data.aliases?.join(' ').toLowerCase() || ''}
-                                data-symptoms={disease.data.symptoms?.join(' ').toLowerCase() || ''}
-                            >
-                                <div class="card-header">
-                                    <span class="card-category" style={`--cat-color: ${catInfo.color}`}>
-                                        <span class="cat-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={catInfo.icon}/></svg></span>
-                                        {catInfo.label}
-                                    </span>
-                                    {disease.data.researchStatus === 'ACTIVE_TRIALS' && (
-                                        <span class="research-badge">
-                                            <span class="pulse"></span>
-                                            Active Research
-                                        </span>
-                                    )}
-                                </div>
+			<div class="cl-empty" id="empty-state" hidden>
+				<h2>No diseases found</h2>
+				<p>Try adjusting your search or filter criteria.</p>
+			</div>
 
-                                <h3 class="card-title">{disease.data.name}</h3>
+			<section class="cl-sec" aria-labelledby="res-h">
+				<h2 id="res-h" class="cl-h2">Patient resources</h2>
+				<p class="cl-lede">Trusted organisations and databases for rare disease information.</p>
+				<ul class="cl-links">
+					<li><a href="https://rarediseases.org" target="_blank" rel="noopener"><b>NORD</b><span>National Organization for Rare Disorders</span></a></li>
+					<li><a href="https://www.orpha.net" target="_blank" rel="noopener"><b>Orphanet</b><span>European rare disease database</span></a></li>
+					<li><a href="https://clinicaltrials.gov" target="_blank" rel="noopener"><b>ClinicalTrials.gov</b><span>Find active clinical trials</span></a></li>
+					<li><a href="https://www.omim.org" target="_blank" rel="noopener"><b>OMIM</b><span>Genetic disorder database</span></a></li>
+				</ul>
+			</section>
 
-                                {disease.data.aliases && disease.data.aliases.length > 0 && (
-                                    <p class="card-aliases">
-                                        Also known as: {disease.data.aliases.slice(0, 2).join(', ')}
-                                    </p>
-                                )}
-
-                                <p class="card-description">
-                                    {disease.data.description.slice(0, 150)}...
-                                </p>
-
-                                <div class="card-meta">
-                                    {disease.data.prevalence && (
-                                        <span class="meta-item">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                                                <circle cx="9" cy="7" r="4"/>
-                                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                                            </svg>
-                                            {disease.data.prevalence}
-                                        </span>
-                                    )}
-                                    {disease.data.clinicalTrialsCount > 0 && (
-                                        <span class="meta-item trials">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
-                                                <polyline points="14 2 14 8 20 8"/>
-                                            </svg>
-                                            {disease.data.clinicalTrialsCount} trials
-                                        </span>
-                                    )}
-                                </div>
-
-                                <div class="card-footer">
-                                    <div class="specialists">
-                                        {doctorCount > 0 ? (
-                                            <span class="specialists-count">
-                                                {doctorCount} specialist{doctorCount !== 1 ? 's' : ''}
-                                            </span>
-                                        ) : (
-                                            <span class="specialists-types">
-                                                {disease.data.specialistTypes?.slice(0, 2).join(', ')}
-                                            </span>
-                                        )}
-                                    </div>
-                                    <span class="card-arrow">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                                        </svg>
-                                    </span>
-                                </div>
-                            </a>
-                        );
-                    })}
-                </div>
-
-                <!-- Empty State -->
-                <div class="empty-state" id="empty-state" hidden>
-                    <span class="empty-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.35-4.35"/></svg></span>
-                    <h3>No diseases found</h3>
-                    <p>Try adjusting your search or filter criteria</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Resources Section -->
-        <section class="resources-section">
-            <div class="container">
-                <h2 class="section-title">Patient Resources</h2>
-                <p class="section-subtitle">Trusted organizations and databases for rare disease information</p>
-                <div class="resources-grid">
-                    <a href="https://rarediseases.org" target="_blank" rel="noopener" class="resource-card">
-                        <span class="resource-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M4 21V8M20 21V8"/></svg></span>
-                        <h4>NORD</h4>
-                        <p>National Organization for Rare Disorders</p>
-                    </a>
-                    <a href="https://www.orpha.net" target="_blank" rel="noopener" class="resource-card">
-                        <span class="resource-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zM2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
-                        <h4>Orphanet</h4>
-                        <p>European rare disease database</p>
-                    </a>
-                    <a href="https://clinicaltrials.gov" target="_blank" rel="noopener" class="resource-card">
-                        <span class="resource-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v2H9V3zm0 4v6l-3 6h12l-3-6V7H9z"/></svg></span>
-                        <h4>ClinicalTrials.gov</h4>
-                        <p>Find active clinical trials</p>
-                    </a>
-                    <a href="https://www.omim.org" target="_blank" rel="noopener" class="resource-card">
-                        <span class="resource-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 15c6.667-6 13.333 0 20-6M2 9c6.667 6 13.333 0 20 6M9 3v18m6-18v18"/></svg></span>
-                        <h4>OMIM</h4>
-                        <p>Genetic disorder database</p>
-                    </a>
-                </div>
-            </div>
-        </section>
-    </div>
-</Layout>
+			<p class="cl-note">Entries are for information only and are not medical advice. Talk to a qualified physician about any diagnosis or treatment.</p>
+		</section>
+	</div>
+</SiteLayout>
 
 <script>
-    const searchInput = document.getElementById('disease-search') as HTMLInputElement;
-    const categoryPills = document.querySelectorAll<HTMLButtonElement>('.category-pill');
-    const diseaseCards = document.querySelectorAll<HTMLElement>('.disease-card');
-    const emptyState = document.getElementById('empty-state');
+	const searchInput = document.getElementById("disease-search") as HTMLInputElement;
+	const categoryPills = document.querySelectorAll<HTMLButtonElement>(".category-pill");
+	const diseaseCards = document.querySelectorAll<HTMLElement>(".disease-card");
+	const emptyState = document.getElementById("empty-state");
+	const countEl = document.getElementById("disease-count");
 
-    let currentCategory = 'all';
-    let searchQuery = '';
+	let currentCategory = "all";
+	let searchQuery = "";
 
-    function filterDiseases() {
-        let visibleCount = 0;
+	function filterDiseases() {
+		let visibleCount = 0;
+		diseaseCards.forEach((card) => {
+			const category = card.dataset.category;
+			const name = card.dataset.name || "";
+			const aliases = card.dataset.aliases || "";
+			const symptoms = card.dataset.symptoms || "";
+			const matchesCategory = currentCategory === "all" || category === currentCategory;
+			const matchesSearch = !searchQuery || name.includes(searchQuery) || aliases.includes(searchQuery) || symptoms.includes(searchQuery);
+			if (matchesCategory && matchesSearch) {
+				card.style.display = "";
+				visibleCount++;
+			} else {
+				card.style.display = "none";
+			}
+		});
+		if (emptyState) emptyState.hidden = visibleCount > 0;
+		if (countEl) countEl.textContent = `${visibleCount} ${visibleCount === 1 ? "disease" : "diseases"}`;
+	}
 
-        diseaseCards.forEach(card => {
-            const category = card.dataset.category;
-            const name = card.dataset.name || '';
-            const aliases = card.dataset.aliases || '';
-            const symptoms = card.dataset.symptoms || '';
+	categoryPills.forEach((pill) => {
+		pill.addEventListener("click", () => {
+			categoryPills.forEach((p) => p.setAttribute("aria-pressed", "false"));
+			pill.setAttribute("aria-pressed", "true");
+			currentCategory = pill.dataset.category || "all";
+			filterDiseases();
+		});
+	});
 
-            const matchesCategory = currentCategory === 'all' || category === currentCategory;
-            const matchesSearch = !searchQuery ||
-                name.includes(searchQuery) ||
-                aliases.includes(searchQuery) ||
-                symptoms.includes(searchQuery);
-
-            if (matchesCategory && matchesSearch) {
-                card.style.display = '';
-                visibleCount++;
-            } else {
-                card.style.display = 'none';
-            }
-        });
-
-        if (emptyState) {
-            emptyState.hidden = visibleCount > 0;
-        }
-    }
-
-    // Category filter
-    categoryPills.forEach(pill => {
-        pill.addEventListener('click', () => {
-            categoryPills.forEach(p => p.classList.remove('active'));
-            pill.classList.add('active');
-            currentCategory = pill.dataset.category || 'all';
-            filterDiseases();
-        });
-    });
-
-    // Search
-    searchInput?.addEventListener('input', (e) => {
-        searchQuery = (e.target as HTMLInputElement).value.toLowerCase().trim();
-        filterDiseases();
-    });
+	searchInput?.addEventListener("input", (e) => {
+		searchQuery = (e.target as HTMLInputElement).value.toLowerCase().trim();
+		filterDiseases();
+	});
 </script>
-
-<style>
-    .rare-diseases-page {
-        background: var(--paper);
-        min-height: 100vh;
-    }
-
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 1.5rem;
-    }
-
-    /* Hero */
-    .page-hero {
-        padding: 5rem 0 3rem;
-        background: var(--paper);
-        border-bottom: 1px solid var(--rule);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .hero-content {
-        max-width: 720px;
-        margin: 0 auto;
-        text-align: center;
-        position: relative;
-        z-index: 1;
-    }
-
-    .hero-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 18px;
-        background: var(--ink-blue-2);
-        border: 1px solid var(--ink-blue);
-        border-radius: var(--r-pill);
-        font-size: 0.7rem;
-        font-weight: 700;
-        letter-spacing: 0.15em;
-        font-family: var(--font-mono);
-        color: var(--ink-blue);
-        margin-bottom: 1.5rem;
-    }
-
-    .page-hero h1 {
-        font-family: var(--font-serif);
-        font-size: clamp(2.5rem, 5vw, 3.5rem);
-        font-weight: 400;
-        color: var(--ink);
-        margin: 0 0 1rem;
-        letter-spacing: -0.03em;
-    }
-
-    .hero-description {
-        font-size: 1.15rem;
-        color: var(--ink-2);
-        line-height: 1.7;
-        margin: 0 0 2.5rem;
-    }
-
-    .hero-stats {
-        display: flex;
-        justify-content: center;
-        gap: 2rem;
-        margin-bottom: 2.5rem;
-    }
-
-    .stat {
-        text-align: center;
-        padding: 1rem 1.5rem;
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        transition: all var(--t-fast);
-    }
-
-    .stat:hover {
-        background: var(--paper-3);
-        transform: translateY(-2px);
-    }
-
-    .stat__value {
-        display: block;
-        font-family: var(--font-mono);
-        font-size: 2.25rem;
-        font-weight: 500;
-        color: var(--ink-blue);
-        line-height: 1.2;
-    }
-
-    .stat__label {
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        color: var(--ink-3);
-        font-weight: 600;
-    }
-
-    .hero-search {
-        position: relative;
-        max-width: 540px;
-        margin: 0 auto;
-    }
-
-    .hero-search svg {
-        position: absolute;
-        left: 20px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--ink-3);
-        transition: color var(--t-fast);
-    }
-
-    .hero-search:focus-within svg {
-        color: var(--ink-blue);
-    }
-
-    .hero-search input {
-        width: 100%;
-        height: 60px;
-        padding: 0 24px 0 56px;
-        background: var(--paper);
-        border: 2px solid var(--rule);
-        border-radius: var(--r-4);
-        font-size: 1rem;
-        color: var(--ink);
-        outline: none;
-        transition: all var(--t-base);
-        box-shadow: var(--shadow-2);
-    }
-
-    .hero-search input::placeholder {
-        color: var(--ink-3);
-    }
-
-    .hero-search input:focus {
-        border-color: var(--ink-blue);
-        box-shadow: var(--shadow-3);
-    }
-
-    /* Filter Section */
-    .filter-section {
-        padding: 1.5rem 0;
-        background: var(--paper-2);
-        border-bottom: 1px solid var(--rule);
-        position: sticky;
-        top: 0;
-        z-index: 20;
-    }
-
-    .category-pills {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        justify-content: center;
-    }
-
-    .category-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem 1rem;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-pill);
-        font-size: 0.8rem;
-        font-weight: 500;
-        color: var(--ink-2);
-        cursor: pointer;
-        transition: all var(--t-fast);
-    }
-
-    .category-pill:hover {
-        background: var(--paper-3);
-        border-color: var(--rule-strong);
-        color: var(--ink);
-    }
-
-    .category-pill.active {
-        background: var(--ink-blue);
-        border-color: var(--ink-blue);
-        color: var(--paper);
-    }
-
-    .pill-icon {
-        font-size: 0.9rem;
-    }
-
-    .pill-count {
-        padding: 2px 8px;
-        background: var(--paper-3);
-        border-radius: var(--r-pill);
-        font-size: 0.7rem;
-        font-weight: 600;
-        font-family: var(--font-mono);
-    }
-
-    .category-pill.active .pill-count {
-        background: var(--ink-blue-2);
-        color: var(--paper);
-    }
-
-    /* Diseases Grid */
-    .diseases-section {
-        padding: 3rem 0 4rem;
-    }
-
-    .diseases-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-        gap: 1.25rem;
-    }
-
-    .disease-card {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        padding: 1.75rem;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        text-decoration: none;
-        color: inherit;
-        transition: all var(--t-base);
-        overflow: hidden;
-    }
-
-    .disease-card::before {
-        display: none;
-    }
-
-    .disease-card:hover {
-        border-color: var(--rule-strong);
-        box-shadow: var(--shadow-3);
-        transform: translateY(-4px);
-    }
-
-    .card-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0.75rem;
-        margin-bottom: 1rem;
-    }
-
-    .card-category {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        padding: 5px 12px;
-        background: var(--paper-2);
-        border-radius: var(--r-3);
-        font-size: 0.7rem;
-        font-weight: 600;
-        font-family: var(--font-mono);
-        color: var(--cat-color, var(--ink-blue));
-    }
-
-    .cat-icon {
-        font-size: 0.8rem;
-    }
-
-    .research-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 4px 10px;
-        background: var(--verdant-2);
-        border-radius: var(--r-pill);
-        font-size: 0.65rem;
-        font-weight: 600;
-        color: var(--verdant);
-    }
-
-    .pulse {
-        width: 6px;
-        height: 6px;
-        background: var(--verdant);
-        border-radius: 50%;
-        animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-        0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.5; transform: scale(1.5); }
-    }
-
-    .card-title {
-        font-family: var(--font-serif);
-        font-size: 1.25rem;
-        font-weight: 500;
-        color: var(--ink);
-        margin: 0 0 0.5rem;
-        line-height: 1.3;
-        letter-spacing: -0.01em;
-    }
-
-    .card-aliases {
-        font-size: 0.75rem;
-        color: var(--ink-3);
-        margin: 0 0 0.75rem;
-        font-style: italic;
-    }
-
-    .card-description {
-        font-size: 0.875rem;
-        color: var(--ink-2);
-        line-height: 1.6;
-        margin: 0 0 1rem;
-        flex: 1;
-    }
-
-    .card-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-        margin-bottom: 1rem;
-        padding-top: 1rem;
-        border-top: 1px solid var(--rule);
-    }
-
-    .meta-item {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 0.75rem;
-        color: var(--ink-3);
-    }
-
-    .meta-item svg {
-        opacity: 0.6;
-    }
-
-    .meta-item.trials {
-        color: var(--ink-blue);
-    }
-
-    .card-footer {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .specialists-count {
-        font-size: 0.8rem;
-        font-weight: 600;
-        color: var(--verdant);
-    }
-
-    .specialists-types {
-        font-size: 0.75rem;
-        color: var(--ink-3);
-    }
-
-    .card-arrow {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 32px;
-        height: 32px;
-        background: var(--paper-2);
-        border-radius: var(--r-3);
-        color: var(--ink-3);
-        transition: all var(--t-fast);
-    }
-
-    .disease-card:hover .card-arrow {
-        background: var(--ink-blue-2);
-        color: var(--ink-blue);
-        transform: translateX(3px);
-    }
-
-    /* Empty State */
-    .empty-state {
-        text-align: center;
-        padding: 4rem 2rem;
-        color: var(--ink-3);
-    }
-
-    .empty-icon {
-        font-size: 3rem;
-        display: block;
-        margin-bottom: 1rem;
-        opacity: 0.5;
-    }
-
-    .empty-state h3 {
-        font-size: 1.1rem;
-        color: var(--ink-2);
-        margin: 0 0 0.5rem;
-    }
-
-    /* Resources Section */
-    .resources-section {
-        padding: 4rem 0 5rem;
-        background: var(--paper-2);
-        border-top: 1px solid var(--rule);
-        position: relative;
-    }
-
-    .section-title {
-        font-family: var(--font-serif);
-        font-size: 1.5rem;
-        font-weight: 400;
-        color: var(--ink);
-        text-align: center;
-        margin: 0 0 0.75rem;
-    }
-
-    .section-subtitle {
-        font-size: 0.95rem;
-        color: var(--ink-3);
-        text-align: center;
-        margin: 0 0 2.5rem;
-    }
-
-    .resources-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 1rem;
-    }
-
-    .resource-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 2rem 1.5rem;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        text-decoration: none;
-        transition: all var(--t-base);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .resource-card::before {
-        display: none;
-    }
-
-    .resource-card:hover {
-        border-color: var(--rule-strong);
-        transform: translateY(-4px);
-        box-shadow: var(--shadow-3);
-    }
-
-    .resource-icon {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-        transition: transform var(--t-fast);
-    }
-
-    .resource-card:hover .resource-icon {
-        transform: scale(1.1);
-    }
-
-    .resource-card h4 {
-        font-family: var(--font-serif);
-        font-size: 1.1rem;
-        font-weight: 500;
-        color: var(--ink);
-        margin: 0 0 0.5rem;
-    }
-
-    .resource-card p {
-        font-size: 0.85rem;
-        color: var(--ink-3);
-        margin: 0;
-        line-height: 1.5;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-        .page-hero {
-            padding: 3rem 0 2rem;
-        }
-
-        .hero-stats {
-            gap: 1.5rem;
-        }
-
-        .stat__value {
-            font-size: 1.5rem;
-        }
-
-        .diseases-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .category-pills {
-            justify-content: flex-start;
-            overflow-x: auto;
-            flex-wrap: nowrap;
-            padding-bottom: 0.5rem;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .category-pill {
-            flex-shrink: 0;
-        }
-    }
-</style>

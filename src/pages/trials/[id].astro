@@ -5,715 +5,160 @@
  */
 export const prerender = true;
 
-import Layout from "../../layouts/Layout.astro";
+import SiteLayout from "../../layouts/SiteLayout.astro";
 import trialsData from "../../content/trials/index.json";
-import { getStatusColor, getPhaseColor } from "../../lib/trials";
+import { statusTone } from "../../lib/trials";
+import "../../styles/pages/clinical.css";
 
-// Generate static paths for all trials
 export function getStaticPaths() {
-    const paths: { params: { id: string }; props: { trial: any; company: any; category: any } }[] = [];
+	const paths: { params: { id: string }; props: { trial: any; company: any; category: any } }[] = [];
 
-    trialsData.companies.forEach((company: any) => {
-        company.trials.forEach((trial: any) => {
-            const category = trialsData.categories.find((c: any) => c.id === trial.category);
-            paths.push({
-                params: { id: trial.id },
-                props: { trial, company, category }
-            });
-        });
-    });
+	trialsData.companies.forEach((company: any) => {
+		company.trials.forEach((trial: any) => {
+			const category = trialsData.categories.find((c: any) => c.id === trial.category);
+			paths.push({
+				params: { id: trial.id },
+				props: { trial, company, category },
+			});
+		});
+	});
 
-    return paths;
+	return paths;
 }
 
 const { trial, company, category } = Astro.props;
 
-// Format date helper
 function formatDate(dateStr: string): string {
-    if (!dateStr) return 'TBD';
-    const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+	if (!dateStr) return "TBD";
+	return new Date(dateStr).toLocaleDateString("en-US", { year: "numeric", month: "long" });
 }
+
+const site = Astro.site ?? "https://mdrpedia.com";
+const trialUrl = new URL(`/trials/${trial.id}`, site).href;
+const jsonLd = [
+	{
+		"@context": "https://schema.org",
+		"@type": "MedicalTrial",
+		name: trial.name,
+		description: trial.description,
+		url: trialUrl,
+		studyLocation: (trial.countries || []).map((c: string) => ({ "@type": "AdministrativeArea", name: c })),
+		sponsor: { "@type": "Organization", name: company.name, url: company.website },
+		...(trial.indication && { studySubject: { "@type": "MedicalCondition", name: trial.indication } }),
+		...(trial.registryId && { sameAs: `https://clinicaltrials.gov/study/${trial.registryId}` }),
+	},
+	{
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		itemListElement: [
+			{ "@type": "ListItem", position: 1, name: "Home", item: new URL("/", site).href },
+			{ "@type": "ListItem", position: 2, name: "Clinical Trials", item: new URL("/clinical-trials", site).href },
+			{ "@type": "ListItem", position: 3, name: trial.name, item: trialUrl },
+		],
+	},
+];
 ---
 
-<Layout title={`${trial.name} - Clinical Trial | MDRPedia`} description={trial.description}>
-    <div class="trial-page">
-        <div class="container">
-            <!-- Breadcrumb -->
-            <nav class="breadcrumb">
-                <a href="/clinical-trials">Clinical Trials</a>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-                    <path d="M9 18l6-6-6-6"/>
-                </svg>
-                <a href={`/clinical-trials#${company.id}`}>{company.name}</a>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-                    <path d="M9 18l6-6-6-6"/>
-                </svg>
-                <span>{trial.id.toUpperCase()}</span>
-            </nav>
-
-            <!-- Trial Header -->
-            <header class="trial-header">
-                <div class="trial-meta">
-                    <span class="phase-badge" style={`--phase-color: ${getPhaseColor(trial.phase)}`}>
-                        {trial.phase}
-                    </span>
-                    <span class="status-badge" style={`--status-color: ${getStatusColor(trial.status)}`}>
-                        {trial.status}
-                    </span>
-                    {category && (
-                        <span class="category-badge">{category.name}</span>
-                    )}
-                </div>
-                <h1>{trial.name}</h1>
-                <p class="indication">{trial.indication}</p>
-
-                <div class="sponsor">
-                    {company.logo && <img src={company.logo} alt={company.name} class="sponsor-logo" width="48" height="48" loading="lazy" onerror="this.remove()" />}
-                    <div class="sponsor-info">
-                        <span class="sponsor-label">Sponsor</span>
-                        <span class="sponsor-name">{company.name}</span>
-                    </div>
-                </div>
-            </header>
-
-            <!-- Stats Grid -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                        <circle cx="9" cy="7" r="4"/>
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-                    </svg>
-                    <span class="stat-value">{trial.enrollment?.toLocaleString() || 'N/A'}</span>
-                    <span class="stat-label">Enrollment Target</span>
-                </div>
-                <div class="stat-card">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
-                        <path d="M3 21h18M5 21V7l7-4 7 4v14"/>
-                        <path d="M9 21v-6h6v6"/>
-                    </svg>
-                    <span class="stat-value">{trial.sites || 'N/A'}</span>
-                    <span class="stat-label">Trial Sites</span>
-                </div>
-                <div class="stat-card">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
-                        <circle cx="12" cy="12" r="10"/>
-                        <line x1="2" y1="12" x2="22" y2="12"/>
-                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                    </svg>
-                    <span class="stat-value">{trial.countries?.length || 'N/A'}</span>
-                    <span class="stat-label">Countries</span>
-                </div>
-                <div class="stat-card">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
-                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                        <line x1="16" y1="2" x2="16" y2="6"/>
-                        <line x1="8" y1="2" x2="8" y2="6"/>
-                        <line x1="3" y1="10" x2="21" y2="10"/>
-                    </svg>
-                    <span class="stat-value">{formatDate(trial.estimatedCompletion)}</span>
-                    <span class="stat-label">Est. Completion</span>
-                </div>
-                <div class="stat-card">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                        <path d="M14 2v6h6M16 13H8M16 17H8"/>
-                    </svg>
-                    {trial.registryId ? (
-                        <a class="stat-value stat-value--link" href={`https://clinicaltrials.gov/study/${trial.registryId}`} target="_blank" rel="noopener noreferrer">{trial.registryId}</a>
-                    ) : (
-                        <span class="stat-value">N/A</span>
-                    )}
-                    <span class="stat-label">Registry Record</span>
-                </div>
-            </div>
-
-            <div class="content-grid">
-                <!-- Main Content -->
-                <div class="main-content">
-                    <!-- Description -->
-                    <section class="content-section">
-                        <h2>About This Trial</h2>
-                        <p>{trial.description}</p>
-                    </section>
-
-                    <!-- Primary Endpoints -->
-                    {trial.primaryEndpoints && trial.primaryEndpoints.length > 0 && (
-                        <section class="content-section">
-                            <h2>Primary Endpoints</h2>
-                            <ul class="endpoints-list">
-                                {trial.primaryEndpoints.map((endpoint: string) => (
-                                    <li>
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
-                                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                                            <polyline points="22 4 12 14.01 9 11.01"/>
-                                        </svg>
-                                        {endpoint}
-                                    </li>
-                                ))}
-                            </ul>
-                        </section>
-                    )}
-
-                    <!-- Latest Update -->
-                    {trial.latestUpdate && (
-                        <section class="content-section update-section">
-                            <h2>Latest Update</h2>
-                            <div class="update-card">
-                                <span class="update-date">{formatDate(trial.latestUpdate.date)}</span>
-                                <p>{trial.latestUpdate.summary}</p>
-                                {trial.latestUpdate.source && (
-                                    <a class="update-source" href={trial.latestUpdate.source} target="_blank" rel="noopener noreferrer">Source</a>
-                                )}
-                            </div>
-                        </section>
-                    )}
-                </div>
-
-                <!-- Sidebar -->
-                <aside class="sidebar">
-                    <!-- Trial Details -->
-                    <div class="sidebar-card">
-                        <h3>Trial Details</h3>
-                        <dl class="details-list">
-                            <div class="detail-row">
-                                <dt>Trial ID</dt>
-                                <dd>{trial.id.toUpperCase()}</dd>
-                            </div>
-                            <div class="detail-row">
-                                <dt>Phase</dt>
-                                <dd>{trial.phase}</dd>
-                            </div>
-                            <div class="detail-row">
-                                <dt>Status</dt>
-                                <dd style={`color: ${getStatusColor(trial.status)}`}>{trial.status}</dd>
-                            </div>
-                            <div class="detail-row">
-                                <dt>Start Date</dt>
-                                <dd>{formatDate(trial.startDate)}</dd>
-                            </div>
-                            <div class="detail-row">
-                                <dt>Est. Completion</dt>
-                                <dd>{formatDate(trial.estimatedCompletion)}</dd>
-                            </div>
-                        </dl>
-                    </div>
-
-                    <!-- Countries -->
-                    {trial.countries && trial.countries.length > 0 && (
-                        <div class="sidebar-card">
-                            <h3>Trial Locations</h3>
-                            <div class="countries-list">
-                                {trial.countries.map((country: string) => (
-                                    <span class="country-tag">{country}</span>
-                                ))}
-                            </div>
-                        </div>
-                    )}
-
-                    <!-- Sponsor Info -->
-                    <div class="sidebar-card">
-                        <h3>Sponsor</h3>
-                        <div class="sponsor-card">
-                            {company.logo && <img src={company.logo} alt={company.name} class="sponsor-logo-sm" width="40" height="40" loading="lazy" onerror="this.remove()" />}
-                            <div class="sponsor-details">
-                                <span class="sponsor-name-sm">{company.name}</span>
-                                <span class="sponsor-hq">{company.headquarters}</span>
-                                {company.website && (
-                                    <a href={company.website} target="_blank" rel="noopener noreferrer" class="sponsor-link">
-                                        Visit Website
-                                    </a>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Back Link -->
-                    <a href="/clinical-trials" class="back-link">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-                            <path d="M19 12H5M12 19l-7-7 7-7"/>
-                        </svg>
-                        All Clinical Trials
-                    </a>
-                </aside>
-            </div>
-        </div>
-    </div>
-</Layout>
-
-<style>
-    .trial-page {
-        padding: 40px 0 80px;
-        background: var(--paper);
-    }
-
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-    }
-
-    /* Breadcrumb */
-    .breadcrumb {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-bottom: 32px;
-        font-size: 0.85rem;
-    }
-
-    .breadcrumb a {
-        color: var(--ink-3);
-        text-decoration: none;
-    }
-
-    .breadcrumb a:hover {
-        color: var(--ink-blue);
-    }
-
-    .breadcrumb span {
-        color: var(--ink-2);
-    }
-
-    .breadcrumb svg {
-        color: var(--ink-3);
-    }
-
-    /* Header */
-    .trial-header {
-        margin-bottom: 40px;
-    }
-
-    .trial-meta {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 16px;
-        flex-wrap: wrap;
-    }
-
-    .phase-badge, .status-badge, .category-badge {
-        padding: 6px 14px;
-        border-radius: var(--r-pill);
-        font-size: 0.75rem;
-        font-weight: 600;
-        font-family: var(--font-mono);
-        text-transform: uppercase;
-        letter-spacing: 0.03em;
-    }
-
-    .phase-badge {
-        background: color-mix(in srgb, var(--phase-color) 15%, transparent);
-        color: var(--phase-color);
-    }
-
-    .status-badge {
-        background: color-mix(in srgb, var(--status-color) 15%, transparent);
-        color: var(--status-color);
-    }
-
-    .category-badge {
-        background: var(--ink-blue-2);
-        color: var(--ink-blue);
-    }
-
-    .trial-header h1 {
-        font-family: var(--font-serif);
-        font-size: 2.2rem;
-        font-weight: 400;
-        color: var(--ink);
-        margin: 0 0 12px;
-        line-height: 1.2;
-    }
-
-    .indication {
-        font-size: 1.2rem;
-        color: var(--ink-2);
-        margin: 0 0 24px;
-    }
-
-    .sponsor {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-    }
-
-    .sponsor-logo {
-        width: 48px;
-        height: 48px;
-        border-radius: var(--r-3);
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        padding: 6px;
-        object-fit: contain;
-    }
-
-    .sponsor-info {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .sponsor-label {
-        font-size: 0.7rem;
-        color: var(--ink-3);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-
-    .sponsor-name {
-        font-weight: 500;
-        color: var(--ink);
-    }
-
-    /* Stats Grid */
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 16px;
-        margin-bottom: 40px;
-    }
-
-    .stat-card {
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        padding: 20px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .stat-card svg {
-        color: var(--ink-blue);
-    }
-
-    .stat-value {
-        font-size: 1.5rem;
-        font-weight: 500;
-        font-family: var(--font-mono);
-        color: var(--ink);
-    }
-
-    .stat-label {
-        font-size: 0.75rem;
-        color: var(--ink-3);
-        text-transform: uppercase;
-        letter-spacing: 0.03em;
-    }
-
-    /* Content Grid */
-    .content-grid {
-        display: grid;
-        grid-template-columns: 1fr 320px;
-        gap: 40px;
-        align-items: start;
-    }
-
-    /* Content Sections */
-    .content-section {
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        padding: 24px;
-        margin-bottom: 24px;
-    }
-
-    .content-section h2 {
-        font-family: var(--font-serif);
-        font-size: 1.1rem;
-        font-weight: 500;
-        color: var(--ink);
-        margin: 0 0 16px;
-        padding-bottom: 12px;
-        border-bottom: 1px solid var(--rule);
-    }
-
-    .content-section p {
-        color: var(--ink-2);
-        line-height: 1.7;
-        margin: 0;
-    }
-
-    /* Endpoints */
-    .endpoints-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .endpoints-list li {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        color: var(--ink-2);
-    }
-
-    .endpoints-list svg {
-        color: var(--verdant);
-        flex-shrink: 0;
-    }
-
-    /* Update Section */
-    .update-card {
-        background: var(--verdant-2);
-        border: 1px solid var(--verdant);
-        border-radius: var(--r-3);
-        padding: 16px;
-    }
-
-    .update-date {
-        display: block;
-        font-size: 0.75rem;
-        color: var(--verdant);
-        font-weight: 600;
-        margin-bottom: 8px;
-    }
-
-    .update-source {
-        display: inline-block;
-        margin-top: 12px;
-        font-size: 0.75rem;
-        font-family: var(--font-mono);
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: var(--ink-blue);
-        text-decoration: underline;
-        text-underline-offset: 3px;
-    }
-
-    .stat-value--link {
-        font-size: 1rem;
-        font-weight: 500;
-        font-family: var(--font-mono);
-        color: var(--ink-blue);
-        text-decoration: underline;
-        text-underline-offset: 3px;
-        word-break: break-all;
-    }
-
-    .update-card p {
-        color: var(--ink);
-    }
-
-    /* Investigators */
-    .investigators-list {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .investigator-card {
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-3);
-        overflow: hidden;
-    }
-
-    .investigator-link, .investigator-card-inner {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        padding: 14px;
-        text-decoration: none;
-        color: inherit;
-        transition: background var(--t-fast);
-    }
-
-    .investigator-link:hover {
-        background: var(--paper-3);
-    }
-
-    .investigator-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: var(--ink-blue-2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 600;
-        font-size: 0.85rem;
-        color: var(--ink-blue);
-        flex-shrink: 0;
-    }
-
-    .investigator-info {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .investigator-name {
-        font-weight: 500;
-        color: var(--ink);
-    }
-
-    .investigator-role {
-        font-size: 0.8rem;
-        color: var(--ink-3);
-    }
-
-    .investigator-link svg {
-        color: var(--ink-blue);
-    }
-
-    /* Sidebar */
-    .sidebar-card {
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        padding: 20px;
-        margin-bottom: 20px;
-    }
-
-    .sidebar-card h3 {
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: var(--ink-3);
-        margin: 0 0 16px;
-    }
-
-    .details-list {
-        margin: 0;
-    }
-
-    .detail-row {
-        display: flex;
-        justify-content: space-between;
-        padding: 8px 0;
-        border-bottom: 1px solid var(--rule);
-    }
-
-    .detail-row:last-child {
-        border-bottom: none;
-    }
-
-    .detail-row dt {
-        color: var(--ink-3);
-        font-size: 0.85rem;
-    }
-
-    .detail-row dd {
-        margin: 0;
-        font-size: 0.85rem;
-        font-weight: 500;
-        color: var(--ink);
-    }
-
-    /* Countries */
-    .countries-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-
-    .country-tag {
-        padding: 4px 12px;
-        background: var(--ink-blue-2);
-        color: var(--ink-blue);
-        border-radius: var(--r-pill);
-        font-size: 0.75rem;
-        font-family: var(--font-mono);
-    }
-
-    /* Sponsor Card */
-    .sponsor-card {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-    }
-
-    .sponsor-logo-sm {
-        width: 40px;
-        height: 40px;
-        border-radius: var(--r-3);
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        padding: 4px;
-        object-fit: contain;
-    }
-
-    .sponsor-details {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-    }
-
-    .sponsor-name-sm {
-        font-weight: 500;
-        font-size: 0.9rem;
-        color: var(--ink);
-    }
-
-    .sponsor-hq {
-        font-size: 0.75rem;
-        color: var(--ink-3);
-    }
-
-    .sponsor-link {
-        font-size: 0.75rem;
-        color: var(--ink-blue);
-        text-decoration: none;
-    }
-
-    .sponsor-link:hover {
-        text-decoration: underline;
-    }
-
-    /* Back Link */
-    .back-link {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        color: var(--ink-blue);
-        text-decoration: none;
-        font-weight: 500;
-        font-size: 0.9rem;
-    }
-
-    .back-link:hover {
-        text-decoration: underline;
-    }
-
-    /* Responsive */
-    @media (max-width: 1024px) {
-        .content-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .sidebar {
-            order: -1;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-        }
-
-        .sidebar .back-link {
-            grid-column: span 2;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .stats-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .sidebar {
-            grid-template-columns: 1fr;
-        }
-
-        .sidebar .back-link {
-            grid-column: span 1;
-        }
-
-        .trial-header h1 {
-            font-size: 1.6rem;
-        }
-    }
-</style>
+<SiteLayout title={`${trial.name} - Clinical Trial | MDRPedia`} description={trial.description} active="find" jsonLd={jsonLd}>
+	<article class="cl">
+		<header class="cl-hero">
+			<nav class="cl-crumb" aria-label="Breadcrumb">
+				<a href="/clinical-trials">Clinical trials</a>
+				<span aria-hidden="true">/</span>
+				<a href={`/clinical-trials#${company.id}`}>{company.name}</a>
+				<span aria-hidden="true">/</span>
+				<span>{trial.id.toUpperCase()}</span>
+			</nav>
+			<span class="cl-eyebrow">
+				{trial.phase} <span class={`cl-flag cl-flag--${statusTone(trial.status)}`}>{trial.status}</span>
+				{category && <span>{category.name}</span>}
+			</span>
+			<h1>{trial.name}</h1>
+			<p>{trial.indication}</p>
+			<p class="cl-aka">Sponsor: {company.name}</p>
+
+			<ul class="cl-stats" aria-label="Trial figures">
+				<li><b>{trial.enrollment?.toLocaleString() || "N/A"}</b><span>Enrollment target</span></li>
+				<li><b>{trial.sites || "N/A"}</b><span>Trial sites</span></li>
+				<li><b>{trial.countries?.length || "N/A"}</b><span>Countries</span></li>
+				<li><b>{formatDate(trial.estimatedCompletion)}</b><span>Est. completion</span></li>
+				<li>
+					<b>
+						{trial.registryId ? (
+							<a href={`https://clinicaltrials.gov/study/${trial.registryId}`} target="_blank" rel="noopener noreferrer">{trial.registryId}</a>
+						) : (
+							"N/A"
+						)}
+					</b>
+					<span>Registry record</span>
+				</li>
+			</ul>
+		</header>
+
+		<div class="cl-main cl-layout">
+			<div class="cl-col">
+				<section class="cl-sec">
+					<h2 class="cl-h2">About this trial</h2>
+					<p class="cl-prose">{trial.description}</p>
+				</section>
+
+				{trial.primaryEndpoints && trial.primaryEndpoints.length > 0 && (
+					<section class="cl-sec">
+						<h2 class="cl-h2">Primary endpoints</h2>
+						<ul class="cl-bullets">
+							{trial.primaryEndpoints.map((endpoint: string) => <li>{endpoint}</li>)}
+						</ul>
+					</section>
+				)}
+
+				{trial.latestUpdate && (
+					<section class="cl-sec">
+						<h2 class="cl-h2">Latest update</h2>
+						<div class="cl-update">
+							<span class="cl-update__k">{formatDate(trial.latestUpdate.date)}</span>
+							<p>{trial.latestUpdate.summary}</p>
+							{trial.latestUpdate.source && (
+								<a href={trial.latestUpdate.source} target="_blank" rel="noopener noreferrer">Source</a>
+							)}
+						</div>
+					</section>
+				)}
+
+				<p class="cl-note">Trial information is compiled from public sources and may be out of date. It is not medical advice and is not an offer of enrolment; check the registry entry or speak to a physician before acting on it.</p>
+			</div>
+
+			<aside class="cl-aside">
+				<div class="cl-box">
+					<h2 class="cl-box__t">Trial details</h2>
+					<dl class="cl-facts">
+						<div><dt>Trial ID</dt><dd>{trial.id.toUpperCase()}</dd></div>
+						<div><dt>Phase</dt><dd>{trial.phase}</dd></div>
+						<div><dt>Status</dt><dd>{trial.status}</dd></div>
+						<div><dt>Start date</dt><dd>{formatDate(trial.startDate)}</dd></div>
+						<div><dt>Est. completion</dt><dd>{formatDate(trial.estimatedCompletion)}</dd></div>
+					</dl>
+				</div>
+
+				{trial.countries && trial.countries.length > 0 && (
+					<div class="cl-box">
+						<h2 class="cl-box__t">Trial locations</h2>
+						<ul class="cl-tags">
+							{trial.countries.map((country: string) => <li>{country}</li>)}
+						</ul>
+					</div>
+				)}
+
+				<div class="cl-box">
+					<h2 class="cl-box__t">Sponsor</h2>
+					<p class="cl-box__lead">{company.name}</p>
+					<p class="cl-dim">{company.headquarters}</p>
+					{company.website && (
+						<p><a href={company.website} target="_blank" rel="noopener noreferrer">Visit website ↗</a></p>
+					)}
+				</div>
+
+				<a href="/clinical-trials" class="cl-more">← All clinical trials</a>
+			</aside>
+		</div>
+	</article>
+</SiteLayout>
