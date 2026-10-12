@@ -4,9 +4,8 @@
  * Dynamic pages for each medical specialty category
  * Optimized for SEO with rich structured data
  */
-import Layout from "../../layouts/Layout.astro";
-import TierBadge from "../../components/TierBadge.astro";
-import OptimizedImage from "../../components/OptimizedImage.astro";
+import "../../styles/pages/directory.css";
+import SiteLayout from "../../layouts/SiteLayout.astro";
 import { prisma } from "../../lib/prisma";
 import { SPECIALTY_GROUPS } from "../../lib/specialty-groups";
 import { generateSpecialtyPageSchema } from "../../lib/medical-knowledge-graph";
@@ -63,7 +62,6 @@ const sortedDoctors = await prisma.profile.findMany({
         status: true,
         ranking_score: true,
         h_index: true,
-        portrait_url: true,
         geography: {
             select: {
                 country: true,
@@ -139,648 +137,87 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
         tier: d.tier,
     }))
 );
+
+const TIER_LABEL: Record<string, string> = { TITAN: "Titan", ELITE: "Elite", MASTER: "Master" };
+const canonical = page > 1 ? `/specialty/${slug}?page=${page}` : undefined;
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
-    <!-- Structured Data: Collection Page -->
-    <script type="application/ld+json" set:html={JSON.stringify(collectionPageSchema)} />
-
-    <!-- Medical Knowledge Graph with @id references -->
-    <script type="application/ld+json" set:html={JSON.stringify(knowledgeGraphSchema)} />
-
-    <div class="specialty-page">
-        <!-- Hero Section -->
-        <header class="specialty-hero">
-            <div class="container">
-                <!-- Breadcrumb -->
-                <nav class="breadcrumb" aria-label="Breadcrumb">
-                    <a href="/">Home</a>
-                    <span class="breadcrumb-sep">/</span>
-                    <a href="/rankings">Specialties</a>
-                    <span class="breadcrumb-sep">/</span>
-                    <span class="breadcrumb-current">{group.name}</span>
-                </nav>
-
-                <div class="hero-content">
-                    <span class="hero-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={group.svgPath}/></svg></span>
-                    <h1>{group.name}</h1>
-                    <p class="hero-description">{group.description}</p>
-                </div>
-
-                <!-- Stats Bar -->
-                <div class="stats-bar">
-                    <div class="stat">
-                        <span class="stat-value">{totalDoctors.toLocaleString()}</span>
-                        <span class="stat-label">Specialists</span>
-                    </div>
-                    <div class="stat stat--titan">
-                        <span class="stat-value">{titanCount}</span>
-                        <span class="stat-label">Titans</span>
-                    </div>
-                    <div class="stat stat--elite">
-                        <span class="stat-value">{eliteCount}</span>
-                        <span class="stat-label">Elite</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-value">{countryCount}</span>
-                        <span class="stat-label">Countries</span>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Subspecialty Tags -->
-        <section class="subspecialties">
-            <div class="container">
-                <h2 class="section-title">Subspecialties</h2>
-                <div class="tags-grid">
-                    {group.specialties.map(specialty => (
-                        <span class="subspecialty-tag">{specialty}</span>
-                    ))}
-                </div>
-            </div>
-        </section>
-
-        <!-- Doctors Grid -->
-        <section class="doctors-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">Leading Specialists</h2>
-                    <span class="section-count">{totalDoctors.toLocaleString()} physicians</span>
-                </div>
-
-                {sortedDoctors.length > 0 ? (<>
-                    <div class="doctors-grid">
-                        {sortedDoctors.map(doc => {
-                            const location = [doc.geography?.city, doc.geography?.country]
-                                .filter(Boolean)
-                                .join(', ');
-                            const initials = doc.full_name
-                                .split(' ')
-                                .map((w: string) => w[0])
-                                .filter((_: string, i: number) => i < 2)
-                                .join('')
-                                .toUpperCase();
-
-                            return (
-                                <a
-                                    href={`/doctors/${doc.slug}`}
-                                    class={`doctor-card doctor-card--${doc.tier.toLowerCase()}`}
-                                >
-                                    <div class="doctor-card__header">
-                                        <div class={`doctor-card__avatar avatar--${doc.tier.toLowerCase()}`}>
-                                            <OptimizedImage
-                                                src={doc.portrait_url}
-                                                alt={doc.full_name}
-                                                width={64}
-                                                height={64}
-                                                fallbackInitials={initials}
-                                                tier={doc.tier as 'TITAN' | 'ELITE' | 'MASTER' | 'UNRANKED'}
-                                            />
-                                        </div>
-                                        <div class="doctor-card__badges">
-                                            <TierBadge
-                                                tier={doc.tier as 'TITAN' | 'ELITE' | 'MASTER' | 'UNRANKED'}
-                                                size="sm"
-                                            />
-                                            {doc.status === 'HISTORICAL' && (
-                                                <span class="legacy-badge">Legacy</span>
-                                            )}
-                                        </div>
-                                    </div>
-                                    <h3 class="doctor-card__name">{doc.full_name}</h3>
-                                    <p class="doctor-card__specialty">{doc.specialty}</p>
-                                    {location && (
-                                        <p class="doctor-card__location">{location}</p>
-                                    )}
-                                    <div class="doctor-card__stats">
-                                        <span class="stat">
-                                            <strong>{doc.h_index || '-'}</strong> H-index
-                                        </span>
-                                    </div>
-                                </a>
-                            );
-                        })}
-                    </div>
-                    <Pagination page={page} totalPages={totalPages} total={totalDoctors} pageSize={PAGE_SIZE} label="specialists" />
-                    <SpecialtyGeoLinks groupSlug={slug} />
-                </>) : (
-                    <div class="empty-state">
-                        <span class="empty-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={group.svgPath}/></svg></span>
-                        <h3>No specialists found</h3>
-                        <p>We're actively building our database. Check back soon for {group.name.toLowerCase()} specialists.</p>
-                    </div>
-                )}
-            </div>
-        </section>
-
-        <!-- Related Specialties -->
-        <section class="related-section">
-            <div class="container">
-                <h2 class="section-title">Explore Other Specialties</h2>
-                <div class="related-grid">
-                    {relatedGroups.map(related => (
-                        <a
-                            href={`/specialty/${slugify(related.name)}`}
-                            class="related-card"
-                        >
-                            <span class="related-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={related.svgPath}/></svg></span>
-                            <div class="related-content">
-                                <h3 class="related-name">{related.name}</h3>
-                                <p class="related-desc">{related.description}</p>
-                            </div>
-                            <span class="related-arrow">&#8594;</span>
-                        </a>
-                    ))}
-                </div>
-            </div>
-        </section>
-    </div>
-</Layout>
-
-<style>
-    .specialty-page {
-        background: var(--paper);
-        min-height: 100vh;
-    }
-
-    .container {
-        max-width: var(--max);
-        margin: 0 auto;
-        padding: 0 1.5rem;
-    }
-
-    /* Breadcrumb */
-    .breadcrumb {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.85rem;
-        margin-bottom: 2rem;
-    }
-
-    .breadcrumb a {
-        color: var(--ink-3);
-        text-decoration: none;
-        transition: color 0.2s;
-    }
-
-    .breadcrumb a:hover {
-        color: var(--ink-blue);
-    }
-
-    .breadcrumb-sep {
-        color: var(--ink-3);
-        opacity: 0.5;
-    }
-
-    .breadcrumb-current {
-        color: var(--ink-2);
-    }
-
-    /* Hero Section */
-    .specialty-hero {
-        padding: 4rem 0 3rem;
-        background: var(--paper);
-        border-bottom: 1px solid var(--rule);
-    }
-
-    .hero-content {
-        text-align: center;
-        margin-bottom: 2.5rem;
-    }
-
-    .hero-icon {
-        display: block;
-        font-size: 4rem;
-        margin-bottom: 1rem;
-    }
-
-    .specialty-hero h1 {
-        font-family: var(--font-serif);
-        font-size: clamp(2.5rem, 5vw, 3.5rem);
-        font-weight: 400;
-        color: var(--ink);
-        margin-bottom: 1rem;
-    }
-
-    .hero-description {
-        font-size: 1.15rem;
-        color: var(--ink-2);
-        max-width: 600px;
-        margin: 0 auto;
-        line-height: 1.6;
-    }
-
-    /* Stats Bar */
-    .stats-bar {
-        display: flex;
-        justify-content: center;
-        gap: 1.5rem;
-        flex-wrap: wrap;
-    }
-
-    .stat {
-        text-align: center;
-        padding: 1rem 1.5rem;
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        min-width: 110px;
-    }
-
-    .stat-value {
-        display: block;
-        font-family: var(--font-mono);
-        font-size: 1.75rem;
-        font-weight: 500;
-        color: var(--ink);
-    }
-
-    .stat-label {
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--ink-3);
-    }
-
-    .stat--titan .stat-value { color: var(--titan-text); }
-    .stat--elite .stat-value { color: var(--elite-text); }
-
-    /* Subspecialties Section */
-    .subspecialties {
-        padding: 3rem 0;
-        background: var(--paper-2);
-        border-bottom: 1px solid var(--rule);
-    }
-
-    .section-title {
-        font-family: var(--font-serif);
-        font-size: 1.5rem;
-        font-weight: 400;
-        color: var(--ink);
-        margin-bottom: 1.5rem;
-    }
-
-    .tags-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-    }
-
-    .subspecialty-tag {
-        padding: 0.5rem 1rem;
-        background: var(--ink-blue-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-pill);
-        font-size: 0.85rem;
-        color: var(--ink-blue);
-        text-transform: capitalize;
-        transition: all 0.2s;
-    }
-
-    .subspecialty-tag:hover {
-        background: var(--paper-3);
-        border-color: var(--rule-strong);
-    }
-
-    /* Doctors Section */
-    .doctors-section {
-        padding: 3rem 0 4rem;
-    }
-
-    .section-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 2rem;
-        padding-bottom: 1rem;
-        border-bottom: 1px solid var(--rule);
-    }
-
-    .section-count {
-        font-size: 0.9rem;
-        color: var(--ink-3);
-    }
-
-    .doctors-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: 1.5rem;
-    }
-
-    /* Doctor Card */
-    .doctor-card {
-        display: flex;
-        flex-direction: column;
-        padding: 1.5rem;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        text-decoration: none;
-        color: inherit;
-        transition: all var(--t-base) var(--ease);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .doctor-card::before {
-        display: none;
-    }
-
-    .doctor-card:hover {
-        transform: translateY(-3px);
-        border-color: var(--rule-strong);
-        box-shadow: var(--shadow-3);
-    }
-
-    /* Tier-specific styling */
-    .doctor-card--titan {
-        background: var(--titan-bg);
-        border-color: var(--titan-border);
-    }
-
-    .doctor-card--titan:hover {
-        border-color: var(--titan-border);
-        box-shadow: var(--shadow-glow-titan);
-    }
-
-    .doctor-card--elite {
-        background: var(--elite-bg);
-        border-color: var(--elite-border);
-    }
-
-    .doctor-card--elite:hover {
-        border-color: var(--elite-border);
-        box-shadow: var(--shadow-glow-elite);
-    }
-
-    .doctor-card--master {
-        background: var(--master-bg);
-        border-color: var(--master-border);
-    }
-
-    .doctor-card--master:hover {
-        border-color: var(--master-border);
-        box-shadow: var(--shadow-glow-master);
-    }
-
-    .doctor-card__header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 1rem;
-    }
-
-    .doctor-card__avatar {
-        width: 56px;
-        height: 56px;
-        border-radius: var(--r-4);
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--paper-2);
-        border: 2px solid var(--rule);
-        box-shadow: var(--shadow-2);
-    }
-
-    .avatar--titan {
-        border-color: var(--titan-border);
-        background: var(--titan-bg);
-    }
-
-    .avatar--elite {
-        border-color: var(--elite-border);
-        background: var(--elite-bg);
-    }
-
-    .avatar--master {
-        border-color: var(--master-border);
-        background: var(--master-bg);
-    }
-
-    .doctor-card__avatar img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .avatar-initials {
-        font-weight: 500;
-        font-size: 0.85rem;
-        color: var(--ink-3);
-    }
-
-    .avatar--titan .avatar-initials { color: var(--titan-text); }
-    .avatar--elite .avatar-initials { color: var(--elite-text); }
-    .avatar--master .avatar-initials { color: var(--master-text); }
-
-    .doctor-card__badges {
-        display: flex;
-        gap: 0.5rem;
-        align-items: center;
-    }
-
-    .legacy-badge {
-        font-size: 0.65rem;
-        font-weight: 500;
-        padding: 2px 6px;
-        border-radius: var(--r-2);
-        background: var(--paper-3);
-        color: var(--ink-3);
-    }
-
-    .doctor-card__name {
-        font-family: var(--font-serif);
-        font-size: 1.15rem;
-        font-weight: 500;
-        color: var(--ink);
-        margin-bottom: 0.25rem;
-        line-height: 1.3;
-        letter-spacing: -0.01em;
-    }
-
-    .doctor-card--titan .doctor-card__name {
-        color: var(--titan-text);
-    }
-
-    .doctor-card__specialty {
-        font-size: 0.85rem;
-        color: var(--ink-2);
-        font-weight: 500;
-        margin-bottom: 0.25rem;
-    }
-
-    .doctor-card__location {
-        font-size: 0.8rem;
-        color: var(--ink-3);
-        margin-bottom: 1rem;
-    }
-
-    .doctor-card__stats {
-        display: flex;
-        gap: 1rem;
-        padding-top: 1rem;
-        border-top: 1px solid var(--rule);
-        margin-top: auto;
-    }
-
-    .doctor-card__stats .stat {
-        font-size: 0.75rem;
-        color: var(--ink-3);
-        background: none;
-        border: none;
-        padding: 0;
-        min-width: auto;
-    }
-
-    .doctor-card__stats .stat strong {
-        color: var(--ink);
-        font-weight: 500;
-        font-size: 1rem;
-        font-family: var(--font-mono);
-    }
-
-    /* Empty State */
-    .empty-state {
-        text-align: center;
-        padding: 4rem 2rem;
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-    }
-
-    .empty-icon {
-        font-size: 4rem;
-        opacity: 0.3;
-        display: block;
-        margin-bottom: 1rem;
-    }
-
-    .empty-state h3 {
-        font-size: 1.25rem;
-        color: var(--ink-2);
-        margin-bottom: 0.5rem;
-    }
-
-    .empty-state p {
-        font-size: 0.95rem;
-        color: var(--ink-3);
-        max-width: 400px;
-        margin: 0 auto;
-    }
-
-    /* Related Specialties Section */
-    .related-section {
-        padding: 4rem 0;
-        background: var(--paper-2);
-        border-top: 1px solid var(--rule);
-    }
-
-    .related-section .section-title {
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-
-    .related-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-        gap: 1rem;
-    }
-
-    .related-card {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: 1.25rem 1.5rem;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        text-decoration: none;
-        color: inherit;
-        transition: all 0.2s;
-    }
-
-    .related-card:hover {
-        background: var(--paper-3);
-        border-color: var(--rule-strong);
-        transform: translateX(4px);
-    }
-
-    .related-icon {
-        font-size: 1.75rem;
-        flex-shrink: 0;
-    }
-
-    .related-content {
-        flex: 1;
-        min-width: 0;
-    }
-
-    .related-name {
-        font-size: 1rem;
-        font-weight: 500;
-        color: var(--ink);
-        margin-bottom: 0.25rem;
-    }
-
-    .related-desc {
-        font-size: 0.8rem;
-        color: var(--ink-3);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .related-arrow {
-        font-size: 1.25rem;
-        color: var(--ink-3);
-        opacity: 0;
-        transition: opacity 0.2s, transform 0.2s;
-    }
-
-    .related-card:hover .related-arrow {
-        opacity: 1;
-        transform: translateX(4px);
-        color: var(--ink-blue);
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-        .specialty-hero {
-            padding: 3rem 0 2rem;
-        }
-
-        .hero-icon {
-            font-size: 3rem;
-        }
-
-        .stats-bar {
-            gap: 0.75rem;
-        }
-
-        .stat {
-            min-width: 80px;
-            padding: 0.75rem 1rem;
-        }
-
-        .stat-value {
-            font-size: 1.25rem;
-        }
-
-        .doctors-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .related-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .section-header {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0.5rem;
-        }
-    }
-</style>
+<SiteLayout title={pageTitle} description={pageDescription} active="register" jsonLd={[collectionPageSchema, knowledgeGraphSchema]} canonical={canonical}>
+	<div class="dx">
+		<header class="dx-hero">
+			<div class="dx-hero__inner">
+				<nav class="dx-crumbs" aria-label="Breadcrumb">
+					<a href="/">Home</a><span aria-hidden="true">/</span><a href="/specialty">Specialties</a><span aria-hidden="true">/</span><span aria-current="page">{group.name}</span>
+				</nav>
+				<span class="dx-eyebrow">SPECIALTY</span>
+				<h1>{group.name}</h1>
+				<p class="dx-lede">{group.description}</p>
+				<ul class="dx-facts">
+					<li><b>{totalDoctors.toLocaleString()}</b><span>Specialists</span></li>
+					<li><b>{titanCount}</b><span>Titan</span></li>
+					<li><b>{eliteCount}</b><span>Elite</span></li>
+					<li><b>{countryCount}</b><span>Countries</span></li>
+				</ul>
+			</div>
+		</header>
+
+		<div class="dx-main">
+			<section class="dx-section" aria-labelledby="sub-h">
+				<h2 id="sub-h">Subspecialties</h2>
+				<ul class="dx-chips" style="list-style:none;margin:0;padding:0">
+					{group.specialties.map((specialty) => <li class="dx-chip" style="cursor:default">{specialty}</li>)}
+				</ul>
+			</section>
+
+			<section class="dx-section" aria-labelledby="doc-h">
+				<h2 id="doc-h">Leading specialists</h2>
+				<p class="dx-count">{totalDoctors.toLocaleString()} physicians · ordered by tier, then ranking score</p>
+				{sortedDoctors.length > 0 ? (
+					<>
+						<div class="dx-scroll dx-scroll--stack" tabindex="0" role="region" aria-label={`${group.name} specialists`}>
+							<table class="dx-table dx-stack">
+								<caption class="r-sr-only">{group.name} specialists, page {page} of {totalPages}</caption>
+								<thead>
+									<tr><th scope="col">Physician</th><th scope="col">Practises in</th><th scope="col">Tier</th><th scope="col">h-index</th></tr>
+								</thead>
+								<tbody>
+									{sortedDoctors.map((doc) => {
+										const location = [doc.geography?.city, doc.geography?.country].filter(Boolean).join(", ");
+										const tier = TIER_LABEL[doc.tier];
+										return (
+											<tr>
+												<td class="who">
+													<a href={`/doctors/${doc.slug}`}>{doc.full_name}</a>
+													<span class="sub">{doc.specialty}{doc.status === "HISTORICAL" && " · Historical"}</span>
+												</td>
+												<td class:list={["sub", { "is-none": !location }]}>{location}</td>
+												<td class:list={["dx-tier", `dx-tier--${doc.tier.toLowerCase()}`, { "is-none": !tier }]} data-label="Tier">{tier}</td>
+												<td class:list={["num", { "is-none": !doc.h_index }]} data-label="h-index">{doc.h_index || ""}</td>
+											</tr>
+										);
+									})}
+								</tbody>
+							</table>
+						</div>
+						<Pagination page={page} totalPages={totalPages} total={totalDoctors} pageSize={PAGE_SIZE} label="specialists" />
+						<SpecialtyGeoLinks groupSlug={slug} />
+					</>
+				) : (
+					<p class="dx-empty">No {group.name.toLowerCase()} specialists are listed yet.</p>
+				)}
+			</section>
+
+			<section class="dx-section" aria-labelledby="rel-h">
+				<h2 id="rel-h">Other specialties</h2>
+				<ul class="dx-grid">
+					{relatedGroups.map((related) => (
+						<li class="dx-card">
+							<h3><a href={`/specialty/${slugify(related.name)}`}>{related.name}</a></h3>
+							<p class="dx-card__clamp">{related.description}</p>
+						</li>
+					))}
+				</ul>
+			</section>
+		</div>
+	</div>
+</SiteLayout>

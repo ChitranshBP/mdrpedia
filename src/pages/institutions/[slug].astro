@@ -4,10 +4,11 @@
  * Display institution details and affiliated doctors
  * Includes Medical Knowledge Graph schema for AI crawlers
  */
-import Layout from "../../layouts/Layout.astro";
+import "../../styles/pages/directory.css";
+import SiteLayout from "../../layouts/SiteLayout.astro";
 import { prisma } from "../../lib/prisma";
 import { generateHospitalPageSchema } from "../../lib/medical-knowledge-graph";
-import { getInstitutionLogo, getInstitutionInitials, getInstitutionColor } from "../../lib/institution-logos";
+import { getInstitutionLogo, getInstitutionInitials } from "../../lib/institution-logos";
 
 export const prerender = false;
 
@@ -77,12 +78,7 @@ const sectorLabels: Record<string, string> = {
     PRIVATE: 'Private Institution'
 };
 
-const tierColors: Record<string, string> = {
-    TITAN: 'var(--titan-text)',
-    ELITE: 'var(--elite-text)',
-    MASTER: 'var(--master-text)',
-    UNRANKED: 'var(--ink-3)'
-};
+const TIER_LABEL: Record<string, string> = { TITAN: "Titan", ELITE: "Elite", MASTER: "Master" };
 
 // Generate Hospital Knowledge Graph Schema
 const hospitalSchema = generateHospitalPageSchema(
@@ -137,591 +133,111 @@ const hospitalDatasetSchema = {
     },
     isAccessibleForFree: true,
 };
+
+const logoUrl = institution.logo_url || getInstitutionLogo(institution.name, institution.website);
+const initials = getInstitutionInitials(institution.name);
+const place = [institution.geography?.city, institution.geography?.region, institution.geography?.country || "Unknown location"].filter(Boolean).join(", ");
+const title = `${institution.name} — MDRPedia`;
+const description = `${doctors.length} verified physician${doctors.length === 1 ? "" : "s"} affiliated with ${institution.name}${institution.geography?.country ? `, ${institution.geography.country}` : ""}${specialties.length ? ` across ${specialties.length} ${specialties.length === 1 ? "specialty" : "specialties"}` : ""}. Profiles, citations and clinical impact on MDRPedia.`;
 ---
 
-<Layout
-    title={`${institution.name} — MDRPedia`}
-    description={`${doctors.length} verified physician${doctors.length === 1 ? "" : "s"} affiliated with ${institution.name}${institution.geography?.country ? `, ${institution.geography.country}` : ""}${specialties.length ? ` across ${specialties.length} ${specialties.length === 1 ? "specialty" : "specialties"}` : ""}. Profiles, citations and clinical impact on MDRPedia.`}
->
-    <!-- Hospital Knowledge Graph Schema -->
-    <script
-        type="application/ld+json"
-        set:html={JSON.stringify(hospitalSchema, null, 2)}
-    />
-
-    <!-- Hospital Dataset Schema -->
-    <script
-        type="application/ld+json"
-        set:html={JSON.stringify(hospitalDatasetSchema, null, 2)}
-    />
-
-    <div class="container institution-profile">
-        <!-- Hero Section -->
-        <header class="inst-hero">
-            <div class="hero-content">
-                <div class="hero-logo">
-                    {(() => {
-                        const logoUrl = institution.logo_url || getInstitutionLogo(institution.name, institution.website);
-                        const initials = getInstitutionInitials(institution.name);
-                        const color = getInstitutionColor(institution.name);
-                        return logoUrl ? (
-                            <>
-                                <img
-                                    src={logoUrl}
-                                    alt={institution.name}
-                                    loading="eager"
-                                    onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`}
-                                />
-                                <div class="logo-placeholder" style={`display:none;background:${color}`}>
-                                    {initials}
-                                </div>
-                            </>
-                        ) : (
-                            <div class="logo-placeholder" style={`background:${color}`}>
-                                {initials}
-                            </div>
-                        );
-                    })()}
-                </div>
-                <div class="hero-text">
-                    <h1>{institution.name}</h1>
-                    <p class="location">
-                        {institution.geography?.city && `${institution.geography.city}, `}
-                        {institution.geography?.region && `${institution.geography.region}, `}
-                        {institution.geography?.country || 'Unknown Location'}
-                    </p>
-                    <div class="hero-badges">
-                        <span class={`sector-badge sector-${institution.sector.toLowerCase()}`}>
-                            {sectorLabels[institution.sector]}
-                        </span>
-                        {institution.ranking_position && (
-                            <span class="ranking-badge">
-                                Ranked #{institution.ranking_position}
-                                {institution.ranking_source && ` (${institution.ranking_source})`}
-                            </span>
-                        )}
-                        {institution.center_of_excellence && (
-                            <span class="coe-badge">
-                                Center of Excellence: {institution.center_of_excellence}
-                            </span>
-                        )}
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Stats Bar -->
-        <div class="stats-bar">
-            <div class="stat-item">
-                <span class="stat-value">{doctors.length}</span>
-                <span class="stat-label">Affiliated Doctors</span>
-            </div>
-            <div class="stat-item" style={`--stat-color: ${tierColors.TITAN}`}>
-                <span class="stat-value">{tierCounts.TITAN}</span>
-                <span class="stat-label">Titans</span>
-            </div>
-            <div class="stat-item" style={`--stat-color: ${tierColors.ELITE}`}>
-                <span class="stat-value">{tierCounts.ELITE}</span>
-                <span class="stat-label">Elite</span>
-            </div>
-            <div class="stat-item" style={`--stat-color: ${tierColors.MASTER}`}>
-                <span class="stat-value">{tierCounts.MASTER}</span>
-                <span class="stat-label">Masters</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-value">{specialties.length}</span>
-                <span class="stat-label">Specialties</span>
-            </div>
-        </div>
-
-        <div class="content-grid">
-            <!-- Main Content -->
-            <div class="main-content">
-                <!-- About Section -->
-                {institution.description && (
-                    <section class="content-section">
-                        <h2>About</h2>
-                        <p>{institution.description}</p>
-                    </section>
-                )}
-
-                <!-- Affiliated Doctors -->
-                <section class="content-section">
-                    <div class="section-header">
-                        <h2>Affiliated Physicians</h2>
-                        <span class="count">{doctors.length} doctors</span>
-                    </div>
-
-                    <div class="doctors-grid">
-                        {doctors.length > 0 ? (
-                            doctors.map((doctor) => (
-                                <a href={`/doctors/${doctor.slug}`} class="doctor-card">
-                                    <div class="doctor-avatar">
-                                        {doctor.portrait_url && !doctor.portrait_url.startsWith('data:') ? (
-                                            <img src={doctor.portrait_url} alt={doctor.full_name || ''} loading="lazy" />
-                                        ) : (
-                                            <div class="avatar-placeholder" style={`--tier-color: ${tierColors[doctor.tier || 'UNRANKED']}`}>
-                                                {(doctor.full_name || '?').charAt(0)}
-                                            </div>
-                                        )}
-                                    </div>
-                                    <div class="doctor-info">
-                                        <h4 class="doctor-name">
-                                            {doctor.full_name}
-                                            {doctor.isPrimary && <span class="primary-badge">Primary</span>}
-                                        </h4>
-                                        <p class="doctor-specialty">{doctor.specialty}</p>
-                                        {doctor.role && <p class="doctor-role">{doctor.role}</p>}
-                                    </div>
-                                    <div class="doctor-stats">
-                                        <span class={`tier-badge tier-${(doctor.tier || 'unranked').toLowerCase()}`}>
-                                            {doctor.tier}
-                                        </span>
-                                        <span class="h-index">H: {doctor.h_index}</span>
-                                    </div>
-                                </a>
-                            ))
-                        ) : (
-                            <p class="empty-message">No affiliated doctors found.</p>
-                        )}
-                    </div>
-                </section>
-            </div>
-
-            <!-- Sidebar -->
-            <aside class="sidebar">
-                <!-- Quick Facts -->
-                <div class="sidebar-card">
-                    <h3>Quick Facts</h3>
-                    <dl class="facts-list">
-                        <div class="fact-row">
-                            <dt>Type</dt>
-                            <dd>{sectorLabels[institution.sector]}</dd>
-                        </div>
-                        {institution.geography?.country && (
-                            <div class="fact-row">
-                                <dt>Country</dt>
-                                <dd>{institution.geography.country}</dd>
-                            </div>
-                        )}
-                        {institution.geography?.city && (
-                            <div class="fact-row">
-                                <dt>City</dt>
-                                <dd>{institution.geography.city}</dd>
-                            </div>
-                        )}
-                        {institution.website && (
-                            <div class="fact-row">
-                                <dt>Website</dt>
-                                <dd>
-                                    <a href={institution.website} target="_blank" rel="noopener">
-                                        Visit &rarr;
-                                    </a>
-                                </dd>
-                            </div>
-                        )}
-                    </dl>
-                </div>
-
-                <!-- Specialties -->
-                {specialties.length > 0 && (
-                    <div class="sidebar-card">
-                        <h3>Specialties</h3>
-                        <div class="specialties-list">
-                            {specialties.slice(0, 10).map(spec => (
-                                <a href={`/doctors?specialty=${encodeURIComponent(spec || '')}`} class="specialty-tag">
-                                    {spec}
-                                </a>
-                            ))}
-                            {specialties.length > 10 && (
-                                <span class="more-specialties">+{specialties.length - 10} more</span>
-                            )}
-                        </div>
-                    </div>
-                )}
-
-                <!-- Back Link -->
-                <a href="/institutions" class="back-link">
-                    &larr; All Institutions
-                </a>
-            </aside>
-        </div>
-    </div>
-</Layout>
-
-<style>
-    .institution-profile {
-        padding: 40px 20px;
-        max-width: var(--max);
-    }
-
-    /* Hero */
-    .inst-hero {
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        padding: 40px;
-        margin-bottom: 32px;
-    }
-
-    .hero-content {
-        display: flex;
-        gap: 32px;
-        align-items: flex-start;
-    }
-
-    .hero-logo img,
-    .logo-placeholder {
-        width: 100px;
-        height: 100px;
-        border-radius: var(--r-4);
-        object-fit: contain;
-    }
-
-    .hero-logo img {
-        background: var(--paper);
-        padding: 8px;
-    }
-
-    .logo-placeholder {
-        background: var(--ink-blue);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2.5rem;
-        font-weight: 500;
-        color: var(--paper);
-    }
-
-    .hero-text h1 {
-        font-family: var(--font-serif);
-        font-size: 2.2rem;
-        font-weight: 400;
-        color: var(--ink);
-        margin: 0 0 8px;
-    }
-
-    .location {
-        color: var(--ink-2);
-        font-size: 1.1rem;
-        margin: 0 0 16px;
-    }
-
-    .hero-badges {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-
-    .sector-badge, .ranking-badge, .coe-badge {
-        padding: 6px 14px;
-        border-radius: var(--r-pill);
-        font-size: 0.8rem;
-        font-weight: 600;
-    }
-
-    .sector-public {
-        background: var(--verdant-2);
-        color: var(--verdant);
-    }
-
-    .sector-private {
-        background: var(--ink-blue-2);
-        color: var(--ink-blue);
-    }
-
-    .ranking-badge {
-        background: var(--aged-gold-2);
-        color: var(--titan-text);
-    }
-
-    .coe-badge {
-        background: var(--ink-blue-2);
-        color: var(--ink-blue);
-    }
-
-    /* Stats Bar */
-    .stats-bar {
-        display: flex;
-        gap: 16px;
-        margin-bottom: 40px;
-        flex-wrap: wrap;
-    }
-
-    .stats-bar .stat-item {
-        flex: 1;
-        min-width: 120px;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        padding: 20px;
-        text-align: center;
-    }
-
-    .stats-bar .stat-value {
-        display: block;
-        font-size: 1.8rem;
-        font-weight: 500;
-        color: var(--stat-color, var(--ink));
-    }
-
-    .stats-bar .stat-label {
-        font-size: 0.75rem;
-        color: var(--ink-3);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-
-    /* Content Grid */
-    .content-grid {
-        display: grid;
-        grid-template-columns: 1fr 320px;
-        gap: 40px;
-        align-items: start;
-    }
-
-    .content-section {
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        padding: 24px;
-        margin-bottom: 24px;
-    }
-
-    .content-section h2 {
-        font-family: var(--font-serif);
-        font-size: 1.3rem;
-        font-weight: 400;
-        color: var(--ink);
-        margin: 0 0 16px;
-        padding-bottom: 12px;
-        border-bottom: 1px solid var(--rule);
-    }
-
-    .section-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        padding-bottom: 12px;
-        border-bottom: 1px solid var(--rule);
-    }
-
-    .section-header h2 {
-        margin: 0;
-        border: none;
-        padding: 0;
-    }
-
-    .count {
-        color: var(--ink-3);
-        font-size: 0.9rem;
-    }
-
-    /* Doctors Grid */
-    .doctors-grid {
-        display: grid;
-        gap: 12px;
-    }
-
-    .doctor-card {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        padding: 16px;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-3);
-        text-decoration: none;
-        color: inherit;
-        transition: all 0.2s;
-    }
-
-    .doctor-card:hover {
-        background: var(--paper-2);
-        border-color: var(--rule-strong);
-    }
-
-    .doctor-avatar img,
-    .avatar-placeholder {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        object-fit: cover;
-    }
-
-    .avatar-placeholder {
-        background: var(--paper-3);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 500;
-        color: var(--ink-2);
-    }
-
-    .doctor-info {
-        flex: 1;
-    }
-
-    .doctor-name {
-        font-size: 0.95rem;
-        font-weight: 500;
-        margin: 0 0 2px;
-        color: var(--ink);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .primary-badge {
-        font-size: 0.65rem;
-        padding: 2px 6px;
-        background: var(--verdant-2);
-        color: var(--verdant);
-        border-radius: var(--r-2);
-    }
-
-    .doctor-specialty {
-        font-size: 0.8rem;
-        color: var(--ink-2);
-        margin: 0;
-    }
-
-    .doctor-role {
-        font-size: 0.75rem;
-        color: var(--ink-3);
-        margin: 2px 0 0;
-    }
-
-    .doctor-stats {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 4px;
-    }
-
-    .tier-badge {
-        padding: 3px 10px;
-        border-radius: var(--r-2);
-        font-size: 0.7rem;
-        font-weight: 500;
-    }
-
-    .tier-titan { background: var(--titan-bg); color: var(--titan-text); }
-    .tier-elite { background: var(--elite-bg); color: var(--elite-text); }
-    .tier-master { background: var(--master-bg); color: var(--master-text); }
-    .tier-unranked { background: var(--paper-3); color: var(--ink-3); }
-
-    .h-index {
-        font-family: var(--font-mono);
-        font-size: 0.75rem;
-        color: var(--ink-3);
-    }
-
-    /* Sidebar */
-    .sidebar-card {
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        padding: 20px;
-        margin-bottom: 20px;
-    }
-
-    .sidebar-card h3 {
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: var(--ink-3);
-        margin: 0 0 16px;
-    }
-
-    .facts-list {
-        margin: 0;
-    }
-
-    .fact-row {
-        display: flex;
-        justify-content: space-between;
-        padding: 8px 0;
-        border-bottom: 1px solid var(--rule);
-    }
-
-    .fact-row:last-child {
-        border-bottom: none;
-    }
-
-    .fact-row dt {
-        color: var(--ink-3);
-        font-size: 0.85rem;
-    }
-
-    .fact-row dd {
-        margin: 0;
-        font-size: 0.85rem;
-    }
-
-    .fact-row a {
-        color: var(--ink-blue);
-        text-decoration: none;
-    }
-
-    .specialties-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-
-    .specialty-tag {
-        padding: 4px 12px;
-        background: var(--ink-blue-2);
-        color: var(--ink-blue);
-        border-radius: var(--r-pill);
-        font-size: 0.75rem;
-        text-decoration: none;
-        transition: all 0.2s;
-    }
-
-    .specialty-tag:hover {
-        background: var(--paper-3);
-    }
-
-    .more-specialties {
-        color: var(--ink-3);
-        font-size: 0.75rem;
-        padding: 4px;
-    }
-
-    .back-link {
-        display: block;
-        color: var(--ink-blue);
-        text-decoration: none;
-        font-weight: 600;
-    }
-
-    .empty-message {
-        color: var(--ink-3);
-        text-align: center;
-        padding: 40px;
-    }
-
-    @media (max-width: 1024px) {
-        .content-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .sidebar {
-            order: -1;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .hero-content {
-            flex-direction: column;
-            text-align: center;
-        }
-
-        .hero-badges {
-            justify-content: center;
-        }
-    }
-</style>
+<SiteLayout title={title} description={description} active="register" jsonLd={[hospitalSchema, hospitalDatasetSchema]}>
+	<div class="dx">
+		<header class="dx-hero">
+			<div class="dx-hero__inner">
+				<nav class="dx-crumbs" aria-label="Breadcrumb">
+					<a href="/">Home</a><span aria-hidden="true">/</span><a href="/institutions">Institutions</a><span aria-hidden="true">/</span><span aria-current="page">{institution.name}</span>
+				</nav>
+				<div class="dx-inst dx-inst--lg">
+					{logoUrl ? (
+						<>
+							<img src={logoUrl} alt="" class="dx-logo" width="88" height="88" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+							<span class="dx-logo dx-logo--ph" style="display:none">{initials}</span>
+						</>
+					) : (
+						<span class="dx-logo dx-logo--ph">{initials}</span>
+					)}
+					<div>
+						<span class="dx-eyebrow">{sectorLabels[institution.sector].toUpperCase()}</span>
+						<h1>{institution.name}</h1>
+					</div>
+				</div>
+				<p class="dx-lede">{place}</p>
+				<p class="dx-meta">
+					{institution.ranking_position && <span>Ranked #{institution.ranking_position}{institution.ranking_source && ` (${institution.ranking_source})`}</span>}
+					{institution.center_of_excellence && <span>Centre of excellence: {institution.center_of_excellence}</span>}
+				</p>
+				<ul class="dx-facts">
+					<li><b>{doctors.length}</b><span>Affiliated doctors</span></li>
+					<li><b>{tierCounts.TITAN}</b><span>Titan</span></li>
+					<li><b>{tierCounts.ELITE}</b><span>Elite</span></li>
+					<li><b>{tierCounts.MASTER}</b><span>Master</span></li>
+					<li><b>{specialties.length}</b><span>Specialties</span></li>
+				</ul>
+			</div>
+		</header>
+
+		<div class="dx-main">
+			<div class="dx-two">
+				<div class="dx-section">
+					{institution.description && (
+						<section class="dx-section" aria-labelledby="about-h">
+							<h2 id="about-h">About</h2>
+							<div class="dx-prose"><p>{institution.description}</p></div>
+						</section>
+					)}
+
+					<section class="dx-section" aria-labelledby="phys-h">
+						<h2 id="phys-h">Affiliated physicians</h2>
+						<p class="dx-count">{doctors.length} {doctors.length === 1 ? "doctor" : "doctors"} · ordered by h-index</p>
+						{doctors.length > 0 ? (
+							<div class="dx-scroll dx-scroll--stack" tabindex="0" role="region" aria-label={`Physicians affiliated with ${institution.name}`}>
+								<table class="dx-table dx-stack">
+									<caption class="r-sr-only">Physicians affiliated with {institution.name}</caption>
+									<thead>
+										<tr><th scope="col">Physician</th><th scope="col">Role</th><th scope="col">Tier</th><th scope="col">h-index</th></tr>
+									</thead>
+									<tbody>
+										{doctors.map((doctor) => (
+											<tr>
+												<td class="who">
+													<a href={`/doctors/${doctor.slug}`}>{doctor.full_name}</a>
+													<span class="sub">{doctor.specialty}{doctor.isPrimary && " · Primary affiliation"}</span>
+												</td>
+												<td class:list={["sub", { "is-none": !doctor.role }]}>{doctor.role}</td>
+												<td class:list={["dx-tier", `dx-tier--${(doctor.tier || "unranked").toLowerCase()}`, { "is-none": !TIER_LABEL[doctor.tier || ""] }]} data-label="Tier">{TIER_LABEL[doctor.tier || ""]}</td>
+												<td class:list={["num", { "is-none": !doctor.h_index }]} data-label="h-index">{doctor.h_index || ""}</td>
+											</tr>
+										))}
+									</tbody>
+								</table>
+							</div>
+						) : (
+							<p class="dx-empty">No affiliated doctors found.</p>
+						)}
+					</section>
+				</div>
+
+				<aside class="dx-side dx-section" aria-label="Institution details">
+					<h2 class="dx-h2">Quick facts</h2>
+					<dl class="dx-dl">
+						<div><dt>Type</dt><dd>{sectorLabels[institution.sector]}</dd></div>
+						{institution.geography?.country && <div><dt>Country</dt><dd>{institution.geography.country}</dd></div>}
+						{institution.geography?.city && <div><dt>City</dt><dd>{institution.geography.city}</dd></div>}
+						{institution.website && <div><dt>Website</dt><dd><a href={institution.website} target="_blank" rel="noopener noreferrer">Visit &rarr;</a></dd></div>}
+					</dl>
+					{specialties.length > 0 && (
+						<>
+							<h2 class="dx-h2">Specialties</h2>
+							<div class="dx-chips">
+								{specialties.slice(0, 10).map((spec) => <a href={`/doctors?specialty=${encodeURIComponent(spec || "")}`}>{spec}</a>)}
+								{specialties.length > 10 && <span class="dx-count">+{specialties.length - 10} more</span>}
+							</div>
+						</>
+					)}
+					<p><a href="/institutions">&larr; All institutions</a></p>
+				</aside>
+			</div>
+		</div>
+	</div>
+</SiteLayout>

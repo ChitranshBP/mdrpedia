@@ -4,7 +4,8 @@
  * Browse all medical specialty groups with doctor counts
  * Optimized for SEO with structured data
  */
-import Layout from "../../layouts/Layout.astro";
+import "../../styles/pages/directory.css";
+import SiteLayout from "../../layouts/SiteLayout.astro";
 import { getSpecialtyStats } from "../../lib/cached-stats";
 import { SPECIALTY_GROUPS, type SpecialtyGroup } from "../../lib/specialty-groups";
 import { slugify } from "../../lib/utils";
@@ -39,12 +40,11 @@ const groupsWithCounts: GroupWithCount[] = SPECIALTY_GROUPS.map((group) => {
 const sortedGroups = groupsWithCounts.sort((a, b) => b.doctorCount - a.doctorCount);
 
 // Calculate totals
-const totalDoctors = sortedGroups.reduce((sum, g) => sum + g.doctorCount, 0);
 const totalSpecialties = sortedGroups.reduce((sum, g) => sum + g.specialties.length, 0);
 
 // Page metadata
 const pageTitle = "Medical Specialties — MDRPedia";
-const pageDescription = `Explore ${sortedGroups.length} medical specialty categories covering ${totalSpecialties}+ subspecialties. Find the world's leading physicians across surgery, cardiology, oncology, neuroscience, and more.`;
+const pageDescription = `Explore ${sortedGroups.length} medical specialty categories covering ${totalSpecialties} subspecialties. Find the world's leading physicians across surgery, cardiology, oncology, neuroscience, and more.`;
 const canonicalUrl = new URL('/specialty', Astro.site ?? 'https://mdrpedia.com').href;
 
 // Structured Data: CollectionPage with ItemList
@@ -94,497 +94,44 @@ const structuredData = {
 };
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
-    <!-- Structured Data -->
-    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
-
-    <div class="specialties-page">
-        <!-- Hero Section -->
-        <header class="specialties-hero">
-            <div class="container">
-                <!-- Breadcrumbs -->
-                <nav class="breadcrumb" aria-label="Breadcrumb">
-                    <a href="/">Home</a>
-                    <span class="breadcrumb-sep">/</span>
-                    <span class="breadcrumb-current">Specialties</span>
-                </nav>
-
-                <div class="hero-content">
-                    <h1>Medical Specialties</h1>
-                    <p class="hero-description">
-                        Explore the world's leading physicians across {sortedGroups.length} specialty categories.
-                        From groundbreaking surgeons to pioneering researchers, discover verified profiles
-                        of medical professionals shaping the future of healthcare.
-                    </p>
-                </div>
-
-                <!-- Stats Summary -->
-                <div class="hero-stats">
-                    <div class="hero-stat">
-                        <span class="hero-stat__value">{sortedGroups.length}</span>
-                        <span class="hero-stat__label">Specialty Groups</span>
-                    </div>
-                    <div class="hero-stat">
-                        <span class="hero-stat__value">{totalSpecialties}+</span>
-                        <span class="hero-stat__label">Subspecialties</span>
-                    </div>
-                    <div class="hero-stat">
-                        <span class="hero-stat__value">{totalDoctors.toLocaleString()}</span>
-                        <span class="hero-stat__label">Verified Physicians</span>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Specialty Cards Grid -->
-        <section class="specialties-grid-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Browse by Specialty</h2>
-                    <p class="section-subtitle">Select a specialty to explore top physicians in that field</p>
-                </div>
-
-                <div class="specialties-grid">
-                    {sortedGroups.map((group, index) => (
-                        <a
-                            href={`/specialty/${group.slug}`}
-                            class="specialty-card"
-                            style={`animation-delay: ${index * 50}ms`}
-                        >
-                            <div class="specialty-card__icon">
-                                <span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={group.svgPath}/></svg></span>
-                            </div>
-                            <div class="specialty-card__content">
-                                <h3 class="specialty-card__name">{group.name}</h3>
-                                <p class="specialty-card__description">{group.description}</p>
-                                <div class="specialty-card__footer">
-                                    <span class="specialty-card__count">
-                                        <strong>{group.doctorCount.toLocaleString()}</strong> physicians
-                                    </span>
-                                    <span class="specialty-card__arrow">&#8594;</span>
-                                </div>
-                            </div>
-                        </a>
-                    ))}
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="cta-section">
-            <div class="container">
-                <div class="cta-content">
-                    <h2>Are you a medical professional?</h2>
-                    <p>Claim your verified profile and join the world's most comprehensive physician directory.</p>
-                    <div class="cta-buttons">
-                        <a href="/doctor/claim" class="btn btn--primary">Claim Your Profile</a>
-                        <a href="/doctor/add-profile" class="btn btn--secondary">Add New Profile</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-</Layout>
-
-<style>
-    .specialties-page {
-        background: var(--paper);
-        min-height: 100vh;
-    }
-
-    .container {
-        max-width: var(--max);
-        margin: 0 auto;
-        padding: 0 1.5rem;
-    }
-
-    /* Breadcrumb */
-    .breadcrumb {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.85rem;
-        margin-bottom: 2rem;
-    }
-
-    .breadcrumb a {
-        color: var(--ink-3);
-        text-decoration: none;
-        transition: color 0.2s;
-    }
-
-    .breadcrumb a:hover {
-        color: var(--ink-blue);
-    }
-
-    .breadcrumb-sep {
-        color: var(--ink-3);
-        opacity: 0.5;
-    }
-
-    .breadcrumb-current {
-        color: var(--ink-2);
-    }
-
-    /* Hero Section */
-    .specialties-hero {
-        padding: 4rem 0 3rem;
-        background: var(--paper);
-        border-bottom: 1px solid var(--rule);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .specialties-hero::before {
-        display: none;
-    }
-
-    .hero-content {
-        text-align: center;
-        position: relative;
-        z-index: 1;
-        margin-bottom: 2.5rem;
-    }
-
-    .specialties-hero h1 {
-        font-family: var(--font-serif);
-        font-size: clamp(2.5rem, 5vw, 4rem);
-        font-weight: 400;
-        color: var(--ink);
-        margin-bottom: 1.25rem;
-        letter-spacing: -0.02em;
-    }
-
-    .hero-description {
-        font-size: 1.15rem;
-        color: var(--ink-2);
-        max-width: 700px;
-        margin: 0 auto;
-        line-height: 1.7;
-    }
-
-    /* Hero Stats */
-    .hero-stats {
-        display: flex;
-        justify-content: center;
-        gap: 2rem;
-        flex-wrap: wrap;
-        position: relative;
-        z-index: 1;
-    }
-
-    .hero-stat {
-        text-align: center;
-        padding: 1.25rem 2rem;
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        min-width: 150px;
-    }
-
-    .hero-stat__value {
-        display: block;
-        font-family: var(--font-mono);
-        font-size: 2rem;
-        font-weight: 500;
-        color: var(--ink-blue);
-        letter-spacing: -0.02em;
-    }
-
-    .hero-stat__label {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--ink-3);
-        margin-top: 0.25rem;
-    }
-
-    /* Grid Section */
-    .specialties-grid-section {
-        padding: 4rem 0;
-    }
-
-    .section-header {
-        text-align: center;
-        margin-bottom: 3rem;
-    }
-
-    .section-header h2 {
-        font-family: var(--font-serif);
-        font-size: 1.75rem;
-        font-weight: 400;
-        color: var(--ink);
-        margin-bottom: 0.5rem;
-    }
-
-    .section-subtitle {
-        font-size: 1rem;
-        color: var(--ink-3);
-    }
-
-    .specialties-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-        gap: 1.5rem;
-    }
-
-    /* Specialty Card */
-    .specialty-card {
-        display: flex;
-        gap: 1.25rem;
-        padding: 1.5rem;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        text-decoration: none;
-        color: inherit;
-        transition: all var(--t-base) var(--ease);
-        position: relative;
-        overflow: hidden;
-        animation: fadeInCard 0.5s ease-out forwards;
-        opacity: 0;
-    }
-
-    @keyframes fadeInCard {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .specialty-card::before {
-        display: none;
-    }
-
-    .specialty-card:hover {
-        border-color: var(--rule-strong);
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-3);
-    }
-
-    .specialty-card__icon {
-        flex-shrink: 0;
-        width: 64px;
-        height: 64px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--ink-blue-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        font-size: 2rem;
-        transition: all 0.3s;
-    }
-
-    .specialty-card:hover .specialty-card__icon {
-        background: var(--paper-3);
-        border-color: var(--rule-strong);
-        transform: scale(1.05);
-    }
-
-    .specialty-card__content {
-        flex: 1;
-        min-width: 0;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .specialty-card__name {
-        font-family: var(--font-serif);
-        font-size: 1.25rem;
-        font-weight: 500;
-        color: var(--ink);
-        margin-bottom: 0.5rem;
-        transition: color 0.2s;
-    }
-
-    .specialty-card:hover .specialty-card__name {
-        color: var(--ink-blue);
-    }
-
-    .specialty-card__description {
-        font-size: 0.875rem;
-        color: var(--ink-3);
-        line-height: 1.5;
-        margin-bottom: 1rem;
-        flex: 1;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    .specialty-card__footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-top: 0.75rem;
-        border-top: 1px solid var(--rule);
-    }
-
-    .specialty-card__count {
-        font-size: 0.85rem;
-        color: var(--ink-2);
-    }
-
-    .specialty-card__count strong {
-        color: var(--ink-blue);
-        font-family: var(--font-mono);
-        font-weight: 500;
-    }
-
-    .specialty-card__arrow {
-        font-size: 1.25rem;
-        color: var(--ink-3);
-        opacity: 0;
-        transform: translateX(-10px);
-        transition: all 0.3s;
-    }
-
-    .specialty-card:hover .specialty-card__arrow {
-        opacity: 1;
-        transform: translateX(0);
-        color: var(--ink-blue);
-    }
-
-    /* CTA Section */
-    .cta-section {
-        padding: 4rem 0;
-        background: var(--paper-2);
-        border-top: 1px solid var(--rule);
-    }
-
-    .cta-content {
-        text-align: center;
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-    .cta-content h2 {
-        font-family: var(--font-serif);
-        font-size: 1.75rem;
-        font-weight: 400;
-        color: var(--ink);
-        margin-bottom: 0.75rem;
-    }
-
-    .cta-content p {
-        font-size: 1rem;
-        color: var(--ink-2);
-        margin-bottom: 1.5rem;
-    }
-
-    .cta-buttons {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.875rem 1.75rem;
-        font-family: var(--font-sans);
-        font-size: 0.95rem;
-        font-weight: 600;
-        border-radius: var(--r-3);
-        text-decoration: none;
-        transition: all 0.2s;
-        cursor: pointer;
-    }
-
-    .btn--primary {
-        background: var(--ink-blue);
-        color: var(--paper);
-        border: none;
-    }
-
-    .btn--primary:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-3);
-    }
-
-    .btn--secondary {
-        background: transparent;
-        color: var(--ink-2);
-        border: 1px solid var(--rule);
-    }
-
-    .btn--secondary:hover {
-        background: var(--paper-3);
-        border-color: var(--rule-strong);
-        color: var(--ink);
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-        .specialties-hero {
-            padding: 3rem 0 2rem;
-        }
-
-        .specialties-hero h1 {
-            font-size: 2rem;
-        }
-
-        .hero-description {
-            font-size: 1rem;
-        }
-
-        .hero-stats {
-            gap: 1rem;
-        }
-
-        .hero-stat {
-            padding: 1rem 1.25rem;
-            min-width: 120px;
-        }
-
-        .hero-stat__value {
-            font-size: 1.5rem;
-        }
-
-        .specialties-grid {
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-
-        .specialty-card {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .specialty-card__icon {
-            width: 56px;
-            height: 56px;
-            font-size: 1.75rem;
-        }
-
-        .cta-buttons {
-            flex-direction: column;
-        }
-
-        .btn {
-            width: 100%;
-            justify-content: center;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .hero-stats {
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .hero-stat {
-            width: 100%;
-            max-width: 280px;
-        }
-    }
-</style>
+<SiteLayout title={pageTitle} description={pageDescription} active="register" jsonLd={[structuredData]}>
+	<div class="dx">
+		<header class="dx-hero">
+			<div class="dx-hero__inner">
+				<nav class="dx-crumbs" aria-label="Breadcrumb">
+					<a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Specialties</span>
+				</nav>
+				<span class="dx-eyebrow">THE REGISTER BY SPECIALTY</span>
+				<h1>Medical specialties</h1>
+				<p class="dx-lede">
+					Verified physicians grouped into {sortedGroups.length} specialty categories, covering {totalSpecialties} subspecialties.
+					Open a category to see the physicians in it.
+				</p>
+			</div>
+		</header>
+
+		<div class="dx-main">
+			<section class="dx-section" aria-labelledby="spec-browse">
+				<h2 id="spec-browse">Browse by specialty</h2>
+				<p class="dx-sub">Categories are ordered by the number of verified physicians in each.</p>
+				<ul class="dx-grid">
+					{sortedGroups.map((group) => (
+						<li class="dx-card">
+							<span class="dx-card__kicker">{group.specialties.length} {group.specialties.length === 1 ? "subspecialty" : "subspecialties"}</span>
+							<h3><a href={`/specialty/${group.slug}`}>{group.name}</a></h3>
+							<p class="dx-card__clamp">{group.description}</p>
+							<div class="dx-card__foot">
+								<span><b>{group.doctorCount.toLocaleString()}</b> physicians</span>
+								<span aria-hidden="true">&rarr;</span>
+							</div>
+						</li>
+					))}
+				</ul>
+			</section>
+
+			<section class="dx-note">
+				Are you a physician? <a href="/doctor/claim">Claim your profile</a> or <a href="/doctor/add-profile">add a new one</a>.
+			</section>
+		</div>
+	</div>
+</SiteLayout>
