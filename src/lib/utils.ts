@@ -8,17 +8,7 @@
 /**
  * Convert a name or title to a URL-friendly slug
  */
-export function slugify(text: string): string {
-    return text
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
-        .replace(/[^a-z0-9\s-]/g, '')    // Remove special chars
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-')
-        .replace(/^-|-$/g, '')
-        .slice(0, 80);
-}
+export { slugify } from './slug';
 
 /**
  * Capitalize the first letter of each word

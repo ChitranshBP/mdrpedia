@@ -2,20 +2,9 @@
 import fs from 'fs';
 import path from 'path';
 import { createPrismaClient } from '../src/lib/prisma-factory';
+import { slugify } from '../src/lib/slug';
 
 const prisma = createPrismaClient();
-
-function slugify(text: string): string {
-    return text
-        .toString()
-        .toLowerCase()
-        .trim()
-        .replace(/\s+/g, '-')     // Replace spaces with -
-        .replace(/[^\w\-]+/g, '') // Remove all non-word chars
-        .replace(/\-\-+/g, '-')   // Replace multiple - with single -
-        .replace(/^-+/, '')       // Trim - from start of text
-        .replace(/-+$/, '');      // Trim - from end of text
-}
 
 // Configuration
 const INPUT_FILE = path.join(process.cwd(), 'src/data/pioneers-raw.tsv');
