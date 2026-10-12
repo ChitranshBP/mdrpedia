@@ -15,7 +15,7 @@ MDRPedia is a **Hybrid SSG/SSR** application built with Astro 5.0.
 
 ## 🔑 Administrative Access
 -   **Super Admin Dashboard**: `/admin`
--   **Default Key**: `mdr2026` (Hardcoded in `src/lib/rbac.ts`) -> **ROTATE IMMEDIATELY**
+-   **Admin key**: read from `ADMIN_ACCESS_KEY` in `.env` (no default).
 -   **Capabilities**:
     -   Global Ingestion Toggle (Stop scraping)
     -   Tier Override (Force "TITAN" status)

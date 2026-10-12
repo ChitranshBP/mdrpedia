@@ -9,7 +9,7 @@ DATABASE_URL="postgresql://user:password@host:5432/mdrpedia?pgbouncer=true"
 DIRECT_URL="postgresql://user:password@host:5432/mdrpedia"
 
 # Auth & Admin
-ADMIN_ACCESS_KEY="mdr2026"  # CHANGE THIS IN PRODUCTION
+ADMIN_ACCESS_KEY="<long random value, e.g. openssl rand -hex 32>"
 
 # External APIs
 NCBI_API_KEY="your_ncbi_key"
@@ -48,5 +48,5 @@ npx prisma db push
 *(Note: Use `prisma migrate deploy` for production with migrations history)*
 
 ## 4. Post-Deployment Verification
-- Visit `/admin?key=mdr2026` to verify admin access.
+- Visit `/admin` and sign in with ADMIN_ACCESS_KEY to verify admin access.
 - Check `/api/admin/config` to ensure system sovereignty.
