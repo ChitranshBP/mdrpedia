@@ -3,10 +3,10 @@
  * MDRPedia — Individual Award Page
  * Premium display of award details and recipients
  */
-import Layout from "../../layouts/Layout.astro";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import "../../styles/pages/feed.css";
 import { getCollection } from "astro:content";
-import TierBadge from "../../components/TierBadge.astro";
-import { HonorTier, classifyAward, getHonorStyle } from "../../lib/global-honors";
+import { HonorTier, classifyAward } from "../../lib/global-honors";
 
 export const prerender = true;
 
@@ -23,22 +23,22 @@ const allDoctors = await getCollection("doctors");
 
 // Classify this award
 const classification = classifyAward(prize.data.name);
-// Tier display config
-const TIER_ICON_PATHS: Record<HonorTier, string> = {
-    [HonorTier.GLOBAL_LANDMARK]: 'M6 9H4.5a2.5 2.5 0 0 1 0-5H6m12 5h1.5a2.5 2.5 0 0 0 0-5H18M6 9a6 6 0 0 0 12 0V4H6v5zm3 12h6m-3-3v3',
-    [HonorTier.NATIONAL_HONOR]: 'M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM8.21 13.89L7 23l5-3 5 3-1.21-9.12',
-    [HonorTier.PROFESSIONAL_EXCELLENCE]: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z',
-    [HonorTier.UNCLASSIFIED]: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
+const TIER_LABEL: Record<HonorTier, string> = {
+    [HonorTier.GLOBAL_LANDMARK]: 'Global Landmark',
+    [HonorTier.NATIONAL_HONOR]: 'National Honor',
+    [HonorTier.PROFESSIONAL_EXCELLENCE]: 'Professional Excellence',
+    [HonorTier.UNCLASSIFIED]: 'Award',
+};
+const TIER_ORDINAL: Record<HonorTier, string> = {
+    [HonorTier.GLOBAL_LANDMARK]: 'Tier I',
+    [HonorTier.NATIONAL_HONOR]: 'Tier II',
+    [HonorTier.PROFESSIONAL_EXCELLENCE]: 'Tier III',
+    [HonorTier.UNCLASSIFIED]: 'Unclassified',
 };
 
-const TIER_CONFIG: Record<HonorTier, { label: string; color: string; icon: string; points: number }> = {
-    [HonorTier.GLOBAL_LANDMARK]: { label: 'Global Landmark', color: '#ffd700', icon: TIER_ICON_PATHS[HonorTier.GLOBAL_LANDMARK], points: 100 },
-    [HonorTier.NATIONAL_HONOR]: { label: 'National Honor', color: '#c0c0c0', icon: TIER_ICON_PATHS[HonorTier.NATIONAL_HONOR], points: 75 },
-    [HonorTier.PROFESSIONAL_EXCELLENCE]: { label: 'Professional Excellence', color: '#cd7f32', icon: TIER_ICON_PATHS[HonorTier.PROFESSIONAL_EXCELLENCE], points: 50 },
-    [HonorTier.UNCLASSIFIED]: { label: 'Award', color: '#888', icon: TIER_ICON_PATHS[HonorTier.UNCLASSIFIED], points: 0 },
-};
+const tierLabel = TIER_LABEL[classification.tier];
 
-const tierConfig = TIER_CONFIG[classification.tier];
+const STATURE_LABEL: Record<string, string> = { TITAN: 'Titan', ELITE: 'Elite', MASTER: 'Master' };
 
 // Helper to safely extract award name from either string or object entries
 type AwardEntry = { name: string; year?: number; contribution?: string; issuingBody?: string } | string;
@@ -98,727 +98,120 @@ const allPrizes = await getCollection("prizes");
 const relatedPrizes = allPrizes
     .filter(p => p.id !== prize.id && p.data.category === prize.data.category)
     .slice(0, 3);
+
+const awardFor = (doctor: (typeof winners)[number]) =>
+    ((doctor.data.awards || []) as AwardEntry[]).find((a) =>
+        getAwardName(a)?.toLowerCase().includes(prize.data.name.toLowerCase())
+    );
+const isNmc = (doctor: (typeof winners)[number]) => doctor.data.geography?.country === 'India';
 ---
 
-<Layout
+<SiteLayout
     title={`${prize.data.name} — MDRPedia`}
     description={`Learn about the ${prize.data.name} and discover the medical pioneers who have received this prestigious honor.`}
+    active=""
 >
-    <div class="prize-page">
-        <!-- Breadcrumb -->
-        <nav class="breadcrumb">
-            <div class="container">
-                <a href="/prizes">Awards & Honors</a>
-                <span class="separator">/</span>
-                <span class="current">{prize.data.name}</span>
-            </div>
-        </nav>
-
-        <!-- Hero Section -->
-        <header class="prize-hero" style={`--tier-color: ${tierConfig.color}`}>
-            <div class="container">
-                <div class="hero-content">
-                    <div class="prize-image-container">
-                        <div class="prize-image">
-                            {prize.data.image ? (
-                                <img src={prize.data.image} alt={prize.data.name} loading="lazy" />
-                            ) : (
-                                <span class="prize-emoji"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={tierConfig.icon}/></svg></span>
-                            )}
-                        </div>
-                        <div class="tier-ribbon">
-                            <span class="tier-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={tierConfig.icon}/></svg></span>
-                            {tierConfig.label}
-                        </div>
-                    </div>
-
-                    <div class="prize-info">
-                        <div class="prize-badges">
-                            <span class="category-badge">{prize.data.category}</span>
-                            {tierConfig.points > 0 && (
-                                <span class="points-badge">+{tierConfig.points} prestige points</span>
-                            )}
-                        </div>
-
-                        <h1>{prize.data.name}</h1>
-
-                        <p class="prize-description">{prize.data.description}</p>
-
-                        <!-- Quick Stats -->
-                        <div class="prize-stats">
-                            <div class="stat">
-                                <span class="stat-value">{sortedWinners.length}</span>
-                                <span class="stat-label">Recipients in Registry</span>
-                            </div>
-                            {earliestYear && latestYear && (
-                                <div class="stat">
-                                    <span class="stat-value">{earliestYear === latestYear ? earliestYear : `${earliestYear}–${latestYear}`}</span>
-                                    <span class="stat-label">Years Tracked</span>
-                                </div>
-                            )}
-                            <div class="stat">
-                                <span class="stat-value">{classification.tier === HonorTier.GLOBAL_LANDMARK ? 'Tier 1' : classification.tier === HonorTier.NATIONAL_HONOR ? 'Tier 2' : 'Tier 3'}</span>
-                                <span class="stat-label">Prestige Tier</span>
-                            </div>
-                        </div>
-                    </div>
+    <div class="fd">
+        <header class="fd-wrap fd-hero">
+            <nav class="fd-crumbs" aria-label="Breadcrumb">
+                <a href="/prizes">Awards &amp; Honors</a><span aria-hidden="true">/</span><span aria-current="page">{prize.data.name}</span>
+            </nav>
+            <div class="fd-prizehead">
+                <div class="fd-prizehead__img">
+                    <span aria-hidden="true">{prize.data.name[0]}</span>
+{prize.data.image && <img src={prize.data.image} alt="" loading="lazy" onerror="this.remove()" />}
+                </div>
+                <div class="fd-prizehead__copy">
+                    <span class="fd-eyebrow">{tierLabel} · {prize.data.category}</span>
+                    <h1>{prize.data.name}</h1>
+                    <p>{prize.data.description}</p>
+                    <ul class="fd-stats">
+                        <li><b>{sortedWinners.length}</b><span>Recipients in register</span></li>
+                        {earliestYear && latestYear && (
+                            <li><b>{earliestYear === latestYear ? earliestYear : `${earliestYear}–${latestYear}`}</b><span>Years tracked</span></li>
+                        )}
+                        <li><b>{TIER_ORDINAL[classification.tier]}</b><span>Award tier</span></li>
+                    </ul>
                 </div>
             </div>
         </header>
 
-        <!-- Recipients Section -->
-        <div class="recipients-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Laureates & Recipients</h2>
-                    <span class="count-badge">{sortedWinners.length} in registry</span>
+        <div class="fd-wrap fd-main">
+            <section class="fd-sec" aria-labelledby="recipients-h">
+                <div class="fd-sec__head">
+                    <h2 id="recipients-h">Laureates &amp; recipients</h2>
+                    <span class="fd-count">{sortedWinners.length} in register</span>
                 </div>
 
                 {sortedWinners.length > 0 ? (
-                    <div class="recipients-grid">
+                    <ul class="fd-recips">
                         {sortedWinners.map((doctor) => {
-                            const awards = (doctor.data.awards || []) as AwardEntry[];
-                            const award = awards.find((a) =>
-                                getAwardName(a)?.toLowerCase().includes(prize.data.name.toLowerCase())
-                            );
+                            const award = awardFor(doctor);
                             const year = award ? getAwardYear(award) : undefined;
                             const contribution = award ? getAwardContribution(award) : undefined;
+                            const stature = !isNmc(doctor) ? STATURE_LABEL[doctor.data.tier] : undefined;
 
                             return (
-                                <a href={`/doctors/${doctor.id}`} class="recipient-card">
-                                    {year && (
-                                        <div class="year-badge" style={`--tier-color: ${tierConfig.color}`}>
-                                            {year}
-                                        </div>
-                                    )}
-
-                                    <div class="recipient-avatar">
-                                        {doctor.data.portraitUrl ? (
-                                            <img
-                                                src={doctor.data.portraitUrl}
-                                                alt={doctor.data.fullName}
-                                                loading="lazy"
-                                            />
-                                        ) : (
-                                            <div class="avatar-placeholder">
-                                                {doctor.data.fullName[0]}
-                                            </div>
-                                        )}
+                                <li class="fd-recip">
+                                    <span class="yr">{year || ''}</span>
+                                    <div class="fd-card__img">
+                                        <span aria-hidden="true">{doctor.data.fullName[0]}</span>
+{doctor.data.portraitUrl && <img src={doctor.data.portraitUrl} alt="" loading="lazy" onerror="this.remove()" />}
                                     </div>
-
-                                    <div class="recipient-info">
-                                        <div class="recipient-name">
-                                            <h3>{doctor.data.fullName}</h3>
-                                            <TierBadge tier={doctor.data.tier} size="sm" />
-                                        </div>
-                                        <p class="recipient-specialty">{doctor.data.specialty}</p>
-
+                                    <div class="who">
+                                        <h3>
+                                            <a href={`/doctors/${doctor.id}`}>{doctor.data.fullName}</a>
+                                            {stature && <span class={`fd-stature fd-stature--${doctor.data.tier.toLowerCase()}`}>{stature}</span>}
+                                        </h3>
+                                        <p>{doctor.data.specialty}</p>
                                         {contribution ? (
-                                            <p class="contribution">"{contribution}"</p>
+                                            <p class="quote">"{contribution}"</p>
                                         ) : doctor.data.aiSummary ? (
-                                            <p class="bio-snippet">{doctor.data.aiSummary.slice(0, 120)}...</p>
+                                            <p>{doctor.data.aiSummary.slice(0, 120)}…</p>
                                         ) : null}
-
-                                        <div class="recipient-meta">
-                                            <span class="meta-item">
-                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                                    <circle cx="12" cy="10" r="3"/>
-                                                </svg>
-                                                {doctor.data.geography.country}
-                                            </span>
-                                            {doctor.data.hIndex > 0 && (
-                                                <span class="meta-item">
-                                                    H-Index: {doctor.data.hIndex}
-                                                </span>
-                                            )}
-                                        </div>
                                     </div>
-
-                                    <div class="card-arrow">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                                        </svg>
+                                    <div class="side">
+                                        <span>{doctor.data.geography.country}</span>
+                                        {doctor.data.hIndex > 0 && <span>h-index {doctor.data.hIndex}</span>}
                                     </div>
-                                </a>
+                                </li>
                             );
                         })}
-                    </div>
+                    </ul>
                 ) : (
-                    <div class="empty-recipients">
-                        <div class="empty-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.35-4.35"/></svg></div>
-                        <h3>No recipients found in registry</h3>
-                        <p>We are continuously updating our database. Know someone who received this award?</p>
-                        <a href="/contact?subject=suggest-recipient" class="suggest-link">
-                            Suggest a Recipient
-                        </a>
-                    </div>
+                    <p class="fd-empty">
+                        No recipients found in the register. We are continuously updating our records.
+                        Know someone who received this award? <a href="/contact?subject=suggest-recipient">Suggest a recipient</a>.
+                    </p>
                 )}
-            </div>
-        </div>
-
-        <!-- Related Awards -->
-        {relatedPrizes.length > 0 && (
-            <section class="related-section">
-                <div class="container">
-                    <h2>Related Awards</h2>
-                    <div class="related-grid">
-                        {relatedPrizes.map(rp => {
-                            const rpClassification = classifyAward(rp.data.name);
-                            const rpConfig = TIER_CONFIG[rpClassification.tier];
-                            return (
-                                <a href={`/prizes/${rp.id}`} class="related-card">
-                                    <span class="related-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={rpConfig.icon}/></svg></span>
-                                    <div>
-                                        <h4>{rp.data.name}</h4>
-                                        <p>{rp.data.category}</p>
-                                    </div>
-                                </a>
-                            );
-                        })}
-                    </div>
-                </div>
             </section>
-        )}
 
-        <!-- Know a Recipient CTA -->
-        <section class="cta-section">
-            <div class="container">
-                <div class="cta-card" style={`--tier-color: ${tierConfig.color}`}>
-                    <div class="cta-content">
-                        <h3>Know a Recipient?</h3>
-                        <p>Help us document the complete history of this award by suggesting physicians who have received it.</p>
-                    </div>
-                    <a href={`/contact?subject=suggest-recipient&award=${encodeURIComponent(prize.data.name)}`} class="cta-btn">
-                        Suggest a Recipient
-                    </a>
+            {relatedPrizes.length > 0 && (
+                <section class="fd-sec" aria-labelledby="related-h">
+                    <div class="fd-sec__head"><h2 id="related-h">Related awards</h2></div>
+                    <ul class="fd-grid">
+                        {relatedPrizes.map((rp) => (
+                            <li class="fd-card">
+                                <div class="fd-card__img">
+                                    <span aria-hidden="true">{rp.data.name[0]}</span>{rp.data.image && <img src={rp.data.image} alt="" loading="lazy" onerror="this.remove()" />}
+                                </div>
+                                <div>
+                                    <h3><a href={`/prizes/${rp.id}`}>{rp.data.name}</a></h3>
+                                    <p>{rp.data.category}</p>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </section>
+            )}
+
+            <section class="fd-panel" aria-labelledby="cta-h">
+                <div>
+                    <h3 id="cta-h">Know a recipient?</h3>
+                    <p>Help us document the complete history of this award by suggesting physicians who have received it.</p>
                 </div>
-            </div>
-        </section>
+                <a href={`/contact?subject=suggest-recipient&award=${encodeURIComponent(prize.data.name)}`} class="fd-btn">Suggest a recipient</a>
+            </section>
+        </div>
     </div>
-</Layout>
-
-<style>
-    .prize-page {
-        background: var(--paper);
-        min-height: 100vh;
-    }
-
-    .container {
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 0 1.5rem;
-    }
-
-    /* Breadcrumb */
-    .breadcrumb {
-        padding: 1rem 0;
-        font-size: 0.85rem;
-        border-bottom: 1px solid var(--rule);
-    }
-
-    .breadcrumb a {
-        color: var(--ink-3);
-        text-decoration: none;
-        transition: color var(--t-fast);
-    }
-
-    .breadcrumb a:hover {
-        color: var(--ink-blue);
-    }
-
-    .separator {
-        margin: 0 0.5rem;
-        color: var(--rule-strong);
-    }
-
-    .current {
-        color: var(--ink-2);
-    }
-
-    /* Hero */
-    .prize-hero {
-        padding: 3rem 0 4rem;
-        background: var(--paper);
-        border-bottom: 1px solid var(--rule);
-    }
-
-    .hero-content {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 3rem;
-        align-items: start;
-    }
-
-    .prize-image-container {
-        position: relative;
-    }
-
-    .prize-image {
-        width: 180px;
-        height: 180px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--paper-2);
-        border: 2px solid var(--tier-color, var(--rule));
-        border-radius: var(--r-4);
-        padding: 1.5rem;
-    }
-
-    .prize-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
-
-    .prize-emoji {
-        font-size: 4rem;
-    }
-
-    .tier-ribbon {
-        position: absolute;
-        bottom: -12px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
-        padding: 6px 14px;
-        background: var(--paper);
-        border: 1px solid var(--tier-color, var(--rule));
-        border-radius: var(--r-pill);
-        font-size: 0.75rem;
-        font-weight: 600;
-        font-family: var(--font-mono);
-        color: var(--tier-color, var(--ink-2));
-        white-space: nowrap;
-    }
-
-    .tier-icon {
-        font-size: 0.9rem;
-    }
-
-    .prize-info {
-        padding-top: 0.5rem;
-    }
-
-    .prize-badges {
-        display: flex;
-        gap: 0.75rem;
-        margin-bottom: 1rem;
-        flex-wrap: wrap;
-    }
-
-    .category-badge {
-        padding: 4px 12px;
-        background: var(--ink-blue-2);
-        border: 1px solid var(--ink-blue);
-        border-radius: var(--r-pill);
-        font-size: 0.75rem;
-        font-weight: 600;
-        font-family: var(--font-mono);
-        color: var(--ink-blue);
-    }
-
-    .points-badge {
-        padding: 4px 12px;
-        background: color-mix(in srgb, var(--tier-color) 10%, transparent);
-        border: 1px solid color-mix(in srgb, var(--tier-color) 30%, transparent);
-        border-radius: var(--r-pill);
-        font-size: 0.75rem;
-        font-weight: 600;
-        font-family: var(--font-mono);
-        color: var(--tier-color);
-    }
-
-    .prize-hero h1 {
-        font-family: var(--font-serif);
-        font-size: clamp(1.75rem, 4vw, 2.5rem);
-        font-weight: 400;
-        color: var(--ink);
-        margin-bottom: 1rem;
-        line-height: 1.2;
-    }
-
-    .prize-description {
-        font-size: 1.05rem;
-        color: var(--ink-2);
-        line-height: 1.7;
-        margin-bottom: 2rem;
-    }
-
-    .prize-stats {
-        display: flex;
-        gap: 2.5rem;
-        flex-wrap: wrap;
-    }
-
-    .stat {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .stat-value {
-        font-size: 1.5rem;
-        font-weight: 500;
-        font-family: var(--font-mono);
-        color: var(--tier-color, var(--ink));
-    }
-
-    .stat-label {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--ink-3);
-    }
-
-    /* Recipients Section */
-    .recipients-section {
-        padding: 3rem 0;
-    }
-
-    .section-header {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin-bottom: 2rem;
-    }
-
-    .section-header h2 {
-        font-family: var(--font-serif);
-        font-size: 1.5rem;
-        font-weight: 400;
-        color: var(--ink);
-        margin: 0;
-    }
-
-    .count-badge {
-        padding: 4px 12px;
-        background: var(--paper-2);
-        border-radius: var(--r-pill);
-        font-size: 0.8rem;
-        font-family: var(--font-mono);
-        color: var(--ink-3);
-    }
-
-    .recipients-grid {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .recipient-card {
-        position: relative;
-        display: flex;
-        align-items: center;
-        gap: 1.25rem;
-        padding: 1.5rem;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        text-decoration: none;
-        transition: all var(--t-base);
-    }
-
-    .recipient-card:hover {
-        background: var(--paper-2);
-        border-color: var(--ink-blue);
-        transform: translateX(4px);
-    }
-
-    .year-badge {
-        position: absolute;
-        top: -8px;
-        right: 1.5rem;
-        padding: 4px 12px;
-        background: var(--paper);
-        border: 1px solid var(--tier-color, var(--rule));
-        border-radius: var(--r-pill);
-        font-size: 0.8rem;
-        font-weight: 600;
-        font-family: var(--font-mono);
-        color: var(--tier-color, var(--ink-2));
-    }
-
-    .recipient-avatar {
-        flex-shrink: 0;
-        width: 72px;
-        height: 72px;
-        border-radius: var(--r-3);
-        overflow: hidden;
-        border: 2px solid var(--rule);
-    }
-
-    .recipient-avatar img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .avatar-placeholder {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--ink-blue-2);
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: var(--ink-blue);
-    }
-
-    .recipient-info {
-        flex: 1;
-        min-width: 0;
-    }
-
-    .recipient-name {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        margin-bottom: 0.25rem;
-    }
-
-    .recipient-name h3 {
-        font-family: var(--font-serif);
-        font-size: 1.1rem;
-        font-weight: 500;
-        color: var(--ink);
-        margin: 0;
-    }
-
-    .recipient-specialty {
-        font-size: 0.85rem;
-        color: var(--ink-blue);
-        margin: 0 0 0.5rem;
-    }
-
-    .contribution {
-        font-size: 0.9rem;
-        font-style: italic;
-        color: var(--ink-2);
-        padding-left: 0.75rem;
-        border-left: 2px solid var(--tier-color, var(--rule-strong));
-        margin: 0 0 0.75rem;
-    }
-
-    .bio-snippet {
-        font-size: 0.85rem;
-        color: var(--ink-3);
-        line-height: 1.5;
-        margin: 0 0 0.75rem;
-    }
-
-    .recipient-meta {
-        display: flex;
-        gap: 1.25rem;
-        flex-wrap: wrap;
-    }
-
-    .meta-item {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        font-size: 0.8rem;
-        color: var(--ink-3);
-    }
-
-    .meta-item svg {
-        opacity: 0.6;
-    }
-
-    .card-arrow {
-        flex-shrink: 0;
-        color: var(--ink-3);
-        opacity: 0;
-        transform: translateX(-8px);
-        transition: all var(--t-fast);
-    }
-
-    .recipient-card:hover .card-arrow {
-        opacity: 1;
-        transform: translateX(0);
-    }
-
-    /* Empty State */
-    .empty-recipients {
-        text-align: center;
-        padding: 4rem 2rem;
-        background: var(--paper-2);
-        border: 1px dashed var(--rule-strong);
-        border-radius: var(--r-4);
-    }
-
-    .empty-icon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        opacity: 0.5;
-    }
-
-    .empty-recipients h3 {
-        font-size: 1.1rem;
-        color: var(--ink-2);
-        margin-bottom: 0.5rem;
-    }
-
-    .empty-recipients p {
-        color: var(--ink-3);
-        margin-bottom: 1.5rem;
-    }
-
-    .suggest-link {
-        display: inline-flex;
-        padding: 0.6rem 1.25rem;
-        background: var(--ink-blue);
-        border-radius: var(--r-3);
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: var(--paper);
-        text-decoration: none;
-        transition: background var(--t-fast);
-    }
-
-    .suggest-link:hover {
-        filter: brightness(1.1);
-    }
-
-    /* Related Awards */
-    .related-section {
-        padding: 3rem 0;
-        background: var(--paper-2);
-        border-top: 1px solid var(--rule);
-    }
-
-    .related-section h2 {
-        font-family: var(--font-serif);
-        font-size: 1.25rem;
-        font-weight: 400;
-        color: var(--ink);
-        margin-bottom: 1.5rem;
-    }
-
-    .related-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1rem;
-    }
-
-    .related-card {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: 1rem 1.25rem;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-3);
-        text-decoration: none;
-        transition: all var(--t-fast);
-    }
-
-    .related-card:hover {
-        background: var(--paper-2);
-        border-color: var(--ink-blue);
-    }
-
-    .related-icon {
-        font-size: 1.5rem;
-    }
-
-    .related-card h4 {
-        font-size: 0.95rem;
-        font-weight: 500;
-        color: var(--ink);
-        margin: 0 0 0.2rem;
-    }
-
-    .related-card p {
-        font-size: 0.8rem;
-        color: var(--ink-3);
-        margin: 0;
-    }
-
-    /* CTA Section */
-    .cta-section {
-        padding: 3rem 0;
-    }
-
-    .cta-card {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 2rem;
-        padding: 2rem 2.5rem;
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-    }
-
-    .cta-content h3 {
-        font-family: var(--font-serif);
-        font-size: 1.25rem;
-        font-weight: 400;
-        color: var(--ink);
-        margin-bottom: 0.4rem;
-    }
-
-    .cta-content p {
-        font-size: 0.9rem;
-        color: var(--ink-3);
-        margin: 0;
-    }
-
-    .cta-btn {
-        padding: 0.75rem 1.5rem;
-        background: var(--ink-blue);
-        border-radius: var(--r-3);
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: var(--paper);
-        text-decoration: none;
-        white-space: nowrap;
-        transition: all var(--t-fast);
-    }
-
-    .cta-btn:hover {
-        filter: brightness(1.1);
-        transform: translateY(-1px);
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-        .hero-content {
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            text-align: center;
-        }
-
-        .prize-image-container {
-            justify-self: center;
-        }
-
-        .prize-badges {
-            justify-content: center;
-        }
-
-        .prize-stats {
-            justify-content: center;
-        }
-
-        .recipient-card {
-            flex-wrap: wrap;
-        }
-
-        .year-badge {
-            position: static;
-            order: -1;
-            margin-bottom: 0.5rem;
-        }
-
-        .cta-card {
-            flex-direction: column;
-            text-align: center;
-            padding: 1.5rem;
-        }
-    }
-</style>
+</SiteLayout>

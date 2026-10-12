@@ -4,7 +4,8 @@ export const prerender = true;
  * MDRPedia — Awards & Honors Directory
  * Comprehensive catalog of medical awards organized by prestige tier
  */
-import Layout from "../../layouts/Layout.astro";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import "../../styles/pages/feed.css";
 import { getCollection } from "astro:content";
 import { HonorTier, GLOBAL_HONORS_DB } from "../../lib/global-honors";
 
@@ -35,34 +36,13 @@ interface PrizeWithMeta {
     tier: HonorTier;
     tierLabel: string;
     recipientCount: number;
-    color: string;
 }
 
-const TIER_CONFIG = {
-    [HonorTier.GLOBAL_LANDMARK]: {
-        label: 'Global Landmark',
-        color: '#ffd700',
-        bgGradient: 'from-amber-500/10 to-yellow-500/5',
-        borderColor: 'border-amber-500/30'
-    },
-    [HonorTier.NATIONAL_HONOR]: {
-        label: 'National Honor',
-        color: '#c0c0c0',
-        bgGradient: 'from-slate-400/10 to-gray-500/5',
-        borderColor: 'border-slate-400/30'
-    },
-    [HonorTier.PROFESSIONAL_EXCELLENCE]: {
-        label: 'Professional Excellence',
-        color: '#cd7f32',
-        bgGradient: 'from-orange-600/10 to-amber-700/5',
-        borderColor: 'border-orange-600/30'
-    },
-    [HonorTier.UNCLASSIFIED]: {
-        label: 'Other Awards',
-        color: '#888',
-        bgGradient: 'from-gray-500/10 to-gray-600/5',
-        borderColor: 'border-gray-500/30'
-    },
+const TIER_LABEL: Record<HonorTier, string> = {
+    [HonorTier.GLOBAL_LANDMARK]: 'Global Landmark',
+    [HonorTier.NATIONAL_HONOR]: 'National Honor',
+    [HonorTier.PROFESSIONAL_EXCELLENCE]: 'Professional Excellence',
+    [HonorTier.UNCLASSIFIED]: 'Other Awards',
 };
 
 // Map content prizes to display format with tier info
@@ -75,7 +55,6 @@ const prizeList: PrizeWithMeta[] = prizes.map(p => {
     );
 
     const tier = matchedHonor?.tier || HonorTier.UNCLASSIFIED;
-    const config = TIER_CONFIG[tier];
 
     return {
         id: p.id,
@@ -84,9 +63,8 @@ const prizeList: PrizeWithMeta[] = prizes.map(p => {
         category: p.data.category,
         image: p.data.image,
         tier,
-        tierLabel: config.label,
+        tierLabel: TIER_LABEL[tier],
         recipientCount: countRecipients(p.data.name),
-        color: config.color,
     };
 });
 
@@ -101,823 +79,115 @@ const groupedPrizes = {
 // Stats
 const totalPrizes = prizes.length;
 const totalRecipients = prizeList.reduce((sum, p) => sum + p.recipientCount, 0);
+
+const sections = [
+    { id: 'global-landmark', tier: HonorTier.GLOBAL_LANDMARK, title: 'Global Landmark awards', note: 'Paradigm-defining recognition for contributions to medicine worldwide.' },
+    { id: 'national-honor', tier: HonorTier.NATIONAL_HONOR, title: 'National honors', note: 'State-level recognition honoring outstanding medical service.' },
+    { id: 'professional-excellence', tier: HonorTier.PROFESSIONAL_EXCELLENCE, title: 'Professional excellence', note: 'Peer-recognized achievements in specialized medical fields.' },
+    { id: 'other-awards', tier: HonorTier.UNCLASSIFIED, title: 'Other awards', note: 'Awards on record that are not yet placed in a tier.' },
+].map((sec) => ({ ...sec, items: groupedPrizes[sec.tier] })).filter((sec) => sec.items.length > 0);
+
+function blurb(text: string): string {
+    return text.length > 110 ? `${text.slice(0, 110).trimEnd()}…` : text;
+}
 ---
 
-<Layout
+<SiteLayout
     title="Awards & Honors — MDRPedia"
     description="Explore the most prestigious awards in medicine, from Nobel Prizes to national honors. Discover the physicians who have shaped medical history."
+    active=""
 >
-    <div class="prizes-page">
-        <!-- Hero Section -->
-        <header class="page-hero">
-            <div class="container">
-                <span class="hero-badge">AWARDS & HONORS</span>
-                <h1>Excellence in Medicine</h1>
-                <p class="hero-description">
-                    Celebrating the highest achievements in medical science — from Nobel laureates
-                    to national honors that recognize transformative contributions to human health.
-                </p>
-
-                <!-- Quick Stats -->
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-value">{totalPrizes}</span>
-                        <span class="stat-label">Awards Tracked</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <span class="stat-value">{totalRecipients}</span>
-                        <span class="stat-label">Recipients in Registry</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <span class="stat-value">3</span>
-                        <span class="stat-label">Prestige Tiers</span>
-                    </div>
-                </div>
-            </div>
+    <div class="fd">
+        <header class="fd-wrap fd-hero">
+            <span class="fd-eyebrow">Awards &amp; honors</span>
+            <h1>Excellence in Medicine</h1>
+            <p>
+                The awards MDRPedia tracks, from Nobel laureates to national honors, and the
+                physicians in the register who received them.
+            </p>
+            <ul class="fd-stats">
+                <li><b>{totalPrizes}</b><span>Awards tracked</span></li>
+                <li><b>{totalRecipients}</b><span>Recipients in register</span></li>
+            </ul>
         </header>
 
-        <!-- Tier Navigation -->
-        <nav class="tier-nav">
-            <div class="container">
-                <div class="tier-tabs">
-                    <a href="#global-landmark" class="tier-tab tier-gold">
-                        <span class="tier-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6m12 5h1.5a2.5 2.5 0 0 0 0-5H18M6 9a6 6 0 0 0 12 0V4H6v5zm3 12h6m-3-3v3"/></svg></span>
-                        Global Landmark
-                        <span class="tier-count">{groupedPrizes[HonorTier.GLOBAL_LANDMARK].length}</span>
-                    </a>
-                    <a href="#national-honor" class="tier-tab tier-silver">
-                        <span class="tier-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM8.21 13.89L7 23l5-3 5 3-1.21-9.12"/></svg></span>
-                        National Honor
-                        <span class="tier-count">{groupedPrizes[HonorTier.NATIONAL_HONOR].length}</span>
-                    </a>
-                    <a href="#professional-excellence" class="tier-tab tier-bronze">
-                        <span class="tier-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
-                        Professional Excellence
-                        <span class="tier-count">{groupedPrizes[HonorTier.PROFESSIONAL_EXCELLENCE].length}</span>
-                    </a>
-                </div>
-            </div>
-        </nav>
+        <div class="fd-wrap fd-main">
+            {sections.length > 1 && (
+                <nav class="fd-seg" aria-label="Jump to a tier">
+                    {sections.map((sec) => (
+                        <a href={`#${sec.id}`}>{sec.title} <span class="n">{sec.items.length}</span></a>
+                    ))}
+                </nav>
+            )}
 
-        <!-- Awards Sections -->
-        <div class="awards-content">
-            <div class="container">
-
-                <!-- Global Landmark Awards -->
-                {groupedPrizes[HonorTier.GLOBAL_LANDMARK].length > 0 && (
-                    <section id="global-landmark" class="awards-section">
-                        <div class="section-header tier-gold-header">
-                            <div class="section-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6m12 5h1.5a2.5 2.5 0 0 0 0-5H18M6 9a6 6 0 0 0 12 0V4H6v5zm3 12h6m-3-3v3"/></svg></div>
-                            <div>
-                                <h2>Global Landmark Awards</h2>
-                                <p>Paradigm-defining recognition for civilization-level contributions to medicine</p>
-                            </div>
-                            <span class="prestige-badge gold">+100 pts</span>
+            {sections.map((sec) => (
+                <section id={sec.id} class="fd-sec" aria-labelledby={`${sec.id}-h`}>
+                    <div class="fd-sec__head">
+                        <div>
+                            <h2 id={`${sec.id}-h`}>{sec.title}</h2>
+                            <p>{sec.note}</p>
                         </div>
-
-                        <div class="awards-grid">
-                            {groupedPrizes[HonorTier.GLOBAL_LANDMARK].map(prize => (
-                                <a href={`/prizes/${prize.id}`} class="award-card tier-gold-card">
-                                    <div class="award-image">
-                                        {prize.image ? (
-                                            <img src={prize.image} alt={prize.name} loading="lazy" />
-                                        ) : (
-                                            <div class="award-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6m12 5h1.5a2.5 2.5 0 0 0 0-5H18M6 9a6 6 0 0 0 12 0V4H6v5zm3 12h6m-3-3v3"/></svg></div>
-                                        )}
-                                    </div>
-                                    <div class="award-content">
-                                        <h3>{prize.name}</h3>
-                                        <p>{prize.description.slice(0, 100)}...</p>
-                                        <div class="award-meta">
-                                            <span class="recipient-count">
-                                                {prize.recipientCount} recipient{prize.recipientCount !== 1 ? 's' : ''} in registry
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="award-arrow">→</div>
-                                </a>
-                            ))}
-                        </div>
-                    </section>
-                )}
-
-                <!-- National Honor Awards -->
-                {groupedPrizes[HonorTier.NATIONAL_HONOR].length > 0 && (
-                    <section id="national-honor" class="awards-section">
-                        <div class="section-header tier-silver-header">
-                            <div class="section-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM8.21 13.89L7 23l5-3 5 3-1.21-9.12"/></svg></div>
-                            <div>
-                                <h2>National Honors</h2>
-                                <p>State-level recognition honoring outstanding medical service</p>
-                            </div>
-                            <span class="prestige-badge silver">+75 pts</span>
-                        </div>
-
-                        <div class="awards-grid">
-                            {groupedPrizes[HonorTier.NATIONAL_HONOR].map(prize => (
-                                <a href={`/prizes/${prize.id}`} class="award-card tier-silver-card">
-                                    <div class="award-image">
-                                        {prize.image ? (
-                                            <img src={prize.image} alt={prize.name} loading="lazy" />
-                                        ) : (
-                                            <div class="award-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM8.21 13.89L7 23l5-3 5 3-1.21-9.12"/></svg></div>
-                                        )}
-                                    </div>
-                                    <div class="award-content">
-                                        <h3>{prize.name}</h3>
-                                        <p>{prize.description.slice(0, 100)}...</p>
-                                        <div class="award-meta">
-                                            <span class="recipient-count">
-                                                {prize.recipientCount} recipient{prize.recipientCount !== 1 ? 's' : ''} in registry
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="award-arrow">→</div>
-                                </a>
-                            ))}
-                        </div>
-                    </section>
-                )}
-
-                <!-- Professional Excellence Awards -->
-                {groupedPrizes[HonorTier.PROFESSIONAL_EXCELLENCE].length > 0 && (
-                    <section id="professional-excellence" class="awards-section">
-                        <div class="section-header tier-bronze-header">
-                            <div class="section-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
-                            <div>
-                                <h2>Professional Excellence</h2>
-                                <p>Peer-recognized achievements in specialized medical fields</p>
-                            </div>
-                            <span class="prestige-badge bronze">+50 pts</span>
-                        </div>
-
-                        <div class="awards-grid">
-                            {groupedPrizes[HonorTier.PROFESSIONAL_EXCELLENCE].map(prize => (
-                                <a href={`/prizes/${prize.id}`} class="award-card tier-bronze-card">
-                                    <div class="award-image">
-                                        {prize.image ? (
-                                            <img src={prize.image} alt={prize.name} loading="lazy" />
-                                        ) : (
-                                            <div class="award-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
-                                        )}
-                                    </div>
-                                    <div class="award-content">
-                                        <h3>{prize.name}</h3>
-                                        <p>{prize.description.slice(0, 100)}...</p>
-                                        <div class="award-meta">
-                                            <span class="recipient-count">
-                                                {prize.recipientCount} recipient{prize.recipientCount !== 1 ? 's' : ''} in registry
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="award-arrow">→</div>
-                                </a>
-                            ))}
-                        </div>
-                    </section>
-                )}
-
-                <!-- Empty State -->
-                {totalPrizes === 0 && (
-                    <div class="empty-state">
-                        <span class="empty-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6m12 5h1.5a2.5 2.5 0 0 0 0-5H18M6 9a6 6 0 0 0 12 0V4H6v5zm3 12h6m-3-3v3"/></svg></span>
-                        <h3>Awards database is being compiled</h3>
-                        <p>We are continuously adding awards and their recipients.</p>
+                        <span class="fd-count">{sec.items.length} award{sec.items.length !== 1 ? 's' : ''}</span>
                     </div>
-                )}
-            </div>
+                    <ul class="fd-grid">
+                        {sec.items.map((prize) => (
+                            <li class="fd-card">
+                                <div class="fd-card__img">
+                                    <span aria-hidden="true">{prize.name[0]}</span>
+{prize.image && <img src={prize.image} alt="" loading="lazy" onerror="this.remove()" />}
+                                </div>
+                                <div>
+                                    <h3><a href={`/prizes/${prize.id}`}>{prize.name}</a></h3>
+                                    <p>{blurb(prize.description)}</p>
+                                    <span class="m">{prize.recipientCount} recipient{prize.recipientCount !== 1 ? 's' : ''} in register</span>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </section>
+            ))}
+
+            {totalPrizes === 0 && (
+                <p class="fd-empty">The awards database is being compiled. We are continuously adding awards and their recipients.</p>
+            )}
+
+            <section class="fd-sec" aria-labelledby="tiers-h">
+                <div class="fd-sec__head">
+                    <div>
+                        <h2 id="tiers-h">How awards are tiered</h2>
+                        <p>
+                            Awards are placed in tiers by recognition and historical significance. Honours
+                            count toward a physician's score, and the top two tiers set a floor under their stature;
+                            see the <a href="/methodology">methodology</a>.
+                        </p>
+                    </div>
+                </div>
+                <div class="fd-tiers">
+                    <div class="fd-tier">
+                        <span class="tag">Tier I</span>
+                        <h3>Global Landmark</h3>
+                        <p>Paradigm-defining awards such as the Nobel Prize, Lasker Award, Wolf Prize and Breakthrough Prize. Holders are never placed below Elite.</p>
+                    </div>
+                    <div class="fd-tier">
+                        <span class="tag">Tier II</span>
+                        <h3>National Honor</h3>
+                        <p>Government recognition for exceptional medical service, such as the Padma awards, the Presidential Medal of Freedom and knighthoods. Holders are never placed below Elite.</p>
+                    </div>
+                    <div class="fd-tier">
+                        <span class="tag">Tier III</span>
+                        <h3>Professional Excellence</h3>
+                        <p>Peer-recognized achievements in specialized fields: specialty society awards, research prizes and academy memberships.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="fd-panel" aria-labelledby="suggest-h">
+                <div>
+                    <h3 id="suggest-h">Know an award we should track?</h3>
+                    <p>Help us build a complete record of medical awards.</p>
+                </div>
+                <a href="/contact?subject=suggest-award" class="fd-btn">Suggest an award</a>
+            </section>
         </div>
-
-        <!-- Prestige System Explainer -->
-        <section class="prestige-explainer">
-            <div class="container">
-                <h2>Understanding the Prestige System</h2>
-                <p class="explainer-intro">
-                    MDRPedia classifies medical awards into three tiers based on their global recognition,
-                    impact on medical science, and historical significance.
-                </p>
-
-                <div class="tiers-grid">
-                    <div class="tier-card gold">
-                        <div class="tier-header">
-                            <span class="tier-medal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6m12 5h1.5a2.5 2.5 0 0 0 0-5H18M6 9a6 6 0 0 0 12 0V4H6v5zm3 12h6m-3-3v3"/></svg></span>
-                            <h3>Global Landmark</h3>
-                            <span class="points">+100 points</span>
-                        </div>
-                        <p>
-                            Paradigm-defining awards recognizing civilization-level contributions.
-                            Includes Nobel Prize, Lasker Award, Wolf Prize, and Breakthrough Prize.
-                        </p>
-                        <ul>
-                            <li>World-renowned recognition</li>
-                            <li>Transformative discoveries</li>
-                            <li>Multi-million dollar prizes</li>
-                        </ul>
-                    </div>
-
-                    <div class="tier-card silver">
-                        <div class="tier-header">
-                            <span class="tier-medal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM8.21 13.89L7 23l5-3 5 3-1.21-9.12"/></svg></span>
-                            <h3>National Honor</h3>
-                            <span class="points">+75 points</span>
-                        </div>
-                        <p>
-                            State-level recognition from governments honoring exceptional medical service.
-                            Includes Padma Awards, Presidential Medal of Freedom, and Knighthoods.
-                        </p>
-                        <ul>
-                            <li>Government recognition</li>
-                            <li>National impact</li>
-                            <li>Lifetime achievement</li>
-                        </ul>
-                    </div>
-
-                    <div class="tier-card bronze">
-                        <div class="tier-header">
-                            <span class="tier-medal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
-                            <h3>Professional Excellence</h3>
-                            <span class="points">+50 points</span>
-                        </div>
-                        <p>
-                            Peer-recognized professional achievements in specialized fields.
-                            Includes specialty society awards, research prizes, and academy memberships.
-                        </p>
-                        <ul>
-                            <li>Specialty recognition</li>
-                            <li>Research excellence</li>
-                            <li>Professional leadership</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Suggest Award CTA -->
-        <section class="suggest-section">
-            <div class="container">
-                <div class="suggest-card">
-                    <div class="suggest-content">
-                        <h3>Know an Award We Should Track?</h3>
-                        <p>Help us build the most comprehensive medical awards database.</p>
-                    </div>
-                    <a href="/contact?subject=suggest-award" class="suggest-btn">
-                        Suggest an Award
-                    </a>
-                </div>
-            </div>
-        </section>
     </div>
-</Layout>
-
-<style>
-    .prizes-page {
-        background: var(--paper);
-        min-height: 100vh;
-    }
-
-    .container {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 0 1.5rem;
-    }
-
-    /* Hero */
-    .page-hero {
-        padding: 4rem 0 3rem;
-        text-align: center;
-        background: var(--paper);
-        border-bottom: 1px solid var(--rule);
-    }
-
-    .hero-badge {
-        display: inline-block;
-        padding: 6px 16px;
-        background: var(--aged-gold-2);
-        border: 1px solid var(--aged-gold);
-        border-radius: var(--r-pill);
-        font-size: 0.75rem;
-        font-weight: 700;
-        letter-spacing: 0.15em;
-        font-family: var(--font-mono);
-        color: var(--aged-gold);
-        margin-bottom: 1.5rem;
-    }
-
-    .page-hero h1 {
-        font-family: var(--font-serif);
-        font-size: clamp(2.25rem, 5vw, 3.5rem);
-        font-weight: 400;
-        color: var(--ink);
-        margin-bottom: 1rem;
-    }
-
-    .hero-description {
-        font-size: 1.1rem;
-        color: var(--ink-2);
-        max-width: 600px;
-        margin: 0 auto 2.5rem;
-        line-height: 1.7;
-    }
-
-    .hero-stats {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 2rem;
-        flex-wrap: wrap;
-    }
-
-    .stat-item {
-        text-align: center;
-    }
-
-    .stat-value {
-        display: block;
-        font-size: 2rem;
-        font-weight: 500;
-        font-family: var(--font-mono);
-        color: var(--aged-gold);
-    }
-
-    .stat-label {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--ink-3);
-    }
-
-    .stat-divider {
-        width: 1px;
-        height: 40px;
-        background: var(--rule);
-    }
-
-    /* Tier Navigation */
-    .tier-nav {
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        background: var(--paper);
-        border-bottom: 1px solid var(--rule);
-        padding: 1rem 0;
-    }
-
-    .tier-tabs {
-        display: flex;
-        gap: 0.75rem;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-    }
-
-    .tier-tabs::-webkit-scrollbar {
-        display: none;
-    }
-
-    .tier-tab {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.6rem 1.25rem;
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-pill);
-        font-size: 0.85rem;
-        font-weight: 500;
-        color: var(--ink-2);
-        text-decoration: none;
-        white-space: nowrap;
-        transition: all var(--t-fast);
-    }
-
-    .tier-tab:hover {
-        background: var(--paper-3);
-        color: var(--ink);
-    }
-
-    .tier-tab.tier-gold:hover {
-        border-color: var(--aged-gold);
-        color: var(--aged-gold);
-    }
-
-    .tier-tab.tier-silver:hover {
-        border-color: var(--slate);
-        color: var(--slate);
-    }
-
-    .tier-tab.tier-bronze:hover {
-        border-color: var(--sanguine);
-        color: var(--sanguine);
-    }
-
-    .tier-icon {
-        font-size: 1rem;
-    }
-
-    .tier-count {
-        padding: 2px 8px;
-        background: var(--paper-3);
-        border-radius: var(--r-pill);
-        font-size: 0.75rem;
-        font-family: var(--font-mono);
-    }
-
-    /* Awards Content */
-    .awards-content {
-        padding: 3rem 0;
-    }
-
-    .awards-section {
-        margin-bottom: 4rem;
-    }
-
-    .section-header {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: 1.5rem;
-        border-radius: var(--r-4);
-        margin-bottom: 1.5rem;
-    }
-
-    .tier-gold-header {
-        background: var(--aged-gold-2);
-        border: 1px solid var(--aged-gold);
-    }
-
-    .tier-silver-header {
-        background: var(--slate-2);
-        border: 1px solid var(--slate);
-    }
-
-    .tier-bronze-header {
-        background: var(--sanguine-2);
-        border: 1px solid var(--sanguine);
-    }
-
-    .section-icon {
-        font-size: 2rem;
-    }
-
-    .section-header h2 {
-        font-family: var(--font-serif);
-        font-size: 1.5rem;
-        font-weight: 400;
-        color: var(--ink);
-        margin: 0;
-    }
-
-    .section-header p {
-        font-size: 0.9rem;
-        color: var(--ink-3);
-        margin: 0.25rem 0 0;
-    }
-
-    .prestige-badge {
-        margin-left: auto;
-        padding: 6px 14px;
-        border-radius: var(--r-pill);
-        font-size: 0.8rem;
-        font-weight: 600;
-        font-family: var(--font-mono);
-    }
-
-    .prestige-badge.gold {
-        background: var(--aged-gold-2);
-        color: var(--aged-gold);
-        border: 1px solid var(--aged-gold);
-    }
-
-    .prestige-badge.silver {
-        background: var(--slate-2);
-        color: var(--slate);
-        border: 1px solid var(--slate);
-    }
-
-    .prestige-badge.bronze {
-        background: var(--sanguine-2);
-        color: var(--sanguine);
-        border: 1px solid var(--sanguine);
-    }
-
-    /* Awards Grid */
-    .awards-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: 1.25rem;
-    }
-
-    .award-card {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: 1.25rem;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        text-decoration: none;
-        transition: all var(--t-base);
-    }
-
-    .award-card:hover {
-        transform: translateY(-2px);
-        background: var(--paper-2);
-        box-shadow: var(--shadow-2);
-    }
-
-    .tier-gold-card:hover {
-        border-color: var(--aged-gold);
-    }
-
-    .tier-silver-card:hover {
-        border-color: var(--slate);
-    }
-
-    .tier-bronze-card:hover {
-        border-color: var(--sanguine);
-    }
-
-    .award-image {
-        flex-shrink: 0;
-        width: 64px;
-        height: 64px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--paper-2);
-        border-radius: var(--r-3);
-        overflow: hidden;
-    }
-
-    .award-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        padding: 8px;
-    }
-
-    .award-placeholder {
-        font-size: 1.75rem;
-    }
-
-    .award-content {
-        flex: 1;
-        min-width: 0;
-    }
-
-    .award-content h3 {
-        font-size: 1rem;
-        font-weight: 500;
-        color: var(--ink);
-        margin: 0 0 0.4rem;
-        line-height: 1.3;
-    }
-
-    .award-content p {
-        font-size: 0.8rem;
-        color: var(--ink-3);
-        margin: 0 0 0.5rem;
-        line-height: 1.5;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    .award-meta {
-        font-size: 0.75rem;
-    }
-
-    .recipient-count {
-        color: var(--ink-2);
-    }
-
-    .award-arrow {
-        flex-shrink: 0;
-        font-size: 1.25rem;
-        color: var(--ink-3);
-        opacity: 0;
-        transform: translateX(-8px);
-        transition: all var(--t-fast);
-    }
-
-    .award-card:hover .award-arrow {
-        opacity: 1;
-        transform: translateX(0);
-    }
-
-    /* Empty State */
-    .empty-state {
-        text-align: center;
-        padding: 4rem 2rem;
-        color: var(--ink-3);
-    }
-
-    .empty-icon {
-        font-size: 3rem;
-        display: block;
-        margin-bottom: 1rem;
-        opacity: 0.5;
-    }
-
-    .empty-state h3 {
-        font-size: 1.25rem;
-        color: var(--ink-2);
-        margin-bottom: 0.5rem;
-    }
-
-    /* Prestige Explainer */
-    .prestige-explainer {
-        padding: 4rem 0;
-        background: var(--paper-2);
-        border-top: 1px solid var(--rule);
-    }
-
-    .prestige-explainer h2 {
-        font-family: var(--font-serif);
-        font-size: 1.75rem;
-        font-weight: 400;
-        color: var(--ink);
-        text-align: center;
-        margin-bottom: 0.75rem;
-    }
-
-    .explainer-intro {
-        text-align: center;
-        color: var(--ink-2);
-        max-width: 600px;
-        margin: 0 auto 2.5rem;
-    }
-
-    .tiers-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1.5rem;
-    }
-
-    .tier-card {
-        padding: 1.75rem;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-    }
-
-    .tier-card.gold {
-        border-color: var(--aged-gold);
-    }
-
-    .tier-card.silver {
-        border-color: var(--slate);
-    }
-
-    .tier-card.bronze {
-        border-color: var(--sanguine);
-    }
-
-    .tier-header {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        margin-bottom: 1rem;
-        flex-wrap: wrap;
-    }
-
-    .tier-medal {
-        font-size: 1.5rem;
-    }
-
-    .tier-header h3 {
-        font-family: var(--font-serif);
-        font-size: 1.1rem;
-        font-weight: 500;
-        color: var(--ink);
-        margin: 0;
-    }
-
-    .tier-header .points {
-        margin-left: auto;
-        font-size: 0.8rem;
-        font-weight: 600;
-        font-family: var(--font-mono);
-        padding: 4px 10px;
-        border-radius: var(--r-pill);
-        background: var(--paper-3);
-        color: var(--ink-2);
-    }
-
-    .tier-card p {
-        font-size: 0.9rem;
-        color: var(--ink-2);
-        line-height: 1.6;
-        margin-bottom: 1rem;
-    }
-
-    .tier-card ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .tier-card li {
-        position: relative;
-        padding-left: 1.25rem;
-        font-size: 0.85rem;
-        color: var(--ink-3);
-        margin-bottom: 0.4rem;
-    }
-
-    .tier-card li::before {
-        content: "\2022";
-        position: absolute;
-        left: 0;
-        color: var(--ink-3);
-    }
-
-    .tier-card.gold li::before { color: var(--aged-gold); }
-    .tier-card.silver li::before { color: var(--slate); }
-    .tier-card.bronze li::before { color: var(--sanguine); }
-
-    /* Suggest Section */
-    .suggest-section {
-        padding: 3rem 0;
-    }
-
-    .suggest-card {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 2rem;
-        padding: 2rem 2.5rem;
-        background: var(--paper-2);
-        border: 1px dashed var(--rule-strong);
-        border-radius: var(--r-4);
-    }
-
-    .suggest-content h3 {
-        font-family: var(--font-serif);
-        font-size: 1.25rem;
-        font-weight: 400;
-        color: var(--ink);
-        margin-bottom: 0.4rem;
-    }
-
-    .suggest-content p {
-        font-size: 0.9rem;
-        color: var(--ink-3);
-        margin: 0;
-    }
-
-    .suggest-btn {
-        padding: 0.75rem 1.5rem;
-        background: var(--ink-blue);
-        border-radius: var(--r-3);
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: var(--paper);
-        text-decoration: none;
-        white-space: nowrap;
-        transition: all var(--t-fast);
-    }
-
-    .suggest-btn:hover {
-        filter: brightness(1.1);
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-        .page-hero {
-            padding: 3rem 0 2rem;
-        }
-
-        .hero-stats {
-            flex-direction: column;
-            gap: 1.25rem;
-        }
-
-        .stat-divider {
-            width: 60px;
-            height: 1px;
-        }
-
-        .section-header {
-            flex-wrap: wrap;
-        }
-
-        .prestige-badge {
-            margin-left: 0;
-            margin-top: 0.5rem;
-        }
-
-        .awards-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .suggest-card {
-            flex-direction: column;
-            text-align: center;
-            padding: 1.5rem;
-        }
-    }
-</style>
+</SiteLayout>

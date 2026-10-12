@@ -4,13 +4,13 @@ export const prerender = true;
  * MDRPedia — Breakthroughs & Impact
  * Curated feed of medical research breakthroughs, registry updates, and impact stories.
  */
-import Layout from "../layouts/Layout.astro";
+import SiteLayout from "../layouts/SiteLayout.astro";
 import {
     getPublishedNews,
     getCategoryInfo,
-    ICON_PATHS,
 } from "../lib/news";
 import NewsletterSignup from "../components/NewsletterSignup.astro";
+import "../styles/pages/feed.css";
 
 // Published articles only — entries dated in the future are scheduled,
 // not live, so the feed never leads with tomorrow's news.
@@ -22,28 +22,10 @@ const articles = (await getPublishedNews()).map((entry) => ({
 function formatDate(dateStr: string) {
     return new Date(dateStr).toLocaleDateString("en-US", {
         year: "numeric",
-        month: "long",
+        month: "short",
         day: "numeric",
+        timeZone: "UTC",
     });
-}
-
-function getRelativeTime(dateStr: string) {
-    const date = new Date(dateStr);
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
-    // Handle future dates
-    if (diffDays < 0) {
-        return formatDate(dateStr);
-    }
-
-    if (diffDays === 0) return 'Today';
-    if (diffDays === 1) return 'Yesterday';
-    if (diffDays < 7) return `${diffDays} days ago`;
-    if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-    if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
-    return `${Math.floor(diffDays / 365)} years ago`;
 }
 
 // Get unique categories
@@ -74,243 +56,93 @@ const collectionSchema = {
 };
 ---
 
-<Layout
+<SiteLayout
     title="Medical Breakthroughs & Impact News — MDRPedia"
     description="Curated coverage of medical research breakthroughs, clinical trial results, and impact stories from the world's leading physicians and researchers."
+    active=""
+    jsonLd={[collectionSchema]}
 >
-    <script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
-    <div class="news-page">
-        <!-- Hero Section -->
-        <header class="page-hero">
-            <div class="container">
-                <div class="hero-badge">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                        <path d="M2 17l10 5 10-5"/>
-                        <path d="M2 12l10 5 10-5"/>
-                    </svg>
-                    BREAKTHROUGHS & IMPACT
-                </div>
-                <h1 class="hero-title">Medical Insights</h1>
-                <p class="hero-description">
-                    Curated coverage of research breakthroughs, clinical trials, and stories
-                    of physicians making a measurable difference in global health.
-                </p>
-
-                <!-- Stats Bar -->
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-number">{articles.length}</span>
-                        <span class="stat-label">Articles</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <span class="stat-number">{uniqueCategories.length}</span>
-                        <span class="stat-label">Categories</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <span class="stat-number">Weekly</span>
-                        <span class="stat-label">Updates</span>
-                    </div>
-                </div>
-
-                <!-- Category Filter -->
-                <div class="category-filter">
-                    <button class="filter-btn active" data-category="all">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="3" width="7" height="7"/>
-                            <rect x="14" y="3" width="7" height="7"/>
-                            <rect x="14" y="14" width="7" height="7"/>
-                            <rect x="3" y="14" width="7" height="7"/>
-                        </svg>
-                        All Stories
-                    </button>
-                    {uniqueCategories.map(cat => {
-                        const info = getCategoryInfo(cat);
-                        const iconPath = ICON_PATHS[info.icon] || ICON_PATHS['file'];
-                        return (
-                            <button class="filter-btn" data-category={cat.toLowerCase()} style={`--cat-color: ${info.color}`}>
-                                <svg class="filter-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d={iconPath} />
-                                </svg>
-                                {info.label}
-                            </button>
-                        );
-                    })}
-                </div>
-            </div>
+    <div class="fd">
+        <header class="fd-wrap fd-hero">
+            <span class="fd-eyebrow">Breakthroughs &amp; impact</span>
+            <h1>Medical Insights</h1>
+            <p>
+                Curated coverage of research breakthroughs, clinical trials, and stories
+                of physicians making a measurable difference in global health.
+            </p>
+            <ul class="fd-stats">
+                <li><b>{articles.length}</b><span>Articles</span></li>
+                <li><b>{uniqueCategories.length}</b><span>Categories</span></li>
+            </ul>
         </header>
 
-        <!-- Featured Article -->
-        {articles.length > 0 && (
-            <section class="featured-section">
-                <div class="container">
-                    <div class="section-header">
-                        <h2 class="section-title">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                            </svg>
-                            Featured Story
-                        </h2>
-                    </div>
-                    <article class="featured-card">
-                        <div class="featured-glow"></div>
-                        <div class="featured-content">
-                            <div class="featured-badge" style={`--cat-color: ${getCategoryInfo(articles[0].category).color}`}>
-                                <svg class="badge-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d={ICON_PATHS[getCategoryInfo(articles[0].category).icon] || ICON_PATHS['file']} />
-                                </svg>
-                                {getCategoryInfo(articles[0].category).label}
-                            </div>
-                            <h3 class="featured-title">
-                                <a href={`/news/${articles[0].id}`}>{articles[0].title}</a>
-                            </h3>
-                            <p class="featured-summary">{articles[0].summary}</p>
-                            <div class="featured-meta">
-                                <div class="meta-item">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"/>
-                                        <polyline points="12 6 12 12 16 14"/>
-                                    </svg>
-                                    <span>{getRelativeTime(articles[0].date)}</span>
-                                </div>
-                                <div class="meta-item">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                                        <circle cx="12" cy="10" r="3"/>
-                                    </svg>
-                                    <span>{articles[0].source}</span>
-                                </div>
-                            </div>
-                            <a href={`/news/${articles[0].id}`} class="featured-link">
-                                <span>Read Full Story</span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                                </svg>
-                            </a>
+        <div class="fd-wrap fd-main">
+            {articles.length > 0 && (
+                <section class="fd-sec" aria-labelledby="featured-h">
+                    <div class="fd-sec__head"><h2 id="featured-h">Featured story</h2></div>
+                    <article class="fd-feature">
+                        <span class="kick">{getCategoryInfo(articles[0].category).label}</span>
+                        <h3><a href={`/news/${articles[0].id}`}>{articles[0].title}</a></h3>
+                        <p>{articles[0].summary}</p>
+                        <div class="meta">
+                            <time datetime={articles[0].date}>{formatDate(articles[0].date)}</time>
+                            <span>{articles[0].source}</span>
                         </div>
-                        <div class="featured-visual">
-                            <div class="visual-placeholder">
-                                <div class="visual-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <path d={ICON_PATHS[getCategoryInfo(articles[0].category).icon] || ICON_PATHS['file']} />
-                                    </svg>
-                                </div>
-                                <div class="visual-pattern"></div>
-                            </div>
-                        </div>
+                        <a href={`/news/${articles[0].id}`} class="go">Read the full story →</a>
                     </article>
+                </section>
+            )}
+
+            <section class="fd-sec" aria-labelledby="latest-h">
+                <div class="fd-sec__head">
+                    <h2 id="latest-h">Latest articles</h2>
+                    <span class="fd-count" id="article-count" aria-live="polite">{articles.length - 1} articles</span>
                 </div>
+
+                <div class="fd-seg" role="group" aria-label="Filter by category">
+                    <button type="button" class="filter-btn" data-category="all" aria-pressed="true">All stories</button>
+                    {uniqueCategories.map((cat) => (
+                        <button type="button" class="filter-btn" data-category={cat.toLowerCase()} aria-pressed="false">
+                            {getCategoryInfo(cat).label}
+                        </button>
+                    ))}
+                </div>
+
+                <ol class="fd-list" id="articles-grid">
+                    {articles.slice(1).map((article) => (
+                        <li class="fd-item article-card" data-category={article.category.toLowerCase()}>
+                            <div class="fd-item__meta">
+                                <span class="cat">{getCategoryInfo(article.category).label}</span>
+                                <time datetime={article.date}>{formatDate(article.date)}</time>
+                            </div>
+                            <div>
+                                <h3><a href={`/news/${article.id}`}>{article.title}</a></h3>
+                                <p>{article.summary}</p>
+                                <span class="src">{article.source}</span>
+                            </div>
+                        </li>
+                    ))}
+                </ol>
+
+                <p class="fd-empty" id="empty-state" hidden>
+                    No articles in this category. <button type="button" id="reset-filter">View all stories</button>
+                </p>
             </section>
-        )}
 
-        <!-- Articles Grid -->
-        <div class="articles-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
-                        </svg>
-                        Latest Articles
-                    </h2>
-                    <span class="article-count" id="article-count">{articles.length - 1} articles</span>
+            <section class="fd-panel" aria-labelledby="submit-h">
+                <div>
+                    <h3 id="submit-h">Share a breakthrough</h3>
+                    <p>Know of a medical breakthrough or impact story we should cover? Submit it for review by our editorial team.</p>
                 </div>
+                <a href="/contact?subject=submit-story" class="fd-btn">Submit a story</a>
+            </section>
 
-                <div class="articles-grid" id="articles-grid">
-                    {articles.slice(1).map((article, index) => {
-                        const catInfo = getCategoryInfo(article.category);
-                        const iconPath = ICON_PATHS[catInfo.icon] || ICON_PATHS['file'];
-                        return (
-                            <article
-                                class="article-card"
-                                data-category={article.category.toLowerCase()}
-                                style={`--delay: ${index * 0.05}s; --cat-color: ${catInfo.color}`}
-                            >
-                                <div class="card-highlight"></div>
-                                <div class="article-category">
-                                    <svg class="cat-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d={iconPath} />
-                                    </svg>
-                                    {catInfo.label}
-                                </div>
-                                <h3 class="article-title">
-                                    <a href={`/news/${article.id}`}>{article.title}</a>
-                                </h3>
-                                <p class="article-summary">{article.summary}</p>
-                                <div class="article-footer">
-                                    <div class="footer-left">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                                            <line x1="16" y1="2" x2="16" y2="6"/>
-                                            <line x1="8" y1="2" x2="8" y2="6"/>
-                                            <line x1="3" y1="10" x2="21" y2="10"/>
-                                        </svg>
-                                        <span>{getRelativeTime(article.date)}</span>
-                                    </div>
-                                    <span class="article-source">{article.source}</span>
-                                </div>
-                                <a href={`/news/${article.id}`} class="card-link" aria-label={`Read ${article.title}`}></a>
-                            </article>
-                        );
-                    })}
-                </div>
-
-                <!-- Empty State -->
-                <div class="empty-state" id="empty-state" hidden>
-                    <div class="empty-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <circle cx="11" cy="11" r="8"/>
-                            <path d="m21 21-4.3-4.3"/>
-                        </svg>
-                    </div>
-                    <h3>No articles found</h3>
-                    <p>Try selecting a different category to discover more stories</p>
-                    <button class="reset-filter" id="reset-filter">
-                        View All Stories
-                    </button>
-                </div>
-            </div>
+            <section class="fd-panel fd-panel--news">
+                <NewsletterSignup source="news-page" />
+            </section>
         </div>
-
-        <!-- Submit Story CTA -->
-        <section class="submit-section">
-            <div class="container">
-                <div class="submit-card">
-                    <div class="submit-glow"></div>
-                    <div class="submit-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 19l7-7 3 3-7 7-3-3z"/>
-                            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
-                            <path d="M2 2l7.586 7.586"/>
-                            <circle cx="11" cy="11" r="2"/>
-                        </svg>
-                    </div>
-                    <div class="submit-content">
-                        <h3>Share a Breakthrough</h3>
-                        <p>Know of a medical breakthrough or impact story we should cover? Submit it for review by our editorial team.</p>
-                    </div>
-                    <a href="/contact?subject=submit-story" class="submit-btn">
-                        <span>Submit a Story</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Newsletter CTA -->
-        <section class="newsletter-section">
-            <div class="container">
-                <div class="newsletter-card">
-                    <NewsletterSignup source="news-page" />
-                </div>
-            </div>
-        </section>
     </div>
-</Layout>
+</SiteLayout>
 
 <script>
     const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
@@ -325,9 +157,6 @@ const collectionSchema = {
         articles.forEach(article => {
             if (category === 'all' || article.dataset.category === category) {
                 article.style.display = '';
-                article.style.animation = 'none';
-                article.offsetHeight; // Trigger reflow
-                article.style.animation = '';
                 visibleCount++;
             } else {
                 article.style.display = 'none';
@@ -345,698 +174,13 @@ const collectionSchema = {
 
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            filterBtns.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
             filterArticles(btn.dataset.category || 'all');
         });
     });
 
     resetFilter?.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        const allBtn = document.querySelector('.filter-btn[data-category="all"]');
-        allBtn?.classList.add('active');
+        filterBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.category === 'all')));
         filterArticles('all');
     });
 </script>
-
-<style>
-    .news-page {
-        background: var(--paper);
-        min-height: 100vh;
-    }
-
-    .container {
-        max-width: var(--max);
-        margin: 0 auto;
-        padding: 0 var(--gutter);
-    }
-
-    /* Hero */
-    .page-hero {
-        padding: 5rem 0 3rem;
-        text-align: center;
-        border-bottom: 1px solid var(--rule);
-    }
-
-    .hero-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 18px;
-        background: var(--ink-blue-2);
-        border: 1px solid var(--ink-blue);
-        border-radius: var(--r-pill);
-        font-family: var(--font-mono);
-        font-size: 0.7rem;
-        font-weight: 500;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--ink-blue);
-        margin-bottom: 1.5rem;
-    }
-
-    .hero-badge svg {
-        width: 14px;
-        height: 14px;
-    }
-
-    .hero-title {
-        font-family: var(--font-serif);
-        font-size: clamp(2.5rem, 5vw, 4rem);
-        font-weight: 400;
-        color: var(--ink);
-        margin-bottom: 1rem;
-        letter-spacing: -0.03em;
-    }
-
-    .hero-description {
-        font-size: 1.15rem;
-        color: var(--ink-2);
-        max-width: 600px;
-        margin: 0 auto 2rem;
-        line-height: 1.7;
-    }
-
-    /* Hero Stats */
-    .hero-stats {
-        display: inline-flex;
-        align-items: center;
-        gap: 1.5rem;
-        padding: 1rem 2rem;
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-pill);
-        margin-bottom: 2rem;
-    }
-
-    .stat-item {
-        text-align: center;
-    }
-
-    .stat-number {
-        display: block;
-        font-family: var(--font-mono);
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: var(--ink-blue);
-    }
-
-    .stat-label {
-        font-family: var(--font-mono);
-        font-size: 0.65rem;
-        color: var(--ink-3);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-    }
-
-    .stat-divider {
-        width: 1px;
-        height: 30px;
-        background: var(--rule);
-    }
-
-    /* Category Filter */
-    .category-filter {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.5rem;
-    }
-
-    .filter-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.6rem 1.1rem;
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-pill);
-        font-size: 0.8rem;
-        font-weight: 500;
-        color: var(--ink-2);
-        cursor: pointer;
-        transition: all var(--t-fast) var(--ease);
-    }
-
-    .filter-btn svg {
-        width: 14px;
-        height: 14px;
-    }
-
-    .filter-btn:hover {
-        background: var(--paper-3);
-        border-color: var(--rule-strong);
-        color: var(--ink);
-    }
-
-    .filter-btn.active {
-        background: var(--ink-blue);
-        border-color: var(--ink-blue);
-        color: var(--paper);
-        box-shadow: var(--shadow-2);
-    }
-
-    .filter-icon-svg,
-    .badge-icon-svg,
-    .cat-icon-svg {
-        width: 14px;
-        height: 14px;
-    }
-
-    /* Section Header */
-    .section-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 1.5rem;
-    }
-
-    .section-title {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        font-family: var(--font-serif);
-        font-size: 1.25rem;
-        font-weight: 500;
-        color: var(--ink);
-    }
-
-    .section-title svg {
-        width: 20px;
-        height: 20px;
-        color: var(--ink-blue);
-    }
-
-    .article-count {
-        font-family: var(--font-mono);
-        font-size: 0.8rem;
-        color: var(--ink-3);
-        padding: 6px 14px;
-        background: var(--paper-2);
-        border-radius: var(--r-pill);
-    }
-
-    /* Featured Section */
-    .featured-section {
-        padding: 3rem 0;
-    }
-
-    .featured-card {
-        display: grid;
-        grid-template-columns: 1fr 360px;
-        gap: 0;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        overflow: hidden;
-        position: relative;
-        transition: all var(--t-base) var(--ease);
-    }
-
-    .featured-card:hover {
-        border-color: var(--rule-strong);
-        box-shadow: var(--shadow-3);
-    }
-
-    .featured-glow { display: none; }
-
-    .featured-content {
-        padding: 2.5rem;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .featured-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 6px 14px;
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-pill);
-        font-family: var(--font-mono);
-        font-size: 0.7rem;
-        font-weight: 500;
-        color: var(--ink-2);
-        margin-bottom: 1.5rem;
-        width: fit-content;
-    }
-
-    .featured-title {
-        font-family: var(--font-serif);
-        font-size: 1.75rem;
-        font-weight: 500;
-        line-height: 1.3;
-        margin-bottom: 1rem;
-        letter-spacing: -0.02em;
-    }
-
-    .featured-title a {
-        color: var(--ink);
-        text-decoration: none;
-        transition: color var(--t-fast);
-    }
-
-    .featured-title a:hover {
-        color: var(--ink-blue);
-    }
-
-    .featured-summary {
-        font-size: 1rem;
-        color: var(--ink-2);
-        line-height: 1.7;
-        margin-bottom: 1.5rem;
-        flex-grow: 1;
-    }
-
-    .featured-meta {
-        display: flex;
-        gap: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .meta-item {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.85rem;
-        color: var(--ink-3);
-    }
-
-    .meta-item svg {
-        width: 14px;
-        height: 14px;
-        opacity: 0.6;
-    }
-
-    .featured-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.85rem 1.5rem;
-        background: var(--ink-blue);
-        border-radius: var(--r-3);
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: var(--paper);
-        text-decoration: none;
-        width: fit-content;
-        transition: all var(--t-fast) var(--ease);
-        box-shadow: var(--shadow-2);
-    }
-
-    .featured-link svg {
-        width: 16px;
-        height: 16px;
-        transition: transform var(--t-fast);
-    }
-
-    .featured-link:hover {
-        box-shadow: var(--shadow-3);
-    }
-
-    .featured-link:hover svg {
-        transform: translateX(4px);
-    }
-
-    .featured-visual {
-        background: var(--paper-2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .visual-placeholder {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .visual-icon svg {
-        width: 80px;
-        height: 80px;
-        color: var(--ink-3);
-        opacity: 0.3;
-    }
-
-    .visual-pattern { display: none; }
-
-    /* Articles Grid */
-    .articles-section {
-        padding: 3rem 0 4rem;
-    }
-
-    .articles-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: 1.5rem;
-    }
-
-    .article-card {
-        position: relative;
-        padding: 1.75rem;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        transition: all var(--t-fast) var(--ease);
-        overflow: hidden;
-    }
-
-    .card-highlight {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: var(--ink-blue);
-        transform: scaleX(0);
-        transition: transform var(--t-fast) var(--ease);
-    }
-
-    .article-card:hover {
-        border-color: var(--rule-strong);
-        box-shadow: var(--shadow-3);
-    }
-
-    .article-card:hover .card-highlight {
-        transform: scaleX(1);
-    }
-
-    .card-link {
-        position: absolute;
-        inset: 0;
-        z-index: 1;
-    }
-
-    .article-category {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        padding: 5px 12px;
-        background: var(--paper-2);
-        border-radius: var(--r-3);
-        font-family: var(--font-mono);
-        font-size: 0.65rem;
-        font-weight: 500;
-        color: var(--ink-2);
-        margin-bottom: 1rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-
-    .article-title {
-        font-family: var(--font-serif);
-        font-size: 1.1rem;
-        font-weight: 500;
-        line-height: 1.4;
-        margin-bottom: 0.75rem;
-    }
-
-    .article-title a {
-        color: var(--ink);
-        text-decoration: none;
-        transition: color var(--t-fast);
-    }
-
-    .article-card:hover .article-title a {
-        color: var(--ink-blue);
-    }
-
-    .article-summary {
-        font-size: 0.9rem;
-        color: var(--ink-3);
-        line-height: 1.65;
-        margin-bottom: 1.25rem;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    .article-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 0.75rem;
-        color: var(--ink-3);
-        padding-top: 1rem;
-        border-top: 1px solid var(--rule);
-    }
-
-    .footer-left {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .footer-left svg {
-        width: 12px;
-        height: 12px;
-        opacity: 0.6;
-    }
-
-    .article-source {
-        font-weight: 600;
-        color: var(--ink-2);
-    }
-
-    /* Empty State */
-    .empty-state {
-        text-align: center;
-        padding: 5rem 2rem;
-    }
-
-    .empty-icon {
-        width: 80px;
-        height: 80px;
-        margin: 0 auto 1.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--ink-blue-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-    }
-
-    .empty-icon svg {
-        width: 32px;
-        height: 32px;
-        color: var(--ink-blue);
-    }
-
-    .empty-state h3 {
-        font-family: var(--font-serif);
-        font-size: 1.25rem;
-        font-weight: 500;
-        color: var(--ink);
-        margin-bottom: 0.5rem;
-    }
-
-    .empty-state p {
-        color: var(--ink-3);
-        margin-bottom: 1.5rem;
-    }
-
-    .reset-filter {
-        padding: 0.75rem 1.5rem;
-        background: var(--ink-blue);
-        border: none;
-        border-radius: var(--r-3);
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: var(--paper);
-        cursor: pointer;
-        transition: all var(--t-fast);
-    }
-
-    .reset-filter:hover {
-        box-shadow: var(--shadow-2);
-    }
-
-    /* Submit Section */
-    .submit-section {
-        padding: 3rem 0;
-    }
-
-    .submit-card {
-        display: flex;
-        align-items: center;
-        gap: 2rem;
-        padding: 2.5rem;
-        background: var(--verdant-2);
-        border: 1px solid var(--verdant);
-        border-radius: var(--r-4);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .submit-glow { display: none; }
-
-    .submit-icon {
-        width: 60px;
-        height: 60px;
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: color-mix(in oklch, var(--verdant) 15%, transparent);
-        border: 1px solid var(--verdant);
-        border-radius: var(--r-4);
-    }
-
-    .submit-icon svg {
-        width: 28px;
-        height: 28px;
-        color: var(--verdant);
-    }
-
-    .submit-content {
-        flex: 1;
-    }
-
-    .submit-content h3 {
-        font-family: var(--font-serif);
-        font-size: 1.35rem;
-        font-weight: 500;
-        color: var(--ink);
-        margin-bottom: 0.5rem;
-    }
-
-    .submit-content p {
-        font-size: 0.95rem;
-        color: var(--ink-3);
-        margin: 0;
-        line-height: 1.6;
-    }
-
-    .submit-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.9rem 1.75rem;
-        background: var(--verdant);
-        border-radius: var(--r-3);
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: var(--paper);
-        text-decoration: none;
-        white-space: nowrap;
-        transition: all var(--t-fast) var(--ease);
-        box-shadow: var(--shadow-2);
-    }
-
-    .submit-btn svg {
-        width: 16px;
-        height: 16px;
-        transition: transform var(--t-fast);
-    }
-
-    .submit-btn:hover {
-        box-shadow: var(--shadow-3);
-    }
-
-    .submit-btn:hover svg {
-        transform: translateX(4px);
-    }
-
-    /* Newsletter Section */
-    .newsletter-section {
-        padding: 3rem 0 4rem;
-        border-top: 1px solid var(--rule);
-    }
-
-    .newsletter-card {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 2rem;
-        padding: 2rem 2.5rem;
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-    }
-
-    .newsletter-content h3 {
-        font-family: var(--font-serif);
-        font-size: 1.2rem;
-        font-weight: 500;
-        color: var(--ink);
-        margin-bottom: 0.25rem;
-    }
-
-    .newsletter-content p {
-        font-size: 0.9rem;
-        color: var(--ink-3);
-        margin: 0;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-        .page-hero {
-            padding: 4rem 0 2rem;
-        }
-
-        .hero-stats {
-            padding: 0.75rem 1.25rem;
-            gap: 1rem;
-        }
-
-        .stat-number {
-            font-size: 1rem;
-        }
-
-        .category-filter {
-            gap: 0.4rem;
-        }
-
-        .filter-btn {
-            padding: 0.5rem 0.9rem;
-            font-size: 0.75rem;
-        }
-
-        .featured-card {
-            grid-template-columns: 1fr;
-        }
-
-        .featured-visual {
-            height: 200px;
-            order: -1;
-        }
-
-        .featured-content {
-            padding: 1.75rem;
-        }
-
-        .featured-title {
-            font-size: 1.35rem;
-        }
-
-        .articles-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .section-header {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0.75rem;
-        }
-
-        .submit-card,
-        .newsletter-card {
-            flex-direction: column;
-            text-align: center;
-        }
-
-        .submit-icon {
-            margin: 0 auto;
-        }
-
-        .submit-card {
-            padding: 1.75rem;
-        }
-    }
-</style>
