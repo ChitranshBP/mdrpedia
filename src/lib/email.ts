@@ -23,6 +23,10 @@ interface SendEmailOptions {
 
 export async function sendEmail(opts: SendEmailOptions): Promise<{ success: boolean; id?: string; error?: string }> {
     if (!resend) {
+        if (import.meta.env.PROD) {
+            console.error(`[EMAIL] RESEND_API_KEY not set; not sent to ${opts.to}: ${opts.subject}`);
+            return { success: false, error: 'Email is not configured' };
+        }
         // Dev fallback — log to console
         console.log(`[EMAIL-DEV] To: ${opts.to}`);
         console.log(`[EMAIL-DEV] Subject: ${opts.subject}`);
