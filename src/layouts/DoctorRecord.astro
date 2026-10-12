@@ -467,7 +467,7 @@ const bioHtml = hasBio ? sanitizeHtml(doctor.biography) : "";
 					<h2 id="evidence-title">What this record is built on</h2>
 				</div>
 				<p>
-					Compared with the register{standing.groupName ? `: ${standing.groupName}` : ""}{country ? ` · ${country}` : ""}{doctor.yearsActive > 0 ? ` · ${doctor.yearsActive} years in practice` : ""} · <a href="/about#methodology">How it works</a>
+					Compared with the register{standing.groupName ? `: ${standing.groupName}` : ""}{country ? ` · ${country}` : ""}{doctor.yearsActive > 0 ? ` · ${doctor.yearsActive} years in practice` : ""} · <a href="/methodology">How it works</a>
 				</p>
 			</div>
 			<div class="p-evidence__grid">
@@ -504,10 +504,10 @@ const bioHtml = hasBio ? sanitizeHtml(doctor.biography) : "";
 				<section id="record" class="p-panel" role="tabpanel" aria-labelledby="tab-record" tabindex="0">
 					<div class="p-block">
 						<h2>Record</h2>
-						{hasBio ? <div class="p-prose" set:html={bioHtml} /> : <p class="p-prose">{aiSummary}</p>}
+						{hasBio ? <div class="p-prose" set:html={bioHtml} /> : <><p class="p-prose">{aiSummary}</p><p class="p-byline">Summary drafted automatically from this record's data. <a href={`/suggest-edit?profile=${slug}&type=biography`}>Suggest a correction</a></p></>}
 						<p class="p-byline">
 							{sources.size > 0 ? `Compiled from ${sources.size} public ${sources.size === 1 ? "source" : "sources"} (${[...sources].join(", ")})` : "Compiled from public sources"}
-							{updated && ` · Updated ${fmtLong(updated)}`} · <a href="/about#methodology">How we verify</a>
+							{updated && ` · Updated ${fmtLong(updated)}`} · <a href="/methodology">How we verify</a>
 						</p>
 					</div>
 
@@ -666,7 +666,7 @@ const bioHtml = hasBio ? sanitizeHtml(doctor.biography) : "";
 						{pillars.length > 0 && (
 							<div class="p-block">
 								<h2>Impact quotient</h2>
-								<p class="p-byline">The four parts of the MDRPedia impact score, each out of 100. <a href="/about#methodology">How it is calculated</a></p>
+								<p class="p-byline">The four parts of the MDRPedia impact score, each out of 100. <a href="/methodology">How it is calculated</a></p>
 								<dl class="p-pillars">
 									{pillars.map((p) => {
 										const pct = Math.max(0, Math.min(Math.round(p.value), 100));
