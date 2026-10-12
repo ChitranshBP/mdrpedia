@@ -11,7 +11,6 @@ import TierBadge from "../components/TierBadge.astro";
 import SimilarDoctors from "../components/SimilarDoctors.astro";
 import ShareProfileModal from "../components/ShareProfileModal";
 import ImpactVoteButton from "../components/ImpactVoteButton";
-import FloatingActionBar from "../components/FloatingActionBar";
 import { generateAISummary } from "../lib/ai-summary";
 import ClaimProfile from "../components/ClaimProfile.astro";
 import PatientFriendlySummary from "../components/PatientFriendlySummary.astro";
@@ -19,6 +18,7 @@ import ProfileCompletionMeter from "../components/ProfileCompletionMeter.astro";
 import ResearchTimelineChart from "../components/ResearchTimelineChart.astro";
 import Top100Badge from "../components/Top100Badge.astro";
 import { getTop100Rank } from "../lib/ranking";
+import { normalizeSpecialty } from "../lib/specialty-groups";
 
 // Premium Components
 import MediaVault from "../components/MediaVault.astro";
@@ -26,33 +26,6 @@ import MedicalLineageGraph from "../components/MedicalLineageGraph";
 import AwardsRibbon from "../components/AwardsRibbon.astro";
 import LegacyTimeline from "../components/LegacyTimeline.astro";
 import ProfileEmbed from "../components/ProfileEmbed.astro";
-
-// AI-Optimized Content Components (Phase 1)
-import ELI5Summary from "../components/AI/ELI5Summary.astro";
-import TechniqueBreakdown from "../components/AI/TechniqueBreakdown.astro";
-import VerifiedClaims from "../components/AI/VerifiedClaims.astro";
-import EnhancedFAQ from "../components/AI/EnhancedFAQ.astro";
-import ImpactMetricsTable from "../components/AI/ImpactMetricsTable.astro";
-import ControversiesTimeline from "../components/AI/ControversiesTimeline.astro";
-import MisconceptionsTable from "../components/AI/MisconceptionsTable.astro";
-import ClinicalScenarios from "../components/AI/ClinicalScenarios.astro";
-import AIContentSchema from "../components/AI/AIContentSchema.astro";
-
-// AI-Optimized Content Components (Phase 2)
-import MentorshipTree from "../components/AI/MentorshipTree.astro";
-import CitationContexts from "../components/AI/CitationContexts.astro";
-import FailureAnalysis from "../components/AI/FailureAnalysis.astro";
-import MedicalLexiconTags from "../components/AI/MedicalLexiconTags.astro";
-import FutureOutlook from "../components/AI/FutureOutlook.astro";
-import PatientJourneyMap from "../components/AI/PatientJourneyMap.astro";
-import ComparativeMatrix from "../components/AI/ComparativeMatrix.astro";
-import DataExportPanel from "../components/AI/DataExportPanel.astro";
-import KeyInsights from "../components/AI/KeyInsights.astro";
-import InstitutionalEcosystem from "../components/AI/InstitutionalEcosystem.astro";
-
-// AI-Optimized Content Components (Phase 3)
-import OffLabelTracker from "../components/AI/OffLabelTracker.astro";
-import MedicalDiffs from "../components/AI/MedicalDiffs.astro";
 
 import type { ProfileData } from "../lib/types";
 import { getInstitutionLogo, getInstitutionInitials, getInstitutionColor } from "../lib/institution-logos";
@@ -153,34 +126,6 @@ const pillars = hasFourPillars ? [
     { label: 'Humanitarian Impact', value: doctor.humanitarianImpact ?? 0, icon: 'M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z' },
 ] : [];
 
-// AI-Optimized Content availability flags (Phase 1)
-const hasELI5Summary = doctor.eli5Summary && doctor.clinicalSummary;
-const hasTechniqueBreakdowns = doctor.techniqueBreakdowns && doctor.techniqueBreakdowns.length > 0;
-const hasVerifiedClaims = doctor.verifiedClaims && doctor.verifiedClaims.length > 0;
-const hasEnhancedFAQs = doctor.faqs && doctor.faqs.length > 0;
-const hasImpactTimeSeries = doctor.impactTimeSeries && doctor.impactTimeSeries.length > 0;
-const hasConsensusTimeline = doctor.consensusTimeline && doctor.consensusTimeline.length > 0;
-const hasMisconceptions = doctor.misconceptions && doctor.misconceptions.length > 0;
-const hasClinicalScenarios = doctor.clinicalScenarios && doctor.clinicalScenarios.length > 0;
-
-// AI-Optimized Content availability flags (Phase 2)
-const hasMentorshipTree = doctor.mentorshipTree && (doctor.mentorshipTree.mentors.length > 0 || doctor.mentorshipTree.mentees.length > 0);
-const hasCitationContexts = doctor.citationContexts && doctor.citationContexts.totalCitations > 0;
-const hasFailureAnalyses = doctor.failureAnalyses && doctor.failureAnalyses.length > 0;
-const hasMedicalLexicon = doctor.medicalLexicon && (doctor.medicalLexicon.primaryConditions.length > 0 || doctor.medicalLexicon.procedures.length > 0);
-const hasFutureOutlook = doctor.futureOutlook && doctor.futureOutlook.fieldPredictions.length > 0;
-const hasPatientJourneys = doctor.patientJourneys && doctor.patientJourneys.length > 0;
-const hasComparativeMatrices = doctor.comparativeMatrices && doctor.comparativeMatrices.length > 0;
-const hasDataExportConfig = doctor.dataExportConfig && doctor.dataExportConfig.availableFormats.length > 0;
-const hasKeyInsights = doctor.keyInsights && doctor.keyInsights.topInsights.length > 0;
-const hasInstitutionalEcosystem = doctor.institutionalEcosystem && (doctor.institutionalEcosystem.currentAffiliations.length > 0 || doctor.institutionalEcosystem.geographicInfluence.length > 0);
-
-// AI-Optimized Content availability flags (Phase 3)
-const hasOffLabelTracker = doctor.offLabelTracker && doctor.offLabelTracker.entries.length > 0;
-const hasMedicalDiffs = doctor.medicalDiffs && doctor.medicalDiffs.diffs.length > 0;
-
-const hasAnyAIContent = hasELI5Summary || hasTechniqueBreakdowns || hasVerifiedClaims || hasEnhancedFAQs || hasImpactTimeSeries || hasConsensusTimeline || hasMisconceptions || hasClinicalScenarios || hasMentorshipTree || hasCitationContexts || hasFailureAnalyses || hasMedicalLexicon || hasFutureOutlook || hasPatientJourneys || hasComparativeMatrices || hasKeyInsights || hasInstitutionalEcosystem || hasOffLabelTracker || hasMedicalDiffs;
-
 // Top journals from citations
 const topJournals = [...new Set(doctor.citations?.map(c => c.journal).filter((j): j is string => !!j) || [])].slice(0, 5);
 
@@ -204,7 +149,7 @@ const completenessLabel = profileCompleteness >= 90 ? 'Comprehensive' : profileC
 
 // The <title> is the highest-value slot on the page. "<Name> — MDRPedia"
 // on all ~1,150 profiles wastes it; specialty and city are already in scope.
-const titleParts = [doctor.specialty, doctor.geography.city]
+const titleParts = [normalizeSpecialty(doctor.specialty), doctor.geography.city]
     .filter((v): v is string => !!v && v !== "Unknown");
 const pageTitle = titleParts.length
     ? `${doctor.fullName} — ${titleParts.join(", ")} | MDRPedia`
@@ -266,17 +211,6 @@ function slugifyInstitution(name: string): string {
         createdAt={doctor.createdAt}
         updatedAt={doctor.updatedAt}
     />
-
-    <!-- AI Content JSON-LD Schemas -->
-    {hasAnyAIContent && (
-        <AIContentSchema
-            doctor={doctor}
-            slug={slug}
-            pageUrl={Astro.url.href}
-        />
-    )}
-
-    <!-- Hidden AI Context for LLM crawlers -->
 
     <!-- Medical Knowledge Graph: Interconnected Doctor → Hospital → Technique → Citation -->
     <MedicalKnowledgeGraph
@@ -540,189 +474,6 @@ function slugifyInstitution(name: string): string {
                                 <div class="prose" set:html={doctor.biography} />
                             </section>
                         )}
-
-                        <!-- ═══════════════════ AI-OPTIMIZED CONTENT SECTIONS ═══════════════════ -->
-
-                        <!-- ELI5 vs Clinical Summary -->
-                        {hasELI5Summary && (
-                            <ELI5Summary
-                                eli5Summary={doctor.eli5Summary!}
-                                clinicalSummary={doctor.clinicalSummary!}
-                                tier={doctor.tier}
-                            />
-                        )}
-
-                        <!-- Verified Claims Section -->
-                        {hasVerifiedClaims && (
-                            <VerifiedClaims
-                                claims={doctor.verifiedClaims as any}
-                                tier={doctor.tier}
-                            />
-                        )}
-
-                        <!-- Technique Breakdowns -->
-                        {hasTechniqueBreakdowns && doctor.techniqueBreakdowns!.map(technique => (
-                            <TechniqueBreakdown
-                                technique={technique as any}
-                                tier={doctor.tier}
-                            />
-                        ))}
-
-                        <!-- Enhanced FAQs -->
-                        {hasEnhancedFAQs && (
-                            <EnhancedFAQ
-                                faqs={doctor.faqs!}
-                                doctorName={doctor.fullName}
-                                tier={doctor.tier}
-                            />
-                        )}
-
-                        <!-- Impact Metrics Over Time -->
-                        {hasImpactTimeSeries && (
-                            <ImpactMetricsTable
-                                data={doctor.impactTimeSeries!}
-                                doctorName={doctor.fullName}
-                                tier={doctor.tier}
-                            />
-                        )}
-
-                        <!-- Controversies / Consensus Timeline -->
-                        {hasConsensusTimeline && doctor.consensusTimeline!.map(timeline => (
-                            <ControversiesTimeline
-                                timeline={timeline}
-                                tier={doctor.tier}
-                            />
-                        ))}
-
-                        <!-- Common Misconceptions -->
-                        {hasMisconceptions && (
-                            <MisconceptionsTable
-                                misconceptions={doctor.misconceptions!}
-                                tier={doctor.tier}
-                            />
-                        )}
-
-                        <!-- Clinical Scenarios -->
-                        {hasClinicalScenarios && doctor.clinicalScenarios!.map(scenario => (
-                            <ClinicalScenarios
-                                scenario={scenario}
-                                tier={doctor.tier}
-                            />
-                        ))}
-
-                        <!-- ═══════════════════ AI-OPTIMIZED CONTENT (PHASE 2) ═══════════════════ -->
-
-                        <!-- Key Insights Summary -->
-                        {hasKeyInsights && (
-                            <KeyInsights
-                                insights={doctor.keyInsights as any}
-                                doctorName={doctor.fullName}
-                                tier={doctor.tier}
-                            />
-                        )}
-
-                        <!-- Medical Mentorship Tree / Genealogy -->
-                        {hasMentorshipTree && (
-                            <MentorshipTree
-                                tree={doctor.mentorshipTree as any}
-                                tier={doctor.tier}
-                            />
-                        )}
-
-                        <!-- Institutional & Geographic Ecosystem -->
-                        {hasInstitutionalEcosystem && (
-                            <InstitutionalEcosystem
-                                ecosystem={doctor.institutionalEcosystem as any}
-                                doctorName={doctor.fullName}
-                                tier={doctor.tier}
-                            />
-                        )}
-
-                        <!-- Citation Context Analysis -->
-                        {hasCitationContexts && (
-                            <CitationContexts
-                                summary={doctor.citationContexts as any}
-                                doctorName={doctor.fullName}
-                                tier={doctor.tier}
-                            />
-                        )}
-
-                        <!-- Medical Lexicon Tags -->
-                        {hasMedicalLexicon && (
-                            <MedicalLexiconTags
-                                lexicon={doctor.medicalLexicon as any}
-                                doctorName={doctor.fullName}
-                                tier={doctor.tier}
-                            />
-                        )}
-
-                        <!-- Patient Journey Maps -->
-                        {hasPatientJourneys && doctor.patientJourneys!.map(journey => (
-                            <PatientJourneyMap
-                                journey={journey as any}
-                                doctorName={doctor.fullName}
-                                tier={doctor.tier}
-                            />
-                        ))}
-
-                        <!-- Future Outlook -->
-                        {hasFutureOutlook && (
-                            <FutureOutlook
-                                outlook={doctor.futureOutlook as any}
-                                doctorName={doctor.fullName}
-                                specialty={doctor.specialty}
-                                tier={doctor.tier}
-                            />
-                        )}
-
-                        <!-- Comparative Matrices -->
-                        {hasComparativeMatrices && doctor.comparativeMatrices!.map(matrix => (
-                            <ComparativeMatrix
-                                matrix={matrix as any}
-                                tier={doctor.tier}
-                            />
-                        ))}
-
-                        <!-- Failure Analysis / Lessons Learned -->
-                        {hasFailureAnalyses && (
-                            <FailureAnalysis
-                                analyses={doctor.failureAnalyses as any}
-                                doctorName={doctor.fullName}
-                                tier={doctor.tier}
-                            />
-                        )}
-
-                        <!-- Data Export Panel -->
-                        {hasDataExportConfig && (
-                            <DataExportPanel
-                                config={doctor.dataExportConfig as any}
-                                doctorName={doctor.fullName}
-                                doctorSlug={slug}
-                                tier={doctor.tier}
-                            />
-                        )}
-
-                        <!-- ═══════════════════ AI-OPTIMIZED CONTENT (PHASE 3) ═══════════════════ -->
-
-                        <!-- Off-Label vs FDA-Approved Usage Tracker -->
-                        {hasOffLabelTracker && (
-                            <OffLabelTracker
-                                tracker={doctor.offLabelTracker!}
-                                doctorName={doctor.fullName}
-                                tier={doctor.tier}
-                            />
-                        )}
-
-                        <!-- Medical Guideline Diffs (How Guidelines Changed) -->
-                        {hasMedicalDiffs && (
-                            <MedicalDiffs
-                                diffs={doctor.medicalDiffs as any}
-                                doctorName={doctor.fullName}
-                                tier={doctor.tier}
-                            />
-                        )}
-
-                        <!-- ═══════════════════ END AI-OPTIMIZED CONTENT ═══════════════════ -->
 
                         <!-- Affiliations & Institutions -->
                         {hasAffiliations && (
@@ -1264,7 +1015,6 @@ function slugifyInstitution(name: string): string {
             <ClaimProfile doctorName={doctor.fullName} slug={slug} />
         )}
     </article>
-    <FloatingActionBar client:load slug={slug} fullName={doctor.fullName} />
 </Layout>
 
 <script define:vars={{ slug, doctorFullName: doctor.fullName, doctorSpecialty: doctor.specialty, doctorTier: doctor.tier, doctorPortrait: doctor.portraitUrl || '' }}>

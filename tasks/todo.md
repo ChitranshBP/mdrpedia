@@ -382,7 +382,7 @@ These are not design issues. Two of them are actively harming users right now.
   renders as an unformatted text stack (and its nodes are mouse-only — see P5).
   **Fix:** delete FloatingActionBar; convert the graph to scoped `<style>`.
 
-- [ ] **P4.2 — 21 "AI-Optimized Content" components can never render**
+- [x] **P4.2 — 21 "AI-Optimized Content" components can never render**
   `DoctorProfileRevamp.astro:31-56,183,256-262,535-711`. All 21 gating fields are set by neither
   data path and appear in **0 of 1,147** content files, so `hasAnyAIContent` is always false —
   which also kills `AIContentSchema`. ~318KB of source whose scoped CSS still ships inside the

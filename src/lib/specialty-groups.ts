@@ -202,8 +202,21 @@ export const SPECIALTY_GROUPS: SpecialtyGroup[] = [
 /**
  * Find the specialty group for a given specialty name
  */
+/**
+ * Strip the impact-area suffix that a bulk import concatenated onto 54
+ * specialty values ("Cardiac Surgery - Advanced cardiac surgery"). The stored
+ * value is what the DB and the content files hold, so normalise on read rather
+ * than depending on every caller remembering to.
+ */
+export function normalizeSpecialty(specialty: string): string {
+    if (!specialty) return specialty;
+    // Split on a spaced hyphen, or on the point a bracketed aside begins.
+    const primary = specialty.split(/\s+[-–—]\s+/)[0].split('(')[0];
+    return primary.trim() || specialty.trim();
+}
+
 export function getSpecialtyGroup(specialty: string): SpecialtyGroup | null {
-    const normalizedSpecialty = specialty.toLowerCase().trim();
+    const normalizedSpecialty = normalizeSpecialty(specialty).toLowerCase().trim();
 
     for (const group of SPECIALTY_GROUPS) {
         if (group.specialties.some(s =>
