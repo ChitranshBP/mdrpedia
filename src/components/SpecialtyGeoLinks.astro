@@ -1,0 +1,54 @@
+---
+/**
+ * Internal links into the specialty x country hubs.
+ * Pass `groupSlug` (on /specialty/[slug]) to list countries, or `countrySlug`
+ * (on /geography/[country]) to list specialties.
+ */
+import { getSpecialtyGeoCombos, MIN_INDEXABLE_DOCTORS } from "../lib/specialty-geo";
+
+interface Props {
+    groupSlug?: string;
+    countrySlug?: string;
+    limit?: number;
+}
+
+const { groupSlug, countrySlug, limit = 24 } = Astro.props;
+
+let combos: Awaited<ReturnType<typeof getSpecialtyGeoCombos>> = [];
+try {
+    combos = (await getSpecialtyGeoCombos()).filter(
+        c => c.count >= MIN_INDEXABLE_DOCTORS && (groupSlug ? c.groupSlug === groupSlug : c.countrySlug === countrySlug),
+    );
+} catch {
+    combos = [];
+}
+const items = combos.slice(0, limit);
+const byGroup = !!groupSlug;
+---
+
+{items.length > 0 && (
+    <section class="geo-links" aria-labelledby="geo-links-title">
+        <h2 id="geo-links-title">{byGroup ? "Browse by country" : "Browse by specialty"}</h2>
+        <ul>
+            {items.map(c => (
+                <li>
+                    <a href={`/specialty/${c.groupSlug}/${c.countrySlug}`}>
+                        {byGroup ? c.country : c.group.name} <small>({c.count})</small>
+                    </a>
+                </li>
+            ))}
+        </ul>
+    </section>
+)}
+
+<style>
+    .geo-links { margin: 2.5rem 0; }
+    .geo-links h2 { font-family: var(--font-serif); font-size: 1.25rem; margin: 0 0 1rem; }
+    .geo-links ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .geo-links a {
+        display: inline-block; padding: 0.35rem 0.85rem; border: 1px solid var(--rule); border-radius: 999px;
+        color: var(--ink-2); text-decoration: none; font-size: 0.9rem;
+    }
+    .geo-links a:hover { border-color: var(--ink-blue); color: var(--ink-blue); }
+    .geo-links small { color: var(--ink-3); }
+</style>
