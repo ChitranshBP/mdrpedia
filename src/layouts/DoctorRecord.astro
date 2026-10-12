@@ -1,4 +1,5 @@
 ---
+import { sanitizeHtml } from "../lib/sanitize-html";
 /**
  * MDRPedia — doctor record (claude.ai/design "Profile", with the tabbed body
  * and NMC-safe framing from "Doctor Showcase").
@@ -333,8 +334,7 @@ const titleParts = [specialtyLabel, city].filter(Boolean);
 const pageTitle = titleParts.length ? `${doctor.fullName} — ${titleParts.join(", ")} | MDRPedia` : `${doctor.fullName} | MDRPedia`;
 const ogImageUrl = new URL(`/og/${slug}.png`, site).href;
 const institutionHref = (a: { hospitalSlug?: string | null }) => (a.hospitalSlug ? `/institutions/${a.hospitalSlug}` : null);
-const ALLOWED_TAGS = /<(?!\/?(p|br|em|strong|i|b|a|ul|ol|li)\b)[^>]*>/gi;
-const bioHtml = hasBio ? doctor.biography!.replace(/<(script|style)[\s\S]*?<\/\1>/gi, "").replace(ALLOWED_TAGS, "").replace(/\son\w+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, "").replace(/href\s*=\s*(["'])\s*javascript:[^"']*\1/gi, 'href="#"') : "";
+const bioHtml = hasBio ? sanitizeHtml(doctor.biography) : "";
 ---
 
 <SiteLayout title={pageTitle} description={aiSummary.slice(0, 160)} active="register" ogImage={ogImageUrl}>
