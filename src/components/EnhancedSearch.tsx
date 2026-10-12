@@ -20,7 +20,6 @@ interface EnhancedSearchProps {
     initialQuery?: string;
     placeholder?: string;
     autoFocus?: boolean;
-    showFilters?: boolean;
     onResultClick?: (result: SearchResult) => void;
     maxResults?: number;
 }

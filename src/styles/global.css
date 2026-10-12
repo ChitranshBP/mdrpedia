@@ -138,7 +138,9 @@
   --ink-3:   oklch(0.58 0.01 85);
   --rule:        oklch(0.30 0.02 260);
   --rule-strong: oklch(0.40 0.02 260);
+  --verdant:     oklch(0.70 0.12 155);
   --verdant-2:   oklch(0.22 0.06 155);
+  --sanguine:    oklch(0.68 0.14 25);
   --aged-gold-2: oklch(0.24 0.05 80);
   --ink-blue-2:  oklch(0.22 0.06 250);
   --slate-2:     oklch(0.22 0.02 230);
@@ -358,6 +360,7 @@ code {
 .btn--ghost:hover { background: var(--ink); color: var(--paper); }
 .btn--verdant { background: var(--verdant); color: var(--paper); }
 .btn--verdant:hover { background: oklch(0.40 0.11 155); }
+[data-theme="dark"] .btn--verdant:hover { background: oklch(0.78 0.12 155); }
 .btn--sm { padding: 6px 12px; font-size: 12px; }
 
 /* ─── Search Input ───────────────────────────────────────────────────────── */
@@ -390,14 +393,14 @@ code {
 
 /* ─── Reveal on scroll ───────────────────────────────────────────────────── */
 
-.reveal { opacity: 0; transform: translateY(10px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
-.reveal.in { opacity: 1; transform: none; }
+.reveal { transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
+.reveal--pending:not(.in) { opacity: 0; transform: translateY(10px); }
 
 /* Respect the OS "reduce motion" setting. .reveal starts at opacity:0, so it is not
    enough to drop the transition — the content must be shown outright, otherwise a
    reduced-motion user sees nothing at all if the observer is also skipped. */
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
+  .reveal, .reveal--pending:not(.in) { opacity: 1; transform: none; transition: none; }
 
   *,
   *::before,

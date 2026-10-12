@@ -362,6 +362,20 @@ export async function getFeaturedTitans(limit = 8) {
     );
 }
 
+export async function getLastVerified(): Promise<Date | null> {
+    return cache.getOrFetch(
+        'stats:last_verified',
+        async () => {
+            const latest = await prisma.profile.findFirst({
+                orderBy: { updatedAt: 'desc' },
+                select: { updatedAt: true },
+            });
+            return latest?.updatedAt ?? null;
+        },
+        CacheTTL.SHORT
+    );
+}
+
 /**
  * Invalidate all stats caches (call after data updates)
  */
