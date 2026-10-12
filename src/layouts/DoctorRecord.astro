@@ -337,7 +337,7 @@ const institutionHref = (a: { hospitalSlug?: string | null }) => (a.hospitalSlug
 const bioHtml = hasBio ? sanitizeHtml(doctor.biography) : "";
 ---
 
-<SiteLayout title={pageTitle} description={aiSummary.slice(0, 160)} active="register" ogImage={ogImageUrl}>
+<SiteLayout title={pageTitle} description={aiSummary.slice(0, 160)} active="register" ogImage={ogImageUrl} ogType="profile">
 	<JsonLd
 		fullName={doctor.fullName}
 		specialty={specialtyLabel}

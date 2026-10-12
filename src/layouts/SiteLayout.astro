@@ -12,12 +12,14 @@ interface Props {
 	description: string;
 	active?: "" | "find" | "regions" | "register" | "evidence";
 	ogImage?: string;
+	ogType?: string;
+	canonical?: string;
 	robots?: string;
 	jsonLd?: Record<string, unknown>[];
 }
 
-const { title, description, active = "", ogImage, robots = "index, follow", jsonLd = [] } = Astro.props;
-const canonicalURL = new URL(Astro.url.pathname.replace(/(.)\/$/, "$1"), Astro.site ?? "https://mdrpedia.com");
+const { title, description, active = "", ogImage, ogType = "website", canonical, robots = "index, follow", jsonLd = [] } = Astro.props;
+const canonicalURL = new URL(canonical ?? Astro.url.pathname.replace(/(.)\/$/, "$1"), Astro.site ?? "https://mdrpedia.com");
 const image = ogImage || new URL("/og-default.png", canonicalURL.origin).href;
 const FONTS =
 	"https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap";
@@ -35,7 +37,7 @@ const FONTS =
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link rel="stylesheet" href={FONTS} />
-		<meta property="og:type" content="website" />
+		<meta property="og:type" content={ogType} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonicalURL.href} />
