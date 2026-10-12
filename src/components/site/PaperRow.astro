@@ -1,0 +1,37 @@
+---
+/** One row in a record's paper list (claude.ai/design "Profile" → Landmark papers). */
+interface Props {
+	paper: {
+		doi?: string;
+		pubmedId?: string;
+		title: string;
+		journal?: string;
+		year?: number;
+		totalCitationCount?: number;
+		isOpenAccess?: boolean;
+		openAccessUrl?: string;
+	};
+}
+
+const { paper } = Astro.props;
+const count = (paper as { citationCount?: number }).citationCount ?? paper.totalCitationCount ?? 0;
+const href = paper.pubmedId ? `https://pubmed.ncbi.nlm.nih.gov/${paper.pubmedId}/` : paper.doi ? `https://doi.org/${paper.doi}` : null;
+---
+
+<li class="p-paper">
+	<span class="p-paper__y">{paper.year ?? "—"}</span>
+	<span class="p-paper__body">
+		{href ? (
+			<a class="p-paper__t" href={href} target="_blank" rel="noopener noreferrer">{paper.title}</a>
+		) : (
+			<span class="p-paper__t">{paper.title}</span>
+		)}
+		<span class="p-paper__m">
+			{paper.journal && <em>{paper.journal}</em>}
+			{paper.doi && <span>doi <a href={`https://doi.org/${paper.doi}`} target="_blank" rel="noopener noreferrer">{paper.doi}</a></span>}
+			{count > 0 && <span>{count.toLocaleString("en-US")} citations</span>}
+			{paper.pubmedId && <a class="p-st p-st--ok" href={`https://pubmed.ncbi.nlm.nih.gov/${paper.pubmedId}/`} target="_blank" rel="noopener noreferrer">PubMed ✓</a>}
+			{paper.isOpenAccess && paper.openAccessUrl && <a href={paper.openAccessUrl} target="_blank" rel="noopener noreferrer">Free to read</a>}
+		</span>
+	</span>
+</li>

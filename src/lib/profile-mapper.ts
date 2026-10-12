@@ -18,6 +18,7 @@ import type {
     Hospital,
     ProfileMedia,
     DoctorPortal,
+    BoardCertification,
 } from '@prisma/client';
 
 // Full DB profile type with all relations
@@ -33,6 +34,7 @@ export type DbProfileFull = Profile & {
     mentees: { id: string; slug: string; full_name: string; title: string | null }[];
     media?: ProfileMedia[];
     portal?: DoctorPortal | null;
+    certifications?: BoardCertification[];
     _count?: {
         impact_votes: number;
     };
@@ -187,6 +189,26 @@ export function mapDbProfileToProps(db: DbProfileFull): ProfileData {
         // Timestamps for SEO structured data
         createdAt: db.createdAt?.toISOString() ?? null,
         updatedAt: db.updatedAt?.toISOString() ?? null,
+        licenseVerified: db.license_verified,
+        manuallyVerified: db.is_manually_verified,
+        ethics: db.ethics_status
+            ? {
+                status: db.ethics_status,
+                tier: db.ethics_tier,
+                certId: db.ethics_cert_id,
+                score: db.ethics_score,
+                certifiedAt: db.ethics_certified_at?.toISOString() ?? null,
+            }
+            : null,
+        certifications: (db.certifications ?? []).map(c => ({
+            boardName: c.board_name,
+            specialty: c.specialty,
+            issuingBody: c.issuing_body,
+            country: c.country,
+            isActive: c.is_active,
+            verified: c.verified,
+            expiryDate: c.expiry_date?.toISOString() ?? null,
+        })),
     };
 }
 
