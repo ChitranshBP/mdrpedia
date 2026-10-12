@@ -2,7 +2,7 @@
 export const prerender = true;
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { getCollection } from "astro:content";
-import { getSignedImage } from "../lib/image-security";
+import { portraitAttrs } from "../lib/portrait";
 import "../styles/pages/feed.css";
 
 const doctors = await getCollection("doctors");
@@ -62,12 +62,10 @@ const seoDescription =
                                 <div class="fd-laureate__img">
                                     {doc.data.portraitUrl ? (
                                         <img
-                                            src={getSignedImage(doc.data.portraitUrl, {
-                                                width: 600,
-                                                height: 450,
-                                                gravity: "face",
-                                                crop: "fill",
-                                            })}
+                                            {...portraitAttrs(doc.data.portraitUrl, 400, 300)}
+                                            referrerpolicy="no-referrer"
+                                            decoding="async"
+                                            onerror="this.remove()"
                                             alt={`Portrait of ${doc.data.fullName}, Nobel Laureate`}
                                             width="600"
                                             height="450"
