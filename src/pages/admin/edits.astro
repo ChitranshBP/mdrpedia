@@ -38,8 +38,14 @@ function describeEdit(edit: { field_name: string; new_value: string | null }) {
         const documentUrl = parsed.document_id
             ? getSignedDocumentUrl(parsed.document_id, parsed.document_type ?? "image")
             : null;
+        const check = parsed.registry_check;
+        const checkText = !check
+            ? ""
+            : check.found
+              ? ` · ${check.source}: ${check.registered_name} (${check.status}), name ${check.name_match ? "matches" : "DOES NOT match"}`
+              : ` · ${check.source}: not found`;
         return {
-            text: `Registration: ${parsed.registration_number ?? "—"}`,
+            text: `Registration${parsed.registry ? ` (${parsed.registry})` : ""}: ${parsed.registration_number ?? "—"}${checkText}`,
             documentUrl,
             documentName: parsed.document_name ?? null,
         };

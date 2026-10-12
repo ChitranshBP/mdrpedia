@@ -1,0 +1,29 @@
+/* Ethics dashboard on the register design system: maps the legacy tokens its
+   scoped styles use onto the register palette. */
+
+.ethics-dash {
+  --verdant: #1f5c45;
+  --verdant-2: #e4efe8;
+  --ink-blue: #0e3b2e;
+  --sanguine: var(--r-red);
+  --sanguine-2: var(--r-red-soft);
+  --rule: var(--r-line);
+  --ink: var(--r-ink);
+  --ink-2: var(--r-ink-2);
+  --ink-3: var(--r-ink-3);
+  --paper: var(--r-card);
+  --paper-2: var(--r-paper);
+  --paper-3: var(--r-line-soft);
+  --font-serif: var(--r-serif);
+  --font-mono: var(--r-mono);
+  --r-2: 0;
+  --r-3: 0;
+  --r-4: 0;
+  --s-8: 56px;
+  --s-9: 88px;
+}
+.ethics-dash a { color: var(--verdant); }
+.ethics-dash .eyebrow { font-family: var(--r-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--verdant); }
+.ethics-dash h1, .ethics-dash h2 { font-weight: 500; }
+.ethics-dash input, .ethics-dash select, .ethics-dash textarea { font: inherit; }
+.ethics-dash .btn--primary { background: var(--verdant); color: var(--r-paper); }
