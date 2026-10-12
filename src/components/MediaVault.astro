@@ -64,8 +64,8 @@ const hasImages = images.length > 0 || hasGallery;
                 alt={`Portrait of ${fullName}`}
                 width="480"
                 height="480"
-                loading="eager"
-                fetchpriority="high"
+                loading="lazy"
+                decoding="async"
                 class="media-vault__portrait"
             />
             <div class="media-vault__overlay">
@@ -82,7 +82,10 @@ const hasImages = images.length > 0 || hasGallery;
                             <img
                                 src={url}
                                 alt={`${fullName} — Archive ${i + 1}`}
+                                width="400"
+                                height="300"
                                 loading="lazy"
+                                decoding="async"
                                 class="media-vault__thumb"
                             />
                             <div class="media-vault__expand">
@@ -107,7 +110,10 @@ const hasImages = images.length > 0 || hasGallery;
                             <img
                                 src={img.url}
                                 alt={img.title || `${fullName} — Media ${i + 1}`}
+                                width="400"
+                                height="300"
                                 loading="lazy"
+                                decoding="async"
                                 class="media-vault__thumb"
                             />
                             <div class="media-vault__expand">
@@ -143,7 +149,7 @@ const hasImages = images.length > 0 || hasGallery;
                             title={video.title || `${fullName} Video`}
                             thumbnail={video.thumbnail}
                         />
-                        {video.title && <h4 class="media-vault__video-title">{video.title}</h4>}
+                        {video.title && <h3 class="media-vault__video-title">{video.title}</h3>}
                         {video.description && <p class="media-vault__video-desc">{video.description}</p>}
                     </div>
                 ))}
@@ -329,8 +335,16 @@ const hasImages = images.length > 0 || hasGallery;
         transition: opacity var(--transition-fast);
     }
 
-    .media-vault__item:hover .media-vault__expand {
+    .media-vault__item:hover .media-vault__expand,
+    .media-vault__item:focus-visible .media-vault__expand {
         opacity: 1;
+    }
+
+    .media-vault__item:focus-visible,
+    .media-vault__tab:focus-visible,
+    .media-vault__lightbox-close:focus-visible {
+        outline: 2px solid var(--ink-blue);
+        outline-offset: 2px;
     }
 
     /* Lightbox */
