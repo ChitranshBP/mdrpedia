@@ -170,8 +170,8 @@ function timeAgo(d: Date): string {
 	const hrs = Math.round(mins / 60);
 	if (hrs < 24) return `${hrs} hr ago`;
 	const days = Math.round(hrs / 24);
-	if (days < 60) return `${days} days ago`;
-	return `${Math.round(days / 30)} months ago`;
+	if (days < 30) return `${days} days ago`;
+	return d.toLocaleDateString("en-US", { month: "short", year: "numeric" });
 }
 const verifiedAgo = lastVerified ? timeAgo(lastVerified) : null;
 
