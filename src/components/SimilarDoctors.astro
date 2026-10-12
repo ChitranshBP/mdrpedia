@@ -5,6 +5,7 @@
  */
 
 import { prisma } from "../lib/prisma";
+import { cache, CacheTTL } from "../lib/cache";
 
 interface Props {
     currentSlug: string;
@@ -32,48 +33,56 @@ const {
     limit = 4,
 } = Astro.props;
 
-// Fetch a broader candidate pool from same specialty for smart scoring
-const candidates = await prisma.profile.findMany({
-    where: {
-        slug: { not: currentSlug },
-        specialty: specialty,
-    },
-    select: {
-        slug: true,
-        full_name: true,
-        title: true,
-        specialty: true,
-        sub_specialty: true,
-        tier: true,
-        portrait_url: true,
-        h_index: true,
-        years_active: true,
-        geography: {
-            select: {
-                city: true,
-                region: true,
-                country: true,
-            },
+// The whole specialty pool is cached once per specialty; per-profile scoring happens in memory.
+async function loadPool() {
+    const key = `similar:pool:${specialty}`;
+    const hit = cache.get<Awaited<ReturnType<typeof fetchPool>>>(key);
+    if (hit) return hit;
+    try {
+        const pool = await fetchPool();
+        cache.set(key, pool, CacheTTL.LONG);
+        return pool;
+    } catch (e) {
+        console.error(`SimilarDoctors pool failed for ${specialty}:`, e);
+        return [];
+    }
+}
+
+function fetchPool() {
+    return prisma.profile.findMany({
+        where: { specialty },
+        select: {
+            slug: true,
+            full_name: true,
+            title: true,
+            specialty: true,
+            sub_specialty: true,
+            tier: true,
+            portrait_url: true,
+            h_index: true,
+            years_active: true,
+            geography: { select: { city: true, region: true, country: true } },
+            techniques: { select: { name: true } },
+            citations: { select: { journal: true }, take: 10 },
+            _count: { select: { citations: true } },
         },
-        techniques: {
-            select: { name: true },
-        },
-        citations: {
-            select: { journal: true },
-            take: 20,
-        },
-        _count: {
-            select: {
-                citations: true,
-            },
-        },
-    },
-    orderBy: [
-        { tier: "asc" },
-        { h_index: "desc" },
-    ],
-    take: 20,
-});
+        take: 400,
+    });
+}
+
+const candidates = (await loadPool()).filter((c) => c.slug !== currentSlug);
+
+// Stable per-pair jitter so different profiles surface different neighbours
+// instead of every page in a specialty linking the same top-ranked doctors.
+function pairJitter(a: string, b: string): number {
+    let h = 2166136261;
+    const key = `${a}|${b}`;
+    for (let i = 0; i < key.length; i++) {
+        h ^= key.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+    }
+    return (h >>> 0) % 13;
+}
 
 // Score each candidate
 const scored = candidates.map(candidate => {
@@ -114,15 +123,17 @@ const scored = candidates.map(candidate => {
         score += 10;
     }
 
+    // Same tier band (8 points) keeps neighbours comparable without pinning to titans
+    if (candidate.tier === tier) {
+        score += 8;
+    }
+
+    score += pairJitter(currentSlug, candidate.slug);
+
     return { ...candidate, similarityScore: score };
 });
 
-// Sort by score, then fall back to tier/h-index
-scored.sort((a, b) => {
-    if (b.similarityScore !== a.similarityScore) return b.similarityScore - a.similarityScore;
-    if (a.tier !== b.tier) return a.tier < b.tier ? -1 : 1;
-    return (b.h_index || 0) - (a.h_index || 0);
-});
+scored.sort((a, b) => b.similarityScore - a.similarityScore);
 
 const allSimilar = scored.slice(0, limit);
 
@@ -145,7 +156,7 @@ const tierLabels: Record<string, string> = {
     allSimilar.length > 0 && (
         <section class="similar-doctors">
             <header class="similar-doctors__header">
-                <h3>
+                <h2>
                     <svg
                         width="20"
                         height="20"
@@ -160,9 +171,9 @@ const tierLabels: Record<string, string> = {
                         <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                     </svg>
                     Related Specialists
-                </h3>
+                </h2>
                 <a
-                    href={`/search?specialty=${encodeURIComponent(specialty)}`}
+                    href={`/doctors?specialty=${encodeURIComponent(specialty)}`}
                     class="view-all-link"
                 >
                     View All
@@ -212,14 +223,14 @@ const tierLabels: Record<string, string> = {
                             )}
                         </div>
                         <div class="doctor-card__info">
-                            <h4 class="doctor-card__name">
+                            <h3 class="doctor-card__name">
                                 {doctor.full_name}
                                 {doctor.title && (
                                     <span class="doctor-card__title">
                                         , {doctor.title}
                                     </span>
                                 )}
-                            </h4>
+                            </h3>
                             <p class="doctor-card__specialty">
                                 {doctor.sub_specialty || doctor.specialty}
                             </p>
@@ -302,7 +313,7 @@ const tierLabels: Record<string, string> = {
         margin-bottom: var(--space-lg);
     }
 
-    .similar-doctors__header h3 {
+    .similar-doctors__header h2 {
         display: flex;
         align-items: center;
         gap: 10px;

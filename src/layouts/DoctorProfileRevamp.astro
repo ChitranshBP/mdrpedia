@@ -25,6 +25,7 @@ import AwardsRibbon from "../components/AwardsRibbon.astro";
 import LegacyTimeline from "../components/LegacyTimeline.astro";
 import ProfileEmbed from "../components/ProfileEmbed.astro";
 
+import { classifyAward, HonorTier } from "../lib/global-honors";
 import type { ProfileData } from "../lib/types";
 import { getInstitutionLogo, getInstitutionInitials, getInstitutionColor } from "../lib/institution-logos";
 
@@ -107,7 +108,7 @@ try { top100Rank = await getTop100Rank(slug); } catch {};
 const hasMeaningfulBio = doctor.biography && doctor.biography.length > 50;
 const hasAffiliations = doctor.affiliations && doctor.affiliations.length > 0;
 const hasPublications = doctor.citations && doctor.citations.length > 0;
-const hasAwards = doctor.awards && doctor.awards.length > 0;
+const hasRibbonAwards = !!doctor.awards?.some((a) => classifyAward(a.name).tier !== HonorTier.UNCLASSIFIED);
 const hasTimeline = doctor.timeline && doctor.timeline.length > 0;
 const hasLineage = (doctor.mentors && doctor.mentors.length > 0) || (doctor.students && doctor.students.length > 0);
 const hasMedia = hasImage || (doctor.galleryUrls && doctor.galleryUrls.length > 0) || (doctor.media && doctor.media.length > 0);
@@ -148,6 +149,16 @@ function institutionHref(aff: { hospitalName: string; hospitalSlug?: string | nu
     return fallback ? `/institutions/${fallback}` : null;
 }
 
+const portraitOrigin = (() => {
+    if (!hasImage || !doctor.portraitUrl) return null;
+    try {
+        const u = new URL(doctor.portraitUrl);
+        return u.origin === Astro.url.origin ? null : u.origin;
+    } catch {
+        return null;
+    }
+})();
+
 const isUnclaimed = !doctor.claimStatus || doctor.claimStatus === "UNCLAIMED";
 const consultationFee = doctor.consultationFee ?? doctor.consultationPrice ?? null;
 const showConsultation = !isHistorical && !!doctor.bookingUrl && !!(consultationFee || doctor.teleConsultationPrice);
@@ -172,6 +183,7 @@ const publications = doctor.citations ?? [];
     ogType="profile"
     ogImage={ogImageUrl}
 >
+    {portraitOrigin && <link rel="preconnect" href={portraitOrigin} />}
     <JsonLd
         fullName={doctor.fullName}
         specialty={doctor.specialty}
@@ -355,7 +367,7 @@ const publications = doctor.citations ?? [];
         </header>
 
         <!-- ═══════════════════ AWARDS RIBBON ═══════════════════ -->
-        {hasAwards && (
+        {hasRibbonAwards && (
             <section class="awards-ribbon-section">
                 <div class="container">
                     <AwardsRibbon awards={doctor.awards!.map(a => ({
@@ -796,19 +808,17 @@ const publications = doctor.citations ?? [];
                         )}
 
                         <!-- Similar Doctors -->
-                        <section class="card">
-                            <SimilarDoctors
-                                currentSlug={slug}
-                                specialty={doctor.specialty}
-                                country={doctor.geography.country}
-                                region={doctor.geography.region}
-                                tier={doctor.tier}
-                                subSpecialty={doctor.subSpecialty}
-                                techniques={doctor.techniquesInvented || []}
-                                journals={topJournals as string[]}
-                                hIndex={doctor.hIndex}
-                            />
-                        </section>
+                        <SimilarDoctors
+                            currentSlug={slug}
+                            specialty={doctor.specialty}
+                            country={doctor.geography.country}
+                            region={doctor.geography.region}
+                            tier={doctor.tier}
+                            subSpecialty={doctor.subSpecialty}
+                            techniques={doctor.techniquesInvented || []}
+                            journals={topJournals as string[]}
+                            hIndex={doctor.hIndex}
+                        />
                     </div>
 
                     <!-- Sidebar -->
