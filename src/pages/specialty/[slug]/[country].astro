@@ -3,10 +3,14 @@
  * MDRPedia — Specialty x Country hub
  * e.g. /specialty/cardiology/india: every doctor of one specialty group in one country.
  */
-import Layout from "../../../layouts/Layout.astro";
-import TierBadge from "../../../components/TierBadge.astro";
-import { prisma } from "../../../lib/prisma";
-import { findCountry, findGroup, getSpecialtyGeoCombos, MIN_INDEXABLE_DOCTORS } from "../../../lib/specialty-geo";
+import "../../../styles/pages/regions.css";
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+import RegionHero from "../../../components/site/RegionHero.astro";
+import RegisterTable from "../../../components/site/RegisterTable.astro";
+import RegionSync from "../../../components/site/RegionSync.astro";
+import Pagination from "../../../components/Pagination.astro";
+import { COUNTRY_REGISTER, getRegister, isAlphabetical, sortEntries, themeKey } from "../../../lib/regions";
+import { findGroup, getSpecialtyGeoCombos, MIN_INDEXABLE_DOCTORS, specialtyMatches } from "../../../lib/specialty-geo";
 
 export const prerender = false;
 
@@ -15,184 +19,139 @@ const { slug, country: countrySlug } = Astro.params;
 const group = findGroup(slug);
 if (!group) return Astro.rewrite("/404");
 
-const countryName = await findCountry(countrySlug);
-if (!countryName) return Astro.rewrite("/404");
+const matches = (await getRegister()).filter((e) => e.countrySlug === countrySlug && specialtyMatches(group, e.rawSpecialty));
+if (matches.length === 0) return Astro.rewrite("/404");
 
-const doctors = await prisma.profile.findMany({
-    where: {
-        geography: { country: { equals: countryName, mode: "insensitive" } },
-        OR: group.specialties.map(s => ({ specialty: { contains: s, mode: "insensitive" as const } })),
-    },
-    select: {
-        slug: true,
-        full_name: true,
-        specialty: true,
-        tier: true,
-        status: true,
-        ranking_score: true,
-        h_index: true,
-        geography: { select: { city: true } },
-    },
-});
-
-if (doctors.length === 0) return Astro.rewrite("/404");
-
-const tierOrder: Record<string, number> = { TITAN: 0, ELITE: 1, MASTER: 2, UNRANKED: 3 };
-const sorted = [...doctors].sort(
-    (a, b) =>
-        (tierOrder[a.tier] ?? 3) - (tierOrder[b.tier] ?? 3) ||
-        (b.ranking_score ?? 0) - (a.ranking_score ?? 0) ||
-        (b.h_index ?? 0) - (a.h_index ?? 0),
-);
-
-const LIST_LIMIT = 100;
-const shown = sorted.slice(0, LIST_LIMIT);
+const countryName = matches[0].country;
+const alphabetical = isAlphabetical(countryName);
+const sorted = sortEntries(matches, alphabetical, "score");
 const total = sorted.length;
 const thin = total < MIN_INDEXABLE_DOCTORS;
+
+const PAGE_SIZE = 50;
+const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+const page = Math.min(Math.max(1, parseInt(Astro.url.searchParams.get("page") || "1", 10) || 1), totalPages);
+const shown = sorted.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
 Astro.response.headers.set("Cache-Control", "public, max-age=120, s-maxage=300");
 
 const groupLower = group.name.toLowerCase();
+const register = COUNTRY_REGISTER[countryName];
 const pageTitle = `${group.name} doctors in ${countryName} — verified register | MDRPedia`;
-const pageDescription = `${total} verified ${groupLower} ${total === 1 ? "physician" : "physicians"} in ${countryName}, ranked by MDRPedia tier and research impact. ${group.description}.`;
+const pageDescription = `${total} verified ${groupLower} ${total === 1 ? "physician" : "physicians"} in ${countryName}, ${alphabetical ? "listed alphabetically" : "ranked by MDRPedia evidence tier and research impact"}. ${group.description}.`;
 const site = (Astro.site ?? new URL("https://mdrpedia.com")).origin;
 const canonicalUrl = `${site}/specialty/${slug}/${countrySlug}`;
 
-const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: `${site}/` },
-        { "@type": "ListItem", position: 2, name: "Specialties", item: `${site}/specialty` },
-        { "@type": "ListItem", position: 3, name: group.name, item: `${site}/specialty/${slug}` },
-        { "@type": "ListItem", position: 4, name: countryName, item: canonicalUrl },
-    ],
-};
-
-const listSchema = {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: `${group.name} doctors in ${countryName}`,
-    description: pageDescription,
-    url: canonicalUrl,
-    mainEntity: {
-        "@type": "ItemList",
-        numberOfItems: total,
-        itemListElement: shown.slice(0, 50).map((d, i) => ({
-            "@type": "ListItem",
-            position: i + 1,
-            url: `${site}/doctors/${d.slug}`,
-            name: d.full_name,
-        })),
-    },
-};
+const jsonLd = [
+	{
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		itemListElement: [
+			{ "@type": "ListItem", position: 1, name: "Home", item: `${site}/` },
+			{ "@type": "ListItem", position: 2, name: "Specialties", item: `${site}/specialty` },
+			{ "@type": "ListItem", position: 3, name: group.name, item: `${site}/specialty/${slug}` },
+			{ "@type": "ListItem", position: 4, name: countryName, item: canonicalUrl },
+		],
+	},
+	{
+		"@context": "https://schema.org",
+		"@type": "CollectionPage",
+		name: `${group.name} doctors in ${countryName}`,
+		description: pageDescription,
+		url: canonicalUrl,
+		mainEntity: {
+			"@type": "ItemList",
+			numberOfItems: total,
+			itemListElement: shown.map((d, i) => ({
+				"@type": "ListItem",
+				position: (page - 1) * PAGE_SIZE + i + 1,
+				url: `${site}/doctors/${d.slug}`,
+				name: d.name,
+			})),
+		},
+	},
+];
 
 const otherCombos = (await getSpecialtyGeoCombos())
-    .filter(c => c.count >= MIN_INDEXABLE_DOCTORS && !(c.groupSlug === slug && c.countrySlug === countrySlug))
-    .filter(c => c.groupSlug === slug || c.countrySlug === countrySlug);
-const sameGroup = otherCombos.filter(c => c.groupSlug === slug).slice(0, 8);
-const sameCountry = otherCombos.filter(c => c.countrySlug === countrySlug).slice(0, 8);
+	.filter((c) => c.count >= MIN_INDEXABLE_DOCTORS && !(c.groupSlug === slug && c.countrySlug === countrySlug))
+	.filter((c) => c.groupSlug === slug || c.countrySlug === countrySlug);
+const sameGroup = otherCombos.filter((c) => c.groupSlug === slug).slice(0, 8);
+const sameCountry = otherCombos.filter((c) => c.countrySlug === countrySlug).slice(0, 8);
+const countLabel = `${total} ${total === 1 ? "physician" : "physicians"} · ${group.name} · ${countryName}${alphabetical ? " · A–Z" : " · ranked by evidence tier"}`;
 ---
 
-<Layout title={pageTitle} description={pageDescription} robots={thin ? "noindex, follow" : undefined}>
-    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-    <script type="application/ld+json" set:html={JSON.stringify(listSchema)} />
+<SiteLayout title={pageTitle} description={pageDescription} active="regions" jsonLd={jsonLd} robots={thin || page > 1 ? "noindex, follow" : undefined}>
+	<div class="rg" data-theme={themeKey(countryName)}>
+		<RegionHero
+			eyebrow={`BY SPECIALTY · ${group.name.toUpperCase()} · REGISTERED IN ${countryName.toUpperCase()}${register ? ` (${register})` : ""}`}
+			heading={`${group.name} doctors in ${countryName}`}
+			lede={`${total} verified ${total === 1 ? "physician" : "physicians"} in the MDRPedia register. ${group.description}.`}
+			crumbs={[
+				{ label: "Specialties", href: "/specialty" },
+				{ label: group.name, href: `/specialty/${slug}` },
+				{ label: countryName },
+			]}
+		/>
 
-    <div class="geo-hub">
-        <div class="container">
-            <nav class="breadcrumb" aria-label="Breadcrumb">
-                <a href="/">Home</a><span aria-hidden="true">/</span>
-                <a href="/specialty">Specialties</a><span aria-hidden="true">/</span>
-                <a href={`/specialty/${slug}`}>{group.name}</a><span aria-hidden="true">/</span>
-                <span class="current">{countryName}</span>
-            </nav>
+		<section class="rg-main">
+			<aside class="rg-aside">
+				{sameCountry.length > 0 && (
+					<>
+						<h2 class="rg-label">MORE SPECIALTIES IN {countryName.toUpperCase()}</h2>
+						<ul class="rg-children">
+							{sameCountry.map((c) => (
+								<li>
+									<a href={`/specialty/${c.groupSlug}/${c.countrySlug}`}>
+										<span class="n">{c.group.name}</span>
+										<span class="c">{c.count} →</span>
+									</a>
+								</li>
+							))}
+						</ul>
+					</>
+				)}
+				{sameGroup.length > 0 && (
+					<>
+						<h2 class="rg-label">{group.name.toUpperCase()} ELSEWHERE</h2>
+						<ul class="rg-children">
+							{sameGroup.map((c) => (
+								<li>
+									<a href={`/specialty/${c.groupSlug}/${c.countrySlug}`}>
+										<span class="n">{c.country}</span>
+										<span class="c">{c.count} →</span>
+									</a>
+								</li>
+							))}
+						</ul>
+					</>
+				)}
+				<p class="rg-note">
+					Browse every physician in {countryName} by state and city on the <a href={`/geography/${countrySlug}`}>{countryName} register</a>, or all
+					{" "}<a href={`/specialty/${slug}`}>{groupLower} specialists</a>.
+				</p>
+				<div class="rg-how">
+					<b>{alphabetical ? `HOW LISTINGS WORK IN ${countryName.toUpperCase()}` : "HOW RANKS WORK HERE"}</b>
+					{alphabetical
+						? "Under the NMC's October 2026 advertising guidelines, doctors are listed alphabetically. We never label anyone \"best\" or \"No. 1\", and there is no paid placement."
+						: "Physicians are ranked within this specialty and country, on evidence only. Reviews, ratings and payment play no part."}
+					<a href="/about#methodology">The Evidence Standard →</a>
+				</div>
+			</aside>
 
-            <header class="hub-header">
-                <h1>{group.name} doctors in {countryName}</h1>
-                <p class="lede">
-                    {total} verified {total === 1 ? "physician" : "physicians"} in the MDRPedia register.
-                    {group.description}.
-                </p>
-            </header>
-
-            <ol class="doctor-list">
-                {shown.map(d => (
-                    <li>
-                        <a href={`/doctors/${d.slug}`} class="doctor-row">
-                            <span class="name">{d.full_name}</span>
-                            <span class="meta">
-                                {d.specialty}{d.geography?.city && d.geography.city !== "Unknown" ? ` · ${d.geography.city}` : ""}
-                            </span>
-                            <span class="badges">
-                                <TierBadge tier={d.tier as "TITAN" | "ELITE" | "MASTER" | "UNRANKED"} size="sm" />
-                                {d.status === "HISTORICAL" && <span class="legacy">Legacy</span>}
-                            </span>
-                        </a>
-                    </li>
-                ))}
-            </ol>
-            {total > shown.length && (
-                <p class="more">
-                    Showing the top {shown.length} of {total}.
-                    <a href={`/specialty/${slug}`}>Browse all {groupLower} specialists</a>
-                </p>
-            )}
-
-            {(sameGroup.length > 0 || sameCountry.length > 0) && (
-                <aside class="related">
-                    {sameGroup.length > 0 && (
-                        <section>
-                            <h2>{group.name} elsewhere</h2>
-                            <ul>
-                                {sameGroup.map(c => (
-                                    <li><a href={`/specialty/${c.groupSlug}/${c.countrySlug}`}>{c.country} <small>({c.count})</small></a></li>
-                                ))}
-                            </ul>
-                        </section>
-                    )}
-                    {sameCountry.length > 0 && (
-                        <section>
-                            <h2>More specialties in {countryName}</h2>
-                            <ul>
-                                {sameCountry.map(c => (
-                                    <li><a href={`/specialty/${c.groupSlug}/${c.countrySlug}`}>{c.group.name} <small>({c.count})</small></a></li>
-                                ))}
-                            </ul>
-                        </section>
-                    )}
-                </aside>
-            )}
-        </div>
-    </div>
-</Layout>
-
-<style>
-    .geo-hub { background: var(--paper); min-height: 70vh; padding: 3rem 0 4rem; }
-    .container { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; }
-    .breadcrumb { display: flex; flex-wrap: wrap; gap: 0.5rem; font-size: 0.85rem; color: var(--ink-3); margin-bottom: 2rem; }
-    .breadcrumb a { color: var(--ink-3); text-decoration: none; }
-    .breadcrumb a:hover { color: var(--ink-blue); }
-    .breadcrumb .current { color: var(--ink-2); }
-    .hub-header h1 { font-family: var(--font-serif); font-size: clamp(2rem, 4.5vw, 3rem); margin: 0 0 0.75rem; color: var(--ink); }
-    .lede { color: var(--ink-2); max-width: 46rem; margin: 0 0 2rem; line-height: 1.6; }
-    .doctor-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
-    .doctor-row {
-        display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 2fr) auto; gap: 1rem; align-items: center;
-        padding: 0.9rem 0.25rem; border-bottom: 1px solid var(--rule); text-decoration: none; color: inherit;
-    }
-    .doctor-row:hover .name { color: var(--ink-blue); }
-    .name { font-family: var(--font-serif); font-size: 1.1rem; color: var(--ink); }
-    .meta { color: var(--ink-3); font-size: 0.9rem; }
-    .badges { display: flex; gap: 0.5rem; align-items: center; }
-    .legacy { font-size: 0.75rem; color: var(--ink-3); border: 1px solid var(--rule); border-radius: 999px; padding: 0.1rem 0.5rem; }
-    .more { margin-top: 1.5rem; color: var(--ink-2); }
-    .related { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 2rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--rule); }
-    .related h2 { font-family: var(--font-serif); font-size: 1.15rem; margin: 0 0 0.75rem; }
-    .related ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.4rem; }
-    .related a { color: var(--ink-2); text-decoration: none; }
-    .related a:hover { color: var(--ink-blue); }
-    @media (max-width: 640px) {
-        .doctor-row { grid-template-columns: 1fr auto; }
-        .meta { grid-column: 1 / -1; order: 3; }
-    }
-</style>
+			<div class="rg-list">
+				<p class="rg-count">{countLabel}</p>
+				<RegisterTable
+					entries={shown}
+					rankFrom={alphabetical ? undefined : (page - 1) * PAGE_SIZE + 1}
+					showTier={!alphabetical}
+					caption={countLabel}
+				/>
+				<Pagination page={page} totalPages={totalPages} total={total} pageSize={PAGE_SIZE} label="physicians" />
+				<p class="rg-foot">
+					h-index and papers come from each physician's published research record. Tier is MDRPedia's evidence tier; ethics shows an approved MDRPedia ethics certification.
+				</p>
+			</div>
+		</section>
+	</div>
+	<RegionSync country={countryName} />
+</SiteLayout>
