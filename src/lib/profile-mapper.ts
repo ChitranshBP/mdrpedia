@@ -189,7 +189,8 @@ export function mapDbProfileToProps(db: DbProfileFull): ProfileData {
         // Timestamps for SEO structured data
         createdAt: db.createdAt?.toISOString() ?? null,
         updatedAt: db.updatedAt?.toISOString() ?? null,
-        licenseVerified: db.license_verified,
+        // license_verified was bulk-set by seed scripts; only trust it with corroborating evidence.
+        licenseVerified: db.license_verified && (db.is_manually_verified || db.claim_status === 'VERIFIED'),
         manuallyVerified: db.is_manually_verified,
         ethics: db.ethics_status
             ? {

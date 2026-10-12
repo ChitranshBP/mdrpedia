@@ -68,7 +68,7 @@ async function seedSingle(slug: string) {
             date_of_death: data.dateOfDeath ? new Date(data.dateOfDeath) : null,
             geography_id: geography.id,
             has_technique_invention: data.hasInvention ?? false,
-            license_verified: true,
+            license_verified: false,
         },
     });
 

@@ -111,7 +111,7 @@ async function main() {
                 date_of_death: data.dateOfDeath ? new Date(data.dateOfDeath) : null,
                 geography_id: geography.id,
                 has_technique_invention: data.hasInvention ?? false,
-                license_verified: true,
+                license_verified: false,
                 ai_summary: data.aiSummary,
                 medical_specialty: data.medicalSpecialty || [],
                 knows_about: data.knowsAbout || [],

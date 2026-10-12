@@ -156,7 +156,7 @@ const jsonLd = [
 
 <SiteLayout
 	title="MDRPedia — Find a doctor you can verify"
-	description={`Find a doctor you can verify. ${total.toLocaleString("en-US")} physician records checked against official medical registers: registration, qualifications, ongoing training and real contributions to medicine. No paid rankings, reviews or testimonials.`}
+	description={`Find a doctor you can verify. ${total.toLocaleString("en-US")} physician records built from public evidence: qualifications, research and contributions to medicine, each with its source. No paid rankings, reviews or testimonials.`}
 	jsonLd={jsonLd}
 >
 	<div class="home" data-country="India">
@@ -181,8 +181,8 @@ const jsonLd = [
 					<h1 id="home-title">Find a doctor <em>you can verify.</em></h1>
 					{variants.map((v) => (
 						<p class="home-hero__sub" data-for={v.c}>
-							Every doctor here is checked against {v.m.register}. We show registration, qualifications, ongoing training and real contributions to
-							medicine. We have no paid rankings, reviews or testimonials.
+							Every record shows its evidence and where it came from: qualifications, research and contributions to medicine, with registration
+							checked against {v.m.register} as it is confirmed. We have no paid rankings, reviews or testimonials.
 						</p>
 					))}
 
