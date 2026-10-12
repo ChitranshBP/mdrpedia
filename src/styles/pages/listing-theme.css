@@ -1,0 +1,18 @@
+/* Country themes shared by the Find a doctor and Register listings (mirrors .r-header). */
+
+.r-listing {
+  --t-hero: #0c3a20; --t-hero-line: #2f6b46; --t-hero-text: #dbe9df; --t-hi: #ff9933;
+  --t-primary: #127a0a; --t-accent: #9a4f00; --t-soft: #f8eedf;
+  /* Pagination.astro reads the legacy layout tokens. */
+  --rule: var(--r-line); --rule-strong: var(--r-line); --font-mono: var(--r-mono);
+  --ink: var(--r-ink); --ink-3: var(--r-ink-3); --paper-2: var(--r-line-soft); --r-2: 0;
+}
+.r-listing[data-country='United States'] {
+  --t-hero: #1c2550; --t-hero-line: #3a4580; --t-hero-text: #dde1f0; --t-hi: #ff8f99;
+  --t-primary: #3c3b6e; --t-accent: #b22234; --t-soft: #ecebf3;
+}
+.r-listing[data-country='United Kingdom'] {
+  --t-hero: #012169; --t-hero-line: #2a4590; --t-hero-text: #dfe5f5; --t-hi: #ff8090;
+  --t-primary: #012169; --t-accent: #c8102e; --t-soft: #e9edf6;
+}
+.r-listing .pager a.pager__link { color: var(--r-ink); }

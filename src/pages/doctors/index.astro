@@ -1,913 +1,326 @@
 ---
 /**
- * MDRPedia — Browse All Doctors
- * Searchable grid of all verified doctor profiles
- * Database-first with static fallback
- * Uses cached stats for consistent data across all pages
+ * MDRPedia — The Register.
+ * Every physician on record, in register-number order. Database-first with a
+ * static fallback. Stature tiers are hidden for India (NMC 2026 guidelines).
  */
-import Layout from "../../layouts/Layout.astro";
-import TierBadge from "../../components/TierBadge.astro";
-import OptimizedImage from "../../components/OptimizedImage.astro";
-import EnhancedSearch from "../../components/EnhancedSearch";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import Pagination from "../../components/Pagination.astro";
+import "../../styles/pages/listing-theme.css";
+import "../../styles/pages/register-list.css";
 import { getCollection } from "astro:content";
 import { prisma } from "../../lib/prisma";
-import Pagination from "../../components/Pagination.astro";
-import { getTierCounts, getCountryStats, getSpecialtyStats } from "../../lib/cached-stats";
+import { normalizeSpecialty } from "../../lib/specialty-groups";
+import { ALL_COUNTRIES, REGISTER_COUNTRIES, resolveCountry } from "../../lib/find-doctor";
+import { formatRegisterNumber, getRegisterNumbers } from "../../lib/register-numbers";
 
 export const prerender = false;
 
-// Sort order for tiers
-const tierOrder: Record<string, number> = {
-    TITAN: 0,
-    ELITE: 1,
-    MASTER: 2,
-    UNRANKED: 3,
+type Sort = "id" | "name" | "h";
+type Row = {
+	slug: string;
+	no: string;
+	name: string;
+	specialty: string;
+	country: string;
+	tier: string;
+	status: string;
+	hIndex: number;
+	ethics: string;
 };
 
-// Unified doctor type for UI
-type DoctorItem = {
-    slug: string;
-    fullName: string;
-    title: string | null;
-    specialty: string;
-    tier: string;
-    status: string;
-    rankingScore: number | null;
-    hIndex: number;
-    portraitUrl: string | null;
-    geography: { country: string; city?: string | null };
-    livesSaved: number;
-    citations: number;
-};
-
-const PAGE_SIZE = 48;
+const PAGE_SIZE = 50;
 const TIERS = ["TITAN", "ELITE", "MASTER"];
 const ROLES = ["surgeon", "physician", "researcher"];
+const TIER_LABEL: Record<string, string> = { TITAN: "Titan · I", ELITE: "Elite · II", MASTER: "Master · III" };
 
 const params = Astro.url.searchParams;
-const tierFilter = TIERS.includes(params.get("tier") || "") ? params.get("tier")! : "all";
-const roleFilter = ROLES.includes(params.get("role") || "") ? params.get("role")! : "all";
-const countryFilter = params.get("country") || "all";
-const specialtyFilter = params.get("specialty") || "all";
+const countryParam = (params.get("country") || "").trim();
+const country = countryParam.toLowerCase() === ALL_COUNTRIES ? null : resolveCountry(countryParam);
+// Legacy links pass any country name (?country=Germany); filter on it without the register theme.
+const otherCountry = !country && countryParam && countryParam.toLowerCase() !== ALL_COUNTRIES ? countryParam.slice(0, 60) : "";
+const nmc = country?.nmc ?? false;
+const tierParam = (params.get("tier") || "").toUpperCase();
+const tier = !nmc && TIERS.includes(tierParam) ? tierParam : "";
+const ethicsOnly = params.get("ethics") === "1";
+const role = ROLES.includes(params.get("role") || "") ? params.get("role")! : "";
+const specialty = (params.get("specialty") || "").trim().slice(0, 100);
 const query = (params.get("q") || "").trim().slice(0, 100);
 const requestedPage = Math.max(1, parseInt(params.get("page") || "1", 10) || 1);
 
+const sortCycle: Sort[] = nmc ? ["id", "name"] : country ? ["h", "id"] : ["id", "h"];
+const sortParam = params.get("sort") as Sort | null;
+const sort: Sort = sortParam && ["id", "name", "h"].includes(sortParam) ? sortParam : sortCycle[0];
+const nextSort = sortCycle[(sortCycle.indexOf(sort) + 1) % sortCycle.length];
+const SORT_LABEL: Record<Sort, string> = { id: "Register №", name: "Name A–Z", h: "h-index" };
+
 const surgeonSpecialty = [
-    { specialty: { contains: "surgery", mode: "insensitive" } },
-    { specialty: { contains: "surgeon", mode: "insensitive" } },
-    { specialty: { contains: "transplant", mode: "insensitive" } },
+	{ specialty: { contains: "surgery", mode: "insensitive" } },
+	{ specialty: { contains: "surgeon", mode: "insensitive" } },
+	{ specialty: { contains: "transplant", mode: "insensitive" } },
 ];
-const researcherSignal = [
-    { h_index: { gt: 50 } },
-    { title: { contains: "PhD" } },
-];
+const researcherSignal = [{ h_index: { gt: 50 } }, { title: { contains: "PhD" } }];
 
 const where: Record<string, any> = {};
 const and: any[] = [];
-if (tierFilter !== "all") where.tier = tierFilter;
-if (countryFilter !== "all") where.geography = { country: countryFilter };
-if (specialtyFilter !== "all") where.specialty = { equals: specialtyFilter, mode: "insensitive" };
-if (roleFilter === "surgeon") and.push({ OR: surgeonSpecialty });
-if (roleFilter === "researcher") and.push({ NOT: { OR: surgeonSpecialty } }, { OR: researcherSignal });
-if (roleFilter === "physician") and.push({ NOT: { OR: [...surgeonSpecialty, ...researcherSignal] } });
+const countryName = country?.name ?? otherCountry;
+if (countryName) where.geography = { is: { country: { equals: countryName, mode: "insensitive" } } };
+if (tier) where.tier = tier;
+if (ethicsOnly) and.push({ ethics_status: "APPROVED" }, { ethics_tier: { not: null } });
+if (specialty) where.specialty = { contains: specialty, mode: "insensitive" };
+if (role === "surgeon") and.push({ OR: surgeonSpecialty });
+if (role === "researcher") and.push({ NOT: { OR: surgeonSpecialty } }, { OR: researcherSignal });
+if (role === "physician") and.push({ NOT: { OR: [...surgeonSpecialty, ...researcherSignal] } });
 if (query) {
-    and.push({
-        OR: [
-            { full_name: { contains: query, mode: "insensitive" } },
-            { specialty: { contains: query, mode: "insensitive" } },
-            { geography: { is: { OR: [
-                { city: { contains: query, mode: "insensitive" } },
-                { country: { contains: query, mode: "insensitive" } },
-            ] } } },
-        ],
-    });
+	and.push({
+		OR: [
+			{ full_name: { contains: query, mode: "insensitive" } },
+			{ specialty: { contains: query, mode: "insensitive" } },
+			{ sub_specialty: { contains: query, mode: "insensitive" } },
+			{ geography: { is: { city: { contains: query, mode: "insensitive" } } } },
+		],
+	});
 }
 if (and.length) where.AND = and;
 
-const toRole = (d: { specialty: string; hIndex: number; title: string | null }) => {
-    const spec = d.specialty.toLowerCase();
-    if (spec.includes("surgery") || spec.includes("surgeon") || spec.includes("transplant")) return "surgeon";
-    return d.hIndex > 50 || d.title?.includes("PhD") ? "researcher" : "physician";
-};
+const orderBy =
+	sort === "name"
+		? [{ full_name: "asc" as const }, { slug: "asc" as const }]
+		: sort === "h"
+			? [{ h_index: "desc" as const }, { slug: "asc" as const }]
+			: [{ createdAt: "asc" as const }, { slug: "asc" as const }];
 
-let doctors: DoctorItem[] = [];
+const titleCase = (s: string) => s.charAt(0) + s.slice(1).toLowerCase();
+const placeName = (c: string | null | undefined) => (!c || c === "Global" || c === "Unknown" ? "—" : c);
+
+let rows: Row[] = [];
 let total = 0;
 let page = requestedPage;
-let countries: string[] = [];
-let specialties: string[] = [];
-let dataSource = 'database';
 
 try {
-    const [countryStats, specialtyStats, count] = await Promise.all([
-        getCountryStats(),
-        getSpecialtyStats(),
-        prisma.profile.count({ where }),
-    ]);
-    if (specialtyStats.length === 0) throw new Error('No profiles in database');
-    countries = countryStats.map(c => c.country).sort();
-    specialties = specialtyStats.map(s => s.specialty).filter(Boolean).sort();
-    total = count;
-    page = Math.min(requestedPage, Math.max(1, Math.ceil(total / PAGE_SIZE)));
-
-    const dbDoctors = await prisma.profile.findMany({
-        where,
-        select: {
-            slug: true,
-            full_name: true,
-            title: true,
-            specialty: true,
-            tier: true,
-            status: true,
-            ranking_score: true,
-            h_index: true,
-            portrait_url: true,
-            geography: { select: { country: true, city: true } },
-            impact_metrics: { select: { lives_saved: true } },
-            _count: { select: { citations: true } },
-        },
-        orderBy: [
-            { tier: 'asc' },
-            { ranking_score: { sort: 'desc', nulls: 'last' } },
-            { h_index: 'desc' },
-            { slug: 'asc' },
-        ],
-        skip: (page - 1) * PAGE_SIZE,
-        take: PAGE_SIZE,
-    });
-
-    doctors = dbDoctors.map(d => ({
-        slug: d.slug,
-        fullName: d.full_name,
-        title: d.title,
-        specialty: d.specialty,
-        tier: d.tier,
-        status: d.status,
-        rankingScore: d.ranking_score,
-        hIndex: d.h_index,
-        portraitUrl: d.portrait_url,
-        geography: d.geography || { country: 'Unknown' },
-        livesSaved: d.impact_metrics?.lives_saved || 0,
-        citations: d._count?.citations || 0
-    }));
+	const [count, numbers] = await Promise.all([prisma.profile.count({ where }), getRegisterNumbers()]);
+	total = count;
+	page = Math.min(requestedPage, Math.max(1, Math.ceil(total / PAGE_SIZE)));
+	const found = await prisma.profile.findMany({
+		where,
+		select: {
+			slug: true,
+			full_name: true,
+			specialty: true,
+			tier: true,
+			status: true,
+			h_index: true,
+			ethics_tier: true,
+			ethics_status: true,
+			geography: { select: { country: true } },
+		},
+		orderBy,
+		skip: (page - 1) * PAGE_SIZE,
+		take: PAGE_SIZE,
+	});
+	rows = found.map((d) => ({
+		slug: d.slug,
+		no: formatRegisterNumber(numbers.get(d.slug)),
+		name: d.full_name,
+		specialty: normalizeSpecialty(d.specialty),
+		country: placeName(d.geography?.country),
+		tier: d.tier,
+		status: d.status,
+		hIndex: d.h_index,
+		ethics: d.ethics_status === "APPROVED" && d.ethics_tier ? titleCase(d.ethics_tier) : "—",
+	}));
 } catch (e) {
-    dataSource = 'static';
-    const allDoctors = await getCollection("doctors");
-
-    let fallback: DoctorItem[] = allDoctors.map(d => ({
-        slug: d.id,
-        fullName: d.data.fullName,
-        title: d.data.title || null,
-        specialty: d.data.specialty,
-        tier: d.data.tier || 'UNRANKED',
-        status: d.data.status || 'LIVING',
-        rankingScore: d.data.rankingScore || null,
-        hIndex: d.data.hIndex || 0,
-        portraitUrl: d.data.portraitUrl || null,
-        geography: d.data.geography,
-        livesSaved: d.data.livesSaved || 0,
-        citations: d.data.citations?.length || 0
-    }));
-
-    countries = Array.from(new Set(fallback.map(d => d.geography.country).filter(Boolean))).sort();
-    specialties = Array.from(new Set(fallback.map(d => d.specialty).filter(Boolean))).sort();
-
-    const q = query.toLowerCase();
-    fallback = fallback.filter(d =>
-        (tierFilter === "all" || d.tier === tierFilter) &&
-        (roleFilter === "all" || toRole(d) === roleFilter) &&
-        (countryFilter === "all" || d.geography.country === countryFilter) &&
-        (specialtyFilter === "all" || d.specialty.toLowerCase() === specialtyFilter.toLowerCase()) &&
-        (!q || `${d.fullName} ${d.specialty} ${d.geography.city || ""} ${d.geography.country}`.toLowerCase().includes(q))
-    );
-
-    fallback.sort((a, b) => {
-        const tierDiff = (tierOrder[a.tier] ?? 3) - (tierOrder[b.tier] ?? 3);
-        if (tierDiff !== 0) return tierDiff;
-        const rankDiff = (b.rankingScore ?? 0) - (a.rankingScore ?? 0);
-        if (rankDiff !== 0) return rankDiff;
-        return b.hIndex - a.hIndex;
-    });
-
-    total = fallback.length;
-    page = Math.min(requestedPage, Math.max(1, Math.ceil(total / PAGE_SIZE)));
-    doctors = fallback.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+	console.error("Register: database unavailable, using static records", e);
+	const entries = (await getCollection("doctors")).sort((a, b) => a.id.localeCompare(b.id));
+	const q = query.toLowerCase();
+	const isSurgeon = (s: string) => /surg|transplant/i.test(s);
+	let all = entries
+		.map((d, i) => ({ entry: d, n: i + 1 }))
+		.filter(({ entry: { data: d } }) =>
+			(!countryName || d.geography.country.toLowerCase() === countryName.toLowerCase()) &&
+			(!tier || d.tier === tier) &&
+			!ethicsOnly &&
+			(!specialty || d.specialty.toLowerCase().includes(specialty.toLowerCase())) &&
+			(!role || (role === "surgeon") === isSurgeon(d.specialty)) &&
+			(!q || `${d.fullName} ${d.specialty} ${d.subSpecialty ?? ""} ${d.geography.city ?? ""}`.toLowerCase().includes(q)),
+		);
+	if (sort === "name") all = all.sort((a, b) => a.entry.data.fullName.localeCompare(b.entry.data.fullName));
+	if (sort === "h") all = all.sort((a, b) => b.entry.data.hIndex - a.entry.data.hIndex);
+	total = all.length;
+	page = Math.min(requestedPage, Math.max(1, Math.ceil(total / PAGE_SIZE)));
+	rows = all.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).map(({ entry, n }) => ({
+		slug: entry.id,
+		no: formatRegisterNumber(n),
+		name: entry.data.fullName,
+		specialty: normalizeSpecialty(entry.data.specialty),
+		country: placeName(entry.data.geography.country),
+		tier: entry.data.tier,
+		status: entry.data.status,
+		hIndex: entry.data.hIndex,
+		ethics: "—",
+	}));
 }
 
 const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
-let tierCounts = { titan: 0, elite: 0, master: 0, unranked: 0, total: 0 };
-try {
-    tierCounts = await getTierCounts();
-} catch (e) {
-    tierCounts = { titan: 0, elite: 0, master: 0, unranked: 0, total };
-}
-
-const titanCount = tierCounts.titan;
-const eliteCount = tierCounts.elite;
-const masterCount = tierCounts.master;
-
-const filterHref = (overrides: Record<string, string>) => {
-    const next = new URLSearchParams();
-    const current: Record<string, string> = {
-        tier: tierFilter, role: roleFilter, country: countryFilter, specialty: specialtyFilter, q: query,
-    };
-    for (const [k, v] of Object.entries({ ...current, ...overrides })) {
-        if (v && v !== "all") next.set(k, v);
-    }
-    const qs = next.toString();
-    return qs ? `/doctors?${qs}` : "/doctors";
+const href = (overrides: Record<string, string>) => {
+	const base: Record<string, string> = {
+		q: query,
+		country: country ? country.slug : countryParam ? (otherCountry || ALL_COUNTRIES) : "",
+		tier: tier.toLowerCase(),
+		ethics: ethicsOnly ? "1" : "",
+		sort: sortParam ? sort : "",
+		specialty,
+		role,
+	};
+	const next = new URLSearchParams();
+	for (const [k, v] of Object.entries({ ...base, ...overrides })) if (v) next.set(k, v);
+	const qs = next.toString();
+	return qs ? `/doctors?${qs}` : "/doctors";
 };
-const isFiltered = tierFilter !== "all" || roleFilter !== "all" || countryFilter !== "all" || specialtyFilter !== "all" || !!query;
+
+const scopeName = country?.name ?? (otherCountry || "every country");
+const eyebrow = country
+	? `THE REGISTER · ONLY PHYSICIANS REGISTERED IN ${country.name.toUpperCase()}`
+	: otherCountry
+		? `THE REGISTER · PHYSICIANS IN ${otherCountry.toUpperCase()}`
+		: "THE REGISTER · EVERY PHYSICIAN ON RECORD";
+const intro = nmc
+	? "Every physician on record in India, listed by register number or by name. Search by name or specialty, or filter by the ethics mark."
+	: `Every physician on record in ${scopeName}, in register-number order. Filter by mark or specialty, or sort by evidence.`;
+const countLabel =
+	`${total.toLocaleString()} ${total === 1 ? "physician" : "physicians"} in ${scopeName}` +
+	(totalPages > 1 ? ` · page ${page} of ${totalPages}` : "") +
+	(nmc ? " · stature tiers hidden under NMC 2026 guidelines" : "");
+const filtered = !!(query || tier || ethicsOnly || specialty || role || sortParam);
+
+const site = Astro.site ?? "https://mdrpedia.com";
+const title = country
+	? `The Register — Physicians in ${country.name} | MDRPedia`
+	: "The Register — Every Physician on MDRPedia";
+const description = `${total.toLocaleString()} physicians on record in ${scopeName}, listed by register number. Search by name or specialty, filter by the ethics mark, and open each record for registration, research and training.`;
+const jsonLd = [
+	{
+		"@context": "https://schema.org",
+		"@type": "CollectionPage",
+		name: title,
+		url: new URL("/doctors", site).href,
+		description,
+		mainEntity: {
+			"@type": "ItemList",
+			numberOfItems: total,
+			itemListElement: rows.map((r, i) => ({
+				"@type": "ListItem",
+				position: (page - 1) * PAGE_SIZE + i + 1,
+				url: new URL(`/doctors/${r.slug}`, site).href,
+				name: r.name,
+			})),
+		},
+	},
+	{
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		itemListElement: [
+			{ "@type": "ListItem", position: 1, name: "MDRPedia", item: new URL("/", site).href },
+			{ "@type": "ListItem", position: 2, name: "The Register", item: new URL("/doctors", site).href },
+		],
+	},
+];
 ---
 
-<Layout
-	title="Browse All Doctors — MDRPedia"
-	description="Browse every physician in the MDRPedia register. Filter by specialty, country, institution and tier to find verified profiles with citations, techniques and clinical impact."
->
-    <section class="browse">
-        <div class="container">
-            <!-- Header -->
-            <div class="browse-header">
-                <div class="browse-header__text">
-                    <h1>Browse Profiles</h1>
-                    <p>{tierCounts.total.toLocaleString()} verified medical professionals</p>
-                </div>
-                <div class="browse-header__stats">
-                    <span class="mini-stat mini-stat--titan"
-                        >{titanCount} Titans</span
-                    >
-                    <span class="mini-stat mini-stat--elite"
-                        >{eliteCount} Elite</span
-                    >
-                    <span class="mini-stat mini-stat--master"
-                        >{masterCount} Master</span
-                    >
-                </div>
-            </div>
+<SiteLayout title={title} description={description} active="register" robots={filtered ? "noindex, follow" : "index, follow"} jsonLd={jsonLd}>
+	<div class="rg r-listing" data-country={country?.name ?? "all"} data-country-param={countryParam ? "1" : ""}>
+		<section class="rg-hero">
+			<span class="rg-eyebrow">{eyebrow}</span>
+			<h1>The Register</h1>
+			<p>{intro}</p>
+		</section>
 
-            <!-- Search & Filters -->
-            <div class="browse-controls">
-                <div class="search-wrap search-wrap--enhanced">
-                    <EnhancedSearch
-                        client:load
-                        placeholder="Quick search across all profiles..."
-                        maxResults={6}
-                    />
-                </div>
+		<section class="rg-main">
+			<div class="rg-controls">
+				<form class="rg-search" action="/doctors" method="get" role="search">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+					<label class="r-sr-only" for="rg-q">Search the register by name or specialty</label>
+					<input id="rg-q" type="search" name="q" value={query} placeholder="Name or specialty" autocomplete="off" maxlength="100" />
+					{countryParam && <input type="hidden" name="country" value={country ? country.slug : otherCountry || ALL_COUNTRIES} />}
+					{tier && <input type="hidden" name="tier" value={tier.toLowerCase()} />}
+					{ethicsOnly && <input type="hidden" name="ethics" value="1" />}
+					{sortParam && <input type="hidden" name="sort" value={sort} />}
+					{specialty && <input type="hidden" name="specialty" value={specialty} />}
+					{role && <input type="hidden" name="role" value={role} />}
+				</form>
+				{!nmc && (
+					<nav class="rg-tiers" aria-label="Stature">
+						{["", ...TIERS].map((t) => (
+							<a href={href({ tier: t.toLowerCase(), page: "" })} aria-current={t === tier ? "true" : undefined}>{t ? titleCase(t) : "All"}</a>
+						))}
+					</nav>
+				)}
+				<a class="rg-toggle" href={href({ ethics: ethicsOnly ? "" : "1", page: "" })} data-on={ethicsOnly ? "" : undefined}>{ethicsOnly && <span aria-hidden="true">✓ </span>}Ethics-certified only{ethicsOnly && <span class="r-sr-only"> (on — show everyone)</span>}</a>
+				<a class="rg-sort" href={href({ sort: nextSort === sortCycle[0] ? "" : nextSort, page: "" })} title={`Sort by ${SORT_LABEL[nextSort]}`}>Sort: {SORT_LABEL[sort]}</a>
+			</div>
 
-                <form class="filter-input-wrap" method="get" action="/doctors" id="browse-form">
-                    {tierFilter !== "all" && <input type="hidden" name="tier" value={tierFilter} />}
-                    {roleFilter !== "all" && <input type="hidden" name="role" value={roleFilter} />}
-                    {countryFilter !== "all" && <input type="hidden" name="country" value={countryFilter} />}
-                    {specialtyFilter !== "all" && <input type="hidden" name="specialty" value={specialtyFilter} />}
-                    <svg
-                        class="filter-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    >
-                        <path d="M3 4h18M6 8h12M9 12h6M12 16h0"></path>
-                    </svg>
-                    <label class="sr-only" for="browse-search">Filter by name, specialty or location</label>
-                    <input
-                        type="search"
-                        id="browse-search"
-                        name="q"
-                        class="filter-input"
-                        placeholder="Filter by name, specialty or location..."
-                        value={query}
-                        autocomplete="off"
-                    />
-                </form>
+			<div class="rg-meta">
+				<span>{countLabel}</span>
+				<span class="rg-scope">
+					{REGISTER_COUNTRIES.filter((c) => c.slug !== country?.slug).map((c) => (
+						<a href={href({ country: c.slug, tier: "", sort: "", page: "" })} data-country-link={c.name}>{c.name}</a>
+					))}
+					{(country || otherCountry) && <a href={href({ country: ALL_COUNTRIES, page: "" })}>All countries</a>}
+				</span>
+			</div>
 
-                <div class="filter-group">
-                    <span class="filter-label" id="filter-label-role">Role</span>
-                    <div class="filter-buttons" role="group" aria-labelledby="filter-label-role">
-                        {[["all", "All"], ["surgeon", "Surgeon"], ["physician", "Physician"], ["researcher", "Researcher"]].map(([value, label]) => (
-                            <a
-                                class={`filter-btn${roleFilter === value ? " filter-btn--active" : ""}`}
-                                href={filterHref({ role: value })}
-                                aria-current={roleFilter === value ? "true" : undefined}
-                            >{label}</a>
-                        ))}
-                    </div>
-                </div>
+			{(specialty || role) && (
+				<p class="rg-filters">
+					{specialty && <span>Specialty: <strong>{specialty}</strong> <a href={href({ specialty: "", page: "" })}>Remove</a></span>}
+					{role && <span>Role: <strong>{role}</strong> <a href={href({ role: "", page: "" })}>Remove</a></span>}
+				</p>
+			)}
 
-                <div class="filter-group">
-                    <span class="filter-label" id="filter-label-tier">Tier</span>
-                    <div class="filter-buttons" role="group" aria-labelledby="filter-label-tier">
-                        {[["all", "All"], ["TITAN", "Titan"], ["ELITE", "Elite"]].map(([value, label]) => (
-                            <a
-                                class={`filter-btn filter-btn--${value.toLowerCase()}${tierFilter === value ? " filter-btn--active" : ""}`}
-                                href={filterHref({ tier: value })}
-                                aria-current={tierFilter === value ? "true" : undefined}
-                            >{label}</a>
-                        ))}
-                    </div>
-                </div>
+			<div class="rg-table-wrap">
+				<table class="rg-table">
+					<caption class="r-sr-only">{countLabel}</caption>
+					<thead>
+						<tr>
+							<th scope="col">MDR №</th>
+							<th scope="col">Physician</th>
+							<th scope="col">Specialty</th>
+							<th scope="col">Country</th>
+							<th scope="col">{nmc ? "Status" : "Stature"}</th>
+							<th scope="col">H-index</th>
+							<th scope="col">Ethics</th>
+						</tr>
+					</thead>
+					<tbody>
+						{rows.map((r) => (
+							<tr>
+								<td class="rg-no">{r.no}</td>
+								<th scope="row" class="rg-name"><a href={`/doctors/${r.slug}`}>{r.name}</a></th>
+								<td class="rg-spec">{r.specialty}</td>
+								<td class="rg-country">{r.country}</td>
+								{nmc ? (
+									<td class="rg-tier rg-tier--status">{r.status === "HISTORICAL" ? "Historical" : "Living"}</td>
+								) : (
+									<td class={`rg-tier rg-tier--${r.tier.toLowerCase()}`}>{TIER_LABEL[r.tier] ?? "—"}</td>
+								)}
+								<td class="rg-h"><span class="rg-label" aria-hidden="true">h </span>{r.hIndex || "—"}</td>
+								<td class={`rg-ethics${r.ethics === "—" ? " rg-ethics--none" : ""}`}>{r.ethics}</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+				{rows.length === 0 && (
+					<p class="rg-empty">No physicians match. Try a broader filter, or <a href="/doctor/add-profile">nominate someone</a>.</p>
+				)}
+			</div>
 
-                <div class="filter-group">
-                    <label class="filter-label" for="country-filter">Country</label>
-                    <select id="country-filter" class="filter-select" data-param="country">
-                        <option value="all">All Countries</option>
-                        {countries.map((country) => (
-                            <option value={country} selected={country === countryFilter}>{country}</option>
-                        ))}
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <label class="filter-label" for="specialty-filter">Specialty</label>
-                    <select id="specialty-filter" class="filter-select" data-param="specialty">
-                        <option value="all">All Specialties</option>
-                        {specialties.map((specialty) => (
-                            <option value={specialty} selected={specialty.toLowerCase() === specialtyFilter.toLowerCase()}>{specialty}</option>
-                        ))}
-                    </select>
-                </div>
-            </div>
-
-            <div class="results-info" id="results-info" role="status" aria-live="polite">
-                {isFiltered
-                    ? `${total.toLocaleString()} matching profile${total === 1 ? "" : "s"}`
-                    : `${total.toLocaleString()} profiles`}
-                {isFiltered && <a href="/doctors" class="clear-filters"> &middot; Clear filters</a>}
-            </div>
-
-            <!-- Doctor Grid -->
-            <div class="browse-grid" id="doctor-grid">
-                {
-                    doctors.map((d) => {
-                        const location = [
-                            d.geography.city,
-                            d.geography.country,
-                        ]
-                            .filter(Boolean)
-                            .join(", ");
-                        const initials = d.fullName
-                            .split(" ")
-                            .map((w: string) => w[0])
-                            .filter((_: string, i: number) => i < 2)
-                            .join("")
-                            .toUpperCase();
-                        const hasImage =
-                            d.portraitUrl && !d.portraitUrl.startsWith("data:");
-
-                        return (
-                            <a
-                                href={`/doctors/${d.slug}`}
-                                class={`doctor-card doctor-card--${d.tier.toLowerCase()}`}
-                            >
-                                <div class="doctor-card__header">
-                                    <div
-                                        class={`doctor-card__avatar avatar--${d.tier.toLowerCase()}`}
-                                    >
-                                        <OptimizedImage
-                                            src={d.portraitUrl}
-                                            alt={d.fullName}
-                                            width={64}
-                                            height={64}
-                                            fallbackInitials={initials}
-                                            tier={d.tier as "TITAN" | "ELITE" | "MASTER" | "UNRANKED"}
-                                        />
-                                    </div>
-                                    <div class="doctor-card__badges">
-                                        <TierBadge
-                                            tier={
-                                                d.tier as
-                                                    | "TITAN"
-                                                    | "ELITE"
-                                                    | "MASTER"
-                                                    | "UNRANKED"
-                                            }
-                                            size="sm"
-                                        />
-                                        {d.status === "HISTORICAL" && (
-                                            <span class="legacy-badge">
-                                                Legacy
-                                            </span>
-                                        )}
-                                    </div>
-                                </div>
-                                <h3 class="doctor-card__name">{d.fullName}</h3>
-                                <p class="doctor-card__specialty">
-                                    {d.specialty}
-                                </p>
-                                {location && (
-                                    <p class="doctor-card__location">
-                                        {location}
-                                    </p>
-                                )}
-                                <div class="doctor-card__stats">
-                                    <span class="stat">
-                                        <strong>{d.hIndex || "-"}</strong>{" "}
-                                        H-index
-                                    </span>
-                                    <span class="stat">
-                                        <strong>
-                                            {d.citations > 0 ? d.citations.toLocaleString() : "-"}
-                                        </strong>{" "}
-                                        citations
-                                    </span>
-                                </div>
-                            </a>
-                        );
-                    })
-                }
-            </div>
-
-            {doctors.length === 0 && (
-                <div class="empty-state" role="status">
-                    <h3>No results found</h3>
-                    <p>Try adjusting your search or filters.</p>
-                    {isFiltered && <p><a href="/doctors">Clear all filters</a></p>}
-                </div>
-            )}
-
-            <Pagination page={page} totalPages={totalPages} total={total} pageSize={PAGE_SIZE} label="profiles" />
-        </div>
-    </section>
-</Layout>
+			<Pagination page={page} totalPages={totalPages} total={total} pageSize={PAGE_SIZE} label="physicians" />
+		</section>
+	</div>
+</SiteLayout>
 
 <script>
-    document.querySelectorAll<HTMLSelectElement>(".filter-select[data-param]").forEach((select) => {
-        select.addEventListener("change", () => {
-            const url = new URL(window.location.href);
-            url.searchParams.delete("page");
-            if (select.value === "all") url.searchParams.delete(select.dataset.param!);
-            else url.searchParams.set(select.dataset.param!, select.value);
-            window.location.href = url.toString();
-        });
-    });
+	import { syncCountry } from "../../lib/country-sync";
+
+	syncCountry({ fallbackToGuess: false, reset: ["tier", "sort", "page"] });
 </script>
-
-<style>
-    .browse {
-        padding: 48px 0 80px;
-    }
-
-    /* Header */
-    .browse-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        margin-bottom: 32px;
-        padding-bottom: 24px;
-        border-bottom: 1px solid var(--rule);
-    }
-
-    .browse-header__text h1 {
-        font-family: var(--font-serif);
-        font-size: 2rem;
-        font-weight: 400;
-        color: var(--ink);
-        margin-bottom: 4px;
-    }
-
-    .browse-header__text p {
-        color: var(--ink-3);
-        font-size: 0.95rem;
-    }
-
-    .browse-header__stats {
-        display: flex;
-        gap: 12px;
-    }
-
-    .mini-stat {
-        font-size: 0.8rem;
-        font-weight: 600;
-        padding: 4px 12px;
-        border-radius: var(--r-pill);
-        background: var(--paper-2);
-        color: var(--ink-3);
-    }
-
-    .mini-stat--titan {
-        color: var(--titan-text);
-        background: var(--titan-bg);
-    }
-    .mini-stat--elite {
-        color: var(--elite-text);
-        background: var(--elite-bg);
-    }
-    .mini-stat--master {
-        color: var(--master-text);
-        background: var(--master-bg);
-    }
-
-    /* Controls */
-    .browse-controls {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 24px;
-        align-items: center;
-        margin-bottom: 24px;
-    }
-
-    .search-wrap {
-        position: relative;
-        flex: 1;
-        min-width: 280px;
-        max-width: 400px;
-    }
-
-    .search-wrap--enhanced {
-        flex: 1;
-        min-width: 320px;
-        max-width: 500px;
-    }
-
-    .filter-input-wrap {
-        position: relative;
-        min-width: 200px;
-        max-width: 280px;
-    }
-
-    .filter-icon {
-        position: absolute;
-        left: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 16px;
-        height: 16px;
-        color: var(--ink-3);
-        pointer-events: none;
-    }
-
-    .filter-input {
-        width: 100%;
-        padding: 10px 14px 10px 38px;
-        font-size: 0.85rem;
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-3);
-        color: var(--ink);
-        outline: none;
-        transition: all 0.15s;
-    }
-
-    .filter-input::placeholder {
-        color: var(--ink-3);
-        font-size: 0.8rem;
-    }
-
-    .filter-input:focus {
-        border-color: var(--ink-blue);
-        background: var(--paper);
-    }
-
-    .search-icon {
-        position: absolute;
-        left: 14px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 18px;
-        height: 18px;
-        color: var(--ink-3);
-        pointer-events: none;
-    }
-
-    .search-input {
-        width: 100%;
-        padding: 12px 16px 12px 44px;
-        font-size: 0.9rem;
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-3);
-        color: var(--ink);
-        outline: none;
-        transition: all 0.15s;
-    }
-
-    .filter-select {
-        padding: 8px 14px;
-        font-size: 0.8rem;
-        font-weight: 500;
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-3);
-        color: var(--ink-2);
-        cursor: pointer;
-        transition: all 0.15s;
-        outline: none;
-    }
-
-    .filter-select:hover,
-    .filter-select:focus {
-        background: var(--paper-3);
-        color: var(--ink);
-        border-color: var(--rule-strong);
-    }
-
-    .search-input::placeholder {
-        color: var(--ink-3);
-    }
-
-    .search-input:focus {
-        border-color: var(--ink-blue);
-        background: var(--paper);
-    }
-
-    .filter-group {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .filter-label {
-        font-size: 0.75rem;
-        font-weight: 600;
-        color: var(--ink-3);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-
-    .filter-buttons {
-        display: flex;
-        gap: 6px;
-    }
-
-    .filter-btn {
-        display: inline-block;
-        text-decoration: none;
-        padding: 8px 14px;
-        font-size: 0.8rem;
-        font-weight: 500;
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-3);
-        color: var(--ink-2);
-        cursor: pointer;
-        transition: all 0.15s;
-    }
-
-    .filter-btn:hover {
-        background: var(--paper-3);
-        color: var(--ink);
-    }
-
-    .filter-btn--active {
-        background: var(--ink-blue);
-        border-color: var(--ink-blue);
-        color: var(--paper);
-    }
-
-    .filter-btn--titan.filter-btn--active {
-        background: var(--titan-bg);
-        border-color: var(--titan-border);
-        color: var(--titan-text);
-    }
-
-    .filter-btn--elite.filter-btn--active {
-        background: var(--elite-bg);
-        border-color: var(--elite-border);
-        color: var(--elite-text);
-    }
-
-    .filter-btn--master.filter-btn--active {
-        background: var(--master-bg);
-        border-color: var(--master-border);
-        color: var(--master-text);
-    }
-
-    /* Results Info */
-    .results-info {
-        font-size: 0.85rem;
-        color: var(--ink-3);
-        margin-bottom: 20px;
-    }
-
-    /* Grid and Cards */
-    .browse-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: 24px;
-    }
-
-    /* Doctor Card */
-    .doctor-card {
-        /* This page renders every profile in one document (~975 cards, ~17k DOM
-           nodes) because the filters run client-side over the full set — cards
-           cannot be paginated away without breaking that. content-visibility
-           lets the browser skip layout and paint for off-screen cards, which is
-           where the cost actually is; contain-intrinsic-size keeps the scrollbar
-           stable until a card has been rendered once. */
-        content-visibility: auto;
-        contain-intrinsic-size: auto 280px;
-        display: flex;
-        flex-direction: column;
-        padding: 24px;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        text-decoration: none;
-        color: inherit;
-        transition: all var(--t-base) var(--ease);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .doctor-card::before {
-        display: none;
-    }
-
-    .doctor-card:hover {
-        transform: translateY(-3px);
-        border-color: var(--rule-strong);
-        box-shadow: var(--shadow-3);
-    }
-
-    /* Tier Styling */
-    .doctor-card--titan {
-        background: var(--titan-bg);
-        border-color: var(--titan-border);
-    }
-    .doctor-card--titan:hover {
-        border-color: var(--titan-border);
-        box-shadow: var(--shadow-glow-titan);
-    }
-
-    .doctor-card--elite {
-        background: var(--elite-bg);
-        border-color: var(--elite-border);
-    }
-    .doctor-card--elite:hover {
-        border-color: var(--elite-border);
-        box-shadow: var(--shadow-glow-elite);
-    }
-
-    .doctor-card__header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 18px;
-    }
-
-    .doctor-card__avatar {
-        width: 64px;
-        height: 64px;
-        border-radius: var(--r-4);
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--paper-2);
-        border: 2px solid var(--rule);
-        box-shadow: var(--shadow-2);
-    }
-
-    .avatar--titan {
-        border-color: var(--titan-border);
-        background: var(--titan-bg);
-    }
-
-    .avatar--elite {
-        border-color: var(--elite-border);
-        background: var(--elite-bg);
-    }
-
-    .avatar--master {
-        border-color: var(--master-border);
-        background: var(--master-bg);
-    }
-
-    .doctor-card__avatar img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .avatar-initials {
-        font-weight: 500;
-        font-size: 0.9rem;
-        color: var(--ink-3);
-    }
-
-    .avatar--titan .avatar-initials {
-        color: var(--titan-text);
-    }
-    .avatar--elite .avatar-initials {
-        color: var(--elite-text);
-    }
-    .avatar--master .avatar-initials {
-        color: var(--master-text);
-    }
-
-    .doctor-card__badges {
-        display: flex;
-        gap: 6px;
-        align-items: center;
-    }
-
-    .legacy-badge {
-        font-size: 0.7rem;
-        font-weight: 500;
-        padding: 3px 8px;
-        border-radius: var(--r-2);
-        background: var(--paper-3);
-        color: var(--ink-3);
-    }
-
-    .doctor-card__name {
-        font-family: var(--font-serif);
-        font-size: 1.25rem;
-        font-weight: 500;
-        color: var(--ink);
-        margin-bottom: 6px;
-        line-height: 1.3;
-        letter-spacing: -0.01em;
-    }
-
-    .doctor-card--titan .doctor-card__name {
-        color: var(--titan-text);
-    }
-
-    .doctor-card__specialty {
-        font-size: 0.9rem;
-        color: var(--ink-2);
-        font-weight: 500;
-        margin-bottom: 4px;
-    }
-
-    .doctor-card__location {
-        font-size: 0.85rem;
-        color: var(--ink-3);
-        margin-bottom: 16px;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-    }
-
-    .doctor-card__stats {
-        display: flex;
-        gap: 16px;
-        padding-top: 16px;
-        border-top: 1px solid var(--rule);
-        margin-top: auto;
-    }
-
-    .doctor-card__stats .stat {
-        font-size: 0.8rem;
-        color: var(--ink-3);
-        display: flex;
-        flex-direction: column;
-        line-height: 1.2;
-    }
-
-    .doctor-card__stats .stat strong {
-        color: var(--ink);
-        font-weight: 500;
-        font-size: 1.1rem;
-        font-family: var(--font-mono);
-    }
-
-    /* Empty State */
-    .empty-state {
-        text-align: center;
-        padding: 60px 20px;
-        color: var(--ink-3);
-    }
-
-    .empty-state svg {
-        opacity: 0.4;
-        margin-bottom: 16px;
-    }
-
-    .empty-state h3 {
-        font-size: 1.1rem;
-        color: var(--ink-2);
-        margin-bottom: 8px;
-    }
-
-    .empty-state p {
-        font-size: 0.9rem;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-        .browse-header {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 16px;
-        }
-
-        .browse-controls {
-            flex-direction: column;
-            align-items: stretch;
-        }
-
-        .search-wrap {
-            max-width: none;
-        }
-
-        .filter-group {
-            flex-wrap: wrap;
-        }
-
-        .browse-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-</style>
