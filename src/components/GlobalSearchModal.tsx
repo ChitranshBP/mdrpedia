@@ -16,7 +16,13 @@ interface SearchResult {
     rankingScore?: number;
 }
 
-const DEBOUNCE_MS = 150;
+const DEBOUNCE_MS = 350;
+
+function logSearchClick(query: string, clickedSlug: string) {
+    const body = new Blob([JSON.stringify({ query, clickedSlug })], { type: 'application/json' });
+    if (navigator.sendBeacon) navigator.sendBeacon('/api/log-search-click', body);
+    else fetch('/api/log-search-click', { method: 'POST', body, keepalive: true }).catch(() => {});
+}
 
 const tierConfig: Record<string, {
     gradient: string;
@@ -232,6 +238,7 @@ export default function GlobalSearchModal() {
                 e.preventDefault();
                 if (results.length > 0 && results[selectedIndex]) {
                     saveSearch(query);
+                    logSearchClick(query, results[selectedIndex].slug);
                     window.location.href = `/doctors/${results[selectedIndex].slug}`;
                 } else if (results.length === 0 && quickLinks[selectedIndex]) {
                     window.location.href = quickLinks[selectedIndex].href;
@@ -1052,7 +1059,7 @@ export default function GlobalSearchModal() {
                                         href={`/doctors/${result.slug}`}
                                         className={`gsm-result ${selectedIndex === index ? 'selected' : ''}`}
                                         onMouseEnter={() => setSelectedIndex(index)}
-                                        onClick={() => saveSearch(query)}
+                                        onClick={() => { saveSearch(query); logSearchClick(query, result.slug); }}
                                     >
                                         <div
                                             className="gsm-avatar"

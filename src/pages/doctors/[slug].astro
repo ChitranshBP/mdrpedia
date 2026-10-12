@@ -170,3 +170,10 @@ if (dbProfile) {
 ---
 
 <DoctorProfileRevamp doctor={profileData} profileId={resolvedProfileId} />
+<script is:inline define:vars={{ viewSlug: slug }}>
+    (function () {
+        var body = new Blob([JSON.stringify({ slug: viewSlug })], { type: 'application/json' });
+        if (navigator.sendBeacon) navigator.sendBeacon('/api/track-view', body);
+        else fetch('/api/track-view', { method: 'POST', body: body, keepalive: true });
+    })();
+</script>

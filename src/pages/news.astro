@@ -10,6 +10,7 @@ import {
     getCategoryInfo,
     ICON_PATHS,
 } from "../lib/news";
+import NewsletterSignup from "../components/NewsletterSignup.astro";
 
 // Published articles only — entries dated in the future are scheduled,
 // not live, so the feed never leads with tomorrow's news.
@@ -304,20 +305,7 @@ const collectionSchema = {
         <section class="newsletter-section">
             <div class="container">
                 <div class="newsletter-card">
-                    <div class="newsletter-content">
-                        <h3>Stay Updated</h3>
-                        <p>Get weekly digests of the most impactful medical breakthroughs delivered to your inbox.</p>
-                    </div>
-                    <form class="newsletter-form" action="#" method="post">
-                        <input type="email" placeholder="Enter your email" class="newsletter-input" required />
-                        <button type="submit" class="newsletter-btn">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M22 2L11 13"/>
-                                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
-                            </svg>
-                            Subscribe
-                        </button>
-                    </form>
+                    <NewsletterSignup source="news-page" />
                 </div>
             </div>
         </section>
@@ -986,56 +974,6 @@ const collectionSchema = {
         margin: 0;
     }
 
-    .newsletter-form {
-        display: flex;
-        gap: 0.75rem;
-    }
-
-    .newsletter-input {
-        padding: 0.85rem 1.25rem;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-3);
-        font-size: 0.9rem;
-        color: var(--ink);
-        width: 280px;
-        outline: none;
-        transition: all var(--t-fast);
-    }
-
-    .newsletter-input::placeholder {
-        color: var(--ink-3);
-    }
-
-    .newsletter-input:focus {
-        border-color: var(--ink-blue);
-        box-shadow: 0 0 0 3px color-mix(in oklch, var(--ink-blue) 10%, transparent);
-    }
-
-    .newsletter-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.85rem 1.5rem;
-        background: var(--ink-blue);
-        border: none;
-        border-radius: var(--r-3);
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: var(--paper);
-        cursor: pointer;
-        transition: all var(--t-fast);
-    }
-
-    .newsletter-btn svg {
-        width: 16px;
-        height: 16px;
-    }
-
-    .newsletter-btn:hover {
-        box-shadow: var(--shadow-2);
-    }
-
     /* Responsive */
     @media (max-width: 768px) {
         .page-hero {
@@ -1095,15 +1033,6 @@ const collectionSchema = {
 
         .submit-icon {
             margin: 0 auto;
-        }
-
-        .newsletter-form {
-            flex-direction: column;
-            width: 100%;
-        }
-
-        .newsletter-input {
-            width: 100%;
         }
 
         .submit-card {

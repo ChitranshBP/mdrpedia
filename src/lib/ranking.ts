@@ -6,6 +6,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { prisma } from './prisma';
+import { cache, CacheKeys, CacheTTL } from './cache';
 
 // Types
 export interface DoctorRank {
@@ -22,16 +23,18 @@ export interface DoctorRank {
 }
 
 // Cache
-let _rankingCache: Record<string, DoctorRank> | null = null;
+let _staticRankingCache: Record<string, DoctorRank> | null = null;
 const DOCTORS_DIR = path.join(process.cwd(), 'src/content/doctors');
 
 /**
  * Returns a map of doctor slug -> Ranking Info
  * Uses database first, falls back to static files
  */
-export async function getDoctorRankingsAsync(): Promise<Record<string, DoctorRank>> {
-    if (_rankingCache) return _rankingCache;
+export function getDoctorRankingsAsync(): Promise<Record<string, DoctorRank>> {
+    return cache.getOrFetch(CacheKeys.rankings(), computeDoctorRankings, CacheTTL.MEDIUM);
+}
 
+async function computeDoctorRankings(): Promise<Record<string, DoctorRank>> {
     const rankings: Record<string, DoctorRank> = {};
     const doctorsBySpecialty: Record<string, {
         slug: string;
@@ -90,7 +93,6 @@ export async function getDoctorRankingsAsync(): Promise<Record<string, DoctorRan
 
         // Fallback to static files
         if (!fs.existsSync(DOCTORS_DIR)) {
-            _rankingCache = {};
             return {};
         }
 
@@ -144,7 +146,6 @@ export async function getDoctorRankingsAsync(): Promise<Record<string, DoctorRan
         });
     }
 
-    _rankingCache = rankings;
     return rankings;
 }
 
@@ -153,7 +154,7 @@ export async function getDoctorRankingsAsync(): Promise<Record<string, DoctorRan
  * Only reads from static files (no database access)
  */
 export function getDoctorRankings(): Record<string, DoctorRank> {
-    if (_rankingCache) return _rankingCache;
+    if (_staticRankingCache) return _staticRankingCache;
 
     const rankings: Record<string, DoctorRank> = {};
     const doctorsBySpecialty: Record<string, { slug: string; fullName: string; score: number; tier: string }[]> = {};
@@ -197,7 +198,7 @@ export function getDoctorRankings(): Record<string, DoctorRank> {
         });
     }
 
-    _rankingCache = rankings;
+    _staticRankingCache = rankings;
     return rankings;
 }
 

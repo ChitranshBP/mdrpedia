@@ -212,6 +212,42 @@ function calculateRelevanceScore(doctor: SearchableDoctor, query: string): numbe
     return score;
 }
 
+// ─── Settled-query logging ───────────────────────────────────────────────────
+// Typing fires one request per pause ("sa", "sal", "salm"...). Hold each
+// client's latest query briefly and drop it if the next one extends or trims it,
+// so one search produces one searchLog row.
+
+const SEARCH_LOG_SETTLE_MS = 1500;
+const pendingSearchLogs = new Map<string, { query: string; count: number; timer: ReturnType<typeof setTimeout> }>();
+
+function writeSearchLog(ipHash: string, query: string, count: number) {
+    prisma.searchLog.create({
+        data: { queryText: query, resultsCount: count, ipAddress: ipHash }
+    }).catch((err) => {
+        if (import.meta.env.DEV) console.error('Search log write failed:', err?.message);
+    });
+}
+
+async function logSettledSearch(request: Request, query: string, count: number) {
+    const ipHash = await hashIP(getClientIP(request));
+    const q = query.toLowerCase();
+    const previous = pendingSearchLogs.get(ipHash);
+
+    if (previous) {
+        clearTimeout(previous.timer);
+        const p = previous.query.toLowerCase();
+        if (!q.startsWith(p) && !p.startsWith(q)) {
+            writeSearchLog(ipHash, previous.query, previous.count);
+        }
+    }
+
+    const timer = setTimeout(() => {
+        pendingSearchLogs.delete(ipHash);
+        writeSearchLog(ipHash, query, count);
+    }, SEARCH_LOG_SETTLE_MS);
+    pendingSearchLogs.set(ipHash, { query, count, timer });
+}
+
 export const GET: APIRoute = async ({ request, clientAddress }) => {
     const url = new URL(request.url);
     const query = url.searchParams.get('q')?.trim() || '';
@@ -226,6 +262,9 @@ export const GET: APIRoute = async ({ request, clientAddress }) => {
         const cacheKey = searchCacheKey(query, { country: country || '', role: role || '', specialty: specialty || '', fuzzy: String(fuzzyEnabled) });
         const cached = searchCache.get(cacheKey);
         if (cached) {
+            if (query.length > 2) {
+                logSettledSearch(request, query, (cached as unknown[]).length).catch(() => {});
+            }
             return new Response(JSON.stringify(cached), {
                 status: 200,
                 headers: {
@@ -291,22 +330,8 @@ export const GET: APIRoute = async ({ request, clientAddress }) => {
         scoredResults.sort((a, b) => b.score - a.score);
         const topResults = scoredResults.slice(0, API_CONFIG.search.maxResults);
 
-        // Log to Database (Fire & Forget - non-blocking, with error logging)
         if (query.length > 2) {
-            const clientIP = getClientIP(request);
-            hashIP(clientIP).then(ipHash => {
-                prisma.searchLog.create({
-                    data: {
-                        queryText: query,
-                        resultsCount: topResults.length,
-                        ipAddress: ipHash,
-                    }
-                }).catch((err) => {
-                    if (import.meta.env.DEV) console.error('Search log write failed:', err?.message);
-                });
-            }).catch((err) => {
-                if (import.meta.env.DEV) console.error('IP hash failed:', err?.message);
-            });
+            logSettledSearch(request, query, topResults.length).catch(() => {});
         }
 
         // Return results with match info for highlighting
