@@ -26,6 +26,15 @@ export function getStatusColor(status: string): string {
 /** Statuses that mean the study is still running and enrolling or treating. */
 const OPEN_STATUSES = new Set(['active', 'recruiting', 'not yet recruiting']);
 
+/** Visual tone for a status badge. */
+export function statusTone(status: string): 'live' | 'warn' | 'stop' | 'done' {
+    const k = (status || '').toLowerCase();
+    if (k === 'active' || k === 'recruiting') return 'live';
+    if (k === 'suspended' || k === 'discontinued' || k === 'terminated') return 'stop';
+    if (k === 'not yet recruiting' || k === 'under review') return 'warn';
+    return 'done';
+}
+
 export function isOpen(status: string): boolean {
     return OPEN_STATUSES.has((status || '').toLowerCase());
 }
