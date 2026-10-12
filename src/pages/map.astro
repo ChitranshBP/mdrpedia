@@ -3,7 +3,8 @@
  * MDRPedia — Global Doctors Map
  * Interactive map showing distribution of medical professionals worldwide
  */
-import Layout from "../layouts/Layout.astro";
+import "../styles/pages/directory.css";
+import SiteLayout from "../layouts/SiteLayout.astro";
 import { getCollection } from "astro:content";
 import { prisma } from "../lib/prisma";
 import { slugify } from "../lib/utils";
@@ -90,335 +91,61 @@ const meridians = [-120, -60, 0, 60, 120].map(lng => ((lng + 180) / 360) * 1000)
 const parallels = [-60, -30, 0, 30, 60].map(lat => ((90 - lat) / 180) * 500);
 ---
 
-<Layout title="Global Doctors Map — MDRPedia" description="Explore where the register's physicians practice: a country-by-country distribution with links to every national directory.">
-    <div class="map-page">
-        <!-- Hero Section -->
-        <header class="page-hero">
-            <div class="container">
-                <span class="hero-badge">GLOBAL NETWORK</span>
-                <h1>World Map of Medical Excellence</h1>
-                <p class="hero-description">
-                    Explore {totalDoctors.toLocaleString()} medical professionals across {totalCountries} countries.
-                    Discover the global distribution of medical expertise.
-                </p>
+<SiteLayout title="Global Doctors Map — MDRPedia" description="Explore where the register's physicians practice: a country-by-country distribution with links to every national directory." active="regions">
+	<div class="dx">
+		<header class="dx-hero">
+			<div class="dx-hero__inner">
+				<span class="dx-eyebrow">THE REGISTER BY PLACE</span>
+				<h1>World map of the register</h1>
+				<p class="dx-lede">
+					{totalDoctors.toLocaleString()} physicians across {totalCountries} countries. Select a country to open its directory.
+				</p>
+				<ul class="dx-facts">
+					<li><b>{totalDoctors.toLocaleString()}</b><span>Doctors</span></li>
+					<li><b>{totalTitans}</b><span>Titan</span></li>
+					<li><b>{totalCountries}</b><span>Countries</span></li>
+				</ul>
+			</div>
+		</header>
 
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-value">{totalDoctors.toLocaleString()}</span>
-                        <span class="stat-label">Doctors</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <span class="stat-value stat-titan">{totalTitans}</span>
-                        <span class="stat-label">Titans</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <span class="stat-value">{totalCountries}</span>
-                        <span class="stat-label">Countries</span>
-                    </div>
-                </div>
-            </div>
-        </header>
+		<div class="dx-main">
+			<section class="dx-section" aria-labelledby="plot-h">
+				<h2 id="plot-h">Where physicians practise</h2>
+				<figure class="dx-map" id="world-map">
+					<svg viewBox="0 0 1000 500" role="group" aria-label="Countries plotted by location, sized by number of physicians">
+						{meridians.map((x) => <line x1={x} y1="0" x2={x} y2="500" class="grid" />)}
+						{parallels.map((y) => <line x1="0" y1={y} x2="1000" y2={y} class={y === 250 ? "grid grid--equator" : "grid"} />)}
+						{markers.map((m) => (
+							<a href={`/geography/${m.slug}`} aria-label={`${m.country}: ${m.total} physicians`}>
+								<circle cx={m.x} cy={m.y} r={m.r} class="marker">
+									<title>{m.country} — {m.total.toLocaleString()} physicians</title>
+								</circle>
+								{m.r > 14 && <text x={m.x} y={m.y + 4} class="marker-label" text-anchor="middle">{m.total}</text>}
+							</a>
+						))}
+					</svg>
+					<figcaption class="dx-count">Each circle marks a country, sized by physicians on the register. Circles are placed at an approximate national centre; countries without a plotted position are listed below.</figcaption>
+				</figure>
+			</section>
 
-        <!-- Country plot -->
-        <section class="map-section">
-            <div class="map-container" id="world-map">
-                <svg viewBox="0 0 1000 500" role="group" aria-label="Countries plotted by location, sized by number of physicians">
-                    {meridians.map(x => <line x1={x} y1="0" x2={x} y2="500" class="grid" />)}
-                    {parallels.map(y => <line x1="0" y1={y} x2="1000" y2={y} class={y === 250 ? 'grid grid--equator' : 'grid'} />)}
-                    {markers.map(m => (
-                        <a href={`/geography/${m.slug}`} aria-label={`${m.country}: ${m.total} physicians`}>
-                            <circle cx={m.x} cy={m.y} r={m.r} class="marker">
-                                <title>{m.country} — {m.total.toLocaleString()} physicians</title>
-                            </circle>
-                            {m.r > 14 && <text x={m.x} y={m.y + 4} class="marker-label" text-anchor="middle">{m.total}</text>}
-                        </a>
-                    ))}
-                </svg>
-                <p class="map-caption">Each circle marks a country, sized by physicians on the register. Select one to open its directory.</p>
-            </div>
-        </section>
-
-        <!-- Countries List -->
-        <section class="countries-section">
-            <div class="container">
-                <h2>Medical Professionals by Country</h2>
-
-                <div class="countries-grid">
-                    {sortedCountries.map(([country, stats]) => (
-                        <a href={`/geography/${slugify(country)}`} class="country-card">
-                            <div class="country-header">
-                                <h3>{country}</h3>
-                                {stats.titans > 0 && (
-                                    <span class="titan-badge">{stats.titans} Titan{stats.titans > 1 ? 's' : ''}</span>
-                                )}
-                            </div>
-                            <div class="country-stats">
-                                <div class="country-stat">
-                                    <span class="value">{stats.total.toLocaleString()}</span>
-                                    <span class="label">Total</span>
-                                </div>
-                                {stats.elites > 0 && (
-                                    <div class="country-stat elite">
-                                        <span class="value">{stats.elites}</span>
-                                        <span class="label">Elite</span>
-                                    </div>
-                                )}
-                            </div>
-                        </a>
-                    ))}
-                </div>
-            </div>
-        </section>
-    </div>
-</Layout>
-
-<style>
-    .map-page {
-        background: var(--paper);
-        min-height: 100vh;
-    }
-
-    .container {
-        max-width: var(--max);
-        margin: 0 auto;
-        padding: 0 1.5rem;
-    }
-
-    /* Hero */
-    .page-hero {
-        padding: 4rem 0 3rem;
-        text-align: center;
-        background: var(--paper);
-        border-bottom: 1px solid var(--rule);
-    }
-
-    .hero-badge {
-        display: inline-block;
-        padding: 6px 16px;
-        background: var(--verdant-2);
-        border: 1px solid var(--verdant);
-        border-radius: var(--r-pill);
-        font-size: 0.75rem;
-        font-weight: 700;
-        letter-spacing: 0.15em;
-        color: var(--verdant);
-        margin-bottom: 1.5rem;
-    }
-
-    .page-hero h1 {
-        font-family: var(--font-serif);
-        font-size: clamp(2rem, 5vw, 3rem);
-        font-weight: 400;
-        color: var(--ink);
-        margin-bottom: 1rem;
-    }
-
-    .hero-description {
-        font-size: 1.1rem;
-        color: var(--ink-2);
-        max-width: 600px;
-        margin: 0 auto 2.5rem;
-    }
-
-    .hero-stats {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 2rem;
-        flex-wrap: wrap;
-    }
-
-    .stat-item {
-        text-align: center;
-    }
-
-    .stat-value {
-        display: block;
-        font-size: 2rem;
-        font-weight: 500;
-        font-family: var(--font-mono);
-        color: var(--ink);
-    }
-
-    .stat-value.stat-titan {
-        color: var(--titan-text);
-    }
-
-    .stat-label {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--ink-3);
-    }
-
-    .stat-divider {
-        width: 1px;
-        height: 40px;
-        background: var(--rule);
-    }
-
-    /* Map Section */
-    .map-section {
-        padding: 2rem 0;
-    }
-
-    .map-container {
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        overflow: hidden;
-        position: relative;
-        aspect-ratio: 2 / 1;
-    }
-
-    .map-container svg {
-        width: 100%;
-        height: 100%;
-        display: block;
-    }
-
-    .grid {
-        stroke: var(--rule);
-        stroke-width: 1;
-    }
-
-    .grid--equator {
-        stroke: var(--rule-strong);
-    }
-
-    .marker {
-        fill: var(--ink-blue);
-        fill-opacity: 0.35;
-        stroke: var(--ink-blue);
-        stroke-width: 1.5;
-        transition: fill-opacity 0.2s;
-    }
-
-    a:hover .marker, a:focus-visible .marker {
-        fill-opacity: 0.7;
-    }
-
-    .marker-label {
-        font-family: var(--font-mono);
-        font-size: 11px;
-        fill: var(--ink);
-        pointer-events: none;
-    }
-
-    .map-caption {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0.75rem;
-        text-align: center;
-        font-size: 0.8rem;
-        color: var(--ink-3);
-        margin: 0;
-    }
-
-    /* Countries Section */
-    .countries-section {
-        padding: 4rem 0;
-    }
-
-    .countries-section h2 {
-        font-family: var(--font-serif);
-        font-size: 1.75rem;
-        font-weight: 400;
-        color: var(--ink);
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-
-    .countries-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 1rem;
-    }
-
-    .country-card {
-        padding: 1.25rem;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        text-decoration: none;
-        transition: all 0.25s;
-    }
-
-    .country-card:hover {
-        background: var(--paper-2);
-        border-color: var(--rule-strong);
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-2);
-    }
-
-    .country-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 0.75rem;
-    }
-
-    .country-header h3 {
-        font-size: 1rem;
-        font-weight: 500;
-        color: var(--ink);
-        margin: 0;
-    }
-
-    .titan-badge {
-        padding: 2px 8px;
-        background: var(--titan-bg);
-        border-radius: var(--r-pill);
-        font-size: 0.7rem;
-        font-weight: 600;
-        color: var(--titan-text);
-    }
-
-    .country-stats {
-        display: flex;
-        gap: 1rem;
-        margin-bottom: 0.75rem;
-    }
-
-    .country-stat {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .country-stat .value {
-        font-size: 1.25rem;
-        font-weight: 500;
-        font-family: var(--font-mono);
-        color: var(--ink);
-    }
-
-    .country-stat.elite .value {
-        color: var(--elite-text);
-    }
-
-    .country-stat .label {
-        font-size: 0.65rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: var(--ink-3);
-    }
-
-    @media (max-width: 768px) {
-        .hero-stats {
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .stat-divider {
-            width: 60px;
-            height: 1px;
-        }
-
-        .countries-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-</style>
+			<section class="dx-section" aria-labelledby="by-country-h">
+				<h2 id="by-country-h">By country</h2>
+				<ul class="dx-grid dx-grid--tight">
+					{sortedCountries.map(([country, stats]) => (
+						<li class="dx-card">
+							<h3><a href={`/geography/${slugify(country)}`}>{country}</a></h3>
+							<div class="dx-card__foot">
+								<span><b>{stats.total.toLocaleString()}</b> {stats.total === 1 ? "physician" : "physicians"}</span>
+								<span>
+									{stats.titans > 0 && <>{stats.titans} Titan{stats.titans > 1 ? "s" : ""}</>}
+									{stats.titans > 0 && stats.elites > 0 && " · "}
+									{stats.elites > 0 && <>{stats.elites} Elite</>}
+								</span>
+							</div>
+						</li>
+					))}
+				</ul>
+			</section>
+		</div>
+	</div>
+</SiteLayout>

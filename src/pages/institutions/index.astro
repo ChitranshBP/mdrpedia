@@ -3,10 +3,11 @@
  * MDRPedia — Institution Directory
  * Browse all hospitals and medical institutions
  */
-import Layout from "../../layouts/Layout.astro";
+import "../../styles/pages/directory.css";
+import SiteLayout from "../../layouts/SiteLayout.astro";
 import Pagination from "../../components/Pagination.astro";
 import { prisma } from "../../lib/prisma";
-import { getInstitutionLogo, getInstitutionInitials, getInstitutionColor } from "../../lib/institution-logos";
+import { getInstitutionLogo, getInstitutionInitials } from "../../lib/institution-logos";
 
 export const prerender = false;
 
@@ -96,504 +97,120 @@ const sectorLabels: Record<string, string> = {
     PUBLIC: 'Public',
     PRIVATE: 'Private'
 };
+
+const hasFilters = Boolean(filterCountry || filterSector || searchQuery);
+const canonical = page > 1 && !hasFilters ? `/institutions?page=${page}` : undefined;
 ---
 
-<Layout
+<SiteLayout
 	title="Medical Institutions — MDRPedia"
 	description="Hospitals, universities and research centres represented in the MDRPedia register, with the physicians affiliated to each."
+	active="register"
+	canonical={canonical}
 >
-    <div class="container institutions-page">
-        <header class="page-header">
-            <h1>Medical Institutions</h1>
-            <p class="page-desc">Explore hospitals and research institutions where leading physicians practice.</p>
-        </header>
+	<div class="dx">
+		<header class="dx-hero">
+			<div class="dx-hero__inner">
+				<span class="dx-eyebrow">THE REGISTER BY INSTITUTION</span>
+				<h1>Medical institutions</h1>
+				<p class="dx-lede">Hospitals and research institutions where the physicians in the register practise.</p>
+			</div>
+		</header>
 
-        {/* Error Messages */}
-        {errorParam === 'not_found' && (
-            <div class="error-banner">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M12 8v4M12 16h.01"/>
-                </svg>
-                <span>Institution not found. It may have been removed or the URL is incorrect.</span>
-            </div>
-        )}
+		<div class="dx-main">
+			{errorParam === "not_found" && <p class="dx-note" role="alert">Institution not found. It may have been removed or the URL is incorrect.</p>}
+			{dbError && <p class="dx-note" role="alert">Unable to load institutions. Please try again later.</p>}
 
-        {dbError && (
-            <div class="error-banner">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M12 8v4M12 16h.01"/>
-                </svg>
-                <span>Unable to load institutions. Please try again later.</span>
-            </div>
-        )}
+			<div class="dx-controls">
+				<form method="get" style="display:contents">
+					<label class="dx-search">
+						<span class="r-sr-only">Search institutions</span>
+						<input id="institution-q" type="search" name="q" placeholder="Search institutions" value={searchQuery || ""} />
+					</label>
+					{filterCountry && <input type="hidden" name="country" value={filterCountry} />}
+					{filterSector && <input type="hidden" name="sector" value={filterSector} />}
+					<button type="submit" class="dx-btn">Search</button>
+				</form>
+				<label class="r-sr-only" for="countryFilter">Country</label>
+				<select id="countryFilter" class="dx-select" data-filter="country">
+					<option value="">All countries</option>
+					{countries.map((c) => <option value={c.country} selected={c.country === filterCountry}>{c.country}</option>)}
+				</select>
+				<label class="r-sr-only" for="sectorFilter">Sector</label>
+				<select id="sectorFilter" class="dx-select" data-filter="sector">
+					<option value="">All sectors</option>
+					<option value="PUBLIC" selected={filterSector === "PUBLIC"}>Public</option>
+					<option value="PRIVATE" selected={filterSector === "PRIVATE"}>Private</option>
+				</select>
+			</div>
 
-        <!-- Search & Filters -->
-        <div class="filters-bar">
-            <form class="search-form" method="get">
-                <label for="institution-q" class="sr-only">Search institutions</label>
-                <input
-                    id="institution-q"
-                    type="search"
-                    name="q"
-                    placeholder="Search institutions..."
-                    value={searchQuery || ''}
-                    class="search-input"
-                />
-                <button type="submit" class="search-btn">Search</button>
-            </form>
+			{!dbError && (
+				<p class="dx-count" aria-live="polite">
+					{totalInstitutions.toLocaleString()} {totalInstitutions === 1 ? "institution" : "institutions"} found
+					{hasFilters && <> · <a href="/institutions">Clear filters</a></>}
+				</p>
+			)}
 
-            <div class="filter-group">
-                <label for="countryFilter">Country:</label>
-                <select id="countryFilter" onchange="applyFilter('country', this.value)">
-                    <option value="">All Countries</option>
-                    {countries.map(c => (
-                        <option value={c.country} selected={c.country === filterCountry}>
-                            {c.country}
-                        </option>
-                    ))}
-                </select>
-            </div>
-
-            <div class="filter-group">
-                <label for="sectorFilter">Sector:</label>
-                <select id="sectorFilter" onchange="applyFilter('sector', this.value)">
-                    <option value="">All Sectors</option>
-                    <option value="PUBLIC" selected={filterSector === 'PUBLIC'}>Public</option>
-                    <option value="PRIVATE" selected={filterSector === 'PRIVATE'}>Private</option>
-                </select>
-            </div>
-        </div>
-
-        <!-- Results Count -->
-        {!dbError && (
-        <div class="results-info">
-            <span>{totalInstitutions.toLocaleString()} institution{totalInstitutions !== 1 ? 's' : ''} found</span>
-            {(filterCountry || filterSector || searchQuery) && (
-                <a href="/institutions" class="clear-filters">Clear filters</a>
-            )}
-        </div>
-        )}
-
-        <!-- Institutions Grid -->
-        {!dbError && (
-        <div class="institutions-grid">
-            {processedInstitutions.length > 0 ? (
-                processedInstitutions.map((inst) => (
-                    <a href={`/institutions/${inst.slug}`} class="institution-card">
-                        <div class="card-header">
-                            {(() => {
-                                const logoUrl = inst.logo_url || getInstitutionLogo(inst.name, inst.website);
-                                const initials = getInstitutionInitials(inst.name);
-                                const color = getInstitutionColor(inst.name);
-                                return logoUrl ? (
-                                    <>
-                                        <img
-                                            src={logoUrl}
-                                            alt={inst.name}
-                                            class="inst-logo"
-                                            width="56"
-                                            height="56"
-                                            loading="lazy"
-                                            onerror={`this.style.display='none';this.nextElementSibling.style.display='flex'`}
-                                        />
-                                        <div class="inst-logo-placeholder" style={`display:none;background:${color}`}>
-                                            {initials}
-                                        </div>
-                                    </>
-                                ) : (
-                                    <div class="inst-logo-placeholder" style={`background:${color}`}>
-                                        {initials}
-                                    </div>
-                                );
-                            })()}
-                            <div class="card-header-text">
-                                <h3 class="inst-name">{inst.name}</h3>
-                                <p class="inst-location">
-                                    {inst.geography?.city && `${inst.geography.city}, `}
-                                    {inst.geography?.country || 'Unknown'}
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="card-body">
-                            <div class="inst-meta">
-                                <span class={`sector-badge sector-${inst.sector.toLowerCase()}`}>
-                                    {sectorLabels[inst.sector]}
-                                </span>
-                                {inst.ranking_position && (
-                                    <span class="ranking-badge" title={inst.ranking_source || 'Ranking'}>
-                                        #{inst.ranking_position}
-                                    </span>
-                                )}
-                                {inst.center_of_excellence && (
-                                    <span class="coe-badge" title="Center of Excellence">
-                                        CoE: {inst.center_of_excellence}
-                                    </span>
-                                )}
-                            </div>
-
-                            {inst.description && (
-                                <p class="inst-desc">{inst.description.slice(0, 100)}...</p>
-                            )}
-
-                            <div class="doctor-stats">
-                                <span class="stat-item">
-                                    <strong>{inst.doctorCount}</strong> Affiliated Doctors
-                                </span>
-                                {inst.tierCounts.TITAN > 0 && (
-                                    <span class="stat-item tier-stat tier-titan">
-                                        {inst.tierCounts.TITAN} Titan{inst.tierCounts.TITAN !== 1 ? 's' : ''}
-                                    </span>
-                                )}
-                                {inst.tierCounts.ELITE > 0 && (
-                                    <span class="stat-item tier-stat tier-elite">
-                                        {inst.tierCounts.ELITE} Elite
-                                    </span>
-                                )}
-                            </div>
-                        </div>
-
-                        <div class="card-footer">
-                            <span class="view-link">View Institution &rarr;</span>
-                        </div>
-                    </a>
-                ))
-            ) : (
-                <div class="empty-state">
-                    <p>No institutions found matching your criteria.</p>
-                    {(filterCountry || filterSector || searchQuery) && (
-                        <a href="/institutions" class="btn btn--outline">Clear Filters</a>
-                    )}
-                </div>
-            )}
-        </div>
-        <Pagination page={page} totalPages={totalPages} total={totalInstitutions} pageSize={PAGE_SIZE} label="institutions" />
-        )}
-    </div>
-</Layout>
+			{!dbError && (
+				<>
+					{processedInstitutions.length > 0 ? (
+						<ul class="dx-grid">
+							{processedInstitutions.map((inst) => {
+								const logoUrl = inst.logo_url || getInstitutionLogo(inst.name, inst.website);
+								const initials = getInstitutionInitials(inst.name);
+								const place = [inst.geography?.city, inst.geography?.country || "Unknown"].filter(Boolean).join(", ");
+								return (
+									<li class="dx-card">
+										<div class="dx-inst">
+											{logoUrl ? (
+												<>
+													<img src={logoUrl} alt="" class="dx-logo" width="48" height="48" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+													<span class="dx-logo dx-logo--ph" style="display:none">{initials}</span>
+												</>
+											) : (
+												<span class="dx-logo dx-logo--ph">{initials}</span>
+											)}
+											<div>
+												<h3><a href={`/institutions/${inst.slug}`}>{inst.name}</a></h3>
+												<span class="dx-card__kicker">{place}</span>
+											</div>
+										</div>
+										<p class="dx-meta">
+											<span>{sectorLabels[inst.sector]}</span>
+											{inst.ranking_position && <span title={inst.ranking_source || "Ranking"}>Ranked #{inst.ranking_position}</span>}
+											{inst.center_of_excellence && <span>Centre of excellence: {inst.center_of_excellence}</span>}
+										</p>
+										{inst.description && <p class="dx-card__clamp">{inst.description.slice(0, 100)}...</p>}
+										<div class="dx-card__foot">
+											<span><b>{inst.doctorCount}</b> affiliated {inst.doctorCount === 1 ? "doctor" : "doctors"}</span>
+											<span>
+												{inst.tierCounts.TITAN > 0 && <>{inst.tierCounts.TITAN} Titan{inst.tierCounts.TITAN !== 1 ? "s" : ""}</>}
+												{inst.tierCounts.TITAN > 0 && inst.tierCounts.ELITE > 0 && " · "}
+												{inst.tierCounts.ELITE > 0 && <>{inst.tierCounts.ELITE} Elite</>}
+											</span>
+										</div>
+									</li>
+								);
+							})}
+						</ul>
+					) : (
+						<p class="dx-empty">No institutions found matching your criteria.{hasFilters && <> <a href="/institutions">Clear filters</a></>}</p>
+					)}
+					<Pagination page={page} totalPages={totalPages} total={totalInstitutions} pageSize={PAGE_SIZE} label="institutions" />
+				</>
+			)}
+		</div>
+	</div>
+</SiteLayout>
 
 <script>
-    (window as any).applyFilter = function(type: string, value: string) {
-        const url = new URL(window.location.href);
-        if (value) {
-            url.searchParams.set(type, value);
-        } else {
-            url.searchParams.delete(type);
-        }
-        window.location.href = url.toString();
-    };
+	document.querySelectorAll<HTMLSelectElement>("select[data-filter]").forEach((el) =>
+		el.addEventListener("change", () => {
+			const url = new URL(window.location.href);
+			if (el.value) url.searchParams.set(el.dataset.filter!, el.value);
+			else url.searchParams.delete(el.dataset.filter!);
+			url.searchParams.delete("page");
+			window.location.href = url.toString();
+		}),
+	);
 </script>
-
-<style>
-    .institutions-page {
-        padding: 60px 20px;
-        max-width: var(--max);
-    }
-
-    .error-banner {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 16px 20px;
-        background: var(--sanguine-2);
-        border: 1px solid var(--sanguine);
-        border-radius: var(--r-3);
-        color: var(--sanguine);
-        margin-bottom: 24px;
-    }
-
-    .error-banner svg {
-        flex-shrink: 0;
-    }
-
-    .page-header {
-        text-align: center;
-        margin-bottom: 48px;
-    }
-
-    .page-header h1 {
-        font-family: var(--font-serif);
-        font-size: 2.5rem;
-        font-weight: 400;
-        color: var(--ink);
-        margin-bottom: 12px;
-    }
-
-    .page-desc {
-        color: var(--ink-2);
-        font-size: 1.1rem;
-    }
-
-    /* Filters */
-    .filters-bar {
-        display: flex;
-        gap: 24px;
-        align-items: center;
-        margin-bottom: 24px;
-        flex-wrap: wrap;
-        padding: 20px;
-        background: var(--paper-2);
-        border-radius: var(--r-4);
-        border: 1px solid var(--rule);
-    }
-
-    .search-form {
-        display: flex;
-        flex: 1;
-        min-width: 250px;
-        gap: 8px;
-    }
-
-    .search-input {
-        flex: 1;
-        padding: 10px 16px;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-3);
-        color: var(--ink);
-        font-size: 0.95rem;
-    }
-
-    .search-input:focus {
-        outline: none;
-        border-color: var(--ink-blue);
-    }
-
-    .search-btn {
-        padding: 10px 20px;
-        background: var(--ink-blue);
-        color: var(--paper);
-        border: none;
-        border-radius: var(--r-3);
-        font-weight: 600;
-        cursor: pointer;
-    }
-
-    .filter-group {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .filter-group label {
-        font-size: 0.85rem;
-        color: var(--ink-3);
-    }
-
-    .filter-group select {
-        padding: 8px 12px;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-2);
-        color: var(--ink);
-        cursor: pointer;
-    }
-
-    .results-info {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 24px;
-        color: var(--ink-3);
-    }
-
-    .clear-filters {
-        color: var(--ink-blue);
-        text-decoration: none;
-    }
-
-    /* Grid */
-    .institutions-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-        gap: 24px;
-    }
-
-    .institution-card {
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        overflow: hidden;
-        text-decoration: none;
-        color: inherit;
-        transition: all var(--t-base) var(--ease);
-        display: flex;
-        flex-direction: column;
-    }
-
-    .institution-card:hover {
-        border-color: var(--rule-strong);
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-3);
-    }
-
-    .card-header {
-        display: flex;
-        gap: 16px;
-        padding: 20px;
-        border-bottom: 1px solid var(--rule);
-    }
-
-    .inst-logo {
-        width: 56px;
-        height: 56px;
-        border-radius: var(--r-3);
-        object-fit: contain;
-        background: var(--paper);
-    }
-
-    .inst-logo-placeholder {
-        width: 56px;
-        height: 56px;
-        border-radius: var(--r-3);
-        background: var(--ink-blue);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-        font-weight: 500;
-        color: var(--paper);
-    }
-
-    .card-header-text {
-        flex: 1;
-    }
-
-    .inst-name {
-        font-family: var(--font-serif);
-        font-size: 1.1rem;
-        font-weight: 500;
-        margin: 0 0 4px;
-        color: var(--ink);
-    }
-
-    .inst-location {
-        font-size: 0.85rem;
-        color: var(--ink-3);
-        margin: 0;
-    }
-
-    .card-body {
-        padding: 20px;
-        flex: 1;
-    }
-
-    .inst-meta {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-        margin-bottom: 12px;
-    }
-
-    .sector-badge {
-        padding: 3px 10px;
-        border-radius: var(--r-pill);
-        font-size: 0.7rem;
-        font-weight: 600;
-        text-transform: uppercase;
-    }
-
-    .sector-public {
-        background: var(--verdant-2);
-        color: var(--verdant);
-    }
-
-    .sector-private {
-        background: var(--ink-blue-2);
-        color: var(--ink-blue);
-    }
-
-    .ranking-badge {
-        padding: 3px 10px;
-        background: var(--aged-gold-2);
-        color: var(--titan-text);
-        border-radius: var(--r-pill);
-        font-size: 0.7rem;
-        font-weight: 500;
-    }
-
-    .coe-badge {
-        padding: 3px 10px;
-        background: var(--ink-blue-2);
-        color: var(--ink-blue);
-        border-radius: var(--r-pill);
-        font-size: 0.7rem;
-    }
-
-    .inst-desc {
-        font-size: 0.85rem;
-        color: var(--ink-2);
-        line-height: 1.5;
-        margin-bottom: 16px;
-    }
-
-    .doctor-stats {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-    }
-
-    .stat-item {
-        font-size: 0.8rem;
-        color: var(--ink-3);
-    }
-
-    .stat-item strong {
-        color: var(--ink);
-    }
-
-    .tier-stat {
-        padding: 2px 8px;
-        border-radius: var(--r-2);
-    }
-
-    .tier-titan {
-        background: var(--titan-bg);
-        color: var(--titan-text);
-    }
-
-    .tier-elite {
-        background: var(--elite-bg);
-        color: var(--elite-text);
-    }
-
-    .card-footer {
-        padding: 16px 20px;
-        border-top: 1px solid var(--rule);
-        background: var(--paper-2);
-    }
-
-    .view-link {
-        font-size: 0.85rem;
-        color: var(--ink-blue);
-        font-weight: 600;
-    }
-
-    .empty-state {
-        grid-column: 1 / -1;
-        text-align: center;
-        padding: 60px 20px;
-        color: var(--ink-3);
-    }
-
-    .empty-state p {
-        margin-bottom: 20px;
-    }
-
-    @media (max-width: 768px) {
-        .filters-bar {
-            flex-direction: column;
-            align-items: stretch;
-        }
-
-        .search-form {
-            width: 100%;
-        }
-
-        .institutions-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-</style>
