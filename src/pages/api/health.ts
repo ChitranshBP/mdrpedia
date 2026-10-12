@@ -7,8 +7,10 @@ export const prerender = false;
 
 import type { APIRoute } from 'astro';
 import { prisma } from '../../lib/prisma';
+import { requireSuperAdmin } from '../../lib/rbac';
 
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async ({ request }) => {
+    const detailed = requireSuperAdmin(request);
     const start = Date.now();
 
     try {
@@ -16,7 +18,7 @@ export const GET: APIRoute = async () => {
         await prisma.$queryRaw`SELECT 1`;
         const dbLatency = Date.now() - start;
 
-        return new Response(JSON.stringify({
+        return new Response(JSON.stringify(!detailed ? { status: 'healthy' } : {
             status: 'healthy',
             timestamp: new Date().toISOString(),
             db: { status: 'connected', latencyMs: dbLatency },
@@ -33,7 +35,7 @@ export const GET: APIRoute = async () => {
             },
         });
     } catch (error) {
-        return new Response(JSON.stringify({
+        return new Response(JSON.stringify(!detailed ? { status: 'unhealthy' } : {
             status: 'unhealthy',
             timestamp: new Date().toISOString(),
             db: { status: 'disconnected', error: error instanceof Error ? error.message : 'Unknown' },

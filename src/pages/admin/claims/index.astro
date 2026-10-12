@@ -14,7 +14,6 @@ if (!requireSuperAdmin(Astro.request)) {
     return Astro.redirect("/login");
 }
 
-const adminKey = new URL(Astro.request.url).searchParams.get("key");
 const filterStatus = new URL(Astro.request.url).searchParams.get("status") || "all";
 
 // Get profiles with claims info
@@ -84,14 +83,14 @@ const statusLabels: Record<string, string> = {
 
 <Layout title="Claims Management — MDRPedia Admin" robots="noindex, nofollow">
     <div class="admin">
-        <AdminSidebar adminKey={adminKey} activePage="claims" />
+        <AdminSidebar activePage="claims" />
         <div class="main">
 
         <!-- Stats Cards -->
         <div class="stats-grid">
             {Object.entries(statusCounts).map(([status, count]) => (
                 <a
-                    href={`/admin/claims?key=${adminKey}&status=${status}`}
+                    href={`/admin/claims?status=${status}`}
                     class={`stat-card ${filterStatus === status ? 'active' : ''}`}
                     style={`--stat-color: ${statusColors[status]}`}
                 >
@@ -105,16 +104,16 @@ const statusLabels: Record<string, string> = {
         <div class="filter-bar">
             <span class="filter-label">Filter:</span>
             <div class="filter-buttons">
-                <a href={`/admin/claims?key=${adminKey}&status=all`} class={`filter-btn ${filterStatus === 'all' ? 'active' : ''}`}>
+                <a href={`/admin/claims?status=all`} class={`filter-btn ${filterStatus === 'all' ? 'active' : ''}`}>
                     All
                 </a>
-                <a href={`/admin/claims?key=${adminKey}&status=PENDING`} class={`filter-btn ${filterStatus === 'PENDING' ? 'active' : ''}`}>
+                <a href={`/admin/claims?status=PENDING`} class={`filter-btn ${filterStatus === 'PENDING' ? 'active' : ''}`}>
                     Pending
                 </a>
-                <a href={`/admin/claims?key=${adminKey}&status=VERIFIED`} class={`filter-btn ${filterStatus === 'VERIFIED' ? 'active' : ''}`}>
+                <a href={`/admin/claims?status=VERIFIED`} class={`filter-btn ${filterStatus === 'VERIFIED' ? 'active' : ''}`}>
                     Verified
                 </a>
-                <a href={`/admin/claims?key=${adminKey}&status=REJECTED`} class={`filter-btn ${filterStatus === 'REJECTED' ? 'active' : ''}`}>
+                <a href={`/admin/claims?status=REJECTED`} class={`filter-btn ${filterStatus === 'REJECTED' ? 'active' : ''}`}>
                     Rejected
                 </a>
             </div>
@@ -220,7 +219,7 @@ const statusLabels: Record<string, string> = {
     </div>
 </Layout>
 
-<script define:vars={{ adminKey }}>
+<script is:inline>
     document.querySelectorAll('[data-action]').forEach(btn => {
         btn.addEventListener('click', async (e) => {
             const action = btn.dataset.action;
@@ -241,7 +240,7 @@ const statusLabels: Record<string, string> = {
                     break;
             }
 
-            const res = await fetch(`/api/admin/claims?key=${adminKey}`, {
+            const res = await fetch(`/api/admin/claims`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ profileId, status: newStatus })

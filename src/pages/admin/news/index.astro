@@ -15,7 +15,6 @@ if (!requireSuperAdmin(Astro.request)) {
     return Astro.redirect("/login");
 }
 
-const adminKey = new URL(Astro.request.url).searchParams.get("key");
 const news = await getCollection("news");
 
 // Sort by date descending
@@ -31,7 +30,7 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
 
 <Layout title="Manage News — MDRPedia Admin" robots="noindex, nofollow">
     <div class="admin">
-        <AdminSidebar adminKey={adminKey} activePage="news" />
+        <AdminSidebar activePage="news" />
         <div class="main">
         <header class="admin-header">
             <div class="admin-header__top">
@@ -39,7 +38,7 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
                 <h1>News Management</h1>
             </div>
             <div class="admin-actions">
-                <a href={`/admin/news/create?key=${adminKey}`} class="btn btn--primary">
+                <a href={`/admin/news/create`} class="btn btn--primary">
                     + New Article
                 </a>
             </div>
@@ -116,7 +115,7 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
                                     )}
                                 </td>
                                 <td class="actions-cell">
-                                    <a href={`/admin/news/${article.id}?key=${adminKey}`} class="btn btn--sm btn--outline">
+                                    <a href={`/admin/news/${article.id}`} class="btn btn--sm btn--outline">
                                         Edit
                                     </a>
                                     <button class="btn btn--sm btn--danger" data-delete={article.id}>
@@ -166,8 +165,7 @@ const categories = [...new Set(news.map(n => n.data.category))].sort();
             const slug = (btn as HTMLElement).dataset.delete;
             if (!confirm(`Delete article "${slug}"? This cannot be undone.`)) return;
 
-            const key = new URLSearchParams(window.location.search).get('key');
-            const res = await fetch(`/api/admin/news?key=${key}`, {
+            const res = await fetch(`/api/admin/news`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ slug })

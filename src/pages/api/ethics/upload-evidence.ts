@@ -5,6 +5,7 @@
 export const prerender = false;
 
 import { uploadImage } from '../../../lib/cloudinary';
+import { sniffFileType } from '../../../lib/file-sniff';
 import { apiError } from '../../../lib/api-response';
 import { checkRateLimit, getClientIdentifier, RATE_LIMITS, rateLimitResponse } from '../../../lib/rate-limit';
 import { requireSession, requireAuditOwner } from '../../../lib/api-auth';
@@ -16,8 +17,8 @@ function json(data: unknown, status = 200) {
     });
 }
 
-export async function POST({ request }: { request: Request }) {
-    const rateCheck = checkRateLimit(getClientIdentifier(request), RATE_LIMITS.ethicsCheckin);
+export async function POST({ request, clientAddress }: { request: Request; clientAddress?: string }) {
+    const rateCheck = checkRateLimit(getClientIdentifier(request, clientAddress), RATE_LIMITS.ethicsCheckin);
     if (!rateCheck.allowed) return rateLimitResponse(rateCheck.resetTime);
 
     const auth = await requireSession(request);
@@ -41,21 +42,17 @@ export async function POST({ request }: { request: Request }) {
             if (!auditAuth.ok) return auditAuth.response;
         }
 
-        // Validate file type
-        const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
-        if (!allowedTypes.includes(file.type)) {
+        // Max 5MB
+        if (file.size > 5 * 1024 * 1024) {
+            return json({ error: 'File too large. Maximum 5MB.' }, 400);
+        }
+
+        const buffer = Buffer.from(await file.arrayBuffer());
+        const detectedType = sniffFileType(buffer);
+        if (!detectedType) {
             return json({ error: 'File type not allowed. Use JPEG, PNG, WebP, or PDF.' }, 400);
         }
-
-        // Max 10MB
-        if (file.size > 10 * 1024 * 1024) {
-            return json({ error: 'File too large. Maximum 10MB.' }, 400);
-        }
-
-        // Convert to buffer and upload
-        const arrayBuffer = await file.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
-        const base64 = `data:${file.type};base64,${buffer.toString('base64')}`;
+        const base64 = `data:${detectedType};base64,${buffer.toString('base64')}`;
 
         const folder = `ethics-evidence/${profileId}`;
         const publicId = auditId ? `${auditId}-${Date.now()}` : `${Date.now()}`;

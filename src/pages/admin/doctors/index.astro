@@ -17,7 +17,6 @@ if (!requireSuperAdmin(Astro.request)) {
     return Astro.redirect("/login");
 }
 const url = new URL(Astro.request.url);
-const adminKey = url.searchParams.get("key");
 
 // Handle Import Action
 let successMsg = "";
@@ -185,7 +184,7 @@ const unimported = staticProfiles.filter((p) => !dbSlugs.has(p.id));
 
 <Layout title="Manage Doctors — MDRPedia" robots="noindex, nofollow">
     <div class="admin">
-        <AdminSidebar adminKey={adminKey} activePage="doctors" />
+        <AdminSidebar activePage="doctors" />
         <div class="main">
 
         {successMsg && <div class="alert success">{successMsg}</div>}
@@ -219,7 +218,7 @@ const unimported = staticProfiles.filter((p) => !dbSlugs.has(p.id));
                                         <td>{p.tier}</td>
                                         <td>
                                             <a
-                                                href={`/admin/doctors/${p.slug}?key=${adminKey}`}
+                                                href={`/admin/doctors/${p.slug}`}
                                                 class="btn btn--sm btn--primary"
                                             >
                                                 Edit

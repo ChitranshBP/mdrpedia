@@ -1,7 +1,9 @@
 import type { APIRoute } from "astro";
 import { prisma } from "../../lib/prisma";
-import { isValidEmail } from "../../lib/utils";
+import { isValidEmail, getClientIP } from "../../lib/utils";
 import crypto from 'crypto';
+import { sanitizeHtml } from "../../lib/sanitize-html";
+import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "../../lib/rate-limit";
 
 export const prerender = false;
 
@@ -12,6 +14,8 @@ const ALLOWED_FIELDS = [
 ];
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
+    const rl = checkRateLimit(getClientIdentifier(request, clientAddress), { windowMs: 300000, maxRequests: 10 });
+    if (!rl.allowed) return rateLimitResponse(rl.resetTime);
     try {
         // Check body size
         const contentLength = parseInt(request.headers.get('content-length') || '0');
@@ -64,7 +68,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
         // Rate limiting check (basic IP based)
         // In a real app, use a proper rate limit library (upstash/redis)
         // keeping it simple: max 5 edits per hour per IP
-        const ipHash = crypto.createHash('sha256').update(clientAddress || 'unknown').digest('hex').slice(0, 32);
+        const ipHash = crypto.createHash('sha256').update(getClientIP(request) !== 'unknown' ? getClientIP(request) : (clientAddress || 'unknown')).digest('hex').slice(0, 32);
 
         const recentEdits = await prisma.profileEdit.count({
             where: {
@@ -85,7 +89,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
                 profile_slug,
                 field_name,
                 old_value,
-                new_value,
+                new_value: field_name === 'biography' ? sanitizeHtml(new_value) : new_value,
                 reason,
                 contributor_name,
                 contributor_email,

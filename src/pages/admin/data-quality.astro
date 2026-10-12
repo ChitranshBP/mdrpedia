@@ -16,7 +16,6 @@ if (!requireSuperAdmin(Astro.request)) {
 }
 
 const url = new URL(Astro.request.url);
-const adminKey = url.searchParams.get("key") || "";
 const sortBy = url.searchParams.get("sort") || "completeness";
 const filterMissing = url.searchParams.get("missing") || "";
 
@@ -115,7 +114,7 @@ function getTierColor(tier: string): string {
 
 <Layout title="Data Quality — Admin" robots="noindex, nofollow">
     <div class="admin">
-        <AdminSidebar adminKey={adminKey} activePage="data-quality" />
+        <AdminSidebar activePage="data-quality" />
 
         <div class="main">
             <header class="page-header">
@@ -134,15 +133,15 @@ function getTierColor(tier: string): string {
                         <div class="stat-card__fill" style={`width: ${avgScore}%`}></div>
                     </div>
                 </div>
-                <a class="stat-card stat-card--clickable" href={`?key=${adminKey}&missing=Portrait`}>
+                <a class="stat-card stat-card--clickable" href={`?missing=Portrait`}>
                     <div class="stat-card__value stat-card__value--red">{missingPhotos}</div>
                     <div class="stat-card__label">Missing Photos</div>
                 </a>
-                <a class="stat-card stat-card--clickable" href={`?key=${adminKey}&missing=Biography`}>
+                <a class="stat-card stat-card--clickable" href={`?missing=Biography`}>
                     <div class="stat-card__value stat-card__value--red">{missingBios}</div>
                     <div class="stat-card__label">Missing Bios</div>
                 </a>
-                <a class="stat-card stat-card--clickable" href={`?key=${adminKey}&missing=Citations`}>
+                <a class="stat-card stat-card--clickable" href={`?missing=Citations`}>
                     <div class="stat-card__value stat-card__value--yellow">{missingCitations}</div>
                     <div class="stat-card__label">No Citations</div>
                 </a>
@@ -156,7 +155,7 @@ function getTierColor(tier: string): string {
             <div class="filters-bar">
                 <div class="filter-group">
                     <label>Sort By</label>
-                    <select onchange={`window.location='?key=${adminKey}&sort=' + this.value + '${filterMissing ? `&missing=${filterMissing}` : ''}'`}>
+                    <select onchange={`window.location='?sort=' + this.value + '${filterMissing ? `&missing=${filterMissing}` : ''}'`}>
                         <option value="completeness" selected={sortBy === 'completeness'}>Lowest Completeness</option>
                         <option value="name" selected={sortBy === 'name'}>Name</option>
                         <option value="tier" selected={sortBy === 'tier'}>Tier</option>
@@ -164,7 +163,7 @@ function getTierColor(tier: string): string {
                 </div>
                 <div class="filter-group">
                     <label>Missing Field</label>
-                    <select onchange={`window.location='?key=${adminKey}&sort=${sortBy}&missing=' + this.value`}>
+                    <select onchange={`window.location='?sort=${sortBy}&missing=' + this.value`}>
                         <option value="">All Profiles</option>
                         <option value="Portrait" selected={filterMissing === 'Portrait'}>Missing Portrait</option>
                         <option value="Biography" selected={filterMissing === 'Biography'}>Missing Biography</option>
@@ -176,7 +175,7 @@ function getTierColor(tier: string): string {
                     </select>
                 </div>
                 {filterMissing && (
-                    <a href={`/admin/data-quality?key=${adminKey}`} class="btn btn--outline">Clear Filter</a>
+                    <a href={`/admin/data-quality`} class="btn btn--outline">Clear Filter</a>
                 )}
                 <div class="filter-results">
                     Showing {filteredProfiles.length} of {profilesWithScores.length} profiles
@@ -232,7 +231,7 @@ function getTierColor(tier: string): string {
                                     )}
                                 </td>
                                 <td>
-                                    <a href={`/admin/doctors/${profile.slug}?key=${adminKey}`} class="btn btn--sm btn--outline">Edit</a>
+                                    <a href={`/admin/doctors/${profile.slug}`} class="btn btn--sm btn--outline">Edit</a>
                                 </td>
                             </tr>
                         ))}

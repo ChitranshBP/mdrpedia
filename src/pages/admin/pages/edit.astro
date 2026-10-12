@@ -10,7 +10,6 @@ if (!requireSuperAdmin(Astro.request)) {
     return Astro.redirect("/login");
 }
 const url = new URL(Astro.request.url);
-const adminKey = url.searchParams.get("key");
 const slugParam = url.searchParams.get("slug");
 
 let page = null;
@@ -85,7 +84,7 @@ if (Astro.request.method === "POST") {
                     change_note: "Initial creation",
                 },
             });
-            return Astro.redirect(`/admin/pages?key=${adminKey}`);
+            return Astro.redirect(`/admin/pages`);
         }
     } catch (err: any) {
         error = err.message || "Failed to save page.";
@@ -109,7 +108,7 @@ const initialSeoDesc = page?.seo_desc || "";
 
 <Layout title={`${page ? "Edit" : "New"} Page — MDRPedia Admin`} robots="noindex, nofollow">
     <div class="admin">
-        <AdminSidebar adminKey={adminKey} activePage="pages" />
+        <AdminSidebar activePage="pages" />
         <div class="main">
         <header class="admin-header">
             <div class="admin-header__top">

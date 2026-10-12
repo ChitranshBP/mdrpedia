@@ -166,7 +166,7 @@ export async function hashIP(ip: string): Promise<string> {
  * Get client IP from request headers
  */
 export function getClientIP(request: Request): string {
-    return request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+    return request.headers.get('x-forwarded-for')?.split(',').pop()?.trim()
         || request.headers.get('x-real-ip')
         || request.headers.get('cf-connecting-ip')
         || 'unknown';

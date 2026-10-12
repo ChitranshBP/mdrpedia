@@ -43,8 +43,6 @@ if (!requireSuperAdmin(request)) {
 }
 
 const url = new URL(request.url);
-const adminKey =
-    url.searchParams.get("key") || import.meta.env.ADMIN_ACCESS_KEY || "";
 
 // Use cached stats for faster dashboard loading
 let titanCount = 0;
@@ -120,7 +118,7 @@ try {
 
 <Layout title="Admin Dashboard — MDRPedia" description="Restricted Access" robots="noindex, nofollow">
     <div class="admin">
-        <AdminSidebar adminKey={adminKey} activePage="dashboard" />
+        <AdminSidebar activePage="dashboard" />
 
         <!-- Main Content -->
         <div class="main">
@@ -337,7 +335,7 @@ try {
                 <h2 class="section-title">Quick Actions</h2>
                 <div class="actions-grid">
                     <a
-                        href={`/admin/edits?key=${adminKey}`}
+                        href={`/admin/edits`}
                         class="action-card"
                     >
                         {
@@ -365,7 +363,7 @@ try {
                         <span class="action-card__label">Pending Edits</span>
                     </a>
                     <a
-                        href={`/admin/submissions?key=${adminKey}`}
+                        href={`/admin/submissions`}
                         class="action-card"
                     >
                         {
@@ -393,7 +391,7 @@ try {
                         <span class="action-card__label">New Submissions</span>
                     </a>
                     <a
-                        href={`/admin/pages?key=${adminKey}`}
+                        href={`/admin/pages`}
                         class="action-card"
                     >
                         <div class="action-card__badge action-card__badge--neutral">
@@ -414,7 +412,7 @@ try {
                         </div>
                         <span class="action-card__label">Content Pages</span>
                     </a>
-                    <a href={`/admin/doctors?key=${adminKey}`} class="action-card">
+                    <a href={`/admin/doctors`} class="action-card">
                         <div class="action-card__badge action-card__badge--success">
                             {titanCount + eliteCount + masterCount}
                         </div>
@@ -524,7 +522,7 @@ try {
     <div class="table-header">
         <h2>Recent Profiles</h2>
         <a
-            href={`/admin/doctors?key=${adminKey}`}
+            href={`/admin/doctors`}
             class="btn btn--outline btn--sm">View All</a
         >
     </div>
@@ -578,7 +576,7 @@ try {
                             </td>
                             <td>
                                 <a
-                                    href={`/admin/doctors/edit?slug=${doctor.slug}&key=${adminKey}`}
+                                    href={`/admin/doctors/edit?slug=${doctor.slug}`}
                                     class="btn-icon"
                                     title="Edit"
                                 >
@@ -627,8 +625,7 @@ try {
     </div>
 </div>
 
-<script define:vars={{ adminKey }}>
-    const key = adminKey;
+<script is:inline>
 
     function escapeHtml(str) {
         const div = document.createElement('div');
@@ -696,7 +693,7 @@ try {
         btn.innerHTML = `<span class="animate-spin">...</span> Updating`;
 
         try {
-            const res = await fetch(`/api/admin/override-tier?key=${key}`, {
+            const res = await fetch(`/api/admin/override-tier`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ slug, tier }),
@@ -742,7 +739,6 @@ try {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        "x-admin-key": key,
                     },
                     body: JSON.stringify({ action: "sync_all", batchSize: 10 }),
                 });
@@ -802,7 +798,6 @@ try {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        "x-admin-key": key,
                     },
                     body: JSON.stringify({ action: "fix_all" }),
                 });
@@ -860,7 +855,6 @@ try {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        "x-admin-key": key,
                     },
                     body: JSON.stringify({ action: "enrich_all" }),
                 });
@@ -918,7 +912,6 @@ try {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        "x-admin-key": key,
                     },
                     body: JSON.stringify({ action: "sync_all" }),
                 });
@@ -966,7 +959,7 @@ try {
             output.innerHTML = `<div class="console-line">Syncing ${escapeHtml(slug)}...</div>`;
 
             try {
-                const res = await fetch(`/api/admin/sync?key=${key}`, {
+                const res = await fetch(`/api/admin/sync`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ action: "sync_single", slug }),

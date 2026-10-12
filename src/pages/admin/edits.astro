@@ -22,7 +22,6 @@ if (!requireSuperAdmin(Astro.request)) {
 }
 
 const url = new URL(Astro.request.url);
-const adminKey = url.searchParams.get("key");
 
 /**
  * Claim requests store their payload as JSON in `new_value`. Verification
@@ -119,7 +118,7 @@ const reviewedEdits = await prisma.profileEdit.findMany({
 
 <Layout title="Pending Edits — MDRPedia Admin" robots="noindex, nofollow">
     <div class="admin">
-        <AdminSidebar adminKey={adminKey} activePage="edits" />
+        <AdminSidebar activePage="edits" />
         <div class="main">
 
         {successMsg && <div class="alert success">{successMsg}</div>}

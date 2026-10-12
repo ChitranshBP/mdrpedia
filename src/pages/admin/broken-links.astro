@@ -15,7 +15,6 @@ if (!requireSuperAdmin(Astro.request)) {
 }
 
 const url = new URL(Astro.request.url);
-const adminKey = url.searchParams.get("key") || "";
 const showResolved = url.searchParams.get("resolved") === "true";
 const page = parseInt(url.searchParams.get("page") || "1");
 const pageSize = 50;
@@ -73,14 +72,14 @@ if (Astro.request.method === 'POST') {
             where: { url: targetUrl as string },
             data: { resolved: true }
         });
-        return Astro.redirect(`/admin/broken-links?key=${adminKey}`);
+        return Astro.redirect(`/admin/broken-links`);
     }
 }
 ---
 
 <Layout title="Broken Links — Admin" robots="noindex, nofollow">
     <div class="admin">
-        <AdminSidebar adminKey={adminKey} activePage="broken-links" />
+        <AdminSidebar activePage="broken-links" />
 
         <div class="main">
             <header class="page-header">
@@ -99,11 +98,11 @@ if (Astro.request.method === 'POST') {
             <!-- Filters -->
             <div class="filters-bar">
                 <div class="filter-tabs">
-                    <a href={`/admin/broken-links?key=${adminKey}`}
+                    <a href={`/admin/broken-links`}
                        class={`filter-tab ${!showResolved ? 'active' : ''}`}>
                         Active Issues
                     </a>
-                    <a href={`/admin/broken-links?key=${adminKey}&resolved=true`}
+                    <a href={`/admin/broken-links?resolved=true`}
                        class={`filter-tab ${showResolved ? 'active' : ''}`}>
                         Resolved
                     </a>
@@ -205,7 +204,7 @@ if (Astro.request.method === 'POST') {
             {totalPages > 1 && (
                 <div class="pagination">
                     {page > 1 && (
-                        <a href={`/admin/broken-links?key=${adminKey}&page=${page - 1}${showResolved ? '&resolved=true' : ''}`}
+                        <a href={`/admin/broken-links?page=${page - 1}${showResolved ? '&resolved=true' : ''}`}
                            class="btn btn--outline btn--sm">
                             &larr; Previous
                         </a>
@@ -214,7 +213,7 @@ if (Astro.request.method === 'POST') {
                         Page {page} of {totalPages}
                     </span>
                     {page < totalPages && (
-                        <a href={`/admin/broken-links?key=${adminKey}&page=${page + 1}${showResolved ? '&resolved=true' : ''}`}
+                        <a href={`/admin/broken-links?page=${page + 1}${showResolved ? '&resolved=true' : ''}`}
                            class="btn btn--outline btn--sm">
                             Next &rarr;
                         </a>

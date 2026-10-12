@@ -15,7 +15,6 @@ if (!requireSuperAdmin(Astro.request)) {
 }
 
 const url = new URL(Astro.request.url);
-const adminKey = url.searchParams.get("key") || "";
 
 // Date range (default: last 30 days)
 const daysAgo = parseInt(url.searchParams.get("days") || "30");
@@ -117,7 +116,7 @@ function formatNumber(num: number): string {
 
 <Layout title="Analytics — Admin" robots="noindex, nofollow">
     <div class="admin">
-        <AdminSidebar adminKey={adminKey} activePage="analytics" />
+        <AdminSidebar activePage="analytics" />
 
         <div class="main">
             <header class="page-header">
@@ -126,7 +125,7 @@ function formatNumber(num: number): string {
                     <p>Page view statistics and traffic insights</p>
                 </div>
                 <div class="date-filter">
-                    <select id="daysFilter" onchange="location.href=`/admin/analytics?key=${adminKey}&days=${this.value}`">
+                    <select id="daysFilter" onchange="location.href=`/admin/analytics?days=${this.value}`">
                         <option value="7" selected={daysAgo === 7}>Last 7 days</option>
                         <option value="30" selected={daysAgo === 30}>Last 30 days</option>
                         <option value="90" selected={daysAgo === 90}>Last 90 days</option>

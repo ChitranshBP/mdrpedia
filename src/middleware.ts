@@ -5,6 +5,21 @@
 
 import { defineMiddleware } from 'astro:middleware';
 import { goneResponse, isGone, legacyRedirect, profileSlugRedirect } from './lib/legacy-urls';
+import { adminCookieHeader, isValidAdminKey } from './lib/rbac';
+
+const CSP_REPORT_ONLY = [
+    "default-src 'self'",
+    "script-src 'self' 'unsafe-inline'",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net",
+    "font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net",
+    "img-src 'self' data: blob: https:",
+    "connect-src 'self'",
+    "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "frame-ancestors 'self'",
+].join('; ');
 
 // Static asset patterns
 const STATIC_ASSETS = /\.(js|css|woff2?|ttf|otf|png|jpg|jpeg|gif|webp|avif|svg|ico|mp4|webm)$/i;
@@ -45,6 +60,20 @@ export const onRequest = defineMiddleware(async ({ request, locals }, next) => {
     const movedSlug = profileSlugRedirect(url.pathname);
     if (movedSlug) return Response.redirect(new URL(movedSlug + url.search, url).href, 301);
 
+    // One-time admin login: /admin...?key=SECRET -> set HttpOnly cookie, redirect without the key
+    if (request.method === 'GET' && url.pathname.startsWith('/admin') && url.searchParams.has('key')) {
+        const key = url.searchParams.get('key');
+        url.searchParams.delete('key');
+        const location = url.pathname + url.search;
+        if (isValidAdminKey(key)) {
+            return new Response(null, {
+                status: 302,
+                headers: { Location: location, 'Set-Cookie': adminCookieHeader(request), 'Cache-Control': 'no-store' },
+            });
+        }
+        return new Response(null, { status: 302, headers: { Location: location, 'Cache-Control': 'no-store' } });
+    }
+
     // Process the request
     const response = await next();
     
@@ -61,6 +90,13 @@ export const onRequest = defineMiddleware(async ({ request, locals }, next) => {
     newHeaders.set('X-Content-Type-Options', 'nosniff');
     newHeaders.set('X-Frame-Options', 'SAMEORIGIN');
     newHeaders.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+    const proto = request.headers.get('x-forwarded-proto')?.split(',').pop()?.trim() || url.protocol.replace(':', '');
+    if (proto === 'https') {
+        newHeaders.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    }
+    if (!url.pathname.startsWith('/api/')) {
+        newHeaders.set('Content-Security-Policy-Report-Only', CSP_REPORT_ONLY);
+    }
     
     // Cache control based on content type
     if (IMMUTABLE_ASSETS.test(url.pathname)) {

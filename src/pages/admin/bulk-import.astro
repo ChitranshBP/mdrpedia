@@ -15,7 +15,6 @@ if (!requireSuperAdmin(Astro.request)) {
 }
 
 const url = new URL(Astro.request.url);
-const adminKey = url.searchParams.get("key") || "";
 
 // Fetch recent import jobs
 let recentJobs: any[] = [];
@@ -31,7 +30,7 @@ try {
 
 <Layout title="Bulk Import — Admin" robots="noindex, nofollow">
     <div class="admin">
-        <AdminSidebar adminKey={adminKey} activePage="bulk-import" />
+        <AdminSidebar activePage="bulk-import" />
 
         <div class="main">
             <header class="page-header">
@@ -217,7 +216,7 @@ try {
     </div>
 </Layout>
 
-<script define:vars={{ adminKey }}>
+<script is:inline>
     let csvData = [];
     let headers = [];
 
@@ -370,7 +369,6 @@ try {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'x-admin-key': adminKey
                     },
                     body: JSON.stringify({
                         profile: row,
@@ -409,7 +407,6 @@ try {
             const res = await fetch('/api/admin/bulk-template', {
                 method: 'GET',
                 headers: {
-                    'x-admin-key': adminKey
                 }
             });
 

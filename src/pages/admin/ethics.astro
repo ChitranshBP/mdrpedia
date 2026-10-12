@@ -14,7 +14,6 @@ if (!requireSuperAdmin(Astro.request)) {
     return Astro.redirect("/login");
 }
 
-const adminKey = new URL(Astro.request.url).searchParams.get("key");
 const tab = new URL(Astro.request.url).searchParams.get("tab") || "applications";
 const filterStatus = new URL(Astro.request.url).searchParams.get("status") || "all";
 
@@ -109,14 +108,14 @@ const tierColors: Record<string, string> = {
 
 <Layout title="Ethics Management -- MDRPedia Admin" robots="noindex, nofollow">
     <div class="admin">
-        <AdminSidebar adminKey={adminKey} activePage="ethics" />
+        <AdminSidebar activePage="ethics" />
         <div class="main">
 
         <!-- Tab Navigation -->
         <div class="tab-nav">
-            <a href={`/admin/ethics?key=${adminKey}&tab=applications`} class={`tab-btn ${tab === 'applications' ? 'active' : ''}`}>Applications</a>
-            <a href={`/admin/ethics?key=${adminKey}&tab=audits`} class={`tab-btn ${tab === 'audits' ? 'active' : ''}`}>Pending Audits</a>
-            <a href={`/admin/ethics?key=${adminKey}&tab=clinics`} class={`tab-btn ${tab === 'clinics' ? 'active' : ''}`}>Clinics</a>
+            <a href={`/admin/ethics?tab=applications`} class={`tab-btn ${tab === 'applications' ? 'active' : ''}`}>Applications</a>
+            <a href={`/admin/ethics?tab=audits`} class={`tab-btn ${tab === 'audits' ? 'active' : ''}`}>Pending Audits</a>
+            <a href={`/admin/ethics?tab=clinics`} class={`tab-btn ${tab === 'clinics' ? 'active' : ''}`}>Clinics</a>
         </div>
 
         {tab === 'applications' && (
@@ -125,7 +124,7 @@ const tierColors: Record<string, string> = {
             <div class="stats-grid">
                 {Object.entries(statusCounts).map(([status, count]) => (
                     <a
-                        href={`/admin/ethics?key=${adminKey}&tab=applications&status=${status}`}
+                        href={`/admin/ethics?tab=applications&status=${status}`}
                         class={`stat-card ${filterStatus === status ? 'active' : ''}`}
                         style={`--stat-color: ${statusColors[status] || '#6b7280'}`}
                     >
@@ -139,10 +138,10 @@ const tierColors: Record<string, string> = {
             <div class="filter-bar">
                 <span class="filter-label">Filter:</span>
                 <div class="filter-buttons">
-                    <a href={`/admin/ethics?key=${adminKey}&tab=applications&status=all`} class={`filter-btn ${filterStatus === 'all' ? 'active' : ''}`}>All</a>
-                    <a href={`/admin/ethics?key=${adminKey}&tab=applications&status=SUBMITTED`} class={`filter-btn ${filterStatus === 'SUBMITTED' ? 'active' : ''}`}>Submitted</a>
-                    <a href={`/admin/ethics?key=${adminKey}&tab=applications&status=APPROVED`} class={`filter-btn ${filterStatus === 'APPROVED' ? 'active' : ''}`}>Approved</a>
-                    <a href={`/admin/ethics?key=${adminKey}&tab=applications&status=SUSPENDED`} class={`filter-btn ${filterStatus === 'SUSPENDED' ? 'active' : ''}`}>Suspended</a>
+                    <a href={`/admin/ethics?tab=applications&status=all`} class={`filter-btn ${filterStatus === 'all' ? 'active' : ''}`}>All</a>
+                    <a href={`/admin/ethics?tab=applications&status=SUBMITTED`} class={`filter-btn ${filterStatus === 'SUBMITTED' ? 'active' : ''}`}>Submitted</a>
+                    <a href={`/admin/ethics?tab=applications&status=APPROVED`} class={`filter-btn ${filterStatus === 'APPROVED' ? 'active' : ''}`}>Approved</a>
+                    <a href={`/admin/ethics?tab=applications&status=SUSPENDED`} class={`filter-btn ${filterStatus === 'SUSPENDED' ? 'active' : ''}`}>Suspended</a>
                 </div>
             </div>
 
@@ -320,7 +319,7 @@ const tierColors: Record<string, string> = {
     </div>
 </Layout>
 
-<script define:vars={{ adminKey }}>
+<script is:inline>
     function setLoading(btn, loading, text) {
         if (!btn) return;
         btn.disabled = loading;
@@ -339,9 +338,9 @@ const tierColors: Record<string, string> = {
             setLoading(btn, true, 'Approving...');
             const id = btn.dataset.id;
             try {
-                const res = await fetch(`/api/admin/ethics/${id}?key=${adminKey}`, {
+                const res = await fetch(`/api/admin/ethics/${id}`, {
                     method: 'PUT',
-                    headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ action: 'approve' })
                 });
                 if (res.ok) window.location.reload();
@@ -357,9 +356,9 @@ const tierColors: Record<string, string> = {
             setLoading(btn, true, 'Rejecting...');
             const id = btn.dataset.id;
             try {
-                const res = await fetch(`/api/admin/ethics/${id}?key=${adminKey}`, {
+                const res = await fetch(`/api/admin/ethics/${id}`, {
                     method: 'PUT',
-                    headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ action: 'reject', rejection_reason: reason })
                 });
                 if (res.ok) window.location.reload();
@@ -375,9 +374,9 @@ const tierColors: Record<string, string> = {
             setLoading(btn, true, 'Creating...');
             const id = btn.dataset.id;
             try {
-                const res = await fetch(`/api/admin/ethics/create-audit?key=${adminKey}`, {
+                const res = await fetch(`/api/admin/ethics/create-audit`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ application_id: id, audit_type: type.toUpperCase() })
                 });
                 if (res.ok) { alert('Audit created!'); window.location.reload(); }
@@ -393,9 +392,9 @@ const tierColors: Record<string, string> = {
             setLoading(btn, true, 'Revoking...');
             const profileId = btn.dataset.profileId;
             try {
-                const res = await fetch(`/api/admin/ethics/revoke?key=${adminKey}`, {
+                const res = await fetch(`/api/admin/ethics/revoke`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ profile_id: profileId, reason })
                 });
                 if (res.ok) window.location.reload();
@@ -412,9 +411,9 @@ const tierColors: Record<string, string> = {
 
             try {
                 // Fetch audit details
-                const res = await fetch(`/api/admin/ethics/audit/${auditId}/review?key=${adminKey}`, {
+                const res = await fetch(`/api/admin/ethics/audit/${auditId}/review`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ action: 'fetch_details' })
                 });
 
@@ -424,9 +423,9 @@ const tierColors: Record<string, string> = {
 
                 if (action === 'request_changes') {
                     const notes = prompt('Notes for the doctor:');
-                    const reviewRes = await fetch(`/api/admin/ethics/audit/${auditId}/review?key=${adminKey}`, {
+                    const reviewRes = await fetch(`/api/admin/ethics/audit/${auditId}/review`, {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ action: 'request_changes', reviewer_notes: notes })
                     });
                     if (reviewRes.ok) { alert('Sent back for changes.'); window.location.reload(); }
@@ -434,9 +433,9 @@ const tierColors: Record<string, string> = {
                 } else {
                     // Approve with default full marks (admin can refine via direct API later)
                     const notes = prompt('Reviewer notes (optional):');
-                    const reviewRes = await fetch(`/api/admin/ethics/audit/${auditId}/review?key=${adminKey}`, {
+                    const reviewRes = await fetch(`/api/admin/ethics/audit/${auditId}/review`, {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ action: 'approve', reviewer_notes: notes, grades: [] })
                     });
                     if (reviewRes.ok) {
@@ -458,9 +457,9 @@ const tierColors: Record<string, string> = {
             if (!confirm('Recalculate all clinic certifications?')) return;
             setLoading(recalcBtn, true, 'Recalculating...');
             try {
-                const res = await fetch(`/api/admin/ethics/clinics?key=${adminKey}`, {
+                const res = await fetch(`/api/admin/ethics/clinics`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ action: 'recalculate' })
                 });
                 if (res.ok) { alert('Recalculation complete'); window.location.reload(); }

@@ -90,12 +90,11 @@ export function checkRateLimit(
 /**
  * Get client IP from request headers
  */
-export function getClientIdentifier(request: Request): string {
-    const forwarded = request.headers.get("x-forwarded-for");
-    const realIp = request.headers.get("x-real-ip");
-    const ip = forwarded?.split(",")[0]?.trim() || realIp || "unknown";
-
-    // Also include the endpoint for per-endpoint rate limiting
+export function getClientIdentifier(request: Request, clientAddress?: string): string {
+    // Behind OpenLiteSpeed the proxy appends the real peer as the LAST entry;
+    // earlier entries are client-supplied and spoofable.
+    const last = request.headers.get("x-forwarded-for")?.split(",").pop()?.trim();
+    const ip = last || clientAddress || "unknown";
     const url = new URL(request.url);
     return `${ip}:${url.pathname}`;
 }

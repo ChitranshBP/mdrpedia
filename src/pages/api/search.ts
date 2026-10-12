@@ -6,6 +6,7 @@ import { searchCache, searchCacheKey } from '../../lib/cache';
 import { API_CONFIG } from '../../lib/config';
 import { fuzzyMatch } from '../../lib/fuzzy-search';
 import { hashIP, getClientIP } from '../../lib/bot-detector';
+import { checkRateLimit, getClientIdentifier, rateLimitResponse, RATE_LIMITS } from '../../lib/rate-limit';
 
 export const prerender = false; // Server-side only
 
@@ -249,6 +250,8 @@ async function logSettledSearch(request: Request, query: string, count: number) 
 }
 
 export const GET: APIRoute = async ({ request, clientAddress }) => {
+    const rl = checkRateLimit(getClientIdentifier(request, clientAddress), RATE_LIMITS.search);
+    if (!rl.allowed) return rateLimitResponse(rl.resetTime);
     const url = new URL(request.url);
     const query = url.searchParams.get('q')?.trim() || '';
     const queryLower = query.toLowerCase();

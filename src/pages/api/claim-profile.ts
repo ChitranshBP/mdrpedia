@@ -1,9 +1,10 @@
 import type { APIRoute } from "astro";
 import { prisma } from "../../lib/prisma";
-import { isValidEmail } from "../../lib/utils";
+import { isValidEmail, getClientIP } from "../../lib/utils";
 import { uploadPrivateDocument } from "../../lib/cloudinary";
 import { lookupNPI } from "../../lib/npi-registry";
 import { checkRateLimit, getClientIdentifier, RATE_LIMITS, rateLimitResponse } from "../../lib/rate-limit";
+import { sniffFileType } from "../../lib/file-sniff";
 import crypto from "crypto";
 
 export const prerender = false;
@@ -67,7 +68,7 @@ function hashIp(address: string | undefined) {
 }
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
-    const rate = checkRateLimit(getClientIdentifier(request), RATE_LIMITS.submission);
+    const rate = checkRateLimit(getClientIdentifier(request, clientAddress), RATE_LIMITS.submission);
     if (!rate.allowed) return rateLimitResponse(rate.resetTime);
 
     try {
@@ -119,6 +120,13 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
                     { status: 400 },
                 );
             }
+            const sniffed = sniffFileType(new Uint8Array(await documentFile.slice(0, 16).arrayBuffer()));
+            if (!sniffed || !ALLOWED_DOCUMENT_TYPES.includes(sniffed)) {
+                return new Response(
+                    JSON.stringify({ error: "Document must be a PDF, JPG or PNG." }),
+                    { status: 400 },
+                );
+            }
             if (documentFile.size > MAX_FILE_SIZE) {
                 return new Response(
                     JSON.stringify({ error: "Document is larger than 10MB." }),
@@ -161,7 +169,8 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
             return new Response(JSON.stringify({ error: "Profile not found." }), { status: 404 });
         }
 
-        const ipHash = hashIp(clientAddress);
+        const realIp = getClientIP(request);
+        const ipHash = hashIp(realIp !== 'unknown' ? realIp : clientAddress);
 
         const recentClaims = await prisma.profileEdit.count({
             where: {

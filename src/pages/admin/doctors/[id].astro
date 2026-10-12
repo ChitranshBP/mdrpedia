@@ -14,7 +14,6 @@ if (!requireSuperAdmin(Astro.request)) {
 }
 const { id } = Astro.params; // slug
 const url = new URL(Astro.request.url);
-const adminKey = url.searchParams.get("key");
 
 // Valid enum values for type-safe form handling
 const validStatuses: ProfileStatus[] = Object.values(ProfileStatus);
@@ -326,7 +325,7 @@ const formatDate = (date: Date | null) => date ? date.toISOString().split('T')[0
 
 <Layout title={`Edit ${profile.full_name} — Admin`} robots="noindex, nofollow">
     <div class="admin">
-        <AdminSidebar adminKey={adminKey} activePage="doctors" />
+        <AdminSidebar activePage="doctors" />
         <div class="main">
         <header class="admin-header">
             <div>

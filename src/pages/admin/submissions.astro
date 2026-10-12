@@ -10,6 +10,7 @@ import { requireSuperAdmin } from "../../lib/rbac";
 import { slugify } from "../../lib/utils";
 import { logAdminAction } from "../../lib/audit";
 import { notifySearchEngines } from "../../utils/indexer";
+import { sanitizeHtml } from "../../lib/sanitize-html";
 
 export const prerender = false;
 
@@ -22,7 +23,6 @@ if (!requireSuperAdmin(Astro.request)) {
 }
 
 const url = new URL(Astro.request.url);
-const adminKey = url.searchParams.get("key");
 
 let successMsg = "";
 let errorMsg = "";
@@ -76,7 +76,7 @@ if (Astro.request.method === "POST") {
                             slug,
                             full_name: pending.full_name,
                             specialty: pending.specialty,
-                            biography: pending.biography,
+                            biography: pending.biography ? sanitizeHtml(pending.biography) : pending.biography,
                             npi_number: pending.npi_number,
                             orcid_id: pending.orcid_id,
                             geography_id: geo.id,
@@ -141,7 +141,7 @@ const reviewedSubmissions = await prisma.pendingProfile.findMany({
 
 <Layout title="New Submissions — MDRPedia Admin" robots="noindex, nofollow">
     <div class="admin">
-        <AdminSidebar adminKey={adminKey} activePage="submissions" />
+        <AdminSidebar activePage="submissions" />
         <div class="main">
 
         {successMsg && <div class="alert success">{successMsg}</div>}

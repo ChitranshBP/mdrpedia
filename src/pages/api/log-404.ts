@@ -7,8 +7,11 @@ export const prerender = false;
 
 import { prisma } from '../../lib/prisma';
 import { isBot, hashIP, getClientIP } from '../../lib/bot-detector';
+import { checkRateLimit, getClientIdentifier, rateLimitResponse } from '../../lib/rate-limit';
 
-export async function POST({ request }: { request: Request }) {
+export async function POST({ request, clientAddress }: { request: Request; clientAddress?: string }) {
+    const rl = checkRateLimit(getClientIdentifier(request, clientAddress), { windowMs: 60000, maxRequests: 20 });
+    if (!rl.allowed) return rateLimitResponse(rl.resetTime);
     try {
         const body = await request.json();
         const { url, referrer } = body;

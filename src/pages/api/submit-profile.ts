@@ -1,13 +1,17 @@
 import type { APIRoute } from "astro";
 import { prisma } from "../../lib/prisma";
-import { isValidEmail } from "../../lib/utils";
+import { isValidEmail, getClientIP } from "../../lib/utils";
 import crypto from 'crypto';
+import { sanitizeHtml } from "../../lib/sanitize-html";
+import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "../../lib/rate-limit";
 
 export const prerender = false;
 
 const MAX_BODY_SIZE = 512 * 1024; // 512KB
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
+    const rl = checkRateLimit(getClientIdentifier(request, clientAddress), { windowMs: 300000, maxRequests: 5 });
+    if (!rl.allowed) return rateLimitResponse(rl.resetTime);
     try {
         // Check body size
         const contentLength = parseInt(request.headers.get('content-length') || '0');
@@ -68,12 +72,12 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
                 country,
                 city,
                 hospital,
-                biography,
+                biography: biography ? sanitizeHtml(biography) : biography,
                 orcid_id,
                 npi_number,
                 contributor_name,
                 contributor_email,
-                ip_address: crypto.createHash('sha256').update(clientAddress || 'unknown').digest('hex').slice(0, 32),
+                ip_address: crypto.createHash('sha256').update(getClientIP(request) !== 'unknown' ? getClientIP(request) : (clientAddress || 'unknown')).digest('hex').slice(0, 32),
                 status: "PENDING"
             }
         });

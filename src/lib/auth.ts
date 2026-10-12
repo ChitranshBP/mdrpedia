@@ -4,6 +4,7 @@
  */
 
 import { SignJWT, jwtVerify } from 'jose';
+import { randomUUID } from 'node:crypto';
 
 // ─── Environment Validation ─────────────────────────────────────────────────
 // Crash early rather than sign sessions with a public, hardcoded secret.
@@ -46,6 +47,7 @@ export interface SessionPayload {
 export async function createMagicLinkToken(payload: SessionPayload): Promise<string> {
     return new SignJWT({ ...payload, type: 'magic_link' })
         .setProtectedHeader({ alg: 'HS256' })
+        .setJti(randomUUID())
         .setIssuedAt()
         .setExpirationTime(MAGIC_LINK_EXPIRY)
         .sign(JWT_SECRET);
@@ -62,12 +64,43 @@ export async function createSessionToken(payload: SessionPayload): Promise<strin
         .sign(JWT_SECRET);
 }
 
+export type TokenType = 'magic_link' | 'session';
+
+// Single-use tracking for magic links (app runs as one PM2 process)
+const usedJti = new Map<string, number>();
+
+function sweepUsedJti(now: number) {
+    for (const [id, exp] of usedJti) if (exp <= now) usedJti.delete(id);
+}
+
 /**
- * Verify and decode a token
+ * Verify and decode a token of the expected type. Rejects other types.
  */
-export async function verifyToken(token: string): Promise<SessionPayload | null> {
+export async function verifyToken(token: string, expectedType: TokenType): Promise<SessionPayload | null> {
     try {
-        const { payload } = await jwtVerify(token, JWT_SECRET);
+        const { payload } = await jwtVerify(token, JWT_SECRET, { algorithms: ['HS256'] });
+        if (payload.type !== expectedType) return null;
+        return {
+            profileId: payload.profileId as string,
+            slug: payload.slug as string,
+            email: payload.email as string,
+        };
+    } catch {
+        return null;
+    }
+}
+
+/**
+ * Verify a magic link token and consume it (single use).
+ */
+export async function consumeMagicLinkToken(token: string): Promise<SessionPayload | null> {
+    try {
+        const { payload } = await jwtVerify(token, JWT_SECRET, { algorithms: ['HS256'] });
+        if (payload.type !== 'magic_link' || !payload.jti) return null;
+        const now = Date.now();
+        sweepUsedJti(now);
+        if (usedJti.has(payload.jti)) return null;
+        usedJti.set(payload.jti, (payload.exp ?? Math.floor(now / 1000) + 900) * 1000);
         return {
             profileId: payload.profileId as string,
             slug: payload.slug as string,
@@ -85,7 +118,7 @@ export async function getSession(request: Request): Promise<SessionPayload | nul
     const cookieHeader = request.headers.get('cookie') || '';
     const match = cookieHeader.match(new RegExp(`${COOKIE_NAME}=([^;]+)`));
     if (!match) return null;
-    return verifyToken(match[1]);
+    return verifyToken(match[1], 'session');
 }
 
 /**

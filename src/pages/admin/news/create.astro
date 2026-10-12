@@ -12,7 +12,6 @@ if (!requireSuperAdmin(Astro.request)) {
     return Astro.redirect("/login");
 }
 
-const adminKey = new URL(Astro.request.url).searchParams.get("key");
 
 const categories = [
     "Policy",
@@ -28,7 +27,7 @@ const categories = [
 
 <Layout title="Create News Article — MDRPedia Admin" robots="noindex, nofollow">
     <div class="admin">
-        <AdminSidebar adminKey={adminKey} activePage="news" />
+        <AdminSidebar activePage="news" />
         <div class="main">
 
         <form id="newsForm" class="editor-form">
@@ -100,7 +99,7 @@ const categories = [
     </div>
 </Layout>
 
-<script define:vars={{ adminKey }}>
+<script is:inline>
     // Set default date to today
     document.getElementById('date').value = new Date().toISOString().split('T')[0];
 
@@ -119,7 +118,7 @@ const categories = [
             content: form.content.value || `Detailed information about "${form.title.value}" will be expanded soon.`
         };
 
-        const res = await fetch(`/api/admin/news?key=${adminKey}`, {
+        const res = await fetch(`/api/admin/news`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -128,7 +127,7 @@ const categories = [
         if (res.ok) {
             const result = await res.json();
             alert('Article created successfully!');
-            window.location.href = `/admin/news?key=${adminKey}`;
+            window.location.href = `/admin/news`;
         } else {
             const error = await res.json();
             alert(`Error: ${error.message || 'Failed to create article'}`);

@@ -14,11 +14,10 @@ if (!requireSuperAdmin(Astro.request)) {
 }
 
 const { slug } = Astro.params;
-const adminKey = new URL(Astro.request.url).searchParams.get("key");
 
 const article = await getEntry("news", slug!);
 if (!article) {
-    return Astro.redirect(`/admin/news?key=${adminKey}&error=not_found`);
+    return Astro.redirect(`/admin/news?error=not_found`);
 }
 
 const categories = [
@@ -37,7 +36,7 @@ const data = article.data;
 
 <Layout title={`Edit: ${data.title} — MDRPedia Admin`} robots="noindex, nofollow">
     <div class="admin">
-        <AdminSidebar adminKey={adminKey} activePage="news" />
+        <AdminSidebar activePage="news" />
         <div class="main">
         <header class="admin-header">
             <div class="admin-header__top">
@@ -108,7 +107,7 @@ const data = article.data;
     </div>
 </Layout>
 
-<script define:vars={{ adminKey, slug }}>
+<script define:vars={{ slug }}>
     // Form submission
     document.getElementById('newsForm').addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -125,7 +124,7 @@ const data = article.data;
             content: form.content.value
         };
 
-        const res = await fetch(`/api/admin/news?key=${adminKey}`, {
+        const res = await fetch(`/api/admin/news`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -143,14 +142,14 @@ const data = article.data;
     window.deleteArticle = async function() {
         if (!confirm('Delete this article? This cannot be undone.')) return;
 
-        const res = await fetch(`/api/admin/news?key=${adminKey}`, {
+        const res = await fetch(`/api/admin/news`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ slug })
         });
 
         if (res.ok) {
-            window.location.href = `/admin/news?key=${adminKey}`;
+            window.location.href = `/admin/news`;
         } else {
             alert('Failed to delete article');
         }

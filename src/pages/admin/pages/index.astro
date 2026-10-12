@@ -18,14 +18,13 @@ const pages = await prisma.contentPage.findMany({
     orderBy: { updatedAt: "desc" },
 });
 
-const adminKey = new URL(Astro.request.url).searchParams.get("key");
 const editUrl = (slug?: string) =>
-    `/admin/pages/edit?key=${adminKey}${slug ? `&slug=${slug}` : ""}`;
+    `/admin/pages/edit${slug ? `&slug=${slug}` : ""}`;
 ---
 
 <Layout title="Manage Pages — MDRPedia Admin" robots="noindex, nofollow">
     <div class="admin">
-        <AdminSidebar adminKey={adminKey} activePage="pages" />
+        <AdminSidebar activePage="pages" />
         <div class="main">
         <header class="admin-header">
             <div class="admin-header__top">

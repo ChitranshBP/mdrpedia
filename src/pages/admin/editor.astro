@@ -15,7 +15,6 @@ if (!requireSuperAdmin(Astro.request)) {
     return Astro.redirect("/login");
 }
 
-const adminKey = new URL(Astro.request.url).searchParams.get("key") || "";
 
 // Get relationship stats
 let lineageCount = 0;
@@ -71,7 +70,7 @@ try {
 
 <Layout title="Knowledge Graph Editor — MDRPedia" robots="noindex, nofollow">
     <div class="admin">
-        <AdminSidebar adminKey={adminKey} activePage="editor" />
+        <AdminSidebar activePage="editor" />
         <div class="main">
         <!-- Header -->
         <header class="editor-header">
@@ -146,13 +145,13 @@ try {
                 </div>
                 <div class="section-content">
                     <div class="quick-actions">
-                        <a href={`/admin/claims?key=${adminKey}`} class="action-btn">
+                        <a href={`/admin/claims`} class="action-btn">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                             </svg>
                             Review Profile Claims
                         </a>
-                        <a href={`/admin/doctors?key=${adminKey}`} class="action-btn">
+                        <a href={`/admin/doctors`} class="action-btn">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                                 <circle cx="9" cy="7" r="4"/>
@@ -160,14 +159,14 @@ try {
                             </svg>
                             Manage Doctors
                         </a>
-                        <a href={`/admin/edits?key=${adminKey}`} class="action-btn">
+                        <a href={`/admin/edits`} class="action-btn">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
                                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                             </svg>
                             Pending Edits
                         </a>
-                        <a href={`/admin/submissions?key=${adminKey}`} class="action-btn">
+                        <a href={`/admin/submissions`} class="action-btn">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                                 <circle cx="8.5" cy="7" r="4"/>

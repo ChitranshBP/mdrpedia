@@ -4,7 +4,7 @@
  */
 
 import type { APIRoute } from 'astro';
-import { verifyToken, createSessionToken, sessionCookieHeader } from '../../../lib/auth';
+import { consumeMagicLinkToken, createSessionToken, sessionCookieHeader } from '../../../lib/auth';
 import { createLogger } from '../../../lib/logger';
 
 export const prerender = false;
@@ -19,7 +19,7 @@ export const GET: APIRoute = async ({ request, redirect }) => {
         return redirect('/login?error=missing_token');
     }
 
-    const payload = await verifyToken(token);
+    const payload = await consumeMagicLinkToken(token);
 
     if (!payload) {
         log.warn('Invalid or expired magic link token');

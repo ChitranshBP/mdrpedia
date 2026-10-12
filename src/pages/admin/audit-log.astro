@@ -15,7 +15,6 @@ if (!requireSuperAdmin(Astro.request)) {
 }
 
 const url = new URL(Astro.request.url);
-const adminKey = url.searchParams.get("key") || "";
 const filterAction = url.searchParams.get("action") || "";
 const filterTarget = url.searchParams.get("target") || "";
 const page = parseInt(url.searchParams.get("page") || "1");
@@ -72,7 +71,7 @@ function getActionColor(action: string): string {
 
 <Layout title="Activity Log — Admin" robots="noindex, nofollow">
     <div class="admin">
-        <AdminSidebar adminKey={adminKey} activePage="audit-log" />
+        <AdminSidebar activePage="audit-log" />
 
         <div class="main">
             <header class="page-header">
@@ -91,7 +90,6 @@ function getActionColor(action: string): string {
             <!-- Filters -->
             <div class="filters-bar">
                 <form method="get" class="filters-form">
-                    <input type="hidden" name="key" value={adminKey} />
 
                     <div class="filter-group">
                         <label>Action Type</label>
@@ -117,7 +115,7 @@ function getActionColor(action: string): string {
 
                     <button type="submit" class="btn btn--primary">Filter</button>
                     {(filterAction || filterTarget) && (
-                        <a href={`/admin/audit-log?key=${adminKey}`} class="btn btn--outline">Clear</a>
+                        <a href={`/admin/audit-log`} class="btn btn--outline">Clear</a>
                     )}
                 </form>
             </div>
@@ -186,7 +184,7 @@ function getActionColor(action: string): string {
             {totalPages > 1 && (
                 <div class="pagination">
                     {page > 1 && (
-                        <a href={`/admin/audit-log?key=${adminKey}&page=${page - 1}${filterAction ? `&action=${filterAction}` : ''}${filterTarget ? `&target=${filterTarget}` : ''}`} class="btn btn--outline btn--sm">
+                        <a href={`/admin/audit-log?page=${page - 1}${filterAction ? `&action=${filterAction}` : ''}${filterTarget ? `&target=${filterTarget}` : ''}`} class="btn btn--outline btn--sm">
                             &larr; Previous
                         </a>
                     )}
@@ -194,7 +192,7 @@ function getActionColor(action: string): string {
                         Page {page} of {totalPages}
                     </span>
                     {page < totalPages && (
-                        <a href={`/admin/audit-log?key=${adminKey}&page=${page + 1}${filterAction ? `&action=${filterAction}` : ''}${filterTarget ? `&target=${filterTarget}` : ''}`} class="btn btn--outline btn--sm">
+                        <a href={`/admin/audit-log?page=${page + 1}${filterAction ? `&action=${filterAction}` : ''}${filterTarget ? `&target=${filterTarget}` : ''}`} class="btn btn--outline btn--sm">
                             Next &rarr;
                         </a>
                     )}

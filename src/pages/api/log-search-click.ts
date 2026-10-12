@@ -2,8 +2,11 @@ import type { APIRoute } from 'astro';
 import { prisma } from '../../lib/prisma';
 import { getClientIP } from '../../lib/utils';
 import crypto from 'crypto';
+import { checkRateLimit, getClientIdentifier, rateLimitResponse } from '../../lib/rate-limit';
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, clientAddress }) => {
+    const rl = checkRateLimit(getClientIdentifier(request, clientAddress), { windowMs: 60000, maxRequests: 30 });
+    if (!rl.allowed) return rateLimitResponse(rl.resetTime);
     try {
         const body = await request.json();
         const { query, clickedSlug } = body;
