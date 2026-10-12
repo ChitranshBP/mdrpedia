@@ -377,7 +377,7 @@ const RESEARCH_STATUS: Record<string, { label: string; color: string }> = {
                                 </h2>
                                 <div class="doctors-grid">
                                     {treatingDoctors.slice(0, 6).map((doctor) => (
-                                        <a href={`/doctor/${doctor.id}`} class="doctor-card">
+                                        <a href={`/doctors/${doctor.id}`} class="doctor-card">
                                             <div class="doctor-avatar">
                                                 {doctor.data.portraitUrl ? (
                                                     <img src={doctor.data.portraitUrl} alt={doctor.data.fullName} loading="lazy" />

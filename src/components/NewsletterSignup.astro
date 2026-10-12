@@ -17,10 +17,10 @@ const { source = 'footer' } = Astro.props;
             <p>New profiles, ethics rulings, and registry updates — delivered monthly.</p>
         </div>
         <div class="newsletter-fields">
-            <label class="sr-only" for="newsletter-email">Email address</label>
+            <label class="sr-only" for={`newsletter-email-${source}`}>Email address</label>
             <input
                 type="email"
-                id="newsletter-email"
+                id={`newsletter-email-${source}`}
                 name="email"
                 placeholder="your@email.com"
                 required
@@ -42,14 +42,20 @@ const { source = 'footer' } = Astro.props;
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const formEl = e.target as HTMLFormElement;
-            const statusEl = formEl.querySelector('.newsletter-status') as HTMLElement;
+            const statusEl = formEl.querySelector<HTMLElement>('.newsletter-status');
             const btnEl = formEl.querySelector('.newsletter-btn') as HTMLButtonElement;
             const emailInput = formEl.querySelector('input[name="email"]') as HTMLInputElement;
             const honeypot = formEl.querySelector('input[name="website"]') as HTMLInputElement;
 
+            const setStatus = (text: string, color: string) => {
+                if (!statusEl) return;
+                statusEl.textContent = text;
+                statusEl.style.color = color;
+            };
+
             btnEl.disabled = true;
             btnEl.textContent = '...';
-            statusEl.textContent = '';
+            if (statusEl) statusEl.textContent = '';
 
             try {
                 const res = await fetch('/api/newsletter', {
@@ -62,19 +68,16 @@ const { source = 'footer' } = Astro.props;
                     }),
                 });
 
-                const data = await res.json();
+                const data = await res.json().catch(() => ({}));
 
                 if (res.ok && data.success) {
-                    statusEl.textContent = 'Subscribed — welcome aboard.';
-                    statusEl.style.color = 'var(--verdant)';
+                    setStatus('Subscribed — welcome aboard.', 'var(--verdant)');
                     emailInput.value = '';
                 } else {
-                    statusEl.textContent = data.error || 'Something went wrong.';
-                    statusEl.style.color = 'var(--sanguine)';
+                    setStatus(data.error || 'Something went wrong.', 'var(--sanguine)');
                 }
             } catch {
-                statusEl.textContent = 'Network error. Please try again.';
-                statusEl.style.color = 'var(--sanguine)';
+                setStatus('Network error. Please try again.', 'var(--sanguine)');
             } finally {
                 btnEl.disabled = false;
                 btnEl.textContent = 'Subscribe';

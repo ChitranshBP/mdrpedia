@@ -1,5 +1,4 @@
 ---
-export const prerender = true;
 /**
  * MDRPedia — Enhanced Search Results Page
  * Features real-time autocomplete, keyboard navigation, and improved UX
@@ -201,7 +200,7 @@ const tierCounts = results.reduce((acc, d) => {
 
                                 return (
                                     <a
-                                        href={`/doctor/${doctor.id}`}
+                                        href={`/doctors/${doctor.id}`}
                                         class={`result-card result-card--${d.tier.toLowerCase()}`}
                                         style={`--animation-delay: ${index * 30}ms`}
                                     >
@@ -284,7 +283,7 @@ const tierCounts = results.reduce((acc, d) => {
                                     </svg>
                                     Browse Top Doctors
                                 </a>
-                                <a href="/specialties" class="btn btn--primary">
+                                <a href="/specialty" class="btn btn--primary">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
                                     </svg>
@@ -351,7 +350,7 @@ const tierCounts = results.reduce((acc, d) => {
                                 <span class="quick-link-desc">Prize-winning researchers</span>
                             </div>
                         </a>
-                        <a href="/specialties" class="quick-link">
+                        <a href="/specialty" class="quick-link">
                             <div class="quick-link-icon quick-link-icon--blue">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
