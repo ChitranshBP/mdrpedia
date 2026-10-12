@@ -261,6 +261,27 @@ export interface ProfileData {
   createdAt?: string | null;
   updatedAt?: string | null;
 
+  /** Licence checked against the issuing board. */
+  licenseVerified?: boolean;
+  /** Record reviewed by an MDRPedia editor. */
+  manuallyVerified?: boolean;
+  ethics?: {
+    status: string | null;
+    tier: string | null;
+    certId: string | null;
+    score: number | null;
+    certifiedAt: string | null;
+  } | null;
+  certifications?: {
+    boardName: string;
+    specialty: string;
+    issuingBody: string;
+    country: string;
+    isActive: boolean;
+    verified: boolean;
+    expiryDate?: string | null;
+  }[];
+
   // ═══════════════════ DOCTOR PORTAL FIELDS ═══════════════════
   languagesSpoken?: string[];
   acceptedInsurance?: string[];

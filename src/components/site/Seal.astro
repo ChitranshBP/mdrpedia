@@ -1,0 +1,43 @@
+---
+/** The register's circular seal (claude.ai/design "Seal"). */
+interface Props {
+	size?: number;
+	color?: string;
+	ring?: string;
+	letter?: string;
+	no?: string;
+	uid: string;
+	label?: string;
+}
+
+const {
+	size = 120,
+	color = "#c9a24a",
+	ring = "THE PHYSICIANS' REGISTER · MDRPEDIA · VERIFIED ·",
+	letter = "M",
+	no = "",
+	uid,
+	label,
+} = Astro.props;
+const arc = `arc-${uid}`;
+const sw = size < 80 ? 3 : 1.4;
+const mono = "Spline Sans Mono, monospace";
+---
+
+<svg
+	viewBox="0 0 200 200"
+	width={size}
+	height={size}
+	style={`display:block;color:${color}`}
+	role={label ? "img" : undefined}
+	aria-label={label}
+	aria-hidden={label ? undefined : "true"}
+>
+	<defs><path id={arc} d="M 100 100 m -80 0 a 80 80 0 1 1 160 0 a 80 80 0 1 1 -160 0"></path></defs>
+	<circle cx="100" cy="100" r="96" fill="none" stroke="currentColor" stroke-width={sw}></circle>
+	<circle cx="100" cy="100" r="66" fill="none" stroke="currentColor" stroke-width="1"></circle>
+	<text font-family={mono} font-size="8.4" letter-spacing="3.2" fill="currentColor"><textPath href={`#${arc}`}>{ring}</textPath></text>
+	<text x="100" y={no ? 112 : 122} text-anchor="middle" font-family="Bodoni Moda, serif" font-size="64" font-weight="500" fill="currentColor">{letter}</text>
+	{no && <line x1="72" y1="124" x2="128" y2="124" stroke="currentColor" stroke-width="0.6"></line>}
+	{no && <text x="100" y="138" text-anchor="middle" font-family={mono} font-size="8" letter-spacing="2" fill="currentColor">{no}</text>}
+</svg>

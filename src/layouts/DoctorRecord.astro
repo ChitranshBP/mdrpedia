@@ -1,0 +1,973 @@
+---
+/**
+ * MDRPedia — doctor record (claude.ai/design "Profile", with the tabbed body
+ * and NMC-safe framing from "Doctor Showcase").
+ */
+import "../styles/pages/profile.css";
+import SiteLayout from "./SiteLayout.astro";
+import JsonLd from "../components/JsonLd.astro";
+import MedicalKnowledgeGraph from "../components/MedicalKnowledgeGraph.astro";
+import Seal from "../components/site/Seal.astro";
+import PaperRow from "../components/site/PaperRow.astro";
+import { generateAISummary } from "../lib/ai-summary";
+import { generatePatientSummary } from "../lib/patient-summary";
+import { normalizeSpecialty } from "../lib/specialty-groups";
+import { getProfileStanding } from "../lib/profile-ranks";
+import { getSimilarDoctors } from "../lib/similar-doctors";
+import { slugify } from "../lib/slug";
+import type { ProfileData } from "../lib/types";
+
+interface Props {
+	doctor: ProfileData;
+}
+
+const { doctor } = Astro.props;
+const slug = Astro.url.pathname.split("/").filter(Boolean).pop() || "";
+const site = Astro.site ?? new URL("https://mdrpedia.com");
+const pageUrl = new URL(`/doctors/${slug}`, site).href;
+
+const isHistorical = doctor.status === "HISTORICAL";
+const isUnclaimed = !doctor.claimStatus || doctor.claimStatus === "UNCLAIMED";
+const claimable = isUnclaimed && !isHistorical;
+const openalexId = doctor.openalexId?.replace(/^https?:\/\/openalex\.org\//i, "") || null;
+const known = (v?: string | null): v is string => !!v && v.trim() !== "" && !["unknown", "global"].includes(v.trim().toLowerCase());
+
+const specialtyLabel = normalizeSpecialty(doctor.specialty);
+const city = known(doctor.geography.city) ? doctor.geography.city : null;
+const region = known(doctor.geography.region) && doctor.geography.region !== city ? doctor.geography.region : null;
+const country = known(doctor.geography.country) ? doctor.geography.country : null;
+const location = [city, region, country].filter(Boolean).join(", ");
+const primaryInstitution = doctor.affiliations?.[0]?.hospitalName;
+
+const hasImage = !!doctor.portraitUrl && !doctor.portraitUrl.startsWith("data:image/svg");
+const initials = doctor.fullName
+	.replace(/^(dr|prof|sir|dame)\.?\s+/i, "")
+	.split(/\s+/)
+	.filter((w) => /^[\p{L}]/u.test(w))
+	.map((w) => w[0])
+	.filter((_, i, a) => i === 0 || i === a.length - 1)
+	.join("")
+	.toUpperCase();
+
+const citations = doctor.citations ?? [];
+const citationCount = (c: (typeof citations)[number]) => (c as { citationCount?: number }).citationCount ?? c.totalCitationCount ?? 0;
+const totalCitations = citations.reduce((acc, c) => acc + citationCount(c), 0);
+const pubmedLinked = citations.filter((c) => c.pubmedId).length;
+const openAccess = citations.filter((c) => c.isOpenAccess && c.openAccessUrl).length;
+const papers = [...citations].sort((a, b) => citationCount(b) - citationCount(a) || (b.year ?? 0) - (a.year ?? 0));
+const PAPERS_SHOWN = 5;
+const paperYears = citations.map((c) => c.year).filter((y): y is number => !!y);
+const yearCounts = (() => {
+	if (paperYears.length < 3) return [];
+	const lo = Math.min(...paperYears);
+	const hi = Math.max(...paperYears);
+	if (hi - lo > 80) return [];
+	const counts = new Map<number, number>();
+	paperYears.forEach((y) => counts.set(y, (counts.get(y) ?? 0) + 1));
+	return Array.from({ length: hi - lo + 1 }, (_, i) => ({ y: lo + i, n: counts.get(lo + i) ?? 0 }));
+})();
+const maxYearCount = Math.max(1, ...yearCounts.map((y) => y.n));
+const topJournals = [...new Set(citations.map((c) => c.journal).filter((j): j is string => !!j))].slice(0, 5);
+
+const awards = [...(doctor.awards ?? [])].sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
+const timeline = [...(doctor.timeline ?? [])].sort((a, b) => a.year - b.year);
+const talks = [...(doctor.talks ?? [])].sort((a, b) => b.year - a.year);
+const techniques = doctor.techniquesInvented ?? [];
+const mentors = doctor.mentors ?? [];
+const students = doctor.students ?? [];
+const certifications = doctor.certifications ?? [];
+const education = doctor.education ?? [];
+
+const aiSummary =
+	doctor.aiSummary ||
+	generateAISummary({
+		fullName: doctor.fullName,
+		specialty: doctor.specialty,
+		subSpecialty: doctor.subSpecialty || undefined,
+		tier: doctor.tier,
+		hIndex: doctor.hIndex,
+		yearsActive: doctor.yearsActive,
+		verifiedSurgeries: doctor.verifiedSurgeries,
+		livesSaved: doctor.livesSaved,
+		techniquesInvented: doctor.techniquesInvented,
+		geography: { country: doctor.geography.country, region: doctor.geography.region || undefined, city: doctor.geography.city || undefined },
+		affiliations: doctor.affiliations?.map((a) => ({ hospitalName: a.hospitalName, role: a.role || undefined, hospitalUrl: a.hospitalUrl || undefined })),
+		biography: doctor.biography || undefined,
+		status: doctor.status,
+		dateOfBirth: doctor.dateOfBirth || undefined,
+		dateOfDeath: doctor.dateOfDeath || undefined,
+		citations: doctor.citations,
+		awards: doctor.awards,
+	});
+const hasBio = !!doctor.biography && doctor.biography.replace(/<[^>]+>/g, "").trim().length > 50;
+
+// Patient counts and outcome claims stay off the record (NMC Guidelines on Ethical Advertising, 8.1(iii)).
+const plainWords = generatePatientSummary({
+	fullName: doctor.fullName,
+	specialty: specialtyLabel,
+	subSpecialty: doctor.subSpecialty,
+	yearsActive: doctor.yearsActive,
+	verifiedSurgeries: 0,
+	livesSaved: 0,
+	techniquesInvented: techniques,
+	hIndex: doctor.hIndex,
+	totalCitations,
+	geography: doctor.geography,
+	affiliations: doctor.affiliations?.map((a) => ({ hospitalName: a.hospitalName, role: a.role })),
+	status: doctor.status,
+	dateOfBirth: doctor.dateOfBirth,
+	dateOfDeath: doctor.dateOfDeath,
+}).map((b) => b.text);
+
+const expertise = [
+	{ h: "Conditions treated", items: doctor.conditionsTreated ?? [], href: (t: string) => `/search?q=${encodeURIComponent(t)}` },
+	{ h: "Rare conditions", items: doctor.rareConditions ?? [], href: (t: string) => `/search?q=${encodeURIComponent(t)}` },
+	{ h: "Specialties", items: doctor.medicalSpecialty ?? [], href: (t: string) => `/doctors?specialty=${encodeURIComponent(t)}` },
+	{ h: "Clinical knowledge and procedures", items: doctor.knowsAbout ?? [], href: (t: string) => `/search?q=${encodeURIComponent(t)}` },
+].filter((g) => g.items.length > 0);
+
+const galleryImages = [
+	...(doctor.galleryUrls ?? []).map((url) => ({ url, title: doctor.fullName, source: undefined as string | undefined })),
+	...(doctor.media ?? []).filter((m) => m.type === "IMAGE").map((m) => ({ url: m.url, title: m.title || doctor.fullName, source: m.source ?? undefined })),
+];
+function videoEmbed(url: string, videoId?: string | null): string | null {
+	const yt = videoId || url.match(/(?:youtube(?:-nocookie)?\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/)?.[1];
+	if (yt) return `https://www.youtube-nocookie.com/embed/${yt}?rel=0&autoplay=1`;
+	const vimeo = url.match(/vimeo\.com\/(?:video\/)?(\d+)/)?.[1];
+	return vimeo ? `https://player.vimeo.com/video/${vimeo}?autoplay=1` : null;
+}
+const videos = (doctor.media ?? [])
+	.filter((m) => m.type === "VIDEO")
+	.map((m) => {
+		const yt = m.video_id || m.url.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/)?.[1];
+		return { ...m, embed: videoEmbed(m.url, m.video_id), thumb: m.thumbnail || (yt ? `https://i.ytimg.com/vi/${yt}/hqdefault.jpg` : null) };
+	});
+const documents = (doctor.media ?? []).filter((m) => m.type === "DOCUMENT");
+const hasMedia = galleryImages.length > 0 || videos.length > 0 || documents.length > 0;
+
+const portal = {
+	languages: doctor.languagesSpoken ?? [],
+	insurance: doctor.acceptedInsurance ?? [],
+	philosophy: doctor.patientPhilosophy ?? null,
+	booking: doctor.bookingUrl ?? null,
+	fee: doctor.consultationFee ?? doctor.consultationPrice ?? null,
+	teleFee: doctor.teleConsultationPrice ?? null,
+};
+const hasPractice = !isHistorical && !!(portal.languages.length || portal.insurance.length || portal.philosophy || portal.booking || portal.fee || portal.teleFee);
+
+const pillars = [
+	{ label: "Clinical mastery", value: doctor.clinicalMasteryIndex },
+	{ label: "Intellectual legacy", value: doctor.intellectualLegacy },
+	{ label: "Global mentorship", value: doctor.globalMentorshipScore },
+	{ label: "Humanitarian impact", value: doctor.humanitarianImpact },
+].filter((p): p is { label: string; value: number } => typeof p.value === "number" && p.value > 0);
+
+const hasCareer = awards.length > 0 || timeline.length > 0 || talks.length > 0 || techniques.length > 0 || certifications.length > 0 || pillars.length > 0 || education.length > 0;
+
+const standing = await getProfileStanding(slug, doctor.specialty, doctor.geography.country, doctor.hIndex);
+let similar: Awaited<ReturnType<typeof getSimilarDoctors>> = [];
+try {
+	similar = await getSimilarDoctors({
+		currentSlug: slug,
+		specialty: doctor.specialty,
+		country: doctor.geography.country,
+		tier: doctor.tier,
+		subSpecialty: doctor.subSpecialty,
+		techniques,
+		journals: topJournals,
+		hIndex: doctor.hIndex,
+	});
+} catch {
+	similar = [];
+}
+
+const TIERS: Record<string, { name: string; tier: string; color: string }> = {
+	TITAN: { name: "TITAN", tier: "TIER I", color: "#b08a35" },
+	ELITE: { name: "ELITE", tier: "TIER II", color: "#1f5c45" },
+	MASTER: { name: "MASTER", tier: "TIER III", color: "#0e3b2e" },
+};
+const tier = TIERS[doctor.tier] ?? null;
+const reviewed = !!(doctor.manuallyVerified || doctor.licenseVerified);
+const updated = doctor.updatedAt ? new Date(doctor.updatedAt) : null;
+const created = doctor.createdAt ? new Date(doctor.createdAt) : null;
+const fmtShort = (d: Date) => d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "2-digit", timeZone: "UTC" });
+const fmtLong = (d: Date) => d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+const lifeYears = (() => {
+	const b = doctor.dateOfBirth ? new Date(doctor.dateOfBirth).getUTCFullYear() : null;
+	const d = doctor.dateOfDeath ? new Date(doctor.dateOfDeath).getUTCFullYear() : null;
+	if (isHistorical) return b || d ? `${b ?? "?"}–${d ?? "?"}` : null;
+	return null;
+})();
+
+const ring = tier
+	? `${tier.name} · ${tier.tier} · MDRPEDIA · ${reviewed ? "VERIFIED" : "LISTED"}${updated ? ` ${updated.getUTCFullYear()}` : ""} ·`
+	: `THE PHYSICIANS' REGISTER · MDRPEDIA · ${reviewed ? "VERIFIED" : "LISTED"} ·`;
+
+const stats = [
+	doctor.hIndex > 0 && { v: doctor.hIndex.toLocaleString("en-US"), l: "h-index (OpenAlex)" },
+	citations.length > 0 && { v: citations.length.toLocaleString("en-US"), l: pubmedLinked ? `Papers on record · ${pubmedLinked} on PubMed` : "Papers on record" },
+	totalCitations > 0 && { v: totalCitations.toLocaleString("en-US"), l: "Citations to these papers" },
+	{ v: tier ? tier.tier.replace("TIER", "Tier") : "Listed", l: "Stature" },
+	doctor.yearsActive > 0 && { v: String(doctor.yearsActive), l: isHistorical ? "Years in practice" : "Years in practice" },
+	updated && { v: fmtShort(updated), l: "Last updated" },
+].filter((s): s is { v: string; l: string } => !!s).slice(0, 5);
+
+const ordinal = (n: number) => `${n}${n % 100 >= 11 && n % 100 <= 13 ? "th" : ["th", "st", "nd", "rd"][n % 10] ?? "th"}`;
+type Row = { k: string; v: string; src: string; st: "ok" | "pub" | "no" };
+const ok = (k: string, v: string, src: string): Row => ({ k, v, src, st: "ok" });
+const pub = (k: string, v: string, src: string): Row => ({ k, v, src, st: "pub" });
+const no = (k: string, v: string, src: string): Row => ({ k, v, src, st: "no" });
+const ST = { ok: "✓ Verified", pub: "◐ Public record", no: "○ Not reported" };
+const activeCerts = certifications.filter((c) => c.isActive);
+const ethicsApproved = doctor.ethics?.status === "APPROVED";
+const evidence: { h: string; rows: Row[] }[] = [
+	{
+		h: "I · SCHOLARSHIP",
+		rows: [
+			doctor.hIndex > 0
+				? (openalexId ? ok : pub)("h-index", standing.hIndexPercentile !== null ? `${doctor.hIndex} · ${ordinal(standing.hIndexPercentile)} pct` : String(doctor.hIndex), "OpenAlex")
+				: no("h-index", "—", "OpenAlex"),
+			citations.length > 0
+				? (pubmedLinked ? ok : pub)("Papers on record", String(citations.length), pubmedLinked ? `PubMed · ${pubmedLinked === citations.length ? "all" : pubmedLinked} linked` : "Crossref / DOI")
+				: no("Papers on record", "—", "PubMed"),
+			totalCitations > 0 ? pub("Citations received", totalCitations.toLocaleString("en-US"), "OpenAlex") : no("Citations received", "—", "OpenAlex"),
+		],
+	},
+	{
+		h: "II · PRACTICE",
+		rows: [
+			doctor.licenseVerified ? ok("Licence", "Checked", "Issuing board") : no("Licence", isHistorical ? "Historical record" : "Not yet checked", "Medical council"),
+			activeCerts.length
+				? (activeCerts.some((c) => c.verified) ? ok : pub)("Board certification", activeCerts.length === 1 ? "Current" : `${activeCerts.length} current`, activeCerts[0].issuingBody)
+				: no("Board certification", "—", "Specialty boards"),
+			doctor.npiNumber ? ok("Registration", `NPI ${doctor.npiNumber}`, "NPPES") : no("Registration ID", "—", "National registry"),
+			(doctor.affiliations?.length ?? 0) > 0
+				? pub("Institutions", String(doctor.affiliations!.length), "Institution records")
+				: no("Institutions", "—", "Institution records"),
+		],
+	},
+	{
+		h: "III · LEARNING & TEACHING",
+		rows: [
+			students.length ? pub("Trainees traced", String(students.length), "Lineage") : no("Trainees traced", "Not yet traced", "Lineage"),
+			mentors.length ? pub("Mentors traced", String(mentors.length), "Lineage") : no("Mentors traced", "Not yet traced", "Lineage"),
+			talks.length ? pub("Invited talks", String(talks.length), "Congress programmes") : no("Invited talks", "—", "Congress programmes"),
+		],
+	},
+	{
+		h: "IV · PEER STANDING",
+		rows: [
+			awards.length ? (awards.some((a) => a.sourceUrl) ? ok : pub)("Honours", String(awards.length), "Awarding bodies") : no("Honours", "—", "Awarding bodies"),
+			techniques.length ? pub("Techniques pioneered", String(techniques.length), "Published literature") : no("Techniques pioneered", "—", "Published literature"),
+			isHistorical
+				? no("Ethics mark", "Not applicable", "MDRPedia audit")
+				: ethicsApproved
+				? ok("Ethics mark", doctor.ethics?.tier ? doctor.ethics.tier.charAt(0) + doctor.ethics.tier.slice(1).toLowerCase() : "Awarded", "MDRPedia audit")
+				: no("Ethics mark", "Not yet audited", "MDRPedia audit"),
+		],
+	},
+];
+
+const sources = new Set<string>();
+if (openalexId || doctor.hIndex > 0) sources.add("OpenAlex");
+if (doctor.orcidId) sources.add("ORCID");
+if (doctor.npiNumber) sources.add("NPPES");
+if (pubmedLinked) sources.add("PubMed");
+if (citations.some((c) => c.doi)) sources.add("Crossref");
+if (doctor.affiliations?.length) sources.add("Institutions");
+if (awards.some((a) => a.sourceUrl)) sources.add("Awarding bodies");
+if (doctor.portraitUrl?.includes("wikimedia.org")) sources.add("Wikimedia Commons");
+
+const facts = [
+	{ k: "Specialty", v: specialtyLabel },
+	doctor.subSpecialty && { k: "Focus", v: doctor.subSpecialty },
+	primaryInstitution && { k: "Institution", v: primaryInstitution },
+	country && { k: "Country", v: country },
+	doctor.dateOfBirth && { k: "Born", v: fmtLong(new Date(doctor.dateOfBirth)) },
+	isHistorical && doctor.dateOfDeath && { k: "Died", v: fmtLong(new Date(doctor.dateOfDeath)) },
+	!isHistorical && { k: "Ethics mark", v: ethicsApproved ? `Awarded${doctor.ethics?.certId ? ` · ${doctor.ethics.certId}` : ""}` : "Not yet audited" },
+	!isHistorical && { k: "Record", v: isUnclaimed ? "Not claimed" : doctor.claimStatus === "VERIFIED" ? "Claimed by the doctor" : "Claim under review" },
+].filter((f): f is { k: string; v: string } => !!f);
+const identifiers = [
+	doctor.npiNumber && { k: "NPI", v: doctor.npiNumber, href: `https://npiregistry.cms.hhs.gov/provider-view/${doctor.npiNumber}` },
+	doctor.orcidId && { k: "ORCID", v: doctor.orcidId, href: `https://orcid.org/${doctor.orcidId}` },
+	openalexId && { k: "OpenAlex", v: openalexId, href: `https://openalex.org/${openalexId}` },
+].filter((f): f is { k: string; v: string; href: string } => !!f);
+
+const history = [
+	updated && { d: updated, t: reviewed ? "Record reviewed by editors" : "Record updated" },
+	updated && pubmedLinked > 0 && { d: updated, t: `${pubmedLinked} ${pubmedLinked === 1 ? "paper" : "papers"} linked to PubMed` },
+	doctor.ethics?.certifiedAt && ethicsApproved && { d: new Date(doctor.ethics.certifiedAt), t: "Ethics mark awarded" },
+	created && { d: created, t: tier ? `Entered the register · ${tier.name.charAt(0) + tier.name.slice(1).toLowerCase()}` : "Entered the register" },
+].filter((h): h is { d: Date; t: string } => !!h);
+
+const tabs = [
+	{ id: "record", label: "Record" },
+	citations.length > 0 && { id: "publications", label: `Publications · ${citations.length}` },
+	hasCareer && { id: "career", label: "Career & honours" },
+	{ id: "lineage", label: "Lineage" },
+	hasMedia && { id: "media", label: "Media" },
+	hasPractice && { id: "practice", label: "Practice details" },
+].filter((t): t is { id: string; label: string } => !!t);
+
+const crumbs = [
+	country && { label: country, href: `/geography/${slugify(country)}` },
+	region && { label: region },
+	city && { label: city },
+	standing.groupSlug ? { label: specialtyLabel, href: standing.countryHub ?? `/specialty/${standing.groupSlug}` } : { label: specialtyLabel },
+].filter((c): c is { label: string; href?: string } => !!c);
+
+const browse = [
+	standing.countryHub && country && standing.groupName && { label: `${standing.groupName} doctors in ${country}`, href: standing.countryHub },
+	standing.groupSlug && standing.groupName && { label: `All ${standing.groupName.toLowerCase()} doctors`, href: `/specialty/${standing.groupSlug}` },
+	country && { label: `Doctors in ${country}`, href: `/geography/${slugify(country)}` },
+	{ label: "Top 100 physicians", href: "/rankings/top-100" },
+].filter((b): b is { label: string; href: string } => !!b);
+
+const citeDate = updated ?? new Date();
+const citation = `MDRPedia. (${citeDate.getUTCFullYear()}, ${citeDate.toLocaleDateString("en-US", { month: "long", day: "numeric", timeZone: "UTC" })}). ${doctor.fullName}. In MDRPedia: The Physicians' Register. ${pageUrl}`;
+const shareText = `${doctor.fullName} — ${specialtyLabel} | MDRPedia`;
+const embedCode = `<a href="${pageUrl}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;padding:8px 14px;background:#fbf8f1;border:1px solid #0e3b2e;color:#0e3b2e;font:600 14px/1.3 system-ui,sans-serif;text-decoration:none">${doctor.fullName}<span style="color:#7a5c16;font-weight:400">· MDRPedia${tier ? ` · ${tier.tier}` : ""}</span></a>`;
+
+const titleParts = [specialtyLabel, city].filter(Boolean);
+const pageTitle = titleParts.length ? `${doctor.fullName} — ${titleParts.join(", ")} | MDRPedia` : `${doctor.fullName} | MDRPedia`;
+const ogImageUrl = new URL(`/og/${slug}.png`, site).href;
+const institutionHref = (a: { hospitalSlug?: string | null }) => (a.hospitalSlug ? `/institutions/${a.hospitalSlug}` : null);
+const ALLOWED_TAGS = /<(?!\/?(p|br|em|strong|i|b|a|ul|ol|li)\b)[^>]*>/gi;
+const bioHtml = hasBio ? doctor.biography!.replace(/<(script|style)[\s\S]*?<\/\1>/gi, "").replace(ALLOWED_TAGS, "").replace(/\son\w+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, "").replace(/href\s*=\s*(["'])\s*javascript:[^"']*\1/gi, 'href="#"') : "";
+---
+
+<SiteLayout title={pageTitle} description={aiSummary.slice(0, 160)} active="register" ogImage={ogImageUrl}>
+	<JsonLd
+		fullName={doctor.fullName}
+		specialty={specialtyLabel}
+		subSpecialty={doctor.subSpecialty || undefined}
+		biography={doctor.biography || undefined}
+		portraitUrl={doctor.portraitUrl || undefined}
+		geography={{ country: doctor.geography.country, region: doctor.geography.region || undefined, city: doctor.geography.city || undefined }}
+		citations={doctor.citations}
+		tier={doctor.tier}
+		hIndex={doctor.hIndex}
+		yearsActive={doctor.yearsActive}
+		url={pageUrl}
+		media={doctor.media}
+		npiNumber={doctor.npiNumber || undefined}
+		orcidId={doctor.orcidId || undefined}
+		openalexId={doctor.openalexId || undefined}
+		education={doctor.education}
+		boardCertifications={certifications.map((c) => ({ boardName: c.boardName, specialty: c.specialty }))}
+		medicalSpecialty={doctor.medicalSpecialty}
+		knowsAbout={doctor.knowsAbout}
+		affiliations={doctor.affiliations?.map((a) => ({ hospitalName: a.hospitalName, role: a.role || undefined, hospitalUrl: a.hospitalUrl || undefined }))}
+		aiSummary={aiSummary || undefined}
+		dateOfBirth={doctor.dateOfBirth || undefined}
+		dateOfDeath={doctor.dateOfDeath || undefined}
+		mentors={doctor.mentors}
+		students={doctor.students}
+		createdAt={doctor.createdAt}
+		updatedAt={doctor.updatedAt}
+	/>
+	<MedicalKnowledgeGraph
+		slug={slug}
+		fullName={doctor.fullName}
+		specialty={doctor.specialty}
+		subSpecialty={doctor.subSpecialty || undefined}
+		biography={doctor.biography || undefined}
+		aiSummary={aiSummary || undefined}
+		portraitUrl={doctor.portraitUrl || undefined}
+		geography={{ country: doctor.geography.country, region: doctor.geography.region || undefined, city: doctor.geography.city || undefined }}
+		tier={doctor.tier}
+		hIndex={doctor.hIndex}
+		yearsActive={doctor.yearsActive}
+		url={pageUrl}
+		npiNumber={doctor.npiNumber || undefined}
+		orcidId={doctor.orcidId || undefined}
+		dateOfBirth={doctor.dateOfBirth || undefined}
+		dateOfDeath={doctor.dateOfDeath || undefined}
+		medicalSpecialty={doctor.medicalSpecialty}
+		knowsAbout={doctor.knowsAbout}
+		conditionsTreated={doctor.conditionsTreated}
+		rareConditions={doctor.rareConditions}
+		affiliations={doctor.affiliations?.map((a) => ({ hospitalName: a.hospitalName, role: a.role || undefined, hospitalUrl: a.hospitalUrl || undefined }))}
+		techniques={techniques.map((name) => ({
+			name,
+			yearInvented: timeline.find((t) => t.title.toLowerCase().includes(name.toLowerCase()) || t.description?.toLowerCase().includes(name.toLowerCase()))?.year,
+			isGoldStandard: doctor.hasInvention,
+		}))}
+		citations={citations.map((c) => ({ doi: c.doi, pubmedId: c.pubmedId, title: c.title, journal: c.journal, year: c.year, abstract: c.abstract, citationCount: c.totalCitationCount, isOpenAccess: c.isOpenAccess }))}
+		awards={awards.map((a) => ({ name: a.name, year: a.year, issuingBody: a.issuingBody || undefined }))}
+		mentors={doctor.mentors}
+		students={doctor.students}
+		talks={doctor.talks}
+	/>
+
+	<article class="p-record" aria-labelledby="profile-name">
+		<nav class="p-wrap p-crumbs" aria-label="Breadcrumb">
+			<ol>
+				{crumbs.map((c) => <li>{c.href ? <a href={c.href}>{c.label}</a> : <span>{c.label}</span>}</li>)}
+				<li><span aria-current="page">{doctor.fullName}</span></li>
+			</ol>
+		</nav>
+
+		<header class="p-wrap p-hero">
+			<div class="p-hero__rule">
+				<div class={`p-portrait${hasImage ? "" : " p-portrait--initials"}`}>
+					{hasImage ? (
+						<>
+							<img src={doctor.portraitUrl!} alt={`Portrait of ${doctor.fullName}`} class="js-portrait" width="120" height="150" loading="eager" fetchpriority="high" decoding="async" referrerpolicy="no-referrer" />
+							<span class="p-portrait__initials" aria-hidden="true" hidden>{initials}</span>
+						</>
+					) : (
+						<span class="p-portrait__initials" aria-hidden="true">{initials}</span>
+					)}
+				</div>
+				<div class="p-hero__main">
+					<p class="p-kicker">
+						<span>MDRPEDIA RECORD</span>
+						{tier && <span>{tier.name} · {tier.tier}</span>}
+						<span class="p-kicker__muted">{isHistorical ? `HISTORICAL${lifeYears ? ` · ${lifeYears}` : ""}` : "LIVING"}</span>
+						{reviewed && <span class="p-kicker__ok">✓ EDITOR-REVIEWED</span>}
+					</p>
+					<h1 id="profile-name">{doctor.fullName}</h1>
+					<p class="p-hero__sub">
+						{[doctor.subSpecialty ? `${specialtyLabel} (${doctor.subSpecialty})` : specialtyLabel, primaryInstitution, location].filter(Boolean).join(" · ")}
+					</p>
+					{standing.chips.length > 0 && (
+						<ul class="p-ranks" aria-label="Standing in the register">
+							{standing.chips.map((r) => (
+								<li><a href={r.href}><span class="p-ranks__n">{r.n}</span><span>{r.label}</span></a></li>
+							))}
+						</ul>
+					)}
+					<div class="p-actions">
+						<button type="button" class="p-btn p-btn--solid" data-cite={citation}>
+							<span data-cite-label>Cite this record</span>
+						</button>
+						<button type="button" class="p-btn" data-share-open aria-haspopup="dialog">Share card</button>
+						<a class="p-btn p-btn--quiet" href={`/suggest-edit?profile=${slug}&type=general`}>Suggest a correction</a>
+						<span class="r-sr-only" role="status" aria-live="polite" data-cite-status></span>
+					</div>
+				</div>
+				<div class="p-hero__seal">
+					<Seal size={180} color={tier?.color ?? "#6a6f72"} ring={ring} no={tier?.tier ?? ""} uid={`prof-${slug}`} label={tier ? `${tier.name}, ${tier.tier} seal` : "MDRPedia register seal"} />
+				</div>
+			</div>
+		</header>
+
+		<section class="p-wrap" aria-label="Key figures">
+			<dl class="p-stats">
+				{stats.map((s) => <div><dt>{s.l}</dt><dd>{s.v}</dd></div>)}
+			</dl>
+		</section>
+
+		<section class="p-wrap p-evidence" aria-labelledby="evidence-title">
+			<div class="p-section-head">
+				<div>
+					<span class="p-label">EVIDENCE RECORD</span>
+					<h2 id="evidence-title">What this record is built on</h2>
+				</div>
+				<p>
+					Compared with the register{standing.groupName ? `: ${standing.groupName}` : ""}{country ? ` · ${country}` : ""}{doctor.yearsActive > 0 ? ` · ${doctor.yearsActive} years in practice` : ""} · <a href="/about#methodology">How it works</a>
+				</p>
+			</div>
+			<div class="p-evidence__grid">
+				{evidence.map((g) => (
+					<div class="p-card">
+						<h3 class="p-card__label">{g.h}</h3>
+						<dl>
+							{g.rows.map((r) => (
+								<div class="p-ev">
+									<div class="p-ev__line"><dt>{r.k}</dt><dd>{r.v}</dd></div>
+									<div class="p-ev__meta"><span>{r.src}</span><span class={`p-st p-st--${r.st}`}>{ST[r.st]}</span></div>
+								</div>
+							))}
+						</dl>
+					</div>
+				))}
+			</div>
+			<p class="p-never-line">
+				<span>Not on this record by design:</span>
+				<s>Star ratings</s><span aria-hidden="true">·</span><s>Anonymous reviews</s><span aria-hidden="true">·</span><s>Paid placement</s>
+			</p>
+		</section>
+
+		<div class="p-wrap">
+			<div class="p-tabs" role="tablist" aria-label="Record sections" hidden>
+				{tabs.map((t, i) => (
+					<button type="button" role="tab" id={`tab-${t.id}`} aria-controls={t.id} aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1}>{t.label}</button>
+				))}
+			</div>
+		</div>
+
+		<div class="p-wrap p-body">
+			<div class="p-main">
+				<section id="record" class="p-panel" role="tabpanel" aria-labelledby="tab-record" tabindex="0">
+					<div class="p-block">
+						<h2>Record</h2>
+						{hasBio ? <div class="p-prose" set:html={bioHtml} /> : <p class="p-prose">{aiSummary}</p>}
+						<p class="p-byline">
+							{sources.size > 0 ? `Compiled from ${sources.size} public ${sources.size === 1 ? "source" : "sources"} (${[...sources].join(", ")})` : "Compiled from public sources"}
+							{updated && ` · Updated ${fmtLong(updated)}`} · <a href="/about#methodology">How we verify</a>
+						</p>
+					</div>
+
+					{plainWords.length >= 2 && (
+						<div class="p-block">
+							<span class="p-label">IN PLAIN WORDS</span>
+							<ul class="p-plain">
+								{plainWords.map((t) => <li>{t}</li>)}
+							</ul>
+						</div>
+					)}
+
+					{expertise.length > 0 && (
+						<div class="p-block">
+							<h2>{isHistorical ? "Areas of work" : "What they treat and study"}</h2>
+							{expertise.map((g) => (
+								<div class="p-chips-group">
+									<h3 class="p-label">{g.h.toUpperCase()}</h3>
+									<ul class="p-chips">
+										{g.items.map((t) => <li><a href={g.href(t)}>{t}</a></li>)}
+									</ul>
+								</div>
+							))}
+						</div>
+					)}
+
+					{(doctor.affiliations?.length ?? 0) > 0 && (
+						<div class="p-block">
+							<h2>Institutions</h2>
+							<ul class="p-rows">
+								{doctor.affiliations!.map((a) => {
+									const href = institutionHref(a);
+									return (
+										<li>
+											{href ? <a href={href} class="p-rows__title">{a.hospitalName}</a> : <span class="p-rows__title">{a.hospitalName}</span>}
+											{a.role && <span class="p-rows__meta">{a.role}</span>}
+										</li>
+									);
+								})}
+							</ul>
+						</div>
+					)}
+
+					{!isHistorical && (
+						<div class="p-block p-ask">
+							<span class="p-label">QUESTIONS YOU MIGHT ASK AT A FIRST VISIT</span>
+							<ul>
+								<li>Is a procedure needed now, or can medicines and lifestyle changes help first?</li>
+								<li>What are the risks and benefits of each option for someone like me?</li>
+								<li>How many similar cases does your team see, and who will be involved in my care?</li>
+								<li>Who do I contact if symptoms come back after treatment?</li>
+							</ul>
+						</div>
+					)}
+				</section>
+
+				{citations.length > 0 && (
+					<section id="publications" class="p-panel" role="tabpanel" aria-labelledby="tab-publications" tabindex="0">
+						<div class="p-block">
+							<h2>Landmark papers</h2>
+							<dl class="p-stats p-stats--small">
+								<div><dt>Papers on record</dt><dd>{citations.length}</dd></div>
+								{totalCitations > 0 && <div><dt>Citations received</dt><dd>{totalCitations.toLocaleString("en-US")}</dd></div>}
+								{pubmedLinked > 0 && <div><dt>Linked to PubMed</dt><dd>{pubmedLinked}</dd></div>}
+								{openAccess > 0 && <div><dt>Free to read</dt><dd>{openAccess}</dd></div>}
+							</dl>
+							{yearCounts.length > 0 && (
+								<figure class="p-years">
+									<div class="p-years__bars" aria-hidden="true">
+										{yearCounts.map((y) => <span style={`height:${Math.max(4, Math.round((y.n / maxYearCount) * 100))}%`} class={y.n ? "" : "p-years__gap"} title={`${y.y}: ${y.n}`}></span>)}
+									</div>
+									<figcaption>Papers on record by year, {yearCounts[0].y}–{yearCounts[yearCounts.length - 1].y}</figcaption>
+								</figure>
+							)}
+							{topJournals.length > 0 && <p class="p-journals"><span class="p-label">PUBLISHED IN</span> {topJournals.join(" · ")}</p>}
+							<ol class="p-papers">
+								{papers.slice(0, PAPERS_SHOWN).map((p) => <PaperRow paper={p} />)}
+							</ol>
+							{papers.length > PAPERS_SHOWN && (
+								<details class="p-more">
+									<summary><span class="p-more__closed">Show all {papers.length} papers</span><span class="p-more__open">Show fewer papers</span></summary>
+									<ol class="p-papers" start={PAPERS_SHOWN + 1}>
+										{papers.slice(PAPERS_SHOWN).map((p) => <PaperRow paper={p} />)}
+									</ol>
+								</details>
+							)}
+							<p class="p-byline">Sorted by citations received. Know a paper we've missed? <a href={`/suggest-edit?profile=${slug}&type=citation`}>Add a citation</a></p>
+						</div>
+					</section>
+				)}
+
+				{hasCareer && (
+					<section id="career" class="p-panel" role="tabpanel" aria-labelledby="tab-career" tabindex="0">
+						{awards.length > 0 && (
+							<div class="p-block">
+								<h2>Honours</h2>
+								<ul class="p-dated">
+									{awards.map((a) => (
+										<li>
+											<span class="p-dated__y">{a.year || "—"}</span>
+											<span>
+												<span class="p-dated__t">{a.sourceUrl ? <a href={a.sourceUrl} target="_blank" rel="noopener noreferrer">{a.name}</a> : a.name}</span>
+												{a.issuingBody && <span class="p-dated__m">{a.issuingBody}</span>}
+											</span>
+										</li>
+									))}
+								</ul>
+							</div>
+						)}
+						{techniques.length > 0 && (
+							<div class="p-block">
+								<h2>Techniques pioneered</h2>
+								<ul class="p-chips">{techniques.map((t) => <li><span>{t}</span></li>)}</ul>
+							</div>
+						)}
+						{timeline.length > 0 && (
+							<div class="p-block">
+								<h2>Career</h2>
+								<ul class="p-dated">
+									{timeline.map((t) => (
+										<li>
+											<span class="p-dated__y">{t.year}</span>
+											<span><span class="p-dated__t">{t.title}</span>{t.description && <span class="p-dated__m">{t.description}</span>}</span>
+										</li>
+									))}
+								</ul>
+							</div>
+						)}
+						{(education.length > 0 || certifications.length > 0) && (
+							<div class="p-block">
+								<h2>Training and certification</h2>
+								<ul class="p-rows">
+									{education.map((e) => <li><span class="p-rows__title">{e}</span></li>)}
+									{certifications.map((c) => (
+										<li>
+											<span class="p-rows__title">{c.boardName}</span>
+											<span class="p-rows__meta">{[c.specialty, c.issuingBody, c.isActive ? "Current" : "Lapsed"].filter(Boolean).join(" · ")}{c.verified && <b class="p-st p-st--ok"> · ✓ Verified</b>}</span>
+										</li>
+									))}
+								</ul>
+							</div>
+						)}
+						{talks.length > 0 && (
+							<div class="p-block">
+								<h2>Talks and lectures</h2>
+								<ul class="p-dated">
+									{talks.map((t) => (
+										<li>
+											<span class="p-dated__y">{t.year}</span>
+											<span><span class="p-dated__t">{t.url ? <a href={t.url} target="_blank" rel="noopener noreferrer">{t.title}</a> : t.title}</span><span class="p-dated__m">{t.event}</span></span>
+										</li>
+									))}
+								</ul>
+							</div>
+						)}
+						{pillars.length > 0 && (
+							<div class="p-block">
+								<h2>Impact quotient</h2>
+								<p class="p-byline">The four parts of the MDRPedia impact score, each out of 100. <a href="/about#methodology">How it is calculated</a></p>
+								<dl class="p-pillars">
+									{pillars.map((p) => {
+										const pct = Math.max(0, Math.min(Math.round(p.value), 100));
+										return (
+											<div>
+												<dt>{p.label}</dt>
+												<dd><span class="p-pillars__bar" role="img" aria-label={`${pct} out of 100`}><span style={`width:${pct}%`}></span></span><span class="p-pillars__v">{pct}</span></dd>
+											</div>
+										);
+									})}
+								</dl>
+							</div>
+						)}
+					</section>
+				)}
+
+				<section id="lineage" class="p-panel" role="tabpanel" aria-labelledby="tab-lineage" tabindex="0">
+					<div class="p-block">
+						<h2>Lineage</h2>
+						{mentors.length > 0 || students.length > 0 ? (
+							<div class="p-lineage">
+								{[{ h: "TRAINED UNDER", list: mentors }, { h: "TRAINED", list: students }].filter((g) => g.list.length).map((g) => (
+									<div>
+										<h3 class="p-label">{g.h}</h3>
+										<ul class="p-rows">
+											{g.list.map((m) => (
+												<li>
+													{m.id ? <a class="p-rows__title" href={`/doctors/${m.id}`}>{m.name}</a> : <span class="p-rows__title">{m.name}</span>}
+													{m.title && <span class="p-rows__meta">{m.title}</span>}
+												</li>
+											))}
+										</ul>
+									</div>
+								))}
+								<p class="p-byline">Explore teacher and student lines across the register on the <a href="/lineage">lineage map</a>.</p>
+							</div>
+						) : (
+							<div class="p-empty">
+								<span>We haven't traced this physician's mentors and trainees yet. If you trained with them, you can add to the record.</span>
+								<a class="p-btn" href={`/suggest-edit?profile=${slug}&type=general`}>Contribute lineage</a>
+							</div>
+						)}
+					</div>
+				</section>
+
+				{hasMedia && (
+					<section id="media" class="p-panel" role="tabpanel" aria-labelledby="tab-media" tabindex="0">
+						{galleryImages.length > 0 && (
+							<div class="p-block">
+								<h2>Images</h2>
+								<ul class="p-gallery">
+									{galleryImages.map((g, i) => (
+										<li>
+											<a href={g.url} target="_blank" rel="noopener noreferrer" data-lightbox={i}>
+												<img src={g.url} alt={g.title} loading="lazy" decoding="async" width="240" height="180" referrerpolicy="no-referrer" />
+											</a>
+											{g.source && <span class="p-rows__meta">{g.source}</span>}
+										</li>
+									))}
+								</ul>
+							</div>
+						)}
+						{videos.length > 0 && (
+							<div class="p-block">
+								<h2>Video</h2>
+								<ul class="p-videos">
+									{videos.map((v) => (
+										<li>
+											{v.embed ? (
+												<button type="button" class="p-video" data-embed={v.embed} aria-label={`Play video: ${v.title || doctor.fullName}`}>
+													{v.thumb ? <img src={v.thumb} alt="" loading="lazy" width="480" height="270" /> : <span class="p-video__blank"></span>}
+													<span class="p-video__play" aria-hidden="true">▶</span>
+												</button>
+											) : (
+												<a href={v.url} target="_blank" rel="noopener noreferrer">{v.title || v.url}</a>
+											)}
+											<span class="p-rows__title">{v.title || "Video"}</span>
+											{(v.source || v.description) && <span class="p-rows__meta">{[v.source, v.description].filter(Boolean).join(" · ")}</span>}
+										</li>
+									))}
+								</ul>
+							</div>
+						)}
+						{documents.length > 0 && (
+							<div class="p-block">
+								<h2>Documents</h2>
+								<ul class="p-rows">
+									{documents.map((d) => <li><a class="p-rows__title" href={d.url} target="_blank" rel="noopener noreferrer">{d.title || d.url}</a>{d.source && <span class="p-rows__meta">{d.source}</span>}</li>)}
+								</ul>
+							</div>
+						)}
+					</section>
+				)}
+
+				{hasPractice && (
+					<section id="practice" class="p-panel" role="tabpanel" aria-labelledby="tab-practice" tabindex="0">
+						<div class="p-block">
+							<h2>Practice details</h2>
+							<dl class="p-kv">
+								{primaryInstitution && <div><dt>Hospital</dt><dd>{primaryInstitution}</dd></div>}
+								{location && <div><dt>Location</dt><dd>{location}</dd></div>}
+								{portal.languages.length > 0 && <div><dt>Languages</dt><dd>{portal.languages.join(", ")}</dd></div>}
+								{portal.insurance.length > 0 && <div><dt>Insurance accepted</dt><dd>{portal.insurance.join(", ")}</dd></div>}
+								{portal.fee && <div><dt>Consultation fee</dt><dd>{portal.fee}</dd></div>}
+								{portal.teleFee && <div><dt>Video consultation fee</dt><dd>{portal.teleFee}</dd></div>}
+								{portal.philosophy && <div><dt>Approach to care</dt><dd>{portal.philosophy}<span class="p-src-doc">✎ Added by the doctor</span></dd></div>}
+							</dl>
+							{portal.booking && <a class="p-btn p-btn--solid" href={portal.booking} target="_blank" rel="noopener noreferrer nofollow">Book through the practice</a>}
+							<p class="p-note-dark">Appointments are made with the doctor or hospital. MDRPedia doesn't take bookings or payments, and doesn't run offers.</p>
+						</div>
+					</section>
+				)}
+			</div>
+
+			<aside class="p-aside" aria-label="About this record">
+				<div class="p-card">
+					<h2 class="p-card__label">QUICK FACTS</h2>
+					<dl class="p-facts">
+						{facts.map((f) => <div><dt>{f.k}</dt><dd>{f.v}</dd></div>)}
+						{identifiers.map((f) => <div><dt>{f.k}</dt><dd><a href={f.href} target="_blank" rel="noopener noreferrer" class="p-mono">{f.v}</a></dd></div>)}
+					</dl>
+				</div>
+				{history.length > 0 && (
+					<div class="p-card">
+						<h2 class="p-card__label">RECORD HISTORY</h2>
+						<ol class="p-history">
+							{history.map((h) => <li><time datetime={h.d.toISOString()}>{fmtShort(h.d)}</time><span>{h.t}</span></li>)}
+						</ol>
+					</div>
+				)}
+				{ethicsApproved && doctor.ethics?.certId && (
+					<a class="p-card p-ethics" href={`/ethical-doctors/verify/${doctor.ethics.certId}`}>
+						<Seal size={64} color="#1f5c45" ring="ETHICS MARK · MDRPEDIA · AUDITED ·" letter="E" uid={`eth-${slug}`} />
+						<span><b>Ethics mark</b><br />Certificate {doctor.ethics.certId} · verify</span>
+					</a>
+				)}
+				<div class="p-card">
+					<h2 class="p-card__label">HOW TO READ THIS RECORD</h2>
+					<p class="p-legend"><span class="p-st p-st--ok">✓ Verified</span>: checked by MDRPedia with the issuing body.</p>
+					<p class="p-legend"><span class="p-st p-st--pub">◐ Public record</span>: taken from a named public source, not yet checked by an editor.</p>
+					<p class="p-legend"><span class="p-st p-st--no">○ Not reported</span>: we hold no evidence either way.</p>
+				</div>
+				<div class="p-card p-card--sand">
+					<h2 class="p-card__label">NOT ON THIS RECORD, BY DESIGN</h2>
+					<ul class="p-nevers">
+						<li>Patient reviews, ratings or testimonials</li>
+						<li>"Best", "No. 1" or "100% success" claims</li>
+						<li>Success rates or patient counts</li>
+						<li>Before-and-after or case photos</li>
+						<li>Offers, discounts or free consultations</li>
+						<li>Paid placement or promotion</li>
+					</ul>
+					<span class="p-small">In line with the NMC Guidelines on Ethical Advertising, 6 Oct 2026. <a href="/nmc-compliance-check">Check your own pages</a></span>
+				</div>
+				{isHistorical ? null : isUnclaimed ? (
+					<div class="p-claim">
+						<span class="p-claim__t">Is this you?</span>
+						<span>Claim your record to correct details, add lineage and embed your seal.</span>
+						<a href="#claim-profile" class="p-claim__btn">Claim this record</a>
+					</div>
+				) : (
+					<div class="p-claim">
+						<span class="p-claim__t">{doctor.claimStatus === "VERIFIED" ? "Claimed by the doctor" : "Claim under review"}</span>
+						<span>Corrections from the doctor are reviewed by editors before they appear.</span>
+					</div>
+				)}
+				<div class="p-card">
+					<h2 class="p-card__label">HELP IMPROVE THIS RECORD</h2>
+					<ul class="p-improve">
+						<li><a href={`/suggest-edit?profile=${slug}&type=citation`}>Add a paper</a></li>
+						<li><a href={`/suggest-edit?profile=${slug}&type=award`}>Add an honour</a></li>
+						<li><a href={`/suggest-edit?profile=${slug}&type=affiliation`}>Add an institution</a></li>
+						<li><a href={`/suggest-edit?profile=${slug}&type=general`}>Correct something else</a></li>
+					</ul>
+					<span class="p-small">Every suggestion is reviewed before it is published.</span>
+				</div>
+				<a class="p-report" href={`/suggest-edit?profile=${slug}&type=general`}>Report an error or concern</a>
+			</aside>
+		</div>
+
+		{similar.length > 0 && (
+			<section class="p-wrap p-related" aria-labelledby="related-title">
+				<div class="p-section-head">
+					<div>
+						<span class="p-label">ALSO ON THE REGISTER</span>
+						<h2 id="related-title">Related physicians</h2>
+					</div>
+				</div>
+				<ul class="p-related__grid">
+					{similar.map((s) => {
+						const sCountry = known(s.geography?.country) ? s.geography!.country : null;
+						const sCity = known(s.geography?.city) ? s.geography!.city : null;
+						const sInitials = s.full_name.split(/\s+/).filter((w) => /^[\p{L}]/u.test(w)).map((w) => w[0]).filter((_, i, a) => i === 0 || i === a.length - 1).join("").toUpperCase();
+						const sImg = s.portrait_url && !s.portrait_url.startsWith("data:image/svg") ? s.portrait_url : null;
+						return (
+							<li>
+								<a href={`/doctors/${s.slug}`}>
+									<span class="p-related__pic">
+										{sImg ? (
+											<>
+												<img src={sImg} alt="" class="js-portrait" loading="lazy" decoding="async" width="56" height="56" referrerpolicy="no-referrer" />
+												<span class="p-portrait__initials" hidden>{sInitials}</span>
+											</>
+										) : (
+											<span class="p-portrait__initials">{sInitials}</span>
+										)}
+									</span>
+									<span class="p-related__txt">
+										<span class="p-related__name">{s.full_name}</span>
+										<span class="p-rows__meta">{[normalizeSpecialty(s.specialty), sCity, sCountry].filter(Boolean).join(" · ")}</span>
+										{TIERS[s.tier] && <span class="p-related__tier">{TIERS[s.tier].name} · {TIERS[s.tier].tier}</span>}
+									</span>
+								</a>
+							</li>
+						);
+					})}
+				</ul>
+			</section>
+		)}
+
+		<nav class="p-wrap p-browse" aria-label="Continue browsing">
+			<span class="p-label">CONTINUE BROWSING</span>
+			<ul>
+				{browse.map((b) => <li><a href={b.href}>{b.label}</a></li>)}
+			</ul>
+		</nav>
+
+		{claimable && (
+			<section class="p-claimform" id="claim-profile" aria-labelledby="claim-title">
+				<div class="p-wrap p-claimform__inner">
+					<div class="p-claimform__copy">
+						<span class="p-label p-label--light">FOR THE DOCTOR</span>
+						<h2 id="claim-title">Are you {doctor.fullName}?</h2>
+						<p>Claim this record to correct details, add your lineage and teaching, and embed your seal. Claims are checked against your registration before anything changes.</p>
+					</div>
+					<form class="p-form" id="claimForm" data-slug={slug} novalidate>
+						<div class="p-form__row">
+							<label for="claimEmail">Work email</label>
+							<input type="email" id="claimEmail" name="email" autocomplete="email" placeholder="dr.name@hospital.org" required />
+						</div>
+						<div class="p-form__row">
+							<label for="claimLicense">Registration number (NMR, GMC, NPI or state licence)</label>
+							<input type="text" id="claimLicense" name="registration_number" autocomplete="off" required />
+						</div>
+						<div class="p-form__row">
+							<label for="certUpload">Proof of registration <span>(PDF, JPG or PNG, up to 10 MB, optional)</span></label>
+							<input type="file" id="certUpload" name="document" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" />
+						</div>
+						<div class="p-honeypot" aria-hidden="true">
+							<label for="website_url_hp">Leave this empty</label>
+							<input type="text" id="website_url_hp" name="website_url_hp" tabindex="-1" autocomplete="off" />
+						</div>
+						<button type="submit" class="p-claim__btn" id="claimSubmit">Send claim request</button>
+						<p class="p-form__status" id="claimStatus" role="status" aria-live="polite"></p>
+					</form>
+				</div>
+			</section>
+		)}
+	</article>
+
+	<dialog class="p-share" id="shareDialog" aria-labelledby="share-title">
+		<form method="dialog" class="p-share__inner">
+			<div class="p-share__head">
+				<h2 id="share-title">Share this record</h2>
+				<button class="p-share__x" value="close" aria-label="Close">✕</button>
+			</div>
+			<img class="p-share__card" src={ogImageUrl} alt={`Share card for ${doctor.fullName}`} width="600" height="315" loading="lazy" />
+			<div class="p-share__links">
+				<button type="button" class="p-btn" data-copy={pageUrl} data-copy-done="Link copied ✓">Copy link</button>
+				<button type="button" class="p-btn" data-native-share hidden>Share…</button>
+				<a class="p-btn" href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(pageUrl)}`} target="_blank" rel="noopener noreferrer">X</a>
+				<a class="p-btn" href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+				<a class="p-btn" href={`https://wa.me/?text=${encodeURIComponent(`${shareText} ${pageUrl}`)}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+				<a class="p-btn" href={`mailto:?subject=${encodeURIComponent(`${doctor.fullName} — MDRPedia`)}&body=${encodeURIComponent(`${doctor.fullName}'s record on MDRPedia: ${pageUrl}`)}`}>Email</a>
+				<a class="p-btn" href={ogImageUrl} download={`${slug}-mdrpedia.png`}>Download card</a>
+			</div>
+			<label class="p-label" for="embedCode">EMBED THIS RECORD ON YOUR SITE</label>
+			<textarea id="embedCode" class="p-share__code" readonly rows="3">{embedCode}</textarea>
+			<button type="button" class="p-btn" data-copy={embedCode} data-copy-done="Embed code copied ✓">Copy embed code</button>
+			<p class="r-sr-only" role="status" aria-live="polite" data-share-status></p>
+		</form>
+	</dialog>
+
+	<dialog class="p-lightbox" id="lightbox" aria-label="Image viewer">
+		<form method="dialog">
+			<button class="p-share__x" value="close" aria-label="Close">✕</button>
+			<img alt="" />
+		</form>
+	</dialog>
+</SiteLayout>
+
+<script define:vars={{ slug, doctorFullName: doctor.fullName, doctorSpecialty: doctor.specialty, doctorTier: doctor.tier, doctorPortrait: doctor.portraitUrl || "" }}>
+	try {
+		const KEY = "mdrpedia_recently_viewed";
+		const list = JSON.parse(localStorage.getItem(KEY) || "[]").filter((p) => p.slug !== slug);
+		list.unshift({ slug, fullName: doctorFullName, specialty: doctorSpecialty, tier: doctorTier, portraitUrl: doctorPortrait || undefined, viewedAt: Date.now() });
+		localStorage.setItem(KEY, JSON.stringify(list.slice(0, 8)));
+	} catch {}
+</script>
+
+<script>
+	import { initRecordPage } from "../scripts/doctor-record";
+	initRecordPage();
+</script>

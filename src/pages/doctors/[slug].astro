@@ -5,11 +5,10 @@
  * then fall back to static content for unedited profiles.
  */
 
-import DoctorProfileRevamp from "../../layouts/DoctorProfileRevamp.astro";
+import DoctorRecord from "../../layouts/DoctorRecord.astro";
 import { getEntry } from "astro:content";
 import { prisma } from "../../lib/prisma";
 import type { ProfileData } from "../../lib/types";
-import type { CollectionEntry } from "astro:content";
 import { mapDbProfileToProps } from "../../lib/profile-mapper";
 import { calculateTotalImpact } from "../../lib/impact-calculator";
 
@@ -18,11 +17,7 @@ export const prerender = false;
 const { slug } = Astro.params;
 if (!slug) return Astro.redirect("/");
 
-// Type definitions for profile data sources
-type StaticDoctor = CollectionEntry<"doctors">;
-
 let profileData: ProfileData;
-let doctorSource: unknown;
 
 // 1. Try Database FIRST (for profiles that have been imported and edited)
 // This ensures admin edits (citations, lineage, etc.) are visible
@@ -51,6 +46,7 @@ try {
                 orderBy: [{ is_featured: "desc" }, { sort_order: "asc" }],
             },
             portal: true,
+            certifications: true,
             _count: {
                 select: { impact_votes: true },
             },
@@ -61,14 +57,9 @@ try {
     // Ignore DB error and fall back to static
 }
 
-// Store profile ID for analytics tracking
-let resolvedProfileId: string | undefined = undefined;
-
 if (dbProfile) {
     // Database profile found - use it (includes any admin edits)
     profileData = mapDbProfileToProps(dbProfile);
-    doctorSource = dbProfile;
-    resolvedProfileId = dbProfile.id;
 
     // If DB profile has no citations, try to merge from static content
     if (!profileData.citations || profileData.citations.length === 0) {
@@ -160,7 +151,6 @@ if (dbProfile) {
             consultationPrice: d.consultationPrice,
             teleConsultationPrice: d.teleConsultationPrice,
         };
-        doctorSource = staticDoctor;
     } else {
         // Profile not found in DB or static content
         return Astro.rewrite("/404");
@@ -169,11 +159,13 @@ if (dbProfile) {
 
 ---
 
-<DoctorProfileRevamp doctor={profileData} profileId={resolvedProfileId} />
-<script is:inline define:vars={{ viewSlug: slug }}>
-    (function () {
-        var body = new Blob([JSON.stringify({ slug: viewSlug })], { type: 'application/json' });
-        if (navigator.sendBeacon) navigator.sendBeacon('/api/track-view', body);
-        else fetch('/api/track-view', { method: 'POST', body: body, keepalive: true });
-    })();
-</script>
+<DoctorRecord doctor={profileData} />
+{dbProfile && (
+    <script is:inline define:vars={{ viewSlug: slug }}>
+        (function () {
+            var body = new Blob([JSON.stringify({ slug: viewSlug })], { type: 'application/json' });
+            if (navigator.sendBeacon) navigator.sendBeacon('/api/track-view', body);
+            else fetch('/api/track-view', { method: 'POST', body: body, keepalive: true });
+        })();
+    </script>
+)}
