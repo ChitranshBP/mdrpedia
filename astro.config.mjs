@@ -9,6 +9,9 @@ export default defineConfig({
 
   // Output mode: server for SSR with prerender for static pages
   output: 'server',
+  // TLS ends at OpenLiteSpeed, so Astro sees http:// and its origin check rejects every
+  // browser form POST. src/middleware.ts enforces a host-based check instead.
+  security: { checkOrigin: false },
 
   // One URL per page. Without this the default is 'ignore', so /doctors and
   // /doctors/ both resolve and each declares itself canonical.

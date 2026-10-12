@@ -24,6 +24,22 @@ const CSP_REPORT_ONLY = [
 // Static asset patterns
 const STATIC_ASSETS = /\.(js|css|woff2?|ttf|otf|png|jpg|jpeg|gif|webp|avif|svg|ico|mp4|webm)$/i;
 const IMMUTABLE_ASSETS = /\/_astro\//;
+const FORM_TYPES = /^(application\/x-www-form-urlencoded|multipart\/form-data|text\/plain)/i;
+const UNSAFE_METHODS = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
+
+/** CSRF guard for form posts: the Origin host must match the Host header (scheme is ignored; TLS ends at the proxy). */
+function crossSiteForm(request: Request): boolean {
+    if (!UNSAFE_METHODS.has(request.method)) return false;
+    if (!FORM_TYPES.test(request.headers.get('content-type') ?? '')) return false;
+    const origin = request.headers.get('origin');
+    const host = request.headers.get('host')?.toLowerCase();
+    if (!origin || !host) return true;
+    try {
+        return new URL(origin).host.toLowerCase() !== host;
+    } catch {
+        return true;
+    }
+}
 
 // Public SSR pages that are identical for every visitor. s-maxage is what a shared
 // cache (nginx proxy_cache, CDN, LiteSpeed cache) honours; max-age keeps browsers honest.
@@ -46,6 +62,10 @@ export const onRequest = defineMiddleware(async ({ request, locals, isPrerendere
     const host = request.headers.get('host')?.toLowerCase();
     if (host === 'www.mdrpedia.com') {
         return Response.redirect(`https://mdrpedia.com${url.pathname}${url.search}`, 301);
+    }
+
+    if (crossSiteForm(request)) {
+        return new Response('Cross-site form submissions are forbidden', { status: 403, headers: { 'Content-Type': 'text/plain' } });
     }
 
     const singular = url.pathname.match(SINGULAR_PROFILE);
