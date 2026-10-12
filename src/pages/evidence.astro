@@ -1,0 +1,287 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { getRegisterStats, fmt } from "../lib/register-stats";
+import "../styles/pages/editorial.css";
+
+export const prerender = true;
+
+type Status = "live" | "partial" | "planned";
+const STATUS_LABEL: Record<Status, string> = { live: "IN USE", partial: "PARTIAL", planned: "PLANNED" };
+
+const stats = await getRegisterStats();
+
+const refused = ["Star ratings", "Anonymous reviews", "Paid placement", "Follower counts", "Vanity awards", "Years in practice alone"];
+
+const domains: { l: string; n: string; t: string; d: string; signals: { t: string; src: string; rule: string; s: Status }[] }[] = [
+	{
+		l: "Scholarship", n: "I", t: "Scholarship",
+		d: "What a physician has added to medical knowledge.",
+		signals: [
+			{ t: "Peer-reviewed papers & citations", src: "OpenAlex, PubMed, CrossRef", rule: "Each paper is matched by DOI. Citations are weighted by journal impact (up to 5×). A retracted paper zeroes the score until reviewed.", s: "live" },
+			{ t: "h-index", src: "OpenAlex author record", rule: "Taken from the matched author record, not entered by hand", s: "live" },
+			{ t: "Clinical trials as investigator", src: "ClinicalTrials.gov", rule: "Trials are listed on the register but not yet counted in the score", s: "partial" },
+			{ t: "Named techniques & inventions", src: "Surgical and medical literature", rule: "Must be a technique documented in the literature under the physician's name", s: "live" },
+		],
+	},
+	{
+		l: "Practice", n: "II", t: "Clinical practice",
+		d: "Whether the physician is qualified and licensed, and the scale of documented clinical work.",
+		signals: [
+			{ t: "Board certifications & fellowships", src: "Education and training records", rule: "Counted from the record. Confirmation with each issuing body is not yet automated", s: "partial" },
+			{ t: "Licence status", src: "NPI Registry (United States)", rule: "US licences are checked against the NPI Registry. NMC, GMC and other registers are planned", s: "partial" },
+			{ t: "Documented procedure volume", src: "Published figures, institutional records", rule: "Only figures with a published source. Not to be shown on Indian profiles (NMC 8.1(iii))", s: "live" },
+			{ t: "Hospital appointments", src: "Institutional records", rule: "Shown on profiles. Not scored", s: "partial" },
+		],
+	},
+	{
+		l: "Learning", n: "III", t: "Learning & teaching",
+		d: "Medicine changes every year. These signals show who keeps up, and who passes it on.",
+		signals: [
+			{ t: "Trainees mentored", src: "Contributed and published lineage", rule: `Shown on the lineage tree (${fmt(stats.withLineage)} profiles so far). Not yet scored`, s: "partial" },
+			{ t: "CME / CPD credits", src: "Accredited CME/CPD providers", rule: "Rolling 3 years, accredited providers only", s: "planned" },
+			{ t: "Invited faculty & lectures", src: "Society congress programmes", rule: "Faculty roles only; attendance doesn't count", s: "planned" },
+			{ t: "Editorial boards & peer review", src: "Journal mastheads", rule: "Active roles in the last 5 years", s: "planned" },
+		],
+	},
+	{
+		l: "Peer standing", n: "IV", t: "Peer standing & service",
+		d: "How the profession and the public have recognised a physician, measured through actions rather than opinions.",
+		signals: [
+			{ t: "Honours & prizes", src: "Awarding bodies", rule: "Landmark prizes (Nobel, Lasker, Gairdner, Wolf…) and national honours are weighted. Unlisted awards score nothing. Duplicates are counted once", s: "live" },
+			{ t: "Humanitarian & public-health reach", src: "Published reports, NGO records", rule: "Only documented figures, with a source", s: "live" },
+			{ t: "Verified peer referrals", src: "Licensed physicians on MDRPedia", rule: "Capped per referrer, with self, partner and ring referrals blocked", s: "planned" },
+			{ t: "Financial disclosures", src: "Open Payments, journal COI statements", rule: "Shown for transparency and never penalised", s: "planned" },
+		],
+	},
+];
+
+const referralRules = [
+	{ n: "01", t: "Only verified physicians can refer", d: "Licence checked against the national registry before a first referral." },
+	{ n: "02", t: "Named condition required", d: "A referral is for something specific, such as \"complex mitral valve repair\", not a general endorsement." },
+	{ n: "03", t: "No self, partner or same-practice referrals", d: "Referrals between people in the same practice or with financial ties are blocked." },
+	{ n: "04", t: "Ten referrals per physician per year", d: "Scarcity keeps each one meaningful." },
+	{ n: "05", t: "Weighted by the referrer's own record", d: "A referral from a respected specialist in the same field carries more weight." },
+	{ n: "06", t: "Rings are audited", d: "Reciprocal or clustered patterns are flagged, and if confirmed they are removed in public." },
+];
+
+const fairness: { k: string; t: string; d: string; s: Status }[] = [
+	{ k: "BY SPECIALTY", t: "A GP is not compared with a neurosurgeon", d: "Ranks are worked out within the physician's own specialty, never across the whole register.", s: "live" },
+	{ k: "BY REGION", t: "Each country has its own view", d: "Every country, and every specialty within a country, has its own listing. A district surgeon is shown among their own peers.", s: "live" },
+	{ k: "BY CAREER STAGE", t: "Early-career doctors shouldn't be buried", d: "Years in practice currently carry up to 15% of the core score. We plan to adjust signals for years since qualification.", s: "planned" },
+];
+
+const nmcRows: { g: string; cl: string; m: string; s: Status }[] = [
+	{ g: "No fake, paid or misleading reviews, ratings or testimonials", cl: "EXPLANATION V · 3.2", m: "MDRPedia publishes no star ratings or written reviews. The anonymous impact tally on profiles is being retired.", s: "partial" },
+	{ g: "Listing platforms must not offer paid ranking", cl: "PLATFORM NORMS", m: "No sponsored placement. Order comes from the published score and is never sold.", s: "live" },
+	{ g: "No \"best\", \"No. 1\" or unverifiable comparative claims", cl: "8.1(iii), 8.1(ix)", m: "Rank numbers and stature tiers (Titan, Elite) are to be hidden for doctors registered in India.", s: "planned" },
+	{ g: "No personal success rates or patient numbers", cl: "8.1(iii)", m: "Procedure volumes and lives-impacted figures are to be hidden on Indian profiles.", s: "planned" },
+	{ g: "No before-and-after photos, case stories or celebrity patients", cl: "8.1(v)", m: "Doctor-uploaded media is to be screened before it appears.", s: "planned" },
+	{ g: "No product endorsements", cl: "8.1(iv)", m: "Profiles carry no advertising, sponsorship or product placement.", s: "live" },
+	{ g: "Disclose name, qualifications, registration status and SMR/NMR number", cl: "ELECTRONIC MEDIA DISCLOSURE", m: "Indian profiles are to open with an identity block showing the NMR/SMR number, checked against the NMR.", s: "planned" },
+	{ g: "Doctors must not request or share reviews or recommendations", cl: "EXPLANATION V", m: "Peer referrals, when they launch, will be unsolicited: doctors won't be able to request them, see who gave them, or share them.", s: "planned" },
+];
+
+const title = "The Evidence Standard — how MDRPedia judges a physician | MDRPedia";
+const description = `No stars, no reviews, no paid placement. The signals MDRPedia uses across ${fmt(stats.profiles)} physician profiles, where each one is verified, and which are still in development.`;
+const jsonLd = [
+	{
+		"@context": "https://schema.org",
+		"@type": "WebPage",
+		name: "The Evidence Standard",
+		url: "https://mdrpedia.com/evidence",
+		description,
+		publisher: { "@type": "Organization", name: "MDRPedia", url: "https://mdrpedia.com" },
+	},
+	{
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		itemListElement: [
+			{ "@type": "ListItem", position: 1, name: "MDRPedia", item: "https://mdrpedia.com" },
+			{ "@type": "ListItem", position: 2, name: "Evidence Standard", item: "https://mdrpedia.com/evidence" },
+		],
+	},
+];
+---
+
+<SiteLayout title={title} description={description} active="evidence" jsonLd={jsonLd}>
+	<div class="ed">
+		<section class="ed-hero" aria-labelledby="ev-title">
+			<div class="ed-wrap ed-hero__inner">
+				<span class="ed-kicker">THE EVIDENCE STANDARD</span>
+				<h1 class="ed-h1" id="ev-title">No stars. No reviews. <em>Only evidence.</em></h1>
+				<p class="ed-hero__lede">
+					Star ratings measure bedside manner and parking, and they're easy to fake. MDRPedia measures what a physician has verifiably
+					done: what they published, what they invented, the honours they earned and the work they can document.
+				</p>
+				<ul class="ed-refused" aria-label="What we refuse to count">
+					{refused.map((r) => <li><span class="r-sr-only">Not counted: </span>{r}</li>)}
+				</ul>
+			</div>
+		</section>
+
+		<section class="ed-wrap ed-sec ed-sec--first" aria-labelledby="ev-signals">
+			<div class="ed-rule">
+				<div class="ed-head">
+					<div class="ed-head__title">
+						<span class="ed-kicker">№ 01 · WHAT COUNTS</span>
+						<h2 class="ed-h2" id="ev-signals">Sixteen signals, four domains</h2>
+					</div>
+					<span class="ed-head__note">Each signal is tied to a named source. If we can't source a signal, it's left blank rather than estimated. Some are still being built, and are marked so.</span>
+				</div>
+				<ul class="ed-legend" aria-label="Status key">
+					<li><span class="ed-status ed-status--live">IN USE</span> Counted in the score today</li>
+					<li><span class="ed-status ed-status--partial">PARTIAL</span> Shown, or checked for some countries only</li>
+					<li><span class="ed-status ed-status--planned">PLANNED</span> Not built yet</li>
+				</ul>
+				<div class="ed-tabs" role="tablist" aria-label="Evidence domains">
+					{domains.map((d, i) => (
+						<button type="button" role="tab" id={`ev-tab-${i}`} aria-controls={`ev-panel-${i}`} aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1}>{d.l}</button>
+					))}
+				</div>
+				{domains.map((d, i) => (
+					<div class="ed-domain" id={`ev-panel-${i}`} role="tabpanel" aria-labelledby={`ev-tab-${i}`}>
+						<div class="ed-domain__intro">
+							<span class="ed-domain__n" aria-hidden="true">{d.n}</span>
+							<h3 class="ed-domain__t">{d.t}</h3>
+							<p class="ed-domain__d">{d.d}</p>
+						</div>
+						<div class="ed-domain__table ed-table ed-table--3">
+							<div class="ed-table__head" aria-hidden="true"><span>SIGNAL</span><span>VERIFIED AGAINST</span><span>ANTI-GAMING RULE</span></div>
+							{d.signals.map((s) => (
+								<div class="ed-table__row">
+									<span><b>{s.t}</b><span class={`ed-status ed-status--${s.s}`}>{STATUS_LABEL[s.s]}</span></span>
+									<span data-label="VERIFIED AGAINST">{s.src}</span>
+									<span data-label="RULE">{s.rule}</span>
+								</div>
+							))}
+						</div>
+					</div>
+				))}
+			</div>
+		</section>
+
+		<section class="ed-wrap ed-sec" aria-labelledby="ev-referrals">
+			<div class="ed-rule ed-rule--row">
+				<div class="ed-col">
+					<span class="ed-kicker">№ 02 · PEER REFERRALS · PLANNED</span>
+					<h2 class="ed-h2" id="ev-referrals">"Who would you send your own family to?"</h2>
+					<p class="ed-muted" style="max-width:44ch">
+						Doctors know which colleagues are good. A referral from a verified physician, given for a named condition, is the hardest
+						signal to fake. These are the rules it will launch with.
+					</p>
+				</div>
+				<ol class="ed-col ed-col--wide ed-numlist">
+					{referralRules.map((r) => (
+						<li><span class="ed-numlist__n">{r.n}</span><span><b>{r.t}</b><span>{r.d}</span></span></li>
+					))}
+				</ol>
+			</div>
+		</section>
+
+		<section class="ed-wrap ed-sec" aria-labelledby="ev-fair">
+			<div class="ed-rule">
+				<div class="ed-head__title">
+					<span class="ed-kicker">№ 03 · FAIR COMPARISON</span>
+					<h2 class="ed-h2" id="ev-fair">Like is compared with like</h2>
+				</div>
+				<div class="ed-cards">
+					{fairness.map((f) => (
+						<div class="ed-card">
+							<span class="ed-kicker">{f.k} <span class={`ed-status ed-status--${f.s}`}>{STATUS_LABEL[f.s]}</span></span>
+							<span class="ed-card__t">{f.t}</span>
+							<span>{f.d}</span>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section class="ed-wrap ed-sec" aria-label="Patient voice and our promise">
+			<div class="ed-rule ed-rule--row" style="gap:16px">
+				<div class="ed-panel ed-panel--sand">
+					<span class="ed-kicker">№ 04 · THE PATIENT VOICE, DONE RIGHT · PLANNED</span>
+					<span class="ed-panel__t">Verified outcomes, not opinions</span>
+					<span class="ed-muted">
+						Patients will be heard only through validated outcome measures (PROMs), collected by the treating hospital after a confirmed
+						encounter. They'll be reported as results across many patients. There will be no free-text reviews, no stars and no single anecdotes.
+					</span>
+				</div>
+				<div class="ed-panel ed-panel--deep">
+					<span class="ed-kicker">THE PROMISE</span>
+					<span class="ed-panel__t">Rank can't be bought.</span>
+					<span>
+						There's no sponsored placement and no pay-to-appear. Claiming a record lets a physician correct facts, never their score.
+						Corrections are reviewed by an editor before they go live.
+					</span>
+					<a href="/geography" class="ed-btn">Browse by region →</a>
+				</div>
+			</div>
+		</section>
+
+		<section class="ed-wrap ed-sec ed-sec--last" aria-labelledby="ev-nmc">
+			<div class="ed-rule" style="gap:24px">
+				<div class="ed-head">
+					<div class="ed-head__title">
+						<span class="ed-kicker">№ 05 · INDIA · NMC GUIDELINES ON ETHICAL ADVERTISING, 6 OCT 2026</span>
+						<h2 class="ed-h2" id="ev-nmc">Built for the NMC's rules</h2>
+					</div>
+					<span class="ed-head__note">The rules cover doctor-listing platforms as well as doctors. Here's how each one shapes MDRPedia, and what is still being put in place.</span>
+				</div>
+				<div class="ed-table ed-table--2">
+					<div class="ed-table__head" aria-hidden="true"><span>THE GUIDELINE</span><span>WHAT MDRPEDIA DOES</span></div>
+					{nmcRows.map((r) => (
+						<div class="ed-table__row">
+							<span><b>{r.g}</b><span class="ed-table__clause">{r.cl}</span></span>
+							<span data-label="WHAT MDRPEDIA DOES">{r.m} <span class={`ed-status ed-status--${r.s}`}>{r.s === "live" ? "IN PLACE" : r.s === "partial" ? "IN PROGRESS" : "PLANNED"}</span></span>
+						</div>
+					))}
+				</div>
+				<div class="ed-cards">
+					<div class="ed-panel ed-panel--forest">
+						<span class="ed-kicker">WHAT DOCTORS CAN SHOWCASE</span>
+						<span>
+							Factual credentials, publications, trials, teaching, committee work and community service. Health-education articles count
+							as information rather than advertising (Explanation I), provided they're non-promotional.
+						</span>
+					</div>
+					<div class="ed-panel ed-panel--sand ed-panel--note">
+						<span>
+							Are your own website and social channels compliant? Run the free <a href="/nmc-compliance-check">NMC Compliance Check</a>.
+							This page is a summary of how MDRPedia applies the guidelines, not legal advice.
+						</span>
+					</div>
+				</div>
+				<p class="ed-small">Read how these signals become a score in the <a href="/methodology">methodology</a>.</p>
+			</div>
+		</section>
+	</div>
+</SiteLayout>
+
+<script>
+	const list = document.querySelector<HTMLElement>(".ed-tabs");
+	if (list) {
+		const tabs = [...list.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+		const panels = tabs.map((t) => document.getElementById(t.getAttribute("aria-controls")!)!);
+		const select = (i: number, focus = false) => {
+			tabs.forEach((t, j) => {
+				t.setAttribute("aria-selected", String(i === j));
+				t.tabIndex = i === j ? 0 : -1;
+				panels[j].hidden = i !== j;
+			});
+			if (focus) tabs[i].focus();
+		};
+		tabs.forEach((t, i) => t.addEventListener("click", () => select(i)));
+		list.addEventListener("keydown", (e) => {
+			const i = tabs.indexOf(document.activeElement as HTMLButtonElement);
+			if (i < 0) return;
+			if (e.key === "ArrowRight") select((i + 1) % tabs.length, true);
+			else if (e.key === "ArrowLeft") select((i - 1 + tabs.length) % tabs.length, true);
+			else if (e.key === "Home") select(0, true);
+			else if (e.key === "End") select(tabs.length - 1, true);
+			else return;
+			e.preventDefault();
+		});
+		list.dataset.ready = "";
+		select(0);
+	}
+</script>

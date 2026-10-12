@@ -1,718 +1,167 @@
 ---
-export const prerender = true;
-import Layout from "../layouts/Layout.astro";
-import { getCollection } from "astro:content";
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { getRegisterStats, fmt } from "../lib/register-stats";
+import "../styles/pages/editorial.css";
 
-// Registry figures come from the collection so the page cannot drift
-// from what the site actually holds.
-const doctors = await getCollection("doctors");
-const profileCount = doctors.length;
-const countryCount = new Set(
-    doctors.map((d) => d.data.geography?.country).filter(Boolean),
-).size;
-const specialtyCount = new Set(
-    doctors.map((d) => d.data.specialty).filter(Boolean),
-).size;
-const titanCount = doctors.filter((d) => d.data.tier === "TITAN").length;
+export const prerender = true;
+
+const stats = await getRegisterStats();
+
+const figures = [
+	{ v: fmt(stats.profiles), l: "Physicians on the register" },
+	{ v: fmt(stats.countries), l: "Countries" },
+	{ v: fmt(stats.specialties), l: "Specialties" },
+	{ v: fmt(stats.citations), l: "Papers on record" },
+];
+
+const how = [
+	{ k: "THE EVIDENCE STANDARD", t: "What counts, and what never will", d: "The sixteen signals we use, where each is checked, and which are still being built.", h: "/evidence", c: "Read the standard" },
+	{ k: "METHODOLOGY", t: "How a score becomes a tier", d: "The four pillars, their weights, and the thresholds for Titan, Elite and Master.", h: "/methodology", c: "See the formula" },
+	{ k: "LINEAGE", t: "Who trained whom", d: "Mentor-to-trainee lines across generations, traced from published and contributed records.", h: "/lineage", c: "Explore lineage" },
+];
+
+const sources = [
+	{ t: "OpenAlex", d: `Author records, h-index and citation counts. ${fmt(stats.withOpenAlex)} profiles are matched to an OpenAlex author.` },
+	{ t: "PubMed (NCBI E-utilities)", d: "Publication details and abstracts, matched by DOI." },
+	{ t: "CrossRef", d: "DOI checks for papers PubMed doesn't index." },
+	{ t: "ClinicalTrials.gov", d: "Listings for the clinical trials section." },
+	{ t: "NPI Registry", d: "Licence lookups for physicians practising in the United States." },
+	{ t: "Wikimedia Commons", d: "Freely licensed portraits." },
+	{ t: "Prize and honour records", d: "Matched against our list of recognised medical prizes and national honours." },
+];
+
+const title = "About MDRPedia — a register of physicians, built on evidence";
+const description = `MDRPedia records ${fmt(stats.profiles)} physicians across ${fmt(stats.countries)} countries by what they verifiably did: publications, inventions, honours and documented work. No stars, no reviews, no paid placement.`;
+const jsonLd = [
+	{
+		"@context": "https://schema.org",
+		"@type": "AboutPage",
+		name: "About MDRPedia",
+		url: "https://mdrpedia.com/about",
+		description,
+		mainEntity: {
+			"@type": "Organization",
+			name: "MDRPedia",
+			alternateName: ["MDpedia", "DRpedia"],
+			url: "https://mdrpedia.com",
+		},
+	},
+];
 ---
 
-<Layout
-    title="About MDRPedia — The Impact Quotient"
-    description="Cataloging humanity's greatest healers. The Forbes for Doctors, ranked by impact."
->
-    <div class="about-container">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Quantifying the Unquantifiable</h1>
-                <p class="hero-subtitle">
-                    For decades, society has obsessed over the Forbes Rich List.
-                    We believe the true measure of a contribution isn't net
-                    worth—it's <span class="highlight">Human Impact</span>.
-                </p>
-            </div>
-        </section>
+<SiteLayout title={title} description={description} jsonLd={jsonLd}>
+	<div class="ed">
+		<section class="ed-hero" aria-labelledby="a-title">
+			<div class="ed-wrap ed-hero__inner">
+				<span class="ed-kicker">ABOUT MDRPEDIA</span>
+				<h1 class="ed-h1" id="a-title">A register of physicians, <em>built on evidence.</em></h1>
+				<p class="ed-hero__lede">
+					MDRPedia records the physicians who shaped medicine, and the ones practising it now, by what they verifiably did: what they
+					published, what they invented, the honours they earned and the work they can document.
+				</p>
+				<div class="ed-stats">
+					{figures.map((f) => <div class="ed-stat"><b>{f.v}</b><span>{f.l}</span></div>)}
+				</div>
+			</div>
+		</section>
 
-        <!-- Manifesto Section -->
-        <section class="mission">
-            <div class="grid-2">
-                <div class="text">
-                    <h2>The Anti-Rich List</h2>
-                    <p>
-                        We are building the <strong>Forbes for Doctors</strong>,
-                        but instead of dollars, we count lives saved, minds
-                        taught, and breakthroughs made.
-                    </p>
-                    <p>
-                        <strong>MDRPedia</strong> is the world's first definitive
-                        registry ranking medical professionals purely by their contribution
-                        to humanity. From the surgeon who pioneered a life-saving
-                        technique to the physician serving in a crisis zone, we honor
-                        those who enrich the world, not just themselves.
-                    </p>
-                    <div class="regional-names">
-                        <h3>One Register, Two Names</h3>
-                        <p>
-                            Around the world, MDRPedia has earned two colloquial names.
-                            In <strong>Western medical communities</strong> — the Americas, Europe,
-                            and Australasia — physicians and press commonly refer to the register as
-                            <a href="/about/mdpedia"><strong>MDpedia</strong></a>, a shorthand rooted
-                            in the "MD" (Doctor of Medicine) credential.
-                        </p>
-                        <p>
-                            In <strong>Eastern medical communities</strong> — the Middle East, South Asia,
-                            East Asia, and Africa — the platform is known as
-                            <a href="/about/drpedia"><strong>DRpedia</strong></a>, reflecting the
-                            universal "Dr." honorific used across these regions.
-                        </p>
-                        <p class="branding-note">
-                            Both names refer to this same register. <a href="/brand">Read more about our brand system</a>.
-                        </p>
-                    </div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat">
-                        <span class="number">{titanCount}</span>
-                        <span class="label">Titans of Medicine</span>
-                    </div>
-                    <div class="stat">
-                        <span class="number">{countryCount}</span>
-                        <span class="label">Countries Represented</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+		<section class="ed-wrap ed-sec ed-sec--first" aria-labelledby="a-what">
+			<div class="ed-rule">
+				<div class="ed-head__title">
+					<span class="ed-kicker">№ 01 · WHAT IT IS</span>
+					<h2 class="ed-h2" id="a-what">Not a directory. A record.</h2>
+				</div>
+				<div class="ed-cards">
+					<div class="ed-panel ed-panel--sand">
+						<span class="ed-label">What MDRPedia is not</span>
+						<span class="ed-strike">A booking site or a review site</span>
+						<p class="ed-muted">There are no star ratings, no patient reviews, no appointments and no sponsored listings. Plenty of sites already do that.</p>
+					</div>
+					<div class="ed-panel ed-panel--deep">
+						<span class="ed-label">What it is</span>
+						<span class="ed-own">A sourced record of who changed medicine, and whether it holds up</span>
+						<p>Every profile is built from public sources, scored by a published formula and open to correction by anyone.</p>
+					</div>
+				</div>
+			</div>
+		</section>
 
-        <!-- The Methodology -->
-        <section class="methodology" id="methodology">
-            <h2>The Impact Quotient (MDR Score)</h2>
-            <p class="intro">
-                How do you rank a doctor? We use a proprietary 4-Pillar System:
-            </p>
+		<section class="ed-wrap ed-sec" id="methodology" aria-labelledby="a-how">
+			<div class="ed-rule">
+				<div class="ed-head__title">
+					<span class="ed-kicker">№ 02 · HOW IT WORKS</span>
+					<h2 class="ed-h2" id="a-how">Published, so it can be checked</h2>
+				</div>
+				<div class="ed-cards">
+					{how.map((h) => (
+						<div class="ed-card">
+							<span class="ed-kicker">{h.k}</span>
+							<span class="ed-card__t">{h.t}</span>
+							<p>{h.d}</p>
+							<a href={h.h} class="ed-btn ed-btn--line">{h.c} →</a>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
 
-            <div class="pillars">
-                <div class="pillar">
-                    <div class="icon"><svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6v2H9V3zm0 4v6l-3 6h12l-3-6V7H9z"/></svg></div>
-                    <h3>Intellectual Legacy</h3>
-                    <p>
-                        Research, citations, and inventions that changed medical
-                        practice.
-                    </p>
-                </div>
-                <div class="pillar">
-                    <div class="icon"><svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-                    <h3>Clinical Mastery</h3>
-                    <p>
-                        Verified surgeries, years of service, and patient
-                        outcomes.
-                    </p>
-                </div>
-                <div class="pillar">
-                    <div class="icon"><svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
-                    <h3>Humanitarian Impact</h3>
-                    <p>
-                        Lives saved, crisis response, and service to the
-                        underserved.
-                    </p>
-                </div>
-                <div class="pillar">
-                    <div class="icon"><svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-                    <h3>Global Mentorship</h3>
-                    <p>
-                        The lineage of students trained and institutions built.
-                    </p>
-                </div>
-            </div>
-        </section>
-    </div>
+		<section class="ed-wrap ed-sec" id="data-sources" aria-labelledby="a-sources">
+			<div class="ed-rule ed-rule--row">
+				<div class="ed-col">
+					<span class="ed-kicker">№ 03 · DATA SOURCES</span>
+					<h2 class="ed-h2" id="a-sources">Where the record comes from</h2>
+					<p class="ed-muted">Facts are drawn from open, public sources. Where a fact has no source, it's flagged and then fixed or removed.</p>
+				</div>
+				<ul class="ed-col ed-col--wide ed-numlist">
+					{sources.map((s, i) => (
+						<li><span class="ed-numlist__n">{String(i + 1).padStart(2, "0")}</span><span><b>{s.t}</b><span>{s.d}</span></span></li>
+					))}
+				</ul>
+			</div>
+		</section>
 
-    <!-- Enrichment Sections -->
-    <section class="content-block alt-bg">
-        <h2 class="section-title">Our History: From Crisis to Clarity</h2>
-        <div class="timeline">
-            <div class="timeline-item">
-                <span class="year">2018</span>
-                <div class="timeline-content">
-                    <h4>The Genesis</h4>
-                    <p>
-                        During a global medical conference in Zurich, a group of
-                        senior physicians and data scientists identified a
-                        critical gap: while financial markets had Bloomberg and
-                        diverse industries had Forbes, medicine lacked a
-                        unified, data-driven authority to recognize excellence.
-                        Patient choices were being driven by SEO-optimized
-                        marketing rather than clinical outcomes.
-                    </p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <span class="year">2020</span>
-                <div class="timeline-content">
-                    <h4>The Algorithm</h4>
-                    <p>
-                        Development began on the "Impact Quotient" (MDR Score).
-                        We partnered with leading universities to ingest over 50
-                        million citation records and surgical logs. The goal was
-                        to create a ranking system that could not be bought or
-                        gamed—one that weighted a life-saving surgery in a rural
-                        clinic as heavily as one in a private palace.
-                    </p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <span class="year">2022</span>
-                <div class="timeline-content">
-                    <h4>The Beta Launch</h4>
-                    <p>
-                        MDRPedia launched in beta with the "Titan 100"—the first
-                        hundred physicians to meet our strictest criteria. The
-                        response was immediate. Institutions began using our
-                        verification badge as a mark of recruitment prestige,
-                        and patients finally had a tool to cut through the
-                        noise.
-                    </p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <span class="year">2024</span>
-                <div class="timeline-content">
-                    <h4>The Open Register</h4>
-                    <p>
-                        MDRPedia opened as a public, citable encyclopedia under
-                        CC-BY-SA. Every profile was rebuilt from primary
-                        sources—journals, national registries and institutional
-                        records—so that each claim on the site could be traced
-                        back to a document rather than a press release.
-                    </p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <span class="year">2025</span>
-                <div class="timeline-content">
-                    <h4>Depth Over Volume</h4>
-                    <p>
-                        Rather than inflate the register, we tightened it. Tier
-                        classification moved onto bibliometric evidence,
-                        citation records were reconciled against OpenAlex and
-                        PubMed, and profiles that could not be sourced were
-                        removed. A smaller register that holds up to scrutiny
-                        is worth more than a large one that does not.
-                    </p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <span class="year">2026</span>
-                <div class="timeline-content">
-                    <h4>The Ethics Ledger</h4>
-                    <p>
-                        Stature was never the whole story, so in 2026 we added a
-                        second, independent mark: <strong>Ethics</strong>—a
-                        public ledger of how a clinician practices, open to
-                        nomination and to scrutiny. Today the register holds
-                        <strong>{profileCount.toLocaleString()}</strong> verified
-                        profiles across <strong>{countryCount}</strong> countries
-                        and <strong>{specialtyCount}</strong> specialties, of
-                        which <strong>{titanCount}</strong> hold Titan rank.
-                        Every tier remains revocable.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+		<section class="ed-wrap ed-sec" id="editorial-board" aria-labelledby="a-gov">
+			<div class="ed-rule ed-rule--row">
+				<div class="ed-col">
+					<span class="ed-kicker">№ 04 · GOVERNANCE</span>
+					<h2 class="ed-h2" id="a-gov">Who keeps it honest</h2>
+				</div>
+				<div class="ed-col ed-col--wide" style="gap:14px">
+					<p class="ed-muted">
+						MDRPedia doesn't yet have an external advisory board. The methodology is maintained in-house and published in full, so it can be
+						checked rather than taken on trust.
+					</p>
+					<p class="ed-muted">
+						Suggested corrections are reviewed by an editor against their source before they go live, and every change is logged. Claiming a
+						profile lets a physician correct facts; it never changes their score.
+					</p>
+					<p class="ed-muted">
+						If a profile is wrong, <a href="/suggest-edit">tell us</a>. If you're a clinician or bibliometrician willing to review the methodology
+						in public, <a href="/contact">we'd like to hear from you</a>.
+					</p>
+				</div>
+			</div>
+		</section>
 
-    <section class="content-block">
-        <h2 class="section-title" id="editorial-board">Editorial Governance</h2>
-        <p class="section-intro">
-            MDRPedia does not yet have an external advisory board. Ranking
-            methodology is maintained in-house and published in full, so it can
-            be checked rather than taken on trust.
-        </p>
-        <div class="governance-note">
-            <p>
-                Every tier is derived from stated inputs — citation record,
-                h-index, years in practice, documented techniques and verified
-                honours — and every tier is revocable. The weightings are set out
-                on the <a href="/rankings">rankings page</a>.
-            </p>
-            <p>
-                If a profile is wrong, <a href="/suggest-edit">tell us</a>. If you
-                are a clinician or bibliometrician willing to review the
-                methodology publicly, <a href="/contact">we would like to hear
-                from you</a>.
-            </p>
-        </div>
-    </section>
+		<section class="ed-wrap ed-sec ed-sec--last" aria-labelledby="a-name">
+			<div class="ed-rule ed-rule--row">
+				<div class="ed-col">
+					<span class="ed-kicker">№ 05 · ONE NAME</span>
+					<h2 class="ed-h2" id="a-name">MDRPedia, also searched as MDpedia and DRpedia</h2>
+				</div>
+				<div class="ed-col ed-col--wide" style="gap:14px">
+					<p class="ed-muted">
+						People search for the register under different names. <a href="/about/mdpedia">MDpedia</a> follows the "MD" degree used in the
+						Americas and Europe; <a href="/about/drpedia">DRpedia</a> follows the "Dr." title used across South Asia, the Middle East and Africa.
+						Both refer to MDRPedia.
+					</p>
+					<p class="ed-muted"><a href="/about/our-name">Why the name</a> · <a href="/brand">Brand and seals</a> · <a href="/contact">Contact</a></p>
+				</div>
+			</div>
+		</section>
+	</div>
+</SiteLayout>
 
-    <section class="content-block alt-bg">
-        <h2 class="section-title" id="data-sources">Data Integrity: The War on Misinformation</h2>
-        <div class="integrity-content">
-            <p>
-                In the age of AI-generated content and "fake news," medical
-                misinformation is not just annoying—it is deadly. MDRPedia
-                operates as a fortress of verification. Our process is
-                threefold:
-            </p>
-            <div class="integrity-steps">
-                <div class="step">
-                    <span class="step-num">01</span>
-                    <h4>Algorithmic Ingestion</h4>
-                    <p>
-                        We crawl trusted sources like PubMed,
-                        ClinicalTrials.gov, and National Medical Board
-                        registries.
-                    </p>
-                </div>
-                <div class="step">
-                    <span class="step-num">02</span>
-                    <h4>Manual Verification</h4>
-                    <p>
-                        Our "Tier 2" team physically verifies board
-                        certifications and calls hospitals to confirm
-                        affiliations for Elite and Titan profiles.
-                    </p>
-                </div>
-                <div class="step">
-                    <span class="step-num">03</span>
-                    <h4>Peer Review</h4>
-                    <p>
-                        Top-tier doctors can challenge the data of their peers.
-                        If a claim is disputed, it enters a rigorous arbitration
-                        process.
-                    </p>
-                </div>
-            </div>
-            <p class="integrity-note">
-                Profiles that cannot be traced to a primary source are removed,
-                and any tier on this register can be revoked. We do not accept
-                payment for removal of negative records, for placement, or for
-                "boosting" rankings.
-            </p>
-        </div>
-    </section>
-
-    <section class="content-block">
-        <h2 class="section-title">Strategic Partnerships</h2>
-        <p>
-            We collaborate with the world's leading institutions to share data
-            and improve global health outcomes.
-        </p>
-        <ul class="partners-list">
-            <li>
-                <strong>Global Health Data Exchange:</strong> Sharing anonymized disease
-                prevalence data.
-            </li>
-            <li>
-                <strong>The Citation Project:</strong> Working to open-source medical
-                research metrics.
-            </li>
-            <li>
-                <strong>Patient Advocacy Alliance:</strong> Giving patients a voice
-                in how "Bedside Manner" is quantified.
-            </li>
-        </ul>
-    </section>
-</Layout>
-
-<style>
-    .about-container {
-        max-width: var(--max);
-        margin: 0 auto;
-        padding: 0 20px 100px;
-        color: var(--ink);
-    }
-
-    /* Hero */
-    .hero {
-        padding: 100px 0;
-        text-align: center;
-    }
-
-    h1 {
-        font-size: 3.5rem;
-        font-family: var(--font-serif);
-        font-weight: 400;
-        margin-bottom: 1rem;
-        color: var(--ink);
-    }
-
-    .hero-subtitle {
-        font-size: 1.5rem;
-        color: var(--ink-2);
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-    .highlight {
-        color: var(--ink-blue);
-        font-weight: 500;
-    }
-
-    /* Grid Layouts */
-    .grid-2 {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 60px;
-        align-items: center;
-        margin: 80px 0;
-    }
-
-    /* Sections */
-    section {
-        margin-bottom: 80px;
-    }
-
-    h2 {
-        font-size: 2.2rem;
-        font-family: var(--font-serif);
-        font-weight: 400;
-        margin-bottom: 1.5rem;
-        color: var(--ink);
-    }
-
-    p {
-        font-size: 1.1rem;
-        line-height: 1.8;
-        color: var(--ink-2);
-        margin-bottom: 1.5rem;
-    }
-
-    /* Stat Box */
-    .stat-box {
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        padding: 40px;
-        display: flex;
-        justify-content: space-around;
-        text-align: center;
-    }
-
-    .stat .number {
-        display: block;
-        font-size: 3rem;
-        font-weight: 500;
-        color: var(--ink-blue);
-    }
-
-    .stat .label {
-        font-size: 0.9rem;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--ink-3);
-    }
-
-    /* Pillars */
-    .pillars {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 30px;
-        margin-top: 40px;
-    }
-
-    .pillar {
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        padding: 30px;
-        border-radius: var(--r-4);
-        text-align: center;
-        transition: transform var(--t-fast) var(--ease);
-    }
-
-    .pillar:hover {
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-2);
-    }
-
-    .pillar .icon {
-        font-size: 3rem;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .value-icon {
-        width: 48px;
-        height: 48px;
-        color: var(--ink-blue);
-    }
-
-    .pillar h3 {
-        color: var(--ink);
-        margin-bottom: 10px;
-        font-weight: 500;
-    }
-
-    /* Ranking Explainer */
-    .rankings-explainer {
-        display: flex;
-        align-items: center;
-        gap: 60px;
-        background: var(--aged-gold-2);
-        padding: 60px;
-        border-radius: var(--r-4);
-        border-left: 4px solid var(--aged-gold);
-    }
-
-    .dummy-badge {
-        background: var(--aged-gold);
-        color: var(--paper);
-        padding: 20px 40px;
-        border-radius: var(--r-4);
-        font-weight: 500;
-        font-size: 1.5rem;
-        font-family: var(--font-serif);
-        box-shadow: var(--shadow-2);
-    }
-
-    .dummy-badge span {
-        font-size: 2.5rem;
-        font-weight: 500;
-    }
-
-    .regional-names {
-        margin-top: 2rem;
-        padding: 24px 28px;
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-    }
-    .regional-names h3 {
-        font-family: var(--font-serif);
-        font-size: 1.3rem;
-        font-weight: 500;
-        color: var(--ink);
-        margin-bottom: 12px;
-    }
-    .regional-names p {
-        font-size: 1rem;
-        margin-bottom: 0.8rem;
-    }
-    .regional-names a {
-        color: var(--ink-blue);
-        text-decoration: underline;
-        text-underline-offset: 2px;
-    }
-    .regional-names a:hover { color: var(--ink); }
-    .branding-note {
-        font-size: 0.9rem;
-        color: var(--ink-3);
-        font-style: italic;
-        margin-top: 1rem;
-    }
-
-    /* Content Enrichment Styles */
-    .content-block {
-        margin-bottom: 80px;
-    }
-
-    .content-block.alt-bg {
-        background: var(--paper-2);
-        padding: 60px;
-        border-radius: var(--r-4);
-        border: 1px solid var(--rule);
-    }
-
-    .section-title {
-        font-size: 2rem;
-        font-family: var(--font-serif);
-        font-weight: 400;
-        margin-bottom: 40px;
-        color: var(--ink);
-        text-align: center;
-    }
-
-    .section-intro {
-        text-align: center;
-        max-width: 700px;
-        margin: 0 auto 40px;
-        font-size: 1.1rem;
-        color: var(--ink-2);
-    }
-
-    /* Timeline */
-    .timeline {
-        position: relative;
-        max-width: 800px;
-        margin: 0 auto;
-        padding-left: 20px;
-        border-left: 2px solid var(--rule-strong);
-    }
-
-    .timeline-item {
-        position: relative;
-        margin-bottom: 40px;
-        padding-left: 30px;
-    }
-
-    .timeline-item::before {
-        content: "";
-        position: absolute;
-        left: -26px;
-        top: 0;
-        width: 10px;
-        height: 10px;
-        background: var(--ink-blue);
-        border-radius: 50%;
-    }
-
-    .timeline-item .year {
-        display: block;
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: var(--ink-blue);
-        margin-bottom: 8px;
-        font-family: var(--font-mono);
-    }
-
-    .timeline-content h4 {
-        font-size: 1.3rem;
-        color: var(--ink);
-        font-weight: 500;
-        margin-bottom: 8px;
-    }
-
-    /* Board Grid */
-    .governance-note {
-        max-width: 68ch;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        color: var(--ink-2);
-        line-height: 1.7;
-    }
-
-    .governance-note a {
-        color: var(--ink);
-        text-decoration: underline;
-    }
-
-    .board-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 24px;
-    }
-
-    .board-member {
-        background: var(--paper-2);
-        padding: 30px;
-        border-radius: var(--r-4);
-        border: 1px solid var(--rule);
-    }
-
-    .member-role {
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--ink-blue);
-        margin-bottom: 8px;
-        font-family: var(--font-mono);
-    }
-
-    .board-member h4 {
-        font-size: 1.2rem;
-        color: var(--ink);
-        font-weight: 500;
-        margin-bottom: 12px;
-    }
-
-    /* Integrity Steps */
-    .integrity-steps {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 30px;
-        margin: 40px 0;
-    }
-
-    .step {
-        text-align: center;
-    }
-
-    .step-num {
-        display: block;
-        font-size: 3rem;
-        font-weight: 400;
-        color: var(--rule);
-        margin-bottom: 10px;
-        font-family: var(--font-mono);
-    }
-
-    .step h4 {
-        font-size: 1.2rem;
-        color: var(--ink);
-        font-weight: 500;
-        margin-bottom: 10px;
-    }
-
-    .integrity-note {
-        background: var(--sanguine-2);
-        border: 1px solid var(--sanguine);
-        padding: 20px;
-        border-radius: var(--r-3);
-        text-align: center;
-        color: var(--sanguine);
-        font-size: 1rem;
-    }
-
-    .partners-list {
-        list-style: none;
-        padding: 0;
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-    .partners-list li {
-        padding: 16px;
-        border-bottom: 1px solid var(--rule);
-        color: var(--ink-2);
-    }
-
-    .partners-list strong {
-        color: var(--ink);
-        margin-right: 8px;
-    }
-
-    @media (max-width: 768px) {
-        .about-container {
-            padding: 0 16px 60px;
-        }
-        h1 {
-            font-size: 2.5rem;
-        }
-        .hero {
-            padding: 60px 0;
-        }
-        .grid-2 {
-            grid-template-columns: 1fr;
-            gap: 40px;
-        }
-        .stat-box {
-            flex-direction: column;
-            gap: 30px;
-        }
-        .rankings-explainer {
-            flex-direction: column;
-            padding: 30px;
-            text-align: center;
-        }
-        .content-block.alt-bg {
-            padding: 30px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        h1 {
-            font-size: 2rem;
-        }
-        h2 {
-            font-size: 1.6rem;
-        }
-        .section-title {
-            font-size: 1.5rem;
-        }
-        .stat .number {
-            font-size: 2.2rem;
-        }
-    }
-</style>
+<script is:inline>
+	if (location.hash === "#methodology") location.replace("/methodology");
+</script>

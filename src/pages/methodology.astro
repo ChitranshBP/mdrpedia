@@ -1,0 +1,213 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import Seal from "../components/site/Seal.astro";
+import { getRegisterStats, fmt } from "../lib/register-stats";
+import "../styles/pages/editorial.css";
+
+export const prerender = true;
+
+const stats = await getRegisterStats();
+
+const colors = [["#0e3b2e", "#f4f0e6"], ["#154a3a", "#f4f0e6"], ["#c9a24a", "#0e3b2e"], ["#ebe5d6", "#14171a"]];
+const pillars = [
+	{
+		t: "Clinical Mastery", w: 30,
+		d: "The scale and length of documented clinical work.",
+		parts: ["Documented procedure volume (60%)", "Years in practice (40%)"],
+		src: "Published figures, institutional records",
+	},
+	{
+		t: "Intellectual Legacy", w: 30,
+		d: "What the physician has added to medical knowledge.",
+		parts: ["h-index (40%)", "Citations (30%)", "Named techniques and inventions (30%)"],
+		src: "OpenAlex, PubMed, CrossRef",
+	},
+	{
+		t: "Training & Mentorship", w: 20,
+		d: "Formal training today; traced trainee lineage as it is verified.",
+		parts: ["Board certifications and fellowships", "Lineage is shown on profiles but not yet scored"],
+		src: "Education and training records",
+	},
+	{
+		t: "Humanitarian Impact", w: 20,
+		d: "Documented reach beyond the physician's own practice.",
+		parts: ["Lives-impacted figures from published sources", "Global-health and crisis work"],
+		src: "Published reports, NGO records",
+	},
+].map((p, i) => ({ ...p, bg: colors[i][0], fg: colors[i][1] }));
+
+const core = [
+	{ k: "Citations, weighted by journal impact", w: "35%" },
+	{ k: "Named techniques and inventions", w: "30%" },
+	{ k: "Honours and prizes", w: "20%" },
+	{ k: "Years in practice", w: "15%" },
+];
+
+const adjustments = [
+	{ n: "A", t: "Retraction", d: "A retracted paper sets the score to zero and puts the profile under review." },
+	{ n: "B", t: "Honours floor", d: "Holders of a landmark prize (Nobel, Lasker, Gairdner, Wolf…) or a national honour (Padma awards, Presidential Medal of Freedom, knighthood…) are never placed below Elite." },
+	{ n: "C", t: "Legacy decay", d: "For historical physicians, the score fades by 0.5% a year from ten years after death, to no less than half, unless their technique is still the standard of care." },
+	{ n: "D", t: "Pioneer and leadership", d: "Small fixed bonuses for documented pioneering work and for leading a department, society or institution." },
+];
+
+const tiers = [
+	{ n: "Titan · Tier I", letter: "T", uid: "mt1", ring: "TITAN · TIER I · MDRPEDIA ·", min: 90, count: stats.tiers.TITAN, d: "Changed how medicine is practised worldwide." },
+	{ n: "Elite · Tier II", letter: "E", uid: "mt2", ring: "ELITE · TIER II · MDRPEDIA ·", min: 70, count: stats.tiers.ELITE, d: "Field-defining work within a specialty." },
+	{ n: "Master · Tier III", letter: "M", uid: "mt3", ring: "MASTER · TIER III · MDRPEDIA ·", min: 50, count: stats.tiers.MASTER, d: "Sustained, documented excellence in practice." },
+];
+
+const rules = [
+	{ n: "1", t: "Every claim should be sourced", d: "Papers are matched by DOI against PubMed and CrossRef. A fact we can't source is flagged, then fixed or removed." },
+	{ n: "2", t: "Summaries come from the record", d: "Profile summaries are generated from the sourced record, not written freehand. Machine-drafted text is being labelled on every profile until an editor has reviewed it." },
+	{ n: "3", t: "Every mark is revocable", d: "Scores and tiers are recalculated each time a profile's data is synced. Ethics marks decay by 15% for each missed quarterly audit." },
+	{ n: "4", t: "Corrections are reviewed", d: "Anyone can suggest a correction. An editor checks it against its source before it goes live, and every change is logged." },
+	{ n: "5", t: "No paid placement", d: "Claiming a record never changes its score. Physicians can correct facts, not buy rank." },
+];
+
+const title = "Methodology — how the MDR Score and tiers are calculated | MDRPedia";
+const description = `How MDRPedia scores ${fmt(stats.profiles)} physicians: four weighted pillars, citation and honour weighting, the Titan, Elite and Master thresholds, and the editorial rules behind every mark.`;
+const jsonLd = [
+	{
+		"@context": "https://schema.org",
+		"@type": "WebPage",
+		name: "MDRPedia Methodology",
+		url: "https://mdrpedia.com/methodology",
+		description,
+		publisher: { "@type": "Organization", name: "MDRPedia", url: "https://mdrpedia.com" },
+	},
+	{
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		itemListElement: [
+			{ "@type": "ListItem", position: 1, name: "MDRPedia", item: "https://mdrpedia.com" },
+			{ "@type": "ListItem", position: 2, name: "Methodology", item: "https://mdrpedia.com/methodology" },
+		],
+	},
+];
+---
+
+<SiteLayout title={title} description={description} jsonLd={jsonLd}>
+	<div class="ed">
+		<section class="ed-wrap ed-intro" aria-labelledby="m-title">
+			<span class="ed-kicker">METHODOLOGY · MDR SCORE v2</span>
+			<h1 class="ed-h1" id="m-title">How a mark is earned, <em>and lost.</em></h1>
+			<p class="ed-lede">
+				Every tier comes from a score of 0 to 100, built from four weighted pillars and a core of citations, inventions and honours. Every
+				input comes from a named source, and anyone can challenge it.
+			</p>
+		</section>
+
+		<section class="ed-wrap ed-sec" style="padding-top:24px" aria-labelledby="m-pillars">
+			<div class="ed-rule">
+				<div class="ed-head__title">
+					<span class="ed-kicker">№ 01 · THE FOUR PILLARS</span>
+					<h2 class="ed-h2" id="m-pillars">The MDR Score</h2>
+				</div>
+				<div class="ed-bar" role="img" aria-label={pillars.map((p) => `${p.t} ${p.w}%`).join(", ")}>
+					{pillars.map((p) => <div style={`flex:${p.w};background:${p.bg};color:${p.fg}`}>{p.w}%</div>)}
+				</div>
+				<div class="ed-pillars">
+					{pillars.map((p) => (
+						<div class="ed-pillar">
+							<div class="ed-pillar__top"><h3 class="ed-pillar__t">{p.t}</h3><span class="ed-pillar__w">{p.w}%</span></div>
+							<span class="ed-muted">{p.d}</span>
+							<ul>{p.parts.map((x) => <li>{x}</li>)}</ul>
+							<span class="ed-small">Sources: {p.src}</span>
+						</div>
+					))}
+				</div>
+				<div class="ed-formula">
+					<span class="ed-kicker">HOW THE NUMBER IS BUILT</span>
+					<code>MDR Score = ½ × pillar average + ½ × core score</code>
+					<div class="ed-table ed-table--2">
+						<div class="ed-table__head" aria-hidden="true"><span>CORE SCORE INPUT</span><span>WEIGHT</span></div>
+						{core.map((c) => <div class="ed-table__row"><span>{c.k}</span><span data-label="WEIGHT">{c.w}</span></div>)}
+					</div>
+					<span class="ed-small">
+						Each input is scaled from 0 to 100 against a ceiling (for example an h-index of 100 or 50 years in practice), so no single number
+						can dominate. A paper in a journal with an impact factor of 50 or more counts up to five times as much as one in an unranked journal.
+					</span>
+				</div>
+			</div>
+		</section>
+
+		<section class="ed-wrap ed-sec" aria-labelledby="m-adjust">
+			<div class="ed-rule ed-rule--row">
+				<div class="ed-col">
+					<span class="ed-kicker">№ 02 · ADJUSTMENTS</span>
+					<h2 class="ed-h2" id="m-adjust">What moves a score after it's calculated</h2>
+				</div>
+				<ol class="ed-col ed-col--wide ed-numlist ed-numlist--serif">
+					{adjustments.map((a) => <li><span class="ed-numlist__n">{a.n}</span><span><b>{a.t}</b><span>{a.d}</span></span></li>)}
+				</ol>
+			</div>
+		</section>
+
+		<section class="ed-wrap ed-sec" aria-labelledby="m-tiers">
+			<div class="ed-rule" style="gap:24px">
+				<div class="ed-head">
+					<div class="ed-head__title">
+						<span class="ed-kicker">№ 03 · STATURE TIERS</span>
+						<h2 class="ed-h2" id="m-tiers">Three tiers of stature</h2>
+					</div>
+					<span class="ed-head__note">
+						Of {fmt(stats.profiles)} physicians on the register, {fmt(stats.tiers.UNRANKED)} are listed without a tier: their sourced record
+						doesn't yet reach a score of 50.
+					</span>
+				</div>
+				<div class="ed-cards">
+					{tiers.map((t) => (
+						<div class="ed-tier">
+							<Seal size={88} color="#b08a35" ring={t.ring} letter={t.letter} uid={t.uid} />
+							<div class="ed-tier__body">
+								<span class="ed-tier__n">{t.n}</span>
+								<span class="ed-tier__meta">SCORE ≥ {t.min} · {fmt(t.count)} PHYSICIANS</span>
+								<span class="ed-muted" style="font-size:15px">{t.d}</span>
+							</div>
+						</div>
+					))}
+				</div>
+				<p class="ed-small">
+					Tiers are being withdrawn from the profiles of doctors registered in India, where the NMC restricts comparative claims. See the{" "}
+					<a href="/evidence#ev-nmc">Evidence Standard</a>.
+				</p>
+			</div>
+		</section>
+
+		<section class="ed-wrap ed-sec" aria-labelledby="m-ethics">
+			<div class="ed-rule ed-rule--row">
+				<div class="ed-col">
+					<span class="ed-kicker">№ 04 · THE ETHICS MARK</span>
+					<h2 class="ed-h2" id="m-ethics">A separate mark for how a doctor practises</h2>
+					<p class="ed-muted">Stature and ethics are scored independently. A Titan can hold no ethics mark, and a rural GP can hold the highest.</p>
+				</div>
+				<div class="ed-col ed-col--wide">
+					<div class="ed-table ed-table--2">
+						<div class="ed-table__head" aria-hidden="true"><span>AUDIT AREA</span><span>WEIGHT (INITIAL & ANNUAL · QUARTERLY)</span></div>
+						<div class="ed-table__row"><span><b>Patient transparency</b></span><span data-label="WEIGHT">35% · 50%</span></div>
+						<div class="ed-table__row"><span><b>Peer review & compliance</b></span><span data-label="WEIGHT">40% · 20%</span></div>
+						<div class="ed-table__row"><span><b>Community & pro-bono work</b></span><span data-label="WEIGHT">25% · 30%</span></div>
+					</div>
+					<p class="ed-muted" style="padding-top:16px">
+						Four gates fail an audit outright: an inactive board certification, a licence that isn't clean, or undisclosed fees or conflicts
+						of interest. Levels are Advocate (60+), Guardian (75+) and Legend (90+). Guardian and Legend audits carry a fee that pays for the
+						audit itself; paying never guarantees a pass. <a href="/ethical-doctors">See ethical doctors</a>.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="ed-wrap ed-sec ed-sec--last" aria-labelledby="m-rules">
+			<div class="ed-rule ed-rule--row">
+				<div class="ed-col">
+					<span class="ed-kicker">№ 05 · EDITORIAL RULES</span>
+					<h2 class="ed-h2" id="m-rules">What we promise</h2>
+					<p class="ed-muted">Found something wrong? <a href="/suggest-edit">Suggest a correction</a>.</p>
+				</div>
+				<ol class="ed-col ed-col--wide ed-numlist ed-numlist--serif">
+					{rules.map((r) => <li><span class="ed-numlist__n">{r.n}</span><span><b>{r.t}</b><span>{r.d}</span></span></li>)}
+				</ol>
+			</div>
+		</section>
+	</div>
+</SiteLayout>

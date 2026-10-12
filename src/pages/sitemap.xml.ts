@@ -243,6 +243,8 @@ ${indexEntries.join('\n')}
     entries.push(buildUrlEntry(`${SITE_URL}/about/drpedia`, 0.8, 'weekly', today));
     entries.push(buildUrlEntry(`${SITE_URL}/about/our-name`, 0.7, 'monthly', today));
     entries.push(buildUrlEntry(`${SITE_URL}/brand`, 0.5, 'monthly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/evidence`, 0.8, 'monthly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/methodology`, 0.8, 'monthly', today));
 
     // New content pages
     entries.push(buildUrlEntry(`${SITE_URL}/rankings`, 0.9, 'weekly', today));
