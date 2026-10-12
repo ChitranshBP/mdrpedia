@@ -48,7 +48,7 @@ export default function RecentlyViewed() {
     };
 
     return (
-        <section className="recently-viewed">
+        <section className="recently-viewed container" aria-label="Recently viewed profiles">
             <div className="rv-header">
                 <span className="rv-label">Recently Viewed</span>
                 <button
@@ -82,7 +82,7 @@ export default function RecentlyViewed() {
             </div>
             <style>{`
                 .recently-viewed {
-                    margin-bottom: var(--s-6);
+                    margin: var(--s-6) auto;
                 }
                 .rv-header {
                     display: flex;

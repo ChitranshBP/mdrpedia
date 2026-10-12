@@ -32,6 +32,11 @@ const canonicalURL = new URL(
 	canonicalPath,
 	Astro.site ?? "https://mdrpedia.com",
 );
+// Paginated listings (?page=N, no other filters) are distinct pages and self-canonical.
+const pageParam = Number(Astro.url.searchParams.get("page"));
+if (pageParam > 1 && [...Astro.url.searchParams.keys()].length === 1) {
+	canonicalURL.searchParams.set("page", String(Math.floor(pageParam)));
+}
 
 const currentPath = Astro.url.pathname;
 
@@ -301,7 +306,7 @@ const activeKey = getActiveKey(currentPath);
 		</footer>
 
 		<!-- Global Search Modal -->
-		<GlobalSearchModal client:load />
+		<GlobalSearchModal client:idle />
 
 		<!-- Service Worker Registration -->
 		<script>

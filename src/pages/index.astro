@@ -10,7 +10,7 @@ import SealRound from "../components/SealRound.astro";
 import RecentlyViewed from "../components/RecentlyViewed";
 import { getCollection } from "astro:content";
 import { prisma } from "../lib/prisma";
-import { getTierCounts, getCountryStats, getFeaturedTitans, getSpecialtyStats } from "../lib/cached-stats";
+import { getTierCounts, getCountryStats, getFeaturedTitans, getSpecialtyStats, getLastVerified } from "../lib/cached-stats";
 
 export const prerender = false;
 
@@ -42,8 +42,6 @@ type DoctorData = {
 	hIndex?: number;
 };
 
-let allDoctors: DoctorData[] = [];
-
 try {
 	const [cachedTierCounts, countryStats, cachedFeaturedTitans, specialtyStats] = await Promise.all([
 		getTierCounts(),
@@ -56,39 +54,10 @@ try {
 	countriesCount = countryStats.length;
 	featuredTitans = cachedFeaturedTitans;
 	specialtyCount = specialtyStats.length;
-
-	const dbDoctors = await prisma.profile.findMany({
-		select: {
-			slug: true,
-			full_name: true,
-			specialty: true,
-			sub_specialty: true,
-			tier: true,
-			portrait_url: true,
-			h_index: true,
-			geography: { select: { country: true, city: true } },
-		},
-	});
-
-	if (dbDoctors.length > 0) {
-		allDoctors = dbDoctors.map((d) => ({
-			slug: d.slug,
-			fullName: d.full_name,
-			specialty: d.specialty,
-			subSpecialty: d.sub_specialty || undefined,
-			tier: d.tier,
-			country: d.geography?.country || "Unknown",
-			city: d.geography?.city || undefined,
-			portraitUrl: d.portrait_url,
-			hIndex: d.h_index || undefined,
-		}));
-	} else {
-		throw new Error("No profiles in database");
-	}
 } catch (e) {
 	// Fallback to static content when DB is unavailable
 	const staticDoctors = await getCollection("doctors");
-	allDoctors = staticDoctors.map((d) => ({
+	const allDoctors: DoctorData[] = staticDoctors.map((d) => ({
 		slug: d.id,
 		fullName: d.data.fullName,
 		specialty: d.data.specialty,
@@ -110,6 +79,20 @@ try {
 	const countrySet = new Set(allDoctors.map((d) => d.country));
 	countriesCount = countrySet.size;
 	specialtyCount = new Set(allDoctors.map((d) => d.specialty)).size;
+	featuredTitans = allDoctors
+		.filter((d) => d.tier === "TITAN")
+		.sort((a, b) => (b.hIndex || 0) - (a.hIndex || 0))
+		.slice(0, 8)
+		.map((d) => ({
+			slug: d.slug,
+			full_name: d.fullName,
+			specialty: d.specialty,
+			sub_specialty: d.subSpecialty || null,
+			tier: d.tier,
+			portrait_url: d.portraitUrl,
+			h_index: d.hIndex || null,
+			geography: { country: d.country, city: d.city || null },
+		}));
 }
 
 // Get initials from name
@@ -160,13 +143,6 @@ try {
 } catch {}
 const hasLedgerData = ledgerEntries.length > 0;
 
-// Search index for inline search
-const searchIndex = allDoctors.slice(0, 800).map(d => ({
-	s: d.slug, n: d.fullName, sp: d.specialty,
-	t: d.tier, c: d.country, ci: d.city || '',
-	p: d.portraitUrl || '', h: d.hIndex || 0,
-}));
-
 // Ethics count from database
 let ethicsCount = 0;
 try {
@@ -179,6 +155,27 @@ try {
 const edition = new Date().toISOString().slice(0, 7);
 
 Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, stale-while-revalidate=300');
+
+let lastVerified: Date | null = null;
+try {
+	lastVerified = await getLastVerified();
+} catch {
+	lastVerified = null;
+}
+
+function timeAgo(d: Date): string {
+	const mins = Math.max(0, Math.round((Date.now() - d.getTime()) / 60000));
+	if (mins < 1) return "just now";
+	if (mins < 60) return `${mins} min ago`;
+	const hrs = Math.round(mins / 60);
+	if (hrs < 24) return `${hrs} hr ago`;
+	const days = Math.round(hrs / 24);
+	if (days < 30) return `${days} days ago`;
+	return d.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+}
+const verifiedAgo = lastVerified ? timeAgo(lastVerified) : null;
+
+const [leadTitan, ...restTitans] = featuredTitans.slice(0, 8);
 ---
 
 <Layout
@@ -193,7 +190,7 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, s
 		<span class="edition">Open Encyclopedia &middot; CC-BY-SA &middot; <span id="hero-date"></span></span>
 	</div>
 
-	<h1 class="reveal">A record of<br><em>who practices medicine —</em><br>and how they practice it.</h1>
+	<h1>A record of<br><em>who practices medicine —</em><br>and how they practice it.</h1>
 
 	<div class="hero__lede">
 		<p>
@@ -203,64 +200,96 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, s
 			<div class="hero__stat"><div class="n tnum" data-count={tierCounts.total}>{tierCounts.total.toLocaleString()}</div><div class="l">Verified Profiles</div></div>
 			<div class="hero__stat"><div class="n tnum" data-count={countriesCount}>{countriesCount}</div><div class="l">Countries</div></div>
 			<div class="hero__stat"><div class="n tnum" data-count={tierCounts.titan}>{tierCounts.titan}</div><div class="l">Titans &middot; Tier I</div></div>
-			<div class="hero__stat"><div class="n tnum" data-count={ethicsCount}>{ethicsCount}</div><div class="l">Ethics Legends</div></div>
+			{lastVerified && verifiedAgo ? (
+				<div class="hero__stat"><div class="n n--text"><time datetime={lastVerified.toISOString()}>{verifiedAgo}</time></div><div class="l">Last verified</div></div>
+			) : (
+				<div class="hero__stat"><div class="n tnum" data-count={ethicsCount}>{ethicsCount}</div><div class="l">Ethics Legends</div></div>
+			)}
 		</div>
 	</div>
 
 	<div class="command">
-		<label class="command__bar">
-			<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-			<input id="hero-search" placeholder={`Search ${tierCounts.total.toLocaleString()} profiles by name, specialty, institution, DOI...`} autocomplete="off" />
-			<kbd class="mono" style="font-size:10px; padding:3px 6px; border:1px solid var(--rule); border-radius:3px; color:var(--ink-3);">&#8984;K</kbd>
-		</label>
-		<div class="command__facets">
-			<button class="facet">Specialty <span class="count">{specialtyCount}</span></button>
-			<button class="facet">Country <span class="count">{countriesCount}</span></button>
-			<button class="facet">Tier</button>
-			<button class="facet">Ethics <span class="count">{ethicsCount}</span></button>
-			<button class="facet">Institution</button>
-			<button class="facet">Mentorship Lineage</button>
-			<button class="facet">Rare Disease</button>
-		</div>
+		<button type="button" id="hero-search" class="command__bar" aria-label="Search the register" aria-keyshortcuts="Control+K Meta+K">
+			<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+			<span class="command__text">Search {tierCounts.total.toLocaleString()} profiles by name, specialty, institution, DOI...</span>
+			<kbd class="command__kbd mono" aria-hidden="true">&#8984;K</kbd>
+		</button>
+		<nav class="command__facets" aria-label="Browse the register by">
+			<a class="facet" href="/specialty">Specialty <span class="count">{specialtyCount}</span></a>
+			<a class="facet" href="/geography">Country <span class="count">{countriesCount}</span></a>
+			<a class="facet" href="/rankings">Tier</a>
+			<a class="facet" href="/ethical-doctors">Ethics <span class="count">{ethicsCount}</span></a>
+			<a class="facet" href="/institutions">Institution</a>
+			<a class="facet" href="/lineage">Mentorship Lineage</a>
+			<a class="facet" href="/rare-diseases">Rare Disease</a>
+		</nav>
 	</div>
+</section>
+
+<!-- METHODOLOGY -->
+<section class="method container">
+	<div class="sec-head">
+		<div class="sec-head__left">
+			<span class="num">&sect; 01</span>
+			<h2>How a tier <em>is decided</em></h2>
+		</div>
+		<div class="sec-head__right">Methodology v2.0 &middot; <a href="/about">read the method &rarr;</a></div>
+	</div>
+	<div class="pillars">
+		<div class="pillar"><div class="num">01</div><h3>Clinical Mastery</h3><p>Case volume in high-acuity interventions, complication rates, board certifications, registries.</p><div class="metric">Weight 30%<div class="bar" style="--w: 30%"></div></div></div>
+		<div class="pillar"><div class="num">02</div><h3>Intellectual Legacy</h3><p>H-index, landmark trials, textbook authorship, changes to clinical guidelines.</p><div class="metric">Weight 30%<div class="bar" style="--w: 30%"></div></div></div>
+		<div class="pillar"><div class="num">03</div><h3>Mentorship</h3><p>Tracked lineage of trainees and what they went on to do. Legacy reproduced.</p><div class="metric">Weight 20%<div class="bar" style="--w: 20%"></div></div></div>
+		<div class="pillar"><div class="num">04</div><h3>Humanitarian Impact</h3><p>Global health, disaster work, free clinics, care for the underserved.</p><div class="metric">Weight 20%<div class="bar" style="--w: 20%"></div></div></div>
+	</div>
+	<p class="method__note">Every claim is sourced. Every source is citable. Every tier is revocable.</p>
 </section>
 
 <!-- RECENTLY VIEWED (client-only, renders only if localStorage has entries) -->
-<div class="container" style="padding-top: var(--s-6);">
-	<RecentlyViewed client:load />
-</div>
-
-<!-- ETHICAL DOCTORS — new section -->
-<section class="container">
-	<div class="ethics-hero reveal">
-		<div>
-			<span class="new-mark"><span class="dot"></span>New &middot; 2026 Programme</span>
-			<h2>Merit is one register.<br><em>Integrity is another.</em></h2>
-			<p>Stature tells you how much a doctor knows. The <strong>Ethics Register</strong> tells you how they practice. It's independently verified, publicly revocable, and — for the first time — embeddable on their own clinic website. A seal they earn, and a promise they sign.</p>
-			<div class="ethics-hero__actions">
-				<a href="/ethical-doctors" class="btn btn--verdant">Enter the Ethics Register &rarr;</a>
-				<a href="/doctor/claim" class="btn btn--ghost">Nominate a Doctor</a>
-			</div>
-		</div>
-		<div class="ethics-hero__seals">
-			<div><SealRound kind="legend" id="E-001" size={160} /></div>
-			<div><SealRound kind="guardian" id="E-044" size={130} /></div>
-			<div><SealRound kind="advocate" id="E-215" size={110} /></div>
-		</div>
-	</div>
-</section>
+<RecentlyViewed client:idle />
 
 <!-- FEATURED TITANS -->
 <section class="sec container">
 	<div class="sec-head">
 		<div class="sec-head__left">
-			<span class="num">&sect; 01</span>
+			<span class="num">&sect; 02</span>
 			<h2>The <em>Titans</em></h2>
 		</div>
 		<div class="sec-head__right">{tierCounts.titan} profiles &middot; <a href="/rankings">the complete register &rarr;</a></div>
 	</div>
 	<div class="roll">
-		{featuredTitans.slice(0, 8).map(titan => (
+		{leadTitan && (
+			<a class="roll__card roll__card--lead" href={`/doctors/${leadTitan.slug}`}>
+				<div class="roll__portrait">
+					{leadTitan.portrait_url ? (
+						<>
+							<img
+								src={leadTitan.portrait_url}
+								alt={leadTitan.full_name}
+								width="160"
+								height="160"
+								class="roll__img"
+								referrerpolicy="no-referrer"
+								fetchpriority="low"
+								onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+							/>
+							<div class="pp" style="display:none">{getInitials(leadTitan.full_name)}</div>
+						</>
+					) : (
+						<div class="pp">{getInitials(leadTitan.full_name)}</div>
+					)}
+				</div>
+				<div>
+					<span class="roll__kicker">Foremost on the register</span>
+					<h3>{leadTitan.full_name}</h3>
+					<div class="spec">{leadTitan.specialty}{leadTitan.sub_specialty ? ` · ${leadTitan.sub_specialty}` : ''}</div>
+				</div>
+				<div class="meta">
+					<span>{leadTitan.geography?.city ? `${leadTitan.geography.city}, ` : ''}{leadTitan.geography?.country || 'Unknown'}</span>
+					<strong>h-index {leadTitan.h_index || '—'}</strong>
+				</div>
+			</a>
+		)}
+		{restTitans.map(titan => (
 			<a class="roll__card" href={`/doctors/${titan.slug}`}>
 				<div class="roll__portrait">
 					{titan.portrait_url ? (
@@ -283,7 +312,7 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, s
 				</div>
 				<div>
 					<h3>{titan.full_name}</h3>
-					<div class="spec">{titan.specialty}{titan.sub_specialty ? ` \u00B7 ${titan.sub_specialty}` : ''}</div>
+					<div class="spec">{titan.specialty}{titan.sub_specialty ? ` · ${titan.sub_specialty}` : ''}</div>
 				</div>
 				<div class="meta">
 					<span>{titan.geography?.city ? `${titan.geography.city}, ` : ''}{titan.geography?.country || 'Unknown'}</span>
@@ -291,34 +320,35 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, s
 				</div>
 			</a>
 		))}
-		{/* Fill empty slots if fewer than 8 titans */}
-		{featuredTitans.length < 8 && Array.from({ length: Math.min(8 - featuredTitans.length, 4) }).map((_, i) => (
-			<a class="roll__card" href="/rankings" style="opacity:0.5;">
-				<div class="roll__portrait"><div class="pp">?</div></div>
+		{featuredTitans.length > 0 && (
+			<a class="roll__card roll__card--more" href="/rankings">
 				<div>
-					<h3>View More</h3>
-					<div class="spec">Browse the full register</div>
+					<h3>The complete register</h3>
+					<div class="spec">All {tierCounts.titan} Titans, then Elite and Master tiers.</div>
 				</div>
-				<div class="meta"><span>&nbsp;</span><strong>&rarr;</strong></div>
+				<div class="meta"><span>Rankings</span><strong>&rarr;</strong></div>
 			</a>
-		))}
+		)}
 	</div>
 </section>
 
-<!-- PILLARS -->
-<section class="sec container">
-	<div class="sec-head">
-		<div class="sec-head__left">
-			<span class="num">&sect; 02</span>
-			<h2>How a tier <em>is decided</em></h2>
+<!-- ETHICAL DOCTORS -->
+<section class="container">
+	<div class="ethics-hero reveal">
+		<div>
+			<span class="new-mark"><span class="dot"></span>&sect; 03 &middot; New &middot; 2026 Programme</span>
+			<h2>Merit is one register.<br><em>Integrity is another.</em></h2>
+			<p>Stature tells you how much a doctor knows. The <strong>Ethics Register</strong> tells you how they practice. It's independently verified, publicly revocable, and — for the first time — embeddable on their own clinic website. A seal they earn, and a promise they sign.</p>
+			<div class="ethics-hero__actions">
+				<a href="/ethical-doctors" class="btn btn--verdant">Enter the Ethics Register &rarr;</a>
+				<a href="/doctor/ethics" class="btn btn--ghost">Apply for the Seal</a>
+			</div>
 		</div>
-		<div class="sec-head__right">Methodology v2.0</div>
-	</div>
-	<div class="pillars">
-		<div class="pillar"><div class="num">01</div><h3>Clinical Mastery</h3><p>Case volume in high-acuity interventions, complication rates, board certifications, registries.</p><div class="metric">Weight 30%<div class="bar" style="--w: 30%"></div></div></div>
-		<div class="pillar"><div class="num">02</div><h3>Intellectual Legacy</h3><p>H-index, landmark trials, textbook authorship, changes to clinical guidelines.</p><div class="metric">Weight 30%<div class="bar" style="--w: 30%"></div></div></div>
-		<div class="pillar"><div class="num">03</div><h3>Mentorship</h3><p>Tracked lineage of trainees and what they went on to do. Legacy reproduced.</p><div class="metric">Weight 20%<div class="bar" style="--w: 20%"></div></div></div>
-		<div class="pillar"><div class="num">04</div><h3>Humanitarian Impact</h3><p>Global health, disaster work, free clinics, care for the underserved.</p><div class="metric">Weight 20%<div class="bar" style="--w: 20%"></div></div></div>
+		<div class="ethics-hero__seals">
+			<div><SealRound kind="legend" id="E-001" size={160} /></div>
+			<div><SealRound kind="guardian" id="E-044" size={130} /></div>
+			<div><SealRound kind="advocate" id="E-215" size={110} /></div>
+		</div>
 	</div>
 </section>
 
@@ -326,10 +356,10 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, s
 <section class="sec container">
 	<div class="sec-head">
 		<div class="sec-head__left">
-			<span class="num">&sect; 03</span>
+			<span class="num">&sect; 04</span>
 			<h2>The <em>register</em> of records</h2>
 		</div>
-		<div class="sec-head__right">Seven adjacent encyclopedias</div>
+		<div class="sec-head__right">Six adjacent encyclopedias</div>
 	</div>
 	<div class="dirs">
 		<a class="dir" href="/doctors"><span class="dir__tag">Directory 01</span><h3>Physicians</h3><p>Every verified doctor, living or historical, with full dossier and ethics record.</p><div class="dir__meta"><span>{tierCounts.total.toLocaleString()} profiles</span><span class="dir__n">&nearr;</span></div></a>
@@ -345,12 +375,8 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, s
 <section class="ledger">
 	<div class="container">
 		<div class="ledger__head">
-			<h3>The Verification Ledger</h3>
-			{hasLedgerData ? (
-				<span class="live"><span class="dot"></span>Recent activity</span>
-			) : (
-				<span class="live">Sample data</span>
-			)}
+			<div class="ledger__title"><span class="num">&sect; 05</span><h3>The Verification Ledger</h3></div>
+			{hasLedgerData && <span class="live"><span class="dot"></span>Recent activity</span>}
 		</div>
 		<div class="ledger__list">
 			<div class="ledger__row head"><span>Time</span><span>Type</span><span>Subject</span><span>Evidence</span><span>Verdict</span></div>
@@ -365,7 +391,7 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, s
 					</div>
 				))
 			) : (
-				<div class="ledger__row"><span></span><span></span><span>No recent activity recorded.</span><span></span><span></span></div>
+				<div class="ledger__row ledger__row--empty"><span>No recent activity recorded.</span></div>
 			)}
 		</div>
 	</div>
@@ -374,7 +400,7 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, s
 <!-- EDITORIAL -->
 <section class="ed container">
 	<div class="ed__side">
-		On the <br>Editorial <br>Mission
+		&sect; 06<br>On the <br>Editorial <br>Mission
 	</div>
 	<div class="ed__body">
 		<h2>Why build an <em>encyclopedia</em> and not another directory?</h2>
@@ -384,46 +410,16 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, s
 	</div>
 </section>
 
-<!-- REGIONAL NAMES -->
-<section class="regional container">
-	<div class="sec-head">
-		<div class="sec-head__left">
-			<span class="num">&sect; 04</span>
-			<h2>One register, <em>two names</em></h2>
-		</div>
-		<div class="sec-head__right"><a href="/about/our-name">the full story &rarr;</a></div>
-	</div>
-	<div class="regional__grid">
-		<a href="/about/mdpedia" class="regional__card">
-			<div class="regional__label">In the West</div>
-			<div class="regional__name">MDpedia</div>
-			<div class="regional__origin">From "MD" — Doctor of Medicine</div>
-			<p>Across the Americas, Europe, and Australasia, physicians shortened our name to reflect their primary credential. MDpedia is how the register is known in hospitals from Boston to Berlin.</p>
-			<div class="regional__tags">
-				<span>Americas</span><span>Europe</span><span>Australasia</span>
-			</div>
-		</a>
-		<a href="/about/drpedia" class="regional__card">
-			<div class="regional__label">In the East</div>
-			<div class="regional__name">DRpedia</div>
-			<div class="regional__origin">From "Dr." — the universal honorific</div>
-			<p>Across the Middle East, South Asia, East Asia, and Africa, the platform became DRpedia — honouring the title that binds physicians from Cairo to Shanghai.</p>
-			<div class="regional__tags">
-				<span>Middle East</span><span>South Asia</span><span>East Asia</span><span>Africa</span>
-			</div>
-		</a>
-	</div>
-</section>
-
 <!-- CTA -->
 <section class="cta container">
 	<span class="eyebrow">Claim &middot; Embed &middot; Nominate</span>
 	<h2 style="margin-top:16px;">If your record is here, <em>own it.</em><br>If a doctor earned the seal, <em>give them one.</em></h2>
 	<div class="cta__actions">
 		<a href="/doctor/claim" class="btn btn--primary">Claim your profile</a>
-		<a href="/doctor/claim" class="btn btn--ghost">Get the embed kit</a>
-		<a href="/doctor/claim" class="btn btn--ghost" style="border-color: var(--verdant); color: var(--verdant);">Nominate for Ethics</a>
+		<a href="/brand" class="btn btn--ghost">Get the embed kit</a>
+		<a href="/ethical-doctors" class="btn btn--ghost cta__ethics">Nominate for Ethics</a>
 	</div>
+	<p class="namenote">Known as MDpedia in the West and DRpedia in the East &mdash; one register, two names. <a href="/about/our-name">The full story &rarr;</a></p>
 </section>
 
 </Layout>
@@ -437,11 +433,11 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, s
 .hero h1 em { font-style: italic; color: var(--ink-3); font-weight: 300; }
 .hero__lede { display:grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 40px; align-items: end; }
 .hero__lede p { font-family: var(--font-serif); font-size: 22px; line-height: 1.45; color: var(--ink); font-weight: 400; max-width: 40ch; }
-.hero__lede p::first-letter { font-size: 64px; float: left; line-height: 0.82; padding: 6px 10px 0 0; font-weight: 300; }
 .hero__stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-left: 1px solid var(--rule); }
 .hero__stat { padding-left: 20px; border-right: 1px solid var(--rule); padding-right: 20px; }
 .hero__stat:last-child { border-right: 0; }
 .hero__stat .n { font-family: var(--font-serif); font-size: 40px; font-weight: 400; line-height: 1; font-variant-numeric: tabular-nums; }
+.hero__stat .n--text { font-size: 24px; line-height: 40px; white-space: nowrap; }
 .hero__stat .l { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); margin-top: 6px; }
 
 /* ── SEARCH ── */
@@ -449,17 +445,18 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, s
   margin-top: 64px; background: var(--paper-2); border: 1px solid var(--rule);
   border-radius: var(--r-3); padding: 8px;
 }
-.command__bar { display:flex; align-items:center; gap: 12px; padding: 16px 20px; background: var(--paper); border-radius: var(--r-2); border: 1px solid var(--rule); cursor: text; }
-.command__bar input { flex: 1; border: 0; background: transparent; font-family: var(--font-serif); font-size: 22px; color: var(--ink); outline: none; }
-.command__bar input::placeholder { color: var(--ink-3); }
+.command__bar { display:flex; align-items:center; gap: 12px; width: 100%; padding: 16px 20px; background: var(--paper); border-radius: var(--r-2); border: 1px solid var(--rule); cursor: text; text-align: left; font: inherit; color: var(--ink-3); }
+.command__bar:hover { border-color: var(--ink-3); }
+.command__text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-serif); font-size: 22px; color: var(--ink-3); }
+.command__kbd { font-size: 10px; padding: 3px 6px; border: 1px solid var(--rule); border-radius: 3px; color: var(--ink-3); }
 .command__facets { display:flex; gap: 8px; padding: 10px 12px 4px; flex-wrap: wrap; }
-.facet { display:inline-flex; align-items:center; gap: 6px; padding: 5px 10px; border: 1px solid var(--rule); border-radius: var(--r-pill); font-size: 12px; color: var(--ink-2); background: var(--paper); cursor: pointer; font-family: var(--font-sans); }
+.facet { display:inline-flex; align-items:center; gap: 6px; padding: 5px 10px; border: 1px solid var(--rule); border-radius: var(--r-pill); font-size: 12px; color: var(--ink-2); background: var(--paper); cursor: pointer; font-family: var(--font-sans); text-decoration: none; }
 .facet:hover { border-color: var(--ink); color: var(--ink); }
 .facet .count { font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); }
 
 /* ── ETHICS HERO ── */
 .ethics-hero {
-  margin-top: 96px; padding: 64px 48px; position: relative;
+  padding: 64px 48px; position: relative;
   background: var(--verdant-2);
   border: 1px solid color-mix(in oklch, var(--verdant) 40%, var(--rule));
   display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: center;
@@ -478,7 +475,7 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, s
 .ethics-hero .new-mark { display:inline-flex; align-items:center; gap: 8px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--verdant); padding-bottom: 20px; }
 .ethics-hero .new-mark .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--verdant); animation: pulse 2.2s infinite; }
 .ethics-hero p { font-size: 17px; line-height: 1.6; max-width: 48ch; margin-top: 20px; color: var(--ink); }
-.ethics-hero__actions { display:flex; gap: 12px; margin-top: 28px; }
+.ethics-hero__actions { display:flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
 .ethics-hero__seals { display:flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; }
 .ethics-hero__seals > * { filter: drop-shadow(0 4px 16px color-mix(in oklch, var(--verdant) 20%, transparent)); }
 
@@ -492,10 +489,22 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, s
 .sec-head__right { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.1em; text-transform: uppercase; }
 .sec-head__right a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); }
 
+/* ── METHODOLOGY ── */
+.method { padding: 24px 0 64px; }
+.method__note { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-top: 20px; }
+
 /* ── TITAN ROLL ── */
 .roll { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--rule); border-top: 1px solid var(--rule); border-left: 1px solid var(--rule); }
 .roll__card { background: var(--paper); padding: 28px; display:flex; flex-direction: column; gap: 16px; transition: background var(--t-base) var(--ease); text-decoration: none; color: var(--ink); }
 .roll__card:hover { background: var(--paper-2); }
+.roll__card--lead { grid-column: span 2; grid-row: span 2; padding: 40px; gap: 24px; }
+.roll__card--lead .roll__portrait { width: 160px; height: 160px; }
+.roll__card--lead h3 { font-size: 36px; line-height: 1.1; font-weight: 400; }
+.roll__card--lead .spec { font-size: 15px; margin-top: 8px; }
+.roll__card--lead .pp { font-size: 56px; }
+.roll__kicker { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 12px; }
+.roll__card--more { justify-content: space-between; background: var(--paper-2); }
+.roll__card--more:hover { background: var(--paper-3); }
 .roll__portrait { width: 88px; height: 88px; border-radius: 50%; border: 1px solid var(--rule-strong); position: relative; overflow: hidden; }
 .roll__portrait img { width: 100%; height: 100%; object-fit: cover; }
 .roll__portrait .pp { width: 100%; height: 100%; display:flex; align-items:center; justify-content: center; font-family: var(--font-serif); font-size: 32px; font-weight: 400; color: var(--ink-3); background: var(--paper-2); }
@@ -529,6 +538,8 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, s
 /* ── LEDGER ── */
 .ledger { padding: 64px 0; background: var(--paper-2); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-top: 64px; }
 .ledger__head { display:flex; justify-content: space-between; align-items:center; margin-bottom: 32px; }
+.ledger__title { display: flex; align-items: baseline; gap: 20px; }
+.ledger__title .num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); }
 .ledger__head h3 { font-size: 22px; font-weight: 400; font-family: var(--font-serif); }
 .ledger__head .live { display:inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10px; color: var(--verdant); letter-spacing: 0.18em; text-transform: uppercase; }
 .ledger__head .live .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--verdant); animation: pulse 1.8s infinite; }
@@ -536,6 +547,7 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, s
 .ledger__row { display:grid; grid-template-columns: 120px 120px 1fr 1fr 120px; gap: 16px; padding: 14px 0; border-top: 1px solid var(--rule); font-family: var(--font-mono); font-size: 12px; }
 .ledger__row.head { color: var(--ink-3); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; }
 .ledger__row.head + .ledger__row { border-top: 1px solid var(--ink); }
+.ledger__row--empty { grid-template-columns: 1fr; color: var(--ink-3); }
 .ledger__row .verdict { font-family: var(--font-sans); font-weight: 600; }
 .ledger__row .verdict.v { color: var(--verdant); }
 .ledger__row .verdict.r { color: var(--sanguine); }
@@ -548,83 +560,80 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, s
 .ed__body > p { font-family: var(--font-serif); font-size: 20px; line-height: 1.6; max-width: 60ch; margin-bottom: 16px; }
 .ed__body > p.drop::first-letter { font-size: 68px; float: left; line-height: 0.82; padding: 6px 10px 0 0; font-weight: 300; color: var(--ink); }
 
-/* ── REGIONAL NAMES ── */
-.regional { padding: 96px 0; }
-.regional__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.regional__card {
-  padding: 40px; border: 1px solid var(--rule); background: var(--paper-2);
-  text-decoration: none; color: var(--ink); display: flex; flex-direction: column;
-  gap: 8px; transition: all var(--t-base) var(--ease); position: relative;
-}
-.regional__card:hover { border-color: var(--ink); background: var(--paper); box-shadow: var(--shadow-2); }
-.regional__label {
-  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--ink-3);
-}
-.regional__name {
-  font-family: var(--font-serif); font-size: clamp(36px, 4vw, 56px);
-  font-weight: 300; line-height: 1;
-}
-.regional__origin {
-  font-family: var(--font-mono); font-size: 12px; color: var(--ink-blue);
-  letter-spacing: 0.04em; margin-bottom: 8px;
-}
-.regional__card p { font-size: 14px; color: var(--ink-2); line-height: 1.6; max-width: 36ch; }
-.regional__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--rule); }
-.regional__tags span {
-  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--ink-3);
-  padding: 3px 8px; border: 1px solid var(--rule); border-radius: var(--r-1);
-}
-
 /* ── CTA ── */
 .cta { padding: 80px 0 96px; text-align: center; }
 .cta h2 { font-size: clamp(40px, 5vw, 72px); font-weight: 300; max-width: 16ch; margin: 0 auto; }
 .cta h2 em { font-style: italic; color: var(--ink-3); font-weight: 300; }
-.cta__actions { margin-top: 32px; display:flex; gap: 12px; justify-content: center; }
+.cta__actions { margin-top: 32px; display:flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.cta__ethics { border-color: var(--verdant); color: var(--verdant); }
+.namenote { margin-top: 56px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; color: var(--ink-3); }
+.namenote a { color: var(--ink); }
 
 @media (max-width: 900px) {
-  .hero__lede, .hero__stats { grid-template-columns: 1fr; }
-  .hero__stats { border-left: 0; margin-top: 32px; }
-  .hero__stat { border-right: 0; padding: 12px 0; border-top: 1px solid var(--rule); }
-  .roll, .dirs, .pillars, .regional__grid { grid-template-columns: 1fr 1fr; }
+  .hero { display: flex; flex-direction: column; }
+  .hero__masthead { order: 0; }
+  .hero h1 { order: 1; }
+  .hero__lede { display: contents; }
+  .command { order: 2; margin-top: 32px; }
+  .hero__stats { order: 3; grid-template-columns: 1fr 1fr; border-left: 0; margin-top: 32px; }
+  .hero__lede p { order: 4; margin-top: 32px; }
+  .hero__stat { padding: 16px 12px 16px 0; border-right: 0; border-top: 1px solid var(--rule); }
+  .hero__stat:nth-child(even) { padding-left: 16px; border-left: 1px solid var(--rule); }
+  .command__text { font-size: 17px; }
+  .command__kbd { display: none; }
+  .roll, .dirs, .pillars { grid-template-columns: 1fr 1fr; }
+  .roll__card--lead { grid-row: span 1; }
+  .pillar:nth-child(2) { border-right: 0; }
+  .pillar:nth-child(n+3) { border-top: 1px solid var(--rule); }
   .ethics-hero { grid-template-columns: 1fr; padding: 40px 24px; }
   .ed { grid-template-columns: 1fr; gap: 24px; padding: 64px 0; }
-  .ledger__row { grid-template-columns: 80px 1fr 60px; gap: 8px; font-size: 11px; }
-  .ledger__row > :nth-child(4), .ledger__row > :nth-child(5) { display: none; }
+  .ledger__row.head { display: none; }
+  .ledger__row {
+    grid-template-columns: 64px 1fr auto;
+    grid-template-areas: "t ty v" "s s s" "e e e";
+    gap: 4px 12px; font-size: 11px;
+  }
+  .ledger__row > :nth-child(1) { grid-area: t; }
+  .ledger__row > :nth-child(2) { grid-area: ty; }
+  .ledger__row > :nth-child(3) { grid-area: s; }
+  .ledger__row > :nth-child(4) { grid-area: e; color: var(--ink-3); }
+  .ledger__row > :nth-child(5) { grid-area: v; }
+  .ledger__row--empty { grid-template-areas: none; grid-template-columns: 1fr; }
+  .ledger__row--empty > :nth-child(1) { grid-area: auto; }
   .sec { padding: 64px 0; }
+  .method { padding-bottom: 32px; }
   .hero__masthead { flex-direction: column; gap: 4px; }
   .cta__actions { flex-direction: column; align-items: center; }
 }
 
 @media (max-width: 600px) {
-  .roll, .pillars, .regional__grid { grid-template-columns: 1fr; }
+  .roll, .pillars { grid-template-columns: 1fr; }
+  .roll__card--lead { grid-column: span 1; padding: 28px; }
+  .pillar { border-right: 0; border-top: 1px solid var(--rule); }
   .dirs { grid-template-columns: 1fr; }
   .hero h1 { font-size: clamp(40px, 12vw, 56px); }
+  .hero__stat .n { font-size: 32px; }
+  .hero__stat .n--text { font-size: 20px; line-height: 32px; }
   .ethics-hero__seals { gap: 12px; }
 }
 </style>
 
-<script define:vars={{ searchIndex }}>
-  // Today's date
-  const d = new Date();
+<script>
   const dateEl = document.getElementById('hero-date');
-  if (dateEl) dateEl.textContent = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
-  // Count-up animation
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const ease = t => 1 - Math.pow(1 - t, 3);
-  const startCount = (el) => {
-    const target = +el.dataset.count;
+  const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+  const startCount = (el: HTMLElement) => {
+    const target = Number(el.dataset.count);
     if (!target) return;
     if (prefersReducedMotion) {
-      // Skip the 1400ms animation; show the final figure immediately.
       el.textContent = target.toLocaleString();
       return;
     }
     const dur = 1400;
     const t0 = performance.now();
-    const step = (now) => {
+    const step = (now: number) => {
       const p = Math.min(1, (now - t0) / dur);
       el.textContent = Math.round(target * ease(p)).toLocaleString();
       if (p < 1) requestAnimationFrame(step);
@@ -632,27 +641,27 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, s
     requestAnimationFrame(step);
   };
   const countObserver = new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting && !e.target.dataset.done) {
-      e.target.dataset.done = '1';
-      startCount(e.target);
+    const el = e.target as HTMLElement;
+    if (e.isIntersecting && !el.dataset.done) {
+      el.dataset.done = '1';
+      startCount(el);
     }
   }));
-  document.querySelectorAll('[data-count]').forEach(el => countObserver.observe(el));
+  document.querySelectorAll<HTMLElement>('[data-count]').forEach(el => countObserver.observe(el));
 
-  // Reveal on scroll
+  // Only elements that start below the fold are hidden for the entrance animation.
   const revealObserver = new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) e.target.classList.add('in');
   }), { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  document.querySelectorAll('.reveal').forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight) return;
+    el.classList.add('reveal--pending');
+    revealObserver.observe(el);
+  });
 
-  // Hero search → open global search modal
-  const heroSearch = document.getElementById('hero-search');
-  if (heroSearch) {
-    heroSearch.addEventListener('focus', () => {
-      heroSearch.blur();
-      document.dispatchEvent(new KeyboardEvent('keydown', {
-        key: 'k', code: 'KeyK', metaKey: true, ctrlKey: false, bubbles: true
-      }));
-    });
-  }
+  document.getElementById('hero-search')?.addEventListener('click', () => {
+    document.dispatchEvent(new KeyboardEvent('keydown', {
+      key: 'k', code: 'KeyK', metaKey: true, ctrlKey: false, bubbles: true
+    }));
+  });
 </script>

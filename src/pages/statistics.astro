@@ -6,6 +6,7 @@
  */
 import Layout from "../layouts/Layout.astro";
 import { prisma } from "../lib/prisma";
+import { getCountryStats } from "../lib/cached-stats";
 
 export const prerender = false;
 
@@ -21,14 +22,14 @@ const now = new Date();
 const twelveMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 11, 1);
 
 let tierCounts: { tier: string; _count: { _all: number } }[] = [];
-let countryCounts: { country: string; _count: { _all: number } }[] = [];
+let countryCounts: { country: string; count: number }[] = [];
 let specialtyCounts: { specialty: string; _count: { _all: number } }[] = [];
 let ethicsCounts: { ethics_tier: string; _count: { _all: number } }[] = [];
 let totalProfiles = 0;
 let portraitCount = 0;
 let hIndexCount = 0;
 let biographyCount = 0;
-let growthRaw: { createdAt: Date }[] = [];
+let growthRaw: { month: Date; count: number }[] = [];
 
 try {
 	const [
@@ -46,12 +47,7 @@ try {
 			by: ["tier"],
 			_count: { _all: true },
 		}),
-		prisma.geography.groupBy({
-			by: ["country"],
-			_count: { _all: true },
-			orderBy: { _count: { country: "desc" } },
-			take: 20,
-		}),
+		getCountryStats(),
 		prisma.profile.groupBy({
 			by: ["specialty"],
 			_count: { _all: true },
@@ -67,15 +63,16 @@ try {
 		prisma.profile.count({ where: { portrait_url: { not: null } } }),
 		prisma.profile.count({ where: { h_index: { gt: 0 } } }),
 		prisma.profile.count({ where: { biography: { not: null } } }),
-		prisma.profile.findMany({
-			where: { createdAt: { gte: twelveMonthsAgo } },
-			select: { createdAt: true },
-			orderBy: { createdAt: "asc" },
-		}),
+		prisma.$queryRaw<{ month: Date; count: number }[]>`
+			SELECT date_trunc('month', "createdAt") AS month, COUNT(*)::int AS count
+			FROM profiles
+			WHERE "createdAt" >= ${twelveMonthsAgo}
+			GROUP BY 1
+			ORDER BY 1`,
 	]);
 
 	tierCounts = _tierCounts as typeof tierCounts;
-	countryCounts = _countryCounts as typeof countryCounts;
+	countryCounts = _countryCounts.slice(0, 20);
 	specialtyCounts = _specialtyCounts as typeof specialtyCounts;
 	ethicsCounts = _ethicsCounts as typeof ethicsCounts;
 	totalProfiles = _totalProfiles;
@@ -96,7 +93,7 @@ for (const t of tierCounts) tierMap[t.tier] = t._count._all;
 const tierTotal = Object.values(tierMap).reduce((a, b) => a + b, 0);
 
 // Country max for bar scaling
-const countryMax = countryCounts.length > 0 ? countryCounts[0]._count._all : 1;
+const countryMax = countryCounts.length > 0 ? countryCounts[0].count : 1;
 
 // Specialty max for bar scaling
 const specMax = specialtyCounts.length > 0 ? specialtyCounts[0]._count._all : 1;
@@ -109,15 +106,17 @@ for (const e of ethicsCounts) {
 const ethicsTotal = Object.values(ethicsMap).reduce((a, b) => a + b, 0);
 
 // Growth — bucket by month
+const monthKey = (y: number, m: number) => `${y}-${String(m + 1).padStart(2, "0")}`;
+const growthByMonth = new Map(
+	growthRaw.map((r) => [monthKey(r.month.getUTCFullYear(), r.month.getUTCMonth()), Number(r.count)])
+);
 const growthBuckets: { label: string; count: number }[] = [];
 for (let i = 11; i >= 0; i--) {
 	const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-	const label = fmtMonth(d);
-	const nextMonth = new Date(d.getFullYear(), d.getMonth() + 1, 1);
-	const count = growthRaw.filter(
-		(r) => r.createdAt >= d && r.createdAt < nextMonth
-	).length;
-	growthBuckets.push({ label, count });
+	growthBuckets.push({
+		label: fmtMonth(d),
+		count: growthByMonth.get(monthKey(d.getFullYear(), d.getMonth())) ?? 0,
+	});
 }
 const growthMax = Math.max(...growthBuckets.map((b) => b.count), 1);
 
@@ -247,9 +246,9 @@ Astro.response.headers.set(
 					<span class="bar-row__rank">{String(i + 1).padStart(2, "0")}</span>
 					<span class="bar-row__label">{c.country}</span>
 					<div class="bar-row__track">
-						<div class="bar-row__fill" style={`width: ${(c._count._all / countryMax) * 100}%`}></div>
+						<div class="bar-row__fill" style={`width: ${(c.count / countryMax) * 100}%`}></div>
 					</div>
-					<span class="bar-row__value">{c._count._all.toLocaleString()}</span>
+					<span class="bar-row__value">{c.count.toLocaleString()}</span>
 				</div>
 			))}
 			{countryCounts.length === 0 && (
@@ -584,11 +583,10 @@ Astro.response.headers.set(
 
 @media (max-width: 600px) {
 	.tier-grid, .tier-grid--ethics { grid-template-columns: 1fr; }
-	.bar-row { grid-template-columns: 24px 1fr 56px; }
-	.bar-row__track { display: none; }
-	.growth-chart { grid-template-columns: repeat(6, 1fr); height: 160px; }
-	.growth-col:nth-child(-n+6) { display: flex; }
-	.growth-col:nth-child(n+7) { display: none; }
+	.bar-row { grid-template-columns: 24px 1fr 56px; row-gap: 6px; }
+	.bar-row__track { grid-column: 2 / -1; grid-row: 2; height: 8px; }
+	.growth-chart { gap: 2px; height: 160px; }
+	.growth-col__label { font-size: 8px; letter-spacing: 0; }
 	.quality-grid { grid-template-columns: 1fr; }
 	.sec-head { flex-direction: column; align-items: flex-start; gap: 8px; }
 }

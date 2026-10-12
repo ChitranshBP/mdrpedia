@@ -7,6 +7,7 @@
 import Layout from "../layouts/Layout.astro";
 import CompareSearch from "../components/CompareSearch";
 import { prisma } from "../lib/prisma";
+import { getFeaturedTitans } from "../lib/cached-stats";
 
 export const prerender = false;
 
@@ -72,6 +73,27 @@ if (slugs.length > 0) {
 }
 
 const hasDoctors = doctors.length > 0;
+
+let examples: { label: string; href: string }[] = [];
+if (!hasDoctors) {
+    try {
+        const titans = await getFeaturedTitans(5);
+        const pair = (a: typeof titans[number], b: typeof titans[number]) => ({
+            label: `${a.full_name} vs ${b.full_name}`,
+            href: `/compare?doctors=${a.slug},${b.slug}`,
+        });
+        if (titans.length >= 2) examples.push(pair(titans[0], titans[1]));
+        if (titans.length >= 4) examples.push(pair(titans[2], titans[3]));
+        if (titans.length >= 3) {
+            examples.push({
+                label: `${titans[0].full_name}, ${titans[1].full_name} & ${titans[2].full_name}`,
+                href: `/compare?doctors=${titans[0].slug},${titans[1].slug},${titans[2].slug}`,
+            });
+        }
+    } catch {
+        examples = [];
+    }
+}
 const pageTitle = hasDoctors
     ? `Compare: ${doctors.map((d) => d.full_name).join(" vs ")} -- MDRPedia`
     : "Compare Physicians -- MDRPedia";
@@ -207,17 +229,16 @@ Astro.response.headers.set(
                                 name, specialty, or institution. You can compare
                                 up to three profiles simultaneously.
                             </p>
-                            <div class="empty-hints">
-                                <span class="hint">
-                                    Try: "cardiology"
-                                </span>
-                                <span class="hint">
-                                    Try: "neurosurgery"
-                                </span>
-                                <span class="hint">
-                                    Try: "United States"
-                                </span>
-                            </div>
+                            {examples.length > 0 && (
+                                <div class="empty-hints">
+                                    <span class="hint-label">Try:</span>
+                                    {examples.map((ex) => (
+                                        <a class="hint" href={ex.href}>
+                                            {ex.label}
+                                        </a>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </section>
@@ -282,6 +303,7 @@ Astro.response.headers.set(
                                 >
                                     {doctors.map((d) => (
                                         <div class="row-cell">
+<span class="cell-doctor">{d.full_name}</span>
                                             <span class="cell-primary">
                                                 {d.specialty}
                                             </span>
@@ -313,6 +335,7 @@ Astro.response.headers.set(
                                             <div
                                                 class={`row-cell ${isHighest ? "cell-best" : ""}`}
                                             >
+<span class="cell-doctor">{d.full_name}</span>
                                                 <span class="cell-number">
                                                     {d.h_index || "--"}
                                                 </span>
@@ -344,6 +367,7 @@ Astro.response.headers.set(
                                             <div
                                                 class={`row-cell ${isHighest ? "cell-best" : ""}`}
                                             >
+<span class="cell-doctor">{d.full_name}</span>
                                                 <span class="cell-number">
                                                     {d.ranking_score?.toFixed(
                                                         1,
@@ -364,6 +388,7 @@ Astro.response.headers.set(
                                 >
                                     {doctors.map((d) => (
                                         <div class="row-cell">
+<span class="cell-doctor">{d.full_name}</span>
                                             <span class="cell-primary">
                                                 {d.geography?.country ||
                                                     "Unknown"}
@@ -398,6 +423,7 @@ Astro.response.headers.set(
                                             <div
                                                 class={`row-cell ${isHighest ? "cell-best" : ""}`}
                                             >
+<span class="cell-doctor">{d.full_name}</span>
                                                 <span class="cell-number">
                                                     {d.years_active || "--"}
                                                 </span>
@@ -416,6 +442,7 @@ Astro.response.headers.set(
                                 >
                                     {doctors.map((d) => (
                                         <div class="row-cell">
+<span class="cell-doctor">{d.full_name}</span>
                                             <span
                                                 class={`cell-primary ${d.ethics_tier ? "cell-ethics" : ""}`}
                                             >
@@ -446,6 +473,7 @@ Astro.response.headers.set(
                                             <div
                                                 class={`row-cell ${isHighest ? "cell-best" : ""}`}
                                             >
+<span class="cell-doctor">{d.full_name}</span>
                                                 <span class="cell-number">
                                                     {d._count.citations.toLocaleString() ||
                                                         "--"}
@@ -476,6 +504,7 @@ Astro.response.headers.set(
                                             <div
                                                 class={`row-cell ${isHighest ? "cell-best" : ""}`}
                                             >
+<span class="cell-doctor">{d.full_name}</span>
                                                 <span class="cell-number">
                                                     {d._count.awards || "--"}
                                                 </span>
@@ -637,6 +666,33 @@ Astro.response.headers.set(
         flex-wrap: wrap;
         gap: 8px;
         justify-content: center;
+    }
+
+    .hint-label {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--ink-3);
+        align-self: center;
+    }
+
+    a.hint {
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    a.hint:hover {
+        border-color: var(--ink);
+        color: var(--ink);
+    }
+
+    .cell-doctor {
+        display: none;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        margin-bottom: 4px;
     }
 
     .hint {
@@ -946,6 +1002,10 @@ Astro.response.headers.set(
     @media (max-width: 480px) {
         .row-values {
             grid-template-columns: 1fr;
+        }
+
+        .cell-doctor {
+            display: block;
         }
 
         .row-cell {

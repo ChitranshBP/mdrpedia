@@ -8,6 +8,7 @@ import Layout from "../../layouts/Layout.astro";
 import TierBadge from "../../components/TierBadge.astro";
 import OptimizedImage from "../../components/OptimizedImage.astro";
 import { prisma } from "../../lib/prisma";
+import Pagination from "../../components/Pagination.astro";
 import { slugify } from "../../lib/utils";
 
 export const prerender = false;
@@ -42,16 +43,28 @@ if (!matchedCountry) {
 
 const countryName = matchedCountry.country;
 
-// Query all doctors in this country
-const doctors = await prisma.profile.findMany({
-    where: {
-        geography: {
-            country: {
-                equals: countryName,
-                mode: 'insensitive'
-            }
+const PAGE_SIZE = 48;
+const where = {
+    geography: {
+        country: {
+            equals: countryName,
+            mode: 'insensitive' as const
         }
-    },
+    }
+};
+const requestedPage = Math.max(1, parseInt(Astro.url.searchParams.get('page') || '1', 10) || 1);
+
+const [totalDoctors, tierGroups, specialtyRows] = await Promise.all([
+    prisma.profile.count({ where }),
+    prisma.profile.groupBy({ by: ['tier'], where, _count: { _all: true } }),
+    prisma.profile.groupBy({ by: ['specialty'], where, _count: { _all: true } }),
+]);
+
+const totalPages = Math.max(1, Math.ceil(totalDoctors / PAGE_SIZE));
+const page = Math.min(requestedPage, totalPages);
+
+const sortedDoctors = await prisma.profile.findMany({
+    where,
     select: {
         slug: true,
         full_name: true,
@@ -71,29 +84,17 @@ const doctors = await prisma.profile.findMany({
     },
     orderBy: [
         { tier: 'asc' },
-        { ranking_score: 'desc' },
-        { h_index: 'desc' }
-    ]
+        { ranking_score: { sort: 'desc', nulls: 'last' } },
+        { h_index: 'desc' },
+        { slug: 'asc' }
+    ],
+    skip: (page - 1) * PAGE_SIZE,
+    take: PAGE_SIZE
 });
 
-// Sort by tier properly (TITAN > ELITE > MASTER > UNRANKED)
-const tierOrder: Record<string, number> = {
-    TITAN: 0,
-    ELITE: 1,
-    MASTER: 2,
-    UNRANKED: 3
-};
+const specialtyTotals = new Map(specialtyRows.map(r => [r.specialty || 'General', r._count._all]));
 
-const sortedDoctors = [...doctors].sort((a, b) => {
-    const tierDiff = (tierOrder[a.tier] ?? 3) - (tierOrder[b.tier] ?? 3);
-    if (tierDiff !== 0) return tierDiff;
-    const rankA = a.ranking_score ?? 0;
-    const rankB = b.ranking_score ?? 0;
-    if (rankB !== rankA) return rankB - rankA;
-    return (b.h_index ?? 0) - (a.h_index ?? 0);
-});
-
-// Group doctors by specialty
+// Group this page's doctors by specialty
 const specialtyGroups = new Map<string, typeof sortedDoctors>();
 for (const doc of sortedDoctors) {
     const specialty = doc.specialty || 'General';
@@ -102,16 +103,14 @@ for (const doc of sortedDoctors) {
     specialtyGroups.set(specialty, group);
 }
 
-// Sort specialty groups by count descending
 const sortedSpecialtyGroups = Array.from(specialtyGroups.entries())
     .sort((a, b) => b[1].length - a[1].length);
 
-// Calculate stats
-const totalDoctors = sortedDoctors.length;
-const titanCount = sortedDoctors.filter(d => d.tier === 'TITAN').length;
-const eliteCount = sortedDoctors.filter(d => d.tier === 'ELITE').length;
-const masterCount = sortedDoctors.filter(d => d.tier === 'MASTER').length;
-const specialtyCount = specialtyGroups.size;
+const tierTotal = (tier: string) => tierGroups.find(t => t.tier === tier)?._count._all ?? 0;
+const titanCount = tierTotal('TITAN');
+const eliteCount = tierTotal('ELITE');
+const masterCount = tierTotal('MASTER');
+const specialtyCount = specialtyTotals.size;
 
 // Page metadata
 const pageTitle = `Physicians in ${countryName} — MDRPedia`;
@@ -239,7 +238,7 @@ const collectionPageSchema = {
                         <div class="specialty-group">
                             <div class="specialty-group__header">
                                 <h2 class="specialty-group__title">{specialty}</h2>
-                                <span class="specialty-group__count">{docs.length} physician{docs.length !== 1 ? 's' : ''}</span>
+                                <span class="specialty-group__count">{(specialtyTotals.get(specialty) ?? docs.length).toLocaleString()} physician{(specialtyTotals.get(specialty) ?? docs.length) !== 1 ? 's' : ''}</span>
                             </div>
 
                             <div class="doctors-grid">
@@ -300,6 +299,7 @@ const collectionPageSchema = {
                         <p>We are actively building our database. Check back soon for physicians in {countryName}.</p>
                     </div>
                 )}
+                <Pagination page={page} totalPages={totalPages} total={totalDoctors} pageSize={PAGE_SIZE} label="physicians" />
             </div>
         </section>
 
