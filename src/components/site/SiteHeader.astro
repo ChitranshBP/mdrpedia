@@ -12,6 +12,63 @@ const links = [
 	{ key: "evidence", label: "Evidence", href: "/evidence" },
 ];
 
+const menus = [
+	{
+		id: "explore",
+		label: "Explore",
+		groups: [
+			{
+				h: "BROWSE THE REGISTER",
+				links: [
+					{ l: "Specialties", d: "Every field, with its physicians", h: "/specialty" },
+					{ l: "Institutions", d: "Hospitals, universities and institutes", h: "/institutions" },
+					{ l: "Rankings", d: "Top 100 and tier lists", h: "/rankings" },
+					{ l: "Global leaders", d: "Physicians who shaped their field", h: "/global-leaders" },
+					{ l: "Compare doctors", d: "Side by side, on the evidence", h: "/compare" },
+					{ l: "Lineage", d: "Who trained whom", h: "/lineage" },
+					{ l: "Map", d: "Physicians by place", h: "/map" },
+				],
+			},
+			{
+				h: "MEDICINE",
+				links: [
+					{ l: "Rare diseases", d: "Conditions and the specialists who treat them", h: "/rare-diseases" },
+					{ l: "Clinical trials", d: "Trials recruiting now", h: "/clinical-trials" },
+					{ l: "Communities", d: "Specialty communities", h: "/communities" },
+					{ l: "Prizes & honours", d: "The awards medicine gives", h: "/prizes" },
+					{ l: "Nobel laureates", d: "Physiology or Medicine", h: "/nobel-laureates" },
+					{ l: "News", d: "Medical news, sourced", h: "/news" },
+					{ l: "Statistics", d: "The register in numbers", h: "/statistics" },
+				],
+			},
+		],
+	},
+	{
+		id: "doctors",
+		label: "For doctors",
+		cta: true,
+		groups: [
+			{
+				h: "YOUR RECORD",
+				links: [
+					{ l: "Claim your record", d: "Correct details, add your work, embed your seal", h: "/doctor/claim" },
+					{ l: "Free NMC compliance check", d: "Check your website and social posts against the 2026 guidelines", h: "/nmc-compliance-check", tag: "FREE" },
+					{ l: "Add a profile", d: "Not on the register yet?", h: "/doctor/add-profile" },
+					{ l: "Doctor sign in", d: "Manage your claimed record", h: "/login" },
+				],
+			},
+			{
+				h: "ETHICS",
+				links: [
+					{ l: "Ethics Register", d: "Audited ethical practice", h: "/ethical-doctors" },
+					{ l: "Ethical workplaces", d: "Certified clinics and hospitals", h: "/ethical-workplace" },
+					{ l: "Methodology", d: "How records and scores work", h: "/methodology" },
+				],
+			},
+		],
+	},
+];
+
 const countries = [
 	{ name: "India", reg: "NMC · NMR", slug: "india" },
 	{ name: "United States", reg: "STATE BOARDS", slug: "united-states" },
@@ -23,7 +80,11 @@ const countries = [
 	<div class="r-header__bar">
 		<a href="/" class="r-header__logo">MDRPedia</a>
 		<nav class="r-header__nav" aria-label="Primary">
-			{links.map((l) => (
+			{links.slice(0, 3).map((l) => (
+				<a href={l.href} data-nav={l.key} aria-current={l.key === active ? "page" : undefined}>{l.label}</a>
+			))}
+			<button type="button" class="r-menu__btn" aria-expanded="false" aria-controls="r-menu-explore">Explore <span aria-hidden="true">▾</span></button>
+			{links.slice(3).map((l) => (
 				<a href={l.href} data-nav={l.key} aria-current={l.key === active ? "page" : undefined}>{l.label}</a>
 			))}
 		</nav>
@@ -44,8 +105,29 @@ const countries = [
 				<span class="r-country__note">Set from your location. Regions opens the register for this country.</span>
 			</div>
 		</div>
-		<a href="/doctor/claim" class="r-header__cta">For doctors</a>
+		<button type="button" class="r-header__cta r-menu__btn" aria-expanded="false" aria-controls="r-menu-doctors">For doctors <span aria-hidden="true">▾</span></button>
 	</div>
+	{menus.map((m) => (
+		<div class="r-menu" id={`r-menu-${m.id}`} hidden>
+			<div class="r-menu__inner">
+				{m.groups.map((g) => (
+					<nav class="r-menu__group" aria-label={`${m.label}: ${g.h.toLowerCase()}`}>
+						<h2>{g.h}</h2>
+						<ul>
+							{g.links.map((k) => (
+								<li>
+									<a href={k.h}>
+										<span class="r-menu__label">{k.l}{"tag" in k && k.tag && <em>{k.tag}</em>}</span>
+										<span class="r-menu__desc">{k.d}</span>
+									</a>
+								</li>
+							))}
+						</ul>
+					</nav>
+				))}
+			</div>
+		</div>
+	))}
 	<div class="r-header__stripe" aria-hidden="true"></div>
 </header>
 
@@ -102,6 +184,31 @@ const countries = [
 		});
 		document.addEventListener("click", (e) => {
 			if (!menu.hidden && !header.querySelector(".r-country").contains(e.target)) setOpen(false);
+		});
+
+		const menuBtns = [...header.querySelectorAll(".r-menu__btn")];
+		const panelOf = (b) => document.getElementById(b.getAttribute("aria-controls"));
+		const closeMenus = (except) => menuBtns.forEach((b) => {
+			if (b === except) return;
+			b.setAttribute("aria-expanded", "false");
+			panelOf(b).hidden = true;
+		});
+		menuBtns.forEach((b) => b.addEventListener("click", () => {
+			const open = b.getAttribute("aria-expanded") !== "true";
+			closeMenus(b);
+			setOpen(false);
+			b.setAttribute("aria-expanded", String(open));
+			panelOf(b).hidden = !open;
+			if (open) panelOf(b).querySelector("a").focus();
+		}));
+		btn.addEventListener("click", () => closeMenus());
+		header.addEventListener("keydown", (e) => {
+			if (e.key !== "Escape") return;
+			const openBtn = menuBtns.find((b) => b.getAttribute("aria-expanded") === "true");
+			if (openBtn) { closeMenus(); openBtn.focus(); }
+		});
+		document.addEventListener("click", (e) => {
+			if (!header.contains(e.target)) closeMenus();
 		});
 	})();
 </script>
