@@ -26,16 +26,21 @@ const STATIC_ASSETS = /\.(js|css|woff2?|ttf|otf|png|jpg|jpeg|gif|webp|avif|svg|i
 const IMMUTABLE_ASSETS = /\/_astro\//;
 const FORM_TYPES = /^(application\/x-www-form-urlencoded|multipart\/form-data|text\/plain)/i;
 const UNSAFE_METHODS = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
+const SITE_HOST = new URL(import.meta.env.SITE ?? 'https://mdrpedia.com').host;
 
-/** CSRF guard for form posts: the Origin host must match the Host header (scheme is ignored; TLS ends at the proxy). */
+/** CSRF guard for form posts: the Origin host must be this site (scheme is ignored; TLS ends at the proxy, which rewrites Host). */
 function crossSiteForm(request: Request): boolean {
     if (!UNSAFE_METHODS.has(request.method)) return false;
     if (!FORM_TYPES.test(request.headers.get('content-type') ?? '')) return false;
     const origin = request.headers.get('origin');
-    const host = request.headers.get('host')?.toLowerCase();
-    if (!origin || !host) return true;
+    if (!origin) return true;
+    const allowed = new Set(
+        [request.headers.get('host'), request.headers.get('x-forwarded-host')?.split(',').pop()?.trim(), SITE_HOST]
+            .filter((h): h is string => !!h)
+            .map((h) => h.toLowerCase()),
+    );
     try {
-        return new URL(origin).host.toLowerCase() !== host;
+        return !allowed.has(new URL(origin).host.toLowerCase());
     } catch {
         return true;
     }
