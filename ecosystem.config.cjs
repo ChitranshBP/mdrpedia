@@ -5,6 +5,7 @@ module.exports = {
     {
       name: 'mdrpedia',
       script: './dist/server/entry.mjs',
+      interpreter: process.env.NODE_INTERPRETER || '/opt/node-v22.23.2-linux-x64/bin/node',
       instances: 1,
       exec_mode: 'fork',
       autorestart: true,
