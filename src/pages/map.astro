@@ -6,81 +6,48 @@
 import Layout from "../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import { prisma } from "../lib/prisma";
+import { slugify } from "../lib/utils";
 
 export const prerender = false;
 
-// Try to get doctors from database first, fallback to content collection
-let doctors: any[] = [];
-let dataSource = 'database';
+type CountryStat = { total: number; titans: number; elites: number };
+
+const countryStats: Record<string, CountryStat> = {};
+const bump = (country: string, tier: string, n: number) => {
+    const stat = (countryStats[country] ??= { total: 0, titans: 0, elites: 0 });
+    stat.total += n;
+    if (tier === 'TITAN') stat.titans += n;
+    if (tier === 'ELITE') stat.elites += n;
+};
 
 try {
-    // Get aggregated country data from database
-    const dbDoctors = await prisma.profile.findMany({
-        select: {
-            id: true,
-            slug: true,
-            full_name: true,
-            specialty: true,
-            tier: true,
-            portrait_url: true,
-            geography: {
-                select: {
-                    country: true,
-                    city: true,
-                    region: true,
-                }
-            }
-        }
-    });
-
-    if (dbDoctors.length > 0) {
-        doctors = dbDoctors.map(d => ({
-            slug: d.slug,
-            fullName: d.full_name,
-            specialty: d.specialty,
-            tier: d.tier,
-            portraitUrl: d.portrait_url,
-            geography: d.geography || { country: 'Unknown' }
-        }));
-    } else {
-        throw new Error('No profiles in database');
+    const [grouped, geographies] = await Promise.all([
+        prisma.profile.groupBy({
+            by: ['geography_id', 'tier'],
+            _count: { _all: true },
+        }),
+        prisma.geography.findMany({ select: { id: true, country: true } }),
+    ]);
+    if (grouped.length === 0) throw new Error('No profiles in database');
+    const countryById = new Map(geographies.map(g => [g.id, g.country]));
+    for (const row of grouped) {
+        bump(countryById.get(row.geography_id ?? '') || 'Unknown', row.tier, row._count._all);
     }
 } catch (e) {
-    // Fallback to content collection
-    dataSource = 'static';
-    // Fallback to static content when DB is unavailable
+    for (const key of Object.keys(countryStats)) delete countryStats[key];
     const contentDoctors = await getCollection("doctors");
-    doctors = contentDoctors.map(d => ({
-        slug: d.id,
-        fullName: d.data.fullName,
-        specialty: d.data.specialty,
-        tier: d.data.tier,
-        portraitUrl: d.data.portraitUrl,
-        geography: d.data.geography
-    }));
+    for (const d of contentDoctors) {
+        bump(d.data.geography?.country || 'Unknown', d.data.tier || 'UNRANKED', 1);
+    }
 }
 
-// Aggregate by country
-const countryStats: Record<string, { total: number; titans: number; elites: number; doctors: typeof doctors }> = {};
-
-doctors.forEach(d => {
-    const country = d.geography?.country || 'Unknown';
-    if (!countryStats[country]) {
-        countryStats[country] = { total: 0, titans: 0, elites: 0, doctors: [] };
-    }
-    countryStats[country].total++;
-    countryStats[country].doctors.push(d);
-    if (d.tier === 'TITAN') countryStats[country].titans++;
-    if (d.tier === 'ELITE') countryStats[country].elites++;
-});
-
-// Sort by total count
 const sortedCountries = Object.entries(countryStats)
+    .filter(([country]) => country !== 'Unknown')
     .sort((a, b) => b[1].total - a[1].total);
 
-const totalDoctors = doctors.length;
-const totalTitans = doctors.filter(d => d.tier === 'TITAN').length;
-const totalCountries = Object.keys(countryStats).length;
+const totalDoctors = Object.values(countryStats).reduce((sum, c) => sum + c.total, 0);
+const totalTitans = Object.values(countryStats).reduce((sum, c) => sum + c.titans, 0);
+const totalCountries = sortedCountries.length;
 
 // Country coordinates for map markers
 const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
@@ -105,9 +72,25 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
     'Singapore': { lat: 1.3521, lng: 103.8198 },
     'Israel': { lat: 31.0461, lng: 34.8516 },
 };
+
+const maxCount = sortedCountries[0]?.[1].total ?? 1;
+const markers = sortedCountries.flatMap(([country, stats]) => {
+    const coords = COUNTRY_COORDS[country];
+    if (!coords) return [];
+    return [{
+        country,
+        slug: slugify(country),
+        total: stats.total,
+        x: ((coords.lng + 180) / 360) * 1000,
+        y: ((90 - coords.lat) / 180) * 500,
+        r: 6 + 20 * Math.sqrt(stats.total / maxCount),
+    }];
+});
+const meridians = [-120, -60, 0, 60, 120].map(lng => ((lng + 180) / 360) * 1000);
+const parallels = [-60, -30, 0, 30, 60].map(lat => ((90 - lat) / 180) * 500);
 ---
 
-<Layout title="Global Doctors Map — MDRPedia" description="Explore medical professionals worldwide on our interactive global map.">
+<Layout title="Global Doctors Map — MDRPedia" description="Explore where the register's physicians practice: a country-by-country distribution with links to every national directory.">
     <div class="map-page">
         <!-- Hero Section -->
         <header class="page-hero">
@@ -138,13 +121,22 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
             </div>
         </header>
 
-        <!-- Map Container -->
+        <!-- Country plot -->
         <section class="map-section">
             <div class="map-container" id="world-map">
-                <div class="map-loading">
-                    <div class="loading-spinner"></div>
-                    <p>Loading interactive map...</p>
-                </div>
+                <svg viewBox="0 0 1000 500" role="group" aria-label="Countries plotted by location, sized by number of physicians">
+                    {meridians.map(x => <line x1={x} y1="0" x2={x} y2="500" class="grid" />)}
+                    {parallels.map(y => <line x1="0" y1={y} x2="1000" y2={y} class={y === 250 ? 'grid grid--equator' : 'grid'} />)}
+                    {markers.map(m => (
+                        <a href={`/geography/${m.slug}`} aria-label={`${m.country}: ${m.total} physicians`}>
+                            <circle cx={m.x} cy={m.y} r={m.r} class="marker">
+                                <title>{m.country} — {m.total.toLocaleString()} physicians</title>
+                            </circle>
+                            {m.r > 14 && <text x={m.x} y={m.y + 4} class="marker-label" text-anchor="middle">{m.total}</text>}
+                        </a>
+                    ))}
+                </svg>
+                <p class="map-caption">Each circle marks a country, sized by physicians on the register. Select one to open its directory.</p>
             </div>
         </section>
 
@@ -154,8 +146,8 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
                 <h2>Medical Professionals by Country</h2>
 
                 <div class="countries-grid">
-                    {sortedCountries.slice(0, 20).map(([country, stats]) => (
-                        <a href={`/doctors?country=${encodeURIComponent(country)}`} class="country-card">
+                    {sortedCountries.map(([country, stats]) => (
+                        <a href={`/geography/${slugify(country)}`} class="country-card">
                             <div class="country-header">
                                 <h3>{country}</h3>
                                 {stats.titans > 0 && (
@@ -164,7 +156,7 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
                             </div>
                             <div class="country-stats">
                                 <div class="country-stat">
-                                    <span class="value">{stats.total}</span>
+                                    <span class="value">{stats.total.toLocaleString()}</span>
                                     <span class="label">Total</span>
                                 </div>
                                 {stats.elites > 0 && (
@@ -174,29 +166,9 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
                                     </div>
                                 )}
                             </div>
-                            <div class="country-preview">
-                                {stats.doctors.slice(0, 4).map((doc, i) => (
-                                    <div class="preview-avatar" style={`z-index: ${4 - i}`}>
-                                        {doc.portraitUrl ? (
-                                            <img src={doc.portraitUrl} alt={doc.fullName || 'Doctor portrait'} loading="lazy" />
-                                        ) : (
-                                            <span>{doc.fullName?.[0] || '?'}</span>
-                                        )}
-                                    </div>
-                                ))}
-                                {stats.total > 4 && (
-                                    <div class="preview-more">+{stats.total - 4}</div>
-                                )}
-                            </div>
                         </a>
                     ))}
                 </div>
-
-                {sortedCountries.length > 20 && (
-                    <div class="view-all">
-                        <a href="/doctors" class="view-all-btn">View All Countries</a>
-                    </div>
-                )}
             </div>
         </section>
     </div>
@@ -293,36 +265,57 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
     }
 
     .map-container {
-        height: 500px;
         background: var(--paper-2);
         border: 1px solid var(--rule);
         border-radius: var(--r-4);
         overflow: hidden;
         position: relative;
+        aspect-ratio: 2 / 1;
     }
 
-    .map-loading {
+    .map-container svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    .grid {
+        stroke: var(--rule);
+        stroke-width: 1;
+    }
+
+    .grid--equator {
+        stroke: var(--rule-strong);
+    }
+
+    .marker {
+        fill: var(--ink-blue);
+        fill-opacity: 0.35;
+        stroke: var(--ink-blue);
+        stroke-width: 1.5;
+        transition: fill-opacity 0.2s;
+    }
+
+    a:hover .marker, a:focus-visible .marker {
+        fill-opacity: 0.7;
+    }
+
+    .marker-label {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        fill: var(--ink);
+        pointer-events: none;
+    }
+
+    .map-caption {
         position: absolute;
-        inset: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
+        left: 0;
+        right: 0;
+        bottom: 0.75rem;
+        text-align: center;
+        font-size: 0.8rem;
         color: var(--ink-3);
-    }
-
-    .loading-spinner {
-        width: 40px;
-        height: 40px;
-        border: 3px solid var(--rule);
-        border-top-color: var(--ink-blue);
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-        to { transform: rotate(360deg); }
+        margin: 0;
     }
 
     /* Countries Section */
@@ -413,69 +406,6 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
         color: var(--ink-3);
     }
 
-    .country-preview {
-        display: flex;
-        align-items: center;
-    }
-
-    .preview-avatar {
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        border: 2px solid var(--paper);
-        overflow: hidden;
-        margin-left: -8px;
-        background: var(--ink-blue-2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.65rem;
-        font-weight: 500;
-        color: var(--ink-blue);
-    }
-
-    .preview-avatar:first-child {
-        margin-left: 0;
-    }
-
-    .preview-avatar img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .preview-more {
-        padding: 4px 8px;
-        background: var(--paper-3);
-        border-radius: var(--r-pill);
-        font-size: 0.7rem;
-        color: var(--ink-3);
-        margin-left: 4px;
-    }
-
-    .view-all {
-        text-align: center;
-        margin-top: 2rem;
-    }
-
-    .view-all-btn {
-        display: inline-flex;
-        padding: 0.75rem 1.5rem;
-        background: var(--ink-blue-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-3);
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: var(--ink-blue);
-        text-decoration: none;
-        transition: all 0.2s;
-    }
-
-    .view-all-btn:hover {
-        background: var(--paper-3);
-        border-color: var(--rule-strong);
-    }
-
     @media (max-width: 768px) {
         .hero-stats {
             flex-direction: column;
@@ -487,32 +417,8 @@ const COUNTRY_COORDS: Record<string, { lat: number; lng: number }> = {
             height: 1px;
         }
 
-        .map-container {
-            height: 350px;
-        }
-
         .countries-grid {
             grid-template-columns: 1fr;
         }
     }
 </style>
-
-<script>
-    // Simple SVG world map visualization
-    const mapContainer = document.getElementById('world-map');
-    if (mapContainer) {
-        // Create a simple placeholder showing country pins
-        const mapHTML = `
-            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 2rem;">
-                <svg viewBox="0 0 1000 500" style="max-width: 100%; height: auto; opacity: 0.3;">
-                    <path d="M100,200 Q200,100 400,150 T600,200 T800,150 T900,200" stroke="var(--ink-blue)" fill="none" stroke-width="2"/>
-                    <path d="M100,250 Q250,150 450,200 T650,250 T850,200 T950,250" stroke="var(--verdant)" fill="none" stroke-width="2"/>
-                    <path d="M50,300 Q200,200 400,250 T600,300 T800,250 T950,300" stroke="var(--ink-blue)" fill="none" stroke-width="2"/>
-                </svg>
-                <p style="color: var(--ink-3); margin-top: 1rem; font-size: 0.9rem;">Interactive map coming soon</p>
-                <p style="color: var(--ink-3); font-size: 0.8rem;">Browse doctors by country below</p>
-            </div>
-        `;
-        mapContainer.innerHTML = mapHTML;
-    }
-</script>
