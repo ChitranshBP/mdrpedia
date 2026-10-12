@@ -6,7 +6,8 @@
  * The acting profile is derived from the session cookie. It is never read from
  * the query string: doing so let any visitor open any doctor's ethics file.
  */
-import Layout from "../../layouts/Layout.astro";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import "../../styles/pages/ethics-dashboard.css";
 import { prisma } from "../../lib/prisma";
 import { getSession } from "../../lib/auth";
 import { scoreBand } from "../../lib/ethics-score";
@@ -100,7 +101,7 @@ const categoryLabels: Record<string, string> = {
 };
 ---
 
-<Layout title={profile ? `Ethics Dashboard -- ${profile.full_name} | MDRPedia` : "Ethics Certification | MDRPedia"} description="Manage your MDRPedia ethics certification status, complete audits, and upload evidence." robots="noindex, nofollow">
+<SiteLayout title={profile ? `Ethics dashboard — ${profile.full_name} | MDRPedia` : "Ethics certification | MDRPedia"} description="Manage your MDRPedia ethics certification status, complete audits, and upload evidence." robots="noindex, nofollow">
     <div class="ethics-dash">
         <div class="container">
 
@@ -422,7 +423,7 @@ const categoryLabels: Record<string, string> = {
 
         </div>
     </div>
-</Layout>
+</SiteLayout>
 
 <script is:inline>
     // ── Utility: disable/enable button with loading text ──────────

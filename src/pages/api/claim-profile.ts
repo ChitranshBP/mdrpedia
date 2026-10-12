@@ -2,6 +2,8 @@ import type { APIRoute } from "astro";
 import { prisma } from "../../lib/prisma";
 import { isValidEmail } from "../../lib/utils";
 import { uploadPrivateDocument } from "../../lib/cloudinary";
+import { lookupNPI } from "../../lib/npi-registry";
+import { checkRateLimit, getClientIdentifier, RATE_LIMITS, rateLimitResponse } from "../../lib/rate-limit";
 import crypto from "crypto";
 
 export const prerender = false;
@@ -22,6 +24,39 @@ const ALLOWED_DOCUMENT_TYPES = [
  */
 const CLAIM_FIELD = "__claim_request";
 
+const REGISTRIES = ["NMC", "SMC", "NPI", "GMC", "OTHER"] as const;
+type Registry = (typeof REGISTRIES)[number];
+
+interface RegistryCheck {
+    source: string;
+    found: boolean;
+    name_match?: boolean;
+    status?: string;
+    registered_name?: string;
+}
+
+const lastName = (name: string) =>
+    name.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z\s-]/g, " ").trim().split(/\s+/).pop() ?? "";
+
+/**
+ * US NPIs are checked against NPPES so reviewers see the result next to the
+ * claim. Other registries (NMC/SMC, GMC) have no open API and are checked by hand.
+ */
+async function checkRegistry(registry: Registry, number: string, profileName: string): Promise<RegistryCheck | null> {
+    if (registry !== "NPI" || !/^\d{10}$/.test(number)) return null;
+    const timeout = new Promise<null>((resolve) => setTimeout(() => resolve(null), 5000));
+    const npi = await Promise.race([lookupNPI(number), timeout]).catch(() => null);
+    if (!npi) return { source: "NPPES", found: false };
+    const registered = `${npi.firstName} ${npi.lastName}`.trim();
+    return {
+        source: "NPPES",
+        found: true,
+        status: npi.status,
+        registered_name: registered,
+        name_match: lastName(registered) !== "" && lastName(registered) === lastName(profileName),
+    };
+}
+
 function hashIp(address: string | undefined) {
     const salt = import.meta.env.IP_HASH_SALT ?? "";
     return crypto
@@ -32,6 +67,9 @@ function hashIp(address: string | undefined) {
 }
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
+    const rate = checkRateLimit(getClientIdentifier(request), RATE_LIMITS.submission);
+    if (!rate.allowed) return rateLimitResponse(rate.resetTime);
+
     try {
         const contentLength = parseInt(request.headers.get("content-length") || "0");
         if (contentLength > MAX_BODY_SIZE) {
@@ -65,11 +103,14 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
             return new Response(JSON.stringify({ success: true }), { status: 200 });
         }
 
-        const { profile_slug, email, registration_number } = data as {
+        const { profile_slug, email } = data as {
             profile_slug?: string;
             email?: string;
-            registration_number?: string;
         };
+        const registration_number = String(data.registration_number ?? "").trim();
+        const registry: Registry = REGISTRIES.includes(data.registry as Registry)
+            ? (data.registry as Registry)
+            : "OTHER";
 
         if (documentFile) {
             if (!ALLOWED_DOCUMENT_TYPES.includes(documentFile.type)) {
@@ -100,11 +141,15 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
             );
         }
 
-        if (String(registration_number).length > 64) {
+        if (registration_number.length > 64 || String(email).length > 254) {
             return new Response(
-                JSON.stringify({ error: "Registration number is too long." }),
+                JSON.stringify({ error: "Registration number or email is too long." }),
                 { status: 400 },
             );
+        }
+
+        if (registry === "NPI" && !/^\d{10}$/.test(registration_number)) {
+            return new Response(JSON.stringify({ error: "An NPI is 10 digits." }), { status: 400 });
         }
 
         const profile = await prisma.profile.findUnique({
@@ -177,12 +222,16 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
             }
         }
 
+        const registryCheck = await checkRegistry(registry, registration_number, profile.full_name);
+
         await prisma.profileEdit.create({
             data: {
                 profile_slug,
                 field_name: CLAIM_FIELD,
                 new_value: JSON.stringify({
+                    registry,
                     registration_number,
+                    registry_check: registryCheck,
                     document_name: documentName,
                     document_id: documentId,
                     document_type: documentType,

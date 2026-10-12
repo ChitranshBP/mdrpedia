@@ -26,6 +26,7 @@ export async function GET({ params, request }: { params: { certId: string }; req
   var API_URL = "https://mdrpedia.com/api/ethics/verify/" + CERT_ID;
   var VERIFY_URL = "https://mdrpedia.com/ethical-doctors/verify/" + CERT_ID;
 
+  function esc(v){return String(v==null?"":v).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]})}
   var container = document.currentScript && document.currentScript.parentElement;
   if (!container) return;
 
@@ -50,12 +51,12 @@ export async function GET({ params, request }: { params: { certId: string }; req
     var band = d.certification.score_band || "";
 
     el.innerHTML = '<a href="' + VERIFY_URL + '" target="_blank" rel="noopener" style="display:flex;gap:14px;align-items:center;text-decoration:none;color:inherit;width:100%">' +
-      '<div style="width:64px;height:64px;border-radius:50%;border:2px solid ' + color + ';display:flex;align-items:center;justify-content:center;flex-shrink:0;color:' + color + ';font-size:28px;font-family:serif;font-weight:400">' + letter + '</div>' +
+      '<div style="width:64px;height:64px;border-radius:50%;border:2px solid ' + color + ';display:flex;align-items:center;justify-content:center;flex-shrink:0;color:' + color + ';font-size:28px;font-family:serif;font-weight:400">' + esc(letter) + '</div>' +
       '<div style="flex:1;min-width:0">' +
-        '<div style="font-size:13px;font-weight:600;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (d.doctor.name||"") + '</div>' +
-        '<div style="font-size:10px;font-weight:600;letter-spacing:0.08em;color:' + color + ';text-transform:uppercase;margin-top:2px">' + tier + ' Certified</div>' +
-        '<div style="font-size:11px;color:#6b7280;margin-top:4px">' + statusDot + statusText + (band ? " \\u00B7 " + band : "") + '</div>' +
-        '<div style="font-size:10px;color:#6b7280;margin-top:2px">Last audit: ' + auditDate + '</div>' +
+        '<div style="font-size:13px;font-weight:600;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + esc(d.doctor.name) + '</div>' +
+        '<div style="font-size:10px;font-weight:600;letter-spacing:0.08em;color:' + color + ';text-transform:uppercase;margin-top:2px">' + esc(tier) + ' Certified</div>' +
+        '<div style="font-size:11px;color:#6b7280;margin-top:4px">' + statusDot + esc(statusText) + (band ? " \\u00B7 " + esc(band) : "") + '</div>' +
+        '<div style="font-size:10px;color:#6b7280;margin-top:2px">Last audit: ' + esc(auditDate) + '</div>' +
       '</div>' +
     '</a>';
   }).catch(function(){

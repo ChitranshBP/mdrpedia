@@ -1,0 +1,13 @@
+---
+import { renderRegisterSeal, type RegisterSealOptions } from "../../lib/register-seal";
+
+type Props = RegisterSealOptions & { class?: string };
+
+const { class: className, ...opts } = Astro.props;
+---
+
+<span class:list={["r-seal", className]} set:html={renderRegisterSeal(opts)} />
+
+<style>
+	.r-seal { display: inline-block; line-height: 0; flex: none; }
+</style>
