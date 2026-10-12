@@ -1,1084 +1,325 @@
 ---
 /**
- * MDRPedia — Enhanced Search Results Page
- * Features real-time autocomplete, keyboard navigation, and improved UX
+ * MDRPedia — Find a doctor (patient-facing search).
+ * Country-scoped, plain-language matching ("chest pain" → heart specialists),
+ * alphabetical order: no ratings, rankings or "best" claims.
  */
-import Layout from "../layouts/Layout.astro";
-import TierBadge from "../components/TierBadge.astro";
-import EnhancedSearch from "../components/EnhancedSearch";
+import SiteLayout from "../layouts/SiteLayout.astro";
+import Pagination from "../components/Pagination.astro";
+import "../styles/pages/listing-theme.css";
+import "../styles/pages/find-doctor.css";
 import { getCollection } from "astro:content";
+import { normalizeSpecialty } from "../lib/specialty-groups";
+import {
+	ALL_COUNTRIES,
+	CONDITIONS,
+	REGISTER_COUNTRIES,
+	displayName,
+	fold,
+	initials,
+	matchQuery,
+	matchesCondition,
+	plainSpecialty,
+	queryTokens,
+	resolveCountry,
+	type FinderDoctor,
+} from "../lib/find-doctor";
 
-const query = Astro.url.searchParams.get("q")?.trim() || "";
-const specialtyFilter = Astro.url.searchParams.get("specialty")?.trim() || "";
-const countryFilter = Astro.url.searchParams.get("country")?.trim() || "";
+export const prerender = false;
 
-const allDoctors = await getCollection("doctors");
+const PAGE_SIZE = 20;
+const DEFAULT_COUNTRY = REGISTER_COUNTRIES[0];
+const DEGREE = /^(MBBS|MBChB|MB\b|BM\b|MD|MS|DM|MCh|M\.Ch|DNB|PhD|DPhil|FRCS|FRCP|FRCPath|FACC|FACS|FACP|MPH|MMed|MRCP|DCH|DGO|MSc|DSc)/i;
 
-// Enhanced search logic with better matching
-let results: typeof allDoctors = [];
-let searchTime = 0;
+const params = Astro.url.searchParams;
+const query = (params.get("q") || "").trim().slice(0, 120);
+const countryParam = (params.get("country") || "").trim();
+const isAll = countryParam.toLowerCase() === ALL_COUNTRIES;
+const country = isAll ? null : resolveCountry(countryParam) ?? (countryParam ? null : DEFAULT_COUNTRY);
+// Legacy links pass any country name (?country=Germany): filter on it without a register theme.
+const otherCountryParam = !isAll && countryParam && !country ? countryParam.slice(0, 60) : "";
+const cond = CONDITIONS.find((c) => c.key === params.get("cond")) ?? null;
+const cityParam = (params.get("city") || "").trim().slice(0, 80);
+const regionParam = (params.get("region") || params.get("state") || "").trim().slice(0, 80);
+const specialtyParam = (params.get("specialty") || "").trim();
+const requestedPage = Math.max(1, parseInt(params.get("page") || "1", 10) || 1);
 
-if (query.length >= 2) {
-    const startTime = performance.now();
-    const q = query.toLowerCase();
-    const specialtyQ = specialtyFilter.toLowerCase();
-    const countryQ = countryFilter.toLowerCase();
+type Row = FinderDoctor & {
+	country: string;
+	living: boolean;
+	qualifications: string;
+	highlights: string[];
+};
 
-    results = allDoctors
-        .map((d) => {
-            const data = d.data;
-            const fullNameLower = data.fullName.toLowerCase();
-            const specialtyLower = (data.specialty || "").toLowerCase();
-            const countryLower = (data.geography?.country || "").toLowerCase();
-            const cityLower = (data.geography?.city || "").toLowerCase();
+const qualificationsOf = (education: string[] | null | undefined, title: string | null | undefined) => {
+	const degrees = (education || [])
+		.map((e) => e.split(",")[0].trim())
+		.filter((e) => e.length <= 40 && DEGREE.test(e));
+	if (degrees.length) return [...new Set(degrees)].slice(0, 4).join(", ");
+	return title && title.length <= 60 ? title : "";
+};
 
-            // Calculate relevance score
-            let score = 0;
+const all: Row[] = (await getCollection("doctors")).map((entry) => {
+	const d = entry.data;
+	const clinical = [d.specialty, d.subSpecialty, ...(d.medicalSpecialty || []), ...(d.conditionsTreated || [])]
+		.filter(Boolean)
+		.join(" ");
+	const hospital = d.affiliations?.[0]?.hospitalName ?? "";
+	const city = d.geography?.city?.trim() || "";
+	const region = d.geography?.region?.trim() || "";
+	const papers = d.citations?.length ?? 0;
+	const highlights = [
+		papers > 0 ? `${papers} research paper${papers === 1 ? "" : "s"} on record` : "",
+		d.awards?.length ? `${d.awards.length} award${d.awards.length === 1 ? "" : "s"}` : "",
+		d.hasInvention || d.techniquesInvented?.length ? "Developed a technique" : "",
+		d.students?.length ? "Trains doctors" : "",
+		d.rareConditions?.length ? "Treats rare conditions" : "",
+	].filter(Boolean);
+	return {
+		slug: entry.id,
+		name: d.fullName,
+		title: d.title ?? "",
+		specialty: normalizeSpecialty(d.specialty),
+		subSpecialty: d.subSpecialty ?? "",
+		hospital,
+		city,
+		region,
+		country: d.geography?.country ?? "",
+		living: d.status === "LIVING",
+		qualifications: qualificationsOf(d.education, d.title),
+		highlights: highlights.slice(0, 3),
+		clinicalText: fold(clinical),
+		searchText: fold([d.fullName, clinical, hospital, city, region, d.geography?.country ?? ""].join(" ")),
+	};
+});
 
-            // Name matching
-            if (fullNameLower === q) score += 100;
-            else if (fullNameLower.startsWith(q)) score += 80;
-            else if (fullNameLower.includes(q)) score += 50;
+// Display the stored spelling of a legacy country ("germany" → "Germany").
+const otherCountry = otherCountryParam
+	? all.find((d) => d.country.toLowerCase() === otherCountryParam.toLowerCase())?.country ?? otherCountryParam
+	: "";
+const scope = country?.name ?? otherCountry;
 
-            // First/last name matching
-            const nameParts = fullNameLower.split(' ');
-            if (nameParts.some(part => part === q)) score += 70;
-            else if (nameParts.some(part => part.startsWith(q))) score += 40;
+const living = all.filter((d) => d.living);
+const inCountry = scope ? living.filter((d) => d.country.toLowerCase() === scope.toLowerCase()) : living;
+const cities = [...new Set(inCountry.map((d) => d.city).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+// Accept any casing from free-text forms; keep an unknown city so the empty state can explain it.
+const city = cityParam ? cities.find((c) => fold(c) === fold(cityParam)) ?? cityParam : "";
+const region = regionParam;
+const inPlace = (d: Row) =>
+	(!city || fold(d.city) === fold(city)) && (!region || fold(d.region).includes(fold(region)));
 
-            // Specialty matching
-            if (specialtyLower.includes(q)) score += 30;
+const narrow = (pool: Row[]) => {
+	let out = pool;
+	if (specialtyParam) out = out.filter((d) => d.clinicalText.includes(fold(specialtyParam)));
+	if (cond) out = out.filter((d) => matchesCondition(d, cond));
+	// One-letter or stop-word-only queries ("a", "dr") browse the filtered list instead of matching nothing.
+	if (queryTokens(query).length) out = matchQuery(out, query).results;
+	return out;
+};
 
-            // Location matching
-            if (countryLower.includes(q) || cityLower.includes(q)) score += 20;
+const matched = narrow(inCountry);
+const results = matched.filter(inPlace).sort((a, b) => a.name.localeCompare(b.name));
+const searching = !!(queryTokens(query).length || cond || specialtyParam);
+const elsewhere = scope && searching ? narrow(living).length - matched.length : 0;
+const historical = queryTokens(query).length ? matchQuery(all.filter((d) => !d.living), query).results.length : 0;
 
-            // Apply filters
-            if (specialtyQ && !specialtyLower.includes(specialtyQ)) return null;
-            if (countryQ && !countryLower.includes(countryQ)) return null;
+const total = results.length;
+const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+const page = Math.min(requestedPage, totalPages);
+const pageRows = results.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
-            // Tier bonus
-            const tierBonus: Record<string, number> = { TITAN: 15, ELITE: 10, MASTER: 5, UNRANKED: 0 };
-            score += tierBonus[data.tier] || 0;
+const href = (overrides: Record<string, string>) => {
+	const base: Record<string, string> = {
+		q: query,
+		country: isAll ? ALL_COUNTRIES : countryParam ? country?.slug ?? otherCountry : "",
+		city,
+		region,
+		cond: cond?.key ?? "",
+		specialty: specialtyParam,
+	};
+	const next = new URLSearchParams();
+	for (const [k, v] of Object.entries({ ...base, ...overrides })) if (v) next.set(k, v);
+	const qs = next.toString();
+	return qs ? `/search?${qs}` : "/search";
+};
 
-            // H-index bonus (up to 10 points)
-            score += Math.min((data.hIndex || 0) / 10, 10);
+const nmc = country?.nmc ?? false;
+const countLabel = `${total.toLocaleString()} ${total === 1 ? "doctor" : "doctors"} in ${[city, region].filter(Boolean).join(", ") || scope || "all countries"}`;
+const orderNote = nmc
+	? 'Listed alphabetically. Under NMC guidelines, no one is ranked "best" or "No. 1".'
+	: "Listed alphabetically. Open a record to compare the evidence.";
+const eyebrow = scope
+	? `FOR PATIENTS · ONLY DOCTORS ${country ? "REGISTERED" : "BASED"} IN ${scope.toUpperCase()}`
+	: "FOR PATIENTS · DOCTORS IN EVERY COUNTRY ON THE REGISTER";
+const tips = [
+	{ t: "Check they're registered.", d: "Confirm the registration with the medical council before you book." },
+	{ t: "Match the specialist to the problem.", d: "A heart specialist (cardiologist) is not the same as a heart surgeon." },
+	{ t: "Look for recent work.", d: "Recent papers, training and teaching show they've kept learning." },
+	{ t: "Ask questions at your visit.", d: "Bring your reports and a short list of questions to your first appointment." },
+];
+const whyTitle = nmc ? 'WHY THERE ARE NO RATINGS OR "TOP DOCTORS"' : "WHY THERE ARE NO RATINGS";
+const whyText = nmc
+	? "The National Medical Commission's October 2026 guidelines ban fake or paid reviews, testimonials, \"best\" claims and paid rankings on doctor-listing platforms. We think that's right: stars measure waiting rooms, not medicine."
+	: "Star ratings measure waiting rooms and parking, not medicine, and they're easy to fake. We show verified evidence instead.";
 
-            return score > 0 ? { doctor: d, score } : null;
-        })
-        .filter((item): item is { doctor: typeof allDoctors[0]; score: number } => item !== null)
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 50)
-        .map(item => item.doctor);
-
-    searchTime = Math.round(performance.now() - startTime);
-}
-
-// Get unique specialties and countries for filter suggestions
-const specialties = [...new Set(allDoctors.map(d => d.data.specialty).filter(Boolean))].sort();
-const countries = [...new Set(allDoctors.map(d => d.data.geography?.country).filter(Boolean))].sort();
-
-// Count by tier for stats
-const tierCounts = results.reduce((acc, d) => {
-    acc[d.data.tier] = (acc[d.data.tier] || 0) + 1;
-    return acc;
-}, {} as Record<string, number>);
+const title = query
+	? `${query} — Find a doctor in ${scope || "any country"} | MDRPedia`
+	: `Find a doctor in ${scope || "any country"} | MDRPedia`;
+const description = `Find a doctor in ${scope || "any country"} by describing the problem in your own words. Every listing links to a public record of registration, research and training. No ratings, no paid rankings.`;
+const jsonLd = [
+	{
+		"@context": "https://schema.org",
+		"@type": "SearchResultsPage",
+		name: title,
+		url: new URL("/search", Astro.site ?? "https://mdrpedia.com").href,
+		mainEntity: {
+			"@type": "ItemList",
+			numberOfItems: total,
+			itemListElement: pageRows.map((d, i) => ({
+				"@type": "ListItem",
+				position: (page - 1) * PAGE_SIZE + i + 1,
+				url: new URL(`/doctors/${d.slug}`, Astro.site ?? "https://mdrpedia.com").href,
+				name: d.name,
+			})),
+		},
+	},
+];
 ---
 
-<Layout
-	title={query ? `Search: ${query} — MDRPedia` : "Search — MDRPedia"}
-	description="Search MDRPedia for physicians, specialties, institutions and medical research across the register."
-	robots="noindex, follow"
->
-    <section class="search-page">
-        <div class="container">
-            <!-- Search Header -->
-            <div class="search-header">
-                <h1 class="search-title">
-                    <span class="search-title-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <path d="m21 21-4.3-4.3"></path>
-                        </svg>
-                    </span>
-                    Search Doctors
-                </h1>
-                <p class="search-subtitle">
-                    Find verified medical professionals from our database of {allDoctors.length.toLocaleString()}+ profiles
-                </p>
-            </div>
-
-            <!-- Enhanced Search Component (client-side) -->
-            <div class="search-wrapper">
-                <EnhancedSearch
-                    client:load
-                    initialQuery={query}
-                    autoFocus={!query}
-                />
-            </div>
-
-            <!-- Active Filters -->
-            {(specialtyFilter || countryFilter) && (
-                <div class="active-filters">
-                    <span class="filters-label">Active filters:</span>
-                    {specialtyFilter && (
-                        <a href={`/search?q=${encodeURIComponent(query)}${countryFilter ? `&country=${encodeURIComponent(countryFilter)}` : ''}`} class="filter-chip">
-                            <span>Specialty: {specialtyFilter}</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M18 6L6 18M6 6l12 12"/>
-                            </svg>
-                        </a>
-                    )}
-                    {countryFilter && (
-                        <a href={`/search?q=${encodeURIComponent(query)}${specialtyFilter ? `&specialty=${encodeURIComponent(specialtyFilter)}` : ''}`} class="filter-chip">
-                            <span>Country: {countryFilter}</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M18 6L6 18M6 6l12 12"/>
-                            </svg>
-                        </a>
-                    )}
-                    <a href={`/search?q=${encodeURIComponent(query)}`} class="clear-all">Clear all</a>
-                </div>
-            )}
-
-            <!-- Results Section -->
-            {query.length >= 2 ? (
-                <div class="results-section">
-                    <!-- Results Header -->
-                    <div class="results-header">
-                        <div class="results-meta">
-                            <p class="results-count">
-                                {results.length === 0
-                                    ? `No results found for "${query}"`
-                                    : `Found ${results.length} result${results.length === 1 ? "" : "s"} for "${query}"`
-                                }
-                            </p>
-                            {searchTime > 0 && (
-                                <span class="search-time">({searchTime}ms)</span>
-                            )}
-                        </div>
-
-                        {/* Tier breakdown */}
-                        {results.length > 0 && (
-                            <div class="tier-breakdown">
-                                {tierCounts['TITAN'] > 0 && (
-                                    <span class="tier-count tier-count--titan">
-                                        <span class="tier-dot"></span>
-                                        {tierCounts['TITAN']} Titan{tierCounts['TITAN'] > 1 ? 's' : ''}
-                                    </span>
-                                )}
-                                {tierCounts['ELITE'] > 0 && (
-                                    <span class="tier-count tier-count--elite">
-                                        <span class="tier-dot"></span>
-                                        {tierCounts['ELITE']} Elite
-                                    </span>
-                                )}
-                                {tierCounts['MASTER'] > 0 && (
-                                    <span class="tier-count tier-count--master">
-                                        <span class="tier-dot"></span>
-                                        {tierCounts['MASTER']} Master{tierCounts['MASTER'] > 1 ? 's' : ''}
-                                    </span>
-                                )}
-                            </div>
-                        )}
-                    </div>
-
-                    {results.length > 0 && (
-                        <div class="results-grid">
-                            {results.map((doctor, index) => {
-                                const d = doctor.data;
-                                const location = [d.geography?.city, d.geography?.country]
-                                    .filter(Boolean)
-                                    .join(", ");
-                                const initials = d.fullName
-                                    .split(" ")
-                                    .map((w: string) => w[0])
-                                    .filter((_: string, i: number) => i < 2)
-                                    .join("")
-                                    .toUpperCase();
-                                const hasImage = d.portraitUrl && !d.portraitUrl.startsWith("data:");
-                                const totalCitations = d.citations?.reduce((sum: number, c: any) => sum + (c.totalCitationCount || 0), 0) || 0;
-
-                                return (
-                                    <a
-                                        href={`/doctors/${doctor.id}`}
-                                        class={`result-card result-card--${d.tier.toLowerCase()}`}
-                                        style={`--animation-delay: ${index * 30}ms`}
-                                    >
-                                        <div class="result-rank">#{index + 1}</div>
-                                        <div class={`result-avatar avatar--${d.tier.toLowerCase()}`}>
-                                            {hasImage ? (
-                                                <img src={d.portraitUrl} alt={d.fullName} loading="lazy" />
-                                            ) : (
-                                                <span class="avatar-initials">{initials}</span>
-                                            )}
-                                        </div>
-                                        <div class="result-info">
-                                            <div class="result-header">
-                                                <h3 class="result-name">{d.fullName}</h3>
-                                                <TierBadge tier={d.tier as "TITAN" | "ELITE" | "MASTER" | "UNRANKED"} size="sm" />
-                                            </div>
-                                            <p class="result-specialty">{d.specialty}</p>
-                                            {location && (
-                                                <p class="result-location">
-                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                                                        <circle cx="12" cy="10" r="3"/>
-                                                    </svg>
-                                                    {location}
-                                                </p>
-                                            )}
-                                            <div class="result-stats">
-                                                <span class="stat">
-                                                    <span class="stat-label">H-Index</span>
-                                                    <span class="stat-value">{d.hIndex || "—"}</span>
-                                                </span>
-                                                <span class="stat">
-                                                    <span class="stat-label">Publications</span>
-                                                    <span class="stat-value">{d.citations?.length || 0}</span>
-                                                </span>
-                                                {totalCitations > 0 && (
-                                                    <span class="stat">
-                                                        <span class="stat-label">Citations</span>
-                                                        <span class="stat-value">{totalCitations.toLocaleString()}</span>
-                                                    </span>
-                                                )}
-                                            </div>
-                                        </div>
-                                        <div class="result-arrow">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M9 18l6-6-6-6"/>
-                                            </svg>
-                                        </div>
-                                    </a>
-                                );
-                            })}
-                        </div>
-                    )}
-
-                    {results.length === 0 && (
-                        <div class="no-results">
-                            <div class="no-results-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <circle cx="11" cy="11" r="8"/>
-                                    <path d="m21 21-4.3-4.3"/>
-                                    <path d="M8 8l6 6M14 8l-6 6"/>
-                                </svg>
-                            </div>
-                            <h3>No doctors found</h3>
-                            <p>We couldn't find any doctors matching "{query}"</p>
-                            <div class="no-results-suggestions">
-                                <p class="suggestions-title">Suggestions:</p>
-                                <ul>
-                                    <li>Check the spelling of your search term</li>
-                                    <li>Try searching for a different name or specialty</li>
-                                    <li>Use broader terms (e.g., "cardiology" instead of "interventional cardiology")</li>
-                                </ul>
-                            </div>
-                            <div class="no-results-actions">
-                                <a href="/global-leaders" class="btn btn--secondary">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-                                        <circle cx="9" cy="7" r="4"/>
-                                        <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
-                                    </svg>
-                                    Browse Top Doctors
-                                </a>
-                                <a href="/specialty" class="btn btn--primary">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-                                    </svg>
-                                    Browse by Specialty
-                                </a>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            ) : query.length > 0 ? (
-                <div class="min-chars-notice">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M12 8v4M12 16h.01"/>
-                    </svg>
-                    <p>Please enter at least 2 characters to search</p>
-                </div>
-            ) : (
-                <div class="search-landing">
-                    <div class="landing-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <circle cx="11" cy="11" r="8"/>
-                            <path d="m21 21-4.3-4.3"/>
-                        </svg>
-                    </div>
-                    <h3>Find Medical Experts</h3>
-                    <p>Search our comprehensive database of verified medical professionals</p>
-
-                    <!-- Popular Specialties -->
-                    <div class="popular-section">
-                        <h4>Popular Specialties</h4>
-                        <div class="popular-tags">
-                            <a href="/search?q=cardiology" class="popular-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> Cardiology</a>
-                            <a href="/search?q=neurology" class="popular-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> Neurology</a>
-                            <a href="/search?q=oncology" class="popular-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Oncology</a>
-                            <a href="/search?q=surgery" class="popular-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2l4 4-9.5 9.5-4-4L18 2zM5.5 16.5L2 22l5.5-3.5"/></svg> Surgery</a>
-                            <a href="/search?q=pediatrics" class="popular-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> Pediatrics</a>
-                            <a href="/search?q=orthopedics" class="popular-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2l4 4M7.5 20.5L2 22l1.5-5.5M15 4l5 5-11 11H4v-5L15 4z"/></svg> Orthopedics</a>
-                        </div>
-                    </div>
-
-                    <!-- Quick Links -->
-                    <div class="quick-links">
-                        <a href="/global-leaders" class="quick-link">
-                            <div class="quick-link-icon quick-link-icon--gold">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                </svg>
-                            </div>
-                            <div class="quick-link-text">
-                                <span class="quick-link-title">Global Leaders</span>
-                                <span class="quick-link-desc">Top-tier medical experts</span>
-                            </div>
-                        </a>
-                        <a href="/nobel-laureates" class="quick-link">
-                            <div class="quick-link-icon quick-link-icon--purple">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="8" r="6"/>
-                                    <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
-                                </svg>
-                            </div>
-                            <div class="quick-link-text">
-                                <span class="quick-link-title">Nobel Laureates</span>
-                                <span class="quick-link-desc">Prize-winning researchers</span>
-                            </div>
-                        </a>
-                        <a href="/specialty" class="quick-link">
-                            <div class="quick-link-icon quick-link-icon--blue">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-                                </svg>
-                            </div>
-                            <div class="quick-link-text">
-                                <span class="quick-link-title">By Specialty</span>
-                                <span class="quick-link-desc">Browse all specialties</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            )}
-        </div>
-    </section>
-</Layout>
-
-<style>
-    .search-page {
-        padding: 48px 0 80px;
-        min-height: 70vh;
-        background: var(--paper);
-    }
-
-    .search-header {
-        text-align: center;
-        margin-bottom: 32px;
-    }
-
-    .search-title {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        font-family: var(--font-serif);
-        font-size: 2rem;
-        font-weight: 400;
-        color: var(--ink);
-        margin-bottom: 8px;
-    }
-
-    .search-title-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 48px;
-        height: 48px;
-        background: var(--ink-blue);
-        border-radius: var(--r-3);
-    }
-
-    .search-title-icon svg {
-        width: 24px;
-        height: 24px;
-        color: var(--paper);
-    }
-
-    .search-subtitle {
-        color: var(--ink-3);
-        font-size: 1rem;
-    }
-
-    .search-wrapper {
-        max-width: 800px;
-        margin: 0 auto 32px;
-    }
-
-    /* Active Filters */
-    .active-filters {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin-bottom: 24px;
-        padding: 16px;
-        background: var(--ink-blue-2);
-        border: 1px solid var(--ink-blue);
-        border-radius: var(--r-3);
-    }
-
-    .filters-label {
-        font-size: 0.85rem;
-        color: var(--ink-3);
-    }
-
-    .filter-chip {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        padding: 6px 12px;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-pill);
-        font-size: 0.85rem;
-        color: var(--ink);
-        text-decoration: none;
-        transition: all var(--t-fast);
-    }
-
-    .filter-chip:hover {
-        background: var(--paper-3);
-    }
-
-    .filter-chip svg {
-        width: 14px;
-        height: 14px;
-    }
-
-    .clear-all {
-        font-size: 0.85rem;
-        color: var(--ink-blue);
-        text-decoration: none;
-        margin-left: auto;
-    }
-
-    .clear-all:hover {
-        text-decoration: underline;
-    }
-
-    /* Results Header */
-    .results-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 16px;
-        margin-bottom: 24px;
-    }
-
-    .results-meta {
-        display: flex;
-        align-items: baseline;
-        gap: 8px;
-    }
-
-    .results-count {
-        color: var(--ink-2);
-        font-size: 1rem;
-        margin: 0;
-    }
-
-    .search-time {
-        font-size: 0.8rem;
-        color: var(--ink-3);
-    }
-
-    .tier-breakdown {
-        display: flex;
-        gap: 16px;
-    }
-
-    .tier-count {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 0.85rem;
-        color: var(--ink-3);
-    }
-
-    .tier-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-    }
-
-    .tier-count--titan .tier-dot { background: var(--aged-gold); }
-    .tier-count--elite .tier-dot { background: var(--ink-blue); }
-    .tier-count--master .tier-dot { background: var(--slate); }
-
-    /* Results Grid */
-    .results-grid {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .result-card {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        padding: 20px;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        text-decoration: none;
-        transition: all var(--t-fast);
-        animation: slideIn 0.3s ease-out both;
-        animation-delay: var(--animation-delay, 0ms);
-        position: relative;
-    }
-
-    @keyframes slideIn {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .result-card:hover {
-        background: var(--paper-2);
-        border-color: var(--rule-strong);
-        transform: translateX(4px);
-    }
-
-    .result-card--titan:hover {
-        border-color: var(--aged-gold);
-        box-shadow: var(--shadow-glow-titan);
-    }
-
-    .result-card--elite:hover {
-        border-color: var(--ink-blue);
-        box-shadow: var(--shadow-glow-elite);
-    }
-
-    .result-card--master:hover {
-        border-color: var(--slate);
-        box-shadow: var(--shadow-glow-master);
-    }
-
-    .result-rank {
-        position: absolute;
-        top: -8px;
-        left: 12px;
-        padding: 2px 8px;
-        background: var(--ink-blue);
-        border-radius: var(--r-3);
-        font-size: 0.7rem;
-        font-weight: 600;
-        font-family: var(--font-mono);
-        color: var(--paper);
-    }
-
-    .result-avatar {
-        width: 64px;
-        height: 64px;
-        border-radius: var(--r-4);
-        overflow: hidden;
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--paper-2);
-        border: 2px solid var(--rule);
-    }
-
-    .avatar--titan {
-        border-color: var(--aged-gold);
-        background: var(--aged-gold-2);
-    }
-
-    .avatar--elite {
-        border-color: var(--ink-blue);
-        background: var(--ink-blue-2);
-    }
-
-    .avatar--master {
-        border-color: var(--slate);
-        background: var(--slate-2);
-    }
-
-    .result-avatar img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .avatar-initials {
-        font-weight: 600;
-        font-size: 1.1rem;
-        color: var(--ink-3);
-    }
-
-    .avatar--titan .avatar-initials { color: var(--titan-text); }
-    .avatar--elite .avatar-initials { color: var(--elite-text); }
-    .avatar--master .avatar-initials { color: var(--master-text); }
-
-    .result-info {
-        flex: 1;
-        min-width: 0;
-    }
-
-    .result-header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 4px;
-    }
-
-    .result-name {
-        font-family: var(--font-serif);
-        font-size: 1.15rem;
-        font-weight: 500;
-        color: var(--ink);
-        margin: 0;
-    }
-
-    .result-card--titan .result-name {
-        color: var(--titan-text);
-    }
-
-    .result-specialty {
-        font-size: 0.9rem;
-        color: var(--ink-2);
-        margin: 0 0 4px;
-    }
-
-    .result-location {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 0.85rem;
-        color: var(--ink-3);
-        margin: 0 0 12px;
-    }
-
-    .result-location svg {
-        width: 14px;
-        height: 14px;
-        flex-shrink: 0;
-    }
-
-    .result-stats {
-        display: flex;
-        gap: 20px;
-    }
-
-    .stat {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-    }
-
-    .stat-label {
-        font-size: 0.7rem;
-        color: var(--ink-3);
-        text-transform: uppercase;
-        letter-spacing: 0.03em;
-    }
-
-    .stat-value {
-        font-size: 0.95rem;
-        font-weight: 500;
-        font-family: var(--font-mono);
-        color: var(--ink-2);
-    }
-
-    .result-arrow {
-        flex-shrink: 0;
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--paper-2);
-        border-radius: var(--r-3);
-        color: var(--ink-3);
-        transition: all var(--t-fast);
-    }
-
-    .result-card:hover .result-arrow {
-        background: var(--ink-blue);
-        color: var(--paper);
-        transform: translateX(4px);
-    }
-
-    .result-arrow svg {
-        width: 16px;
-        height: 16px;
-    }
-
-    /* No Results */
-    .no-results {
-        text-align: center;
-        padding: 60px 20px;
-    }
-
-    .no-results-icon {
-        width: 80px;
-        height: 80px;
-        margin: 0 auto 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--sanguine-2);
-        border-radius: var(--r-4);
-    }
-
-    .no-results-icon svg {
-        width: 40px;
-        height: 40px;
-        color: var(--sanguine);
-    }
-
-    .no-results h3 {
-        font-family: var(--font-serif);
-        font-size: 1.5rem;
-        font-weight: 400;
-        color: var(--ink);
-        margin-bottom: 8px;
-    }
-
-    .no-results > p {
-        color: var(--ink-3);
-        font-size: 1rem;
-        margin-bottom: 24px;
-    }
-
-    .no-results-suggestions {
-        max-width: 400px;
-        margin: 0 auto 32px;
-        padding: 20px;
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-3);
-        text-align: left;
-    }
-
-    .suggestions-title {
-        font-size: 0.85rem;
-        font-weight: 500;
-        color: var(--ink-2);
-        margin-bottom: 12px;
-    }
-
-    .no-results-suggestions ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .no-results-suggestions li {
-        font-size: 0.9rem;
-        color: var(--ink-3);
-        padding: 6px 0;
-        padding-left: 20px;
-        position: relative;
-    }
-
-    .no-results-suggestions li::before {
-        content: "\2022";
-        position: absolute;
-        left: 0;
-        color: var(--ink-blue);
-    }
-
-    .no-results-actions {
-        display: flex;
-        gap: 12px;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    /* Min Chars Notice */
-    .min-chars-notice {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        padding: 24px;
-        background: var(--aged-gold-2);
-        border: 1px solid var(--aged-gold);
-        border-radius: var(--r-3);
-        max-width: 500px;
-        margin: 0 auto;
-    }
-
-    .min-chars-notice svg {
-        width: 24px;
-        height: 24px;
-        color: var(--aged-gold);
-        flex-shrink: 0;
-    }
-
-    .min-chars-notice p {
-        color: var(--aged-gold);
-        margin: 0;
-    }
-
-    /* Search Landing */
-    .search-landing {
-        text-align: center;
-        padding: 40px 20px;
-    }
-
-    .landing-icon {
-        width: 80px;
-        height: 80px;
-        margin: 0 auto 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--ink-blue-2);
-        border-radius: var(--r-4);
-    }
-
-    .landing-icon svg {
-        width: 40px;
-        height: 40px;
-        color: var(--ink-blue);
-    }
-
-    .search-landing h3 {
-        font-family: var(--font-serif);
-        font-size: 1.5rem;
-        font-weight: 400;
-        color: var(--ink);
-        margin-bottom: 8px;
-    }
-
-    .search-landing > p {
-        color: var(--ink-3);
-        margin-bottom: 32px;
-    }
-
-    /* Popular Section */
-    .popular-section {
-        margin-bottom: 40px;
-    }
-
-    .popular-section h4 {
-        font-size: 0.85rem;
-        color: var(--ink-3);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        margin-bottom: 16px;
-    }
-
-    .popular-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: center;
-    }
-
-    .popular-tag {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        padding: 10px 18px;
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-pill);
-        font-size: 0.9rem;
-        color: var(--ink-2);
-        text-decoration: none;
-        transition: all var(--t-fast);
-    }
-
-    .popular-tag:hover {
-        background: var(--ink-blue-2);
-        border-color: var(--ink-blue);
-        color: var(--ink);
-        transform: translateY(-2px);
-    }
-
-    /* Quick Links */
-    .quick-links {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 16px;
-        max-width: 700px;
-        margin: 0 auto;
-    }
-
-    .quick-link {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        padding: 20px;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-4);
-        text-decoration: none;
-        transition: all var(--t-fast);
-    }
-
-    .quick-link:hover {
-        background: var(--paper-2);
-        border-color: var(--rule-strong);
-        transform: translateY(-2px);
-    }
-
-    .quick-link-icon {
-        width: 48px;
-        height: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: var(--r-3);
-        flex-shrink: 0;
-    }
-
-    .quick-link-icon svg {
-        width: 24px;
-        height: 24px;
-    }
-
-    .quick-link-icon--gold {
-        background: var(--aged-gold-2);
-        color: var(--aged-gold);
-    }
-
-    .quick-link-icon--purple {
-        background: var(--ink-blue-2);
-        color: var(--ink-blue);
-    }
-
-    .quick-link-icon--blue {
-        background: var(--ink-blue-2);
-        color: var(--ink-blue);
-    }
-
-    .quick-link-text {
-        text-align: left;
-    }
-
-    .quick-link-title {
-        display: block;
-        font-weight: 500;
-        color: var(--ink);
-        margin-bottom: 2px;
-    }
-
-    .quick-link-desc {
-        font-size: 0.85rem;
-        color: var(--ink-3);
-    }
-
-    /* Buttons */
-    .btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 12px 24px;
-        border-radius: var(--r-3);
-        font-weight: 500;
-        font-size: 0.9rem;
-        text-decoration: none;
-        transition: all var(--t-fast);
-    }
-
-    .btn svg {
-        width: 18px;
-        height: 18px;
-    }
-
-    .btn--primary {
-        background: var(--ink-blue);
-        color: var(--paper);
-    }
-
-    .btn--primary:hover {
-        filter: brightness(1.1);
-        transform: translateY(-2px);
-    }
-
-    .btn--secondary {
-        background: var(--paper-2);
-        border: 1px solid var(--rule);
-        color: var(--ink);
-    }
-
-    .btn--secondary:hover {
-        background: var(--paper-3);
-        transform: translateY(-2px);
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-        .search-title {
-            font-size: 1.5rem;
-        }
-
-        .search-title-icon {
-            width: 40px;
-            height: 40px;
-        }
-
-        .search-title-icon svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        .results-header {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .tier-breakdown {
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .result-card {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 16px;
-            padding: 16px;
-        }
-
-        .result-rank {
-            top: 8px;
-            left: 8px;
-        }
-
-        .result-avatar {
-            width: 56px;
-            height: 56px;
-        }
-
-        .result-header {
-            flex-wrap: wrap;
-        }
-
-        .result-stats {
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .result-arrow {
-            display: none;
-        }
-
-        .quick-links {
-            grid-template-columns: 1fr;
-        }
-    }
-</style>
+<SiteLayout title={title} description={description} active="find" robots="noindex, follow" jsonLd={jsonLd}>
+	<div class="fd r-listing" data-country={country?.name ?? "all"} data-country-param={countryParam ? "1" : ""}>
+		<section class="fd-hero">
+			<span class="fd-eyebrow">{eyebrow}</span>
+			<h1>Find a doctor in {scope || "any country"}</h1>
+			<form class="fd-bar" action="/search" method="get" role="search">
+				<label class="fd-bar__q">
+					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+					<span class="r-sr-only">Describe the problem, or a doctor's name</span>
+					<input type="search" name="q" value={query} placeholder="Describe the problem in your own words" autocomplete="off" maxlength="120" />
+				</label>
+				<label class="fd-bar__city">
+					<span class="r-sr-only">City</span>
+					<select name="city" data-autosubmit>
+						<option value="">All cities</option>
+						{city && !cities.includes(city) && <option value={city} selected>{city}</option>}
+						{cities.map((c) => <option value={c} selected={c === city}>{c}</option>)}
+					</select>
+				</label>
+				<input type="hidden" name="country" value={isAll ? ALL_COUNTRIES : country?.slug ?? otherCountry} />
+				{specialtyParam && <input type="hidden" name="specialty" value={specialtyParam} />}
+				{region && <input type="hidden" name="region" value={region} />}
+				<button type="submit" class="fd-bar__go">Search</button>
+			</form>
+			<nav class="fd-chips" aria-label="Common problems">
+				{CONDITIONS.map((c) => (
+					<a href={href({ cond: c.key === cond?.key ? "" : c.key, q: "", page: "" })} aria-current={c.key === cond?.key ? "true" : undefined}>{c.label}</a>
+				))}
+			</nav>
+			<p class="fd-scope">
+				Showing {scope ? `doctors in ${scope}` : "doctors in every country"}.
+				{REGISTER_COUNTRIES.filter((c) => c.slug !== country?.slug).map((c) => (
+					<a href={href({ country: c.slug, city: "", page: "" })} data-country-link={c.name}>{c.name}</a>
+				))}
+				{scope && <a href={href({ country: ALL_COUNTRIES, city: "", page: "" })}>All countries</a>}
+			</p>
+		</section>
+
+		<section class="fd-main">
+			<div class="fd-results">
+				<div class="fd-count">
+					<span>{countLabel}</span>
+					<span>{orderNote}</span>
+				</div>
+
+				{(specialtyParam || region) && (
+					<p class="fd-filter">
+						{specialtyParam && <span>Specialty: <strong>{specialtyParam.charAt(0).toUpperCase() + specialtyParam.slice(1)}{specialtyParam.length < 6 ? "…" : ""}</strong> <a href={href({ specialty: "", page: "" })}>Remove</a></span>}
+						{region && <span>State or region: <strong>{region}</strong> <a href={href({ region: "", page: "" })}>Remove</a></span>}
+					</p>
+				)}
+
+				{pageRows.map((d) => (
+					<article class="fd-card">
+						<div class="fd-card__ini" aria-hidden="true">{initials(d.name)}</div>
+						<div class="fd-card__body">
+							<div class="fd-card__name">
+								<h2><a href={`/doctors/${d.slug}`}>{displayName(d.name)}</a></h2>
+								{d.qualifications && <span>{d.qualifications}</span>}
+							</div>
+							<span class="fd-card__plain"><strong>{plainSpecialty(d.specialty, d.subSpecialty)}</strong> <span>({d.specialty})</span></span>
+							{(d.hospital || d.city) && (
+								<span class="fd-card__where">{[d.hospital, [...new Set([d.city, d.region].filter(Boolean))].join(", ")].filter(Boolean).join(" · ")}</span>
+							)}
+							{(() => {
+								const reg = REGISTER_COUNTRIES.find((c) => c.name === d.country);
+								return reg ? (
+									<a class="fd-card__reg" href={reg.verifyUrl} target="_blank" rel="noopener">{reg.verifyLabel} ↗</a>
+								) : null;
+							})()}
+							{d.highlights.length > 0 && (
+								<ul class="fd-card__hi">{d.highlights.map((h) => <li>{h}</li>)}</ul>
+							)}
+						</div>
+						<div class="fd-card__side">
+							<span>{!scope && d.country && d.country !== "Global" && d.country !== "Unknown" ? `Based in ${d.country}` : ""}</span>
+							<a href={`/doctors/${d.slug}`} class="fd-card__cta" aria-label={`View full record: ${d.name}`}>View full record</a>
+						</div>
+					</article>
+				))}
+
+				{total === 0 && (
+					<div class="fd-empty">
+						<span>No doctors match yet</span>
+						<p>Try a simpler word like "heart" or "skin"{city || region ? <>, or <a href={href({ city: "", region: "", page: "" })}>look in every city</a></> : ""}{scope ? <>, or <a href={href({ country: ALL_COUNTRIES, city: "", page: "" })}>search every country</a></> : ""}.</p>
+					</div>
+				)}
+
+				{elsewhere > 0 && (
+					<p class="fd-more">
+						<a href={href({ country: ALL_COUNTRIES, city: "", page: "" })}>{elsewhere} more {elsewhere === 1 ? "match" : "matches"} outside {scope} →</a>
+					</p>
+				)}
+				{historical > 0 && (
+					<p class="fd-more">
+						<a href={`/doctors?country=all&q=${encodeURIComponent(query)}`}>{historical} historical {historical === 1 ? "physician matches" : "physicians match"} in the Register →</a>
+					</p>
+				)}
+
+				<div class="fd-pager">
+					<Pagination page={page} totalPages={totalPages} total={total} pageSize={PAGE_SIZE} label="doctors" />
+				</div>
+
+				<p class="fd-note">
+					Records are compiled from public sources: medical council registers, publications and hospital pages. Confirm registration with the {country?.regulator ?? "medical council"} before you book.
+				</p>
+			</div>
+
+			<aside class="fd-aside" aria-label="Choosing a doctor">
+				<div class="fd-tips">
+					<h2>HOW TO CHOOSE, IN PLAIN WORDS</h2>
+					<ol>
+						{tips.map((t, i) => <li><span aria-hidden="true">{i + 1}</span><span><strong>{t.t}</strong> <span>{t.d}</span></span></li>)}
+					</ol>
+				</div>
+				<div class="fd-why">
+					<h2>{whyTitle}</h2>
+					<p>{whyText}</p>
+					<a href="/about#methodology">The Evidence Standard →</a>
+				</div>
+				<div class="fd-emergency">
+					In an emergency, don't search. Call {country?.emergency ?? "your local emergency number"} or go to the nearest hospital.
+				</div>
+			</aside>
+		</section>
+	</div>
+</SiteLayout>
+
+<script>
+	import { syncCountry } from "../lib/country-sync";
+
+	syncCountry({ fallbackToGuess: true, reset: ["city", "page"] });
+
+	document.querySelectorAll<HTMLSelectElement>("select[data-autosubmit]").forEach((s) =>
+		s.addEventListener("change", () => s.form?.requestSubmit()),
+	);
+</script>
