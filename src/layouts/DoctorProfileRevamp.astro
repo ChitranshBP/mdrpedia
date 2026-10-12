@@ -130,7 +130,8 @@ const topJournals = [...new Set(doctor.citations?.map(c => c.journal).filter((j)
 
 // The <title> is the highest-value slot on the page. "<Name> — MDRPedia"
 // on all ~1,150 profiles wastes it; specialty and city are already in scope.
-const titleParts = [normalizeSpecialty(doctor.specialty), doctor.geography.city]
+const specialtyLabel = normalizeSpecialty(doctor.specialty);
+const titleParts = [specialtyLabel, doctor.geography.city]
     .filter((v): v is string => !!v && v !== "Unknown");
 const pageTitle = titleParts.length
     ? `${doctor.fullName} — ${titleParts.join(", ")} | MDRPedia`
@@ -186,7 +187,7 @@ const publications = doctor.citations ?? [];
     {portraitOrigin && <link rel="preconnect" href={portraitOrigin} />}
     <JsonLd
         fullName={doctor.fullName}
-        specialty={doctor.specialty}
+        specialty={specialtyLabel}
         subSpecialty={doctor.subSpecialty || undefined}
         biography={doctor.biography || undefined}
         portraitUrl={doctor.portraitUrl || undefined}
@@ -288,8 +289,10 @@ const publications = doctor.citations ?? [];
                 <div class="hero__portrait-col">
                     <div class={`hero__frame hero__frame--${doctor.tier.toLowerCase()}`}>
                         {hasImage ? (
-                            <img src={doctor.portraitUrl} alt={doctor.fullName} class="hero__image" loading="eager" fetchpriority="high" decoding="async" width="280" height="280" />
-                        ) : (
+                            <>
+                            <img src={doctor.portraitUrl} alt={doctor.fullName} class="hero__image js-portrait" loading="eager" fetchpriority="high" decoding="async" width="280" height="280" />
+                            <div class="hero__initials" hidden>{initials}</div>
+                        </>) : (
                             <div class="hero__initials">{initials}</div>
                         )}
                     </div>
@@ -315,7 +318,7 @@ const publications = doctor.citations ?? [];
 
                     <p class="hero__specialty">
                         <a href={`/doctors?specialty=${encodeURIComponent(doctor.specialty)}`} class="hero__specialty-link">
-                            {doctor.specialty}
+                            {specialtyLabel}
                         </a>
                         {doctor.subSpecialty && <span class="hero__subspecialty"> · {doctor.subSpecialty}</span>}
                     </p>
@@ -846,7 +849,7 @@ const publications = doctor.citations ?? [];
                                     </div>
                                     <div class="fact-row">
                                         <dt>Specialty</dt>
-                                        <dd>{doctor.specialty}</dd>
+                                        <dd>{specialtyLabel}</dd>
                                     </div>
                                     {doctor.hIndex > 0 && (
                                         <div class="fact-row">
@@ -1092,6 +1095,8 @@ const publications = doctor.citations ?? [];
         object-fit: cover;
         border-radius: var(--r-4);
     }
+
+    .hero__initials[hidden] { display: none; }
 
     .hero__initials {
         width: 100%;
@@ -2445,6 +2450,16 @@ const publications = doctor.citations ?? [];
 
         requestAnimationFrame(update);
     }
+
+    document.querySelectorAll<HTMLImageElement>('img.js-portrait').forEach((img) => {
+        const showInitials = () => {
+            const initials = img.nextElementSibling as HTMLElement | null;
+            img.remove();
+            if (initials) initials.hidden = false;
+        };
+        if (img.complete && img.naturalWidth === 0) showInitials();
+        else img.addEventListener('error', showInitials, { once: true });
+    });
 
     document.querySelectorAll<HTMLImageElement>('img.js-logo').forEach((img) => {
         const showFallback = () => {

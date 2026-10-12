@@ -47,6 +47,10 @@ export const GET: APIRoute = async () => {
     <loc>${xmlEscape(SITE_URL)}/sitemap.xml</loc>
     <lastmod>${today}</lastmod>
   </sitemap>
+  <sitemap>
+    <loc>${xmlEscape(SITE_URL)}/sitemap-specialty-geo.xml</loc>
+    <lastmod>${today}</lastmod>
+  </sitemap>
 </sitemapindex>`;
 
         return new Response(xml, {
@@ -62,7 +66,10 @@ export const GET: APIRoute = async () => {
     <loc>${xmlEscape(SITE_URL)}/sitemap-${i}.xml</loc>
     <lastmod>${today}</lastmod>
   </sitemap>`
-    );
+    ).concat(`  <sitemap>
+    <loc>${xmlEscape(SITE_URL)}/sitemap-specialty-geo.xml</loc>
+    <lastmod>${today}</lastmod>
+  </sitemap>`);
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

@@ -176,6 +176,10 @@ function timeAgo(d: Date): string {
 const verifiedAgo = lastVerified ? timeAgo(lastVerified) : null;
 
 const [leadTitan, ...restTitans] = featuredTitans.slice(0, 8);
+function placeOf(geo?: { city?: string | null; country?: string | null } | null): string {
+	const country = geo?.country && !/^(unknown|global)$/i.test(geo.country) ? geo.country : "";
+	return [geo?.city, country].filter(Boolean).join(", ");
+}
 ---
 
 <Layout
@@ -284,7 +288,7 @@ const [leadTitan, ...restTitans] = featuredTitans.slice(0, 8);
 					<div class="spec">{leadTitan.specialty}{leadTitan.sub_specialty ? ` · ${leadTitan.sub_specialty}` : ''}</div>
 				</div>
 				<div class="meta">
-					<span>{leadTitan.geography?.city ? `${leadTitan.geography.city}, ` : ''}{leadTitan.geography?.country || 'Unknown'}</span>
+					<span>{placeOf(leadTitan.geography)}</span>
 					<strong>h-index {leadTitan.h_index || '—'}</strong>
 				</div>
 			</a>
@@ -315,7 +319,7 @@ const [leadTitan, ...restTitans] = featuredTitans.slice(0, 8);
 					<div class="spec">{titan.specialty}{titan.sub_specialty ? ` · ${titan.sub_specialty}` : ''}</div>
 				</div>
 				<div class="meta">
-					<span>{titan.geography?.city ? `${titan.geography.city}, ` : ''}{titan.geography?.country || 'Unknown'}</span>
+					<span>{placeOf(titan.geography)}</span>
 					<strong>h-index {titan.h_index || '—'}</strong>
 				</div>
 			</a>

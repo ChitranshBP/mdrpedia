@@ -9,6 +9,7 @@ import TierBadge from "../../components/TierBadge.astro";
 import OptimizedImage from "../../components/OptimizedImage.astro";
 import { prisma } from "../../lib/prisma";
 import Pagination from "../../components/Pagination.astro";
+import SpecialtyGeoLinks from "../../components/SpecialtyGeoLinks.astro";
 import { slugify } from "../../lib/utils";
 
 export const prerender = false;
@@ -300,6 +301,7 @@ const collectionPageSchema = {
                     </div>
                 )}
                 <Pagination page={page} totalPages={totalPages} total={totalDoctors} pageSize={PAGE_SIZE} label="physicians" />
+                <SpecialtyGeoLinks countrySlug={countrySlug} />
             </div>
         </section>
 

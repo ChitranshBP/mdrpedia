@@ -66,7 +66,7 @@ const hasImages = images.length > 0 || hasGallery;
                 height="480"
                 loading="lazy"
                 decoding="async"
-                class="media-vault__portrait"
+                class="media-vault__portrait js-vault-portrait"
             />
             <div class="media-vault__overlay">
                 <span class="media-vault__label">Feature Portrait</span>
@@ -389,6 +389,12 @@ const hasImages = images.length > 0 || hasGallery;
 </style>
 
 <script>
+    document.querySelectorAll<HTMLImageElement>("img.js-vault-portrait").forEach((img) => {
+        const hide = () => img.closest<HTMLElement>(".media-vault__feature")?.remove();
+        if (img.complete && img.naturalWidth === 0 && img.currentSrc) hide();
+        else img.addEventListener("error", hide, { once: true });
+    });
+
     // Tab switching
     document.addEventListener("DOMContentLoaded", () => {
         const tabs = document.querySelectorAll('.media-vault__tab');

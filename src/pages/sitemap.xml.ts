@@ -247,6 +247,7 @@ ${indexEntries.join('\n')}
     // New content pages
     entries.push(buildUrlEntry(`${SITE_URL}/rankings`, 0.9, 'weekly', today));
     entries.push(buildUrlEntry(`${SITE_URL}/statistics`, 0.7, 'weekly', today));
+    entries.push(buildUrlEntry(`${SITE_URL}/nmc-compliance-check`, 0.8, 'monthly', today));
     entries.push(buildUrlEntry(`${SITE_URL}/compare`, 0.6, 'monthly', today));
     entries.push(buildUrlEntry(`${SITE_URL}/lineage`, 0.6, 'monthly', today));
     entries.push(buildUrlEntry(`${SITE_URL}/geography`, 0.8, 'weekly', today));

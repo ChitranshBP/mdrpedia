@@ -485,13 +485,13 @@ Astro.response.headers.set(
 
 <script>
     // Client-side search/filter
-    const input = document.getElementById("lineage-search");
-    const entries = document.querySelectorAll(".lineage-entry");
+    const input = document.getElementById("lineage-search") as HTMLInputElement | null;
+    const entries = document.querySelectorAll<HTMLElement>(".lineage-entry");
     const countEl = document.getElementById("visible-count");
 
     if (input) {
-        input.addEventListener("input", (e) => {
-            const q = e.target.value.toLowerCase().trim();
+        input.addEventListener("input", () => {
+            const q = input.value.toLowerCase().trim();
             let visible = 0;
 
             entries.forEach((entry) => {

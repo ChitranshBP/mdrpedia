@@ -11,6 +11,7 @@ import { prisma } from "../../lib/prisma";
 import { SPECIALTY_GROUPS } from "../../lib/specialty-groups";
 import { generateSpecialtyPageSchema } from "../../lib/medical-knowledge-graph";
 import Pagination from "../../components/Pagination.astro";
+import SpecialtyGeoLinks from "../../components/SpecialtyGeoLinks.astro";
 import { slugify } from "../../lib/utils";
 
 export const prerender = false;
@@ -262,6 +263,7 @@ const knowledgeGraphSchema = generateSpecialtyPageSchema(
                         })}
                     </div>
                     <Pagination page={page} totalPages={totalPages} total={totalDoctors} pageSize={PAGE_SIZE} label="specialists" />
+                    <SpecialtyGeoLinks groupSlug={slug} />
                 </>) : (
                     <div class="empty-state">
                         <span class="empty-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={group.svgPath}/></svg></span>
