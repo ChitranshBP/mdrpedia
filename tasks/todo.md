@@ -3,7 +3,7 @@
 Sources: homepage read in full; four parallel audits (browse/listing, content/editorial,
 doctor-profile template, technical SEO); 3 days of production access logs; the Supabase dump.
 Every finding below was verified against code, the built `dist/` output, the logs, or the DB.
-**Status: implementation in progress on `fix/audit-remediation`.**
+**Status: implemented on `fix/audit-remediation` (2026-10-12) — not yet deployed. See Review.**
 
 Scale: ~70 `.astro` pages, 45 API routes, 975 DB profiles / 1,147 content files, ~1,385 sitemap URLs.
 
@@ -84,7 +84,7 @@ These are not design issues. Two of them are actively harming users right now.
 
 # P1 — SEO emergencies (indexation, crawl budget, duplicate content)
 
-- [ ] **P1.1 — 30% of production responses are HTTP 500**
+- [x] **P1.1 — 30% of production responses are HTTP 500**
   Access log, 26–28 Jun, 15,417 requests: 200 ×5,949 · **302 ×4,624** · **500 ×4,594** · 404 ×17.
   `/404` itself returns 500 — 4,593 times, accelerating 242 → 1,458 → 2,894 per day.
   Chain: legacy URL → 302 → `/404` → 500.
@@ -214,61 +214,61 @@ These are not design issues. Two of them are actively harming users right now.
 
 # P2 — Broken functionality
 
-- [ ] **P2.1 — `/search` is broken twice, and the bugs mask each other**
+- [x] **P2.1 — `/search` is broken twice, and the bugs mask each other**
   `search.astro:2` is `prerender = true`, so `Astro.url.searchParams` is always empty at build —
   every `/search?q=…` serves the same frozen empty page. That hides `search.astro:204`, which
   links results to `/doctor/${id}` (singular) where only `/doctors/[slug]` exists.
   **Fixing `prerender` alone ships a results grid where every card 404s — land both together**,
   plus the two `/specialties` links at `:287` and `:354`.
 
-- [ ] **P2.2 — ~650 more broken `/doctor/${…}` links**
+- [x] **P2.2 — ~650 more broken `/doctor/${…}` links**
   Full list of the singular-route bug: `rare-diseases/[slug].astro:380` (109 disease pages × up
   to 6 cards — the big one), `suggest-edit.astro:35,223`, `search.astro:204`, plus
   `AI/MentorshipTree.astro:56,121,161` and `AI/ComparativeMatrix.astro:97` (moot — see P4.1).
   **Fix:** `/doctor/${` → `/doctors/${` everywhere.
 
-- [ ] **P2.3 — `/rankings` goes permanently stale after the first request**
+- [x] **P2.3 — `/rankings` goes permanently stale after the first request**
   `src/lib/ranking.ts:25` is a bare module-level `_rankingCache`, assigned at 93/147/200, read
   at 33/156, never reset anywhere. The page sets `prerender = false` to be dynamic, but the
   first request after each PM2 restart freezes rankings until the process restarts.
   **Fix:** route through the TTL helper in `lib/cached-stats.ts`.
 
-- [ ] **P2.4 — Newsletter signup on the news page is dead after one click**
+- [x] **P2.4 — Newsletter signup on the news page is dead after one click**
   `news.astro:311-318` hand-rolls a `.newsletter-form` with no `name="email"` and no
   `.newsletter-status` element, but `NewsletterSignup.astro:41-52` binds globally via
   `document.querySelectorAll('.newsletter-form')` and does `statusEl.textContent = ''` **before**
   its `try`, so it throws on `null` and the `finally` never re-enables the button.
   **Fix:** replace the markup with `<NewsletterSignup source="news-page" />`.
 
-- [ ] **P2.5 — "View all N publications" is dead; 7,682 publication records never render**
+- [x] **P2.5 — "View all N publications" is dead; 7,682 publication records never render**
   `DoctorProfileRevamp.astro:811` slices to 5; `:869` button; `:2964-2976` handler sets
   `location.hash = 'publications'` — and the layout contains **zero `id` attributes**.
   24.9% of profiles have >5 citations. The handler also binds `.show-more-btn` globally, which
   collides with `AI/VerifiedClaims.astro:203`.
   **Fix:** render all citations, collapse past 5 with `<details>`, delete the hash hack.
 
-- [ ] **P2.6 — Claim CTA gated on the wrong field**
+- [x] **P2.6 — Claim CTA gated on the wrong field**
   `DoctorProfileRevamp.astro:451,1251` gate on `tier === "UNRANKED"`, but `Profile.claim_status`
   exists (`schema.prisma:101`). Already-claimed unranked doctors keep being invited; unclaimed
   TITAN/ELITE profiles — the valuable ones — never see the CTA.
 
-- [ ] **P2.7 — `NPIClaimWizard` never calls an API**
+- [x] **P2.7 — `NPIClaimWizard` never calls an API**
   `NPIClaimWizard.tsx:104-113` fires a success toast and redirects to `/doctor/portal` with no
   POST; no session is minted, so every completing user lands on `/login?error=not_authenticated`.
   `:78` calls `/api/verify-registration`, which **does not exist** — 5 of the 6 verification
   methods advertised in `claim.astro:60-76` 404.
 
-- [ ] **P2.8 — Four-pillar bars multiply an already-0–100 value by 100 again**
+- [x] **P2.8 — Four-pillar bars multiply an already-0–100 value by 100 again**
   `DoctorProfileRevamp.astro:506` vs `lib/mdr-score-engine.ts:48-49`. Every bar clamps to 100.
   (Likely moot in production — nothing writes `clinical_mastery_index`.)
 
-- [ ] **P2.9 — Institution links use a different slug algorithm than the DB**
+- [x] **P2.9 — Institution links use a different slug algorithm than the DB**
   `DoctorProfileRevamp.astro:207-212` (strips punctuation, `.slice(0,50)`) vs
   `scripts/sync-db-clean.cjs:127` (punctuation runs → `-`, no truncation). Diverges on any
   apostrophe/period/comma/ampersand or name >50 chars, and the destination answers with a 302
   soft-404. **Fix:** thread `aff.hospital.slug`, already joined at `doctors/[slug].astro:36`.
 
-- [ ] **P2.10 — Smaller dead/broken UI**
+- [x] **P2.10 — Smaller dead/broken UI**
   - 7 hero facet buttons on the homepage with no handler (`index.astro:213-220`).
   - `showFilters={true}` passed to `EnhancedSearch` but never read (`EnhancedSearch.tsx:23`) —
     the filter chips render with no control to set them.
@@ -283,7 +283,7 @@ These are not design issues. Two of them are actively harming users right now.
   - Footer: "Methodology", "Editorial Board", "Data Sources" all link to `/about`; "Open Data"
     links to `/about` instead of `/statistics` (`Layout.astro:272-279`).
 
-- [ ] **P2.11 — Contradictory empty states**
+- [x] **P2.11 — Contradictory empty states**
   `institutions/index.astro:112-160` — on DB failure it shows "Unable to load…" *and*
   "0 institutions found" *and* "No institutions found matching your criteria" + "Clear Filters",
   blaming the user's filters for an outage.
@@ -292,13 +292,13 @@ These are not design issues. Two of them are actively harming users right now.
   `SimilarDoctors` (`:1019-1031`) and `AwardsRibbon` (`:459-471`) both render an empty bordered
   card when their component returns nothing.
 
-- [ ] **P2.12 — 404 logging infrastructure exists and is never called**
+- [x] **P2.12 — 404 logging infrastructure exists and is never called**
   `api/log-404.ts` + the indexed `NotFoundLog` table are complete; `404.astro` has no `<script>`
   and never posts to it. Same story for `api/track-view.ts` (zero callers — so
   `admin/analytics.astro:39-57` always reports zero; `profile_views` has 0 rows) and
   `api/log-search-click.ts` (zero callers — `clickedSlug` is NULL on all 166 rows).
 
-- [ ] **P2.13 — Search logs one DB row per keystroke**
+- [x] **P2.13 — Search logs one DB row per keystroke**
   `GlobalSearchModal.tsx:19` `DEBOUNCE_MS = 150`; `api/search.ts:294` writes a `searchLog` row
   for every query >2 chars. Evidence: *"Blerina s / sa / sal / salm / salma / salman"* — six
   Supabase writes and six API calls for one search. **Fix:** 300–400ms; log the settled query.
@@ -307,14 +307,14 @@ These are not design issues. Two of them are actively harming users right now.
 
 # P3 — Performance
 
-- [ ] **P3.1 — Homepage ships ~150KB of dead JSON per request**
+- [x] **P3.1 — Homepage ships ~150KB of dead JSON per request**
   `index.astro:164` builds `searchIndex` (800 profiles) and `:605` ships it via `define:vars`;
   the script never reads it (the modal fetches `/api/search`). Feeding it is an uncached
   `prisma.profile.findMany()` over all 975 rows + a join, on every request.
   **Fix:** delete both; move the `findMany` into the `catch` fallback only.
   Same bug on `lineage.astro:200,494` — that script filters from `data-search` DOM attributes.
 
-- [ ] **P3.2 — LCP elements deliberately start invisible (three templates)**
+- [x] **P3.2 — LCP elements deliberately start invisible (three templates)**
   - Homepage: `<h1 class="reveal">` + `global.css:393` `.reveal { opacity: 0 }`.
   - Profile: `DoctorProfileRevamp.astro:2843-2851` — `.card` animates from `opacity: 0` with
     `backwards` fill and staggered 0.1s→0.5s delays, hiding the Overview card (the text LCP
@@ -322,7 +322,7 @@ These are not design issues. Two of them are actively harming users right now.
   - `OptimizedImage.astro:110` holds images at `opacity: 0` until an inline `onload` fires.
   **Fix:** never gate above-the-fold content on JS or entrance animations.
 
-- [ ] **P3.3 — No shared cache honours the `Cache-Control` that is set**
+- [x] **P3.3 — No shared cache honours the `Cache-Control` that is set**
   `middleware.ts:45-49` sets caching for `/` and `/doctors*`, but `nginx.conf:43-55` proxies to
   `127.0.0.1:4321` with **no `proxy_cache`/`proxy_cache_path`** and there is no CDN. Every
   crawler hit re-executes the full Prisma include tree.
@@ -331,14 +331,14 @@ These are not design issues. Two of them are actively harming users right now.
   `ethical-doctors`, `map`. **Fix:** add `proxy_cache` keyed on `$request_uri` for `/doctors/`
   with `proxy_cache_use_stale updating`, plus headers on each route.
 
-- [ ] **P3.4 — Unbounded `findMany` with no pagination**
+- [x] **P3.4 — Unbounded `findMany` with no pagination**
   `doctors/index.astro:49`, `specialty/[slug].astro:37`, `geography/[country].astro:46`,
   `map.astro:18` (pulls the whole table just to bucket by country — should be a `groupBy`),
   `statistics.astro:70-76` (12 JS `.filter()` passes instead of a DB aggregate).
   `specialty/index.astro:19-39` fires 19 separate `COUNT` queries where one `groupBy` would do.
   `institutions/index.astro:48` silently truncates at `take: 100` with no total and no pager.
 
-- [ ] **P3.5 — 219KB of React loaded eagerly, partly to render broken UI**
+- [x] **P3.5 — 219KB of React loaded eagerly, partly to render broken UI**
   `react-vendor` is 219,410 bytes, pulled by two `client:load` islands:
   `FloatingActionBar` (`DoctorProfileRevamp.astro:1255` — unstyled, see P4.1) and
   `GlobalSearchModal` (`Layout.astro:299`, +31,282 bytes, on every page for a modal nobody
@@ -347,7 +347,7 @@ These are not design issues. Two of them are actively harming users right now.
   visitor, inside a wrapper with 32px of dead padding.
   **Fix:** delete FloatingActionBar; `client:idle` for the rest.
 
-- [ ] **P3.6 — `SimilarDoctors` is uncached and links only ~20 doctors per specialty**
+- [x] **P3.6 — `SimilarDoctors` is uncached and links only ~20 doctors per specialty**
   `SimilarDoctors.astro:34-71` runs a 4-join query per profile view with no caching, and its
   candidate pool is `take: 20` ordered `tier asc, h_index desc` **before** scoring — and `Tier`
   is declared `TITAN, ELITE, MASTER, UNRANKED`, so `asc` always returns the same top titans.
@@ -360,13 +360,13 @@ These are not design issues. Two of them are actively harming users right now.
   `330px-` thumb is served into a 260/200/160px frame.
   **Fix:** proxy portraits through Cloudinary (already a dependency and already preconnected).
 
-- [ ] **P3.8 — Missing `width`/`height` → CLS**
+- [x] **P3.8 — Missing `width`/`height` → CLS**
   `map.astro:181`, `nobel-laureates.astro:117-126`, `rare-diseases/[slug].astro:383`,
   `clinical-trials.astro:100`, `trials/[id].astro:72,243`, `institutions/index.astro:177`,
   `search.astro:211`, `MediaVault.astro:82-87,107-112`.
   Correct pattern already in use at `lineage.astro:338-339`.
 
-- [ ] **P3.9 — Drop the Pagefind build step**
+- [x] **P3.9 — Drop the Pagefind build step**
   `npm run build` runs `npx pagefind --site dist`, writing a 2.0MB index to `dist/pagefind/`.
   The node adapter serves `dist/client/`, so it would 404 anyway — and its only consumer,
   `components/Search.astro`, is never imported. Remove the step and both devDependencies.
@@ -375,7 +375,7 @@ These are not design issues. Two of them are actively harming users right now.
 
 # P4 — Dead code (large, low-risk wins — do before the design work)
 
-- [ ] **P4.1 — Tailwind is not installed, but two components are styled entirely in it**
+- [x] **P4.1 — Tailwind is not installed, but two components are styled entirely in it**
   Verified: 0 references in `package.json`, no config, zero hits for the utility classes in the
   built CSS. `FloatingActionBar.tsx:38-79` — so `fixed`/`opacity-0`/`pointer-events-none` are
   inert and it renders in-flow at page bottom, permanently visible. `MedicalLineageGraph.tsx:128-174`
@@ -395,7 +395,7 @@ These are not design issues. Two of them are actively harming users right now.
   profile ships `Name: undefined / H-Index: undefined` plus a duplicate DOM id.
   **Fix:** delete line 265 (the whole component goes anyway under P0.5).
 
-- [ ] **P4.4 — Smaller dead code**
+- [x] **P4.4 — Smaller dead code**
   `ProfileEmbed` + `ShareProfileModal` are two full share widgets side by side (~38KB for one
   intent); ~14KB of CSS shipped as unscoped JS template literals (`ImpactVoteButton.tsx`,
   `ShareProfileModal.tsx`); orphaned `.completeness-*`/`.bio-text`/`.btn--small` rules and the
@@ -410,45 +410,45 @@ These are not design issues. Two of them are actively harming users right now.
 
 ## P5a — Homepage *(the original brief)*
 
-- [ ] **Information architecture.** Ten equal-weight bands, and the two things that justify the
+- [x] **Information architecture.** Ten equal-weight bands, and the two things that justify the
   site's central claim sit fourth and seventh. Promote a condensed methodology strip directly
   under the hero; demote "One register, two names" (brand etymology currently occupying the
   second-highest-intent slot, right above the final CTA) to `/about/our-name`, which exists.
-- [ ] **Fix the numbering system.** §01–§04 label Titans, Pillars, Directories and Regional,
+- [x] **Fix the numbering system.** §01–§04 label Titans, Pillars, Directories and Regional,
   while Ethics, the Ledger and the Editorial are unnumbered — in a design leaning this hard on
   "work of record," that reads as an oversight.
-- [ ] **Three CTAs, one destination.** "Claim your profile", "Get the embed kit" and "Nominate
+- [x] **Three CTAs, one destination.** "Claim your profile", "Get the embed kit" and "Nominate
   for Ethics" all point at `/doctor/claim`; so does the Ethics block's "Nominate a Doctor".
-- [ ] **Make one hero stat a freshness stat** — "last verified 14 min ago" proves the register
+- [x] **Make one hero stat a freshness stat** — "last verified 14 min ago" proves the register
   is alive; four volume counters don't.
-- [ ] **Vary the rhythm.** Every section is a full-width grid of identical cards (4-up, 4-up,
+- [x] **Vary the rhythm.** Every section is a full-width grid of identical cards (4-up, 4-up,
   3-up, 2-up); hierarchy comes only from type size. Lead the Titan roll with one large profile.
-- [ ] **One drop cap, not two** (hero lede + editorial). Keep the editorial one.
-- [ ] **Mobile hero order** — below 900px the four stats become four full-width rows (~200px),
+- [x] **One drop cap, not two** (hero lede + editorial). Keep the editorial one.
+- [x] **Mobile hero order** — below 900px the four stats become four full-width rows (~200px),
   pushing the search bar below the fold at 390px. Reorder to h1 → search → stats; stats 2×2.
-- [ ] **Hero search is keyboard-hostile** — `index.astro:646-653` does focus → `blur()` →
+- [x] **Hero search is keyboard-hostile** — `index.astro:646-653` does focus → `blur()` →
   synthetic ⌘K. Tab into it and focus is yanked; typed characters are lost; on iOS the keyboard
   opens and slams shut. Make it a `<button>` styled as an input, like the nav's `#search-trigger`.
 
 ## P5b — Site-wide
 
-- [ ] **Dark-mode accents fail WCAG AA.** `[data-theme="dark"]` redefines `--verdant-2` but not
+- [x] **Dark-mode accents fail WCAG AA.** `[data-theme="dark"]` redefines `--verdant-2` but not
   `--verdant`/`--sanguine`. Measured: *"Integrity is another."* 2.74:1 (needs 3.0);
   "New · 2026 Programme" 2.74:1 (needs 4.5); ledger "✓ Approved" 3.04:1.
   **Fix:** `--verdant: oklch(0.70 0.12 155)` (→7.41 on paper-2, 6.69 on the ethics panel) and
   `--sanguine: oklch(0.68 0.14 25)`. `.btn--verdant` stays legible because `--paper` flips dark.
   *(Light mode is fine: ink-3 5.08, ink-2 11.7, ink 17.35.)*
-- [ ] **Mobile hides data instead of restacking it.** Homepage ledger drops **Evidence** and
+- [x] **Mobile hides data instead of restacking it.** Homepage ledger drops **Evidence** and
   **Verdict** below 900px — the section exists to prove verification. `statistics.astro:585-591`
   removes the proportional bar from every row and hides 6 of 12 growth bars. `compare.astro:948`
   collapses to one column with no per-cell doctor label, so stacked values lose all
   correspondence to the physician they describe.
-- [ ] **`ProfileCompletionMeter` publishes the thin-content problem as crawlable text** — the one
+- [x] **`ProfileCompletionMeter` publishes the thin-content problem as crawlable text** — the one
   ungated sidebar widget, rendering *"Basic"*, *"23% complete"* and a list of what's missing.
   With 86.7% of profiles having no awards, that's most of the corpus telling Google it's thin.
-- [ ] **Two destinations for one intent** — `/doctors?specialty=` (hero, tags) vs
+- [x] **Two destinations for one intent** — `/doctors?specialty=` (hero, tags) vs
   `/search?specialty=` (`SimilarDoctors.astro:165`). Standardise.
-- [ ] **Sidebar "Primary Institution" duplicates the first affiliation card** (`:1119-1158`).
+- [x] **Sidebar "Primary Institution" duplicates the first affiliation card** (`:1119-1158`).
 - [ ] **Unicode slugs strip accents instead of transliterating.** 52 profiles affected:
   `albert-szent-gy-rgyi`, `c-sar-milstein`, `ant-nio-egas-moniz`, `fran-oise-meunier`,
   `jo-o-lobo-antunes`, `zlem-t-reci` — Nobel laureates, the highest-demand names you have.
@@ -459,18 +459,18 @@ These are not design issues. Two of them are actively harming users right now.
   *"William Kaelin Jr.**Dana-Farber Cancer Institute**"*.
   **Fix:** transliterate (`.normalize('NFD').replace(/\p{Diacritic}/gu,'')`), 301 the old slugs,
   merge the duplicates, repair the three names.
-- [ ] **Content honesty:** `clinical-trials.astro:36` badges "Live Clinical Trial Updates" over a
+- [x] **Content honesty:** `clinical-trials.astro:36` badges "Live Clinical Trial Updates" over a
   build-time snapshot (`prerender = true`). *Partly resolved 2026-09-19* — the content refresh
   bumped `lastUpdated` to today, so the badge is currently truthful. What remains is that there
   is still **no rebuild automation**, so it will drift again; either schedule a rebuild or
   reword the badge to "last reviewed <date>".
   `privacy.astro:14-20` / `terms.astro:15` render `new Date()` into a prerendered page, so the
   legal "last updated" stamp silently advances on every unrelated deploy.
-- [ ] **Five hub pages have zero inbound internal links** — `/map`, `/statistics`, `/lineage`,
+- [x] **Five hub pages have zero inbound internal links** — `/map`, `/statistics`, `/lineage`,
   `/compare` have none at all; `/geography` is a closed loop; `/global-leaders` and
   `/nobel-laureates` are linked only from `/search`, which is `noindex`. Four of them are in the
   sitemap while being unreachable by a crawler following links. The footer has room.
-- [ ] **No specialty×geography hub pages** — `best cardiologist in <city>`, the highest-intent
+- [x] **No specialty×geography hub pages** — `best cardiologist in <city>`, the highest-intent
   query class this site could own, has no target. 18 group pages cover 493 distinct specialty
   values; `Medicine` alone is 184 profiles with no landing page.
 
@@ -478,27 +478,27 @@ These are not design issues. Two of them are actively harming users right now.
 
 # P6 — Accessibility
 
-- [ ] **The profile template has zero `aria-*` attributes** across 2,976 lines, and **zero
+- [x] **The profile template has zero `aria-*` attributes** across 2,976 lines, and **zero
   `:focus` rules** (there is a global `:focus-visible` fallback at `global.css:240`, but six
   custom interactive surfaces define hover treatments that swamp it).
-- [ ] **Heading levels skip h3** — `<h2>` → `<h4>` five times in the profile main column
+- [x] **Heading levels skip h3** — `<h2>` → `<h4>` five times in the profile main column
   (`:752,799,810,893-933,959`), plus `LegacyTimeline.astro:23→37` and `MediaVault.astro:146`.
   `SimilarDoctors` and `MedicalLineageGraph` lead with `<h3>` inside cards that have no `<h2>`.
   A second `<h1>` comes from the hidden layer (removed by P0.5).
-- [ ] **Lineage graph nodes are mouse-only** — `MedicalLineageGraph.tsx:271-277` is an SVG `<g
+- [x] **Lineage graph nodes are mouse-only** — `MedicalLineageGraph.tsx:271-277` is an SVG `<g
   onClick>` navigating via `window.location.href` with no `tabIndex`, `role` or key handler.
   These are real navigation links to mentor/student profiles.
-- [ ] **`ShareProfileModal` declares `aria-modal="true"` and implements none of it** — no focus
+- [x] **`ShareProfileModal` declares `aria-modal="true"` and implements none of it** — no focus
   management anywhere in the file, and four icon-only buttons with no accessible name.
   `ProfileEmbed.astro:200-227` is the in-repo reference implementation: focus moves in, real
   Tab trap, focus restored, Escape, scroll lock. Port it (or delete the modal per P4.4).
-- [ ] **Animated counters ignore `prefers-reduced-motion`** — `DoctorProfileRevamp.astro:2888-2937`
+- [x] **Animated counters ignore `prefers-reduced-motion`** — `DoctorProfileRevamp.astro:2888-2937`
   rewrites `textContent` over 2,000ms with no check; the CSS reduced-motion block at `:2868-2876`
   doesn't cover JS. Six hero metrics have no `aria-live` and no label carrying the final value.
-- [ ] **Placeholder-as-label** on the homepage hero search, `404.astro:56-62`,
+- [x] **Placeholder-as-label** on the homepage hero search, `404.astro:56-62`,
   `#disease-search`, `#lineage-search`, `institutions/index.astro:125-131`; and two `<label>`s
   with no `for` at `institutions/index.astro:136,148`.
-- [ ] **Inline handlers block adding a CSP** — `DoctorProfileRevamp.astro:360,452,740,1134`
+- [x] **Inline handlers block adding a CSP** — `DoctorProfileRevamp.astro:360,452,740,1134`
   (`onmouseover`/`onclick`/`onerror`); `middleware.ts:29-31` sets three security headers but no
   CSP, and these are what would break the moment one is added.
 
@@ -531,7 +531,25 @@ These are not design issues. Two of them are actively harming users right now.
 
 # Review
 
-_(to be filled in after implementation)_
+_2026-10-12 — everything below is on `fix/audit-remediation`, built green (`astro check` 0 errors), smoke-tested against a local production build on the prod DB (read-only, except the one migration noted)._
+
+**Done:** all of P2, P3 (except the Cloudinary half of P3.7), P4, P5a, P5b (except applying the slug script), P6, plus P1.1 (live `/404` now 404s; the old host's wildcard 302 went with the old server; `/services/*`, `/industries/*` and 16 other legacy prefixes now 410 from middleware).
+
+**Outside the plan, found while working:**
+- **Supabase REST was wide open.** `anon`/`authenticated` held SELECT/INSERT/UPDATE/DELETE on every public table with RLS off, so the publishable key could read or delete any row (verified: 975 profiles readable). RLS is now enabled on all 34 tables (no policies); the app connects as `postgres` (BYPASSRLS) so nothing changed for the site. Applied to prod — `prisma/sql/2026-10-12-nmc-checks-and-rls.sql`.
+- `www.mdrpedia.com` served the whole site (prod is OpenLiteSpeed, so the nginx rule never shipped) → 301 in middleware. `/doctor/<slug>` → 301 to `/doctors/<slug>`.
+- Hot-linked Wikimedia portraits that 404 (e.g. Devi Shetty) showed a broken image; the profile now falls back to initials.
+
+**New: NMC compliance check** (`/nmc-compliance-check`, claude.ai/design "NMC Compliance Check") — first page on the new register design system (`SiteLayout`, `register.css`, `components/site/*`). Instant screen via Claude (`claude-haiku-5-5`, needs `ANTHROPIC_API_KEY`) with a deterministic rule engine fallback; leads in `nmc_checks`; reports by email (needs `RESEND_API_KEY`; optional `NMC_ALERT_EMAIL`); queue at `/admin/nmc-checks`.
+
+**Still open:**
+- [ ] **Deploy** this branch (merge → build on VPS → `pm2 restart mdrpedia`). Set `ANTHROPIC_API_KEY`, `RESEND_API_KEY`, `NMC_ALERT_EMAIL` in the prod `.env`.
+- [ ] **Cron** for the NMC full scan: `*/15 * * * * curl -s -X POST -H "x-admin-key: $ADMIN_ACCESS_KEY" -H "Content-Type: application/json" -d '{"action":"process"}' http://127.0.0.1:4331/api/admin/nmc-checks`
+- [ ] **Unicode slugs (P5b):** after deploy, `npx tsx --env-file=.env scripts/fix-unicode-slugs.ts` (dry run) → `--apply` → commit renamed content → redeploy → set `SLUG_REDIRECTS=1` and restart. 50 DB profiles, 5 merges.
+- [ ] **P1.11** add mdrpedia.com to Search Console (needs owner login + GoDaddy TXT record).
+- [ ] **P3.7** proxy portraits through Cloudinary fetch + `srcset` (`lib/cloudinary.ts` has no fetch helper yet).
+- [ ] Rotate `ADMIN_ACCESS_KEY` to a long random value — the current one is short enough to guess.
+- [ ] Homepage "last verified" reads Feb 2026 because no profile `updatedAt` is newer; it is accurate but will look stale until profiles are refreshed.
 
 ---
 
