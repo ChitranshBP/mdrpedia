@@ -11,7 +11,8 @@ import OptimizedImage from "../../components/OptimizedImage.astro";
 import EnhancedSearch from "../../components/EnhancedSearch";
 import { getCollection } from "astro:content";
 import { prisma } from "../../lib/prisma";
-import { getTierCounts } from "../../lib/cached-stats";
+import Pagination from "../../components/Pagination.astro";
+import { getTierCounts, getCountryStats, getSpecialtyStats } from "../../lib/cached-stats";
 
 export const prerender = false;
 
@@ -39,14 +40,77 @@ type DoctorItem = {
     citations: number;
 };
 
-let sortedDoctors: DoctorItem[] = [];
+const PAGE_SIZE = 48;
+const TIERS = ["TITAN", "ELITE", "MASTER"];
+const ROLES = ["surgeon", "physician", "researcher"];
+
+const params = Astro.url.searchParams;
+const tierFilter = TIERS.includes(params.get("tier") || "") ? params.get("tier")! : "all";
+const roleFilter = ROLES.includes(params.get("role") || "") ? params.get("role")! : "all";
+const countryFilter = params.get("country") || "all";
+const specialtyFilter = params.get("specialty") || "all";
+const query = (params.get("q") || "").trim().slice(0, 100);
+const requestedPage = Math.max(1, parseInt(params.get("page") || "1", 10) || 1);
+
+const surgeonSpecialty = [
+    { specialty: { contains: "surgery", mode: "insensitive" } },
+    { specialty: { contains: "surgeon", mode: "insensitive" } },
+    { specialty: { contains: "transplant", mode: "insensitive" } },
+];
+const researcherSignal = [
+    { h_index: { gt: 50 } },
+    { title: { contains: "PhD" } },
+];
+
+const where: Record<string, any> = {};
+const and: any[] = [];
+if (tierFilter !== "all") where.tier = tierFilter;
+if (countryFilter !== "all") where.geography = { country: countryFilter };
+if (specialtyFilter !== "all") where.specialty = { equals: specialtyFilter, mode: "insensitive" };
+if (roleFilter === "surgeon") and.push({ OR: surgeonSpecialty });
+if (roleFilter === "researcher") and.push({ NOT: { OR: surgeonSpecialty } }, { OR: researcherSignal });
+if (roleFilter === "physician") and.push({ NOT: { OR: [...surgeonSpecialty, ...researcherSignal] } });
+if (query) {
+    and.push({
+        OR: [
+            { full_name: { contains: query, mode: "insensitive" } },
+            { specialty: { contains: query, mode: "insensitive" } },
+            { geography: { is: { OR: [
+                { city: { contains: query, mode: "insensitive" } },
+                { country: { contains: query, mode: "insensitive" } },
+            ] } } },
+        ],
+    });
+}
+if (and.length) where.AND = and;
+
+const toRole = (d: { specialty: string; hIndex: number; title: string | null }) => {
+    const spec = d.specialty.toLowerCase();
+    if (spec.includes("surgery") || spec.includes("surgeon") || spec.includes("transplant")) return "surgeon";
+    return d.hIndex > 50 || d.title?.includes("PhD") ? "researcher" : "physician";
+};
+
+let doctors: DoctorItem[] = [];
+let total = 0;
+let page = requestedPage;
 let countries: string[] = [];
 let specialties: string[] = [];
 let dataSource = 'database';
 
 try {
-    // Fetch from database
+    const [countryStats, specialtyStats, count] = await Promise.all([
+        getCountryStats(),
+        getSpecialtyStats(),
+        prisma.profile.count({ where }),
+    ]);
+    if (specialtyStats.length === 0) throw new Error('No profiles in database');
+    countries = countryStats.map(c => c.country).sort();
+    specialties = specialtyStats.map(s => s.specialty).filter(Boolean).sort();
+    total = count;
+    page = Math.min(requestedPage, Math.max(1, Math.ceil(total / PAGE_SIZE)));
+
     const dbDoctors = await prisma.profile.findMany({
+        where,
         select: {
             slug: true,
             full_name: true,
@@ -57,69 +121,39 @@ try {
             ranking_score: true,
             h_index: true,
             portrait_url: true,
-            geography: {
-                select: {
-                    country: true,
-                    city: true
-                }
-            },
-            impact_metrics: {
-                select: {
-                    lives_saved: true
-                }
-            },
-            _count: {
-                select: {
-                    citations: true
-                }
-            }
+            geography: { select: { country: true, city: true } },
+            impact_metrics: { select: { lives_saved: true } },
+            _count: { select: { citations: true } },
         },
         orderBy: [
-            { tier: 'asc' }, // TITAN comes first alphabetically
-            { ranking_score: 'desc' },
-            { h_index: 'desc' }
-        ]
+            { tier: 'asc' },
+            { ranking_score: { sort: 'desc', nulls: 'last' } },
+            { h_index: 'desc' },
+            { slug: 'asc' },
+        ],
+        skip: (page - 1) * PAGE_SIZE,
+        take: PAGE_SIZE,
     });
 
-    if (dbDoctors.length > 0) {
-        sortedDoctors = dbDoctors.map(d => ({
-            slug: d.slug,
-            fullName: d.full_name,
-            title: d.title,
-            specialty: d.specialty,
-            tier: d.tier,
-            status: d.status,
-            rankingScore: d.ranking_score,
-            hIndex: d.h_index,
-            portraitUrl: d.portrait_url,
-            geography: d.geography || { country: 'Unknown' },
-            livesSaved: d.impact_metrics?.lives_saved || 0,
-            citations: d._count?.citations || 0
-        }));
-
-        // Sort properly by tier order
-        sortedDoctors.sort((a, b) => {
-            const tierDiff = (tierOrder[a.tier] ?? 3) - (tierOrder[b.tier] ?? 3);
-            if (tierDiff !== 0) return tierDiff;
-            const rankA = a.rankingScore ?? 0;
-            const rankB = b.rankingScore ?? 0;
-            if (rankB !== rankA) return rankB - rankA;
-            return b.hIndex - a.hIndex;
-        });
-
-        // Extract unique countries and specialties
-        countries = Array.from(new Set(sortedDoctors.map(d => d.geography.country).filter(Boolean))).sort();
-        specialties = Array.from(new Set(sortedDoctors.map(d => d.specialty).filter(Boolean))).sort();
-    } else {
-        throw new Error('No profiles in database');
-    }
+    doctors = dbDoctors.map(d => ({
+        slug: d.slug,
+        fullName: d.full_name,
+        title: d.title,
+        specialty: d.specialty,
+        tier: d.tier,
+        status: d.status,
+        rankingScore: d.ranking_score,
+        hIndex: d.h_index,
+        portraitUrl: d.portrait_url,
+        geography: d.geography || { country: 'Unknown' },
+        livesSaved: d.impact_metrics?.lives_saved || 0,
+        citations: d._count?.citations || 0
+    }));
 } catch (e) {
-    // Fallback to static content
     dataSource = 'static';
-    // Fallback to static content when DB is unavailable
     const allDoctors = await getCollection("doctors");
 
-    sortedDoctors = allDoctors.map(d => ({
+    let fallback: DoctorItem[] = allDoctors.map(d => ({
         slug: d.id,
         fullName: d.data.fullName,
         title: d.data.title || null,
@@ -134,38 +168,56 @@ try {
         citations: d.data.citations?.length || 0
     }));
 
-    sortedDoctors.sort((a, b) => {
+    countries = Array.from(new Set(fallback.map(d => d.geography.country).filter(Boolean))).sort();
+    specialties = Array.from(new Set(fallback.map(d => d.specialty).filter(Boolean))).sort();
+
+    const q = query.toLowerCase();
+    fallback = fallback.filter(d =>
+        (tierFilter === "all" || d.tier === tierFilter) &&
+        (roleFilter === "all" || toRole(d) === roleFilter) &&
+        (countryFilter === "all" || d.geography.country === countryFilter) &&
+        (specialtyFilter === "all" || d.specialty.toLowerCase() === specialtyFilter.toLowerCase()) &&
+        (!q || `${d.fullName} ${d.specialty} ${d.geography.city || ""} ${d.geography.country}`.toLowerCase().includes(q))
+    );
+
+    fallback.sort((a, b) => {
         const tierDiff = (tierOrder[a.tier] ?? 3) - (tierOrder[b.tier] ?? 3);
         if (tierDiff !== 0) return tierDiff;
-        const rankA = a.rankingScore ?? 0;
-        const rankB = b.rankingScore ?? 0;
-        if (rankB !== rankA) return rankB - rankA;
+        const rankDiff = (b.rankingScore ?? 0) - (a.rankingScore ?? 0);
+        if (rankDiff !== 0) return rankDiff;
         return b.hIndex - a.hIndex;
     });
 
-    countries = Array.from(new Set(sortedDoctors.map(d => d.geography.country).filter(Boolean))).sort();
-    specialties = Array.from(new Set(sortedDoctors.map(d => d.specialty).filter(Boolean))).sort();
+    total = fallback.length;
+    page = Math.min(requestedPage, Math.max(1, Math.ceil(total / PAGE_SIZE)));
+    doctors = fallback.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 }
 
-// Get cached stats for consistent tier counts across all pages (single source of truth)
+const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+
 let tierCounts = { titan: 0, elite: 0, master: 0, unranked: 0, total: 0 };
 try {
     tierCounts = await getTierCounts();
 } catch (e) {
-    // Fallback: calculate from local data
-    tierCounts = {
-        titan: sortedDoctors.filter(d => d.tier === "TITAN").length,
-        elite: sortedDoctors.filter(d => d.tier === "ELITE").length,
-        master: sortedDoctors.filter(d => d.tier === "MASTER").length,
-        unranked: sortedDoctors.filter(d => d.tier === "UNRANKED").length,
-        total: sortedDoctors.length
-    };
+    tierCounts = { titan: 0, elite: 0, master: 0, unranked: 0, total };
 }
 
-// Use cached stats for display
 const titanCount = tierCounts.titan;
 const eliteCount = tierCounts.elite;
 const masterCount = tierCounts.master;
+
+const filterHref = (overrides: Record<string, string>) => {
+    const next = new URLSearchParams();
+    const current: Record<string, string> = {
+        tier: tierFilter, role: roleFilter, country: countryFilter, specialty: specialtyFilter, q: query,
+    };
+    for (const [k, v] of Object.entries({ ...current, ...overrides })) {
+        if (v && v !== "all") next.set(k, v);
+    }
+    const qs = next.toString();
+    return qs ? `/doctors?${qs}` : "/doctors";
+};
+const isFiltered = tierFilter !== "all" || roleFilter !== "all" || countryFilter !== "all" || specialtyFilter !== "all" || !!query;
 ---
 
 <Layout
@@ -178,7 +230,7 @@ const masterCount = tierCounts.master;
             <div class="browse-header">
                 <div class="browse-header__text">
                     <h1>Browse Profiles</h1>
-                    <p>{sortedDoctors.length} verified medical professionals</p>
+                    <p>{tierCounts.total.toLocaleString()} verified medical professionals</p>
                 </div>
                 <div class="browse-header__stats">
                     <span class="mini-stat mini-stat--titan"
@@ -203,8 +255,11 @@ const masterCount = tierCounts.master;
                     />
                 </div>
 
-                <!-- Grid Filter Input -->
-                <div class="filter-input-wrap">
+                <form class="filter-input-wrap" method="get" action="/doctors" id="browse-form">
+                    {tierFilter !== "all" && <input type="hidden" name="tier" value={tierFilter} />}
+                    {roleFilter !== "all" && <input type="hidden" name="role" value={roleFilter} />}
+                    {countryFilter !== "all" && <input type="hidden" name="country" value={countryFilter} />}
+                    {specialtyFilter !== "all" && <input type="hidden" name="specialty" value={specialtyFilter} />}
                     <svg
                         class="filter-icon"
                         viewBox="0 0 24 24"
@@ -214,105 +269,76 @@ const masterCount = tierCounts.master;
                     >
                         <path d="M3 4h18M6 8h12M9 12h6M12 16h0"></path>
                     </svg>
-                    <label class="sr-only" for="browse-search">Filter visible results</label>
+                    <label class="sr-only" for="browse-search">Filter by name, specialty or location</label>
                     <input
-                        type="text"
+                        type="search"
                         id="browse-search"
+                        name="q"
                         class="filter-input"
-                        placeholder="Filter visible results..."
+                        placeholder="Filter by name, specialty or location..."
+                        value={query}
                         autocomplete="off"
                     />
-                </div>
+                </form>
 
-                <!-- Role Filter -->
                 <div class="filter-group">
                     <span class="filter-label" id="filter-label-role">Role</span>
                     <div class="filter-buttons" role="group" aria-labelledby="filter-label-role">
-                        <button
-                            class="filter-btn filter-btn--active"
-                            aria-pressed="true"
-                            data-group="role"
-                            data-filter="all">All</button
-                        >
-                        <button
-                            class="filter-btn"
-                            aria-pressed="false"
-                            data-group="role"
-                            data-filter="surgeon">Surgeon</button
-                        >
-                        <button
-                            class="filter-btn"
-                            aria-pressed="false"
-                            data-group="role"
-                            data-filter="physician">Physician</button
-                        >
-                        <button
-                            class="filter-btn"
-                            aria-pressed="false"
-                            data-group="role"
-                            data-filter="researcher">Researcher</button
-                        >
+                        {[["all", "All"], ["surgeon", "Surgeon"], ["physician", "Physician"], ["researcher", "Researcher"]].map(([value, label]) => (
+                            <a
+                                class={`filter-btn${roleFilter === value ? " filter-btn--active" : ""}`}
+                                href={filterHref({ role: value })}
+                                aria-current={roleFilter === value ? "true" : undefined}
+                            >{label}</a>
+                        ))}
                     </div>
                 </div>
 
                 <div class="filter-group">
                     <span class="filter-label" id="filter-label-tier">Tier</span>
                     <div class="filter-buttons" role="group" aria-labelledby="filter-label-tier">
-                        <button
-                            class="filter-btn filter-btn--active"
-                            aria-pressed="true"
-                            data-group="tier"
-                            data-filter="all">All</button
-                        >
-                        <button
-                            class="filter-btn filter-btn--titan"
-                            data-group="tier"
-                            data-filter="TITAN">Titan</button
-                        >
-                        <button
-                            class="filter-btn filter-btn--elite"
-                            data-group="tier"
-                            data-filter="ELITE">Elite</button
-                        >
+                        {[["all", "All"], ["TITAN", "Titan"], ["ELITE", "Elite"]].map(([value, label]) => (
+                            <a
+                                class={`filter-btn filter-btn--${value.toLowerCase()}${tierFilter === value ? " filter-btn--active" : ""}`}
+                                href={filterHref({ tier: value })}
+                                aria-current={tierFilter === value ? "true" : undefined}
+                            >{label}</a>
+                        ))}
                     </div>
                 </div>
 
-                <!-- Country Filter -->
                 <div class="filter-group">
                     <label class="filter-label" for="country-filter">Country</label>
-                    <select id="country-filter" class="filter-select">
+                    <select id="country-filter" class="filter-select" data-param="country">
                         <option value="all">All Countries</option>
-                        {
-                            countries.map((country) => (
-                                <option value={country}>{country}</option>
-                            ))
-                        }
+                        {countries.map((country) => (
+                            <option value={country} selected={country === countryFilter}>{country}</option>
+                        ))}
                     </select>
                 </div>
 
-                <!-- Specialty Filter -->
                 <div class="filter-group">
                     <label class="filter-label" for="specialty-filter">Specialty</label>
-                    <select id="specialty-filter" class="filter-select">
+                    <select id="specialty-filter" class="filter-select" data-param="specialty">
                         <option value="all">All Specialties</option>
-                        {
-                            specialties.map((specialty) => (
-                                <option value={specialty}>{specialty}</option>
-                            ))
-                        }
+                        {specialties.map((specialty) => (
+                            <option value={specialty} selected={specialty.toLowerCase() === specialtyFilter.toLowerCase()}>{specialty}</option>
+                        ))}
                     </select>
                 </div>
             </div>
 
-            <!-- Results Count -->
             <div class="results-info" id="results-info" role="status" aria-live="polite">
-                Showing all {sortedDoctors.length} profiles
+                {isFiltered
+                    ? `${total.toLocaleString()} matching profile${total === 1 ? "" : "s"}`
+                    : `${total.toLocaleString()} profiles`}
+                {isFiltered && <a href="/doctors" class="clear-filters"> &middot; Clear filters</a>}
             </div>
 
             <!-- Doctor Grid -->
             <div class="browse-grid" id="doctor-grid">
                 {
-                    sortedDoctors.map((d) => {
+                    doctors.map((d) => {
                         const location = [
                             d.geography.city,
                             d.geography.country,
@@ -328,31 +354,10 @@ const masterCount = tierCounts.master;
                         const hasImage =
                             d.portraitUrl && !d.portraitUrl.startsWith("data:");
 
-                        // Derive Role
-                        const isSurgeon =
-                            d.specialty.toLowerCase().includes("surgery") ||
-                            d.specialty.toLowerCase().includes("surgeon") ||
-                            d.specialty.toLowerCase().includes("transplant");
-                        const isResearcher =
-                            d.hIndex > 50 || d.title?.includes("PhD") || false; // Simple heuristic for now
-                        const role = isSurgeon
-                            ? "surgeon"
-                            : isResearcher
-                              ? "researcher"
-                              : "physician";
-
                         return (
                             <a
                                 href={`/doctors/${d.slug}`}
                                 class={`doctor-card doctor-card--${d.tier.toLowerCase()}`}
-                                data-tier={d.tier}
-                                data-role={role}
-                                data-country={d.geography.country}
-                                data-name={d.fullName.toLowerCase()}
-                                data-specialty={(
-                                    d.specialty || ""
-                                ).toLowerCase()}
-                                data-location={location.toLowerCase()}
                             >
                                 <div class="doctor-card__header">
                                     <div
@@ -412,206 +417,29 @@ const masterCount = tierCounts.master;
                 }
             </div>
 
-            <!-- Empty State -->
-            <div class="empty-state" id="empty-state" role="status" aria-live="polite" hidden>
-                <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    width="48"
-                    height="48"
-                >
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <path d="m21 21-4.3-4.3"></path>
-                </svg>
-                <h3>No results found</h3>
-                <p>Try adjusting your search or filters</p>
-            </div>
+            {doctors.length === 0 && (
+                <div class="empty-state" role="status">
+                    <h3>No results found</h3>
+                    <p>Try adjusting your search or filters.</p>
+                    {isFiltered && <p><a href="/doctors">Clear all filters</a></p>}
+                </div>
+            )}
+
+            <Pagination page={page} totalPages={totalPages} total={total} pageSize={PAGE_SIZE} label="profiles" />
         </div>
     </section>
 </Layout>
 
 <script>
-    // DOM Elements
-    const buttons = document.querySelectorAll<HTMLButtonElement>(".filter-btn");
-    const countrySelect = document.getElementById("country-filter") as HTMLSelectElement;
-    const specialtySelect = document.getElementById("specialty-filter") as HTMLSelectElement;
-    const cards = document.querySelectorAll<HTMLElement>(".doctor-card");
-    const searchInput = document.getElementById("browse-search") as HTMLInputElement;
-    const resultsInfo = document.getElementById("results-info");
-    const emptyState = document.getElementById("empty-state");
-
-    // Filter state
-    let currentTier = "all";
-    let currentStatus = "all";
-    let currentRole = "all";
-    let currentCountry = "all";
-    let currentSpecialty = "all";
-    let searchQuery = "";
-
-    // Parse URL params on page load
-    function parseUrlParams() {
-        const params = new URLSearchParams(window.location.search);
-
-        if (params.has("tier")) {
-            currentTier = params.get("tier") || "all";
-        }
-        if (params.has("role")) {
-            currentRole = params.get("role") || "all";
-        }
-        if (params.has("country")) {
-            currentCountry = params.get("country") || "all";
-        }
-        if (params.has("specialty")) {
-            currentSpecialty = params.get("specialty") || "all";
-        }
-        if (params.has("q")) {
-            searchQuery = params.get("q") || "";
-        }
-    }
-
-    // Update URL with current filter state (without page reload)
-    function updateUrl() {
-        const params = new URLSearchParams();
-
-        if (currentTier !== "all") params.set("tier", currentTier);
-        if (currentRole !== "all") params.set("role", currentRole);
-        if (currentCountry !== "all") params.set("country", currentCountry);
-        if (currentSpecialty !== "all") params.set("specialty", currentSpecialty);
-        if (searchQuery) params.set("q", searchQuery);
-
-        const newUrl = params.toString()
-            ? `${window.location.pathname}?${params.toString()}`
-            : window.location.pathname;
-
-        window.history.replaceState({}, "", newUrl);
-    }
-
-    // Apply filter state to UI controls
-    function applyStateToControls() {
-        // Update tier buttons
-        document.querySelectorAll('.filter-btn[data-group="tier"]').forEach((btn) => {
-            const b = btn as HTMLButtonElement;
-            const isActive = b.dataset.filter === currentTier;
-            b.classList.toggle("filter-btn--active", isActive);
-            b.setAttribute("aria-pressed", String(isActive));
-        });
-
-        // Update role buttons
-        document.querySelectorAll('.filter-btn[data-group="role"]').forEach((btn) => {
-            const b = btn as HTMLButtonElement;
-            const isActive = b.dataset.filter === currentRole;
-            b.classList.toggle("filter-btn--active", isActive);
-            b.setAttribute("aria-pressed", String(isActive));
-        });
-
-        // Update dropdowns
-        if (countrySelect) countrySelect.value = currentCountry;
-        if (specialtySelect) specialtySelect.value = currentSpecialty;
-        if (searchInput) searchInput.value = searchQuery;
-    }
-
-    // Main filter function
-    function filterCards() {
-        let visibleCount = 0;
-
-        cards.forEach((card) => {
-            const tierMatch = currentTier === "all" || card.dataset.tier === currentTier;
-            const roleMatch = currentRole === "all" || card.dataset.role === currentRole;
-            const countryMatch = currentCountry === "all" || card.dataset.country === currentCountry;
-            const specialtyMatch = currentSpecialty === "all" ||
-                (card.dataset.specialty && card.dataset.specialty.toLowerCase() === currentSpecialty.toLowerCase());
-
-            let textMatch = true;
-            if (searchQuery) {
-                const searchText = `${card.dataset.name} ${card.dataset.specialty} ${card.dataset.location}`;
-                textMatch = searchText.includes(searchQuery);
-            }
-
-            if (tierMatch && roleMatch && countryMatch && specialtyMatch && textMatch) {
-                card.style.display = "";
-                visibleCount++;
-            } else {
-                card.style.display = "none";
-            }
-        });
-
-        // Update results info
-        if (resultsInfo) {
-            if (visibleCount === cards.length) {
-                resultsInfo.textContent = `Showing all ${cards.length} profiles`;
-            } else {
-                resultsInfo.textContent = `Showing ${visibleCount} of ${cards.length} profiles`;
-            }
-        }
-
-        // Show/hide empty state
-        if (emptyState) {
-            emptyState.hidden = visibleCount > 0;
-        }
-
-        // Update URL
-        updateUrl();
-    }
-
-    // Text search with debounce
-    let searchTimer: ReturnType<typeof setTimeout>;
-    searchInput?.addEventListener("input", () => {
-        clearTimeout(searchTimer);
-        searchTimer = setTimeout(() => {
-            searchQuery = searchInput.value.trim().toLowerCase();
-            filterCards();
-        }, 150);
-    });
-
-    // Country Filter
-    countrySelect?.addEventListener("change", (e) => {
-        currentCountry = (e.target as HTMLSelectElement).value;
-        filterCards();
-    });
-
-    // Specialty Filter
-    specialtySelect?.addEventListener("change", (e) => {
-        currentSpecialty = (e.target as HTMLSelectElement).value;
-        filterCards();
-    });
-
-    // Filter buttons
-    buttons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-            const group = btn.dataset.group;
-            const filter = btn.dataset.filter || "all";
-
-            if (group === "tier") {
-                document.querySelectorAll('.filter-btn[data-group="tier"]')
-                    .forEach((b) => b.classList.remove("filter-btn--active"));
-                btn.classList.add("filter-btn--active");
-                currentTier = filter;
-            } else if (group === "role") {
-                document.querySelectorAll('.filter-btn[data-group="role"]')
-                    .forEach((b) => b.classList.remove("filter-btn--active"));
-                btn.classList.add("filter-btn--active");
-                currentRole = filter;
-            }
-            filterCards();
+    document.querySelectorAll<HTMLSelectElement>(".filter-select[data-param]").forEach((select) => {
+        select.addEventListener("change", () => {
+            const url = new URL(window.location.href);
+            url.searchParams.delete("page");
+            if (select.value === "all") url.searchParams.delete(select.dataset.param!);
+            else url.searchParams.set(select.dataset.param!, select.value);
+            window.location.href = url.toString();
         });
     });
-
-    // Handle browser back/forward navigation
-    window.addEventListener("popstate", () => {
-        parseUrlParams();
-        applyStateToControls();
-        filterCards();
-    });
-
-    // Initialize on page load
-    parseUrlParams();
-    applyStateToControls();
-    if (currentTier !== "all" || currentRole !== "all" || currentCountry !== "all" ||
-        currentSpecialty !== "all" || searchQuery) {
-        filterCards();
-    }
 </script>
 
 <style>
@@ -802,6 +630,8 @@ const masterCount = tierCounts.master;
     }
 
     .filter-btn {
+        display: inline-block;
+        text-decoration: none;
         padding: 8px 14px;
         font-size: 0.8rem;
         font-weight: 500;
