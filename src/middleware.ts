@@ -32,15 +32,16 @@ const SITE_HOST = new URL(import.meta.env.SITE ?? 'https://mdrpedia.com').host;
 function crossSiteForm(request: Request): boolean {
     if (!UNSAFE_METHODS.has(request.method)) return false;
     if (!FORM_TYPES.test(request.headers.get('content-type') ?? '')) return false;
-    const origin = request.headers.get('origin');
-    if (!origin) return true;
+    // OpenLiteSpeed re-adds Origin, so Node sees "a, a"; every value must be this site.
+    const origins = (request.headers.get('origin') ?? '').split(',').map((o) => o.trim()).filter(Boolean);
+    if (!origins.length) return true;
     const allowed = new Set(
         [request.headers.get('host'), request.headers.get('x-forwarded-host')?.split(',').pop()?.trim(), SITE_HOST]
             .filter((h): h is string => !!h)
             .map((h) => h.toLowerCase()),
     );
     try {
-        return !allowed.has(new URL(origin).host.toLowerCase());
+        return !origins.every((o) => allowed.has(new URL(o).host.toLowerCase()));
     } catch {
         return true;
     }
