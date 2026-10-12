@@ -4,6 +4,7 @@
  */
 
 import { defineMiddleware } from 'astro:middleware';
+import { goneResponse, isGone, legacyRedirect, profileSlugRedirect } from './lib/legacy-urls';
 
 // Static asset patterns
 const STATIC_ASSETS = /\.(js|css|woff2?|ttf|otf|png|jpg|jpeg|gif|webp|avif|svg|ico|mp4|webm)$/i;
@@ -12,7 +13,15 @@ const IMMUTABLE_ASSETS = /\/_astro\//;
 export const onRequest = defineMiddleware(async ({ request, locals }, next) => {
     const startTime = Date.now();
     const url = new URL(request.url);
-    
+
+    if (isGone(url.pathname)) {
+        const target = legacyRedirect(url.pathname);
+        return target ? Response.redirect(new URL(target, url).href, 301) : goneResponse();
+    }
+
+    const movedSlug = profileSlugRedirect(url.pathname);
+    if (movedSlug) return Response.redirect(new URL(movedSlug + url.search, url).href, 301);
+
     // Process the request
     const response = await next();
     
